@@ -13,5 +13,10 @@ namespace Web.Controllers
         {
             return View(); 
         }
+
+        public IActionResult ShoppingCartCheck()
+        {
+            return View();
+        }
     }
 }
