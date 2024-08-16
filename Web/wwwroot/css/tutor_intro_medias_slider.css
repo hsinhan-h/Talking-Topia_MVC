@@ -1,0 +1,35 @@
+﻿.arrow_prev {
+    position: absolute;
+    top: 97px;
+    left: 2px;
+    display: block;
+    z-index: 2;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid var(--theme-color);
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--theme-color);
+}
+
+.arrow_next {
+    position: absolute;
+    top: 97px;
+    right: 0px;
+    display: block;
+    z-index: 2;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid var(--theme-color);
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--theme-color);
+}

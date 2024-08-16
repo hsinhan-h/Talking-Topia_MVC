@@ -8,5 +8,10 @@ namespace Web.Controllers
         {
             return View();
         }
+
+        public IActionResult CourseList()
+        {
+            return View();
+        }
     }
 }
