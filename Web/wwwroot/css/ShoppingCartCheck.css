@@ -330,7 +330,7 @@ table td {
     border-radius: 50%;
 }
 
-a {
+td > a {
     text-decoration: none;
     border-color: #02cab9;
     border-bottom: 1px dotted white;
