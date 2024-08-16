@@ -59,13 +59,13 @@
     transform: translateY(-3px);
 }
 
-.resume_banner{
-    background-image: url("../Materials/apply_teacher/pexels-fauxels-3184419.jpg");
+.resume_banner {
+    background-image: url("../image/apply_teacher/pexels-fauxels-3184419.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    height: 200px; 
-    color: white; 
+    height: 200px;
+    color: white;
 }
 .resume_banner p:nth-of-type(1){
     font-size: 1.5rem;
