@@ -1,0 +1,62 @@
+/* 返回購物車按鈕 */
+.return-order_btn {
+    background-color: rgb(2, 202, 185);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 15px;
+    height: 50px;
+}
+
+.return-order_btn:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+/* .btn-goback{
+    float: right;
+    margin: 50px 0 0 0;
+} */
+
+/* 交易失敗或成功 */
+.row-transaction {
+    align-items: center;
+    padding: 10px 0 10px 0;
+}
+
+.card-body-transaction {
+    text-align: center;
+    align-items: center;
+    padding: 0 0 10px 0;
+}
+
+.card-title-transaction,
+.card-title-transaction-success {
+    font-size: 32px;
+}
+
+.card-title-transaction,
+.card-text-transaction {
+    color: red;
+    text-align: center;
+}
+
+.card-title-transaction-success {
+    text-align: center;
+    color: #02cab9;
+}
+
+.reserve-info {
+    padding: 10px 0 0 0;
+}
+
+/* .table-transaction{
+    border: 1px solid gray;
+} */
+/* .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-12 {
+    width: 100%;
+} */

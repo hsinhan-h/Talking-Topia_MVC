@@ -1,0 +1,436 @@
+/* 返回購物車按鈕 */
+.return-order_btn {
+    background-color: rgb(2, 202, 185);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 15px;
+    height: 50px;
+}
+
+.return-order_btn:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* .btn-goback {
+    float: right;
+    margin: 50px 0 0 0;
+} */
+
+/* 購物車 */
+/* <= 568px */
+
+/* @media screen and (max-width: 35.5em) { */
+@media screen and (max-width: 768px) {
+    table {
+        border: 0;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        margin-bottom: 10px;
+        display: block;
+        border-bottom: 2px solid #ddd;
+    }
+
+    table td {
+        display: block;
+        text-align: left;
+        font-size: 13px;
+        border-bottom: 1px dotted #ccc;
+    }
+
+    table td:first-child {
+        height: 70px;
+    }
+
+    table td {
+        height: 60px;
+        font-size: 16px;
+    }
+
+    table td:first-child svg {
+        display: block;
+        float: right;
+        width: 20px;
+        margin: -8px -8px;
+    }
+
+    table td:last-child {
+        display: none;
+    }
+
+    table td:nth-last-child(2) {
+        border-bottom: 0;
+    }
+
+    table td:before {
+        content: attr(data-label);
+        width: 30%;
+        height: 30px;
+        float: left;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    /* table th {
+        text-transform: uppercase;
+        font-size: 50px;
+        letter-spacing: 1px;
+    } */
+    table .form-select {
+        width: 200px;
+        height: 40px;
+    }
+}
+
+.container {
+    margin: auto;
+}
+
+.payment {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.card {
+    margin: 5px;
+}
+
+h2,
+h3 {
+    font-weight: bolder;
+    padding: 10px 0 0 0;
+}
+
+.teacher-img-img {
+    border-radius: 50%;
+}
+
+.teacher-info {
+    display: flex;
+}
+
+.teacher-info a,
+a:focus {
+    text-decoration: none;
+    color: black;
+}
+
+.teacher-info a:hover {
+    color: #02cab9;
+}
+
+.discount {
+    color: red;
+    vertical-align: sub;
+    margin-bottom: 0;
+}
+
+.discount-info {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.hori-line {
+    width: 100%;
+    height: 0.5px;
+    border-top: solid rgb(231, 230, 230);
+    border-style: dashed;
+    border-width: thin;
+}
+
+.row {
+    align-items: center;
+    padding: 5px 0 5px 0;
+}
+
+.delete-img {
+    bottom: 0;
+    /* 將圖片固定在父層的大小 */
+    width: 20%;
+    height: 30%;
+    /* 高和寬都填滿容器 */
+}
+
+.shop-hori-line {
+    width: 100%;
+    height: 0.5px;
+    border-top: solid rgb(231, 230, 230);
+    /* border-style: dashed; */
+    border-width: thin;
+    
+}
+
+/* .text-center{
+    overflow-x: auto;
+    width: 1024px;
+} */
+
+.card-teacher {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.card-total-price {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.card-teacher-price {
+    font-size: 24px;
+    text-align: right;
+}
+
+.card-body img {
+    margin: auto;
+    display: block;
+}
+
+.card-title {
+    padding: 0;
+    font-size: 20px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.card-text {
+    color: gray;
+    padding: 0 0 10px 0;
+    text-align: center;
+}
+
+.total-price-text {
+    font-size: 28px;
+}
+
+.total-price {
+    font-size: 28px;
+    text-align: right;
+}
+
+.teacher-info,
+.teacher-classroom {
+    text-align: left;
+}
+
+.coupon-list,
+.payment-list,
+.invoice-list,
+.shop-list,
+.button-div {
+    padding: 30px 0 10px 0;
+}
+
+.card-payment:hover {
+    border-color: #02cab9;
+    border-width: 2px;
+    text-align: center;
+}
+
+.card-payment {
+    height: 100px;
+}
+
+/* .card-body:has(.card-body:hover) .card-body:not(:hover) {
+    opacity: .6;
+} */
+/* .btn-color {
+    color: #02cab9;
+    border-width: 1px;
+} */
+
+/* 交易紀錄 */
+.row-transaction {
+    align-items: center;
+    padding: 10px 0 10px 0;
+}
+
+.card-body-transaction {
+    text-align: center;
+    align-items: center;
+    padding: 0 0 10px 0;
+}
+
+.card-title-transaction,
+.card-title-transaction-success {
+    font-size: 32px;
+}
+
+.card-title-transaction,
+.card-text-transaction {
+    color: red;
+    text-align: center;
+}
+
+.card-title-transaction-success {
+    text-align: center;
+    color: #02cab9;
+}
+
+.reserve-info {
+    padding: 10px 0 0 0;
+}
+
+/* .table-transaction{
+    border: 1px solid gray;
+} */
+.row-payment {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* .col-12 {
+    width: 100%;
+} */
+
+@media screen and (min-width:768px) {
+    .col-md-2 {
+        width: 15%;
+    }
+
+    .col-md-4 {
+        width: 32%;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .lh-text-card-center {
+        max-width: 100vh;
+        overflow-x: hidden;
+    }
+}
+
+/* 購物車 */
+table {
+    border: 1px solid #ccc;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table tr {
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+table th,
+table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.teacher-img-img {
+    border-radius: 50%;
+}
+
+a {
+    text-decoration: none;
+    border-color: #02cab9;
+    border-bottom: 1px dotted white;
+    color: #02cab9;
+}
+
+a:hover {
+    border-color: #02cab9;
+    border-width: 2px;
+    text-align: center;
+}
+
+table th {
+    text-transform: uppercase;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+table td:first-child svg {
+    display: none;
+}
+
+svg {
+    width: 30px;
+}
+
+span.price {
+    border-bottom: 1px dotted #ccc;
+}
+
+/* <= 568px */
+/* @media screen and (max-width: 35.5em) { */
+@media screen and (max-width: 768px) {
+    table {
+        border: 0;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        margin-bottom: 10px;
+        display: block;
+        border-bottom: 2px solid #ddd;
+    }
+
+    table td {
+        display: block;
+        text-align: left;
+        font-size: 13px;
+        border-bottom: 1px dotted #ccc;
+    }
+
+    table td:first-child {
+        height: 70px;
+    }
+
+    table td {
+        height: 60px;
+        font-size: 16px;
+    }
+
+    table td:first-child svg {
+        display: block;
+        float: right;
+        width: 20px;
+        margin: -8px -8px;
+    }
+
+    table td:last-child {
+        display: none;
+    }
+
+    table td:nth-last-child(2) {
+        border-bottom: 0;
+    }
+
+    table td:before {
+        content: attr(data-label);
+        width: 15%;
+        height: 30px;
+        float: left;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    /* table th {
+        text-transform: uppercase;
+        font-size: 50px;
+        letter-spacing: 1px;
+    } */
+    table .form-select {
+        width: 200px;
+        height: 40px;
+    }
+}
+
+.form-check-input:checked {
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
+    box-shadow: none;
+}

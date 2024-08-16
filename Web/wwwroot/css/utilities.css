@@ -1,0 +1,15 @@
+:root {
+  --theme-color: #02cab9;
+  --theme-color-light: #b3efea;
+  --theme-color-hover: #02ebd6;
+  --highlight-color: #ff5f5f;
+  --button-hover-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.1);
+}
+* {
+  font-family: "Lato", sans-serif;
+  /* font-weight: 900; */
+  font-style: normal;
+  /* font-family: "Noto Sans TC", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal; */
+}
