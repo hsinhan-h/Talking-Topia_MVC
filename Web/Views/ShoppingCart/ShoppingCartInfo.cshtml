@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="~/css/ShoppingCartInfo.css" />
 }
 
+
+
 <div class="containerCardInfo">
     <h2>交易紀錄</h2>
     <p>
@@ -10,31 +12,7 @@
         『申請課程退AT幣』
     </p>
     <p>若待付款訂單中包含"未付款之體驗課"，需先取消或支付該筆訂單方可成功購買</p>
-    <!-- 訂單交易成功或失敗 -->
-    <div class="transaction-info">
-        <div class="row">
-            <div class="row-transaction-error">
-                <div>
-                    <div class="card-body-transaction">
-                        <h5 class="card-title-transaction">交易失敗</h5>
-                        <p class="card-text-transaction">
-                            失敗原因xxxxx
-                        </p>
-                        <!-- <a href="cart.htm" class="btn btn-primary btn-card-transaction">返回購物車</a> -->
-                    </div>
-                </div>
-            </div>
 
-            <div class="row-transaction-success">
-                <div>
-                    <div class="card-body-transaction">
-                        <h5 class="card-title-transaction-success">交易成功</h5>
-                        <!-- <a href="cart.htm" class="btn btn-primary btn-card-transaction">返回購物車</a> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- 訂單資訊 -->
     <h3>訂單資訊</h3>
     <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -49,85 +27,59 @@
                 <div class="accordion-body">
                     <div class="order-info">
                         <h5>訂單資料</h5>
-                        <table class="table table-hover table-success-order table-transaction">
-                            <thead>
-                                <tr>
-                                    <td>交易時間</td>
-                                    <td>教師名稱</td>
-                                    <td>課程內容</td>
-                                    <td>堂數</td>
-                                    <td>金額</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>2024/08/01</td>
-                                    <td>Allen</td>
-                                    <td>日文課</td>
-                                    <td>5堂</td>
-                                    <td>NT 500</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-success-order table-transaction">
+                                <thead>
+                                    <tr>
+                                        <td>交易時間</td>
+                                        <td>教師名稱</td>
+                                        <td>課程內容</td>
+                                        <td>堂數</td>
+                                        <td>金額</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2024/08/01</td>
+                                        <td>Allen</td>
+                                        <td>日文課</td>
+                                        <td>5堂</td>
+                                        <td>NT 500</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="reserve-info">
                         <h5>預約資訊</h5>
-                        <table class="table table-hover table-success-order">
-                            <thead>
-                                <tr>
-                                    <td>教師名稱</td>
-                                    <td>課程內容</td>
-                                    <td>預約日期</td>
-                                    <td>預約時間</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Allen</td>
-                                    <td>日文課</td>
-                                    <td>2024/08/01</td>
-                                    <td>17:00~18:00 </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-success-order">
+                                <thead>
+                                    <tr>
+                                        <td>教師名稱</td>
+                                        <td>課程內容</td>
+                                        <td>預約日期</td>
+                                        <td>預約時間</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Allen</td>
+                                        <td>日文課</td>
+                                        <td>2024/08/01</td>
+                                        <td>17:00~18:00 </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    訂單編號 #2
-                </button>
-            </h2>
-            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">
-                    Placeholder content for this accordion, which is intended to demonstrate
-                    the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine
-                    this being filled with some actual content.
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                    訂單編號 #3
-                </button>
-            </h2>
-            <div id="flush-collapseThree" class="accordion-collapse collapse"
-                 data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">
-                    Placeholder content for this accordion, which is intended to demonstrate
-                    the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more
-                    exciting happening here in terms of content, but just filling up the space to make it look, at
-                    least at first glance, a bit more representative of how this would look in a real-world
-                    application.
-                </div>
-            </div>
-        </div>
+
+        <!-- Additional Accordion Items -->
     </div>
+
     <div class="btn-goback">
         <br>
         <button class="return-order_btn text-white" type="button">返回購物車</button>

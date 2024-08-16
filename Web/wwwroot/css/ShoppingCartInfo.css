@@ -60,3 +60,35 @@
 .col-12 {
     width: 100%;
 } */
+
+/* 表格橫向滾動 */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* 允許橫向滾動 */
+    overflow-y: hidden; /* 隱藏垂直滾動條以避免影響視覺效果 */
+    -webkit-overflow-scrolling: touch; /* 在行動裝置上提供更平滑的滾動效果 */
+}
+
+/* 表格設定 */
+.table {
+    width: 100%;
+    min-width: 600px; /* 設定最小寬度，避免表格過度縮小 */
+    border-collapse: collapse; /* 避免邊框重疊 */
+}
+
+    .table thead {
+        background-color: #f8f9fa; /* 表頭背景色 */
+    }
+
+    .table td, .table th {
+        padding: 12px 15px; /* 單元格內距 */
+        text-align: left; /* 文字靠左對齊 */
+        border-bottom: 1px solid #dee2e6; /* 單元格下方邊框 */
+    }
+
+/* 在小螢幕裝置上進行調整 */
+@media screen and (max-width: 768px) {
+    .table {
+        min-width: 500px; /* 在小螢幕上可以稍微縮小表格的最小寬度 */
+    }
+}
