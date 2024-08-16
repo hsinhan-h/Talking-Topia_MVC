@@ -8,5 +8,13 @@ namespace Web.Controllers
         {
             return View();
         }
+        public IActionResult Toteacher()
+        {
+            return View();
+        }
+        public IActionResult Toteacher_resume()
+        {
+            return View();
+        }
     }
 }
