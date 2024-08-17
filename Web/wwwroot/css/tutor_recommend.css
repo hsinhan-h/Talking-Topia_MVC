@@ -1,0 +1,143 @@
+:root {
+    --theme-color: #02cab9;
+    --theme-color-light: #b3efea;
+    --theme-color-hover: #02ebd6;
+    --highlight-color: #ff5f5f;
+    --button-hover-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* cards */
+.tutor-recommend-carousel .lh-tutor-card {
+    border: 1px solid var(--theme-color-light);
+    border-radius: 5px;
+    width: 285px;
+    height: 475px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+
+.tutor-recommend-carousel .tutor-headshot {
+    width: 100px;
+    height: 100px;
+}
+
+.tutor-recommend-carousel .tutor-nation-icon {
+    height: 20px;
+    width: 20px;
+    left: 3%;
+    bottom: 5%;
+}
+
+.tutor-recommend-carousel .lh-tutor-images__head {
+    height: fit-content;
+    width: fit-content;
+}
+
+.tutor-head-brief-pricing {
+    font-size: 14px;
+}
+
+.tutor-recommend-carousel .lh-tutor-follow {
+    font-size: 11px;
+    color: var(--theme-color);
+    border: 1px solid var(--theme-color);
+    border-radius: 5px;
+    width: fit-content;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.lh-tutor-follow:hover {
+    color: #fff;
+    background-color: var(--theme-color);
+}
+
+.tutor-subtitle {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--theme-color);
+}
+
+.tutor-title-and-ranking {
+    overflow: hidden;
+}
+
+.tutor-description-title {
+    font-weight: 900;
+    text-decoration: none;
+    text-decoration: underline var(--theme-color) dotted;
+    text-decoration-thickness: 1px;
+    color: #000;
+    font-size: 15.5px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+    .tutor-description-title:hover {
+        color: var(--theme-color);
+    }
+
+.tutor-title-and-ranking .tutor-ranking {
+    font-size: 14px;
+}
+
+    .tutor-title-and-ranking .tutor-ranking .bi-star-fill {
+        color: var(--theme-color);
+    }
+
+.tutor-intro-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
+    font-size: 13px;
+    color: #666;
+    height: 117px;
+}
+
+.course-pricing:not(.text) {
+    font-weight: 900;
+    font-size: 16.5px;
+}
+
+.course-pricing .text {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.contact-btns-wrapper {
+    font-size: 14px;
+}
+
+    .contact-btns-wrapper button {
+        padding: 7px;
+        border-radius: 3px;
+    }
+
+        .contact-btns-wrapper button:hover {
+            box-shadow: var(--button-hover-shadow);
+        }
+
+.lh-tutor-card__book-btn {
+    background-color: var(--theme-color);
+    color: #fff;
+    border: 0;
+}
+
+.lh-tutor-card__contact-tutor-btn {
+    background-color: #fff;
+    color: var(--theme-color);
+    border: 1px solid var(--theme-color);
+}
+
+
+.tutor-recommend-carousel .slick-track {
+    display: flex;
+    gap: 18px;
+}
+
+.tutor-recommend-carousel .slick-slide {
+    min-width: 285px;
+}
