@@ -16,5 +16,9 @@ namespace Web.Controllers
         {
             return View();
         }
+        public IActionResult MemberCenterHomePage()
+        {
+            return View();
+        }
     }
 }
