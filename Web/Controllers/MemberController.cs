@@ -8,5 +8,9 @@ namespace Web.Controllers
         {
             return View();
         }
+        public IActionResult Message()
+        {
+            return View(Message);
+        }
     }
 }
