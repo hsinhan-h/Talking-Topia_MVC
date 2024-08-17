@@ -16,8 +16,8 @@
 integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    @await RenderSectionAsync("topCSS", required: false)
-    @await RenderSectionAsync("topJS", required: false)
+    @await RenderSectionAsync("MessageCSS", required: false)
+    
 </head>
 <body>
     <header>
@@ -64,5 +64,6 @@ integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1c
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("endCSS", required: false)
     @await RenderSectionAsync("endJS", required: false)
+    @await RenderSectionAsync("MessageJS", required: false)
 </body>
 </html>
