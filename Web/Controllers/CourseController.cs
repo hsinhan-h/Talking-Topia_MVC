@@ -17,5 +17,9 @@ namespace Web.Controllers
         {
             return View();
         }
+        public IActionResult PublishCourse()
+        {
+            return View();
+        }
     }
 }
