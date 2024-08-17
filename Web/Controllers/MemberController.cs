@@ -16,5 +16,21 @@ namespace Web.Controllers
         {
             return View();
         }
+        public IActionResult Recommended_teachers_AI()
+        {
+            return View();
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult Register()
+        {
+            return View();
+        }
+        public IActionResult Chat_window()
+        {
+            return View();
+        }
     }
 }
