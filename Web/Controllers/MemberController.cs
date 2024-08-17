@@ -32,6 +32,17 @@ namespace Web.Controllers
         {
             return View();
         }
-
+        public IActionResult MemberCenterHomePage()
+        {
+            return View();
+        }
+        public IActionResult MemberData()
+        {
+            return View();
+        }
+        public IActionResult MemberTransaction()
+        {
+            return View();
+        }
     }
 }
