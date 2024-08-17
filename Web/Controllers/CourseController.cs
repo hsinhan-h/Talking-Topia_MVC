@@ -21,5 +21,9 @@ namespace Web.Controllers
         {
             return View();
         }
+        public IActionResult CourseMainPage()
+        {
+            return View();
+        }
     }
 }
