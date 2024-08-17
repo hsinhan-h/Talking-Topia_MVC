@@ -16,15 +16,19 @@ namespace Web.Controllers
         {
             return View();
         }
-        public IActionResult MemberCenterHomePage()
+        public IActionResult Recommended_teachers_AI()
         {
             return View();
         }
-        public IActionResult MemberData()
+        public IActionResult Login()
         {
             return View();
         }
-        public IActionResult MemberTransaction()
+        public IActionResult Register()
+        {
+            return View();
+        }
+        public IActionResult Chat_window()
         {
             return View();
         }

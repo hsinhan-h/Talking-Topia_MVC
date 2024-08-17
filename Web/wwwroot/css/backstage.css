@@ -1,3 +1,7 @@
+.lh-backstage {
+	min-height: 500px;
+}
+
 a {
 	text-decoration: none;
 	color: var(--theme-color);
@@ -32,6 +36,10 @@ td {
 	height: 30px;
 	border: 1px solid #ccc;
 	padding: 10px;
+}
+
+tbody > tr > td {
+	height: 99px;
 }
 
 input {
@@ -94,6 +102,11 @@ input {
 		box-shadow: var(--button-hover-shadow);
 	}
 
+.li-backstage-publish-btn {
+	position: absolute;
+	top: -40%;
+}
+
 .lh-backstage-nav-bar {
 	z-index: 5;
 	background-color: #fff;
@@ -146,6 +159,11 @@ input {
 
 	.lh-backstage-member-card-list {
 		flex-direction: column;
+	}
+
+	.li-backstage-publish-btn {
+		position: absolute;
+		top: -5%;
 	}
 }
 
