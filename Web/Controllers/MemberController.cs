@@ -20,5 +20,9 @@ namespace Web.Controllers
         {
             return View();
         }
+        public IActionResult MemberData()
+        {
+            return View();
+        }
     }
 }
