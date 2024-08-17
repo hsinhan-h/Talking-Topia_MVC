@@ -151,13 +151,10 @@ function generateBookingTable(weekStart) {
     });
 }
 
-//產生06:00 ~ 23:00 ~ 05:00的時間段陣列
+//產生00:00 ~ 23:00 的時間段陣列
 function generateTimeSlots() {
     const times = [];
-    for (let hour = 6; hour < 24; hour++) {
-        times.push(`${String(hour).padStart(2, "0")}:00`);
-    }
-    for (let hour = 0; hour < 6; hour++) {
+    for (let hour = 0; hour < 24; hour++) {
         times.push(`${String(hour).padStart(2, "0")}:00`);
     }
     return times;
@@ -166,7 +163,7 @@ function generateTimeSlots() {
 //把date轉換成yyyy-mm-dd
 function formatDate(date) {
     let dateInUTC8 = new Date(date);
-    dateInUTC8.setDate(dateInUTC8.getDate() + 1);
+    dateInUTC8.setDate(dateInUTC8.getDate());
     return dateInUTC8.toISOString().split("T")[0];
 }
 
