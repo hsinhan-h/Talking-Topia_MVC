@@ -15,12 +15,13 @@
 .lh-tutors-filter .dropdown-toggle {
     border: 1px solid var(--theme-color);
     border-radius: 3px;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 @media screen and (max-width: 767px) {
-    .lh-tutors-filter .btn-group {
-        font-size: 12px;
+
+    .lh-tutors-filter .dropdown-toggle {
+        font-size: 14px;
     }
 
     .lh-tutors-filter {
@@ -28,6 +29,9 @@
         justify-content: center;
     }
 }
+
+
+
 
 .lh-tutors-filter .dropdown-toggle:not(.nested):hover {
     box-shadow: var(--button-hover-shadow);
