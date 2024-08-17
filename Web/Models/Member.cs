@@ -10,7 +10,7 @@
         public bool IsVerifiedTutor { get; set; }
         public float Ranking { get; set; }
         public int CompletedCourse { get; set; }
-        public string[] AvailableTimeSlots { get; set; }  //[["wednesday, "00:00"], ["Thursday", 13:00", ..."//
-             
+        public Dictionary<string, List<string>> AvailableTimeSlots { get; set; }  //{ {"wednesday", {"08:00", "13:00"}, {"saturday", {"00:00", "12:00", "14:00"}, ... } }//
+
     }
 }
