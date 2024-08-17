@@ -8,9 +8,29 @@ namespace Web.Controllers
         {
             return View();
         }
-        public IActionResult Message()
+        public IActionResult Toteacher()
         {
-            return View(Message);
+            return View();
+        }
+        public IActionResult Toteacher_resume()
+        {
+            return View();
+        }
+        public IActionResult Recommended_teachers_AI()
+        {
+            return View();
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult Register()
+        {
+            return View();
+        }
+        public IActionResult Chat_window()
+        {
+            return View();
         }
     }
 }

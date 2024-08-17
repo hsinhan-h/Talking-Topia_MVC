@@ -8,5 +8,22 @@ namespace Web.Controllers
         {
             return View();
         }
+
+        public IActionResult CourseList()
+        {
+            return View();
+        }
+        public IActionResult WatchList()
+        {
+            return View();
+        }
+        public IActionResult PublishCourse()
+        {
+            return View();
+        }
+        public IActionResult CourseMainPage()
+        {
+            return View();
+        }
     }
 }

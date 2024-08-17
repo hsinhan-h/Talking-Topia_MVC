@@ -1,0 +1,196 @@
+﻿.booking-table-container {
+    width: 100%;
+}
+
+
+.booking-table-title h3 {
+    font-size: 22px;
+}
+
+.timezone-text {
+    font-size: 12px;
+}
+
+@media screen and (min-width: 768px) {
+    .timezone-text {
+        font-size: 13px;
+    }
+}
+
+.booking-table-date-switcher button {
+    background-color: #fff;
+    border: 1px solid var(--theme-color);
+    border-radius: 5px;
+    width: 55px;
+    height: 25px;
+    color: var(--theme-color);
+}
+
+    .booking-table-date-switcher button:hover {
+        background-color: var(--theme-color);
+        color: #fff;
+        border-color: var(--theme-color-light);
+    }
+
+    .booking-table-date-switcher button:active {
+        scale: 0.98;
+    }
+
+@media screen and (min-width:768px) {
+    .booking-table-date-switcher button {
+        width: 65px;
+    }
+}
+
+
+.booking-table-date-switcher #weekRange {
+    font-size: 15px;
+    font-weight: bold;
+    color: #017d72;
+    margin-left: auto;
+}
+
+@media screen and (min-width: 768px) {
+    .booking-table-date-switcher #weekRange {
+        font-size: 17px;
+        margin-left: 10px;
+    }
+}
+
+.booking-table-title button:hover {
+    background-color: var(--theme-color);
+    color: #fff;
+    border: 1px solid var(--theme-color-light)
+}
+
+.booking-table #bookingTableBody .booked {
+    background-color: #eee;
+    color: #bbb;
+    /* cursor: not-allowed; */
+}
+
+.booking-table #bookingTableBody .available {
+    cursor: pointer;
+}
+
+.booking-table #bookingTableHeader div,
+.booking-table #bookingTableBody div > div {
+    border: 2px solid transparent;
+    padding: 4px 0px;
+}
+
+.booking-table #bookingTableBody .available:hover {
+    border: 2px solid var(--theme-color);
+}
+
+.custom-table-tooltip {
+    --bs-tooltip-bg: var(--highlight-color);
+    --bs-tooltip-color: #fff;
+    --bs-tooltip-opacity: 1;
+}
+
+.booking-table-body-wrapper {
+    font-size: 12px;
+    text-align: center;
+    transition: 1s ease;
+    min-height: 350px;
+    max-height: 480px;
+    overflow: auto;
+    scrollbar-width: thin;
+}
+
+
+@media screen and (min-width: 768px) {
+    .booking-table-body-wrapper {
+        font-size: 14px;
+        max-height: 550px;
+    }
+}
+
+.booking-table-body-wrapper #bookingTableHeader,
+.booking-table-body-wrapper #bookingTableBody {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+    .booking-table-body-wrapper #bookingTableHeader div {
+        position: relative;
+        font-size: 17px;
+        padding-top: 10px;
+        padding-bottom: 8px;
+    }
+
+        .booking-table-body-wrapper #bookingTableHeader div:after {
+            content: '';
+            background-color: var(--theme-color-light);
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 4px;
+            width: 75%;
+        }
+
+/* #expandBookingTable {
+    margin: auto;
+    font-weight: 500;
+    color: var(--theme-color);
+    border: 1px solid var(--theme-color);
+    font-size: 13px;
+}
+
+@media screen and (min-width:768px) {
+    #expandBookingTable {
+        font-size: 14px;
+    }
+} */
+
+@media screen and (min-width: 768px) {
+    .modal-content {
+        width: 600px;
+    }
+}
+
+#confirmBookingModal .modal-header {
+    font-size: 18px;
+}
+
+#confirmBookingModal .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+}
+
+#confirmBookingModal img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1em;
+}
+
+#confirmBookingModal .modal-footer {
+    padding-top: 30px;
+}
+
+    #confirmBookingModal .modal-footer button:hover {
+        box-shadow: var(--button-hover-shadow);
+    }
+
+    #confirmBookingModal .modal-footer .btn-cancel {
+        background-color: #fff;
+        border: 1px solid var(--theme-color);
+    }
+
+    #confirmBookingModal .modal-footer .btn-next {
+        background-color: var(--highlight-color);
+        color: #fff;
+    }
+
+
+#confirmBookingModal .book-info-table {
+    width: 380px;
+    margin: auto;
+    /* text-align: center; */
+    margin-bottom: .4em;
+}

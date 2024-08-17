@@ -1,0 +1,206 @@
+﻿@section topCSS
+{
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/normalize.css" rel="stylesheet" />
+    <link href="~/css/apply_resume.css" rel="stylesheet" />
+}
+
+
+
+<main>
+    <div class="container-fluid mt-5">
+        <div class="rows">
+            <div class="col-12 resume_banner d-flex flex-column justify-content-center">
+                <p class="fw-bold text-whitetext-white">為您打造更輕鬆的教學方式</p>
+                <p class="fw-bold align-content-center text-white">在家就能週入破萬</p>
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col-12 d-flex flex-row justify-content-center ">
+                <h1 class="fs-1 fw-bold mt-3">履歷</h1>
+            </div>
+        </div>
+        <div class="row mt-3 resume_border p-3 m-2">
+            <h2 class="fs-2 fw-bold p-3">學歷</h2>
+            <div class="col-md-2 col-4 d-flex justify-content-center mt-3">
+                <label for="profile_pic">
+                    <div class="apply_head d-flex flex-column justify-content-center align-items-center resume_border">
+                        <i class="fa-solid fa-user-plus fa-2xl"></i>
+                    </div>
+                </label>
+            </div>
+            <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
+                <p class="my-1">請提供大頭貼</p>
+                <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入...">
+            </div>
+            <div class="col-12 mt-4">
+                <p class="my-1 bgc fs-4">【學校名稱】</p>
+                <input class="form-control my-1" type="text" placeholder="輸入...">
+            </div>
+            <div class="col-12 mt-2">
+                <p class="my-1 bgc fs-4">【就學期間】</p>
+                <div class="input-group my-1">
+                    <input type="number" placeholder="開始年份" class="form-control" min="1940">
+                    <input type="number" placeholder="結束年份" class="form-control" min="1940">
+                </div>
+            </div>
+            <div class="col-12 mt-2 mb-3">
+                <p class="my-1 bgc fs-4">【科系名稱】</p>
+                <input class="form-control my-1" type="text" placeholder="輸入...">
+            </div>
+        </div>
+        <div class="row mt-5 resume_border p-3 m-2">
+            <div class="d-flex flex-row justify-content-between">
+                <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
+                <span class="d-flex flex-column justify-content-center align-items-lg-center ">
+                    <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f; "></i>
+                </span>
+            </div>
+            <div class="col-12 ">
+                <p class="my-1 bgc fs-4">【證照 (一)】</p>
+                <div class="my-1 d-flex flex-column">
+                    <input class="form-control my-1" type="text" placeholder="輸入...">
+                    <input class="my-2" type="file" placeholder="輸入...">
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <p class="my-1 bgc fs-4">【證照 (二)】</p>
+                <div class="my-1 d-flex flex-column">
+                    <input class="form-control my-1" type="text" placeholder="輸入...">
+                    <input class="my-2" type="file" placeholder="輸入...">
+                </div>
+            </div>
+            <div class="col-12 mt-2 collapse" id="collapselicense">
+                <p class="my-1 bgc fs-4">【證照 (三)】</p>
+                <div class="my-1 d-flex flex-column">
+                    <input class="form-control my-1" type="text" placeholder="輸入...">
+                    <input class="my-2" type="file" placeholder="輸入...">
+                </div>
+            </div>
+            <div class="col-12 mt-2 collapse" id="collapselicense">
+                <p class="my-1 bgc fs-4">【證照 (四)】</p>
+                <div class="my-1 d-flex flex-column">
+                    <input class="form-control my-1" type="text" placeholder="輸入...">
+                    <input class="my-2" type="file" placeholder="輸入...">
+                </div>
+            </div>
+            <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
+                 aria-expanded="false">
+                <div class="col-12 d-flex flex-row align-items-center justify-content-center">
+                    <i class=" fa-solid fa-ellipsis "></i>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 resume_border p-3 m-2">
+            <div>
+                <div class="d-flex flex-row justify-content-between">
+                    <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">申請科目</h2>
+                </div>
+                <div class="col-12 ">
+                    <p class="my-1 bgc fs-4">【語言】</p>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>請選擇語言</option>
+                        <option value="1">英文</option>
+                        <option value="2">法文</option>
+                        <option value="3">德文</option>
+                        <option value="4">印尼語</option>
+                        <option value="5">馬來語</option>
+                        <option value="6">土耳其語</option>
+                        <option value="7">日文</option>
+                        <option value="8">閩南語</option>
+                        <option value="9">義大利文</option>
+                        <option value="10">粵語</option>
+                        <option value="11">拉丁文</option>
+                        <option value="12">芬蘭文</option>
+                        <option value="13">韓文</option>
+                        <option value="14">中文</option>
+                        <option value="15">越南文</option>
+                        <option value="16">荷蘭文</option>
+                        <option value="17">客家話</option>
+                        <option value="18">西班牙文</option>
+                        <option value="19">泰語</option>
+                        <option value="20">葡萄牙文</option>
+                        <option value="21">俄文</option>
+                        <option value="22">瑞典文</option>
+                    </select>
+                </div>
+                <div class="col-12 ">
+                    <p class="my-1 bgc fs-4">【程式設計】</p>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>請選擇程式類別</option>
+                        <option value="1">HTML/CSS</option>
+                        <option value="2">ASP.NET Core MVC</option>
+                        <option value="3">Python</option>
+                        <option value="4">Java Script</option>
+                        <option value="5">Azure DevOps</option>
+                        <option value="6">C#</option>
+                        <option value="7">AI工程</option>
+                        <option value="8">SQL</option>
+                        <option value="9">C/C++</option>
+                    </select>
+                </div>
+                <div class="col-12 ">
+                    <p class="my-1 bgc fs-4">【升學科目】</p>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>請選擇科目</option>
+                        <option value="1">數學</option>
+                        <option value="2">地理</option>
+                        <option value="3">生物</option>
+                        <option value="4">物理／理化</option>
+                        <option value="5">化學</option>
+                        <option value="6">科學</option>
+                        <option value="7">國文</option>
+                        <option value="8">歷史</option>
+                        <option value="9">通識</option>
+                        <option value="10">自然</option>
+                        <option value="11">社會</option>
+                        <option value="12">ICT</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 resume_border p-3 m-2">
+            <div class="d-flex flex-row justify-content-between">
+                <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">工作經歷</h2>
+                <span class="d-flex flex-column justify-content-center align-items-lg-center ">
+                    <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
+                </span>
+            </div>
+            <div class="col-12 mb-2">
+                <p class="my-1 bgc fs-4">【年資】</p>
+                <div class="input-group my-2">
+                    <input type="number" placeholder="開始年份" class="form-control" min="1940">
+                    <input type="number" placeholder="結束年份" class="form-control" min="1940">
+                </div>
+                <div class="col-12">
+                    <p class="my-1 bgc fs-4">【簡述】</p>
+                    <textarea class="my-1 w-100" name="myresume" rows="10" style="resize:none;" placeholder="輸入..."></textarea>
+                    <input class="form-control my-2" type="file" placeholder="輸入...">
+                </div>
+            </div>
+            <div class="col-12 mb-2 collapse" id="collapsework">
+                <p class="my-1 bgc fs-4">【年資】</p>
+                <div class="input-group my-2">
+                    <input type="number" placeholder="開始年份" class="form-control" min="1940">
+                    <input type="number" placeholder="結束年份" class="form-control" min="1940">
+                </div>
+                <div class="col-12">
+                    <p class="my-1 bgc fs-4">【簡述】</p>
+                    <textarea class="my-1 w-100" name="myresume" rows="10" style="resize:none;" placeholder="輸入..."></textarea>
+                    <input class="form-control my-2" type="file" placeholder="輸入...">
+                </div>
+            </div>
+            <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
+                <div class="col-12 d-flex flex-row align-items-center justify-content-center">
+                    <i class=" fa-solid fa-ellipsis "></i>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 ">
+            <div class="my-3 d-flex flex-row justify-content-end">
+                <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
+                <button type="button" class="btn resume_border resume_btn m-2">下一步</button>
+            </div>
+        </div>
+    </div>
+</main>
