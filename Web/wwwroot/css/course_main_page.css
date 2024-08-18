@@ -166,15 +166,15 @@ strong {
     color: var(--theme-color);
 }
 
-    .lh-expand-btn::before {
+.lh-expand-btn::before {
         content: "瀏覽全部自我介紹";
         font-size: 15px;
-    }
+}
 
-    .lh-expand-btn:checked::before {
+.lh-expand-btn:checked::before {
         content: "收合";
         font-size: 15px;
-    }
+}
 
 .self-intro-paragraph:has(+ .lh-expand-btn:checked) {
     max-height: none;
@@ -254,7 +254,10 @@ strong {
     aspect-ratio: 1/.5;
     margin-bottom: 10px;
 }
-
+.video-info-body> iframe {
+    width:100%;
+    height:100%;
+}
 
 .lh-other-info > div {
     width: 49%;
@@ -567,9 +570,9 @@ strong {
     font-size: 15px;
 }
 
-    .course-info-tab:hover {
+.course-info-tab:hover {
         cursor: pointer;
-    }
+}
 
 .course-info-tab-color {
     border-bottom: 2.5px var(--theme-color) solid;
@@ -580,7 +583,7 @@ strong {
 }
 
 
-.modal-fullscreen>.course-comment-modal {
+#course-comment-modal {
     width: 100%
 }
 .course-comment-modal-body {
