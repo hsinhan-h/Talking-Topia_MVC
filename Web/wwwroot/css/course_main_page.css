@@ -580,6 +580,9 @@ strong {
 }
 
 
+.modal-fullscreen>.course-comment-modal {
+    width: 100%
+}
 .course-comment-modal-body {
     padding: 100px 100px;
     flex-wrap: wrap;
