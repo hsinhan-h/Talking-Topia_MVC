@@ -11,7 +11,7 @@
         public int TwentyFiveMinPriceNTD { get; set; }
         public int FiftyMinPriceNTD { get; set; }
         public string Description { get; set; }
-        public Tuple<string, string> IntroVideo { get; set; }
+        public int IntroVideoId { get; set; }
         public List<string> IntroImages { get; set; }
 
     }
