@@ -53,7 +53,6 @@
                         IntroVideoId = 2,
                         IntroImages = new List<string> { "https://picsum.photos/id/210/350/220", "https://picsum.photos/id/250/350/220" }
                     }
-
                 );
         }
 

@@ -45,7 +45,23 @@ namespace Web.Controllers
                     }
             };
         }
-        
+
+        public IActionResult CourseList()
+        {
+            return View(courses);
+        }
+
+        public async Task<IActionResult> CourseListDB()
+        {
+            List<Course> courseList = await _context.Course.ToListAsync();
+            if (courseList.Count == 0)
+            {
+                return NotFound();
+            }
+            
+            return View("CourseListDB", courseList);
+        }
+
         public IActionResult Index()
         {
             return View();
