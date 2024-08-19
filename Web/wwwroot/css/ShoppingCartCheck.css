@@ -41,72 +41,6 @@ td[data-label="商品"] img {
 /* 購物車 */
 /* <= 568px */
 
-/* @media screen and (max-width: 35.5em) { */
-@media screen and (max-width: 768px) {
-    table {
-        border: 0;
-    }
-
-    table thead {
-        display: none;
-    }
-
-    table tr {
-        margin-bottom: 10px;
-        display: block;
-        border-bottom: 2px solid #ddd;
-    }
-
-    table td {
-        display: block;
-        text-align: left;
-        font-size: 13px;
-        border-bottom: 1px dotted #ccc;
-    }
-
-    table td:first-child {
-        height: 70px;
-    }
-
-    table td {
-        height: 60px;
-        font-size: 16px;
-    }
-
-    table td:first-child svg {
-        display: block;
-        float: right;
-        width: 20px;
-        margin: -60px -8px;
-    }
-
-    table td:last-child {
-        display: none;
-    }
-
-    table td:nth-last-child(2) {
-        border-bottom: 0;
-    }
-
-    table td:before {
-        content: attr(data-label);
-        width: 30%;
-        height: 30px;
-        float: left;
-        text-transform: uppercase;
-        font-weight: bold;
-    }
-
-    /* table th {
-        text-transform: uppercase;
-        font-size: 50px;
-        letter-spacing: 1px;
-    } */
-    table .form-select {
-        width: 200px;
-        height: 40px;
-    }
-}
 
 .container {
     margin: auto;
@@ -118,7 +52,7 @@ td[data-label="商品"] img {
 }
 
 .card {
-    margin: 5px;
+    margin: 5px 0 5px 0;
 }
 
 h2,
@@ -331,6 +265,9 @@ a:focus {
         overflow: hidden;
         width: 450px;
     }
+    .card {
+        margin: 5px;
+    }
 }
 
 @media screen and (max-width:767px) {
@@ -433,7 +370,7 @@ span.price {
         display: block;
         float: right;
         width: 20px;
-        margin: -8px -8px;
+        margin: -60px -8px;
     }
 
     table td:last-child {
