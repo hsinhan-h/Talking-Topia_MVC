@@ -99,7 +99,7 @@ input {
 }
 
 .lh-backstage-progress-bar {
-	background-color: var(--theme-color);
+	background-color: var(--highlight-color)
 }
 
 .rating-star {
