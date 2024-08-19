@@ -98,6 +98,10 @@ input {
 	margin: 20px 1px;
 }
 
+.lh-backstage-progress-bar {
+	background-color: var(--theme-color);
+}
+
 .rating-star {
 	color: var(--theme-color);
 }
