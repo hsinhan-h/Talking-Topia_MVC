@@ -1,3 +1,11 @@
+h2,
+h3 {
+    font-weight: bolder;
+    padding: 10px 0 0 0;
+}
+#con-cartinfo{
+    min-height:65vh;
+}
 /* 返回購物車按鈕 */
 .return-order_btn {
     background-color: rgb(2, 202, 185);
