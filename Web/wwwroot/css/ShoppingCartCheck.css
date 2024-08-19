@@ -52,7 +52,7 @@ td[data-label="商品"] img {
 }
 
 .card {
-    margin: 5px;
+    margin: 5px 0 5px 0;
 }
 
 h2,
@@ -264,6 +264,9 @@ a:focus {
     td[data-label="商品"] a {
         overflow: hidden;
         width: 450px;
+    }
+    .card {
+        margin: 5px;
     }
 }
 
