@@ -104,7 +104,8 @@
 h2,
 h3 {
     font-weight: bolder;
-    padding: 10px 0 0 0;
+    /*padding: 10px 0 0 0;*/
+    margin-top: 100px;
 }
 
 .teacher-img-img {
