@@ -31,11 +31,15 @@
 
 .navbar-toggler {
     border: none;
-    background-color: #eaeaea; /* 背景色 */
-    /* padding: 5px; */
-    border-radius: 50%; /* 圓角 */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 陰影 */
 }
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
 
 .shopping-bag {
     background-color: var(--theme-color);
