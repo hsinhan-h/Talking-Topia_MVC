@@ -139,6 +139,18 @@
         display: none;
     }
 
+    .mega-menu .second-column {
+        max-height: 300px; /* 固定高度，依需求調整 */
+        overflow-y: auto; /* 當內容超過高度時，啟用垂直捲軸 */
+        padding-right: 15px; /* 讓內容不要被捲軸擋住 */
+    }
+
+    /* 可選，讓第一欄的高度也與第二欄一致 */
+    .mega-menu .first-column {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
     /* 當 hover 到第一欄的時候顯示第二欄和第三欄 */
     .mega-menu:hover .second-column,
     .mega-menu:hover .third-column {
