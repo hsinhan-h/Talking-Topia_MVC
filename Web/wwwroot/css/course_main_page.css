@@ -332,11 +332,20 @@ strong {
     border: var(--theme-color) 1px solid;
     box-shadow: var(--button-hover-shadow);
 }
+.comment-rating-stars {
+    align-items:center;
+    gap:10px;
+}
+.rating-star-sign {
+    font-family: "Lato", sans-serif;
+    font-size: 13.5px;
+    margin:auto 0px;
+}
+
 
 .rating-star {
     color: var(--theme-color);
 }
-
 .comment-count {
     font-size: 20px;
     margin-right: 10px;
@@ -597,6 +606,10 @@ strong {
     .comment-rating-group {
        gap: 15px;
     }
+    .comment-card-section {
+        padding: 0 40px;
+        overflow-y: scroll;
+    }
 }
 
 @media screen and (max-width:768px) {
@@ -604,6 +617,7 @@ strong {
         display: flex;
         flex-direction: column;
     }
+   
 }
 
     .comment-modal-selection {
@@ -656,10 +670,7 @@ strong {
             background-color: var(--theme-color);
         }
 
-    .comment-card-section {
-        padding: 0 40px;
-        overflow-y: scroll;
-    }
+    
 
         .comment-card-section > .comment-card > p {
             font-size: 13.5px;
@@ -756,7 +767,9 @@ strong {
         .tab-course-number-time {
             font-size: 13.5px;
         }
-
+        .course-button-group >.try-out-book {
+            background-color: var(--theme-color);
+        }
         .course-button-group {
             align-content: center;
         }
@@ -772,10 +785,7 @@ strong {
                 box-shadow: var(--button-hover-shadow);
             }
 
-        .try-out-book {
-            background-color: var(--theme-color);
-            /* color: #fff; */
-        }
+       
 
         .comment-card-section {
             margin-top: 20px;
@@ -786,4 +796,14 @@ strong {
         .rating-level {
             display: none;
         }
+        .rating-level + p {
+            display:block;
+
+        }
     }
+    @media screen and (min-width:1200px) {
+        .rating-level + p {
+            display: none;
+        }
+    }
+    
