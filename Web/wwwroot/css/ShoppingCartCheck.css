@@ -1,3 +1,23 @@
+/* 針對 data-label="商品" 的 td 元素進行樣式設定 */
+#productInfo {
+    display: inline-flex;
+    align-items: center;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    width: 200px;
+}
+
+td[data-label="商品"] a {
+    overflow: hidden;
+    width: 250px;
+}
+
+/* 調整圖片和文字之間的間距 */
+td[data-label="商品"] img {
+    margin-right: 0.75em; /* 0.25em大約是一個字元的寬度 */
+}
+
 /* 返回購物車按鈕 */
 .return-order_btn {
     background-color: rgb(2, 202, 185);
@@ -57,7 +77,7 @@
         display: block;
         float: right;
         width: 20px;
-        margin: -8px -8px;
+        margin: -60px -8px;
     }
 
     table td:last-child {
@@ -104,7 +124,8 @@
 h2,
 h3 {
     font-weight: bolder;
-    padding: 10px 0 0 0;
+    /*padding: 10px 0 0 0;*/
+    margin-top: 100px;
 }
 
 .teacher-img-img {
@@ -296,6 +317,20 @@ a:focus {
     .col-md-4 {
         width: 32%;
     }
+
+    #productInfo {
+        align-items: center;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        width: 350px;
+    }
+
+    td[data-label="商品"] a {
+        overflow: hidden;
+        width: 450px;
+    }
 }
 
 @media screen and (max-width:767px) {
@@ -434,3 +469,4 @@ span.price {
     border-color: var(--theme-color);
     box-shadow: none;
 }
+
