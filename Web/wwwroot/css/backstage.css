@@ -98,9 +98,17 @@ input {
 	margin: 20px 1px;
 }
 
-	.lh-backstage-focus-btn:hover {
-		box-shadow: var(--button-hover-shadow);
-	}
+.lh-backstage-progress-bar {
+	background-color: var(--highlight-color)
+}
+
+.rating-star {
+	color: var(--theme-color);
+}
+
+.lh-backstage-focus-btn:hover {
+	box-shadow: var(--button-hover-shadow);
+}
 
 .li-backstage-publish-btn {
 	position: absolute;

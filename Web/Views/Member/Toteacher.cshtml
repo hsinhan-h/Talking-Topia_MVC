@@ -9,7 +9,7 @@
 <main>
     <div class="container-fluid">
         <div class="row position-relative">
-            <div class="col-12 ">
+            <div class="col-12 px-0">
                 <img src="~/image/apply_teacher/hero-2022-10-24.webp" class="w-100">
             </div>
             <div class="col-12 d-md-none">
@@ -30,16 +30,14 @@
                         <p class="fs-3 fw-bold p-3">看看您可以賺多少錢</p>
                         <div class="px-3 pb-2">
                             <select class="form-select mt-2">
-                                <option selected>語言學習/英文</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option selected>語言學習</option>
+                                <option value="1">程式設計</option>
+                                <option value="2">升學科目</option>
                             </select>
                             <select class="form-select mt-2">
                                 <option selected>40小時/星期</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option value="1">30小時/星期</option>
+                                <option value="2">20小時/星期</option>
                             </select>
                         </div>
                         <div class="number_wrap px-3">
@@ -64,16 +62,14 @@
                     <p class="fs-3 fw-bold p-3">看看您可以賺多少錢</p>
                     <div class="px-3 pb-2">
                         <select class="form-select mt-2">
-                            <option selected>語言學習/英文</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option selected>語言學習</option>
+                            <option value="1">程式設計</option>
+                            <option value="2">升學科目</option>
                         </select>
                         <select class="form-select mt-2">
                             <option selected>40小時/星期</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="1">30小時/星期</option>
+                            <option value="2">20小時/星期</option>
                         </select>
                     </div>
                     <div class="number_wrap px-3">
@@ -642,7 +638,7 @@
                         <p class="fs-6">
                             因生活中沒有特別需要使用英語，英語能力很弱，但在國小需要推動雙語教學，讓我感到很焦慮向學生解釋教材，並有效傳遞教學內容。通過指導學生學習，幫助他們達到學習目標。關注個別學生的能力和要求。
                         </p>
-                        <div class="my-0 d-flex align-items-baseline ">
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
                             <p class="fs-5 fw-bold text-body-secondary mb-0">NT$524-NT$655</p>
                             <p class="fs-6">/每小時</p>
                         </div>
@@ -660,7 +656,7 @@
                         <p class="fs-6">
                             希望可以加強口說流暢度在進行英文課程之前，先和學生討論學習目標。使用多元化的教學方法，確保學生的積極參與課堂。策劃一對一英文課程內容、準備教材、進行課堂。
                         </p>
-                        <div class="my-0 d-flex align-items-baseline ">
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
                             <p class="fs-5 fw-bold text-body-secondary mb-0">NT$688-NT$819</p>
                             <p class="fs-6">/每小時</p>
                         </div>
@@ -678,7 +674,7 @@
                         <p class="fs-6">
                             口語練習協助學生規劃英文課程，以達至預期的目標。擬定一份能夠最有效地提高學生英文的知識和水平的學習時間表。在學習過程中，鼓勵學生並作出指導。
                         </p>
-                        <div class="my-0 d-flex align-items-baseline ">
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
                             <p class="fs-5 fw-bold text-body-secondary mb-0">NT$524 - NT$655</p>
                             <p class="fs-6">/每小時</p>
                         </div>
@@ -696,7 +692,7 @@
                         <p class="fs-6">
                             必須自信和樂於助人，協助學生學習英文。與學生分享英文知識和專業知識計劃上課時間表，並為學生設計個性化的英文的課程。
                         </p>
-                        <div class="my-0 d-flex align-items-baseline ">
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
                             <p class="fs-5 fw-bold text-body-secondary mb-0">NT$360-NT$491</p>
                             <p class="fs-6">/每小時</p>
                         </div>
@@ -714,7 +710,7 @@
                         <p class="fs-6">
                             計劃上課時間表，並為學生設計個性化的英文的課程。協助學生學習英文。通過指導學生學習，幫助他們達到學習目標。
                         </p>
-                        <div class="my-0 d-flex align-items-baseline ">
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
                             <p class="fs-5 fw-bold text-body-secondary mb-0">NT$360-NT$491</p>
                             <p class="fs-6">/每小時</p>
                         </div>
@@ -775,7 +771,8 @@
             </div>
         </div>
         <div class="row yt_card_row mt-3 mb-5 mx-auto">
-            <div class="yt_card col-12 col-md-4 ">
+            <partial name="_VideoPartial" />
+            @* <div class="yt_card col-12 col-md-4 ">
                 <div class="yt_video_card">
                     <iframe width="100%" height="250" src="https://www.youtube.com/embed/ZavL9y4Adrk?si=AiYZAD9GEgq1gp9G"
                             title="YouTube video player" frameborder="0"
@@ -816,7 +813,7 @@
                         物品頓時共享所需不夠常見仍然涉及轉載結婚，革命再度成立，變化生命一張滑鼠當時時代成員一陣好看人物他們的首先，尤其是市政府圖文老婆，和你精靈創新成本激烈，總結雲林傢俱總算天氣江湖轎車老師推坑王你在很好在此的話關西，說到都有顯得，西方另一動作突然創建現在強化，思。
                     </div>
                 </div>
-            </div>
+            </div> *@
         </div>
         <div class="row AI_row_area mx-auto">
             <div class="col-12 AI_pic ">
