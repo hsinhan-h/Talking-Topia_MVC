@@ -1,7 +1,7 @@
 ﻿@section topCSS
 {
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   @*  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> *@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
@@ -301,8 +301,9 @@
             <div class="lh-tutor-comment ">
                 <div class="course-comment-generator w-100">
                     <h3 class="my-2">對課程的感想</h3>
-                    <div class="comment-rating-stars w-100" id="app">
-                        <p-rating class="my-3" v-model="rating"></p-rating>
+                    <div class="comment-rating-stars w-100 d-flex" id="app">
+                        <p class="rating-star-sign">留下你對此課程的評分:</p>
+                        <p-rating class="comment-rating-little-star my-1" v-model="rating"></p-rating>
                     </div>
                     <div class="comment-input-section my-3 d-flex">
                         <input type="text comment-input-box w-100 my-3" class="form-control" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
@@ -1367,6 +1368,7 @@
                                 <label class="form-check-label" for="flexCheck-5">
                                     <i class="fa-solid fa-star"></i>
                                     <p class="rating-level ">5。非常好</p>
+                                    <p>5</p>
                                     <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                         <div class="progress-bar" style="width: 93%"></div>
                                     </div>
@@ -1378,6 +1380,7 @@
                                 <label class="form-check-label" for="flexCheck-4">
                                     <i class="fa-solid fa-star"></i>
                                     <p class="rating-level ">4。很好</p>
+                                    <p>4</p>
                                     <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                         <div class="progress-bar" style="width: 93%"></div>
                                     </div>
@@ -1389,6 +1392,7 @@
                                 <label class="form-check-label" for="flexCheck-3">
                                     <i class="fa-solid fa-star"></i>
                                     <p class="rating-level ">3。普通</p>
+                                    <p>3</p>
                                     <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                         <div class="progress-bar" style="width: 93%"></div>
                                     </div>
@@ -1400,6 +1404,7 @@
                                 <label class="form-check-label" for="flexCheck-2">
                                     <i class="fa-solid fa-star"></i>
                                     <p class="rating-level ">2。不好</p>
+                                    <p>2</p>
                                     <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                         <div class="progress-bar" style="width: 93%"></div>
                                     </div>
@@ -1411,6 +1416,7 @@
                                 <label class="form-check-label" for="flexCheck-1">
                                     <i class="fa-solid fa-star"></i>
                                     <p class="rating-level ">1。非常糟</p>
+                                    <p>1</p>
                                     <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                         <div class="progress-bar" style="width: 93%"></div>
                                     </div>
@@ -1595,19 +1601,16 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            
         </div>
     </div>
 </div>
 
 @section endJS
 {
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script> *@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
             integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
