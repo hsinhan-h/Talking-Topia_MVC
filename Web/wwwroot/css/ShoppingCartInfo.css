@@ -1,0 +1,103 @@
+h2,
+h3 {
+    font-weight: bolder;
+    /*padding: 10px 0 0 0;*/
+    margin-top:100px;
+}
+#con-cartinfo{
+    min-height:65vh;
+}
+/* 返回購物車按鈕 */
+.return-order_btn {
+    background-color: rgb(2, 202, 185);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 15px;
+    height: 50px;
+}
+
+.return-order_btn:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+/* .btn-goback{
+    float: right;
+    margin: 50px 0 0 0;
+} */
+
+/* 交易失敗或成功 */
+.row-transaction {
+    align-items: center;
+    padding: 10px 0 10px 0;
+}
+
+.card-body-transaction {
+    text-align: center;
+    align-items: center;
+    padding: 0 0 10px 0;
+}
+
+.card-title-transaction,
+.card-title-transaction-success {
+    font-size: 32px;
+}
+
+.card-title-transaction,
+.card-text-transaction {
+    color: red;
+    text-align: center;
+}
+
+.card-title-transaction-success {
+    text-align: center;
+    color: #02cab9;
+}
+
+.reserve-info {
+    padding: 10px 0 0 0;
+}
+
+/* .table-transaction{
+    border: 1px solid gray;
+} */
+/* .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-12 {
+    width: 100%;
+} */
+
+/* 表格橫向滾動 */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* 允許橫向滾動 */
+    overflow-y: hidden; /* 隱藏垂直滾動條以避免影響視覺效果 */
+    -webkit-overflow-scrolling: touch; /* 在行動裝置上提供更平滑的滾動效果 */
+}
+
+/* 表格設定 */
+.table {
+    width: 100%;
+    min-width: 600px; /* 設定最小寬度，避免表格過度縮小 */
+    border-collapse: collapse; /* 避免邊框重疊 */
+}
+
+    .table thead {
+        background-color: #f8f9fa; /* 表頭背景色 */
+    }
+
+    .table td, .table th {
+        padding: 12px 15px; /* 單元格內距 */
+        text-align: left; /* 文字靠左對齊 */
+        border-bottom: 1px solid #dee2e6; /* 單元格下方邊框 */
+    }
+
+/* 在小螢幕裝置上進行調整 */
+@media screen and (max-width: 768px) {
+    .table {
+        min-width: 500px; /* 在小螢幕上可以稍微縮小表格的最小寬度 */
+    }
+}

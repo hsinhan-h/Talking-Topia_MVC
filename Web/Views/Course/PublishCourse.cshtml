@@ -1,0 +1,318 @@
+@section topCSS {
+
+    <link rel="stylesheet" href="~/css/backstage.css" />
+
+}
+
+<partial name="_BannerPartial" />
+<div class="container lh-backstage mt-5" id="app">
+    <div class="row">
+        <div class="col-12 lh-backstage-main-section">
+            <div class="lh-backstage-tutor-section position-relative w-100 mb-5"
+                 id="lh-backstage-tutor-section">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item lh-backstage-nav-item">
+                        <a class="nav-link active"
+                           aria-current="page"
+                           data-bs-toggle="tab"
+                           href="#lh-backstage-course-detail">
+                            課程明細
+                        </a>
+                    </li>
+                    <li class="nav-item lh-backstage-nav-item">
+                        <a class="nav-link"
+                           data-bs-toggle="tab"
+                           href="#lh-backstage-history-course">歷史課程</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="container tab-pane fade show active"
+                         id="lh-backstage-course-detail">
+                        <div class="lh-backstage-transaction-table position-relative">
+                            <button class="btn lh-backstage-submit-btn mt-3 li-backstage-publish-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#lh-backstage-tutor-data-edit">
+                                上架課程
+                            </button>
+                            <table class="lh-backstage-transaction-detail col-12 mt-5"
+                                   border="1">
+                                <thead>
+                                    <tr>
+                                        <td>更新日期</td>
+                                        <td>課程名稱</td>
+                                        <td>課程內容</td>
+                                        <td>開放時段</td>
+                                        <td>金額(台幣)</td>
+                                        <td>編輯</td>
+                                    </tr>
+                                </thead>
+                                <tbody border="1">
+                                    <tr>
+                                        <td>2024-08-04</td>
+                                        <td>唬爛嘴教學</td>
+                                        <td>教你成為國畫大師</td>
+                                        <td>
+                                            <ul class="lh-backstage-time-interval m-0 p-0">
+                                                <li class="list-group-item">週二18~19</li>
+                                            </ul>
+                                        </td>
+                                        <td>NT$9,999</td>
+                                        <td>
+                                            <button class="btn lh-backstage-submit-btn"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#lh-backstage-tutor-data-edit">
+                                                編輯
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="container tab-pane fade"
+                         id="lh-backstage-history-course">
+                        <div class="lh-backstage-transaction-table">
+                            <table class="lh-backstage-transaction-detail col-12 mt-5"
+                                   border="1">
+                                <thead>
+                                    <tr>
+                                        <td>上課時間</td>
+                                        <td>課程名稱</td>
+                                        <td>課程內容</td>
+                                        <td>學員名稱</td>
+                                        <td>金額(台幣)</td>
+                                    </tr>
+                                </thead>
+                                <tbody border="1">
+                                    <tr>
+                                        <td>2024-08-04</td>
+                                        <td>唬爛嘴教學</td>
+                                        <td>教你成為國畫大師</td>
+                                        <td>2024夏季班小夥伴A</td>
+                                        <td>NT$9,999</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- screen modal for 課程明細-->
+    <div class="modal fade"
+         id="lh-backstage-tutor-data-edit"
+         tabindex="-1"
+         aria-labelledby=""
+         aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content container">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
+                        課程明細
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <section class="lh-backstage-lh-backstage-real-data">
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           placeholder=""
+                                           value="語言" />
+                                    <label for="floatingInput">課程分類(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           placeholder=""
+                                           value="中文" />
+                                    <label for="floatingInput">課程科目(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-floating">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           value="中文" />
+                                    <label for="floatingInput">請上傳一張自介照片(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-floating">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           value="中文" />
+                                    <label for="floatingInput">請上傳一支自介影片(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           placeholder=""
+                                           value="最本土的臺灣生活會話" />
+                                    <label for="floatingInput">課程名稱(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           placeholder=""
+                                           value="教你成為本土最會畫虎畫蘭的國畫大師" />
+                                    <label for="floatingInput">課程簡述(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <label for="floatingInput" style="color: #ddd">請輸入自我介紹(必填)</label>
+                                    <textarea class="col-12"
+                                              id="floatingInput"
+                                              rows="10"
+                                              value=""></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           placeholder=""
+                                           value="399" />
+                                    <label for="floatingInput">金額(台幣/體驗價/堂)(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           placeholder=""
+                                           value="517" />
+                                    <label for="floatingInput">金額(台幣/25分鐘/堂)(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput"
+                                           placeholder=""
+                                           value="862" />
+                                    <label for="floatingInput">金額(台幣/50分鐘/堂)(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <!-- 星期與時段選項區塊 -->
+                                <div class="row" id="timeslot-row">
+                                    <div class="col-12 col-md-3">
+                                        <div class="weekday-checkbox">
+                                            <span class="fw-bolder mb-3 d-inline-block">請勾選課程開放星期與時段</span>
+                                            <!-- 星期選項 -->
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       value="monday"
+                                                       id="monday"
+                                                       name="weekday" />
+                                                <label class="form-check-label" for="monday">週一</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       value="tuesday"
+                                                       id="tuesday"
+                                                       name="weekday" />
+                                                <label class="form-check-label" for="tuesday">週二</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       value="wednesday"
+                                                       id="wednesday"
+                                                       name="weekday" />
+                                                <label class="form-check-label" for="wednesday">週三</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       value="thursday"
+                                                       id="thursday"
+                                                       name="weekday" />
+                                                <label class="form-check-label" for="thursday">週四</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       value="friday"
+                                                       id="friday"
+                                                       name="weekday" />
+                                                <label class="form-check-label" for="friday">週五</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       value="saturday"
+                                                       id="saturday"
+                                                       name="weekday" />
+                                                <label class="form-check-label" for="saturday">週六</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       value="sunday"
+                                                       id="sunday"
+                                                       name="weekday" />
+                                                <label class="form-check-label" for="sunday">週日</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 時段選擇區塊將由 JavaScript 動態生成 -->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        儲存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section endJS {
+
+    <script src="~/js/backstage.js"></script>
+
+}

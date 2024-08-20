@@ -1,0 +1,783 @@
+<partial name="_BannerPartial" />
+<div class="container lh-backstage mt-5" id="app">
+    <div class="row">
+        <div class="col-12 lh-backstage-main-section">
+            <div class="lh-backstage-member-section mb-5">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item lh-backstage-nav-item">
+                        <a class="nav-link active"
+                           aria-current="page"
+                           data-bs-toggle="tab"
+                           href="#lh-backstage-member-page">
+                            會員資料
+                        </a>
+                    </li>
+                    <li class="nav-item lh-backstage-nav-item">
+                        <a class="nav-link"
+                           data-bs-toggle="tab"
+                           href="#lh-backstage-tutor-page">家教資料</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="container tab-pane fade show active"
+                         id="lh-backstage-member-page">
+                        <div class="lh-backstage-member-page mb-5">
+                            <section class="lh-backstage-virtual-data">
+                                <div class="row mb-2">
+                                    <div class="col-12">
+                                        <h3>基本資料</h3>
+                                        <div class="pic lh-backstage-user-photo-member-data">
+                                            <img class="lh-backstage-img"
+                                                 src="https://picsum.photos/100/100/?random=16" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="" />
+                                            <label for="floatingInput">暱稱</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="date"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="yyyy-MM-dd" />
+                                            <label for="floatingInput">生日</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="" />
+                                            <label for="floatingInput">性別</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="" />
+                                            <label for="floatingInput">母語</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="" />
+                                            <label for="floatingInput">會說的語言</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="lh-backstage-lh-backstage-real-data">
+                                <div class="row mb-2">
+                                    <div class="col-12">
+                                        <h3>真實資料</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="" />
+                                            <label for="floatingInput">帳號</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <button class="btn lh-backstage-submit-btn mt-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                            修改密碼
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="" />
+                                            <label for="floatingInput">姓名</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="tel"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="" />
+                                            <label for="floatingInput">電話</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="email"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="name@example.com" />
+                                            <label for="floatingInput">電子信箱</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="floatingInput"
+                                                   placeholder="" />
+                                            <label for="floatingInput">地址</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="lh-backstage-preferences">
+                                <div class="row mb-2">
+                                    <div class="col-12">
+                                        <h3>課程偏好</h3>
+                                    </div>
+                                </div>
+                                <div class="row my-3 p-3">
+                                    <h4>語言</h4>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckDefault" />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            英文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            日文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            韓文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            西班牙文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            法文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            閩南語
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            中文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            泰語
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            德文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            義大利文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            越南文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            葡萄牙文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            印尼語
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            粵語
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            荷蘭文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            俄文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            馬來語
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            拉丁文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            客家話
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            瑞典文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            土耳其語
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            芬蘭文
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="lh-backstage-divider"></div>
+                                <div class="row my-3 p-3">
+                                    <h4>程式設計</h4>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            HTML/CSS
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            Java Script
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckDefault" />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            C#
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            SQL
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            ASP.NET Core MVC
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            Azure DevOps
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            AI工程
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            C/C++
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            Python
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="lh-backstage-divider"></div>
+                                <div class="row my-3 p-3">
+                                    <h4>升學科目</h4>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckDefault" />
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            數學
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            物理／理化
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            國文
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            自然
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            地理
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            化學
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            歷史
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            社會
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            生物
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            科學
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            通識
+                                        </label>
+                                    </div>
+                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               value=""
+                                               id="flexCheckChecked" />
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            ICT
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <input class="btn btn-info col-12 lh-backstage-submit-btn"
+                                   type="submit"
+                                   value="儲存"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#exampleModal" />
+                        </div>
+                    </div>
+                    <div class="container tab-pane fade" id="lh-backstage-tutor-page">
+                        <div class="lh-backstage-tutor-page mb-5">
+                            <section class="lh-backstage-lh-backstage-tutor-data">
+                                <div class="row mb-2">
+                                    <div class="col-12">
+                                        <h3>家教資料</h3>
+                                    </div>
+                                    <div class="lh-baclstage-member-data-list mt-3">
+                                        <h4>學歷</h4>
+                                        <ul>
+                                            <li></li>
+                                        </ul>
+                                        <h4>經歷</h4>
+                                        <ul>
+                                            <li></li>
+                                        </ul>
+                                    </div>
+                                    <div class="lh-backstage-member-card-list d-flex">
+                                        <div class="card col-12 col-md-3 me-2 p-2">
+                                            <img src="~/image/backstage/programming.png"
+                                                 class="card-img-top w-100" />
+                                            <div class="card-body">
+                                                <p class="card-text">申請科目：<span>C#</span></p>
+                                                <p class="card-text">
+                                                    申請狀態：<span>已審核</span>
+                                                </p>
+                                                <button class="btn lh-backstage-submit-btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#lh-backstage-tutor-application-audit">
+                                                    證照資訊
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card col-12 col-md-3 me-2 p-2">
+                                            <img src="~/image/backstage/subjects.png"
+                                                 class="card-img-top w-100" />
+                                            <div class="card-body">
+                                                <p class="card-text">申請科目：<span>國文</span></p>
+                                                <p class="card-text">
+                                                    申請狀態：<span>未審核</span>
+                                                </p>
+                                                <button class="btn lh-backstage-submit-btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#lh-backstage-tutor-application-audit">
+                                                    證照資訊
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal 第一步-->
+    <div class="modal fade"
+         id="exampleModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        進階驗證：第一步
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">請輸入會員電子信箱</label>
+                            <input type="tel" class="form-control" id="recipient-name" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn">
+                        送出
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal 第二步-->
+    <div class="modal fade"
+         id="exampleModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        進階驗證：第二步
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">請輸入驗證碼</label>
+                            <input type="tel" class="form-control" id="recipient-name" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn">
+                        送出
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal 第三步-->
+    <div class="modal fade"
+         id="exampleModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        進階驗證：第三步
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">請輸入欲設定的新密碼</label>
+                            <input type="tel" class="form-control" id="recipient-name" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">請再輸入一次新密碼</label>
+                            <input type="tel" class="form-control" id="recipient-name" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn">
+                        送出
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- screen modal for 家教申請審核-->
+    <div class="modal fade"
+         id="lh-backstage-tutor-application-audit"
+         tabindex="-1"
+         aria-labelledby=""
+         aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content container">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
+                        證照資訊
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <section class="lh-backstage-lh-backstage-tutor-data">
+                        <ul>
+                            <li>可無限增生的證照</li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        確認
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section topCSS{
+
+    <link rel="stylesheet" href="~/css/backstage.css" />
+
+}

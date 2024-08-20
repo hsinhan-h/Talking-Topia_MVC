@@ -1,0 +1,518 @@
+﻿/*:root {
+    --theme-color: #02cab9;
+    --theme-color-light: #b3efea;
+    --theme-color-hover: #02ebd6;
+    --highlight-color: #ff5f5f;
+    --button-hover-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.1);
+}*/
+
+.tutors {
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* filters */
+.lh-tutors-filter .dropdown-toggle {
+    border: 1px solid var(--theme-color);
+    border-radius: 3px;
+    font-size: 15px;
+}
+
+@media screen and (max-width: 767px) {
+
+    .lh-tutors-filter .dropdown-toggle {
+        font-size: 14px;
+    }
+
+    .lh-tutors-filter {
+        gap: 1%;
+        justify-content: center;
+    }
+}
+
+
+
+
+.lh-tutors-filter .dropdown-toggle:not(.nested):hover {
+    box-shadow: var(--button-hover-shadow);
+}
+
+.lh-tutors-filter .dropdown-menu li {
+    font-size: 15px;
+    padding: 3px 0;
+}
+
+
+.lh-tutors-filter .dropdown-menu {
+    border: 1px solid var(--theme-color);
+    border-radius: 3px;
+}
+
+
+.lh-tutors-filter .dropdown-toggle:after {
+    content: none;
+}
+
+.lh-tutors-filter .dropdown-menu button {
+    border: none;
+    box-shadow: none;
+}
+
+    .lh-tutors-filter .dropdown-menu button:focus {
+        background-color: var(--theme-color);
+        color: #fff;
+    }
+
+.form-check-input:checked {
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
+    box-shadow: none;
+}
+
+.form-check-input:focus {
+    box-shadow: 1px 1px 4px var(--theme-color);
+}
+
+.course-time-filter .dropdown-menu {
+    width: 373px;
+    font-size: 15px;
+}
+
+    .course-time-filter .dropdown-menu .form-check {
+        margin: 8px 0;
+    }
+
+.course-time-filter .weekday-checkbox {
+    border-right: 1px solid var(--theme-color-light);
+}
+
+.course-time-filter .timeslot-checkbox .form-check {
+    margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .course-time-filter .dropdown-menu {
+        width: 500px;
+    }
+}
+
+/* order */
+.lh-tutors-order > * {
+    text-decoration: none;
+    font-size: 13px;
+    margin-right: 8px;
+    color: #555;
+}
+
+.lh-tutors-order > a:hover {
+    color: var(--theme-color);
+    font-weight: 600;
+}
+
+
+/* cards */
+.lh-tutor-card {
+    border: 1px solid var(--theme-color);
+    border-radius: 5px;
+}
+
+.lh-tutor-card__main {
+    border-bottom: 1px solid var(--theme-color);
+}
+
+.tutor-headshot {
+    width: 83px;
+    height: 83px;
+}
+
+.tutor-nation-icon {
+    height: 18px;
+    width: 18px;
+    left: 3%;
+    bottom: 5%;
+}
+
+.lh-tutor-images__head {
+    height: fit-content;
+    width: fit-content;
+}
+
+.lh-tutor-follow {
+    font-size: 11px;
+    color: var(--theme-color);
+    border: 1px solid var(--theme-color);
+    border-radius: 5px;
+    width: fit-content;
+    padding: 3px;
+    cursor: pointer;
+}
+
+    .lh-tutor-follow:hover {
+        background-color: var(--theme-color);
+        color: #fff;
+    }
+
+.tutor-description-title-wrapper {
+    max-height: 3em;
+    overflow: hidden;
+}
+
+.tutor-description-title {
+    font-weight: 900;
+    text-decoration: none;
+    text-decoration: underline var(--theme-color) dotted;
+    text-decoration-thickness: 1px;
+    color: #000;
+    font-size: 15.5px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+    .tutor-description-title:hover {
+        color: var(--theme-color);
+    }
+
+.tutor-badge {
+    font-size: 17px;
+}
+
+    .tutor-badge img {
+        height: 25px;
+        width: 25px;
+        vertical-align: top;
+    }
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--theme-color-light);
+    --bs-tooltip-color: #000;
+    font-size: 12px;
+    --bs-tooltip-border: 1px solid var(--theme-color);
+}
+
+    .custom-tooltip .tooltip-arrow {
+        background-color: #fff;
+        border-top-color: var(--theme-color);
+    }
+
+
+.tutor-subtitle {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--theme-color);
+}
+
+.tutor-received-feedback {
+    font-size: 12.5px;
+}
+
+    .tutor-received-feedback .bi-star-fill {
+        color: var(--theme-color);
+    }
+
+.course-pricing:not(.text) {
+    font-weight: 900;
+    font-size: 15px;
+}
+
+.course-pricing .text {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.lh-tutor-card {
+    box-shadow: .5px 1.5px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.lh-tutor-description .tutor-intro-text {
+    display: none;
+}
+
+.tutor-intro-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    font-size: 12px;
+    color: #333;
+}
+
+.tutor-viewmore {
+    /* text-decoration: none; */
+    font-size: 14px;
+    color: var(--theme-color);
+    text-decoration: none;
+    text-decoration: underline var(--theme-color);
+    text-decoration-thickness: 1px;
+}
+
+    .tutor-viewmore:hover {
+        color: #02ebd6;
+    }
+
+
+.lh-tutor-card__book-btn {
+    background-color: var(--theme-color);
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+/* tutor card floating popup CSS */
+.lh-tutor-card-floating-popup {
+    width: 350px;
+    height: fit-content;
+    right: -372px;
+    top: 20px;
+    z-index: 3;
+    box-shadow: 0px 1px 1.5px 1.5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+    .lh-tutor-card-floating-popup::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 20px;
+        left: -10px;
+        transform: rotate(45deg);
+        background-color: #fff;
+        box-shadow: -1.5px 2px 2px rgba(0, 0, 0, .1);
+    }
+
+
+.lh-tutor-card__book-btn:hover {
+    box-shadow: var(--button-hover-shadow);
+}
+
+.tutor-intro-media-container {
+    z-index: 2;
+}
+
+    .tutor-intro-media-container iframe,
+    .tutor-intro-media-container img {
+        width: 100%;
+        height: 195px;
+    }
+
+.lh-tutor-card-floating-popup {
+    font-size: 12px;
+}
+
+.tutor-timeslot-table {
+    font-size: 12px;
+}
+
+    .tutor-timeslot-table .row > div {
+        border: 1px solid #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #f8f8f8;
+    }
+
+    .tutor-timeslot-table .row:first-of-type {
+        height: 25px;
+    }
+
+        .tutor-timeslot-table .row:first-of-type > div {
+            align-items: center;
+        }
+
+    .tutor-timeslot-table .time {
+        color: #858585;
+    }
+
+    .tutor-timeslot-table .row:nth-of-type(n+2) > div {
+        height: 45px;
+    }
+
+    .tutor-timeslot-table .row > div.available,
+    .time-slot-table-rule .color-block.available {
+        background-color: var(--theme-color-light);
+    }
+
+    .tutor-timeslot-table .row > div.occupied,
+    .time-slot-table-rule .color-block.occupied {
+        background-color: var(--theme-color);
+    }
+
+.time-slot-table-rule .color-block {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+}
+
+.lh-tutor-card-floating-popup .view-more-btn {
+    color: var(--theme-color);
+    border: 1px solid var(--theme-color);
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+    .lh-tutor-card-floating-popup .view-more-btn:hover {
+        background-color: var(--theme-color);
+        color: #fff;
+        box-shadow: var(--button-hover-shadow);
+    }
+
+.lh-tutors-switch-page-btns {
+    color: #666;
+}
+
+    .lh-tutors-switch-page-btns button {
+        border-radius: 50%;
+        border: 1px solid var(--theme-color);
+        color: var(--theme-color);
+        background-color: #fff;
+        width: 40px;
+        height: 40px;
+    }
+
+        .lh-tutors-switch-page-btns button:hover {
+            color: #fff;
+            background-color: var(--theme-color);
+            border: 1px solid var(--theme-color-light);
+        }
+
+@media screen and (min-width:768px) {
+    .lh-tutor-card, .lh-tutors-switch-page-btns {
+        max-width: 960px;
+    }
+
+    .lh-tutor-card__main {
+        border-bottom: none;
+    }
+
+    .tutor-headshot {
+        width: 116px;
+        height: 116px;
+    }
+
+    .tutor-nation-icon {
+        height: 24px;
+        width: 24px;
+    }
+
+    .lh-tutor-follow {
+        font-size: 12px;
+    }
+
+    .lh-tutor-description .tutor-intro-text {
+        display: -webkit-box;
+        font-size: 14px;
+        height: 63px;
+    }
+
+    .tutor-description-title {
+        font-size: 16px;
+        -webkit-line-clamp: 1;
+    }
+
+    .tutor-subtitle {
+        font-size: 14px;
+    }
+
+    .tutor-received-feedback {
+        font-size: 14px;
+    }
+
+    .course-pricing:not(.text) {
+        font-size: 20px;
+    }
+
+    .lh-tutor-contact button {
+        padding: 12px;
+        border-radius: 5px;
+    }
+
+    .lh-tutor-card__contact-tutor-btn {
+        background-color: #fff;
+        color: var(--theme-color);
+        border: 1px solid var(--theme-color);
+        border-radius: 5px;
+        font-size: 15px;
+    }
+
+        .lh-tutor-card__contact-tutor-btn:hover {
+            box-shadow: var(--button-hover-shadow);
+        }
+}
+
+/* contactModal */
+#contactTutorModal .modal-content {
+    max-width: 550px;
+}
+
+#contactTutorModal .tutor-headshot {
+    width: 83px;
+    height: 83px;
+    border-radius: 50%;
+}
+
+#contactTutorModal .modal-header {
+    height: 120px;
+}
+
+
+#contactTutorModal .modal-title {
+    height: 80px;
+    width: 400px;
+}
+
+#contactTutorModal .form-control,
+#contactTutorModal .form-select,
+#contactTutorModal .form-floating,
+#contactTutorModal .file-upload > * {
+    font-size: 15px;
+}
+
+#contactTutorModal .tutor-description-title {
+    font-weight: 900;
+    text-decoration: none;
+    height: 1.2em;
+    overflow: hidden;
+    color: #000;
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    margin-top: 6px;
+}
+
+#contactTutorModal p {
+    font-size: 15px;
+    color: var(--theme-color);
+    margin-bottom: 5px;
+    margin-top: auto;
+}
+
+    #contactTutorModal p:last-of-type {
+        font-size: 12px;
+        margin: 0;
+    }
+
+#contactTutorModal .modal-footer {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    border-top: none;
+}
+
+    #contactTutorModal .modal-footer button:hover {
+        box-shadow: var(--button-hover-shadow);
+    }
+
+#contactTutorModal .cancel-btn {
+    border: 1px solid var(--theme-color);
+    color: var(--theme-color);
+}
+
+#contactTutorModal .send-btn {
+    background-color: var(--highlight-color);
+    color: #fff;
+}

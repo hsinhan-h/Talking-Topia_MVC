@@ -1,0 +1,29 @@
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Web.Controllers
+{
+    public class CourseController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult CourseList()
+        {
+            return View();
+        }
+        public IActionResult WatchList()
+        {
+            return View();
+        }
+        public IActionResult PublishCourse()
+        {
+            return View();
+        }
+        public IActionResult CourseMainPage()
+        {
+            return View();
+        }
+    }
+}
