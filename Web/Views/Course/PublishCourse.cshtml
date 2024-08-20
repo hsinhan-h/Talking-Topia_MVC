@@ -1,5 +1,6 @@
 @section topCSS {
 
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/backstage.css" />
 
 }
@@ -187,11 +188,9 @@
                         <div class="row mb-2">
                             <div class="col-12">
                                 <div class="form-floating mb-3">
-                                    <label for="floatingInput" style="color: #ddd">請輸入自我介紹(必填)</label>
-                                    <textarea class="col-12"
-                                              id="floatingInput"
-                                              rows="10"
-                                              value=""></textarea>
+                                    <div id="editor" class="col-12">
+                                        <p style="color: #999">請輸入詳細課程介紹</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -312,7 +311,7 @@
     </div>
 </div>
 @section endJS {
-
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <script src="~/js/backstage.js"></script>
-
+    <script src="~/js/editor.js"></script>
 }
