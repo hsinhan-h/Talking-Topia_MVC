@@ -17,6 +17,8 @@ integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1c
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/utilities.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/slick-1.8.1/slick/slick.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/slick-1.8.1/slick/slick-theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
     @await RenderSectionAsync("topCSS", required: false)
     @await RenderSectionAsync("topJS", required: false)
@@ -364,9 +366,10 @@ integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1c
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script src="~/js/layout.js"></script>
+    <script src="~/lib/slick-1.8.1/slick/slick.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>  
+    
 
     @await RenderSectionAsync("endCSS", required: false)
     @await RenderSectionAsync("endJS", required: false)
