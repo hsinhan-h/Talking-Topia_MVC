@@ -1,11 +1,15 @@
 ﻿@section topCSS
 {
-    <link href="~/css/layout.css" rel="stylesheet" />
-    <link href="~/css/normalize.css" rel="stylesheet" />
-    <link href="~/css/apply_resume.css" rel="stylesheet" />
+    <link href="~/css/layout.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/normalize.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/apply_resume.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/quill/css/quill.snow.css" rel="stylesheet" asp-append-version="true" />
 }
-
-
+@section endJS
+{
+    <script src="~/lib/quill/js/quill.js" asp-append-version="true"></script>
+    <script src="~/js/resume_quill.js" asp-append-version="true"></script>
+}
 
 <main>
     <div class="container-fluid mt-5">
@@ -174,7 +178,9 @@
                 </div>
                 <div class="col-12">
                     <p class="my-1 bgc fs-4">【簡述】</p>
-                    <textarea class="my-1 w-100" name="myresume" rows="10" style="resize:none;" placeholder="輸入..."></textarea>
+                    <div class="my-1 w-100 editor_resume">
+                        <p></p>
+                    </div>
                     <input class="form-control my-2" type="file" placeholder="輸入...">
                 </div>
             </div>
@@ -186,7 +192,9 @@
                 </div>
                 <div class="col-12">
                     <p class="my-1 bgc fs-4">【簡述】</p>
-                    <textarea class="my-1 w-100" name="myresume" rows="10" style="resize:none;" placeholder="輸入..."></textarea>
+                    <div class="my-1 w-100 editor_resume">
+                        <p></p>
+                    </div>
                     <input class="form-control my-2" type="file" placeholder="輸入...">
                 </div>
             </div>
