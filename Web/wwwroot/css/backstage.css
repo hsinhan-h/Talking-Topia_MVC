@@ -147,6 +147,12 @@ input {
 .lh-backstage-transaction-detail {
 	text-align: center;
 }
+#editor .ql-editor {
+	min-height: 100px;
+	max-height: 200px;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
 
 @media screen and (max-width: 767px) {
 	.lh-backstage-divider,
