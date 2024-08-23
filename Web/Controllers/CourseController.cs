@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Web.Controllers
+﻿namespace Web.Controllers
 {
     public class CourseController : Controller
     {
