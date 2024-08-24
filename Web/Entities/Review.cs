@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class Reviews
+    public class Review
     {
         public int ReviewId { get; set; }
         public int MemberId { get; set; }

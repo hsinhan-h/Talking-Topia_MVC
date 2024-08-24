@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class TempShoppingCarts
+    public class TempShoppingCart
     {
         public int TempShoppingCartId { get; set; }
         public int CourseId { get; set; }

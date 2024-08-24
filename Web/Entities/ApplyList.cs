@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class ApplyLists
+    public class ApplyList
     {
         public int ApplyID { get; set; }
         public int MemberId { get; set; }

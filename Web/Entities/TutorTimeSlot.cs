@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class TutorTimeSlots
+    public class TutorTimeSlot
     {
         public int TutorTimeSlotId { get; set; }
         public int MemberID { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class Members
+    public class Member
     {
         public int MemberId { get; set; }
         public string HeadShotImage { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class ProfessionalLicenses
+    public class ProfessionalLicense
     {
         public int ProfessionalLicenseId { get; set; }
         public string ProfessionalLicenseName { get; set; }

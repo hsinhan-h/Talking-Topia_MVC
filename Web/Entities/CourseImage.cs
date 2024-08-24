@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class CourseImages
+    public class CourseImage
     {
         public int CourseImageId { get; set; }
         public int CourseId { get; set; }

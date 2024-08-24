@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class Nations
+    public class Nation
     {
         public int NationId { get; set; }
         public string NationName { get; set; }

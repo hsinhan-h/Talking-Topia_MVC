@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class CourseCategorites
+    public class CourseCategory
     {
         public int CourseCategoryId { get; set; }
         public string CategorytName { get; set; }

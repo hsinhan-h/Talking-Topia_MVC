@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class WorkExperiences
+    public class WorkExperience
     {
         public int WorkExperienceId { get; set; }
         public string WorkExperienceFile { get; set; }

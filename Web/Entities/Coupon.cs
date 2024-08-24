@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class Coupons
+    public class Coupon
     {
         public int CouponId { get; set; }
         public string CouponCode { get; set; }

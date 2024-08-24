@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\" />
     <Folder Include="wwwroot\image\flag_imgs\" />
     <Folder Include="wwwroot\image\mainpage_imgs\" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class Orders
+    public class Order
     {
         public int OrderId { get; set; }
         public int MemberId { get; set; }
