@@ -2,7 +2,7 @@
 
 namespace Web.ViewModels
 {
-    public class OrderViewModel
+    public class OrderManagementViewModel
     {
         [Display(Name = "教師頭像")]
         public string HeadShotImage { get; set; }

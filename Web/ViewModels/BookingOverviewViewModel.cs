@@ -2,7 +2,7 @@
 
 namespace Web.ViewModels
 {
-    public class MemberBookingViewModel
+    public class BookingOverviewViewModel
     {
         [Display(Name = "會員暱稱")]
         public int Nickname { get; set; }
