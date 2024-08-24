@@ -22,6 +22,7 @@
         public string BankAccount { get; set; }
         public int EducationId { get; set; }
         public string TutorIntro { get; set; }
-
+        public string Account {  get; set; }
+        public string AccountType {  get; set; }
     }
 }
