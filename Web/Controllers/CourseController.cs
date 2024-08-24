@@ -1,7 +1,15 @@
-﻿namespace Web.Controllers
+﻿using Web.Services;
+
+namespace Web.Controllers
 {
     public class CourseController : Controller
     {
+        private readonly BookingService _bookingService;
+        public CourseController()
+        {
+            _bookingService = new BookingService();
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -15,9 +23,10 @@
         {
             return View();
         }
-        public IActionResult PublishCourse()
+        public async Task<IActionResult> PublishCourse()
         {
-            return View();
+            var model = await _bookingService.GetBookingList();
+            return View(model);
         }
         public IActionResult CourseMainPage()
         {
