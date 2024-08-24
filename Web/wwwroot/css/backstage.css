@@ -99,7 +99,7 @@ input {
 }
 
 .lh-backstage-progress-bar {
-	background-color: var(--highlight-color)
+	background-color: var(--highlight-color);
 }
 
 .rating-star {
@@ -147,7 +147,9 @@ input {
 .lh-backstage-transaction-detail {
 	text-align: center;
 }
-#editor .ql-editor {
+
+#editor1,
+#editor2 {
 	min-height: 100px;
 	max-height: 200px;
 	overflow-y: auto;
