@@ -2,5 +2,7 @@
 {
     public class CourseCardViewModel
     {
+        public string tutorHeadShotImage { get; set; }
+
     }
 }

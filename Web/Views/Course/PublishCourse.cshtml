@@ -1,3 +1,6 @@
+@using Web.ViewModels
+@model BookingListViewModel
+
 <partial name="_BannerPartial" />
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
@@ -78,13 +81,16 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    <tr>
-                                        <td>2024-08-04</td>
-                                        <td>唬爛嘴教學</td>
-                                        <td>教你成為國畫大師</td>
-                                        <td>2024夏季班小夥伴A</td>
-                                        <td>NT$9,999</td>
-                                    </tr>
+                                    @foreach (var item in Model.BookingList)
+                                    {
+                                        <tr>
+                                            <td>@item.BookingDate.ToShortDateString()</td>
+                                            <td>@item.Title</td>
+                                            <td>@item.SubTitle</td>
+                                            <td>@item.MemberName</td>
+                                            <td>NTD$ @item.TotalPriceNTD.ToString("#,###")</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>

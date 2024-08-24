@@ -1,6 +1,6 @@
 ﻿namespace Web.Entities
 {
-    public class Members
+    public class Member
     {
         public int MemberId { get; set; }
         public string HeadShotImage { get; set; }
@@ -22,6 +22,7 @@
         public string BankAccount { get; set; }
         public int EducationId { get; set; }
         public string TutorIntro { get; set; }
-
+        public string Account {  get; set; }
+        public string AccountType {  get; set; }
     }
 }
