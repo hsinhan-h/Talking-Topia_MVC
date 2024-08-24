@@ -1,13 +1,7 @@
-@using Web.ViewModels
-@inject List<OrderManagementViewModel> orderList
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+@model OrderManagementListViewModel
+
 <partial name="_BannerPartial" />
-@foreach (OrderManagementViewModel order in Model)
-{
+
     <div class="container lh-backstage mt-5" id="app">
         <div class="row">
             <div class="col-12 lh-backstage-main-section">
@@ -46,6 +40,8 @@
                         <div class="container tab-pane fade show active"
                              id="lh-backstage-transaction-finished-page">
                             <div class="lh-backstage-transaction-table">
+                            @foreach (var order in Model.OrderManagementList)
+                            {
                                 <table class="lh-backstage-transaction-detail col-12 mt-5"
                                        border="1">
                                     <thead>
@@ -71,6 +67,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            }
                             </div>
                         </div>
                         <div class="container tab-pane fade"
@@ -573,9 +570,9 @@
             </div>
         </div>
     </div>
-    @section topCSS {
+
+@section topCSS {
 
     <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 
-    }
 }

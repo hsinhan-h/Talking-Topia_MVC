@@ -2,6 +2,11 @@
 {
     public class MemberController : Controller
     {
+        private readonly OrderService _orderService;
+        public MemberController(OrderService orderService)
+        {
+            _orderService = orderService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -38,9 +43,10 @@
         {
             return View();
         }
-        public IActionResult MemberTransaction()
+        public async Task<IActionResult> MemberTransaction()
         {
-            return View();
+            var orderManagementListViewModel = await _orderService.GetOrderList();
+            return View(orderManagementListViewModel);
         }
     }
 }
