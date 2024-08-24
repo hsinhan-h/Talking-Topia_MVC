@@ -8,6 +8,7 @@ namespace Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddTransient<OrderManagementListViewModel>();
 
             var app = builder.Build();
 
