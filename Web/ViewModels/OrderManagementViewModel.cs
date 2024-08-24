@@ -55,4 +55,8 @@ namespace Web.ViewModels
         [Display(Name = "訂單狀態")]
         public string OrderStatus { get; set; }
     }
+    public class OrderManagementListViewModel
+    { 
+    public List<OrderManagementViewModel> OrderManagementList { get; set; }
+    }
 }
