@@ -84,11 +84,11 @@
                                     @foreach (var item in Model.BookingList)
                                     {
                                         <tr>
-                                            <td>@item.BookingDate</td>
+                                            <td>@item.BookingDate.ToShortDateString()</td>
                                             <td>@item.Title</td>
                                             <td>@item.SubTitle</td>
                                             <td>@item.MemberName</td>
-                                            <td>@item.TotalPriceNTD</td>
+                                            <td>NTD$ @item.TotalPriceNTD.ToString("#,###")</td>
                                         </tr>
                                     }
                                 </tbody>
