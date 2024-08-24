@@ -14,6 +14,7 @@
         public string VATNumber { get; set; }
         public string SentVATEmail { get; set; }
         public string PaymentMethod { get; set; }
+        public int TrackingNumber { get; set; }
 
     }
 }
