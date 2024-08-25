@@ -211,8 +211,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="row mb-2">
                             <div class="col-12 col-md-4">
                                 <div class="form-floating mb-3">
@@ -245,77 +243,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-12">
-                                <!-- 星期與時段選項區塊 -->
-                                <div class="row" id="timeslot-row">
-                                    <div class="col-12 col-md-3">
-                                        <div class="weekday-checkbox">
-                                            <span class="fw-bolder mb-3 d-inline-block">請勾選課程開放星期與時段</span>
-                                            <!-- 星期選項 -->
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox"
-                                                       value="monday"
-                                                       id="monday"
-                                                       name="weekday" />
-                                                <label class="form-check-label" for="monday">週一</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox"
-                                                       value="tuesday"
-                                                       id="tuesday"
-                                                       name="weekday" />
-                                                <label class="form-check-label" for="tuesday">週二</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox"
-                                                       value="wednesday"
-                                                       id="wednesday"
-                                                       name="weekday" />
-                                                <label class="form-check-label" for="wednesday">週三</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox"
-                                                       value="thursday"
-                                                       id="thursday"
-                                                       name="weekday" />
-                                                <label class="form-check-label" for="thursday">週四</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox"
-                                                       value="friday"
-                                                       id="friday"
-                                                       name="weekday" />
-                                                <label class="form-check-label" for="friday">週五</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox"
-                                                       value="saturday"
-                                                       id="saturday"
-                                                       name="weekday" />
-                                                <label class="form-check-label" for="saturday">週六</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input"
-                                                       type="checkbox"
-                                                       value="sunday"
-                                                       id="sunday"
-                                                       name="weekday" />
-                                                <label class="form-check-label" for="sunday">週日</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- 時段選擇區塊將由 JavaScript 動態生成 -->
-                                </div>
-                            </div>
-                        </div>
                     </section>
                 </div>
                 <div class="modal-footer">
@@ -335,6 +262,5 @@
 }
 @section endJS {
     <script src="~/lib/Quill/JS/quill.js"></script>
-    <script src="~/js/backstage.js"></script>
     <script src="~/js/editor.js"></script>
 }
