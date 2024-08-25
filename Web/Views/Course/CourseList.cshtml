@@ -452,58 +452,40 @@
                             </div>
                             @for (var weekday = 0; weekday < 7; weekday++)
                             {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 6, 12, weekday)"></div>
-                                @* if (@courseCard.AvailableTimeSlots
-                                    .Where(ts => ts.Weekday == i && ts.StartHour >= 6 && ts.StartHour <= 12)
-                                    .Count() > 0)
-                                {
-                                    <div class="available col p-0 "></div>
-                                } else
-                                {
-                                    <div class="col p-0 "></div>
-                                }    *@                           
+                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 6, 12, weekday)"></div>                          
                             }
                         </div>
                         <div class="row">
                             <div class="timeslot col-3 p-0">
                                 下午 <div class="time">12:00-18:00</div>
                             </div>
-                            <div class="afternoon sunday col p-0"></div>
-                            <div class="afternoon monday  col p-0"></div>
-                            <div class="afternoon tuesday col p-0"></div>
-                            <div class="afternoon wednesday available col p-0"></div>
-                            <div class="afternoon thursday col p-0"></div>
-                            <div class="afternoon friday col p-0"></div>
-                            <div class="afternoon saturday col p-0"></div>
+                            @for (var weekday = 0; weekday < 7; weekday++)
+                            {
+                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 12, 18, weekday)"></div>
+                            }
                         </div>
                         <div class="row">
                             <div class="timeslot col-3 p-0">
                                 傍晚 <div class="time">18:00-24:00</div>
                             </div>
-                            <div class="evening sunday col p-0"></div>
-                            <div class="evening monday  col p-0"></div>
-                            <div class="evening tuesday col p-0"></div>
-                            <div class="evening wednesday col p-0"></div>
-                            <div class="evening thursday col p-0"></div>
-                            <div class="evening friday col p-0"></div>
-                            <div class="evening saturday col p-0"></div>
+                            @for (var weekday = 0; weekday < 7; weekday++)
+                            {
+                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 18, 24, weekday)"></div>
+                            }
                         </div>
                         <div class="row">
                             <div class="timeslot col-3 p-0">
                                 深夜 <div class="time">00:00-06:00</div>
                             </div>
-                            <div class="midnight sunday col p-0"></div>
-                            <div class="midnight monday  col p-0"></div>
-                            <div class="midnight tuesday col p-0"></div>
-                            <div class="midnight wednesday col p-0"></div>
-                            <div class="midnight thursday col p-0"></div>
-                            <div class="midnight friday col p-0"></div>
-                            <div class="midnight saturday col p-0"></div>
+                            @for (var weekday = 0; weekday < 7; weekday++)
+                            {
+                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 0, 6, weekday)"></div>
+                            }
                         </div>
                     </div>
                     <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
                         <div class="d-flex align-items-center">
-                            <span class="color-block occupied me-1"></span>教師時段已滿
+                            <span class="color-block occupied me-1"></span>時段內已有預約
                         </div>
                         <div class="d-flex align-items-center">
                             <span class="color-block available me-1"></span>尚有可預約時段
@@ -618,11 +600,11 @@
         int startHour, int endHour, int weekday)
     {
         var isAvailable = availableSlots
-            .Where(ts => ts.Weekday == weekday && ts.StartHour >= startHour && ts.StartHour <= endHour)
+            .Where(ts => ts.Weekday == weekday && ts.StartHour >= startHour && ts.StartHour < endHour)
             .Any();
 
         var isOccupied = bookedSlots
-            .Where(bs => (int)bs.Date.DayOfWeek == weekday && bs.StartHour >= startHour && bs.StartHour <= endHour)
+            .Where(bs => (int)bs.Date.DayOfWeek == weekday && bs.StartHour >= startHour && bs.StartHour < endHour)
             .Any();
 
         return isAvailable ? (isOccupied ? "occupied" : "available") : "";
