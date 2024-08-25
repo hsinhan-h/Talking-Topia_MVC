@@ -37,15 +37,15 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body ">
-                <img class="tutor-headshot rounded-circle"
-                     src="/Materials/tutor_headshot_imgs/tutor_head_001.jpg" alt="Tutor's Photo">
-                <p class="overflow-hidden">
-                    <strong>教師名稱：</strong>{{ tutorName }}
+                <img class="tutor-headshot rounded-circle" id="confirmBookingModalTutorHeadshot"
+                     src="" alt="Tutor's Photo" >
+                <p class="overflow-hidden" >
+                    <strong>課程名稱：</strong><span id="confirmBookingModalCourseTitle"></span> 
                 </p>
-                <p><strong>預約堂數：</strong> {{ bookedLessons }}</p>
+                <p><strong>預約堂數：</strong>1</p>
 
             </div>
-            <table class="book-info-table ">
+            <table class="book-info-table table table-striped">
                 <thead>
                     <tr>
                         <th>課程日期</th>
@@ -60,7 +60,7 @@
                 </tbody>
             </table>
 
-            <div class="modal-footer col-8 mx-auto mb-2 d-flex justify-content-between">
+            <div class="modal-footer col-8 mx-auto mb-2 d-flex justify-content-between border-0">
                 <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-next">下一步</button>
             </div>
