@@ -45,7 +45,7 @@ namespace Web.ViewModels
         public List<CourseImageViewModel> CourseImages { get; set; }
         [Display(Name = "完成課堂數")]
         public int FinishedCoursesTotal { get; set; }
-        [Display(Name = "已被預約時段")]
+        [Display(Name = "已被預約時段")]  
         public List<TimeSlotViewModel> BookedTimeSlots { get; set; }
         [Display(Name = "可預約時段")]
         public List<TimeSlotViewModel> AvailableTimeSlots { get; set; }
@@ -69,7 +69,7 @@ namespace Web.ViewModels
     {
         public DateTime Date { get; set; }
         public DayOfWeek Weekday { get; set; }
-        public DateTime StartHour { get; set; }
+        public int StartHour { get; set; }
         public string StartHourText { get; set; }  //string表示的時間格式
     }
 
