@@ -1,3 +1,4 @@
+@model Web.ViewModels.MemberProfileViewModel
 <partial name="_BannerPartial" />
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
@@ -106,7 +107,7 @@
                                                    class="form-control"
                                                    id="floatingInput"
                                                    placeholder="" />
-                                            <label for="floatingInput">帳號</label>
+                                            <label for="floatingInput">@* 帳號 *@ @Model.Account</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -124,7 +125,7 @@
                                                    class="form-control"
                                                    id="floatingInput"
                                                    placeholder="" />
-                                            <label for="floatingInput">名字</label>
+                                            <label for="floatingInput">@* 名字 *@ @Model.FirstName  </label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -133,7 +134,7 @@
                                                    class="form-control"
                                                    id="floatingInput"
                                                    placeholder="" />
-                                            <label for="floatingInput">姓氏</label>
+                                            <label for="floatingInput">@* 姓氏 *@ @Model.LastName</label>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +145,7 @@
                                                    class="form-control"
                                                    id="floatingInput"
                                                    placeholder="name@example.com" />
-                                            <label for="floatingInput">電子信箱</label>
+                                            <label for="floatingInput">@* 電子信箱 *@ @Model.Email</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -153,7 +154,7 @@
                                                    class="form-control"
                                                    id="floatingInput"
                                                    placeholder="" />
-                                            <label for="floatingInput">電話</label>
+                                            <label for="floatingInput">@* 電話 *@ @Model.Phone</label>
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +165,7 @@
                                                    class="form-control"
                                                    id="floatingInput"
                                                    placeholder="" />
-                                            <label for="floatingInput">地址</label>
+                                            <label for="floatingInput">@* 地址 *@ @Model.Address</label>
                                         </div>
                                     </div>
                                 </div>

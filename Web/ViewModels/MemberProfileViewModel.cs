@@ -80,26 +80,24 @@ namespace Web.ViewModels
         public string TutorIntro { get; set; }
 
         [Display(Name = "可接受預約時段")]//複數欄位
-        public List<ReservationTimeListViewModel> ReservationTime { get; set; }
+        public List<ReservationTimeListViewModel> ReservationTime { get; set; }       
+    }
+    public class CouseListViewModel
+    {
+        [Display(Name = "課程種類名稱")]
+        public string CategorytName { get; set; }
 
-        public class CouseListViewModel
-        {
-            [Display(Name = "課程種類名稱")]
-            public string CategorytName { get; set; }
+        [Display(Name = "科目名稱")]
+        public string SubjectName { get; set; }
+    }
 
-            [Display(Name = "科目名稱")]
-            public string SubjectName { get; set; }
-        }
+    public class ReservationTimeListViewModel
+    {
+        [Display(Name = "開課星期")]
+        public int Weekday { get; set; }
 
-        public class ReservationTimeListViewModel
-        {
-            [Display(Name = "開課星期")]
-            public int Weekday { get; set; }
-
-            [Display(Name = "開課時間")]
-            public int CourseHourId { get; set; }
-
-        }
+        [Display(Name = "開課時間")]
+        public int CourseHourId { get; set; }
 
     }
 }
