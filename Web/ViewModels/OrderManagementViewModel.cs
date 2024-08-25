@@ -56,7 +56,7 @@ namespace Web.ViewModels
         public string OrderStatus { get; set; }
     }
     public class OrderManagementListViewModel
-    { 
-    public List<OrderManagementViewModel> OrderManagementList { get; set; }
+    {
+        public List<OrderManagementViewModel> OrderManagementList { get; set; }
     }
 }

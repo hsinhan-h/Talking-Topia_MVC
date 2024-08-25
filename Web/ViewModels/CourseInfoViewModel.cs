@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.ViewModels
 {
+    public class CourseInfoListViewModel
+    {
+        public List<CourseInfoViewModel> CourseInfoList{ get; set; }
+    }
+    
+    
     public class CourseInfoViewModel
     {
         [Display(Name = "教師頭像")]
@@ -36,39 +42,38 @@ namespace Web.ViewModels
         [Display(Name = "課程影片縮圖")]
         public string CourseVideoThumbnail { get; set; }
         [Display(Name = "課程照片")]
-        public List<CourseImage> CourseImages { get; set; }
+        public List<CourseImageViewModel> CourseImages { get; set; }
         [Display(Name = "完成課堂數")]
         public int FinishedCoursesTotal { get; set; }
         [Display(Name = "已被預約時段")]
-        public List<TimeSlot> BookedTimeSlots { get; set; }
+        public List<TimeSlotViewModel> BookedTimeSlots { get; set; }
         [Display(Name = "可預約時段")]
-        public List<TimeSlot> AvailableTimeSlots { get; set; }
+        public List<TimeSlotViewModel> AvailableTimeSlots { get; set; }
         [Display(Name = "課程評分")]
         public double CourseRatings { get; set; }
         [Display(Name = "課程評論數")]
         public int CourseReviews { get; set; }
         [Display(Name = "評論內容")]
-        public List<Review> ReviewContents { get; set; }
+        public List<ReviewViewModel> ReviewContents { get; set; }
         [Display(Name = "關注狀態")]
         public bool FollowingStatus { get; set; }
 
     }
 
-    public class CourseImage
+    public class CourseImageViewModel
     {
         public string ImageUrl {  get; set; }
     }
 
-    public class TimeSlot
+    public class TimeSlotViewModel
     {
+        public DateTime Date { get; set; }
         public DayOfWeek Weekday { get; set; }
-        public int StartHour { get; set; }
-        public int EndHour { get; set; }
+        public DateTime StartHour { get; set; }
         public string StartHourText { get; set; }  //string表示的時間格式
-        public string EndHourText { get; set; } //string表示的時間格式
     }
 
-    public class Review
+    public class ReviewViewModel
     {
         public string ReviewContent {  get; set; }
     }
