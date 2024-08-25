@@ -404,6 +404,20 @@
                                         <ul>
                                             <li></li>
                                         </ul>
+                                        <h4>可接受預約時段</h4>
+                                        <ul v-if="slots.length > 0">
+                                            <li v-for="slot in slots" :key="slot.id">
+                                                <p>
+                                                    <span>星期二</span><span>13</span>點至<span>15</span>點
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <button type="button"
+                                                class="btn lh-backstage-submit-btn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editTimeSlotModal">
+                                            編輯教師可預約時段
+                                        </button>
                                     </div>
                                     <div class="lh-backstage-member-card-list d-flex">
                                         <div class="card col-12 col-md-3 me-2 p-2">
@@ -605,9 +619,108 @@
             </div>
         </div>
     </div>
+    <!-- modal 時段-->
+    <div class="modal fade"
+         id="editTimeSlotModal"
+         tabindex="-1"
+         aria-labelledby="editModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">
+                        編輯教師可預約時段
+                    </h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 星期區塊 -->
+                    <div class="row" id="timeslot-row">
+                        <div class="col-12">
+                            <div class="weekday-checkbox">
+                                <span class="fw-bolder mb-3 d-inline-block">請選擇可預約星期</span>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value="monday"
+                                           id="monday"
+                                           name="weekday" />
+                                    <label class="form-check-label" for="monday">星期一</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value="tuesday"
+                                           id="tuesday"
+                                           name="weekday" />
+                                    <label class="form-check-label" for="tuesday">星期二</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value="wednesday"
+                                           id="wednesday"
+                                           name="weekday" />
+                                    <label class="form-check-label" for="wednesday">星期三</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value="thursday"
+                                           id="thursday"
+                                           name="weekday" />
+                                    <label class="form-check-label" for="thursday">星期四</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value="friday"
+                                           id="friday"
+                                           name="weekday" />
+                                    <label class="form-check-label" for="friday">星期五</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value="saturday"
+                                           id="saturday"
+                                           name="weekday" />
+                                    <label class="form-check-label" for="saturday">星期六</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value="sunday"
+                                           id="sunday"
+                                           name="weekday" />
+                                    <label class="form-check-label" for="sunday">星期日</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        關閉
+                    </button>
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn">
+                        儲存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @section topCSS {
-
     <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
-
+}
+@section endJS {
+    
+    <link rel="stylesheet" href="~/js/backstage.js" />
 }
