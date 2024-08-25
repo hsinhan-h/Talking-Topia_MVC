@@ -1,8 +1,10 @@
-﻿@section topCSS
+﻿@model CourseInfoListViewModel
+
+@section topCSS
 {
     <link rel="stylesheet" href="~/css/normalize.css" />
     <link rel="stylesheet" href="~/css/utilities.css" />
-    <link rel="stylesheet" href="~/css/course_list.css" />   
+    <link rel="stylesheet" href="~/css/course_list.css" />
     <link rel="stylesheet" href="~/css/tutor_intro_medias_slider.css">
     <link rel="stylesheet" href="~/css/booking_table_modal.css">
 }
@@ -325,820 +327,177 @@
         <a href="">多評價數優先</a>
     </div>
     <div class="lh-tutor-cards">
-        <div class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
-            <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
-                <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
-                    <div class="lh-tutor-images__head position-relative">
-                        <img class="tutor-headshot rounded-circle"
-                             src="~/image/tutor_headshot_imgs/tutor_head_001.jpg" />
-                        <img class="tutor-nation-icon rounded-circle border border-white position-absolute "
-                             src="~/image/flag_imgs/uk_flag.png" />
-                        <div class="tutor-online-status"></div>
-                    </div>
-                    <div class="lh-tutor-follow mt-2">+關注</div>
-                </div>
-                <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
-                    <div class="tutor-description-title-wrapper d-flex">
-                        <a class="tutor-description-title" href="#">
-                            Feds🥇顶级雅思| 批判性思维 |
-                            面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                            面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                            面试教练🥇
-                        </a>
-                        <span class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="僅有8.5%的優質教師"
-                              data-bs-custom-class="custom-tooltip">
-                            <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
-                        </span>
-                    </div>
-                    <div class="tutor-subtitle my-1">今天变得冷静和自信</div>
-                    <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                        <div class="fifty-min-course-pricing">
-                            NT$1,624 <span class="text">/ 50分鐘</span>
+        @foreach (var courseCard in Model.CourseInfoList)
+        {
+            <div class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
+                <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
+                    <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
+                        <div class="lh-tutor-images__head position-relative">
+                            <img class="tutor-headshot rounded-circle"
+                                 src="@Url.Content(@courseCard.TutorHeadShotImage)" />
+                                <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
+                                     src="@Url.Content(@courseCard.TutorFlagImage)" />
                         </div>
-                        <div class="trail-course-pricing">NT$469 <span class="text">/ 體驗課</span></div>
+                        <div class="lh-tutor-follow mt-2">+關注</div>
                     </div>
-                    <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                        <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>4.99</span></div>
-                        <div>・</div>
-                        <div class="tutor-total-reviews"><span class="pe-1">1064</span>個評論</div>
+                    <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
+                        <div class="tutor-description-title-wrapper d-flex justify-content-between">
+                            <a class="tutor-description-title" href="#">
+                                @courseCard.CourseTitle
+                            </a>
+                            @if (@courseCard.IsVerifiedTutor == true)
+                            {
+                                <span class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
+                                      data-bs-placement="bottom" title="僅有8.5%的優質教師"
+                                      data-bs-custom-class="custom-tooltip">
+                                    <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
+                                </span>
+                            }                           
+                        </div> 
+                        <div class="tutor-subtitle my-1">@courseCard.CourseSubTitle</div>
+                        <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
+                            <div class="fifty-min-course-pricing">
+                                NT$@courseCard.FiftyMinPriceNTD <span class="text">/ 50分鐘</span>
+                            </div>
+                            <div class="trail-course-pricing">NT$@courseCard.TrialPriceNTD <span class="text">/ 體驗課</span></div>
+                        </div>
+                        <div class="tutor-received-feedback d-flex gap-1 my-md-2">
+                            <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>4.99</span></div>
+                            <div>・</div>
+                            <div class="tutor-total-reviews"><span class="pe-1">@courseCard.CourseReviews</span>個評論</div>
+                        </div>
+                        <p class="tutor-intro-text mb-2">
+                            @courseCard.TutorIntro
+                        </p>
+                        <a href="#" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
                     </div>
-                    <p class="tutor-intro-text mb-2">
-                        💰你是老师吗？ 获得折扣！🇬🇧 常驻利兹（英国） 🇺🇸 15 年以上国际经验 🌎 曾就职于谷歌、环球音乐和国际特赦组织 🤝 传播专家 👩🏻‍🎓
-                        获得学士学位、理学硕士和剑桥资格
-                        🥇找到你想要的工作 🔥 在顶尖大学学习 👑 克服你的恐惧 😎 找到你的声音🚀增强你的信心
+                    <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
+                        <div class="course-pricing d-flex">
+                            <div class="trail-course-pricing col-6">
+                                NT$@courseCard.TrialPriceNTD <div class="text">體驗課</div>
+                            </div>
+                            <div class="fifty-min-course-pricing col-6">
+                                NT$@courseCard.FiftyMinPriceNTD <div class="text">50分鐘</div>
+                            </div>
+                        </div>
+                        <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
+                                data-bs-target="#bookingTableModal">
+                            預約體驗
+                        </button>
+                        <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
+                                data-bs-toggle="modal" data-bs-target="#contactTutorModal">
+                            聯繫老師
+                        </button>
+                    </div>
+                </div>
+                <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
+                    <p class="tutor-intro-text">
+                        @courseCard.TutorIntro
                     </p>
-                    <a href="#" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
                 </div>
-                <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
-                    <div class="course-pricing d-flex">
-                        <div class="trail-course-pricing col-6">
-                            NT$469 <div class="text">體驗課</div>
-                        </div>
-                        <div class="fifty-min-course-pricing col-6">
-                            NT$1,624 <div class="text">50分鐘</div>
-                        </div>
-                    </div>
-                    <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
+                <div class="lh-tutor-card__book d-flex justify-content-center">
+                    <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
                             data-bs-target="#bookingTableModal">
-                        預約體驗
-                    </button>
-                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
-                            data-bs-toggle="modal" data-bs-target="#contactTutorModal">
-                        聯繫老師
+                        預約立即體驗
                     </button>
                 </div>
-            </div>
-            <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                <p class="tutor-intro-text">
-                    💰你是老师吗？ 获得折扣！🇬🇧 常驻利兹（英国） 🇺🇸 15 年以上国际经验 🌎 曾就职于谷歌、环球音乐和国际特赦组织 🤝 传播专家 👩🏻‍🎓
-                    获得学士学位、理学硕士和剑桥资格
-                    🥇找到你想要的工作 🔥 在顶尖大学学习 👑 克服你的恐惧 😎 找到你的声音🚀增强你的信心
-                </p>
-            </div>
-            <div class="lh-tutor-card__book d-flex justify-content-center">
-                <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                        data-bs-target="#bookingTableModal">
-                    預約立即體驗
-                </button>
-            </div>
-            <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
-                <div class="tutor-intro-media-container col-12 mx-auto">
-                    <a href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
-                       data-bs-video="https://www.youtube.com/embed/3XToqdAcm9g">
-                        <img src="~/image/thumb_nails/tutor001_thumbnail.jpg" alt="">
-                    </a>
-                    <img src="https://picsum.photos/id/210/350/220" alt="">
-                    <img src="https://picsum.photos/id/250/350/220" alt="">
-                </div>
-                <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
-                <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
-                <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
-                <div class="tutor-timeslot-table col-11 mx-auto">
-                    <div class="row">
-                        <div class="weekday col-3 p-0"></div>
-                        <div class="weekday col p-0">週日</div>
-                        <div class="weekday col p-0">週一</div>
-                        <div class="weekday col p-0">週二</div>
-                        <div class="weekday col p-0">週三</div>
-                        <div class="weekday col p-0">週四</div>
-                        <div class="weekday col p-0">週五</div>
-                        <div class="weekday col p-0">週六</div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            上午 <div class="time">06:00-12:00</div>
-                        </div>
-                        <div class="morning sunday col p-0"></div>
-                        <div class="morning monday  col p-0"></div>
-                        <div class="morning tuesday occupied col p-0"></div>
-                        <div class="morning wednesday col p-0"></div>
-                        <div class="morning thursday col p-0"></div>
-                        <div class="morning friday col p-0"></div>
-                        <div class="morning saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            下午 <div class="time">12:00-18:00</div>
-                        </div>
-                        <div class="afternoon sunday col p-0"></div>
-                        <div class="afternoon monday  col p-0"></div>
-                        <div class="afternoon tuesday col p-0"></div>
-                        <div class="afternoon wednesday available col p-0"></div>
-                        <div class="afternoon thursday col p-0"></div>
-                        <div class="afternoon friday col p-0"></div>
-                        <div class="afternoon saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            傍晚 <div class="time">18:00-24:00</div>
-                        </div>
-                        <div class="evening sunday col p-0"></div>
-                        <div class="evening monday  col p-0"></div>
-                        <div class="evening tuesday col p-0"></div>
-                        <div class="evening wednesday col p-0"></div>
-                        <div class="evening thursday col p-0"></div>
-                        <div class="evening friday col p-0"></div>
-                        <div class="evening saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            深夜 <div class="time">00:00-06:00</div>
-                        </div>
-                        <div class="midnight sunday col p-0"></div>
-                        <div class="midnight monday  col p-0"></div>
-                        <div class="midnight tuesday col p-0"></div>
-                        <div class="midnight wednesday col p-0"></div>
-                        <div class="midnight thursday col p-0"></div>
-                        <div class="midnight friday col p-0"></div>
-                        <div class="midnight saturday col p-0"></div>
-                    </div>
-                </div>
-                <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
-                    <div class="d-flex align-items-center">
-                        <span class="color-block occupied me-1"></span>時段已被預約
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="color-block available me-1"></span>尚有可預約時段
-                    </div>
-                </div>
-                <button type="button" class="view-more-btn btn mt-3 p-2 w-100">
-                    瀏覽更多
-                </button>
-            </div>
-        </div>
-        <div class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
-            <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
-                <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
-                    <div class="lh-tutor-images__head position-relative">
-                        <img class="tutor-headshot rounded-circle"
-                             src="~/image/tutor_headshot_imgs/tutor_head_002.png" />
-                        <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
-                             src="~/image/flag_imgs/us_flag.png" />
-                        <div class="tutor-online-status"></div>
-                    </div>
-                    <div class="lh-tutor-follow mt-2">+關注</div>
-                </div>
-                <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
-                    <div class="tutor-description-title-wrapper d-flex">
-                        <a class="tutor-description-title" href="#">
-                            Todd🤠American Teacher!🏅Kid's English
-                            Expert! 🏅 Basic to Advanced😀
+                <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
+                    <div class="tutor-intro-media-container col-12 mx-auto">
+                        if (@courseCard.CourseVideo != null)
+                        {
+                        <a href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
+                           data-bs-video="@Url.Content(@courseCard.CourseVideo)">
+                            <img src="@Url.Content(@courseCard.CourseVideoThumbnail)" alt="">
                         </a>
-                        <span class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="僅有8.5%的優質教師"
-                              data-bs-custom-class="custom-tooltip"></span>
+                        }
+                        if (@courseCard.CourseImages.Count > 0)
+                        {
+                        @foreach (var image in @courseCard.CourseImages)
+                        {
+                            <img src=@Url.Content(image.ImageUrl) alt="">
+                        }
+                        @* <img src="https://picsum.photos/id/210/350/220" alt="">
+                        <img src="https://picsum.photos/id/250/350/220" alt=""> *@
+                        }
+                        
                     </div>
-                    <div class="tutor-subtitle my-1">25分钟儿童课程</div>
-                    <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                        <div class="fifty-min-course-pricing">
-                            NT$857 <span class="text">/ 50分鐘</span>
+                    <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
+                    <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
+                    <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
+                    <div class="tutor-timeslot-table col-11 mx-auto">
+                        <div class="row">
+                            <div class="weekday col-3 p-0"></div>
+                            <div class="weekday col p-0">週日</div>
+                            <div class="weekday col p-0">週一</div>
+                            <div class="weekday col p-0">週二</div>
+                            <div class="weekday col p-0">週三</div>
+                            <div class="weekday col p-0">週四</div>
+                            <div class="weekday col p-0">週五</div>
+                            <div class="weekday col p-0">週六</div>
                         </div>
-                        <div class="trail-course-pricing">NT$514 <span class="text">/ 體驗課</span></div>
-                    </div>
-                    <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                        <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>4.5</span></div>
-                        <div>・</div>
-                        <div class="tutor-total-reviews"><span class="pe-1">1064</span>個評論</div>
-                    </div>
-                    <p class="tutor-intro-text mb-2">
-                        期待什麼：
-                        😉定制課程
-                        😃免費英語資源
-                        🤡80% 學生演講
-                        😃保證改善
-                        🌄有趣和友好的環境
-                        🌄額外的課外工作表和家庭作業（根據要求）
-                        😀 很多談話😁
-                    </p>
-                    <a href="#" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
-                </div>
-                <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
-                    <div class="course-pricing d-flex">
-                        <div class="trail-course-pricing col-6">
-                            NT$514 <div class="text">體驗課</div>
+                        <div class="row">
+                            <div class="timeslot col-3 p-0">
+                                上午 <div class="time">06:00-12:00</div>
+                            </div>
+                            <div class="morning sunday col p-0"></div>
+                            <div class="morning monday  col p-0"></div>
+                            <div class="morning tuesday occupied col p-0"></div>
+                            <div class="morning wednesday col p-0"></div>
+                            <div class="morning thursday col p-0"></div>
+                            <div class="morning friday col p-0"></div>
+                            <div class="morning saturday col p-0"></div>
                         </div>
-                        <div class="fifty-min-course-pricing col-6">
-                            NT$857 <div class="text">50分鐘</div>
+                        <div class="row">
+                            <div class="timeslot col-3 p-0">
+                                下午 <div class="time">12:00-18:00</div>
+                            </div>
+                            <div class="afternoon sunday col p-0"></div>
+                            <div class="afternoon monday  col p-0"></div>
+                            <div class="afternoon tuesday col p-0"></div>
+                            <div class="afternoon wednesday available col p-0"></div>
+                            <div class="afternoon thursday col p-0"></div>
+                            <div class="afternoon friday col p-0"></div>
+                            <div class="afternoon saturday col p-0"></div>
                         </div>
-                    </div>
-                    <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal">
-                        預約體驗
-                    </button>
-                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
-                            data-bs-toggle="modal" data-bs-target="#contactTutorModal">
-                        聯繫老師
-                    </button>
-                </div>
-            </div>
-            <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                <p class="tutor-intro-text">
-                    期待什麼：
-                    😉定制課程
-                    😃免費英語資源
-                    🤡80% 學生演講
-                    😃保證改善
-                    🌄有趣和友好的環境
-                    🌄額外的課外工作表和家庭作業（根據要求）
-                    😀 很多談話😁
-                </p>
-            </div>
-            <div class="lh-tutor-card__book d-flex justify-content-center">
-                <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                        data-bs-target="#bookingTableModal">
-                    預約立即體驗
-                </button>
-            </div>
-            <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
-                <div class="tutor-intro-media-container col-12 mx-auto">
-                    <a href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
-                       data-bs-video="https://www.youtube.com/embed/xXsfl6RBuhQ">
-                        <img src="~/image/thumb_nails/tutor002_thumbnail.jpg" alt="">
-                    </a>
-
-                    <img src="https://picsum.photos/id/210/350/220" alt="">
-                    <img src="https://picsum.photos/id/250/350/220" alt="">
-                </div>
-                <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
-                <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
-                <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
-                <div class="tutor-timeslot-table col-11 mx-auto">
-                    <div class="row">
-                        <div class="weekday col-3 p-0"></div>
-                        <div class="weekday col p-0">週日</div>
-                        <div class="weekday col p-0">週一</div>
-                        <div class="weekday col p-0">週二</div>
-                        <div class="weekday col p-0">週三</div>
-                        <div class="weekday col p-0">週四</div>
-                        <div class="weekday col p-0">週五</div>
-                        <div class="weekday col p-0">週六</div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            上午 <div class="time">06:00-12:00</div>
+                        <div class="row">
+                            <div class="timeslot col-3 p-0">
+                                傍晚 <div class="time">18:00-24:00</div>
+                            </div>
+                            <div class="evening sunday col p-0"></div>
+                            <div class="evening monday  col p-0"></div>
+                            <div class="evening tuesday col p-0"></div>
+                            <div class="evening wednesday col p-0"></div>
+                            <div class="evening thursday col p-0"></div>
+                            <div class="evening friday col p-0"></div>
+                            <div class="evening saturday col p-0"></div>
                         </div>
-                        <div class="morning sunday col p-0"></div>
-                        <div class="morning monday  col p-0"></div>
-                        <div class="morning tuesday occupied col p-0"></div>
-                        <div class="morning wednesday col p-0"></div>
-                        <div class="morning thursday col p-0"></div>
-                        <div class="morning friday col p-0"></div>
-                        <div class="morning saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            下午 <div class="time">12:00-18:00</div>
-                        </div>
-                        <div class="afternoon sunday col p-0"></div>
-                        <div class="afternoon monday  col p-0"></div>
-                        <div class="afternoon tuesday col p-0"></div>
-                        <div class="afternoon wednesday available col p-0"></div>
-                        <div class="afternoon thursday col p-0"></div>
-                        <div class="afternoon friday col p-0"></div>
-                        <div class="afternoon saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            傍晚 <div class="time">18:00-24:00</div>
-                        </div>
-                        <div class="evening sunday col p-0"></div>
-                        <div class="evening monday  col p-0"></div>
-                        <div class="evening tuesday col p-0"></div>
-                        <div class="evening wednesday col p-0"></div>
-                        <div class="evening thursday col p-0"></div>
-                        <div class="evening friday col p-0"></div>
-                        <div class="evening saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            深夜 <div class="time">00:00-06:00</div>
-                        </div>
-                        <div class="midnight sunday col p-0"></div>
-                        <div class="midnight monday  col p-0"></div>
-                        <div class="midnight tuesday col p-0"></div>
-                        <div class="midnight wednesday col p-0"></div>
-                        <div class="midnight thursday col p-0"></div>
-                        <div class="midnight friday col p-0"></div>
-                        <div class="midnight saturday col p-0"></div>
-                    </div>
-                </div>
-                <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
-                    <div class="d-flex align-items-center">
-                        <span class="color-block occupied me-1"></span>時段已被預約
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="color-block available me-1"></span>尚有可預約時段
-                    </div>
-                </div>
-                <button type="button" class="view-more-btn btn mt-3 p-2 w-100">
-                    瀏覽更多
-                </button>
-            </div>
-        </div>
-        <div class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
-            <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
-                <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
-                    <div class="lh-tutor-images__head position-relative">
-                        <img class="tutor-headshot rounded-circle"
-                             src="~/image/tutor_headshot_imgs/tutor_head_003.jpg" />
-                        <img class="tutor-nation-icon rounded-circle border border-white position-absolute object-fit-cover"
-                             src="~/image/flag_imgs/korea_flag.jpg" />
-                        <div class="tutor-online-status"></div>
-                    </div>
-                    <div class="lh-tutor-follow mt-2">+關注</div>
-                </div>
-                <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
-                    <div class="tutor-description-title-wrapper d-flex">
-                        <a class="tutor-description-title" href="#">
-                            🔥Summer Big
-                            Sale😍現在是購課的時候!大促銷🐰💕𝗘𝗨𝗡𝗪𝗢𝗢💎𝙆𝙋𝙊𝙋⭐️𝙏𝙊𝙋𝙄𝙆專門 韓語口 新師6折優惠🔥
-                        </a>
-                        <span class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="僅有8.5%的優質教師"
-                              data-bs-custom-class="custom-tooltip">
-                            <img src="~/image/tutor_badge_imgs/tutor_badge.webp" alt="">
-                        </span>
-                    </div>
-                    <div class="tutor-subtitle my-1">🔥各程度口說🔥𝐊-𝐩𝐨𝐩✨</div>
-                    <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                        <div class="fifty-min-course-pricing">
-                            NT$678 <span class="text">/ 50分鐘</span>
-                        </div>
-                        <div class="trail-course-pricing">NT$407 <span class="text">/ 體驗課</span></div>
-                    </div>
-                    <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                        <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>4.72</span></div>
-                        <div>・</div>
-                        <div class="tutor-total-reviews"><span class="pe-1">1064</span>個評論</div>
-                    </div>
-                    <p class="tutor-intro-text mb-2">
-                        【🔥大量購課優惠：單次購課超過３０堂以上🔥⭐️請向老師索取特別優惠包😍】 💛你好，這是韓國人Eunwoo。💛 💛 4年以上的教學經驗💛 💛兒童和青少年專家💛
-                        💛英語學習韓語💛 💛韓國土生土長，但在美國/澳大利亞/新西蘭生活了10年，英文流利。💛 💛通過K-Pop和K-Drama學習有趣的韓國和韓國文化。💛
-                    </p>
-                    <a href="#" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
-                </div>
-                <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
-                    <div class="course-pricing d-flex">
-                        <div class="trail-course-pricing col-6">
-                            NT$407 <div class="text">體驗課</div>
-                        </div>
-                        <div class="fifty-min-course-pricing col-6">
-                            NT$678 <div class="text">50分鐘</div>
+                        <div class="row">
+                            <div class="timeslot col-3 p-0">
+                                深夜 <div class="time">00:00-06:00</div>
+                            </div>
+                            <div class="midnight sunday col p-0"></div>
+                            <div class="midnight monday  col p-0"></div>
+                            <div class="midnight tuesday col p-0"></div>
+                            <div class="midnight wednesday col p-0"></div>
+                            <div class="midnight thursday col p-0"></div>
+                            <div class="midnight friday col p-0"></div>
+                            <div class="midnight saturday col p-0"></div>
                         </div>
                     </div>
-                    <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal">
-                        預約體驗
-                    </button>
-                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
-                            data-bs-toggle="modal" data-bs-target="#contactTutorModal">
-                        聯繫老師
+                    <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
+                        <div class="d-flex align-items-center">
+                            <span class="color-block occupied me-1"></span>教師時段已滿
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="color-block available me-1"></span>尚有可預約時段
+                        </div>
+                    </div>
+                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100">
+                        瀏覽更多
                     </button>
                 </div>
             </div>
-            <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                <p class="tutor-intro-text">
-                    【🔥大量購課優惠：單次購課超過３０堂以上🔥⭐️請向老師索取特別優惠包😍】 💛你好，這是韓國人Eunwoo。💛 💛 4年以上的教學經驗💛 💛兒童和青少年專家💛
-                    💛英語學習韓語💛 💛韓國土生土長，但在美國/澳大利亞/新西蘭生活了10年，英文流利。💛 💛通過K-Pop和K-Drama學習有趣的韓國和韓國文化。💛
-                </p>
-            </div>
-            <div class="lh-tutor-card__book d-flex justify-content-center">
-                <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                        data-bs-target="#bookingTableModal">
-                    預約立即體驗
-                </button>
-            </div>
-            <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
-                <div class="tutor-intro-media-container col-12 mx-auto">
-                    <img src="https://picsum.photos/id/250/350/220" alt="">
-                </div>
-                <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
-                <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
-                <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
-                <div class="tutor-timeslot-table col-11 mx-auto">
-                    <div class="row">
-                        <div class="weekday col-3 p-0"></div>
-                        <div class="weekday col p-0">週日</div>
-                        <div class="weekday col p-0">週一</div>
-                        <div class="weekday col p-0">週二</div>
-                        <div class="weekday col p-0">週三</div>
-                        <div class="weekday col p-0">週四</div>
-                        <div class="weekday col p-0">週五</div>
-                        <div class="weekday col p-0">週六</div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            上午 <div class="time">06:00-12:00</div>
-                        </div>
-                        <div class="morning sunday col p-0"></div>
-                        <div class="morning monday  col p-0"></div>
-                        <div class="morning tuesday occupied col p-0"></div>
-                        <div class="morning wednesday col p-0"></div>
-                        <div class="morning thursday col p-0"></div>
-                        <div class="morning friday col p-0"></div>
-                        <div class="morning saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            下午 <div class="time">12:00-18:00</div>
-                        </div>
-                        <div class="afternoon sunday col p-0"></div>
-                        <div class="afternoon monday  col p-0"></div>
-                        <div class="afternoon tuesday col p-0"></div>
-                        <div class="afternoon wednesday available col p-0"></div>
-                        <div class="afternoon thursday col p-0"></div>
-                        <div class="afternoon friday col p-0"></div>
-                        <div class="afternoon saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            傍晚 <div class="time">18:00-24:00</div>
-                        </div>
-                        <div class="evening sunday col p-0"></div>
-                        <div class="evening monday  col p-0"></div>
-                        <div class="evening tuesday col p-0"></div>
-                        <div class="evening wednesday col p-0"></div>
-                        <div class="evening thursday col p-0"></div>
-                        <div class="evening friday col p-0"></div>
-                        <div class="evening saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            深夜 <div class="time">00:00-06:00</div>
-                        </div>
-                        <div class="midnight sunday col p-0"></div>
-                        <div class="midnight monday  col p-0"></div>
-                        <div class="midnight tuesday col p-0"></div>
-                        <div class="midnight wednesday col p-0"></div>
-                        <div class="midnight thursday col p-0"></div>
-                        <div class="midnight friday col p-0"></div>
-                        <div class="midnight saturday col p-0"></div>
-                    </div>
-                </div>
-                <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
-                    <div class="d-flex align-items-center">
-                        <span class="color-block occupied me-1"></span>時段已被預約
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="color-block available me-1"></span>尚有可預約時段
-                    </div>
-                </div>
-                <button type="button" class="view-more-btn btn mt-3 p-2 w-100">
-                    瀏覽更多
-                </button>
-            </div>
-        </div>
-        <div class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
-            <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
-                <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
-                    <div class="lh-tutor-images__head position-relative">
-                        <img class="tutor-headshot rounded-circle"
-                             src="~/image/tutor_headshot_imgs/tutor_head_004.jpg" />
-                        <img class="tutor-nation-icon rounded-circle border border-white position-absolute "
-                             src="~/image/flag_imgs/taiwan_flag.jpg" />
-                        <div class="tutor-online-status"></div>
-                    </div>
-                    <div class="lh-tutor-follow mt-2">+關注</div>
-                </div>
-                <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
-                    <div class="tutor-description-title-wrapper d-flex">
-                        <a class="tutor-description-title" href="#">
-                            Feds🥇顶级雅思| 批判性思维 |
-                            面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                            面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                            面试教练🥇
-                        </a>
-                        <span class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="僅有8.5%的優質教師"
-                              data-bs-custom-class="custom-tooltip">
-                            <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
-                        </span>
-                    </div>
-                    <div class="tutor-subtitle my-1">今天变得冷静和自信</div>
-                    <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                        <div class="fifty-min-course-pricing">
-                            NT$1,624 <span class="text">/ 50分鐘</span>
-                        </div>
-                        <div class="trail-course-pricing">NT$469 <span class="text">/ 體驗課</span></div>
-                    </div>
-                    <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                        <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>4.99</span></div>
-                        <div>・</div>
-                        <div class="tutor-total-reviews"><span class="pe-1">1064</span>個評論</div>
-                    </div>
-                    <p class="tutor-intro-text mb-2">
-                        💰你是老师吗？ 获得折扣！🇬🇧 常驻利兹（英国） 🇺🇸 15 年以上国际经验 🌎 曾就职于谷歌、环球音乐和国际特赦组织 🤝 传播专家 👩🏻‍🎓
-                        获得学士学位、理学硕士和剑桥资格
-                        🥇找到你想要的工作 🔥 在顶尖大学学习 👑 克服你的恐惧 😎 找到你的声音🚀增强你的信心
-                    </p>
-                    <a href="#" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
-                </div>
-                <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
-                    <div class="course-pricing d-flex">
-                        <div class="trail-course-pricing col-6">
-                            NT$469 <div class="text">體驗課</div>
-                        </div>
-                        <div class="fifty-min-course-pricing col-6">
-                            NT$1,624 <div class="text">50分鐘</div>
-                        </div>
-                    </div>
-                    <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal">
-                        預約體驗
-                    </button>
-                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
-                            data-bs-toggle="modal" data-bs-target="#contactTutorModal">
-                        聯繫老師
-                    </button>
-                </div>
-            </div>
-            <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                <p class="tutor-intro-text">
-                    💰你是老师吗？ 获得折扣！🇬🇧 常驻利兹（英国） 🇺🇸 15 年以上国际经验 🌎 曾就职于谷歌、环球音乐和国际特赦组织 🤝 传播专家 👩🏻‍🎓
-                    获得学士学位、理学硕士和剑桥资格
-                    🥇找到你想要的工作 🔥 在顶尖大学学习 👑 克服你的恐惧 😎 找到你的声音🚀增强你的信心
-                </p>
-            </div>
-            <div class="lh-tutor-card__book d-flex justify-content-center">
-                <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                        data-bs-target="#bookingTableModal">
-                    預約立即體驗
-                </button>
-            </div>
-            <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
-                <div class="tutor-intro-media-container col-12 mx-auto">
-                    <a href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
-                       data-bs-video="https://www.youtube.com/embed/3XToqdAcm9g">
-                        <img src="~/image/thumb_nails/tutor001_thumbnail.jpg" alt="">
-                    </a>
-                    <img src="https://picsum.photos/id/210/350/220" alt="">
-                    <img src="https://picsum.photos/id/250/350/220" alt="">
-                </div>
-                <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
-                <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
-                <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
-                <div class="tutor-timeslot-table col-11 mx-auto">
-                    <div class="row">
-                        <div class="weekday col-3 p-0"></div>
-                        <div class="weekday col p-0">週日</div>
-                        <div class="weekday col p-0">週一</div>
-                        <div class="weekday col p-0">週二</div>
-                        <div class="weekday col p-0">週三</div>
-                        <div class="weekday col p-0">週四</div>
-                        <div class="weekday col p-0">週五</div>
-                        <div class="weekday col p-0">週六</div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            上午 <div class="time">06:00-12:00</div>
-                        </div>
-                        <div class="morning sunday col p-0"></div>
-                        <div class="morning monday  col p-0"></div>
-                        <div class="morning tuesday occupied col p-0"></div>
-                        <div class="morning wednesday col p-0"></div>
-                        <div class="morning thursday col p-0"></div>
-                        <div class="morning friday col p-0"></div>
-                        <div class="morning saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            下午 <div class="time">12:00-18:00</div>
-                        </div>
-                        <div class="afternoon sunday col p-0"></div>
-                        <div class="afternoon monday  col p-0"></div>
-                        <div class="afternoon tuesday col p-0"></div>
-                        <div class="afternoon wednesday available col p-0"></div>
-                        <div class="afternoon thursday col p-0"></div>
-                        <div class="afternoon friday col p-0"></div>
-                        <div class="afternoon saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            傍晚 <div class="time">18:00-24:00</div>
-                        </div>
-                        <div class="evening sunday col p-0"></div>
-                        <div class="evening monday  col p-0"></div>
-                        <div class="evening tuesday col p-0"></div>
-                        <div class="evening wednesday col p-0"></div>
-                        <div class="evening thursday col p-0"></div>
-                        <div class="evening friday col p-0"></div>
-                        <div class="evening saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            深夜 <div class="time">00:00-06:00</div>
-                        </div>
-                        <div class="midnight sunday col p-0"></div>
-                        <div class="midnight monday  col p-0"></div>
-                        <div class="midnight tuesday col p-0"></div>
-                        <div class="midnight wednesday col p-0"></div>
-                        <div class="midnight thursday col p-0"></div>
-                        <div class="midnight friday col p-0"></div>
-                        <div class="midnight saturday col p-0"></div>
-                    </div>
-                </div>
-                <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
-                    <div class="d-flex align-items-center">
-                        <span class="color-block occupied me-1"></span>時段已被預約
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="color-block available me-1"></span>尚有可預約時段
-                    </div>
-                </div>
-                <button type="button" class="view-more-btn btn mt-3 p-2 w-100">
-                    瀏覽更多
-                </button>
-            </div>
-        </div>
-        <div class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
-            <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
-                <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
-                    <div class="lh-tutor-images__head position-relative">
-                        <img class="tutor-headshot rounded-circle"
-                             src="~/image/tutor_headshot_imgs/tutor_head_005.jpg" />
-                        <img class="tutor-nation-icon rounded-circle border border-white position-absolute "
-                             src="~/image/flag_imgs/taiwan_flag.jpg" />
-                        <div class="tutor-online-status"></div>
-                    </div>
-                    <div class="lh-tutor-follow mt-2">+關注</div>
-                </div>
-                <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
-                    <div class="tutor-description-title-wrapper d-flex">
-                        <a class="tutor-description-title" href="#">
-                            Todd🤠American Teacher!🏅Kid's English
-                            Expert! 🏅 Basic to Advanced😀
-                        </a>
-                        <span class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
-                              data-bs-placement="bottom" title="僅有8.5%的優質教師"
-                              data-bs-custom-class="custom-tooltip"></span>
-                    </div>
-                    <div class="tutor-subtitle my-1">25分钟儿童课程</div>
-                    <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                        <div class="fifty-min-course-pricing">
-                            NT$857 <span class="text">/ 50分鐘</span>
-                        </div>
-                        <div class="trail-course-pricing">NT$514 <span class="text">/ 體驗課</span></div>
-                    </div>
-                    <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                        <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>4.5</span></div>
-                        <div>・</div>
-                        <div class="tutor-total-reviews"><span class="pe-1">1064</span>個評論</div>
-                    </div>
-                    <p class="tutor-intro-text mb-2">
-                        期待什麼：
-                        😉定制課程
-                        😃免費英語資源
-                        🤡80% 學生演講
-                        😃保證改善
-                        🌄有趣和友好的環境
-                        🌄額外的課外工作表和家庭作業（根據要求）
-                        😀 很多談話😁
-                    </p>
-                    <a href="#" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
-                </div>
-                <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
-                    <div class="course-pricing d-flex">
-                        <div class="trail-course-pricing col-6">
-                            NT$514 <div class="text">體驗課</div>
-                        </div>
-                        <div class="fifty-min-course-pricing col-6">
-                            NT$857 <div class="text">50分鐘</div>
-                        </div>
-                    </div>
-                    <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal">
-                        預約體驗
-                    </button>
-                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
-                            data-bs-toggle="modal" data-bs-target="#contactTutorModal">
-                        聯繫老師
-                    </button>
-                </div>
-            </div>
-            <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                <p class="tutor-intro-text">
-                    期待什麼：
-                    😉定制課程
-                    😃免費英語資源
-                    🤡80% 學生演講
-                    😃保證改善
-                    🌄有趣和友好的環境
-                    🌄額外的課外工作表和家庭作業（根據要求）
-                    😀 很多談話😁
-                </p>
-            </div>
-            <div class="lh-tutor-card__book d-flex justify-content-center">
-                <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                        data-bs-target="#bookingTableModal">
-                    預約立即體驗
-                </button>
-            </div>
-            <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
-                <div class="tutor-intro-media-container col-12 mx-auto">
-                    <a href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
-                       data-bs-video="https://www.youtube.com/embed/xXsfl6RBuhQ">
-                        <img src="~/image/thumb_nails/tutor002_thumbnail.jpg" alt="">
-                    </a>
-                    <img src="https://picsum.photos/id/210/350/220" alt="">
-                    <img src="https://picsum.photos/id/250/350/220" alt="">
-                </div>
-                <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
-                <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
-                <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
-                <div class="tutor-timeslot-table col-11 mx-auto">
-                    <div class="row">
-                        <div class="weekday col-3 p-0"></div>
-                        <div class="weekday col p-0">週日</div>
-                        <div class="weekday col p-0">週一</div>
-                        <div class="weekday col p-0">週二</div>
-                        <div class="weekday col p-0">週三</div>
-                        <div class="weekday col p-0">週四</div>
-                        <div class="weekday col p-0">週五</div>
-                        <div class="weekday col p-0">週六</div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            上午 <div class="time">06:00-12:00</div>
-                        </div>
-                        <div class="morning sunday col p-0"></div>
-                        <div class="morning monday  col p-0"></div>
-                        <div class="morning tuesday occupied col p-0"></div>
-                        <div class="morning wednesday col p-0"></div>
-                        <div class="morning thursday col p-0"></div>
-                        <div class="morning friday col p-0"></div>
-                        <div class="morning saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            下午 <div class="time">12:00-18:00</div>
-                        </div>
-                        <div class="afternoon sunday col p-0"></div>
-                        <div class="afternoon monday  col p-0"></div>
-                        <div class="afternoon tuesday col p-0"></div>
-                        <div class="afternoon wednesday available col p-0"></div>
-                        <div class="afternoon thursday col p-0"></div>
-                        <div class="afternoon friday col p-0"></div>
-                        <div class="afternoon saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            傍晚 <div class="time">18:00-24:00</div>
-                        </div>
-                        <div class="evening sunday col p-0"></div>
-                        <div class="evening monday  col p-0"></div>
-                        <div class="evening tuesday col p-0"></div>
-                        <div class="evening wednesday col p-0"></div>
-                        <div class="evening thursday col p-0"></div>
-                        <div class="evening friday col p-0"></div>
-                        <div class="evening saturday col p-0"></div>
-                    </div>
-                    <div class="row">
-                        <div class="timeslot col-3 p-0">
-                            深夜 <div class="time">00:00-06:00</div>
-                        </div>
-                        <div class="midnight sunday col p-0"></div>
-                        <div class="midnight monday  col p-0"></div>
-                        <div class="midnight tuesday col p-0"></div>
-                        <div class="midnight wednesday col p-0"></div>
-                        <div class="midnight thursday col p-0"></div>
-                        <div class="midnight friday col p-0"></div>
-                        <div class="midnight saturday col p-0"></div>
-                    </div>
-                </div>
-                <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
-                    <div class="d-flex align-items-center">
-                        <span class="color-block occupied me-1"></span>時段已被預約
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="color-block available me-1"></span>尚有可預約時段
-                    </div>
-                </div>
-                <button type="button" class="view-more-btn btn mt-3 p-2 w-100">
-                    瀏覽更多
-                </button>
-            </div>
-        </div>
+        }
     </div>
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal"
          aria-hidden="true">
@@ -1157,7 +516,7 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <partial name="_BookingTablePartial" />               
+                <partial name="_BookingTablePartial" />
             </div>
         </div>
     </div>
