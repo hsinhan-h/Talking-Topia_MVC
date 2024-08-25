@@ -26,7 +26,32 @@ namespace Web.Services
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/300/200?grayscale"},
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/237/450/300"}
                     },
-                    CourseReviews = 1013
+                    CourseRatings = 4.96,
+                    CourseReviews = 1013,
+                    BookedTimeSlots = new List<TimeSlotViewModel>
+                    {
+                        new TimeSlotViewModel { Date = new DateTime(2024, 8, 27, 12, 0, 0).Date, StartHour = new DateTime(2024, 8, 27, 12, 0, 0).Hour },
+                        new TimeSlotViewModel { Date = new DateTime(2024, 9, 3, 14, 0, 0).Date, StartHour = new DateTime(2024, 9, 3, 14, 0, 0).Hour },
+                        new TimeSlotViewModel { Date = new DateTime(2024, 9, 7, 17, 0, 0).Date, StartHour = new DateTime(2024, 9, 7, 17, 0, 0).Hour }
+                    },
+                    AvailableTimeSlots = new List<TimeSlotViewModel>
+                    {
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 12 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 13 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 14 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 15 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 16 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 17 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 8 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 9 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 10 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 11 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 12 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 17 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 18 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 19 },
+                        new TimeSlotViewModel { Weekday = 6, StartHour = 17 }
+                    }
 
                 },
                 new CourseInfoViewModel
@@ -47,7 +72,30 @@ namespace Web.Services
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/200/450/300"},
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/300/450/300"}
                     },
-                    CourseReviews = 512
+                    CourseRatings = 4.2,
+                    CourseReviews = 512,
+                    BookedTimeSlots = new List<TimeSlotViewModel>
+                    {
+                        new TimeSlotViewModel { Date = new DateTime(2024, 8, 28, 15, 0, 0).Date, StartHour = new DateTime(2024, 8, 27, 13, 0, 0).Hour },
+                        new TimeSlotViewModel { Date = new DateTime(2024, 9, 6, 12, 0, 0).Date, StartHour = new DateTime(2024, 8, 28, 12, 0, 0).Hour }
+                    },
+                    AvailableTimeSlots = new List<TimeSlotViewModel>
+                    {
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 13 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 14 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 15 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 16 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 17 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 11 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 12 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 13 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 14 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 15 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 12 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 13 },
+                        new TimeSlotViewModel { Weekday = 6, StartHour = 17 },
+                        new TimeSlotViewModel { Weekday = 6, StartHour = 18 }
+                    }
                 }
             };
 
