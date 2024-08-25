@@ -26,7 +26,10 @@
                     <ul class="dropdown-menu">
                         <li><button class="dropdown-item" type="button">英文</button></li>
                         <li><button class="dropdown-item" type="button">日文</button></li>
-                        <li><button class="dropdown-item" type="button">韓文</button></li>
+                        <li><button class="dropdown-item" type="button">中文</button></li>
+                        <li><button class="dropdown-item" type="button">德文</button></li>
+                        <li><button class="dropdown-item" type="button">法文</button></li>
+                        <li><button class="dropdown-item" type="button">西班牙文</button></li>
                     </ul>
                 </li>
                 <li class="dropend nested-dropdown">
@@ -35,9 +38,12 @@
                         程式設計
                     </button>
                     <ul class="dropdown-menu">
-                        <li><button class="dropdown-item" type="button">Python</button></li>
+                        <li><button class="dropdown-item" type="button">HTML/CSS</button></li>
                         <li><button class="dropdown-item" type="button">JavaScript</button></li>
                         <li><button class="dropdown-item" type="button">C#</button></li>
+                        <li><button class="dropdown-item" type="button">SQL</button></li>
+                        <li><button class="dropdown-item" type="button">Python</button></li>
+                        <li><button class="dropdown-item" type="button">Java</button></li>
                     </ul>
                 </li>
                 <li class="dropend nested-dropdown">
@@ -48,7 +54,10 @@
                     <ul class="dropdown-menu">
                         <li><button class="dropdown-item" type="button">數學</button></li>
                         <li><button class="dropdown-item" type="button">物理</button></li>
-                        <li><button class="dropdown-item" type="button">國文</button></li>
+                        <li><button class="dropdown-item" type="button">化學</button></li>
+                        <li><button class="dropdown-item" type="button">歷史</button></li>
+                        <li><button class="dropdown-item" type="button">地理</button></li>
+                        <li><button class="dropdown-item" type="button">生物</button></li>
                     </ul>
                 </li>
             </ul>
@@ -357,9 +366,9 @@
                         <div class="tutor-subtitle my-1">@courseCard.CourseSubTitle</div>
                         <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
                             <div class="fifty-min-course-pricing">
-                                NT$@courseCard.FiftyMinPriceNTD <span class="text">/ 50分鐘</span>
+                                NT$@FormatPrice(@courseCard.FiftyMinPriceNTD) <span class="text">/ 50分鐘</span>
                             </div>
-                            <div class="trail-course-pricing">NT$@courseCard.TrialPriceNTD <span class="text">/ 體驗課</span></div>
+                            <div class="trail-course-pricing">NT$@FormatPrice(@courseCard.TrialPriceNTD) <span class="text">/ 體驗課</span></div>
                         </div>
                         <div class="tutor-received-feedback d-flex gap-1 my-md-2">
                             <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>4.99</span></div>
@@ -374,14 +383,16 @@
                     <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
                         <div class="course-pricing d-flex">
                             <div class="trail-course-pricing col-6">
-                                NT$@courseCard.TrialPriceNTD <div class="text">體驗課</div>
+                                NT$@FormatPrice(@courseCard.TrialPriceNTD) <div class="text">體驗課</div>
                             </div>
                             <div class="fifty-min-course-pricing col-6">
-                                NT$@courseCard.FiftyMinPriceNTD <div class="text">50分鐘</div>
+                                NT$@FormatPrice(@courseCard.FiftyMinPriceNTD) <div class="text">50分鐘</div>
                             </div>
                         </div>
                         <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
-                                data-bs-target="#bookingTableModal">
+                                data-bs-target="#bookingTableModal"
+                                data-tutor-headshot="@courseCard.TutorHeadShotImage"
+                                data-course-title="@courseCard.CourseTitle">
                             預約體驗
                         </button>
                         <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
@@ -397,7 +408,9 @@
                 </div>
                 <div class="lh-tutor-card__book d-flex justify-content-center">
                     <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal">
+                            data-bs-target="#bookingTableModal"
+                            data-tutor-headshot="@courseCard.TutorHeadShotImage"
+                            data-course-title="@courseCard.CourseTitle">
                         預約立即體驗
                     </button>
                 </div>
@@ -416,8 +429,6 @@
                         {
                             <img src=@Url.Content(image.ImageUrl) alt="">
                         }
-                        @* <img src="https://picsum.photos/id/210/350/220" alt="">
-                        <img src="https://picsum.photos/id/250/350/220" alt=""> *@
                         }
                         
                     </div>
@@ -589,4 +600,11 @@
     <script src="~/js/course_list.js"></script>
     <script src="~/js/nested_dropdown.js"></script>
     <script src="~/js/booking_table_modal.js"></script>
+}
+
+@functions {
+    private string FormatPrice(decimal price)
+    {
+        return String.Format($"{price:n0}");
+    }
 }
