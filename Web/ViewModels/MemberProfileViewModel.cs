@@ -2,6 +2,11 @@
 
 namespace Web.ViewModels
 {
+    public class MemberProfileListViewModel
+    {
+        public List<MemberProfileViewModel> MemberDataList { get; set; }
+    }
+
     public class MemberProfileViewModel
     {
         [Display(Name = "照片")]

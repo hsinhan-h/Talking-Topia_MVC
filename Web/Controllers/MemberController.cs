@@ -1,13 +1,17 @@
-﻿namespace Web.Controllers
+﻿using Web.Services;
+
+namespace Web.Controllers
 {
     public class MemberController : Controller
     {
         private readonly OrderService _orderService;
         private readonly MemberDataService _memberDataService;
-        public MemberController(OrderService orderService, MemberDataService memberDataService)
+        private readonly ResumeDataService _resumeDataService;
+        public MemberController(OrderService orderService, MemberDataService memberDataService, ResumeDataService resumeDataService)
         {
             _orderService = orderService;
             _memberDataService = memberDataService;
+            _resumeDataService = resumeDataService;
         }
         public IActionResult Index()
         {
@@ -17,9 +21,10 @@
         {
             return View();
         }
-        public IActionResult Toteacher_resume()
+        public async Task<IActionResult> Toteacher_resume()
         {
-            return View();
+            var ResumeSummaryData = await _resumeDataService.GetresumeData();
+            return View(ResumeSummaryData);
         }
         public IActionResult Recommended_teachers_AI()
         {
