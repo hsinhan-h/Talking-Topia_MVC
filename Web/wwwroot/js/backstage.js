@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
     const weekdays = [
         "monday",
         "tuesday",
@@ -47,7 +47,7 @@
             input.name = `${day}-period`;
 
             const label = document.createElement("label");
-            label.className = "form-check-label fw-bold"; // 加粗字體
+            label.className = "form-check-label fw-bold";
             label.htmlFor = input.id;
             label.textContent = period.label;
 
@@ -58,9 +58,9 @@
             // 事件監聽器，用於勾選或取消勾選對應的時段
             input.addEventListener("change", function () {
                 const checkboxes = timeslotDiv.querySelectorAll(
-                    'input[name="' + day + '-time"]'
+                    `input[name="${day}-time"]`
                 );
-                checkboxes.forEach((checkbox, index) => {
+                checkboxes.forEach((checkbox) => {
                     const hour = parseInt(checkbox.value.split(":")[0], 10);
                     if (hour >= period.range[0] && hour < period.range[1]) {
                         checkbox.checked = this.checked;
@@ -99,19 +99,17 @@
     });
 
     // 事件監聽器，用來控制時段選項的顯示和隱藏
-    $('input[name="weekday"]').each(function () {
-        $(this).on('change', function () {
+    document.querySelectorAll('input[name="weekday"]').forEach(function (input) {
+        input.addEventListener("change", function () {
             const timeslotDiv = document.getElementById(`timeslot-${this.id}`);
             if (this.checked) {
                 timeslotDiv.style.display = "block";
             } else {
                 timeslotDiv.style.display = "none";
                 // 當取消選擇該星期時，同時取消勾選所有對應的時間段
-                $(timeslotDiv)
-                    .find('input[type="checkbox"]')
-                    .each(function () {
-                        this.checked = false;
-                    });
+                timeslotDiv.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+                    checkbox.checked = false;
+                });
             }
         });
     });
