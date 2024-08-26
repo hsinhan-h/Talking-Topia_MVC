@@ -90,16 +90,19 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    <tr>
-                                        <td>時間戳?</td>
-                                        <td>2024-08-04</td>
-                                        <td>Bill叔</td>
-                                        <td>C#物件導向</td>
-                                        <td>50分鐘</td>
-                                        <td>10堂</td>
-                                        <td>NT$9,999</td>
-                                        <td>12345678</td>
-                                    </tr>
+                                    @foreach (var order in Model.OrderManagementList)
+                                    {
+                                        <tr>
+                                            <td>#@order.TrackingNumber</td>
+                                            <td>@order.OrderDatetime</td>
+                                            <td>@order.FullName</td>
+                                            <td>@order.CourseTitle</td>
+                                            <td>@order.CourseLength 分鐘</td>
+                                            <td>@order.CourseQuantity 堂</td>
+                                            <td>NT$@order.SubtotalNTD</td>
+                                            <td>@order.TaxIdNumber</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -121,15 +124,19 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    <tr>
-                                        <td>時間戳?</td>
-                                        <td>2024-08-04</td>
-                                        <td>Bill叔</td>
-                                        <td>C#物件導向</td>
-                                        <td>50分鐘</td>
-                                        <td>10堂</td>
-                                        <td>NT$9,999</td>
-                                    </tr>
+                                    @foreach (var order in Model.OrderManagementList)
+                                    {
+                                        <tr>
+                                            <td>#@order.TrackingNumber</td>
+                                            <td>@order.OrderDatetime</td>
+                                            <td>@order.FullName</td>
+                                            <td>@order.CourseTitle</td>
+                                            <td>@order.CourseLength 分鐘</td>
+                                            <td>@order.CourseQuantity 堂</td>
+                                            <td>NT$@order.SubtotalNTD</td>
+                                            <td>@order.TaxIdNumber</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
