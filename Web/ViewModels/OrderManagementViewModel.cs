@@ -4,6 +4,9 @@ namespace Web.ViewModels
 {
     public class OrderManagementViewModel
     {
+        [Display(Name = "課程ID")]
+        public int CourseId { get; set; } 
+
         [Display(Name = "訂單編號")]
         public string TrackingNumber { get; set; }
 
@@ -63,6 +66,8 @@ namespace Web.ViewModels
 
     public class ShoppingCartCheckViewModel
     {
+        [Display(Name = "課程ID")]
+        public int CourseId { get; set; }
         [Display(Name = "訂單編號")]
         public string TrackingNumber { get; set; }
 
@@ -104,6 +109,8 @@ namespace Web.ViewModels
 
     public class ShoppingCartInfoViewModel
     {
+        [Display(Name = "課程ID")]
+        public int CourseId { get; set; }
         [Display(Name = "訂單編號")]
         public string TrackingNumber { get; set; }
 
@@ -116,8 +123,8 @@ namespace Web.ViewModels
         [Display(Name = "堂數")]
         public int CourseQuantity { get; set; }
 
-        [Display(Name = "單價")]
-        public decimal UnitPrice { get; set; }
+        [Display(Name = "小計")]
+        public decimal SubtotalNTD { get; set; }
 
         [Display(Name = "統一編號")]
         public string TaxIdNumber { get; set; }

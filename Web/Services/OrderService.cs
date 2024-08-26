@@ -11,6 +11,7 @@ namespace Web.Services
         {
                 new OrderManagementViewModel
             {
+                    CourseId = 1,
                     TrackingNumber="17123456789",
                     HeadShotImage = "https://example.com/images/headshot123.jpg",
                     FullName = "John Doe",
@@ -31,6 +32,7 @@ namespace Web.Services
             },
                 new OrderManagementViewModel
             {
+                    CourseId = 2,
                     TrackingNumber="17987654321",
                     HeadShotImage = "https://example.com/images/headshot456.jpg",
                     FullName = "Jane Smith",
@@ -51,6 +53,7 @@ namespace Web.Services
             },
                 new OrderManagementViewModel
                 {
+                    CourseId = 3,
                     TrackingNumber = "17246813579",
                     HeadShotImage = "https://example.com/images/headshot789.jpg",
                     FullName = "Michael Johnson",
@@ -81,11 +84,12 @@ namespace Web.Services
         {
                 new ShoppingCartInfoViewModel
             {
+                    CourseId = 1,
                     TrackingNumber="17123456789",
                     FullName = "John Doe",
                     CourseTitle = "英文生活會話",
                     CourseQuantity = 10,
-                    UnitPrice = 800,
+                    SubtotalNTD = 8000,
                     TaxIdNumber = "12345678",
                     OrderDatetime = "2024/08/24 14:35:00",
                     BookingDate = new DateTime(2024, 8, 24),
@@ -93,11 +97,12 @@ namespace Web.Services
             },
                 new ShoppingCartInfoViewModel
             {
+                    CourseId = 2,
                     TrackingNumber="17987654321",
                     FullName = "Jane Smith",
                     CourseTitle = "商務英文會話",
                     CourseQuantity = 20,
-                    UnitPrice = 1000,
+                    SubtotalNTD = 20000,
                     TaxIdNumber = "87654321",
                     OrderDatetime = "2024/08/23 10:15:00",
                     BookingDate = new DateTime(2024, 8, 25),
@@ -105,11 +110,12 @@ namespace Web.Services
             },
                 new ShoppingCartInfoViewModel
                 {
+                    CourseId = 3,
                     TrackingNumber = "17246813579",
                     FullName = "Michael Johnson",
                     CourseTitle = "基礎英文聽力與發音",
                     CourseQuantity = 10,
-                    UnitPrice = 700,
+                    SubtotalNTD = 7000,
                     TaxIdNumber = "13572468",
                     OrderDatetime = "2024/08/22 08:45:00",
                     BookingDate = new DateTime(2024, 8, 26),
@@ -127,6 +133,7 @@ namespace Web.Services
         {
                 new ShoppingCartCheckViewModel
             {
+                    CourseId = 1,
                     TrackingNumber="17123456789",
                     HeadShotImage = "https://example.com/images/headshot123.jpg",
                     FullName = "John Doe",
@@ -141,6 +148,7 @@ namespace Web.Services
             },
                 new ShoppingCartCheckViewModel
             {
+                    CourseId = 2,
                     TrackingNumber="17987654321",
                     HeadShotImage = "https://example.com/images/headshot456.jpg",
                     FullName = "Jane Smith",
@@ -155,6 +163,7 @@ namespace Web.Services
             },
                 new ShoppingCartCheckViewModel
                 {
+                    CourseId = 3,
                     TrackingNumber = "17246813579",
                     HeadShotImage = "https://example.com/images/headshot789.jpg",
                     FullName = "Michael Johnson",
