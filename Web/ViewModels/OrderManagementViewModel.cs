@@ -92,6 +92,9 @@ namespace Web.ViewModels
         [Display(Name = "堂數")]
         public int CourseQuantity { get; set; }
 
+        [Display(Name = "單價")]
+        public decimal UnitPrice { get; set; }
+
         [Display(Name = "小計")]
         public decimal SubtotalNTD { get; set; }
 
