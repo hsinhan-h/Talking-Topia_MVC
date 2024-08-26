@@ -13,7 +13,6 @@ namespace Web.Services
             {
                     HeadShotImage = "https://example.com/images/headshot123.jpg",
                     FullName = "John Doe",
-                    WorkExperience = "5 years teaching experience in English language schools.",
                     CourseTitle = "英文生活會話",
                     CourseSubject = "英文",
                     CourseCategory = "語言",
@@ -33,7 +32,6 @@ namespace Web.Services
             {
                     HeadShotImage = "https://example.com/images/headshot456.jpg",
                     FullName = "Jane Smith",
-                    WorkExperience = "3 years experience in corporate English training.",
                     CourseTitle = "商務英文會話",
                     CourseSubject = "英文",
                     CourseCategory = "語言",
@@ -53,7 +51,6 @@ namespace Web.Services
             {
                     HeadShotImage = "https://example.com/images/headshot789.jpg",
                     FullName = "Michael Johnson",
-                    WorkExperience = "8 years of experience teaching ESL to adults.",
                     CourseTitle = "基礎英文聽力與發音",
                     CourseSubject = "英文",
                     CourseCategory = "語言",

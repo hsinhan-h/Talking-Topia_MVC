@@ -10,9 +10,6 @@ namespace Web.ViewModels
         [Display(Name = "教師名字")]
         public string FullName { get; set; }
 
-        [Display(Name = "工作簡歷")]
-        public string WorkExperience { get; set; }
-
         [Display(Name = "課程名稱")]
         public string CourseTitle { get; set; }
 
