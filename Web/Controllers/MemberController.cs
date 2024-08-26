@@ -3,9 +3,11 @@
     public class MemberController : Controller
     {
         private readonly OrderService _orderService;
-        public MemberController(OrderService orderService)
+        private readonly MemberDataService _memberDataService;
+        public MemberController(OrderService orderService, MemberDataService memberDataService)
         {
             _orderService = orderService;
+            _memberDataService = memberDataService;
         }
         public IActionResult Index()
         {
@@ -39,9 +41,10 @@
         {
             return View();
         }
-        public IActionResult MemberData()
+        public async Task<IActionResult> MemberData()
         {
-            return View();
+            var summaryData = await _memberDataService.GetFilteredMemberDataAsync();
+            return View(summaryData);
         }
         public async Task<IActionResult> MemberTransaction()
         {

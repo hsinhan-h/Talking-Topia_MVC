@@ -371,7 +371,7 @@
                             <div class="trail-course-pricing">NT$@FormatPrice(@courseCard.TrialPriceNTD) <span class="text">/ 體驗課</span></div>
                         </div>
                         <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                            <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>4.99</span></div>
+                            <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>@courseCard.CourseRatings</span></div>
                             <div>・</div>
                             <div class="tutor-total-reviews"><span class="pe-1">@courseCard.CourseReviews</span>個評論</div>
                         </div>
@@ -408,7 +408,7 @@
                 </div>
                 <div class="lh-tutor-card__book d-flex justify-content-center">
                     <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal"
+                            data-bs-target="#bookingTableModal" 
                             data-tutor-headshot="@courseCard.TutorHeadShotImage"
                             data-course-title="@courseCard.CourseTitle">
                         預約立即體驗
@@ -450,54 +450,42 @@
                             <div class="timeslot col-3 p-0">
                                 上午 <div class="time">06:00-12:00</div>
                             </div>
-                            <div class="morning sunday col p-0"></div>
-                            <div class="morning monday  col p-0"></div>
-                            <div class="morning tuesday occupied col p-0"></div>
-                            <div class="morning wednesday col p-0"></div>
-                            <div class="morning thursday col p-0"></div>
-                            <div class="morning friday col p-0"></div>
-                            <div class="morning saturday col p-0"></div>
+                            @for (var weekday = 0; weekday < 7; weekday++)
+                            {
+                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 6, 12, weekday)"></div>                          
+                            }
                         </div>
                         <div class="row">
                             <div class="timeslot col-3 p-0">
                                 下午 <div class="time">12:00-18:00</div>
                             </div>
-                            <div class="afternoon sunday col p-0"></div>
-                            <div class="afternoon monday  col p-0"></div>
-                            <div class="afternoon tuesday col p-0"></div>
-                            <div class="afternoon wednesday available col p-0"></div>
-                            <div class="afternoon thursday col p-0"></div>
-                            <div class="afternoon friday col p-0"></div>
-                            <div class="afternoon saturday col p-0"></div>
+                            @for (var weekday = 0; weekday < 7; weekday++)
+                            {
+                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 12, 18, weekday)"></div>
+                            }
                         </div>
                         <div class="row">
                             <div class="timeslot col-3 p-0">
                                 傍晚 <div class="time">18:00-24:00</div>
                             </div>
-                            <div class="evening sunday col p-0"></div>
-                            <div class="evening monday  col p-0"></div>
-                            <div class="evening tuesday col p-0"></div>
-                            <div class="evening wednesday col p-0"></div>
-                            <div class="evening thursday col p-0"></div>
-                            <div class="evening friday col p-0"></div>
-                            <div class="evening saturday col p-0"></div>
+                            @for (var weekday = 0; weekday < 7; weekday++)
+                            {
+                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 18, 24, weekday)"></div>
+                            }
                         </div>
                         <div class="row">
                             <div class="timeslot col-3 p-0">
                                 深夜 <div class="time">00:00-06:00</div>
                             </div>
-                            <div class="midnight sunday col p-0"></div>
-                            <div class="midnight monday  col p-0"></div>
-                            <div class="midnight tuesday col p-0"></div>
-                            <div class="midnight wednesday col p-0"></div>
-                            <div class="midnight thursday col p-0"></div>
-                            <div class="midnight friday col p-0"></div>
-                            <div class="midnight saturday col p-0"></div>
+                            @for (var weekday = 0; weekday < 7; weekday++)
+                            {
+                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 0, 6, weekday)"></div>
+                            }
                         </div>
                     </div>
                     <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
                         <div class="d-flex align-items-center">
-                            <span class="color-block occupied me-1"></span>教師時段已滿
+                            <span class="color-block occupied me-1"></span>時段內已有預約
                         </div>
                         <div class="d-flex align-items-center">
                             <span class="color-block available me-1"></span>尚有可預約時段
@@ -606,5 +594,19 @@
     private string FormatPrice(decimal price)
     {
         return String.Format($"{price:n0}");
+    }
+
+    private string AddBookingStatusClass(List<TimeSlotViewModel> availableSlots, List<TimeSlotViewModel> bookedSlots,
+        int startHour, int endHour, int weekday)
+    {
+        var isAvailable = availableSlots
+            .Where(ts => ts.Weekday == weekday && ts.StartHour >= startHour && ts.StartHour < endHour)
+            .Any();
+
+        var isOccupied = bookedSlots
+            .Where(bs => (int)bs.Date.DayOfWeek == weekday && bs.StartHour >= startHour && bs.StartHour < endHour)
+            .Any();
+
+        return isAvailable ? (isOccupied ? "occupied" : "available") : "";
     }
 }

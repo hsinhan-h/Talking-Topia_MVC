@@ -19,14 +19,39 @@ namespace Web.Services
                     TutorIntro = "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊",
                     TrialPriceNTD = 256,
                     FiftyMinPriceNTD = 888,
-                    CourseVideo = "https://www.youtube.com/embed/v22JJP1GBAI",
+                    CourseVideo = "https://www.youtube.com/embed/MAhD37a7AlE",
                     CourseVideoThumbnail = "~/image/thumb_nails/thumbnail_demo_jp_001.webp",
                     CourseImages = new List<CourseImageViewModel>
                     {
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/300/200?grayscale"},
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/237/450/300"}
                     },
-                    CourseReviews = 1013
+                    CourseRatings = 4.96,
+                    CourseReviews = 1013,
+                    BookedTimeSlots = new List<TimeSlotViewModel>
+                    {
+                        new TimeSlotViewModel { Date = new DateTime(2024, 8, 27, 12, 0, 0).Date, StartHour = new DateTime(2024, 8, 27, 12, 0, 0).Hour },
+                        new TimeSlotViewModel { Date = new DateTime(2024, 9, 3, 14, 0, 0).Date, StartHour = new DateTime(2024, 9, 3, 14, 0, 0).Hour },
+                        new TimeSlotViewModel { Date = new DateTime(2024, 9, 7, 17, 0, 0).Date, StartHour = new DateTime(2024, 9, 7, 17, 0, 0).Hour }
+                    },
+                    AvailableTimeSlots = new List<TimeSlotViewModel>
+                    {
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 12 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 13 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 14 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 15 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 16 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 17 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 8 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 9 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 10 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 11 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 12 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 17 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 18 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 19 },
+                        new TimeSlotViewModel { Weekday = 6, StartHour = 17 }
+                    }
 
                 },
                 new CourseInfoViewModel
@@ -47,7 +72,30 @@ namespace Web.Services
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/200/450/300"},
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/300/450/300"}
                     },
-                    CourseReviews = 512
+                    CourseRatings = 4.2,
+                    CourseReviews = 512,
+                    BookedTimeSlots = new List<TimeSlotViewModel>
+                    {
+                        new TimeSlotViewModel { Date = new DateTime(2024, 8, 28, 15, 0, 0).Date, StartHour = new DateTime(2024, 8, 27, 13, 0, 0).Hour },
+                        new TimeSlotViewModel { Date = new DateTime(2024, 9, 6, 12, 0, 0).Date, StartHour = new DateTime(2024, 8, 28, 12, 0, 0).Hour }
+                    },
+                    AvailableTimeSlots = new List<TimeSlotViewModel>
+                    {
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 13 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 14 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 15 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 16 },
+                        new TimeSlotViewModel { Weekday = 2, StartHour = 17 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 11 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 12 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 13 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 14 },
+                        new TimeSlotViewModel { Weekday = 3, StartHour = 15 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 12 },
+                        new TimeSlotViewModel { Weekday = 5, StartHour = 13 },
+                        new TimeSlotViewModel { Weekday = 6, StartHour = 17 },
+                        new TimeSlotViewModel { Weekday = 6, StartHour = 18 }
+                    }
                 }
             };
 

@@ -1,5 +1,4 @@
 ﻿//到時候這區包成funciton, 每次讀取卡後資料後渲染後重新呼叫slick一次
-
 $(document).ready(function () {
     $(".lh-tutor-cards").on(
         "mouseenter",

@@ -68,7 +68,7 @@ namespace Web.ViewModels
     public class TimeSlotViewModel
     {
         public DateTime Date { get; set; }
-        public DayOfWeek Weekday { get; set; }
+        public int Weekday { get; set; }
         public int StartHour { get; set; }
         public string StartHourText { get; set; }  //string表示的時間格式
     }
