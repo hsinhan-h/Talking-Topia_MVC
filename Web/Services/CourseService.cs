@@ -52,7 +52,6 @@ namespace Web.Services
                         new TimeSlotViewModel { Weekday = 5, StartHour = 19 },
                         new TimeSlotViewModel { Weekday = 6, StartHour = 17 }
                     }
-
                 },
                 new CourseInfoViewModel
                 {
@@ -102,6 +101,34 @@ namespace Web.Services
             return new CourseInfoListViewModel()
             {
                 CourseInfoList = courseList
+            };
+
+         
+        }
+
+        public async Task<CourseInfoListViewModel> GetCourseMainPage()
+        { 
+            var courseMainPage = new List<CourseInfoViewModel>
+            {
+                new CourseInfoViewModel
+                {
+                    TutorHeadShotImage = "~/image/tutor_headshot_imgs/tutor_demo_jp_001.webp",
+                    TutorFlagImage = "~/image/flag_imgs/japan_flag.png",
+                    IsVerifiedTutor = true,
+                    CourseTitle = "Akimo老師 🔥精通日語：掌握這門全球流行語言的鑰匙！",
+                    CourseSubTitle = "💡 從基礎到高階語法—全面提升你的日語能力！",
+                    TutorIntro = "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊",
+                    TrialPriceNTD = 256,
+                    FiftyMinPriceNTD = 888,
+                    CourseVideo = "https://www.youtube.com/embed/MAhD37a7AlE",
+                    CourseVideoThumbnail = "~/image/thumb_nails/thumbnail_demo_jp_001.webp",
+                    CourseRatings = 4.96,
+                    CourseReviews = 1013
+                }
+            };
+            return new CourseInfoListViewModel()
+            {
+                CourseInfoList = courseMainPage
             };
         }
     }
