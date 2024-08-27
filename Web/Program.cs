@@ -10,6 +10,7 @@ namespace Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<OrderService>();
             builder.Services.AddScoped<MemberDataService>();
+            builder.Services.AddScoped<ResumeDataService>();
 
             var app = builder.Build();
 

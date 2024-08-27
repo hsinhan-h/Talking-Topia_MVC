@@ -1,4 +1,6 @@
-﻿@section topCSS
+﻿@model Web.ViewModels.MemberProfileListViewModel
+
+@section topCSS
 {
     <link href="~/css/layout.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/normalize.css" rel="stylesheet" asp-append-version="true" />
@@ -39,18 +41,27 @@
             </div>
             <div class="col-12 mt-4">
                 <p class="my-1 bgc fs-4">【學校名稱】</p>
-                <input class="form-control my-1" type="text" placeholder="輸入...">
+                @foreach (var item in Model.MemberDataList)
+                {
+                    <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.SchoolName" />
+                }
             </div>
             <div class="col-12 mt-2">
                 <p class="my-1 bgc fs-4">【就學期間】</p>
                 <div class="input-group my-1">
-                    <input type="number" placeholder="開始年份" class="form-control" min="1940">
-                    <input type="number" placeholder="結束年份" class="form-control" min="1940">
+                     @foreach (var item in Model.MemberDataList)
+                {
+                    <input type="number" placeholder="開始年份" class="form-control" min="1940" value="@item.StudyStartYear">
+                        <input type="number" placeholder="結束年份" class="form-control" min="1940" value="@item.StudyEndYear">
+                }
                 </div>
             </div>
             <div class="col-12 mt-2 mb-3">
                 <p class="my-1 bgc fs-4">【科系名稱】</p>
-                <input class="form-control my-1" type="text" placeholder="輸入...">
+                 @foreach (var item in Model.MemberDataList)
+                {
+                    <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.DepartmentName">
+                }
             </div>
         </div>
         <div class="row mt-5 resume_border p-3 m-2">
