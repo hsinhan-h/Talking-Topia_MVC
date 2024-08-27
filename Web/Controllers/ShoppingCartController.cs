@@ -16,14 +16,14 @@ namespace Web.Controllers
 
         public async Task<IActionResult> ShoppingCartInfo()
         {
-            var ShoppingCartInfoListViewModel = await _orderService.GetShoppingCartInfoList();
-            return View(ShoppingCartInfoListViewModel); 
+            var shoppingCartInfoListViewModel = await _orderService.GetShoppingCartInfoList();
+            return View(shoppingCartInfoListViewModel); 
         }
-
+      
         public async Task<IActionResult> ShoppingCartCheck()
         {
-            var ShoppingCartCheckListViewModel = await _orderService.GetShoppingCartCheckList();
-            return View(ShoppingCartCheckListViewModel);
+            var shoppingCartCheckListViewModel = await _orderService.GetShoppingCartCheckList();
+            return View(shoppingCartCheckListViewModel);
         }
     }
 }
