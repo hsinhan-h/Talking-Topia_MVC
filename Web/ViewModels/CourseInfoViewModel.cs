@@ -11,6 +11,10 @@ namespace Web.ViewModels
     
     public class CourseInfoViewModel
     {
+        
+        public int CourseId { get; set; }
+        public int MemberId { get; set; }
+        public string Title { get; set; }
         [Display(Name = "教師頭像")]
         public string TutorHeadShotImage { get; set; }
         [Display(Name = "教師國旗圖像")]

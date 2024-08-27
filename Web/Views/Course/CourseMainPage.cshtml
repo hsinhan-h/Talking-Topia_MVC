@@ -1,4 +1,6 @@
-﻿@section topCSS
+﻿@model CourseInfoListViewModel
+
+@section topCSS
 {
     @*  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> *@
@@ -16,6 +18,9 @@
 
 }
 
+@{
+    var course = Model.CourseInfoList.FirstOrDefault(c => c.CourseId == 456);
+}
 
 <div class="container tutor-course-page">
     <div class="row">
@@ -23,15 +28,15 @@
             <div class="lh-tutor-title d-flex mb-3">
                 <div class="lh-tutor-pic position-relative">
                     <img class="tutor-headshot rounded-circle  "
-                         src="~/image/tutor_headshot_imgs/tutor_head_003.jpg" />
+                         src="@Url.Content(course.TutorHeadShotImage)" />
                     <img class="tutor-nation-icon rounded-circle border border-white position-absolute "
-                         src="~/image/flag_imgs/korea_flag.jpg" />
+                         src="@Url.Content(course.TutorFlagImage)" />
                 </div>
                 <div class="course-name">
-                    <h3>사영쌤💖🎓首爾大學🎓延世大學語學堂🎓高麗大韓語師資養成課程🌈8年教學經驗✨韓國生活5年</h3>
-                    <span class="course-spcialty mt-2">🌈客製化課程✈️旅遊✨發音🗣口說專家👶兒童韓語🎯韓檢</span>
+                    <h3>@course.CourseTitle</h3>
+                    <span class="course-spcialty mt-2">@course.CourseSubTitle</span>
                     <div class="class-count mt-2">
-                        <strong>2059</strong>堂韓文課
+                        <strong>@course.FinishedCoursesTotal</strong>堂韓文課
                     </div>
                     <div class="follow-button mt-2">+關注</div>
                 </div>
@@ -44,173 +49,7 @@
                     <div class="can-speak"><strong>會說</strong> 英文, 中文, 日文, 韓文, 粵語</div>
                     <div class="self-intro-content">
                         <p class="self-intro-paragraph">
-                            💖사영老師的課程特色💖<br>
-                            🌟사영老師學生時期最擅長的就是活用文法，曾被老師稱讚過很會活用！所以老師的課也擅長引導口說，幫助文法都學了但是不會使用的同學一步步說出自己的想法，給予提示與鼓勵！歡迎來與老師一起練習^^<br>
-                            🌟사영老師也特別擅長解說文法，用容易理解的概念說明文法並帶入情境讓學生可以知道在什麼情況可使用什麼文法，其實很多文法是可以貫通聯想記憶的，讓文法不只是一個個記，可以用概念理解、融會貫通<br>
-                            🌟사영老師也擅長分析文法及句子結構，幫助閱讀很長的文章，也引導學生將好幾個文法結合造句，常常學生恍然大悟原來還可以這樣子用<br>
-                            🌟사영老師這些年一對一與團班的經驗太多了，遇到的學生個性與年齡層都不同，擅長幫學生找出最適合自己的學習方法<br>
-
-                            🙇‍♀️老師不太會寫課程文案， 但是成效有保證，請多多參考學生評價，及學習故事推薦<br>
-
-                            💖사영老師的學經歷💖<br>
-                            🎓首爾大學語言學校最高級結業<br>
-                            🎓延世大學語言學校最高級結業<br>
-                            🎓高麗大學韓國語教師養成課程<br>
-                            🌈在韓國首爾居住5年<br>
-                            🌈韓國打工度假經驗1年<br>
-                            🌞韓語家教7年以上經歷<br>
-                            🌞三星臺灣分公司中文講師經歷<br>
-                            ❤️臺灣銘傳大學應用中國文學系畢業<br>
-                            ❤️臺灣中等學校6個月的實習經驗<br>
-                            🏅臺灣教育部中文教師資格證<br>
-                            🧡翻譯口譯經驗 <br>
-                            🧡香港電視臺韓國旅行節目口譯<br>
-                            💛公司合同中->韓翻譯<br>
-                            💛旅行社旅遊指南手冊中->韓翻譯<br>
-                            🏅韓檢topik 6級資格證<br>
-                            🎖️ 韓國觀光公社外國留學生宣傳大使團1年<br>
-                            💙臺灣知名補習班(實體和線上)韓語講師經歷1年<br>
-                            💜臺灣多家企業內部韓語教育講師經歷2年<br>
-                            🌟豐富的在韓打工經驗<br>
-                            🍒首爾大學附近Mom's Touch漢堡店<br>
-                            🍒大田馬鈴薯湯<br>
-                            🍒明洞烤肉店<br>
-                            🍒麻辣燙店<br>
-                            🍒延南洞日式居酒屋<br>
-                            🍒北村韓服租賃店<br>
-                            🍒免稅店服飾店<br>
-                            🍒遊戲公司新遊戲測試<br>
-                            🌟韓國公司實習經驗<br>
-                            💼應用程序開發公司<br>
-                            💼遊戲公司<br>
-                            💼IT公司<br>
-                            ✈️各國旅行經驗✈️✈️✈️<br>
-                            🚩澳大利亞🚩韓國🚩日本🚩澳門<br>
-                            🚩泰國🚩越南🚩寮國🚩新加坡<br>
-                            🚩美國🚩法國🚩意大利🚩瑞士<br>
-                            💖興趣愛好💖<br>
-                            📖語言學習<br>
-                            🍰日語🍰德語🍰泰語🍰法語🍰廣東話<br>
-                            🍊活動體驗<br>
-                            🔓冰塊浴🔓馬拉松🔓新村水槍慶典<br>
-                            🔓漢江電影節🔓大學路劇場看話劇<br>
-                            🔓農場牧場工作🔓與大象散步洗澡<br>
-                            🔓做韓國料理🔓桌遊🔓烏克麗麗 <br>
-                            🔓探訪美食咖啡店🔓語言文化交流會<br>
-                            🔓數位游牧<br>
-                            🎩特長運動<br>
-                            🏋️健身房🏋️‍♂️Cross Fit🧘‍♀️瑜伽<br>
-                            🥊拳擊🥊泰拳🏓乒乓球<br>
-                            🏐排球🏀籃球⚽足球<br>
-
-
-                            ⚡暑假團班早鳥6折限時招生中 (可以幫忙募集學生開班😊)<br>
-                            💌團班需求可以客製化, 請私訊老師討論<br>
-
-                            (台灣凌晨時段請勿選課)<br>
-                            🌟平日晚上時段一對一收10位學生~請把握~💖<br>
-                            🌟一對一量身訂製課程，請多多告訴老師你的學習需求<br>
-
-
-                            💖[사영老師的課堂效果]<br>
-                            .毫無負擔地學習韓語<br>
-                            .仔細修改發音<br>
-                            .愉快地享受韓語<br>
-                            .比別人更善於運用韓語語法<br>
-                            .用韓語寫日記<br>
-                            .與韓國人暢通無阻攔<br>
-
-                            📒【授課對象】<br>
-                            -成人學習者。 兒童學習者<br>
-                            .喜歡韓流/KPOP的人<br>
-                            .想交韓國朋友的人<br>
-                            .想在韓國自由旅行的人<br>
-                            .想去韓國留學的人<br>
-
-                            📌-解決問題<br>
-                            .難以記住韓文40音的人<br>
-                            .想發音準確的人<br>
-                            .很難背韓語單詞的人 <br>
-                            .即使學了韓語語法也無法使用的人<br>
-                            .很難獨自準備topic topik考試 <br>
-                            .看長篇文章難以理解的人<br>
-                            .覺得韓語很難又無趣的人<br>
-
-                            📋[課程]<br>
-
-                            📖入門（介紹韓語40音）<br>
-                            -韓文字體結構<br>
-                            -輔音<br>
-                            -母音<br>
-                            -複合母音<br>
-                            -收尾音<br>
-                            -組合練習<br>
-                            -單詞練習<br>
-                            -發音規則<br>
-                            -學習唱歌<br>
-
-                            📙初級（使用韓國語學堂教材）<br>
-                            -單詞<br>
-                            -語法<br>
-                            -對話<br>
-                            -運用練習<br>
-                            -加強聽力<br>
-                            -加強口說（留意練習）<br>
-                            -作業<br>
-
-                            📗中級（使用韓國語學堂教材）<br>
-                            -單詞<br>
-                            -語法<br>
-                            -對話<br>
-                            -運用練習<br>
-                            -加強聽力<br>
-                            -加強口說（留意練習）<br>
-                            -作業<br>
-
-                            📘高級（使用韓國語學堂教材）<br>
-                            -單詞<br>
-                            -語法<br>
-                            -對話<br>
-                            -運用練習<br>
-                            -加強聽力<br>
-                            -加強口說話（留意練習）<br>
-                            -作業<br>
-
-                            📓TOPIK1 TOPIK1考試準備班（1對1量身定做， 可以在短時間內獲得Topic韓語資格證想要的級別。 )<br>
-                            .考試概要說明（日期.時間.分數配分。考試類型介紹)<br>
-                            .應試準備方式（根據學習者的水平確定個人學習日程）<br>
-                            .打好基礎<br>
-                            .加強語法補充<br>
-                            . （中間審查，定製學習日程調整）<br>
-                            .較弱的考試類型強化<br>
-                            .應試前備考<br>
-                            .可以一起做很多考古題~！！<br>
-
-                            ✈️ 旅行韓語（使用旅行韓語教材）<br>
-                            ☀️ 發音矯正班（子音.母音重新訓練， 發音部位說明， 發音規則總整理）<br>
-                            🌞韓語生活口語（使用現實生活口語教材，口語機會90%）<br>
-
-                            🎯授課目標: <br>
-                            .1個月自信地說韓語<br>
-                            .3個月可以活用學到的韓語會話<br>
-                            .以韓國人的想法構成韓語句子<br>
-
-                            🍊授課方式: <br>
-                            .有很多說話的機會<br>
-                            .會話實戰演習<br>
-                            .以會話爲主輕鬆學習語法<br>
-                            .發音掌握<br>
-                            .口語.閱讀.寫作.聽力 1:1 量身定做的教育<br>
-                            .通過課題練習熟練掌握韓語<br>
-
-                            🌠我學韓語的時候非常有趣，沒有負擔，所以我也想一樣地教我的學生。 課堂上能自然地說出韓語是我的課堂目標！🌠<br>
-
-                            🚨注意事項<br>
-                            .上課的時候請準備筆記本&筆。<br>
-                            .上課前請確認連接狀態和設備。<br>
-                            .請至少在上課前12個小時取消課程。<br>
-                            .如果需要調整時間，請傳訊息討論安排日程。<br>
-                            .上課時間開始後最多等10分鐘，請準時來。
+                            @course.TutorIntro
                         </p>
                         <input type="checkbox" class="lh-expand-btn">
                         <i class="fa-solid fa-chevron-down"></i>
@@ -298,7 +137,7 @@
                     </div>
                 </div>
                 <div class="tutor-rating d-flex align-content-center">
-                    <p class="comment-count ">410筆韓文課程評價</p>
+                    <p class="comment-count ">@course.CourseReviews 筆韓文課程評價</p>
                     <div class="rating-star">
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
@@ -640,7 +479,7 @@
             <div class="side-bar-body">
                 <div class="course-info-card try-out-course d-flex mb-3 ">
                     <div class="course-charging d-flex flex-column">
-                        <div class="charging-fee">NT$108</div>
+                        <div class="charging-fee">NT$@course.TrialPriceNTD</div>
                         <div class="course-number-time">25分鐘體驗課</div>
                     </div>
                     <div class="course-discount d-flex">
@@ -656,7 +495,7 @@
                 <div class="course-info-group min-25">
                     <div class="course-info-card d-flex">
                         <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$517</div>
+                            <div class="charging-fee">NT$ @FormatPrice(@course.TwentyFiveMinPriceNTD)</div>
                             <div class="course-number-time">1堂25分鐘課</div>
                         </div>
                         <div class="course-discount d-flex">
@@ -1024,6 +863,12 @@
     </div>
 </div>
 
+@functions{
+    private string FormatPrice(decimal price)
+    {
+        return String.Format($"{price:n0}");
+    }
+}
 @section endJS
 {
     @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

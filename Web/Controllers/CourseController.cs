@@ -32,9 +32,10 @@ namespace Web.Controllers
             var model = await _bookingService.GetBookingList();
             return View(model);
         }
-        public IActionResult CourseMainPage()
+        public async Task<IActionResult> CourseMainPage()
         {
-            return View();
+            var model = await _courseService.GetCourseMainPage();
+            return View(model);
         }
     }
 }
