@@ -1,6 +1,4 @@
-﻿using Web.Services;
-
-namespace Web.Controllers
+﻿namespace Web.Controllers
 {
     public class ShoppingCartController : Controller
     {
