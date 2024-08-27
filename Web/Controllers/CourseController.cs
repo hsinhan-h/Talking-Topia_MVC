@@ -29,7 +29,7 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> PublishCourse()
         {
-            var model = await _bookingService.GetBookingList();
+            var model = await _bookingService.GetPublishCourseList();
             return View(model);
         }
         public async Task<IActionResult> CourseMainPage()

@@ -1,4 +1,3 @@
-@using Web.ViewModels
 @model BookingListViewModel
 
 <partial name="_BannerPartial" />
@@ -45,13 +44,15 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
+                                        @foreach (var item in Model.BookingList)
+                                        { 
                                     <tr>
-                                        <td>2024-08-04</td>
-                                        <td>唬爛嘴教學</td>
-                                        <td>教你成為國畫大師</td>
-                                        <td>NT$399</td>
-                                        <td>NT$800</td>
-                                        <td>NT$1,500</td>
+                                        <td>@item.UpdateDatetime</td>
+                                        <td>@item.Title</td>
+                                        <td>@item.SubTitle</td>
+                                        <td>@item.TrialPriceNTD.ToString("#,###")</td>
+                                        <td>@item.TwentyFiveMinPriceNTD.ToString("#,###")</td>
+                                            <td>@item.FiftyMinPriceNTD.ToString("#,###")</td>
                                         <td>
                                             <button class="btn lh-backstage-submit-btn"
                                                     data-bs-toggle="modal"
@@ -60,6 +61,7 @@
                                             </button>
                                         </td>
                                     </tr>
+                                        }
                                 </tbody>
                             </table>
                         </div>
@@ -74,8 +76,8 @@
                                         <td>上課時間</td>
                                         <td>課程名稱</td>
                                         <td>課程內容</td>
+                                        <td>上課時長</td>
                                         <td>學員名稱</td>
-                                        <td>金額(台幣)</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
@@ -85,8 +87,8 @@
                                             <td>@item.BookingDate.ToShortDateString()</td>
                                             <td>@item.Title</td>
                                             <td>@item.SubTitle</td>
+                                            <td>NTD$ @item.CourseLength</td>
                                             <td>@item.MemberName</td>
-                                            <td>NTD$ @item.TotalPriceNTD.ToString("#,###")</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -115,6 +117,9 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    @{
+                            var firstItem = Model.BookingList.FirstOrDefault();
+                      }
                     <section class="lh-backstage-lh-backstage-real-data">
                         <div class="row mb-2">
                             <div class="col-12 col-md-2">
@@ -123,7 +128,7 @@
                                            class="form-control"
                                            id="floatingInput1"
                                            placeholder=""
-                                           value="語言" />
+                                           value="@firstItem.Category" />
                                     <label for="floatingInput1">課程分類(必填)</label>
                                 </div>
                             </div>
@@ -133,7 +138,7 @@
                                            class="form-control"
                                            id="floatingInput2"
                                            placeholder=""
-                                           value="中文" />
+                                           value="@firstItem.CourseSubject" />
                                     <label for="floatingInput2">課程科目(必填)</label>
                                 </div>
                             </div>
@@ -144,7 +149,7 @@
                                            id="floatingInput3"
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
-                                           value="中文" />
+                                           value="@firstItem.Thumbnail" />
                                     <label for="floatingInput3">請上傳一張自介照片(必填)</label>
                                 </div>
                             </div>
@@ -155,7 +160,7 @@
                                            id="floatingInput4"
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
-                                           value="中文" />
+                                           value="@firstItem.VideoUrl" />
                                     <label for="floatingInput4">請上傳一支自介影片(必填)</label>
                                 </div>
                             </div>
@@ -167,7 +172,7 @@
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
                                            multiple />
-                                    <label for="floatingInput5">請上傳多張課程影片(必填)</label>
+                                    <label for="floatingInput5">請上傳多張課程圖片(必填)</label>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +183,7 @@
                                            class="form-control"
                                            id="floatingInput5"
                                            placeholder=""
-                                           value="最本土的臺灣生活會話" />
+                                           value="@firstItem.Title" />
                                     <label for="floatingInput5">課程名稱(必填)</label>
                                 </div>
                             </div>
@@ -188,7 +193,7 @@
                                            class="form-control"
                                            id="floatingInput6"
                                            placeholder=""
-                                           value="教你成為本土最會畫虎畫蘭的國畫大師" />
+                                           value="@firstItem.SubTitle" />
                                     <label for="floatingInput6">課程簡述(必填)</label>
                                 </div>
                             </div>
@@ -197,7 +202,7 @@
                             <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <div id="editor1" class="col-12">
-                                        <p style="color: #999">請輸入教師個人介紹</p>
+                                        <p style="color: #999">@firstItem.TutorIntro</p>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +211,7 @@
                             <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <div id="editor2" class="col-12">
-                                        <p style="color: #999">請輸入詳細課程介紹</p>
+                                        <p style="color: #999">@firstItem.Description</p>
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +223,7 @@
                                            class="form-control"
                                            id="floatingInput7"
                                            placeholder=""
-                                           value="399" />
+                                           value="@firstItem.TrialPriceNTD.ToString("#,###")" />
                                     <label for="floatingInput7">金額(台幣/體驗價/堂)(必填)</label>
                                 </div>
                             </div>
@@ -228,7 +233,7 @@
                                            class="form-control"
                                            id="floatingInput8"
                                            placeholder=""
-                                           value="517" />
+                                           value="@firstItem.TwentyFiveMinPriceNTD.ToString("#,###")" />
                                     <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
                                 </div>
                             </div>
@@ -238,7 +243,7 @@
                                            class="form-control"
                                            id="floatingInput9"
                                            placeholder=""
-                                           value="862" />
+                                           value="@firstItem.FiftyMinPriceNTD.ToString("#,###")" />
                                     <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
                                 </div>
                             </div>
