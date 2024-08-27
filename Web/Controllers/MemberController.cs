@@ -1,9 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Web.Services;
 
 namespace Web.Controllers
 {
     public class MemberController : Controller
     {
+        private readonly OrderService _orderService;
+        private readonly MemberDataService _memberDataService;
+        private readonly ResumeDataService _resumeDataService;
+        public MemberController(OrderService orderService, MemberDataService memberDataService, ResumeDataService resumeDataService)
+        {
+            _orderService = orderService;
+            _memberDataService = memberDataService;
+            _resumeDataService = resumeDataService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -12,9 +21,10 @@ namespace Web.Controllers
         {
             return View();
         }
-        public IActionResult Toteacher_resume()
+        public async Task<IActionResult> Toteacher_resume()
         {
-            return View();
+            var ResumeSummaryData = await _resumeDataService.GetresumeData();
+            return View(ResumeSummaryData);
         }
         public IActionResult Recommended_teachers_AI()
         {
@@ -36,13 +46,15 @@ namespace Web.Controllers
         {
             return View();
         }
-        public IActionResult MemberData()
+        public async Task<IActionResult> MemberData()
         {
-            return View();
+            var summaryData = await _memberDataService.GetFilteredMemberDataAsync();
+            return View(summaryData);
         }
-        public IActionResult MemberTransaction()
+        public async Task<IActionResult> MemberTransaction()
         {
-            return View();
+            var orderManagementListViewModel = await _orderService.GetOrderList();
+            return View(orderManagementListViewModel);
         }
     }
 }

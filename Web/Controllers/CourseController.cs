@@ -1,29 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Web.Services;
 
 namespace Web.Controllers
 {
     public class CourseController : Controller
     {
+        private readonly BookingService _bookingService;
+        private readonly CourseService _courseService;
+        public CourseController()
+        {
+            _bookingService = new BookingService();
+            _courseService = new CourseService();
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult CourseList()
+        public async Task<IActionResult> CourseList()
         {
-            return View();
+            var model = await _courseService.GetCourseCardsList();
+            return View(model);
         }
+
         public IActionResult WatchList()
         {
             return View();
         }
-        public IActionResult PublishCourse()
+        public async Task<IActionResult> PublishCourse()
         {
-            return View();
+            var model = await _bookingService.GetBookingList();
+            return View(model);
         }
-        public IActionResult CourseMainPage()
+        public async Task<IActionResult> CourseMainPage()
         {
-            return View();
+            var model = await _courseService.GetCourseMainPage();
+            return View(model);
         }
     }
 }

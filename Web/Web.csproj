@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\vue\**" />
+    <Content Remove="wwwroot\lib\vue\**" />
+    <EmbeddedResource Remove="wwwroot\lib\vue\**" />
+    <None Remove="wwwroot\lib\vue\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\tutor_recommend_carousel_slider.css" />
   </ItemGroup>
 

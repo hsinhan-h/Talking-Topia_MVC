@@ -20,6 +20,10 @@
       "files": [
         "slick.min.js"
       ]
+    },
+    {
+      "library": "vue@3.4.38",
+      "destination": "wwwroot/lib/vue/"
     }
   ]
 }

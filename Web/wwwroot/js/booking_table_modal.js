@@ -6,6 +6,13 @@ const nextWeekBtn = document.getElementById("nextWeek");
 const confirmBookingModal = new bootstrap.Modal(
     document.getElementById("confirmBookingModal")
 );
+
+const confirmBookingModalTutorHeadshot = document.getElementById(
+    "confirmBookingModalTutorHeadshot");
+
+const confirmBookingModalCourseTitle = document.getElementById(
+    "confirmBookingModalCourseTitle");
+
 const confirmBookingModalDate = document.getElementById(
     "confirmBookingModalDate"
 );
@@ -15,7 +22,6 @@ const confirmBookingModalTime = document.getElementById(
 const bookingTableBodyWrapper = document.getElementById(
     "bookingTableBodyWrapper"
 );
-const expandTableBtn = document.getElementById("expandBookingTable");
 
 //教師有教課的時間由此匯入
 const tutorAvailableSlots = [
@@ -74,6 +80,15 @@ const bookedSlots = [
 let bookingDateStart = new Date();
 bookingDateStart.setDate(bookingDateStart.getDate());
 
+//傳入confirmBookingModel的資訊
+let courseTitle;
+let tutorHeadShot;
+const bookBtn = document.querySelectorAll('.lh-tutor-card__book-btn');
+bookBtn.forEach((btn) => btn.addEventListener("click", (e) => {
+    courseTitle = e.target.getAttribute('data-course-title');
+    tutorHeadShot = e.target.getAttribute('data-tutor-headshot').slice(1);
+}))
+
 function generateBookingTable(weekStart) {
     bookingTableBody.innerHTML = "";
     bookingTableHeader.innerHTML = "";
@@ -126,11 +141,15 @@ function generateBookingTable(weekStart) {
                 cell.classList.add("d-none");
             }
 
-            //如果時段還沒被預約, 跳出confirmBookingModal
+            
+
+            //如果時段還沒被預約, 加入confirmBookingModal事件
             if (!isBooked(date, time, bookedSlots)) {
-                cell.addEventListener("click", () => {
+                cell.addEventListener("click", (e) => {
+                    confirmBookingModalCourseTitle.textContent = courseTitle;
+                    confirmBookingModalTutorHeadshot.src = tutorHeadShot;
                     confirmBookingModalDate.textContent = `${formatDate(date)} (${standardWeekdays[date.getDay()]
-                        })`;
+                        })`;               
                     confirmBookingModalTime.textContent = time;
                     confirmBookingModal.show();
                 });

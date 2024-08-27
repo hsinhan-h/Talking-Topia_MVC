@@ -19,32 +19,7 @@ function moveUserItem() {
 }
 
 
-
-
-//tab區塊在螢幕大小767px時, 需要有左右箭頭
-document.addEventListener('DOMContentLoaded', function () {
-    const tabWrapper = document.querySelector('.lh-layout-tabs');
-    const leftArrow = document.querySelector('.lh-tab-arrow-left');
-    const rightArrow = document.querySelector('.lh-tab-arrow-right');
-    const tabWidth = tabWrapper.querySelector('.lh-layout-tab').offsetWidth + 25; // 25px 是每個tab之間的間距
-
-    leftArrow.addEventListener('click', function () {
-        tabWrapper.scrollBy({
-            left: -tabWidth, // 左移一個標籤的寬度
-            behavior: 'smooth'
-        });
-    });
-
-    rightArrow.addEventListener('click', function () {
-        tabWrapper.scrollBy({
-            left: tabWidth, // 右移一個標籤的寬度
-            behavior: 'smooth'
-        });
-    });
-});
-
-
-
+//選擇課程選單
 
 document.addEventListener('DOMContentLoaded', function () {
     const firstColumnLinks = document.querySelectorAll('.first-column a');
@@ -99,5 +74,66 @@ document.addEventListener('DOMContentLoaded', function () {
         thirdColumn.style.display = 'none';
     });
 });
+
+
+//登入註冊判斷
+document.getElementById('registerForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // 防止表單提交
+
+    // 取得欄位
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+    // 取得錯誤訊息元素
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+    let isValid = true;
+
+    // 檢查名字是否為空
+    if (name === '') {
+        nameError.style.display = 'block';
+        isValid = false;
+    } else {
+        nameError.style.display = 'none';
+    }
+
+    // 檢查信箱是否為空
+    if (email === '') {
+        emailError.style.display = 'block';
+        isValid = false;
+    } else {
+        emailError.style.display = 'none';
+    }
+
+    // 檢查密碼是否為空
+    if (password === '') {
+        passwordError.style.display = 'block';
+        isValid = false;
+    } else {
+        passwordError.style.display = 'none';
+    }
+
+    // 檢查確認密碼是否為空
+    if (confirmPassword === '') {
+        confirmPasswordError.style.display = 'block';
+        isValid = false;
+    } else {
+        confirmPasswordError.style.display = 'none';
+    }
+
+    // 如果所有欄位都有效，執行下一步操作（例如表單提交或其他邏輯）
+    if (isValid) {
+        // 可以在此處執行註冊的邏輯
+        alert('表單已成功提交！');
+    }
+});
+
+
+
 
 

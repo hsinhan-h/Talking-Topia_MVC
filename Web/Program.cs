@@ -8,12 +8,9 @@ namespace Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
-            //1.取得組態中資料庫連線設定
-            string? connectionString = builder.Configuration.GetConnectionString("CourseContext");
-
-            //2.註冊EF Core的DbContext
-            builder.Services.AddDbContext<CourseContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddTransient<OrderService>();
+            builder.Services.AddScoped<MemberDataService>();
+            builder.Services.AddScoped<ResumeDataService>();
 
             var app = builder.Build();
 

@@ -1,4 +1,7 @@
+@model OrderManagementListViewModel
+
 <partial name="_BannerPartial" />
+
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
@@ -41,21 +44,30 @@
                                    border="1">
                                 <thead>
                                     <tr>
+                                        <td>訂單編號</td>
                                         <td>交易時間</td>
                                         <td>教師名稱</td>
                                         <td>課程內容</td>
+                                        <td>購買時長</td>
+                                        <td>購買堂數</td>
                                         <td>金額(台幣)</td>
-                                        <td>交易明細</td>
+                                        <td>統一編號</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    <tr>
-                                        <td>2024-08-04</td>
-                                        <td>Bill叔</td>
-                                        <td>C#物件導向</td>
-                                        <td>NT$9,999</td>
-                                        <td>時間戳?</td>
-                                    </tr>
+                                    @foreach (var order in Model.OrderManagementList)
+                                    {
+                                        <tr>
+                                            <td>#@order.TrackingNumber</td>
+                                            <td>@order.OrderDatetime</td>
+                                            <td>@order.FullName</td>
+                                            <td>@order.CourseTitle</td>
+                                            <td>@order.CourseLength 分鐘</td>
+                                            <td>@order.CourseQuantity 堂</td>
+                                            <td>NT$@order.SubtotalNTD</td>
+                                            <td>@order.TaxIdNumber</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -67,21 +79,30 @@
                                    border="1">
                                 <thead>
                                     <tr>
+                                        <td>訂單編號</td>
                                         <td>交易時間</td>
                                         <td>教師名稱</td>
                                         <td>課程內容</td>
+                                        <td>購買時長</td>
+                                        <td>購買堂數</td>
                                         <td>金額(台幣)</td>
-                                        <td>交易明細</td>
+                                        <td>統一編號</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    <tr>
-                                        <td>2024-08-04</td>
-                                        <td>Bill叔</td>
-                                        <td>C#物件導向</td>
-                                        <td>NT$9,999</td>
-                                        <td>時間戳?</td>
-                                    </tr>
+                                    @foreach (var order in Model.OrderManagementList)
+                                    {
+                                        <tr>
+                                            <td>#@order.TrackingNumber</td>
+                                            <td>@order.OrderDatetime</td>
+                                            <td>@order.FullName</td>
+                                            <td>@order.CourseTitle</td>
+                                            <td>@order.CourseLength 分鐘</td>
+                                            <td>@order.CourseQuantity 堂</td>
+                                            <td>NT$@order.SubtotalNTD</td>
+                                            <td>@order.TaxIdNumber</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -93,21 +114,29 @@
                                    border="1">
                                 <thead>
                                     <tr>
+                                        <td>訂單編號</td>
                                         <td>交易時間</td>
                                         <td>教師名稱</td>
                                         <td>課程內容</td>
+                                        <td>購買時長</td>
+                                        <td>購買堂數</td>
                                         <td>金額(台幣)</td>
-                                        <td>交易明細</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    <tr>
-                                        <td>2024-08-04</td>
-                                        <td>大國</td>
-                                        <td>唬爛嘴教學</td>
-                                        <td>NT$9,999</td>
-                                        <td>時間戳?</td>
-                                    </tr>
+                                    @foreach (var order in Model.OrderManagementList)
+                                    {
+                                        <tr>
+                                            <td>#@order.TrackingNumber</td>
+                                            <td>@order.OrderDatetime</td>
+                                            <td>@order.FullName</td>
+                                            <td>@order.CourseTitle</td>
+                                            <td>@order.CourseLength 分鐘</td>
+                                            <td>@order.CourseQuantity 堂</td>
+                                            <td>NT$@order.SubtotalNTD</td>
+                                            <td>@order.TaxIdNumber</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -553,8 +582,8 @@
     </div>
 </div>
 
-@section topCSS{
+@section topCSS {
 
-    <link rel="stylesheet" href="~/css/backstage.css" />
+    <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 
 }

@@ -1,0 +1,69 @@
+﻿<div class="container booking-table-container py-3">
+    <div class="booking-table-title d-flex justify-content-between">
+        <h3 class="text-start">預約課程</h3>
+        <p class="timezone-text">時間以 台北 GMT +08:00 顯示</p>
+    </div>
+    <div class="booking-table-date-switcher d-flex col-12 mb-4">
+        <div class="text-center d-flex gap-1 me-3">
+            <button id="prevWeek"><i class="fa-solid fa-angle-left"></i></button>
+            <button id="nextWeek"><i class="fa-solid fa-angle-right"></i></button>
+        </div>
+        <div id="weekRange"></div>
+    </div>
+    <div class="booking-table-body-wrapper d-flex justify-content-center w-100"
+         id="bookingTableBodyWrapper">
+        <div class="table booking-table w-100">
+            <div>
+                <div id="bookingTableHeader">
+                    <!-- rendered by JS -->
+                </div>
+            </div>
+            <div id="bookingTableBody">
+                <!-- rendered by JS -->
+            </div>
+        </div>
+    </div>
+    <!-- <div class="text-center">
+        <button id="expandBookingTable" class="btn btn-open">展開完整時間</button>
+    </div> -->
+</div>
+<div class="modal fade" id="confirmBookingModal" tabindex="-1"
+     aria-labelledby="confirmBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>確認預約內容</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <img class="tutor-headshot rounded-circle" id="confirmBookingModalTutorHeadshot"
+                     src="" alt="Tutor's Photo" >
+                <p class="overflow-hidden" >
+                    <strong>課程名稱：</strong><span id="confirmBookingModalCourseTitle"></span> 
+                </p>
+                <p><strong>預約堂數：</strong>1</p>
+
+            </div>
+            <table class="book-info-table table table-striped">
+                <thead>
+                    <tr>
+                        <th>課程日期</th>
+                        <th>時間</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="confirmBookingModalDate"></td>
+                        <td id="confirmBookingModalTime"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="modal-footer col-8 mx-auto mb-2 d-flex justify-content-between border-0">
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-next">下一步</button>
+            </div>
+        </div>
+    </div>
+</div>
