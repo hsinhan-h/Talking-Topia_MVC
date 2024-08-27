@@ -11,6 +11,7 @@ namespace Web
             builder.Services.AddTransient<OrderService>();
             builder.Services.AddScoped<MemberDataService>();
             builder.Services.AddScoped<ResumeDataService>();
+            builder.Services.AddScoped<CourseService>();
 
             var app = builder.Build();
 

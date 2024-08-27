@@ -3,15 +3,18 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly CourseService _courseService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, CourseService courseService)
         {
             _logger = logger;
+            _courseService = courseService;
         }
 
-        public IActionResult Index()
+        public async Task <IActionResult> Index()
         {
-            return View();
+            var course = await _courseService.GetCourseList();
+            return View(course);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -61,7 +61,18 @@ namespace Web.ViewModels
         public List<ReviewViewModel> ReviewContents { get; set; }
         [Display(Name = "關注狀態")]
         public bool FollowingStatus { get; set; }
-
+        /// <summary>
+        /// 科目Id
+        /// </summary>
+        public int SubjectId {  get; set; }
+        /// <summary>
+        /// 科目名稱
+        /// </summary>
+        public string SubjectName { get; set; }
+        /// <summary>
+        /// 會員頭像=教師頭像
+        /// </summary>
+        public string HeadShotImage {  get; set; }
     }
 
     public class CourseImageViewModel
