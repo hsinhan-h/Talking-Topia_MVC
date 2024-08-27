@@ -153,5 +153,72 @@ namespace Web.Services
                 CourseInfoList = courseMainPage
             };
         }
+
+        /// <summary>
+        /// 首頁隨機顯示課程
+        /// </summary>
+        /// <returns></returns>
+        public async Task<CourseInfoListViewModel> GetCourseList()
+        {
+            var courseList = new List<CourseInfoViewModel>
+            {
+                new CourseInfoViewModel
+                {
+                    CourseId=1,
+                    SubjectId=1,
+                    SubjectName="法文",
+                    TrialPriceNTD=100,
+                    HeadShotImage="https://fakeimg.pl/300x300/?text=France"
+                },
+                new CourseInfoViewModel
+                {
+                    CourseId=1,
+                    SubjectId=1,
+                    SubjectName="國文",
+                    TrialPriceNTD=150,
+                    HeadShotImage="https://fakeimg.pl/300x300/?text=Chinese"
+                },
+                new CourseInfoViewModel
+                {
+                    CourseId=1,
+                    SubjectId=1,
+                    SubjectName="日文",
+                    TrialPriceNTD=200,
+                    HeadShotImage="https://fakeimg.pl/300x300/?text=Japen"
+                }
+                ,
+                new CourseInfoViewModel
+                {
+                    CourseId=1,
+                    SubjectId=1,
+                    SubjectName="台語",
+                    TrialPriceNTD=250,
+                    HeadShotImage="https://fakeimg.pl/300x300/?text=Taiwaness"
+                }
+                ,
+                new CourseInfoViewModel
+                {
+                    CourseId=1,
+                    SubjectId=1,
+                    SubjectName="韓文",
+                    TrialPriceNTD=300,
+                    HeadShotImage="https://fakeimg.pl/300x300/?text=Karen"
+                }
+                ,
+                new CourseInfoViewModel
+                {
+                    CourseId=1,
+                    SubjectId=1,
+                    SubjectName="英文",
+                    TrialPriceNTD=350,
+                    HeadShotImage="https://fakeimg.pl/300x300/?text=English"
+                }
+            };
+
+            return new CourseInfoListViewModel()
+            {
+                CourseInfoList = courseList
+            };
+        }
     }
 }
