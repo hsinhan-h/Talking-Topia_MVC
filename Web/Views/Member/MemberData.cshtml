@@ -1,4 +1,6 @@
-@model Web.ViewModels.MemberProfileViewModel
+@model Web.ViewModels.MemberProfileListViewModel
+@foreach (var item in Model.MemberDataList)
+{
 <partial name="_BannerPartial" />
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
@@ -39,7 +41,8 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput1"
-                                                   placeholder="" />
+                                                   placeholder="" 
+                                                   value="@item.Nickname"/>
                                             <label for="floatingInput1">暱稱</label>
                                         </div>
                                     </div>
@@ -48,7 +51,8 @@
                                             <input type="date"
                                                    class="form-control"
                                                    id="floatingInput2"
-                                                   placeholder="yyyy-MM-dd" />
+                                                   placeholder="yyyy-MM-dd" 
+                                                   value="@item.Birthday.ToString("yyyy-MM-dd")" />
                                             <label for="floatingInput2">生日</label>
                                         </div>
                                     </div>
@@ -59,7 +63,8 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput3"
-                                                   placeholder="" />
+                                                   placeholder=""
+                                                   value="@item.Gender" />
                                             <label for="floatingInput3">性別</label>
                                         </div>
                                     </div>
@@ -68,7 +73,8 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput4"
-                                                   placeholder="" />
+                                                   placeholder="" 
+                                                   value="@item.NationName" />
                                             <label for="floatingInput4">國籍</label>
                                         </div>
                                     </div>
@@ -79,7 +85,8 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput5"
-                                                   placeholder="" />
+                                                   placeholder="" 
+                                                   value="@item.NativeLanguage" />
                                             <label for="floatingInput5">母語</label>
                                         </div>
                                     </div>
@@ -88,7 +95,8 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput6"
-                                                   placeholder="" />
+                                                   placeholder=""
+                                                   value="@item.SpokenLanguage" />
                                             <label for="floatingInput6">會說的語言</label>
                                         </div>
                                     </div>
@@ -106,6 +114,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput7"
+                                                   value="@item.Account"
                                                    placeholder="" />
                                             <label for="floatingInput7">帳號</label>
                                         </div>
@@ -124,6 +133,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput8"
+                                                   value="@item.LastName"
                                                    placeholder="" />
                                             <label for="floatingInput8">名字</label>
                                         </div>
@@ -133,6 +143,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput9"
+                                                   value="@item.FirstName"
                                                    placeholder="" />
                                             <label for="floatingInput9">姓氏</label>
                                         </div>
@@ -144,6 +155,7 @@
                                             <input type="email"
                                                    class="form-control"
                                                    id="floatingInput10"
+                                                   value="@item.Email"
                                                    placeholder="name@example.com" />
                                             <label for="floatingInput10">電子信箱</label>
                                         </div>
@@ -153,6 +165,7 @@
                                             <input type="tel"
                                                    class="form-control"
                                                    id="floatingInput11"
+                                                   value="@item.Phone"
                                                    placeholder="" />
                                             <label for="floatingInput11">電話</label>
                                         </div>
@@ -164,6 +177,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput12"
+                                                   value="@item.Address"
                                                    placeholder="" />
                                             <label for="floatingInput12">地址</label>
                                         </div>
@@ -175,6 +189,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput13"
+                                                   value="@item.BankCode"
                                                    placeholder="" />
                                             <label for="floatingInput13">銀行代號</label>
                                         </div>
@@ -184,6 +199,7 @@
                                             <input type="text"
                                                    class="form-control"
                                                    id="floatingInput14"
+                                                   value="@item.BankAccount"
                                                    placeholder="" />
                                             <label for="floatingInput14">銀行帳戶</label>
                                         </div>
@@ -201,8 +217,9 @@
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
                                         <input class="form-check-input"
                                                type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
+                                               value="中文"
+                                               id="flexCheckChecked"
+                                            @(item.CousePrefer.Contains("Chinese") ? "checked" : "") />
                                         <label class="form-check-label" for="flexCheckChecked">
                                             中文
                                         </label>
@@ -210,7 +227,7 @@
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
                                         <input class="form-check-input"
                                                type="checkbox"
-                                               value=""
+                                               value="英文"
                                                id="flexCheckDefault" />
                                         <label class="form-check-label" for="flexCheckDefault">
                                             英文
@@ -259,7 +276,7 @@
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
                                         <input class="form-check-input"
                                                type="checkbox"
-                                               value=""
+                                               value="程式設計"
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
                                             HTML/CSS
@@ -2349,6 +2366,7 @@
         </div>
     </div>
 </div>
+};
 @section topCSS {
     <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 }

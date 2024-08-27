@@ -7,7 +7,7 @@ namespace Web.Services
         public async Task<MemberProfileListViewModel> GetresumeData()
         {
             // 二筆假資料
-            var memberData = new List<MemberProfileViewModel>
+            var resumedata = new List<MemberProfileViewModel>
             {
 
                 new MemberProfileViewModel
@@ -32,7 +32,7 @@ namespace Web.Services
 
             return new MemberProfileListViewModel()
             {
-                MemberDataList = memberData.Where(x => x.Account == "Abc!123456").ToList()
+                MemberDataList = resumedata.Where(x => x.Account == "Abc!123456").ToList()
             };
 
         }

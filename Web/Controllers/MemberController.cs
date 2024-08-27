@@ -48,7 +48,7 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> MemberData()
         {
-            var summaryData = await _memberDataService.GetFilteredMemberDataAsync();
+            var summaryData = await _memberDataService.GetMemberData("tommy85");
             return View(summaryData);
         }
         public async Task<IActionResult> MemberTransaction()
