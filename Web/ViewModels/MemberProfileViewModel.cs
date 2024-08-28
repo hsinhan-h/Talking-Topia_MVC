@@ -49,7 +49,8 @@ namespace Web.ViewModels
         public string Address { get; set; }
 
         [Display(Name ="課程偏好")]//複數欄位
-        public List<CouseListViewModel> CousePrefer { get; set; }
+        //public List<CouseListViewModel> CousePrefer { get; set; }
+        public string CousePrefer { get; set; }
 
         [Display(Name = "學校名稱")]
         public string SchoolName { get; set; }
@@ -85,7 +86,10 @@ namespace Web.ViewModels
         public string TutorIntro { get; set; }
 
         [Display(Name = "可接受預約時段")]//複數欄位
-        public List<ReservationTimeListViewModel> ReservationTime { get; set; }       
+        public List<ReservationTimeListViewModel> ReservationTime { get; set; }  
+ 
+        public string BankAccount { get; set; }
+        public string BankCode { get; set; }
     }
     public class CouseListViewModel
     {
