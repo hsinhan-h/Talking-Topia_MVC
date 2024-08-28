@@ -90,6 +90,11 @@ namespace Web.ViewModels
  
         public string BankAccount { get; set; }
         public string BankCode { get; set; }
+
+        public string ProfessionalLicenseFile { get; set; }
+
+        public List<LicenseViewModel> ProfessionalLicenses { get; set; }
+        //= new List<LicenseViewModel>();
     }
     public class CouseListViewModel
     {
@@ -108,5 +113,10 @@ namespace Web.ViewModels
         [Display(Name = "開課時間")]
         public int CourseHourId { get; set; }
 
+    }
+    public class LicenseViewModel
+    {
+        public string LicenseName { get; set; }
+        public string LicenseFile { get; set; }
     }
 }

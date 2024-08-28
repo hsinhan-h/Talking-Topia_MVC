@@ -14,6 +14,8 @@
 }
 
 <main>
+     @foreach (var item in Model.MemberDataList)
+{
     <div class="container-fluid mt-5">
         <div class="row px-0">
             <div class="col-12 resume_banner d-flex flex-column justify-content-center">
@@ -37,31 +39,22 @@
             </div>
             <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
                 <p class="my-1">請提供大頭貼</p>
-                <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入...">
+                <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入..." value="@item.ImageUrl">
             </div>
             <div class="col-12 mt-4">
                 <p class="my-1 bgc fs-4">【學校名稱】</p>
-                @foreach (var item in Model.MemberDataList)
-                {
-                    <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.SchoolName" />
-                }
+                <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.SchoolName" />
             </div>
             <div class="col-12 mt-2">
                 <p class="my-1 bgc fs-4">【就學期間】</p>
                 <div class="input-group my-1">
-                     @foreach (var item in Model.MemberDataList)
-                {
                     <input type="number" placeholder="開始年份" class="form-control" min="1940" value="@item.StudyStartYear">
-                        <input type="number" placeholder="結束年份" class="form-control" min="1940" value="@item.StudyEndYear">
-                }
+                    <input type="number" placeholder="結束年份" class="form-control" min="1940" value="@item.StudyEndYear">
                 </div>
             </div>
             <div class="col-12 mt-2 mb-3">
                 <p class="my-1 bgc fs-4">【科系名稱】</p>
-                 @foreach (var item in Model.MemberDataList)
-                {
-                    <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.DepartmentName">
-                }
+                 <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.DepartmentName">
             </div>
         </div>
         <div class="row mt-5 resume_border p-3 m-2">
@@ -72,40 +65,74 @@
                 </span>
             </div>
             <div class="col-12 ">
-                <p class="my-1 bgc fs-4">【證照 (一)】</p>
-                <div class="my-1 d-flex flex-column">
-                    <input class="form-control my-1" type="text" placeholder="輸入...">
-                    <input class="my-2" type="file" placeholder="輸入...">
-                </div>
+          <p class="my-1 bgc fs-4">【證照 (一)】</p>
+          <div class="my-1 d-flex flex-column">
+            <input class="form-control my-1" type="text" placeholder="輸入...">
+            <input class="my-2" type="file" placeholder="輸入...">
+          </div>
             </div>
             <div class="col-12 mt-2">
-                <p class="my-1 bgc fs-4">【證照 (二)】</p>
-                <div class="my-1 d-flex flex-column">
-                    <input class="form-control my-1" type="text" placeholder="輸入...">
-                    <input class="my-2" type="file" placeholder="輸入...">
-                </div>
+              <p class="my-1 bgc fs-4">【證照 (二)】</p>
+              <div class="my-1 d-flex flex-column">
+                <input class="form-control my-1" type="text" placeholder="輸入...">
+                <input class="my-2" type="file" placeholder="輸入...">
+              </div>
             </div>
             <div class="col-12 mt-2 collapse" id="collapselicense">
-                <p class="my-1 bgc fs-4">【證照 (三)】</p>
-                <div class="my-1 d-flex flex-column">
-                    <input class="form-control my-1" type="text" placeholder="輸入...">
-                    <input class="my-2" type="file" placeholder="輸入...">
-                </div>
+              <p class="my-1 bgc fs-4">【證照 (三)】</p>
+              <div class="my-1 d-flex flex-column">
+                <input class="form-control my-1" type="text" placeholder="輸入...">
+                <input class="my-2" type="file" placeholder="輸入...">
+              </div>
             </div>
             <div class="col-12 mt-2 collapse" id="collapselicense">
-                <p class="my-1 bgc fs-4">【證照 (四)】</p>
-                <div class="my-1 d-flex flex-column">
-                    <input class="form-control my-1" type="text" placeholder="輸入...">
-                    <input class="my-2" type="file" placeholder="輸入...">
-                </div>
+              <p class="my-1 bgc fs-4">【證照 (四)】</p>
+              <div class="my-1 d-flex flex-column">
+                <input class="form-control my-1" type="text" placeholder="輸入...">
+                <input class="my-2" type="file" placeholder="輸入...">
+              </div>
             </div>
             <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
-                 aria-expanded="false">
-                <div class="col-12 d-flex flex-row align-items-center justify-content-center">
-                    <i class=" fa-solid fa-ellipsis "></i>
-                </div>
+              aria-expanded="false">
+              <div class="col-12 d-flex flex-row align-items-center justify-content-center">
+                <i class=" fa-solid fa-ellipsis "></i>
+              </div>
             </div>
         </div>
+          @* <div class="col-12">
+                <p class="my-1 bgc fs-4">【證照】</p>
+                <div class="my-1 d-flex flex-column">
+                    @for (int i = 0; i < item.ProfessionalLicenses.Count; i++)
+                    {
+                        <div class="col-12 mt-2">
+                            <p class="my-1 bgc fs-4">【證照 @(i + 1)】</p>
+                            <div class="my-1 d-flex flex-column">
+                                <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.ProfessionalLicenses[i].LicenseName">
+                                <input class="my-2" type="file" placeholder="輸入..." value="@item.ProfessionalLicenses[i].LicenseFile">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- Collapse trigger -->
+            <div class="apply-expend mb-3" data-bs-toggle="collapse" data-bs-target="#collapselicense-@item.Account" aria-expanded="false">
+                <div class="col-12 d-flex flex-row align-items-center justify-content-center">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+            </div>
+            <!-- Collapsible section -->
+            <div class="collapse" id="collapselicense-@item.Account">
+                @for (int i = 3; i < item.ProfessionalLicenses.Count; i++)
+                {
+                    <div class="col-12 mt-2">
+                        <p class="my-1 bgc fs-4">【證照 @(i + 1)】</p>
+                        <div class="my-1 d-flex flex-column">
+                            <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.ProfessionalLicenses[i].LicenseName">
+                            <input class="my-2" type="file" placeholder="輸入...">
+                        </div>
+                    </div>
+                }
+            </div> *@
         <div class="row mt-5 resume_border p-3 m-2">
             <div>
                 <div class="d-flex flex-row justify-content-between">
@@ -184,15 +211,15 @@
             <div class="col-12 mb-2">
                 <p class="my-1 bgc fs-4">【年資】</p>
                 <div class="input-group my-2">
-                    <input type="number" placeholder="開始年份" class="form-control" min="1940">
-                    <input type="number" placeholder="結束年份" class="form-control" min="1940">
+                    <input type="date" placeholder="開始年份" class="form-control" min="1940" value="@item.WorkStartDate.ToString("yyyy-MM-dd")" >
+                    <input type="data" placeholder="結束年份" class="form-control" min="1940" value="@item.WorkEndDate.ToString("yyyy-MM-dd")">
                 </div>
                 <div class="col-12">
                     <p class="my-1 bgc fs-4">【簡述】</p>
                     <div class="my-1 w-100 editor_resume">
-                        <p></p>
+                        <p>@item.WorkExperience</p>
                     </div>
-                    <input class="form-control my-2" type="file" placeholder="輸入...">
+                    <input class="form-control my-2" type="file" placeholder="輸入..."  >
                 </div>
             </div>
             <div class="col-12 mb-2 collapse" id="collapsework">
@@ -222,4 +249,5 @@
             </div>
         </div>
     </div>
+}
 </main>
