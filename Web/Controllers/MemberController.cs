@@ -21,9 +21,9 @@ namespace Web.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Toteacher_resume()
+        public async Task<IActionResult> Toteacher_resume( )
         {
-            var ResumeSummaryData = await _resumeDataService.GetresumeData();
+            var ResumeSummaryData = await _resumeDataService.GetresumeData("tommy85");
             return View(ResumeSummaryData);
         }
         public IActionResult Recommended_teachers_AI()
