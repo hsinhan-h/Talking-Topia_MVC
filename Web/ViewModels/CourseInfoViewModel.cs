@@ -39,8 +39,10 @@ namespace Web.ViewModels
         public decimal TrialPriceNTD { get; set; }
         [Display(Name = "25分鐘台幣價格")]
         public decimal TwentyFiveMinPriceNTD { get; set; }
+
         [Display(Name = "50分鐘台幣價格")]
         public decimal FiftyMinPriceNTD { get; set; }
+
         [Display(Name = "課程影片")]
         public string CourseVideo { get; set; }
         [Display(Name = "課程影片縮圖")]
@@ -57,8 +59,8 @@ namespace Web.ViewModels
         public double CourseRatings { get; set; }
         [Display(Name = "課程評論數")]
         public int CourseReviews { get; set; }
-        [Display(Name = "評論內容")]
-        public List<ReviewViewModel> ReviewContents { get; set; }
+        
+        public List<ReviewViewModel> ReviewCardList { get; set; }
         [Display(Name = "關注狀態")]
         public bool FollowingStatus { get; set; }
         /// <summary>
@@ -90,7 +92,25 @@ namespace Web.ViewModels
 
     public class ReviewViewModel
     {
+        public int ReviewerId { get; set; }
+        public DateTime ReviewDate { get; set; }
+
         public string ReviewContent {  get; set; }
+    }
+
+
+    public class TwentyFiveDiscountedPrice
+    { 
+        public int FiveOffPrice { get; set; }
+        public int TenOffPrce { get; set; }
+        public int FifteenOffPrice { get; set; }
+    }
+
+    public class FiftyDiscountedPrice
+    {
+        public int FiveOffPrice { get; set; }
+        public int TenOffPrce { get; set; }
+        public int FifteenOffPrice { get; set; }
     }
 
 }

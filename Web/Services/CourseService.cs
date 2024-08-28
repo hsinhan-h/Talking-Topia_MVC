@@ -129,7 +129,7 @@ namespace Web.Services
                     CourseRatings = 4.96,
                     CourseReviews = 1013,
                     FinishedCoursesTotal = 3056,
-                    ReviewContents = new List<ReviewViewModel>
+                    ReviewCardList = new List<ReviewViewModel>
                     { 
                         new ReviewViewModel{ReviewContent = "Akimo老師的日語課程真是太棒了！老師講解得非常詳細，從基礎到進階都涵蓋到了。現在我不僅能讀懂日文，還能進行簡單的對話，真的感謝這門課！" },
                         new ReviewViewModel{ ReviewContent = "這門課程讓我對日語有了全新的理解。Akimo老師的教學方式非常獨特，讓我在學習中不斷進步。課程內容豐富且實用，是想學日語的朋友們必修的好課！" },
