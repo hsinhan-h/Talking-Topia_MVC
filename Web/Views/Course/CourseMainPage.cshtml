@@ -14,8 +14,6 @@
     <link href="~/css/booking_table_modal.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/tutor_recommend.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/tutor_recommend_carousel_slider.css" rel="stylesheet" asp-append-version="true" />
-
-
 }
 
 @{
@@ -478,7 +476,7 @@
                 <div class="course-info-group min-25">
                     <div class="course-info-card d-flex">
                         <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$ @FormatPrice(@course.TwentyFiveMinPriceNTD)</div>
+                            <div class="charging-fee">NT$@course.TwentyFiveMinPriceNTD</div>
                             <div class="course-number-time">1堂25分鐘課</div>
                         </div>
                         <div class="course-discount d-flex">
@@ -486,41 +484,46 @@
                             <i class="fa-solid fa-angle-right"></i>
                         </div>
                     </div>
-                    <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$491</div>
-                            <div class="course-number-time">10堂25分鐘課</div>
+
+                    @foreach (var price in course.TwentyFiveDiscountedPrice)
+                    {
+                        
+                        <div class="course-info-card d-flex">
+                            <div class="course-charging d-flex flex-column">
+                                <div class="charging-fee">NT$ @price.FiveOffPrice</div>
+                                <div class="course-number-time">10堂25分鐘課</div>
+                            </div>
+                            <div class="course-discount d-flex">
+                                <div class="course-discount-logo">5% Off</div>
+                                <i class="fa-solid fa-angle-right"></i>
+                            </div>
                         </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo">5% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
+                        <div class="course-info-card d-flex">
+                            <div class="course-charging d-flex flex-column">
+                                <div class="charging-fee">NT$ @price.TenOffPrice</div>
+                                <div class="course-number-time">20堂25分鐘課</div>
+                            </div>
+                            <div class="course-discount d-flex">
+                                <div class="course-discount-logo">10% Off</div>
+                                <i class="fa-solid fa-angle-right"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$465</div>
-                            <div class="course-number-time">20堂25分鐘課</div>
+                        <div class="course-info-card d-flex">
+                            <div class="course-charging d-flex flex-column">
+                                <div class="charging-fee">NT$ @price.FifteenOffPrice</div>
+                                <div class="course-number-time">40堂25分鐘課</div>
+                            </div>
+                            <div class="course-discount d-flex">
+                                <div class="course-discount-logo">15% Off</div>
+                                <i class="fa-solid fa-angle-right"></i>
+                            </div>
                         </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo">10% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div>
-                    <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$439</div>
-                            <div class="course-number-time">40堂25分鐘課</div>
-                        </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo">15% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div>
+                    }
                 </div>
                 <div class="course-info-group min-50 d-none">
                     <div class="course-info-card d-flex">
                         <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$862</div>
+                            <div class="charging-fee">NT$@course.FiftyMinPriceNTD</div>
                             <div class="course-number-time">1堂50分鐘課</div>
                         </div>
                         <div class="course-discount d-flex">
@@ -528,36 +531,39 @@
                             <i class="fa-solid fa-angle-right"></i>
                         </div>
                     </div>
-                    <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$819</div>
-                            <div class="course-number-time">5堂50分鐘課</div>
+                    @foreach (var price in course.FiftyDiscountedPrice)
+                    {
+                        <div class="course-info-card d-flex">
+                            <div class="course-charging d-flex flex-column">
+                                <div class="charging-fee">NT$@price.FiveOffPrice</div>
+                                <div class="course-number-time">5堂50分鐘課</div>
+                            </div>
+                            <div class="course-discount d-flex">
+                                <div class="course-discount-logo">5% Off</div>
+                                <i class="fa-solid fa-angle-right"></i>
+                            </div>
                         </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo">5% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
+                        <div class="course-info-card d-flex">
+                            <div class="course-charging d-flex flex-column">
+                                <div class="charging-fee">NT$@price.TenOffPrice</div>
+                                <div class="course-number-time">10堂50分鐘課</div>
+                            </div>
+                            <div class="course-discount d-flex">
+                                <div class="course-discount-logo">10% Off</div>
+                                <i class="fa-solid fa-angle-right"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$775</div>
-                            <div class="course-number-time">10堂50分鐘課</div>
+                        <div class="course-info-card d-flex">
+                            <div class="course-charging d-flex flex-column">
+                                <div class="charging-fee">NT$@price.FifteenOffPrice</div>
+                                <div class="course-number-time">20堂50分鐘課</div>
+                            </div>
+                            <div class="course-discount d-flex">
+                                <div class="course-discount-logo">15% Off</div>
+                                <i class="fa-solid fa-angle-right"></i>
+                            </div>
                         </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo">10% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div>
-                    <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$732</div>
-                            <div class="course-number-time">20堂50分鐘課</div>
-                        </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo">15% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -579,7 +585,7 @@
 </div>
 <div class="lh-rwd-course-info-tab col-12">
     <div class="try-out-class-info">
-        <div class="tab-charging-fee">NT$108</div>
+        <div class="tab-charging-fee">NT$@course.TrialPriceNTD</div>
         <div class="tab-course-number-time">25分鐘體驗課</div>
     </div>
     <div class="course-button-group">
@@ -751,12 +757,7 @@
     </div>
 </div>
 
-@functions{
-    private string FormatPrice(decimal price)
-    {
-        return String.Format($"{price:n0}");
-    }
-}
+
 @section endJS
 {
     @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

@@ -105,7 +105,7 @@ namespace Web.ViewModels
     public class TwentyFiveDiscountedPriceList
     { 
         public int FiveOffPrice { get; set; }
-        public int TenOffPirce { get; set; }
+        public int TenOffPrice { get; set; }
         public int FifteenOffPrice { get; set; }
     }
 
