@@ -146,43 +146,26 @@
                         <i class="fa-regular fa-star-half-stroke"></i>
                     </div>
                 </div>
-                <div class="comment-card">
-                    <div class="comment d-flex ">
-                        <div class="user-icon ">
-                            <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                            </svg>
+                @foreach (var review in course.ReviewCardList.Take(2))
+                {
+                    <div class="comment-card">
+                        <div class="comment d-flex ">
+                            <div class="user-icon ">
+                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                                </svg>
+                            </div>
+                            <div class="comment-info d-flex flex-column">
+                                <p class="user-name">@review.ReviewerId</p>
+                                <p class="comment-date">@review.ReviewDate</p>
+                            </div>
                         </div>
-                        <div class="comment-info d-flex flex-column">
-                            <p class="user-name">Winni</p>
-                            <p class="comment-date">2024 年 7月13 日</p>
-                        </div>
+                        <p>
+                            @review.ReviewContent
+                        </p>
                     </div>
-                    <p>
-                        老師上課很細心，會為學員的需求客製化課程，
-                        一開始想要學習正統的韓文，老師準備了韓國語學堂的課材教學，
-                        上月底去韓國玩，老師花了2堂課時間教我旅遊韓文如何點餐，使用naver導航app，如何搭大眾運輸，幫我把我想要去的景點做統整，並把相關資訊用韓文筆記給我，
-                        讓我對首爾的地理位置更清楚更好安排時間，用韓文點餐買東西，非常的受用，謝謝老師🩵
-                    </p>
-                </div>
-                <div class="comment-card">
-                    <div class="comment d-flex ">
-                        <div class="user-icon ">
-                            <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                            </svg>
-                        </div>
-                        <div class="comment-info d-flex flex-column">
-                            <p class="user-name">匿名</p>
-                            <p class="comment-date">2024 年 4月29 日</p>
-                        </div>
-                    </div>
-                    <p>
-                        1. 相較以往總是遇到說話很快的老師（在此不是說趕課程進度而是說話的快節奏。）Sayeong老師說話較緩
-                        且口語清晰，符合我在此平台找老師的要求。2. 視學生的學習狀況調整進度。3. 除了課本，會讓我唸有興
-                        趣的課外讀物，從中糾正讀音咬字，且有機會慢慢地多練習較難或較少在初級階段遇到的單字讀音。
-                    </p>
-                </div>
+                }
+                
                 <button type="button" class="btn more-comment" data-bs-target="#moreInfoModal" data-bs-toggle="modal">
                     顯示全部410則評論
                     <i class="fa-solid fa-chevron-down"></i>
@@ -742,120 +725,25 @@
 
                 </div>
                 <div class="col-md-6 col-12 comment-card-section h-100">
-                    <div class="comment-card">
-                        <div class="comment d-flex ">
-                            <div class="user-icon ">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                                </svg>
+                    @foreach (var review in course.ReviewCardList)
+                    {
+                        <div class="comment-card">
+                            <div class="comment d-flex ">
+                                <div class="user-icon ">
+                                    <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                                    </svg>
+                                </div>
+                                <div class="comment-info d-flex flex-column">
+                                    <p class="user-name">@review.ReviewerId</p>
+                                    <p class="comment-date">@review.ReviewDate</p>
+                                </div>
                             </div>
-                            <div class="comment-info d-flex flex-column">
-                                <p class="user-name">Winni</p>
-                                <p class="comment-date">2024 年 7月13 日</p>
-                            </div>
+                            <p>
+                                @review.ReviewContent
+                            </p>
                         </div>
-                        <p>
-                            老師上課很細心，會為學員的需求客製化課程，
-                            一開始想要學習正統的韓文，老師準備了韓國語學堂的課材教學，
-                            上月底去韓國玩，老師花了2堂課時間教我旅遊韓文如何點餐，使用naver導航app，如何搭大眾運輸，幫我把我想要去的景點做統整，並把相關資訊用韓文筆記給我，
-                            讓我對首爾的地理位置更清楚更好安排時間，用韓文點餐買東西，非常的受用，謝謝老師🩵
-                        </p>
-                    </div>
-                    <div class="comment-card">
-                        <div class="comment d-flex ">
-                            <div class="user-icon ">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                                </svg>
-                            </div>
-                            <div class="comment-info d-flex flex-column">
-                                <p class="user-name">Winni</p>
-                                <p class="comment-date">2024 年 7月13 日</p>
-                            </div>
-                        </div>
-                        <p>
-                            老師上課很細心，會為學員的需求客製化課程，
-                            一開始想要學習正統的韓文，老師準備了韓國語學堂的課材教學，
-                            上月底去韓國玩，老師花了2堂課時間教我旅遊韓文如何點餐，使用naver導航app，如何搭大眾運輸，幫我把我想要去的景點做統整，並把相關資訊用韓文筆記給我，
-                            讓我對首爾的地理位置更清楚更好安排時間，用韓文點餐買東西，非常的受用，謝謝老師🩵
-                        </p>
-                    </div>
-                    <div class="comment-card">
-                        <div class="comment d-flex ">
-                            <div class="user-icon ">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                                </svg>
-                            </div>
-                            <div class="comment-info d-flex flex-column">
-                                <p class="user-name">Winni</p>
-                                <p class="comment-date">2024 年 7月13 日</p>
-                            </div>
-                        </div>
-                        <p>
-                            老師上課很細心，會為學員的需求客製化課程，
-                            一開始想要學習正統的韓文，老師準備了韓國語學堂的課材教學，
-                            上月底去韓國玩，老師花了2堂課時間教我旅遊韓文如何點餐，使用naver導航app，如何搭大眾運輸，幫我把我想要去的景點做統整，並把相關資訊用韓文筆記給我，
-                            讓我對首爾的地理位置更清楚更好安排時間，用韓文點餐買東西，非常的受用，謝謝老師🩵
-                        </p>
-                    </div>
-                    <div class="comment-card">
-                        <div class="comment d-flex ">
-                            <div class="user-icon ">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                                </svg>
-                            </div>
-                            <div class="comment-info d-flex flex-column">
-                                <p class="user-name">Winni</p>
-                                <p class="comment-date">2024 年 7月13 日</p>
-                            </div>
-                        </div>
-                        <p>
-                            老師上課很細心，會為學員的需求客製化課程，
-                            一開始想要學習正統的韓文，老師準備了韓國語學堂的課材教學，
-                            上月底去韓國玩，老師花了2堂課時間教我旅遊韓文如何點餐，使用naver導航app，如何搭大眾運輸，幫我把我想要去的景點做統整，並把相關資訊用韓文筆記給我，
-                            讓我對首爾的地理位置更清楚更好安排時間，用韓文點餐買東西，非常的受用，謝謝老師🩵
-                        </p>
-                    </div>
-                    <div class="comment-card">
-                        <div class="comment d-flex ">
-                            <div class="user-icon ">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                                </svg>
-                            </div>
-                            <div class="comment-info d-flex flex-column">
-                                <p class="user-name">Winni</p>
-                                <p class="comment-date">2024 年 7月13 日</p>
-                            </div>
-                        </div>
-                        <p>
-                            老師上課很細心，會為學員的需求客製化課程，
-                            一開始想要學習正統的韓文，老師準備了韓國語學堂的課材教學，
-                            上月底去韓國玩，老師花了2堂課時間教我旅遊韓文如何點餐，使用naver導航app，如何搭大眾運輸，幫我把我想要去的景點做統整，並把相關資訊用韓文筆記給我，
-                            讓我對首爾的地理位置更清楚更好安排時間，用韓文點餐買東西，非常的受用，謝謝老師🩵
-                        </p>
-                    </div>
-                    <div class="comment-card">
-                        <div class="comment d-flex ">
-                            <div class="user-icon ">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                                </svg>
-                            </div>
-                            <div class="comment-info d-flex flex-column">
-                                <p class="user-name">Winni</p>
-                                <p class="comment-date">2024 年 7月13 日</p>
-                            </div>
-                        </div>
-                        <p>
-                            老師上課很細心，會為學員的需求客製化課程，
-                            一開始想要學習正統的韓文，老師準備了韓國語學堂的課材教學，
-                            上月底去韓國玩，老師花了2堂課時間教我旅遊韓文如何點餐，使用naver導航app，如何搭大眾運輸，幫我把我想要去的景點做統整，並把相關資訊用韓文筆記給我，
-                            讓我對首爾的地理位置更清楚更好安排時間，用韓文點餐買東西，非常的受用，謝謝老師🩵
-                        </p>
-                    </div>
+                    }
                 </div>
             </div>
 

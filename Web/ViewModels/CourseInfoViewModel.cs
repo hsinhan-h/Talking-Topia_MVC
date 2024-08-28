@@ -96,7 +96,7 @@ namespace Web.ViewModels
     public class ReviewViewModel
     {
         public int ReviewerId { get; set; }
-        public DateTime ReviewDate { get; set; }
+        public string ReviewDate { get; set; }
 
         public string ReviewContent {  get; set; }
     }
