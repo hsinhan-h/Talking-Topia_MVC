@@ -21,12 +21,12 @@ namespace Web.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Toteacher_resume( )
+        public async Task<IActionResult> ToteacherResume( )
         {
-            var ResumeSummaryData = await _resumeDataService.GetresumeData("tommy85");
+            var ResumeSummaryData = await _resumeDataService.GetResumeData("tommy85");
             return View(ResumeSummaryData);
         }
-        public IActionResult Recommended_teachers_AI()
+        public IActionResult RecommendedTeachersAI()
         {
             return View();
         }
@@ -38,7 +38,7 @@ namespace Web.Controllers
         {
             return View();
         }
-        public IActionResult Chat_window()
+        public IActionResult ChatWindow()
         {
             return View();
         }

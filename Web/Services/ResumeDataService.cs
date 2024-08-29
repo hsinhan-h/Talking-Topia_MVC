@@ -4,7 +4,7 @@ namespace Web.Services
 {
     public class ResumeDataService
     {
-        public async Task<MemberProfileListViewModel> GetresumeData(string account)
+        public async Task<MemberProfileListViewModel> GetResumeData(string account)
         {
             // 二筆假資料
             var resumedata = new List<MemberProfileViewModel>
