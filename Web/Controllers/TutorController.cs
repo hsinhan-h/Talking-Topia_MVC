@@ -10,15 +10,15 @@ namespace Web.Controllers
         {
             _resumeDataService = resumeDataService;
         }
+        /// <summary>
+        /// 原ToTeacher.cshtml的頁面
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Toteacher()
-        {
-            return View();
-        }
-        public async Task<IActionResult> ToteacherResume()
+        public async Task<IActionResult> ToTeacherResume()
         {
             var ResumeSummaryData = await _resumeDataService.GetResumeData("tommy85");
             return View(ResumeSummaryData);
