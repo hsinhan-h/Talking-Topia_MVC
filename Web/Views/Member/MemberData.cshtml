@@ -1,4 +1,4 @@
-@model Web.ViewModels.MemberProfileListViewModel
+Ôªø@model Web.ViewModels.MemberProfileListViewModel
 @foreach (var item in Model.MemberDataList)
 {
 <partial name="_BannerPartial" />
@@ -12,13 +12,13 @@
                            aria-current="page"
                            data-bs-toggle="tab"
                            href="#lh-backstage-member-page">
-                            ∑|≠˚∏ÍÆ∆
+                            ÊúÉÂì°Ë≥áÊñô
                         </a>
                     </li>
                     <li class="nav-item lh-backstage-nav-item">
                         <a class="nav-link"
                            data-bs-toggle="tab"
-                           href="#lh-backstage-tutor-page">Æa±–∏ÍÆ∆</a>
+                           href="#lh-backstage-tutor-page">ÂÆ∂ÊïôË≥áÊñô</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -28,7 +28,7 @@
                             <section class="lh-backstage-virtual-data">
                                 <div class="row mb-2">
                                     <div class="col-12">
-                                        <h3>∞Ú•ª∏ÍÆ∆</h3>
+                                        <h3>Âü∫Êú¨Ë≥áÊñô</h3>
                                         <div class="pic lh-backstage-user-photo-member-data">
                                             <img class="lh-backstage-img"
                                                  src="https://picsum.photos/100/100/?random=16" />
@@ -43,7 +43,7 @@
                                                    id="floatingInput1"
                                                    placeholder="" 
                                                    value="@item.Nickname"/>
-                                            <label for="floatingInput1">º ∫Ÿ</label>
+                                            <label for="floatingInput1">Êö±Á®±</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -53,7 +53,7 @@
                                                    id="floatingInput2"
                                                    placeholder="yyyy-MM-dd" 
                                                    value="@item.Birthday.ToString("yyyy-MM-dd")" />
-                                            <label for="floatingInput2">•Õ§È</label>
+                                            <label for="floatingInput2">ÁîüÊó•</label>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                                    id="floatingInput3"
                                                    placeholder=""
                                                    value="@item.Gender" />
-                                            <label for="floatingInput3">© ßO</label>
+                                            <label for="floatingInput3">ÊÄßÂà•</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -75,7 +75,7 @@
                                                    id="floatingInput4"
                                                    placeholder="" 
                                                    value="@item.NationName" />
-                                            <label for="floatingInput4">∞Íƒy</label>
+                                            <label for="floatingInput4">ÂúãÁ±ç</label>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                                    id="floatingInput5"
                                                    placeholder="" 
                                                    value="@item.NativeLanguage" />
-                                            <label for="floatingInput5">•¿ªy</label>
+                                            <label for="floatingInput5">ÊØçË™û</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -97,7 +97,7 @@
                                                    id="floatingInput6"
                                                    placeholder=""
                                                    value="@item.SpokenLanguage" />
-                                            <label for="floatingInput6">∑|ª°™∫ªy®•</label>
+                                            <label for="floatingInput6">ÊúÉË™™ÁöÑË™ûË®Ä</label>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                             <section class="lh-backstage-lh-backstage-real-data">
                                 <div class="row mb-2">
                                     <div class="col-12">
-                                        <h3>ØuπÍ∏ÍÆ∆</h3>
+                                        <h3>ÁúüÂØ¶Ë≥áÊñô</h3>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -116,14 +116,14 @@
                                                    id="floatingInput7"
                                                    value="@item.Account"
                                                    placeholder="" />
-                                            <label for="floatingInput7">±b∏π</label>
+                                            <label for="floatingInput7">Â∏≥Ëôü</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <button class="btn lh-backstage-submit-btn mt-2"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">
-                                            ≠◊ßÔ±KΩX
+                                            ‰øÆÊîπÂØÜÁ¢º
                                         </button>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
                                                    id="floatingInput8"
                                                    value="@item.LastName"
                                                    placeholder="" />
-                                            <label for="floatingInput8">¶W¶r</label>
+                                            <label for="floatingInput8">ÂêçÂ≠ó</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -145,7 +145,7 @@
                                                    id="floatingInput9"
                                                    value="@item.FirstName"
                                                    placeholder="" />
-                                            <label for="floatingInput9">©m§Û</label>
+                                            <label for="floatingInput9">ÂßìÊ∞è</label>
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@
                                                    id="floatingInput10"
                                                    value="@item.Email"
                                                    placeholder="name@example.com" />
-                                            <label for="floatingInput10">πq§l´HΩc</label>
+                                            <label for="floatingInput10">ÈõªÂ≠ê‰ø°ÁÆ±</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -167,7 +167,7 @@
                                                    id="floatingInput11"
                                                    value="@item.Phone"
                                                    placeholder="" />
-                                            <label for="floatingInput11">πq∏‹</label>
+                                            <label for="floatingInput11">ÈõªË©±</label>
                                         </div>
                                     </div>
                                 </div>
@@ -179,7 +179,7 @@
                                                    id="floatingInput12"
                                                    value="@item.Address"
                                                    placeholder="" />
-                                            <label for="floatingInput12">¶aß}</label>
+                                            <label for="floatingInput12">Âú∞ÂùÄ</label>
                                         </div>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@
                                                    id="floatingInput13"
                                                    value="@item.BankCode"
                                                    placeholder="" />
-                                            <label for="floatingInput13">ª»¶Ê•N∏π</label>
+                                            <label for="floatingInput13">ÈäÄË°å‰ª£Ëôü</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -201,7 +201,7 @@
                                                    id="floatingInput14"
                                                    value="@item.BankAccount"
                                                    placeholder="" />
-                                            <label for="floatingInput14">ª»¶Ê±b§·</label>
+                                            <label for="floatingInput14">ÈäÄË°åÂ∏≥Êà∂</label>
                                         </div>
                                     </div>
                                 </div>
@@ -209,28 +209,28 @@
                             <section class="lh-backstage-preferences">
                                 <div class="row mb-2">
                                     <div class="col-12">
-                                        <h3>Ω“µ{∞æ¶n</h3>
+                                        <h3>Ë™≤Á®ãÂÅèÂ•Ω</h3>
                                     </div>
                                 </div>
                                 <div class="row my-3 p-3">
-                                    <h4>ªy®•</h4>
+                                    <h4>Ë™ûË®Ä</h4>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
                                         <input class="form-check-input"
                                                type="checkbox"
-                                               value="§§§Â"
+                                               value="‰∏≠Êñá"
                                                id="flexCheckChecked"
                                             @(item.CousePrefer.Contains("Chinese") ? "checked" : "") />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            §§§Â
+                                            ‰∏≠Êñá
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
                                         <input class="form-check-input"
                                                type="checkbox"
-                                               value="≠^§Â"
+                                               value="Ëã±Êñá"
                                                id="flexCheckDefault" />
                                         <label class="form-check-label" for="flexCheckDefault">
-                                            ≠^§Â
+                                            Ëã±Êñá
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -239,7 +239,7 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            §È§Â
+                                            Êó•Êñá
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -248,7 +248,7 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            ™k§Â
+                                            Ê≥ïÊñá
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -257,7 +257,7 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            ºw§Â
+                                            Âæ∑Êñá
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -266,17 +266,17 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            ¶ËØZ§˙§Â
+                                            Ë•øÁè≠ÁâôÊñá
                                         </label>
                                     </div>
                                 </div>
                                 <div class="lh-backstage-divider"></div>
                                 <div class="row my-3 p-3">
-                                    <h4>µ{¶°≥]≠p</h4>
+                                    <h4>Á®ãÂºèË®≠Ë®à</h4>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
                                         <input class="form-check-input"
                                                type="checkbox"
-                                               value="µ{¶°≥]≠p"
+                                               value="Á®ãÂºèË®≠Ë®à"
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
                                             HTML/CSS
@@ -330,14 +330,14 @@
                                 </div>
                                 <div class="lh-backstage-divider"></div>
                                 <div class="row my-3 p-3">
-                                    <h4>§…æ«¨Ï•ÿ</h4>
+                                    <h4>ÂçáÂ≠∏ÁßëÁõÆ</h4>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
                                         <input class="form-check-input"
                                                type="checkbox"
                                                value=""
                                                id="flexCheckDefault" />
                                         <label class="form-check-label" for="flexCheckDefault">
-                                            º∆æ«
+                                            Êï∏Â≠∏
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -346,7 +346,7 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            ™´≤z
+                                            Áâ©ÁêÜ
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -355,7 +355,7 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            §∆æ«
+                                            ÂåñÂ≠∏
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -364,7 +364,7 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            •Õ™´
+                                            ÁîüÁâ©
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -373,7 +373,7 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            ¶a≤z
+                                            Âú∞ÁêÜ
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 form-check lh-backstage-preference">
@@ -382,7 +382,7 @@
                                                value=""
                                                id="flexCheckChecked" />
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            æ˙•v
+                                            Ê≠∑Âè≤
                                         </label>
                                     </div>
                                 </div>
@@ -393,14 +393,14 @@
                             <div class="col-1">
                                 <input class="btn btn-info col-12 lh-backstage-submit-btn"
                                        type="submit"
-                                       value="ΩsøË"
+                                       value="Á∑®ËºØ"
                                        data-bs-toggle="modal"
                                        data-bs-target="#exampleModal" />
                             </div>
                             <div class="col-1 d-none">
                                 <input class="btn btn-info col-12 lh-backstage-submit-btn"
                                        type="submit"
-                                       value="¿x¶s"
+                                       value="ÂÑ≤Â≠ò"
                                        data-bs-toggle="modal"
                                        data-bs-target="#exampleModal" />
                             </div>
@@ -411,22 +411,22 @@
                             <section class="lh-backstage-lh-backstage-tutor-data">
                                 <div class="row mb-2">
                                     <div class="col-12">
-                                        <h3>Æa±–∏ÍÆ∆</h3>
+                                        <h3>ÂÆ∂ÊïôË≥áÊñô</h3>
                                     </div>
                                     <div class="lh-baclstage-member-data-list mt-3">
-                                        <h4>æ«æ˙</h4>
+                                        <h4>Â≠∏Ê≠∑</h4>
                                         <ul>
                                             <li></li>
                                         </ul>
-                                        <h4>∏gæ˙</h4>
+                                        <h4>Á∂ìÊ≠∑</h4>
                                         <ul>
                                             <li></li>
                                         </ul>
-                                        <h4>•i±µ®¸πw¨˘Æ…¨q</h4>
+                                        <h4>ÂèØÊé•ÂèóÈ†êÁ¥ÑÊôÇÊÆµ</h4>
                                         <ul v-if="slots.length > 0">
                                             <li v-for="slot in slots" :key="slot.id">
                                                 <p>
-                                                    <span>¨P¥¡§G</span><span>13</span>¬I¶‹<span>15</span>¬I
+                                                    <span>ÊòüÊúü‰∫å</span><span>13</span>ÈªûËá≥<span>15</span>Èªû
                                                 </p>
                                             </li>
                                         </ul>
@@ -434,7 +434,7 @@
                                                 class="btn lh-backstage-submit-btn"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#editTimeSlotModal">
-                                            ΩsøË±–Æv•iπw¨˘Æ…¨q
+                                            Á∑®ËºØÊïôÂ∏´ÂèØÈ†êÁ¥ÑÊôÇÊÆµ
                                         </button>
                                     </div>
                                     <div class="lh-backstage-member-card-list d-flex">
@@ -442,18 +442,18 @@
                                             <img src="~/image/backstage/programming.png"
                                                  class="card-img-top w-100" />
                                             <div class="card-body">
-                                                <p class="card-text">•”Ω–¨Ï•ÿ°G<span>C#</span></p>
+                                                <p class="card-text">Áî≥Ë´ãÁßëÁõÆÔºö<span>C#</span></p>
                                                 <p class="card-text">
-                                                    •”Ω–™¨∫A°G<span>§wºfÆ÷</span>
+                                                    Áî≥Ë´ãÁãÄÊÖãÔºö<span>Â∑≤ÂØ©Ê†∏</span>
                                                 </p>
                                                 <button class="btn lh-backstage-submit-btn"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#lh-backstage-tutor-application-audit">
-                                                    √“∑”∏Í∞T
+                                                    Ë≠âÁÖßË≥áË®ä
                                                 </button>
                                                 <a href="/TalkingTopia/Apply_teacher/myResume.html"
                                                    class="btn lh-backstage-submit-btn">
-                                                    ΩsøËÆa±–∏ÍÆ∆
+                                                    Á∑®ËºØÂÆ∂ÊïôË≥áÊñô
                                                 </a>
                                             </div>
                                         </div>
@@ -461,18 +461,18 @@
                                             <img src="~/image/backstage/subjects.png"
                                                  class="card-img-top w-100" />
                                             <div class="card-body">
-                                                <p class="card-text">•”Ω–¨Ï•ÿ°G<span>∞Í§Â</span></p>
+                                                <p class="card-text">Áî≥Ë´ãÁßëÁõÆÔºö<span>ÂúãÊñá</span></p>
                                                 <p class="card-text">
-                                                    •”Ω–™¨∫A°G<span>•ººfÆ÷</span>
+                                                    Áî≥Ë´ãÁãÄÊÖãÔºö<span>Êú™ÂØ©Ê†∏</span>
                                                 </p>
                                                 <button class="btn lh-backstage-submit-btn"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#lh-backstage-tutor-application-audit">
-                                                    √“∑”∏Í∞T
+                                                    Ë≠âÁÖßË≥áË®ä
                                                 </button>
                                                 <a href="/TalkingTopia/Apply_teacher/myResume.html"
                                                    class="btn lh-backstage-submit-btn">
-                                                    ΩsøËÆa±–∏ÍÆ∆
+                                                    Á∑®ËºØÂÆ∂ÊïôË≥áÊñô
                                                 </a>
                                             </div>
                                         </div>
@@ -485,7 +485,7 @@
             </div>
         </div>
     </div>
-    <!-- modal ≤ƒ§@®B-->
+    <!-- modal Á¨¨‰∏ÄÊ≠•-->
     <div class="modal fade"
          id="exampleModal"
          tabindex="-1"
@@ -495,7 +495,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        ∂i∂•≈Á√“°G≤ƒ§@®B
+                        ÈÄ≤ÈöéÈ©óË≠âÔºöÁ¨¨‰∏ÄÊ≠•
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -505,7 +505,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="recipient-name1" class="col-form-label">Ω–øÈ§J∑|≠˚πq§l´HΩc</label>
+                            <label for="recipient-name1" class="col-form-label">Ë´ãËº∏ÂÖ•ÊúÉÂì°ÈõªÂ≠ê‰ø°ÁÆ±</label>
                             <input type="email" class="form-control" id="recipient-name1" />
                         </div>
                     </form>
@@ -514,16 +514,16 @@
                     <button type="button"
                             class="btn lh-backstage-submit-btn"
                             data-bs-dismiss="modal">
-                        ®˙Æ¯
+                        ÂèñÊ∂à
                     </button>
                     <button type="button" class="btn lh-backstage-submit-btn">
-                        ∞e•X
+                        ÈÄÅÂá∫
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- modal ≤ƒ§G®B-->
+    <!-- modal Á¨¨‰∫åÊ≠•-->
     <div class="modal fade"
          id="exampleModal"
          tabindex="-1"
@@ -533,7 +533,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        ∂i∂•≈Á√“°G≤ƒ§G®B
+                        ÈÄ≤ÈöéÈ©óË≠âÔºöÁ¨¨‰∫åÊ≠•
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -543,7 +543,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="recipient-name2" class="col-form-label">Ω–øÈ§J≈Á√“ΩX</label>
+                            <label for="recipient-name2" class="col-form-label">Ë´ãËº∏ÂÖ•È©óË≠âÁ¢º</label>
                             <input type="tel" class="form-control" id="recipient-name2" />
                         </div>
                     </form>
@@ -552,16 +552,16 @@
                     <button type="button"
                             class="btn lh-backstage-submit-btn"
                             data-bs-dismiss="modal">
-                        ®˙Æ¯
+                        ÂèñÊ∂à
                     </button>
                     <button type="button" class="btn lh-backstage-submit-btn">
-                        ∞e•X
+                        ÈÄÅÂá∫
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- modal ≤ƒ§T®B-->
+    <!-- modal Á¨¨‰∏âÊ≠•-->
     <div class="modal fade"
          id="exampleModal"
          tabindex="-1"
@@ -571,7 +571,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        ∂i∂•≈Á√“°G≤ƒ§T®B
+                        ÈÄ≤ÈöéÈ©óË≠âÔºöÁ¨¨‰∏âÊ≠•
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -581,11 +581,11 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="recipient-name3" class="col-form-label">Ω–øÈ§J±˝≥]©w™∫∑s±KΩX</label>
+                            <label for="recipient-name3" class="col-form-label">Ë´ãËº∏ÂÖ•Ê¨≤Ë®≠ÂÆöÁöÑÊñ∞ÂØÜÁ¢º</label>
                             <input type="tel" class="form-control" id="recipient-name3" />
                         </div>
                         <div class="mb-3">
-                            <label for="recipient-name4" class="col-form-label">Ω–¶AøÈ§J§@¶∏∑s±KΩX</label>
+                            <label for="recipient-name4" class="col-form-label">Ë´ãÂÜçËº∏ÂÖ•‰∏ÄÊ¨°Êñ∞ÂØÜÁ¢º</label>
                             <input type="tel" class="form-control" id="recipient-name4" />
                         </div>
                     </form>
@@ -594,16 +594,16 @@
                     <button type="button"
                             class="btn lh-backstage-submit-btn"
                             data-bs-dismiss="modal">
-                        ®˙Æ¯
+                        ÂèñÊ∂à
                     </button>
                     <button type="button" class="btn lh-backstage-submit-btn">
-                        ∞e•X
+                        ÈÄÅÂá∫
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- screen modal for Æa±–•”Ω–ºfÆ÷-->
+    <!-- screen modal for ÂÆ∂ÊïôÁî≥Ë´ãÂØ©Ê†∏-->
     <div class="modal fade"
          id="lh-backstage-tutor-application-audit"
          tabindex="-1"
@@ -613,7 +613,7 @@
             <div class="modal-content container">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        √“∑”∏Í∞T
+                        Ë≠âÁÖßË≥áË®ä
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -623,7 +623,7 @@
                 <div class="modal-body">
                     <section class="lh-backstage-lh-backstage-tutor-data">
                         <ul>
-                            <li>•iµL≠≠ºW•Õ™∫√“∑”</li>
+                            <li>ÂèØÁÑ°ÈôêÂ¢ûÁîüÁöÑË≠âÁÖß</li>
                         </ul>
                     </section>
                 </div>
@@ -631,13 +631,13 @@
                     <button type="button"
                             class="btn btn-secondary lh-backstage-submit-btn"
                             data-bs-dismiss="modal">
-                        ΩTª{
+                        Á¢∫Ë™ç
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- modal Æ…¨q-->
+    <!-- modal ÊôÇÊÆµ-->
     <div class="modal fade"
          id="editTimeSlotModal"
          tabindex="-1"
@@ -647,7 +647,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel">
-                        ΩsøË±–Æv•iπw¨˘Æ…¨q
+                        Á∑®ËºØÊïôÂ∏´ÂèØÈ†êÁ¥ÑÊôÇÊÆµ
                     </h5>
                     <button type="button"
                             class="btn-close"
@@ -655,18 +655,18 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- ¨P¥¡∞œ∂Ù -->
+                    <!-- ÊòüÊúüÂçÄÂ°ä -->
                     <div class="row" id="timeslot-row">
                         <div class="col-12">
                             <div class="weekday-checkbox">
-                                <span class="fw-bolder mb-3 d-inline-block">Ω–øÔæ‹•iπw¨˘¨P¥¡</span>
+                                <span class="fw-bolder mb-3 d-inline-block">Ë´ãÈÅ∏ÊìáÂèØÈ†êÁ¥ÑÊòüÊúü</span>
                                 <div class="form-check">
                                     <input class="form-check-input"
                                            type="checkbox"
                                            value="monday"
                                            id="monday"
                                            name="weekday" />
-                                    <label class="form-check-label" for="monday">¨P¥¡§@</label>
+                                    <label class="form-check-label" for="monday">ÊòüÊúü‰∏Ä</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input"
@@ -674,7 +674,7 @@
                                            value="tuesday"
                                            id="tuesday"
                                            name="weekday" />
-                                    <label class="form-check-label" for="tuesday">¨P¥¡§G</label>
+                                    <label class="form-check-label" for="tuesday">ÊòüÊúü‰∫å</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input"
@@ -682,7 +682,7 @@
                                            value="wednesday"
                                            id="wednesday"
                                            name="weekday" />
-                                    <label class="form-check-label" for="wednesday">¨P¥¡§T</label>
+                                    <label class="form-check-label" for="wednesday">ÊòüÊúü‰∏â</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input"
@@ -690,7 +690,7 @@
                                            value="thursday"
                                            id="thursday"
                                            name="weekday" />
-                                    <label class="form-check-label" for="thursday">¨P¥¡•|</label>
+                                    <label class="form-check-label" for="thursday">ÊòüÊúüÂõõ</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input"
@@ -698,7 +698,7 @@
                                            value="friday"
                                            id="friday"
                                            name="weekday" />
-                                    <label class="form-check-label" for="friday">¨P¥¡§≠</label>
+                                    <label class="form-check-label" for="friday">ÊòüÊúü‰∫î</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input"
@@ -706,7 +706,7 @@
                                            value="saturday"
                                            id="saturday"
                                            name="weekday" />
-                                    <label class="form-check-label" for="saturday">¨P¥¡§ª</label>
+                                    <label class="form-check-label" for="saturday">ÊòüÊúüÂÖ≠</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input"
@@ -714,7 +714,7 @@
                                            value="sunday"
                                            id="sunday"
                                            name="weekday" />
-                                    <label class="form-check-label" for="sunday">¨P¥¡§È</label>
+                                    <label class="form-check-label" for="sunday">ÊòüÊúüÊó•</label>
                                 </div>
                             </div>
                         </div>
@@ -724,11 +724,11 @@
                     <button type="button"
                             class="btn btn-light"
                             data-bs-dismiss="modal">
-                        √ˆ≥¨
+                        ÈóúÈñâ
                     </button>
                     <button type="button"
                             class="btn lh-backstage-submit-btn">
-                        ¿x¶s
+                        ÂÑ≤Â≠ò
                     </button>
                 </div>
             </div>
