@@ -9,6 +9,10 @@ namespace Web.Controllers
         {
             _orderService = orderService;
         }
+        /// <summary>
+        /// 原ShoppingCartInfo.cshtml頁面
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             var shoppingCartInfoListViewModel = await _orderService.GetShoppingCartInfoList();
