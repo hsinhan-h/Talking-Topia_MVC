@@ -12,23 +12,14 @@ namespace Web.Controllers
             _orderService = orderService;
             _memberDataService = memberDataService;
         }
+        /// <summary>
+        /// 原MemberCenterHomepage.cshtml頁面
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Login()
-        {
-            return View();
-        }
-        public IActionResult Register()
-        {
-            return View();
-        }
-        public IActionResult ChatWindow()
-        {
-            return View();
-        }
-
         public async Task<IActionResult> MemberData()
         {
             var summaryData = await _memberDataService.GetMemberData("tommy85");
@@ -38,6 +29,10 @@ namespace Web.Controllers
         {
             var orderManagementListViewModel = await _orderService.GetOrderList();
             return View(orderManagementListViewModel);
+        }
+        public IActionResult ChatWindow()
+        {
+            return View();
         }
     }
 }
