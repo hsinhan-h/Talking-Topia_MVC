@@ -23,10 +23,6 @@ namespace Web.Controllers
             return View(model);
         }
 
-        public IActionResult WatchList()
-        {
-            return View();
-        }
         public async Task<IActionResult> CourseMainPage()
         {
             var model = await _courseService.GetCourseMainPage();

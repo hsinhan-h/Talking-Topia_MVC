@@ -30,6 +30,10 @@ namespace Web.Controllers
             var orderManagementListViewModel = await _orderService.GetOrderList();
             return View(orderManagementListViewModel);
         }
+        public IActionResult WatchList()
+        {
+            return View();
+        }
         public IActionResult ChatWindow()
         {
             return View();
