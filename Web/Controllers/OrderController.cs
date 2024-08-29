@@ -4,9 +4,15 @@ namespace Web.Controllers
 {
     public class OrderController : Controller
     {
-        public IActionResult Index()
+        private readonly OrderService _orderService;
+        public OrderController(OrderService orderService)
         {
-            return View();
+            _orderService = orderService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var shoppingCartInfoListViewModel = await _orderService.GetShoppingCartInfoList();
+            return View(shoppingCartInfoListViewModel);
         }
     }
 }
