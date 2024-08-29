@@ -6,11 +6,11 @@ namespace Web.Controllers
     public class TutorController : Controller
     {
         private readonly ResumeDataService _resumeDataService;
-        private readonly BookingService _bookingService;
+        //private readonly BookingService _bookingService;
         public TutorController(ResumeDataService resumeDataService, BookingService bookingService)
         {
             _resumeDataService = resumeDataService;
-            _bookingService = bookingService;
+            //_bookingService = bookingService;
         }
         /// <summary>
         /// 原ToTeacher.cshtml的頁面
@@ -18,6 +18,11 @@ namespace Web.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
+            return View();
+        }
+        public async Task<IActionResult> TeacherData()
+        {
+
             return View();
         }
         public async Task<IActionResult> ToTeacherResume()
