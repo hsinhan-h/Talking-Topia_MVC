@@ -6,27 +6,13 @@ namespace Web.Controllers
     {
         private readonly OrderService _orderService;
         private readonly MemberDataService _memberDataService;
-        private readonly ResumeDataService _resumeDataService;
-        public MemberController(OrderService orderService, MemberDataService memberDataService, ResumeDataService resumeDataService)
+        
+        public MemberController(OrderService orderService, MemberDataService memberDataService)
         {
             _orderService = orderService;
             _memberDataService = memberDataService;
-            _resumeDataService = resumeDataService;
         }
         public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult Toteacher()
-        {
-            return View();
-        }
-        public async Task<IActionResult> ToteacherResume( )
-        {
-            var ResumeSummaryData = await _resumeDataService.GetResumeData("tommy85");
-            return View(ResumeSummaryData);
-        }
-        public IActionResult RecommendedTeachersAI()
         {
             return View();
         }
@@ -42,10 +28,7 @@ namespace Web.Controllers
         {
             return View();
         }
-        public IActionResult MemberCenterHomePage()
-        {
-            return View();
-        }
+
         public async Task<IActionResult> MemberData()
         {
             var summaryData = await _memberDataService.GetMemberData("tommy85");
