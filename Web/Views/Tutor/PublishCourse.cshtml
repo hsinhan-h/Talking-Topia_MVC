@@ -1,6 +1,4 @@
-@model BookingListViewModel
-
-<partial name="_BannerPartial" />
+ï»¿@model BookingListViewModel
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
@@ -12,13 +10,13 @@
                            aria-current="page"
                            data-bs-toggle="tab"
                            href="#lh-backstage-course-detail">
-                            ½Òµ{©ú²Ó
+                            èª²ç¨‹æ˜Žç´°
                         </a>
                     </li>
                     <li class="nav-item lh-backstage-nav-item">
                         <a class="nav-link"
                            data-bs-toggle="tab"
-                           href="#lh-backstage-history-course">¾ú¥v½Òµ{</a>
+                           href="#lh-backstage-history-course">æ­·å²èª²ç¨‹</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -28,19 +26,19 @@
                             <button class="btn lh-backstage-submit-btn mt-3 li-backstage-publish-btn"
                                     data-bs-toggle="modal"
                                     data-bs-target="#lh-backstage-tutor-data-edit">
-                                ¤W¬[½Òµ{
+                                ä¸Šæž¶èª²ç¨‹
                             </button>
                             <table class="lh-backstage-transaction-detail col-12 mt-5"
                                    border="1">
                                 <thead>
                                     <tr>
-                                        <td>§ó·s¤é´Á</td>
-                                        <td>½Òµ{¦WºÙ</td>
-                                        <td>½Òµ{¤º®e</td>
-                                        <td>ÅéÅç»ù</td>
-                                        <td>25¤ÀÄÁ</td>
-                                        <td>50¤ÀÄÁ</td>
-                                        <td>½s¿è</td>
+                                        <td>æ›´æ–°æ—¥æœŸ</td>
+                                        <td>èª²ç¨‹åç¨±</td>
+                                        <td>èª²ç¨‹å…§å®¹</td>
+                                        <td>é«”é©—åƒ¹</td>
+                                        <td>25åˆ†é˜</td>
+                                        <td>50åˆ†é˜</td>
+                                        <td>ç·¨è¼¯</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
@@ -57,7 +55,7 @@
                                             <button class="btn lh-backstage-submit-btn"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#lh-backstage-tutor-data-edit">
-                                                ½s¿è
+                                                ç·¨è¼¯
                                             </button>
                                         </td>
                                     </tr>
@@ -73,11 +71,11 @@
                                    border="1">
                                 <thead>
                                     <tr>
-                                        <td>¤W½Ò®É¶¡</td>
-                                        <td>½Òµ{¦WºÙ</td>
-                                        <td>½Òµ{¤º®e</td>
-                                        <td>¤W½Ò®Éªø</td>
-                                        <td>¾Ç­û¦WºÙ</td>
+                                        <td>ä¸Šèª²æ™‚é–“</td>
+                                        <td>èª²ç¨‹åç¨±</td>
+                                        <td>èª²ç¨‹å…§å®¹</td>
+                                        <td>ä¸Šèª²æ™‚é•·</td>
+                                        <td>å­¸å“¡åç¨±</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
@@ -99,7 +97,7 @@
             </div>
         </div>
     </div>
-    <!-- screen modal for ½Òµ{©ú²Ó-->
+    <!-- screen modal for èª²ç¨‹æ˜Žç´°-->
     <div class="modal fade"
          id="lh-backstage-tutor-data-edit"
          tabindex="-1"
@@ -109,7 +107,7 @@
             <div class="modal-content container">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        ½Òµ{©ú²Ó
+                        èª²ç¨‹æ˜Žç´°
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -129,7 +127,7 @@
                                            id="floatingInput1"
                                            placeholder=""
                                            value="@firstItem.Category" />
-                                    <label for="floatingInput1">½Òµ{¤ÀÃþ(¥²¶ñ)</label>
+                                    <label for="floatingInput1">èª²ç¨‹åˆ†é¡ž(å¿…å¡«)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-2">
@@ -139,7 +137,7 @@
                                            id="floatingInput2"
                                            placeholder=""
                                            value="@firstItem.CourseSubject" />
-                                    <label for="floatingInput2">½Òµ{¬ì¥Ø(¥²¶ñ)</label>
+                                    <label for="floatingInput2">èª²ç¨‹ç§‘ç›®(å¿…å¡«)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-2">
@@ -150,7 +148,7 @@
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
                                            value="@firstItem.Thumbnail" />
-                                    <label for="floatingInput3">½Ð¤W¶Ç¤@±i¦Û¤¶·Ó¤ù(¥²¶ñ)</label>
+                                    <label for="floatingInput3">è«‹ä¸Šå‚³ä¸€å¼µè‡ªä»‹ç…§ç‰‡(å¿…å¡«)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-2">
@@ -161,7 +159,7 @@
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
                                            value="@firstItem.VideoUrl" />
-                                    <label for="floatingInput4">½Ð¤W¶Ç¤@¤ä¦Û¤¶¼v¤ù(¥²¶ñ)</label>
+                                    <label for="floatingInput4">è«‹ä¸Šå‚³ä¸€æ”¯è‡ªä»‹å½±ç‰‡(å¿…å¡«)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
@@ -172,7 +170,7 @@
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
                                            multiple />
-                                    <label for="floatingInput5">½Ð¤W¶Ç¦h±i½Òµ{¹Ï¤ù(¥²¶ñ)</label>
+                                    <label for="floatingInput5">è«‹ä¸Šå‚³å¤šå¼µèª²ç¨‹åœ–ç‰‡(å¿…å¡«)</label>
                                 </div>
                             </div>
                         </div>
@@ -184,7 +182,7 @@
                                            id="floatingInput5"
                                            placeholder=""
                                            value="@firstItem.Title" />
-                                    <label for="floatingInput5">½Òµ{¦WºÙ(¥²¶ñ)</label>
+                                    <label for="floatingInput5">èª²ç¨‹åç¨±(å¿…å¡«)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -194,7 +192,7 @@
                                            id="floatingInput6"
                                            placeholder=""
                                            value="@firstItem.SubTitle" />
-                                    <label for="floatingInput6">½Òµ{Â²­z(¥²¶ñ)</label>
+                                    <label for="floatingInput6">èª²ç¨‹ç°¡è¿°(å¿…å¡«)</label>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +222,7 @@
                                            id="floatingInput7"
                                            placeholder=""
                                            value="@firstItem.TrialPriceNTD.ToString("#,###")" />
-                                    <label for="floatingInput7">ª÷ÃB(¥x¹ô/ÅéÅç»ù/°ó)(¥²¶ñ)</label>
+                                    <label for="floatingInput7">é‡‘é¡(å°å¹£/é«”é©—åƒ¹/å ‚)(å¿…å¡«)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
@@ -234,7 +232,7 @@
                                            id="floatingInput8"
                                            placeholder=""
                                            value="@firstItem.TwentyFiveMinPriceNTD.ToString("#,###")" />
-                                    <label for="floatingInput8">ª÷ÃB(¥x¹ô/25¤ÀÄÁ/°ó)(¥²¶ñ)</label>
+                                    <label for="floatingInput8">é‡‘é¡(å°å¹£/25åˆ†é˜/å ‚)(å¿…å¡«)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
@@ -244,7 +242,7 @@
                                            id="floatingInput9"
                                            placeholder=""
                                            value="@firstItem.FiftyMinPriceNTD.ToString("#,###")" />
-                                    <label for="floatingInput9">ª÷ÃB(¥x¹ô/50¤ÀÄÁ/°ó)(¥²¶ñ)</label>
+                                    <label for="floatingInput9">é‡‘é¡(å°å¹£/50åˆ†é˜/å ‚)(å¿…å¡«)</label>
                                 </div>
                             </div>
                         </div>
@@ -254,7 +252,7 @@
                     <button type="button"
                             class="btn btn-secondary lh-backstage-submit-btn"
                             data-bs-dismiss="modal">
-                        Àx¦s
+                        å„²å­˜
                     </button>
                 </div>
             </div>

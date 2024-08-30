@@ -15,6 +15,10 @@ a {
 	width: 100%;
 	vertical-align: top;
 	border-radius: 50%;
+	cursor: pointer;
+}
+#lh-profile-fileInput {
+	display: none;
 }
 
 section {

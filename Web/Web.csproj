@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Repositories\" />
     <Folder Include="wwwroot\image\flag_imgs\" />
     <Folder Include="wwwroot\image\mainpage_imgs\" />
   </ItemGroup>

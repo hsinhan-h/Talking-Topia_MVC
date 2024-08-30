@@ -7,11 +7,11 @@ namespace Web.ViewModels
     {
         public List<CourseInfoViewModel> CourseInfoList{ get; set; }
     }
-    
-    
+
+
     public class CourseInfoViewModel
     {
-        
+
         public int CourseId { get; set; }
         public int MemberId { get; set; }
         public string Title { get; set; }
@@ -36,12 +36,15 @@ namespace Web.ViewModels
         [Display(Name = "課程介紹")]
         public string CourseIntro { get; set; }
         [Display(Name = "體驗台幣價格")]
-        public decimal TrialPriceNTD { get; set; }
+        public int TrialPriceNTD { get; set; }
         [Display(Name = "25分鐘台幣價格")]
-        public decimal TwentyFiveMinPriceNTD { get; set; }
+        public int TwentyFiveMinPriceNTD { get; set; }
+
+        public List<TwentyFiveDiscountedPriceList> TwentyFiveDiscountedPrice { get;set;}
 
         [Display(Name = "50分鐘台幣價格")]
-        public decimal FiftyMinPriceNTD { get; set; }
+        public int FiftyMinPriceNTD { get; set; }
+        public List<FiftyDiscountedPriceList> FiftyDiscountedPrice { get;set; }
 
         [Display(Name = "課程影片")]
         public string CourseVideo { get; set; }
@@ -93,23 +96,23 @@ namespace Web.ViewModels
     public class ReviewViewModel
     {
         public int ReviewerId { get; set; }
-        public DateTime ReviewDate { get; set; }
+        public string ReviewDate { get; set; }
 
         public string ReviewContent {  get; set; }
     }
 
 
-    public class TwentyFiveDiscountedPrice
+    public class TwentyFiveDiscountedPriceList
     { 
         public int FiveOffPrice { get; set; }
-        public int TenOffPrce { get; set; }
+        public int TenOffPrice { get; set; }
         public int FifteenOffPrice { get; set; }
     }
 
-    public class FiftyDiscountedPrice
+    public class FiftyDiscountedPriceList
     {
         public int FiveOffPrice { get; set; }
-        public int TenOffPrce { get; set; }
+        public int TenOffPrice { get; set; }
         public int FifteenOffPrice { get; set; }
     }
 

@@ -8,10 +8,12 @@ namespace Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<OrderService>();
-            builder.Services.AddScoped<MemberDataService>();
-            builder.Services.AddScoped<ResumeDataService>();
+            builder.Services.AddScoped<BookingService>();
             builder.Services.AddScoped<CourseService>();
+            builder.Services.AddScoped<MemberDataService>();
+            builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<ResumeDataService>();
+            builder.Services.AddScoped<ShoppingCartService>();
 
             var app = builder.Build();
 

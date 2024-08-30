@@ -6,43 +6,17 @@ namespace Web.Controllers
     {
         private readonly OrderService _orderService;
         private readonly MemberDataService _memberDataService;
-        private readonly ResumeDataService _resumeDataService;
-        public MemberController(OrderService orderService, MemberDataService memberDataService, ResumeDataService resumeDataService)
+        
+        public MemberController(OrderService orderService, MemberDataService memberDataService)
         {
             _orderService = orderService;
             _memberDataService = memberDataService;
-            _resumeDataService = resumeDataService;
         }
+        /// <summary>
+        /// 原MemberCenterHomepage.cshtml頁面
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult Toteacher()
-        {
-            return View();
-        }
-        public async Task<IActionResult> Toteacher_resume()
-        {
-            var ResumeSummaryData = await _resumeDataService.GetresumeData();
-            return View(ResumeSummaryData);
-        }
-        public IActionResult Recommended_teachers_AI()
-        {
-            return View();
-        }
-        public IActionResult Login()
-        {
-            return View();
-        }
-        public IActionResult Register()
-        {
-            return View();
-        }
-        public IActionResult Chat_window()
-        {
-            return View();
-        }
-        public IActionResult MemberCenterHomePage()
         {
             return View();
         }
@@ -55,6 +29,14 @@ namespace Web.Controllers
         {
             var orderManagementListViewModel = await _orderService.GetOrderList();
             return View(orderManagementListViewModel);
+        }
+        public IActionResult WatchList()
+        {
+            return View();
+        }
+        public IActionResult ChatWindow()
+        {
+            return View();
         }
     }
 }

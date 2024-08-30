@@ -6,10 +6,10 @@ namespace Web.Controllers
     {
         private readonly BookingService _bookingService;
         private readonly CourseService _courseService;
-        public CourseController()
+        public CourseController(BookingService bookingService, CourseService courseService)
         {
-            _bookingService = new BookingService();
-            _courseService = new CourseService();
+            _bookingService = bookingService;
+            _courseService = courseService;
         }
 
         public IActionResult Index()
@@ -23,15 +23,6 @@ namespace Web.Controllers
             return View(model);
         }
 
-        public IActionResult WatchList()
-        {
-            return View();
-        }
-        public async Task<IActionResult> PublishCourse()
-        {
-            var model = await _bookingService.GetPublishCourseList();
-            return View(model);
-        }
         public async Task<IActionResult> CourseMainPage()
         {
             var model = await _courseService.GetCourseMainPage();

@@ -16,7 +16,14 @@ namespace Web.Controllers
             var course = await _courseService.GetCourseList();
             return View(course);
         }
-
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult Register()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
