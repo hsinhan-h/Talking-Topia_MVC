@@ -40,7 +40,7 @@ namespace Web.Services
                     LastName = "Suzuki",
                     Email = "tomoya.suzuki@example.com",
                     Phone = "0978123456",
-
+                    
                     CousePrefer = new List<CouseListViewModel>
                     {
                         new CouseListViewModel { CategorytName = "Technology", SubjectName = "Programming" },
