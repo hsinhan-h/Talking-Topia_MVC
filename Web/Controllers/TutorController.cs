@@ -20,12 +20,12 @@ namespace Web.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> TeacherData()
+        public async Task<IActionResult> TutorData()
         {
 
             return View();
         }
-        public async Task<IActionResult> ToTeacherResume()
+        public async Task<IActionResult> TutorResume()
         {
             var ResumeSummaryData = await _resumeDataService.GetResumeData("tommy85");
             return View(ResumeSummaryData);
@@ -35,7 +35,7 @@ namespace Web.Controllers
             var model = await _bookingService.GetPublishCourseList();
             return View(model);
         }
-        public IActionResult RecommendedTeachersAI()
+        public IActionResult RecommendedTutorAI()
         {
             return View();
         }
