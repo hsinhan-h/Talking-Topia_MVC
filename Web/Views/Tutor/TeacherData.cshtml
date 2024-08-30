@@ -9,7 +9,62 @@
                                     <div class="row mb-2">
                                         <div class="col-12">
                                             <h3>家教資料</h3>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-floating mb-3">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="floatingInput4"
+                                                       placeholder=""
+                                                       value="item.NationName" />
+                                                <label for="floatingInput4">國籍</label>
+                                            </div>
                                         </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-floating mb-3">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="floatingInput5"
+                                                       placeholder=""
+                                                       value="item.NativeLanguage" />
+                                                <label for="floatingInput5">母語</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-floating mb-3">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="floatingInput6"
+                                                       placeholder=""
+                                                       value="item.SpokenLanguage" />
+                                                <label for="floatingInput6">會說的語言</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="floatingInput13"
+                                                       value="@item.BankCode"
+                                                       placeholder="" />
+                                                <label for="floatingInput13">銀行代號</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="floatingInput14"
+                                                       value="@item.BankAccount"
+                                                       placeholder="" />
+                                                <label for="floatingInput14">銀行帳戶</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                         <div class="lh-baclstage-member-data-list mt-3">
                                             <h4>學歷</h4>
                                             <ul>
@@ -217,5 +272,5 @@
     <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 }
 @section endJS {
-    <script src="~/js/backstage.js"></script>
+    <script src="~/js/timeslot-setting.js"></script>
 }

@@ -8,86 +8,18 @@
                     <h2> 會員資料</h2>
                     <div class="lh-backstage-member-page mb-5">
                         <section class="lh-backstage-virtual-data">
+                        </section>
+                        <section class="lh-backstage-lh-backstage-real-data">
                             <div class="row mb-2">
                                 <div class="col-12">
                                     <h3>基本資料</h3>
                                     <div class="pic lh-backstage-user-photo-member-data">
                                         <img class="lh-backstage-img"
-                                             src="https://picsum.photos/100/100/?random=16" />
+                                             src="https://picsum.photos/100/100/?random=16"
+                                             id="lh-profileimage"
+                                             alt="點擊更換圖片" />
+                                        <input type="file" id="lh-profile-fileInput" accept="image/*">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput1"
-                                               placeholder=""
-                                               value="@item.Nickname" />
-                                        <label for="floatingInput1">暱稱</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="date"
-                                               class="form-control"
-                                               id="floatingInput2"
-                                               placeholder="yyyy-MM-dd"
-                                               value="@item.Birthday.ToString("yyyy-MM-dd")" />
-                                        <label for="floatingInput2">生日</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput3"
-                                               placeholder=""
-                                               value="@item.Gender" />
-                                        <label for="floatingInput3">性別</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput4"
-                                               placeholder=""
-                                               value="@item.NationName" />
-                                        <label for="floatingInput4">國籍</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput5"
-                                               placeholder=""
-                                               value="@item.NativeLanguage" />
-                                        <label for="floatingInput5">母語</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput6"
-                                               placeholder=""
-                                               value="@item.SpokenLanguage" />
-                                        <label for="floatingInput6">會說的語言</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="lh-backstage-lh-backstage-real-data">
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <h3>真實資料</h3>
                                 </div>
                             </div>
                             <div class="row">
@@ -134,6 +66,38 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="form-floating mb-3">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="floatingInput1"
+                                               placeholder=""
+                                               value="@item.Nickname" />
+                                        <label for="floatingInput1">暱稱</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                               class="form-control"
+                                               id="floatingInput3"
+                                               placeholder=""
+                                               value="@item.Gender" />
+                                        <label for="floatingInput3">性別</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <input type="date"
+                                               class="form-control"
+                                               id="floatingInput2"
+                                               placeholder="yyyy-MM-dd"
+                                               value="@item.Birthday.ToString("yyyy-MM-dd")" />
+                                        <label for="floatingInput2">生日</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-floating mb-3">
                                         <input type="email"
                                                class="form-control"
                                                id="floatingInput10"
@@ -142,7 +106,7 @@
                                         <label for="floatingInput10">電子信箱</label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
                                     <div class="form-floating mb-3">
                                         <input type="tel"
                                                class="form-control"
@@ -150,40 +114,6 @@
                                                value="@item.Phone"
                                                placeholder="" />
                                         <label for="floatingInput11">電話</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput12"
-                                               value="@item.Address"
-                                               placeholder="" />
-                                        <label for="floatingInput12">地址</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput13"
-                                               value="@item.BankCode"
-                                               placeholder="" />
-                                        <label for="floatingInput13">銀行代號</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput14"
-                                               value="@item.BankAccount"
-                                               placeholder="" />
-                                        <label for="floatingInput14">銀行帳戶</label>
                                     </div>
                                 </div>
                             </div>
@@ -514,5 +444,5 @@
     <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 }
 @section endJS {
-    <script src="~/js/backstage.js"></script>
+    <script src="~/js/change-profile-img.js"></script>
 }
