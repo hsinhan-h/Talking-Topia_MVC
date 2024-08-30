@@ -1,4 +1,5 @@
-﻿using NuGet.Protocol;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using NuGet.Protocol;
 
 namespace Web.ViewModels
 {
@@ -27,15 +28,15 @@ namespace Web.ViewModels
         /// <summary>
         /// 證照
         /// </summary>
-        public string ProfessionalLicenseName { get; set; }  // 是否要為list
+        public List<string> ProfessionalLicenseName { get; set; }  
         /// <summary>
         /// 證照Url
         /// </summary>
-        public string ProfessionalLicenseUrl { get; set; } // 是否要為list
+        public List<string> ProfessionalLicenseUrl { get; set; } 
         /// <summary>
         /// 語言分類
         /// </summary>
-        public string  CategorytName { get; set; }  // 是否要為list
+        public List<SelectListItem> CategorytName { get; set; }
         /// <summary>
         /// 工作起始日期
         /// </summary>
