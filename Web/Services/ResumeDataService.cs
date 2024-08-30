@@ -1,5 +1,4 @@
-﻿using Web.Entities;
-
+﻿
 namespace Web.Services
 {
     public class ResumeDataService

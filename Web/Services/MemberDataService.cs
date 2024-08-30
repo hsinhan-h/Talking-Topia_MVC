@@ -1,5 +1,4 @@
-﻿using Web.Entities;
-using Web.ViewModels;
+﻿using Web.ViewModels;
 
 namespace Web.Services
 {

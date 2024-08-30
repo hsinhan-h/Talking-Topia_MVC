@@ -1,5 +1,4 @@
-﻿using Web.Entities;
-using static System.Net.WebRequestMethods;
+﻿using static System.Net.WebRequestMethods;
 
 namespace Web.Services
 {
