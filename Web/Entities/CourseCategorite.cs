@@ -3,17 +3,13 @@ using System.Collections.Generic;
 
 namespace Web.Entities;
 
-public partial class Review
+public partial class CourseCategorite
 {
-    public int ReviewId { get; set; }
+    public int CourseCategoryId { get; set; }
 
-    public int StudentId { get; set; }
+    public string CategorytName { get; set; }
 
     public int CourseId { get; set; }
-
-    public byte Rating { get; set; }
-
-    public string CommentText { get; set; }
 
     public DateTime Cdate { get; set; }
 
@@ -21,5 +17,5 @@ public partial class Review
 
     public virtual Course Course { get; set; }
 
-    public virtual Member Student { get; set; }
+    public virtual ICollection<CourseSubject> CourseSubjects { get; set; } = new List<CourseSubject>();
 }

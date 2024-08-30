@@ -1,3 +1,5 @@
+using Web.Entities;
+
 namespace Web
 {
     public class Program
@@ -14,6 +16,10 @@ namespace Web
             builder.Services.AddScoped<OrderService>();
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<ShoppingCartService>();
+
+            // Add DbContext configuration
+            builder.Services.AddDbContext<TalkingTopiaContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 
             var app = builder.Build();
 
