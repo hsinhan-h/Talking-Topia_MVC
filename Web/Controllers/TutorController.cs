@@ -25,11 +25,11 @@ namespace Web.Controllers
 
             return View();
         }
-        public async Task<IActionResult> TutorResume()
-        {
-            var ResumeSummaryData = await _resumeDataService.GetResumeData("tommy85");
-            return View(ResumeSummaryData);
-        }
+        //public async Task<IActionResult> TutorResume()
+        //{
+        //    var ResumeSummaryData = await _resumeDataService.GetResumeData("tommy85");
+        //    return View(ResumeSummaryData);
+        //}
         public async Task<IActionResult> PublishCourse()
         {
             var model = await _bookingService.GetPublishCourseList();
