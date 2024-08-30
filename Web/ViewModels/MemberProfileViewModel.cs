@@ -15,14 +15,18 @@ namespace Web.ViewModels
         public string ImageUrl { get; set; }
 
         /// <summary>
-        /// 帳號
+        /// 帳號(若為第三方登入則帶第三方登入產生的帳號代碼)
         /// </summary>
         public string Account { get; set; }
 
-        [Display(Name = "名字")]
+        /// <summary>
+        /// 名字
+        /// </summary>
         public string FirstName { get; set; }
 
-        [Display(Name = "姓氏")]
+        /// <summary>
+        /// 姓氏
+        /// </summary>
         public string LastName { get; set; }
 
         /// <summary>
@@ -30,34 +34,41 @@ namespace Web.ViewModels
         /// </summary>
         public string Nickname { get; set; }
 
-        [Display(Name = "生日")]
-        public DateTime Birthday { get; set; }
-
-        [Display(Name = "性別")]
+        /// <summary>
+        /// 性別
+        /// </summary>
         public string Gender { get; set; }
 
+        /// <summary>
+        /// 生日
+        /// </summary>
+        public DateTime Birthday { get; set; }
 
-
-
-        [Display(Name = "信箱")]
+        /// <summary>
+        /// 信箱
+        /// </summary>
         public string Email { get; set; }
 
-        [Display(Name = "電話")]
+        /// <summary>
+        /// 電話
+        /// </summary>
         public string Phone { get; set; }
 
-        [Display(Name = "地址")]
-        public string Address { get; set; }
-
-        [Display(Name ="課程偏好")]//複數欄位
-        //public List<CouseListViewModel> CousePrefer { get; set; }
-        public string CousePrefer { get; set; }
+        /// <summary>
+        /// 複數欄位 
+        /// </summary>
+        public List<CouseListViewModel> CousePrefer { get; set; }
     }
     public class CouseListViewModel
     {
-        [Display(Name = "課程種類名稱")]
+        /// <summary>
+        /// 課程類別
+        /// </summary>
         public string CategorytName { get; set; }
 
-        [Display(Name = "科目名稱")]
+        /// <summary>
+        /// 課程科目
+        /// </summary>
         public string SubjectName { get; set; }
     }
 
