@@ -1,14 +1,10 @@
-﻿@model Web.ViewModels.MemberProfileListViewModel
-@foreach (var item in Model.MemberDataList)
-{
+﻿@model MemberProfileViewModel
+
     <div class="container lh-backstage mt-5" id="app">
         <div class="row">
             <div class="col-12 lh-backstage-main-section">
                 <div class="lh-backstage-member-section mb-5">
-                    <h2> 會員資料</h2>
                     <div class="lh-backstage-member-page mb-5">
-                        <section class="lh-backstage-virtual-data">
-                        </section>
                         <section class="lh-backstage-lh-backstage-real-data">
                             <div class="row mb-2">
                                 <div class="col-12">
@@ -28,7 +24,7 @@
                                         <input type="text"
                                                class="form-control"
                                                id="floatingInput7"
-                                               value="@item.Account"
+                                               value="@Model.Account"
                                                placeholder="" />
                                         <label for="floatingInput7">帳號</label>
                                     </div>
@@ -47,7 +43,7 @@
                                         <input type="text"
                                                class="form-control"
                                                id="floatingInput8"
-                                               value="@item.LastName"
+                                               value="@Model.LastName"
                                                placeholder="" />
                                         <label for="floatingInput8">名字</label>
                                     </div>
@@ -57,7 +53,7 @@
                                         <input type="text"
                                                class="form-control"
                                                id="floatingInput9"
-                                               value="@item.FirstName"
+                                               value="@Model.FirstName"
                                                placeholder="" />
                                         <label for="floatingInput9">姓氏</label>
                                     </div>
@@ -70,7 +66,7 @@
                                                class="form-control"
                                                id="floatingInput1"
                                                placeholder=""
-                                               value="@item.Nickname" />
+                                               value="@Model.Nickname" />
                                         <label for="floatingInput1">暱稱</label>
                                     </div>
                                 </div>
@@ -80,7 +76,7 @@
                                                class="form-control"
                                                id="floatingInput3"
                                                placeholder=""
-                                               value="@item.Gender" />
+                                               value="@Model.Gender" />
                                         <label for="floatingInput3">性別</label>
                                     </div>
                                 </div>
@@ -92,7 +88,7 @@
                                                class="form-control"
                                                id="floatingInput2"
                                                placeholder="yyyy-MM-dd"
-                                               value="@item.Birthday.ToString("yyyy-MM-dd")" />
+                                               value="@Model.Birthday.ToString("yyyy-MM-dd")" />
                                         <label for="floatingInput2">生日</label>
                                     </div>
                                 </div>
@@ -101,7 +97,7 @@
                                         <input type="email"
                                                class="form-control"
                                                id="floatingInput10"
-                                               value="@item.Email"
+                                               value="@Model.Email"
                                                placeholder="name@example.com" />
                                         <label for="floatingInput10">電子信箱</label>
                                     </div>
@@ -111,7 +107,7 @@
                                         <input type="tel"
                                                class="form-control"
                                                id="floatingInput11"
-                                               value="@item.Phone"
+                                               value="@Model.Phone"
                                                placeholder="" />
                                         <label for="floatingInput11">電話</label>
                                     </div>
@@ -439,7 +435,7 @@
             </div>
         </div>
     </div>
-};
+
 @section topCSS {
     <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 }
