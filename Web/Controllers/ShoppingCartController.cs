@@ -1,19 +1,18 @@
-﻿namespace Web.Controllers
+﻿using Web.Services;
+
+namespace Web.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        private readonly OrderService _orderService;
-        public ShoppingCartController(OrderService orderService)
+        private readonly ShoppingCartService _shoppingCartService;
+        public ShoppingCartController(ShoppingCartService shoppingCartService)
         {
-            _orderService = orderService;
+            _shoppingCartService = shoppingCartService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var shoppingCartData = await _shoppingCartService.GetShoppingCartCheckList();
+            return View(shoppingCartData);
         }
-
-        //public async Task<IActionResult> ShoppingCartCheck()
-        //{
-        //}
     }
 }
