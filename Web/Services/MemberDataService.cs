@@ -22,13 +22,11 @@ namespace Web.Services
                     LastName = "Wang",
                     Email = "anna.wang@example.com",
                     Phone = "0987654321",
-                    Address = "台北市信義區信義路101號",
-                    CousePrefer ="中文",
-                    //CousePrefer = new List<CouseListViewModel>
-                    //{
-                    //    new CouseListViewModel { CategorytName = "Language", SubjectName = "English" },
-                    //    new CouseListViewModel { CategorytName = "Language", SubjectName = "Japanese" }
-                    //},
+                    CousePrefer = new List<CouseListViewModel>
+                    {
+                        new CouseListViewModel { CategorytName = "Language", SubjectName = "English" },
+                        new CouseListViewModel { CategorytName = "Language", SubjectName = "Japanese" }
+                    },
                 },
                 new MemberProfileViewModel
                 {
@@ -41,13 +39,12 @@ namespace Web.Services
                     LastName = "Suzuki",
                     Email = "tomoya.suzuki@example.com",
                     Phone = "0978123456",
-                    Address = "東京都新宿區新宿2丁目15-18",
-                    CousePrefer ="中文",//待討論
-                    //CousePrefer = new List<CouseListViewModel>
-                    //{
-                    //    new CouseListViewModel { CategorytName = "Technology", SubjectName = "Programming" },
-                    //    new CouseListViewModel { CategorytName = "Technology", SubjectName = "Web Development" }
-                    //},
+                    
+                    CousePrefer = new List<CouseListViewModel>
+                    {
+                        new CouseListViewModel { CategorytName = "Technology", SubjectName = "Programming" },
+                        new CouseListViewModel { CategorytName = "Technology", SubjectName = "Web Development" }
+                    },
                 }
             };
             var selectedMember = memberData.FirstOrDefault(x => x.Account == account);
@@ -73,7 +70,6 @@ namespace Web.Services
                         LastName = selectedMember.LastName,
                         Email = selectedMember.Email,
                         Phone = selectedMember.Phone,
-                        Address = selectedMember.Address,
                         CousePrefer = selectedMember.CousePrefer,
                     }
                 }
