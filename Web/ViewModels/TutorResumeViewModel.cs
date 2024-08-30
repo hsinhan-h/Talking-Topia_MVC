@@ -36,7 +36,7 @@ namespace Web.ViewModels
         /// <summary>
         /// 語言分類
         /// </summary>
-        public List<SelectListItem> CategorytName { get; set; }
+        public List<SelectListItem> Category { get; set; }
         /// <summary>
         /// 工作起始日期
         /// </summary>
