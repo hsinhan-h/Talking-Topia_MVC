@@ -31,11 +31,11 @@ namespace Web.ViewModels
         [Display(Name = "25分鐘台幣價格")]
         public int TwentyFiveMinPriceNTD { get; set; }
 
-        public List<TwentyFiveDiscountedPriceList> TwentyFiveDiscountedPrice { get; set; }
+        public List<BaseDiscountPice> TwentyFiveDiscountedPrice { get; set; }
 
         [Display(Name = "50分鐘台幣價格")]
         public int FiftyMinPriceNTD { get; set; }
-        public List<FiftyDiscountedPriceList> FiftyDiscountedPrice { get; set; }
+        public List<BaseDiscountPice> FiftyDiscountedPrice { get; set; }
 
         [Display(Name = "課程影片")]
         public string CourseVideo { get; set; }
@@ -53,22 +53,10 @@ namespace Web.ViewModels
         public double CourseRatings { get; set; }
         [Display(Name = "課程評論數")]
         public int CourseReviews { get; set; }
-
         public List<ReviewViewModel> ReviewCardList { get; set; }
         [Display(Name = "關注狀態")]
         public bool FollowingStatus { get; set; }
-        /// <summary>
-        /// 科目Id
-        /// </summary>
-        public int SubjectId { get; set; }
-        /// <summary>
-        /// 科目名稱
-        /// </summary>
-        public string SubjectName { get; set; }
-        /// <summary>
-        /// 會員頭像=教師頭像
-        /// </summary>
-        public string HeadShotImage { get; set; }
+        
     }
 
     public class TimeSlot
@@ -101,5 +89,19 @@ namespace Web.ViewModels
         public decimal TenOffPrice { get; set; }
         public decimal FifteenOffPrice { get; set; }
     }
+    public class BaseDiscountPice
+    {
+       public int CourseCount { get; set; }
+        public int CourseDurance { get; set; }
 
+        public decimal Discount {  get; set; }
+
+        public string DiscountPrice { get; set; }
+    }
+
+    public class CourseCountDiscount
+    {
+        public int CourseCount { get; set; }
+        public decimal Discount { get; set; }
+    }
 }

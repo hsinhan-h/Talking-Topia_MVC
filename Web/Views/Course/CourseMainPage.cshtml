@@ -42,7 +42,7 @@
                     <h3>自我介紹</h3>
                 </div>
                 <div class="self-intro-body">
-                    <div class="can-speak"><strong>會說</strong> 英文, 中文, 日文, 韓文, 粵語</div>
+                    <div class="can-speak"><strong>會說</strong> @string.Join("、", @Model.SpokenLanguage)</div>
                     <div class="self-intro-content">
                         <p class="self-intro-paragraph">
                             @Model.TutorIntro
@@ -472,7 +472,7 @@
                 </div>
 
                 <div class="course-info-group min-25">
-                    <div class="course-info-card d-flex">
+                    @* <div class="course-info-card d-flex">
                         <div class="course-charging d-flex flex-column">
                             <div class="charging-fee">NT$@Model.TwentyFiveMinPriceNTD</div>
                             <div class="course-number-time">1堂25分鐘課</div>
@@ -481,45 +481,26 @@
                             <div class="course-discount-logo d-none">5% Off</div>
                             <i class="fa-solid fa-angle-right"></i>
                         </div>
-                    </div>
+                    </div> *@
 
-                    @foreach (var price in Model.TwentyFiveDiscountedPrice)
+                    @foreach (var item in Model.TwentyFiveDiscountedPrice)
                     {
                         
                         <div class="course-info-card d-flex">
                             <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$ @price.FiveOffPrice</div>
-                                <div class="course-number-time">10堂25分鐘課</div>
+                                <div class="charging-fee">NT$ @item.DiscountPrice</div>
+                                <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
                             </div>
                             <div class="course-discount d-flex">
-                                <div class="course-discount-logo">5% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </div>
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$ @price.TenOffPrice</div>
-                                <div class="course-number-time">20堂25分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">10% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </div>
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$ @price.FifteenOffPrice</div>
-                                <div class="course-number-time">40堂25分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">15% Off</div>
+                                <div class="course-discount-logo">@(item.Discount)% Off</div>
                                 <i class="fa-solid fa-angle-right"></i>
                             </div>
                         </div>
                     }
                 </div>
+                
                 <div class="course-info-group min-50 d-none">
-                    <div class="course-info-card d-flex">
+                    @* <div class="course-info-card d-flex">
                         <div class="course-charging d-flex flex-column">
                             <div class="charging-fee">NT$@Model.FiftyMinPriceNTD</div>
                             <div class="course-number-time">1堂50分鐘課</div>
@@ -528,39 +509,20 @@
                             <div class="course-discount-logo d-none">5% Off</div>
                             <i class="fa-solid fa-angle-right"></i>
                         </div>
-                    </div>
-                    @foreach (var price in Model.FiftyDiscountedPrice)
+                    </div>  *@
+                    @foreach (var item in Model.FiftyDiscountedPrice)
                     {
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$@price.FiveOffPrice</div>
-                                <div class="course-number-time">5堂50分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">5% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
+                    <div class="course-info-card d-flex">
+                        <div class="course-charging d-flex flex-column">
+                            <div class="charging-fee">NT$ @item.DiscountPrice</div>
+                            <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
                         </div>
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$@price.TenOffPrice</div>
-                                <div class="course-number-time">10堂50分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">10% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
+                        <div class="course-discount d-flex">
+                            <div class="course-discount-logo">@(item.Discount)% Off</div>
+                            <i class="fa-solid fa-angle-right"></i>
                         </div>
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$@price.FifteenOffPrice</div>
-                                <div class="course-number-time">20堂50分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">15% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </div>
+                    </div>
+                        
                     }
                 </div>
             </div>
@@ -758,9 +720,9 @@
 
 @section endJS
 {
-    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script> *@
+            crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
     <script src="https://unpkg.com/@@primevue/themes/umd/aura.min.js"></script>
