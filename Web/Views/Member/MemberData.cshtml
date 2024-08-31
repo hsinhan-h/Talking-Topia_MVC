@@ -1,447 +1,440 @@
-﻿@model Web.ViewModels.MemberProfileListViewModel
-@foreach (var item in Model.MemberDataList)
-{
-    <div class="container lh-backstage mt-5" id="app">
-        <div class="row">
-            <div class="col-12 lh-backstage-main-section">
-                <div class="lh-backstage-member-section mb-5">
-                    <h2> 會員資料</h2>
-                    <div class="lh-backstage-member-page mb-5">
-                        <section class="lh-backstage-virtual-data">
-                        </section>
-                        <section class="lh-backstage-lh-backstage-real-data">
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <h3>基本資料</h3>
-                                    <div class="pic lh-backstage-user-photo-member-data">
-                                        <img class="lh-backstage-img"
-                                             src="https://picsum.photos/100/100/?random=16"
-                                             id="lh-profileimage"
-                                             alt="點擊更換圖片" />
-                                        <input type="file" id="lh-profile-fileInput" accept="image/*">
-                                    </div>
-                                </div>
+﻿@model MemberProfileViewModel
+
+<div class="container lh-backstage" id="app">
+    <div class="row">
+        <div class="col-12 lh-backstage-main-section">
+            <div class="lh-backstage-member-section mb-5">
+                <section class="lh-backstage-lh-backstage-real-data">
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <h3>基本資料</h3>
+                            <div class="pic lh-backstage-user-photo-member-data">
+                                <img class="lh-backstage-img"
+                                     src="https://picsum.photos/100/100/?random=16"
+                                     id="lh-profileimage"
+                                     alt="點擊更換圖片" />
+                                <input type="file" id="lh-profile-fileInput" accept="image/*">
                             </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput7"
-                                               value="@item.Account"
-                                               placeholder="" />
-                                        <label for="floatingInput7">帳號</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <button class="btn lh-backstage-submit-btn mt-2"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                        修改密碼
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput8"
-                                               value="@item.LastName"
-                                               placeholder="" />
-                                        <label for="floatingInput8">名字</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput9"
-                                               value="@item.FirstName"
-                                               placeholder="" />
-                                        <label for="floatingInput9">姓氏</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput1"
-                                               placeholder=""
-                                               value="@item.Nickname" />
-                                        <label for="floatingInput1">暱稱</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                               class="form-control"
-                                               id="floatingInput3"
-                                               placeholder=""
-                                               value="@item.Gender" />
-                                        <label for="floatingInput3">性別</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-4">
-                                    <div class="form-floating mb-3">
-                                        <input type="date"
-                                               class="form-control"
-                                               id="floatingInput2"
-                                               placeholder="yyyy-MM-dd"
-                                               value="@item.Birthday.ToString("yyyy-MM-dd")" />
-                                        <label for="floatingInput2">生日</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="form-floating mb-3">
-                                        <input type="email"
-                                               class="form-control"
-                                               id="floatingInput10"
-                                               value="@item.Email"
-                                               placeholder="name@example.com" />
-                                        <label for="floatingInput10">電子信箱</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="form-floating mb-3">
-                                        <input type="tel"
-                                               class="form-control"
-                                               id="floatingInput11"
-                                               value="@item.Phone"
-                                               placeholder="" />
-                                        <label for="floatingInput11">電話</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="lh-backstage-preferences">
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <h3>課程偏好</h3>
-                                </div>
-                            </div>
-                            <div class="row my-3 p-3">
-                                <h4>語言</h4>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="中文"
-                                           id="flexCheckChecked"
-                                     />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        中文
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="英文"
-                                           id="flexCheckDefault" />
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        英文
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        日文
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        法文
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        德文
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        西班牙文
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="lh-backstage-divider"></div>
-                            <div class="row my-3 p-3">
-                                <h4>程式設計</h4>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="程式設計"
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        HTML/CSS
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        Java Script
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckDefault" />
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        C#
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        SQL
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        Python
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        Java
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="lh-backstage-divider"></div>
-                            <div class="row my-3 p-3">
-                                <h4>升學科目</h4>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckDefault" />
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        數學
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        物理
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        化學
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        生物
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        地理
-                                    </label>
-                                </div>
-                                <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value=""
-                                           id="flexCheckChecked" />
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        歷史
-                                    </label>
-                                </div>
-                            </div>
-                        </section>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-11"></div>
-                        <div class="col-1">
-                            <input class="btn btn-info col-12 lh-backstage-submit-btn"
-                                   type="submit"
-                                   value="編輯"
-                                   data-bs-toggle="modal"
-                                   data-bs-target="#exampleModal" />
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput7"
+                                       value="@Model.Account"
+                                       placeholder="" />
+                                <label for="floatingInput7">帳號</label>
+                            </div>
                         </div>
-                        <div class="col-1 d-none">
-                            <input class="btn btn-info col-12 lh-backstage-submit-btn"
-                                   type="submit"
-                                   value="儲存"
-                                   data-bs-toggle="modal"
-                                   data-bs-target="#exampleModal" />
+                        <div class="col-12 col-md-6">
+                            <button class="btn lh-backstage-submit-btn mt-2"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                修改密碼
+                            </button>
                         </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput8"
+                                       value="@Model.LastName"
+                                       placeholder="" />
+                                <label for="floatingInput8">名字</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput9"
+                                       value="@Model.FirstName"
+                                       placeholder="" />
+                                <label for="floatingInput9">姓氏</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput1"
+                                       placeholder=""
+                                       value="@Model.Nickname" />
+                                <label for="floatingInput1">暱稱</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput3"
+                                       placeholder=""
+                                       value="@Model.Gender" />
+                                <label for="floatingInput3">性別</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="date"
+                                       class="form-control"
+                                       id="floatingInput2"
+                                       placeholder="yyyy-MM-dd"
+                                       value="@Model.Birthday.ToString("yyyy-MM-dd")" />
+                                <label for="floatingInput2">生日</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="email"
+                                       class="form-control"
+                                       id="floatingInput10"
+                                       value="@Model.Email"
+                                       placeholder="name@example.com" />
+                                <label for="floatingInput10">電子信箱</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="tel"
+                                       class="form-control"
+                                       id="floatingInput11"
+                                       value="@Model.Phone"
+                                       placeholder="" />
+                                <label for="floatingInput11">電話</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="lh-backstage-preferences">
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <h3>課程偏好</h3>
+                        </div>
+                    </div>
+                    <div class="row my-3 p-3">
+                        <h4>語言</h4>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="中文"
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                中文
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="英文"
+                                   id="flexCheckDefault" />
+                            <label class="form-check-label" for="flexCheckDefault">
+                                英文
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                日文
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                法文
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                德文
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                西班牙文
+                            </label>
+                        </div>
+                    </div>
+                    <div class="lh-backstage-divider"></div>
+                    <div class="row my-3 p-3">
+                        <h4>程式設計</h4>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="程式設計"
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                HTML/CSS
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Java Script
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckDefault" />
+                            <label class="form-check-label" for="flexCheckDefault">
+                                C#
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                SQL
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Python
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Java
+                            </label>
+                        </div>
+                    </div>
+                    <div class="lh-backstage-divider"></div>
+                    <div class="row my-3 p-3">
+                        <h4>升學科目</h4>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckDefault" />
+                            <label class="form-check-label" for="flexCheckDefault">
+                                數學
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                物理
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                化學
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                生物
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                地理
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="flexCheckChecked" />
+                            <label class="form-check-label" for="flexCheckChecked">
+                                歷史
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <div class="row">
+                    <div class="col-8"></div>
+                    <div class="col-2 d-none">
+                        <input class="btn btn-info col-12 lh-backstage-submit-btn"
+                               type="submit"
+                               value="儲存"
+                               data-bs-toggle="modal"
+                               data-bs-target="#exampleModal" />
+                    </div>
+                    <div class="col-2">
+                        <input class="btn btn-info col-12 lh-backstage-submit-btn"
+                               type="submit"
+                               value="編輯"
+                               data-bs-toggle="modal"
+                               data-bs-target="#exampleModal" />
+                    </div>
+                 </div>
             </div>
         </div>
-        <!-- modal 第一步-->
-        <div class="modal fade"
-             id="exampleModal"
-             tabindex="-1"
-             aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                            進階驗證：第一步
-                        </h1>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="recipient-name1" class="col-form-label">請輸入會員電子信箱</label>
-                                <input type="email" class="form-control" id="recipient-name1" />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button"
-                                class="btn lh-backstage-submit-btn"
-                                data-bs-dismiss="modal">
-                            取消
-                        </button>
-                        <button type="button" class="btn lh-backstage-submit-btn">
-                            送出
-                        </button>
-                    </div>
+    </div>
+    <!-- modal 第一步-->
+    <div class="modal fade"
+         id="exampleModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        進階驗證：第一步
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                 </div>
-            </div>
-        </div>
-        <!-- modal 第二步-->
-        <div class="modal fade"
-             id="exampleModal"
-             tabindex="-1"
-             aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                            進階驗證：第二步
-                        </h1>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="recipient-name2" class="col-form-label">請輸入驗證碼</label>
-                                <input type="tel" class="form-control" id="recipient-name2" />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button"
-                                class="btn lh-backstage-submit-btn"
-                                data-bs-dismiss="modal">
-                            取消
-                        </button>
-                        <button type="button" class="btn lh-backstage-submit-btn">
-                            送出
-                        </button>
-                    </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name1" class="col-form-label">請輸入會員電子信箱</label>
+                            <input type="email" class="form-control" id="recipient-name1" />
+                        </div>
+                    </form>
                 </div>
-            </div>
-        </div>
-        <!-- modal 第三步-->
-        <div class="modal fade"
-             id="exampleModal"
-             tabindex="-1"
-             aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                            進階驗證：第三步
-                        </h1>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="recipient-name3" class="col-form-label">請輸入欲設定的新密碼</label>
-                                <input type="tel" class="form-control" id="recipient-name3" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="recipient-name4" class="col-form-label">請再輸入一次新密碼</label>
-                                <input type="tel" class="form-control" id="recipient-name4" />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button"
-                                class="btn lh-backstage-submit-btn"
-                                data-bs-dismiss="modal">
-                            取消
-                        </button>
-                        <button type="button" class="btn lh-backstage-submit-btn">
-                            送出
-                        </button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn">
+                        送出
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-};
+    <!-- modal 第二步-->
+    <div class="modal fade"
+         id="exampleModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        進階驗證：第二步
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name2" class="col-form-label">請輸入驗證碼</label>
+                            <input type="tel" class="form-control" id="recipient-name2" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn">
+                        送出
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal 第三步-->
+    <div class="modal fade"
+         id="exampleModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        進階驗證：第三步
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name3" class="col-form-label">請輸入欲設定的新密碼</label>
+                            <input type="tel" class="form-control" id="recipient-name3" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name4" class="col-form-label">請再輸入一次新密碼</label>
+                            <input type="tel" class="form-control" id="recipient-name4" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn">
+                        送出
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section topCSS {
-    <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
+    <link rel="stylesheet" href="~/css/backstage.css" />
 }
 @section endJS {
     <script src="~/js/change-profile-img.js"></script>

@@ -28,15 +28,11 @@ namespace Web.ViewModels
         public string CourseSubTitle { get; set; }
         [Display(Name = "教師簡介")]
         public string TutorIntro { get; set; }
-        [Display(Name = "課程介紹")]
-        public string CourseIntro { get; set; }
-        [Display(Name = "體驗價格")]
-        public decimal TrialPriceNTD { get; set; }
-        [Display(Name = "25分鐘台幣價格")]
-        public decimal TwentyFiveMinPriceNTD { get; set; }
+        [Display(Name = "25分鐘單位價格")]
+        public decimal TwentyFiveMinUnitPrice { get; set; }
 
-        [Display(Name = "50分鐘台幣價格")]
-        public decimal FiftyMinPriceNTD { get; set; }
+        [Display(Name = "50分鐘單位價格")]
+        public decimal FiftyMinUnitPrice { get; set; }
         
 
         [Display(Name = "課程影片")]
