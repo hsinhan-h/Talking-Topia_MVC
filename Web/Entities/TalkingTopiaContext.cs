@@ -732,7 +732,9 @@ public partial class TalkingTopiaContext : DbContext
 
         modelBuilder.Entity<Review>().HasData(
     new Review { ReviewId = 1, StudentId = 1, CourseId = 1, Rating = 5, CommentText = "很棒的課程！", Cdate = DateTime.Now },
-    new Review { ReviewId = 2, StudentId = 2, CourseId = 2, Rating = 4, CommentText = "非常實用！", Cdate = DateTime.Now }
+    new Review { ReviewId = 2, StudentId = 2, CourseId = 2, Rating = 4, CommentText = "非常實用！", Cdate = DateTime.Now },
+    new Review { ReviewId = 3, StudentId = 2, CourseId = 1, Rating = 4, CommentText = "講得不錯! 但笑話有點冷", Cdate = DateTime.Now },
+    new Review { ReviewId = 4, StudentId = 3, CourseId = 1, Rating = 4, CommentText = "讚讚讚", Cdate = DateTime.Now }
 );
 
 

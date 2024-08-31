@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Entities;
 
@@ -11,9 +12,11 @@ using Web.Entities;
 namespace Web.Migrations
 {
     [DbContext(typeof(TalkingTopiaContext))]
-    partial class TalkingTopiaContextModelSnapshot : ModelSnapshot
+    [Migration("20240831120718_initialDB2")]
+    partial class initialDB2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

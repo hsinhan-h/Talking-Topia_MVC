@@ -1,15 +1,25 @@
-﻿using static System.Net.WebRequestMethods;
+﻿using Web.Entities;
+using Web.Repository;
+using static System.Net.WebRequestMethods;
 
 namespace Web.Services
 {
     public class CourseService
     {
+        private readonly IRepository _repository;
+
+        public CourseService(IRepository repository)
+        {
+            _repository = repository;
+        }
+
         public async Task<CourseInfoListViewModel> GetCourseCardsList()
         {
             var courseList = new List<CourseInfoViewModel>
             {
                 new CourseInfoViewModel
                 {
+                    CourseId = 1,
                     TutorHeadShotImage = "~/image/tutor_headshot_imgs/tutor_demo_jp_001.webp",
                     TutorFlagImage = "~/image/flag_imgs/japan_flag.png",
                     IsVerifiedTutor = true,
@@ -25,7 +35,7 @@ namespace Web.Services
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/300/200?grayscale"},
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/237/450/300"}
                     },
-                    CourseRatings = 4.96,
+                    CourseRatings = GetCourseRating(1),
                     CourseReviews = 1013,
                     BookedTimeSlots = new List<TimeSlotViewModel>
                     {
@@ -54,6 +64,7 @@ namespace Web.Services
                 },
                 new CourseInfoViewModel
                 {
+                    CourseId = 2,
                     TutorHeadShotImage = "~/image/tutor_headshot_imgs/tutor_head_002.png",
                     TutorFlagImage = "~/image/flag_imgs/us_flag.png", 
                     IsVerifiedTutor = false,
@@ -70,7 +81,7 @@ namespace Web.Services
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/200/450/300"},
                         new CourseImageViewModel {ImageUrl = "https://picsum.photos/id/300/450/300"}
                     },
-                    CourseRatings = 4.2,
+                    CourseRatings = GetCourseRating(2),
                     CourseReviews = 512,
                     BookedTimeSlots = new List<TimeSlotViewModel>
                     {
@@ -281,6 +292,15 @@ namespace Web.Services
             {
                 CourseInfoList = courseList
             };
+        }
+
+
+        public double GetCourseRating(int courseId)
+        {
+            var courseRatings = _repository.GetAll<Review>()
+                .Where(review => review.CourseId == courseId)
+                .Select(review => (double)review.Rating);
+            return courseRatings.Any() ? courseRatings.Average() : 0;  
         }
     }
 }

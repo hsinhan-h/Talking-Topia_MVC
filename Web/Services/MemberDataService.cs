@@ -1,4 +1,6 @@
-﻿using Web.ViewModels;
+﻿using Web.Entities;
+using Web.Repository;
+using Web.ViewModels;
 
 namespace Web.Services
 {
@@ -50,5 +52,7 @@ namespace Web.Services
 
             return result;
         }
+
+        
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace Web.Repository
+﻿using Web.Entities;
+
+namespace Web.Repository
 {
-    public class Repository : IRepository
+    public class GeneralRepository : IRepository
     {
-        private DbContext _context;
-        public Repository(DbContext context)
+        private readonly TalkingTopiaContext _context;
+        public GeneralRepository(TalkingTopiaContext context)
         {
             _context = context;
         }
@@ -23,10 +25,10 @@
             _context.Entry(value).State = EntityState.Deleted;
         }
 
-        public T Get<T>(int id) where T : class
-        {
-            return _context.Set<T>().Find(id);
-        }
+        //public T Get<T>(int id) where T : class
+        //{
+        //    return _context.Set<T>().Find(id);
+        //}
 
         public IQueryable<T> GetAll<T>() where T : class
         {

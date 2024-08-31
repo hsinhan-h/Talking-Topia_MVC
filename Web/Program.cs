@@ -1,4 +1,5 @@
 using Web.Entities;
+using Web.Repository;
 
 namespace Web
 {
@@ -7,6 +8,13 @@ namespace Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add DbContext configuration
+            builder.Services.AddDbContext<TalkingTopiaContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            //µù¥UIRepository
+            builder.Services.AddScoped<IRepository, GeneralRepository>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -17,9 +25,6 @@ namespace Web
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<ShoppingCartService>();
 
-            // Add DbContext configuration
-            builder.Services.AddDbContext<TalkingTopiaContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 
             var app = builder.Build();
 
