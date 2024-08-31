@@ -66,7 +66,7 @@ namespace Web.Services
                 {
                     CourseId = 2,
                     TutorHeadShotImage = "~/image/tutor_headshot_imgs/tutor_head_002.png",
-                    TutorFlagImage = "~/image/flag_imgs/us_flag.png", 
+                    TutorFlagImage = "~/image/flag_imgs/us_flag.png",
                     IsVerifiedTutor = false,
                     CourseTitle = "Todd🤠American Teacher!🏅Kid's English🔥精通英文：掌握這門全球流行語言的鑰匙！",
                     CourseSubTitle = "Expert! 🏅 Basic to Advanced😀",
@@ -113,14 +113,39 @@ namespace Web.Services
                 CourseInfoList = courseList
             };
 
-         
+
         }
 
-        public async Task<CourseMainPageViewModel> GetCourseMainPage()
+        public async Task<CourseMainPageViewModel> GetCourseMainPage(int id)
         {
-            var courseInfo = new CourseMainPageViewModel ()
+
+            var spokenLanguage = "中文,英文";
+            var courseCountDiscountList = new List<CourseCountDiscount>
             {
-                CourseId = 456,
+                new CourseCountDiscount
+                {
+                    CourseCount = 1,
+                    Discount = 0,
+                },
+                new CourseCountDiscount
+                {
+                    CourseCount = 5,
+                    Discount = 5,
+                },
+                new CourseCountDiscount
+                {
+                    CourseCount = 10,
+                    Discount = 10,
+                },
+                new CourseCountDiscount
+                {
+                    CourseCount = 20,
+                    Discount =15,
+                }
+            };
+            var courseInfo = new CourseMainPageViewModel()
+            {
+                CourseId = id,
                 MemberId = 312,
                 TutorHeadShotImage = "~/image/tutor_headshot_imgs/tutor_demo_jp_001.webp",
                 TutorFlagImage = "~/image/flag_imgs/japan_flag.png",
@@ -129,9 +154,10 @@ namespace Web.Services
                 CourseSubTitle = "💡 從基礎到高階語法—全面提升你的日語能力！",
                 TutorIntro = "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊",
                 TwentyFiveMinPriceNTD = 480,
-                TwentyFiveDiscountedPrice = new List<TwentyFiveDiscountedPriceList>(),
+                TwentyFiveDiscountedPrice = GettCoursePriceList(courseCountDiscountList, 25, 480),
                 FiftyMinPriceNTD = 888,
-                FiftyDiscountedPrice = new List<FiftyDiscountedPriceList>(),
+                SpokenLanguage = spokenLanguage.Split(",").ToList(),
+                FiftyDiscountedPrice = GettCoursePriceList(courseCountDiscountList, 50, 888),
                 CourseVideo = "https://www.youtube.com/embed/MAhD37a7AlE",
                 CourseVideoThumbnail = "~/image/thumb_nails/thumbnail_demo_jp_001.webp",
                 CourseRatings = 4.96,
@@ -201,32 +227,49 @@ namespace Web.Services
                     }
                 }
             };
-            
-            // 設置 TwentyFiveDiscountedPrice，使用 TwentyFiveMinPriceNTD 的值進行計算
-            courseInfo.TwentyFiveDiscountedPrice = new List<TwentyFiveDiscountedPriceList>
-            {
-                new TwentyFiveDiscountedPriceList
-                {
-                    FiveOffPrice = (decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD  * 0.95),   // 5% off
-                    TenOffPrice = (decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD  * 0.9),    // 10% off
-                    FifteenOffPrice =(decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD * 0.85) // 15% off
-                }
-            };
 
-            courseInfo.FiftyDiscountedPrice = new List<FiftyDiscountedPriceList>
-            {
-                new FiftyDiscountedPriceList
-                {
-                    FiveOffPrice = (decimal)Math.Round(courseInfo.FiftyMinPriceNTD  * 0.95),   // 5% off
-                    TenOffPrice = (decimal)Math.Round(courseInfo.FiftyMinPriceNTD  * 0.9),    // 10% off
-                    FifteenOffPrice =(decimal)Math.Round(courseInfo.FiftyMinPriceNTD* 0.85) // 15% off
-                }
-            };
+            // 設置 TwentyFiveDiscountedPrice，使用 TwentyFiveMinPriceNTD 的值進行計算
+            //courseInfo.TwentyFiveDiscountedPrice = new List<TwentyFiveDiscountedPriceList>
+            //{
+            //    new TwentyFiveDiscountedPriceList
+            //    {
+            //        FiveOffPrice = (decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD  * 0.95),   // 5% off
+            //        TenOffPrice = (decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD  * 0.9),    // 10% off
+            //        FifteenOffPrice =(decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD * 0.85) // 15% off
+            //    }
+            //};
+
+            //courseInfo.FiftyDiscountedPrice = new List<FiftyDiscountedPriceList>
+            //{
+            //    new FiftyDiscountedPriceList
+            //    {
+            //        FiveOffPrice = (decimal)Math.Round(courseInfo.FiftyMinPriceNTD  * 0.95),   // 5% off
+            //        TenOffPrice = (decimal)Math.Round(courseInfo.FiftyMinPriceNTD  * 0.9),    // 10% off
+            //        FifteenOffPrice =(decimal)Math.Round(courseInfo.FiftyMinPriceNTD* 0.85) // 15% off
+            //    }
+            //};
+
 
             return courseInfo;
-            
+
         }
 
+        private List<BaseDiscountPice> GettCoursePriceList(List<CourseCountDiscount> courseCounts, int time, decimal price)
+        {
+
+            var result = courseCounts.Select(x =>
+            new BaseDiscountPice
+            {
+                CourseCount = x.CourseCount,
+                CourseDurance = time,
+                Discount = (int)x.Discount,
+                DiscountPrice =x.Discount == 0? price.ToString():(price * (1 - (x.Discount / 100))).ToString(),
+                
+            }).ToList();
+
+
+            return result;
+        }
         /// <summary>
         /// 首頁隨機顯示課程
         /// </summary>
@@ -305,6 +348,6 @@ namespace Web.Services
     }
 }
 
-       
-       
+
+
 

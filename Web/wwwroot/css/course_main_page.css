@@ -537,15 +537,18 @@ strong {
     flex-wrap: wrap;
     row-gap: 10px;
 }
+.course-info-card:nth-child(1) .course-discount-logo {
+    display: none;
+} 
 
-.course-info-card {
-    width: 100%;
-    border: .5px solid #ccc;
-    box-shadow: var(--button-hover-shadow);
-    border-radius: 10px;
-    padding: 13px 15px;
-    justify-content: space-between;
-}
+    .course-info-card {
+        width: 100%;
+        border: .5px solid #ccc;
+        box-shadow: var(--button-hover-shadow);
+        border-radius: 10px;
+        padding: 13px 15px;
+        justify-content: space-between;
+    }
 
     .course-info-card:hover {
         cursor: pointer;
