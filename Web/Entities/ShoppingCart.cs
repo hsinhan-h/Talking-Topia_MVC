@@ -3,17 +3,12 @@ using System.Collections.Generic;
 
 namespace Web.Entities;
 
-public partial class OrderDetail
+public partial class ShoppingCart
 {
     /// <summary>
-    /// 訂單明細Id
+    /// 購物車Id
     /// </summary>
-    public int OrderDetailId { get; set; }
-
-    /// <summary>
-    /// 訂單Id
-    /// </summary>
-    public int OrderId { get; set; }
+    public int ShoppingCartId { get; set; }
 
     /// <summary>
     /// 課程Id
@@ -31,36 +26,43 @@ public partial class OrderDetail
     public short Quantity { get; set; }
 
     /// <summary>
-    /// 折扣金額
-    /// </summary>
-    public decimal? DiscountPrice { get; set; }
-
-    /// <summary>
-    /// 總價
+    /// 單筆總價
     /// </summary>
     public decimal TotalPrice { get; set; }
 
     /// <summary>
-    /// 課程類別
+    /// 會員Id
+    /// </summary>
+    public int MemberId { get; set; }
+
+    /// <summary>
+    /// 課程類型
     /// </summary>
     public short CourseType { get; set; }
 
     /// <summary>
-    /// 課程名稱
+    /// 建立時間
     /// </summary>
-    public string CourseTitle { get; set; }
+    public DateTime Cdate { get; set; }
 
     /// <summary>
-    /// 課程類別
+    /// 修改時間
     /// </summary>
-    public string CourseCategory { get; set; }
+    public DateTime? Udate { get; set; }
 
     /// <summary>
-    /// 課程主題
+    /// 預約日期
     /// </summary>
-    public string CourseSubject { get; set; }
+    public DateTime? BookingDate { get; set; }
+
+    /// <summary>
+    /// 預約時間
+    /// </summary>
+    public DateTime? BookingTime { get; set; }
 
     public virtual Course Course { get; set; }
 
-    public virtual Order Order { get; set; }
+    public virtual Member Member { get; set; }
+
+    public virtual ICollection<ShoppingCartBooking> ShoppingCartBookings { get; set; } = new List<ShoppingCartBooking>();
 }

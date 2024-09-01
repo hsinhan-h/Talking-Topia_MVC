@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\**" />
     <Compile Remove="wwwroot\lib\vue\**" />
+    <Content Remove="Repositories\**" />
     <Content Remove="wwwroot\lib\vue\**" />
+    <EmbeddedResource Remove="Repositories\**" />
     <EmbeddedResource Remove="wwwroot\lib\vue\**" />
+    <None Remove="Repositories\**" />
     <None Remove="wwwroot\lib\vue\**" />
   </ItemGroup>
 
@@ -18,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <Folder Include="Entities\" />
     <Folder Include="wwwroot\image\flag_imgs\" />
     <Folder Include="wwwroot\image\mainpage_imgs\" />
   </ItemGroup>

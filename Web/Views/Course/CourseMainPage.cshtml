@@ -1,4 +1,4 @@
-﻿@model CourseInfoListViewModel
+﻿@model CourseMainPageViewModel
 
 @section topCSS
 {
@@ -16,9 +16,7 @@
     <link href="~/css/tutor_recommend_carousel_slider.css" rel="stylesheet" asp-append-version="true" />
 }
 
-@{
-    var course = Model.CourseInfoList.FirstOrDefault(c => c.CourseId == 456);
-}
+
 
 <div class="container tutor-course-page">
     <div class="row">
@@ -26,15 +24,15 @@
             <div class="lh-tutor-title d-flex mb-3">
                 <div class="lh-tutor-pic position-relative">
                     <img class="tutor-headshot rounded-circle  "
-                         src="@Url.Content(course.TutorHeadShotImage)" />
+                         src="@Url.Content(Model.TutorHeadShotImage)" />
                     <img class="tutor-nation-icon rounded-circle border border-white position-absolute "
-                         src="@Url.Content(course.TutorFlagImage)" />
+                         src="@Url.Content(Model.TutorFlagImage)" />
                 </div>
                 <div class="course-name">
-                    <h3>@course.CourseTitle</h3>
-                    <span class="course-spcialty mt-2">@course.CourseSubTitle</span>
+                    <h3>@Model.CourseTitle</h3>
+                    <span class="course-spcialty mt-2">@Model.CourseSubTitle</span>
                     <div class="class-count mt-2">
-                        <strong>@course.FinishedCoursesTotal</strong>堂韓文課
+                        <strong>@Model.FinishedCoursesTotal</strong>堂韓文課
                     </div>
                     <div class="follow-button mt-2">+關注</div>
                 </div>
@@ -44,10 +42,10 @@
                     <h3>自我介紹</h3>
                 </div>
                 <div class="self-intro-body">
-                    <div class="can-speak"><strong>會說</strong> 英文, 中文, 日文, 韓文, 粵語</div>
+                    <div class="can-speak"><strong>會說</strong> @string.Join("、", @Model.SpokenLanguage)</div>
                     <div class="self-intro-content">
                         <p class="self-intro-paragraph">
-                            @course.TutorIntro
+                            @Model.TutorIntro
                         </p>
                         <input type="checkbox" class="lh-expand-btn">
                         <i class="fa-solid fa-chevron-down"></i>
@@ -135,7 +133,7 @@
                     </div>
                 </div>
                 <div class="tutor-rating d-flex align-content-center">
-                    <p class="comment-count ">@course.CourseReviews 筆韓文課程評價</p>
+                    <p class="comment-count ">@Model.CourseReviews 筆韓文課程評價</p>
                     <div class="rating-star">
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
@@ -144,7 +142,7 @@
                         <i class="fa-regular fa-star-half-stroke"></i>
                     </div>
                 </div>
-                @foreach (var review in course.ReviewCardList.Take(2))
+                @foreach (var review in Model.ReviewCardList.Take(2))
                 {
                     <div class="comment-card">
                         <div class="comment d-flex ">
@@ -460,8 +458,8 @@
             <div class="side-bar-body">
                 <div class="course-info-card try-out-course d-flex mb-3 ">
                     <div class="course-charging d-flex flex-column">
-                        <div class="charging-fee">NT$@course.TrialPriceNTD</div>
-                        <div class="course-number-time">25分鐘體驗課</div>
+                        <div class="charging-fee">體驗價格換成其他的</div>
+                        <div class="course-number-time"></div>
                     </div>
                     <div class="course-discount d-flex">
                         <div class="course-discount-logo d-none">5% Off</div>
@@ -474,95 +472,57 @@
                 </div>
 
                 <div class="course-info-group min-25">
-                    <div class="course-info-card d-flex">
+                    @* <div class="course-info-card d-flex">
                         <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$@course.TwentyFiveMinPriceNTD</div>
+                            <div class="charging-fee">NT$@Model.TwentyFiveMinPriceNTD</div>
                             <div class="course-number-time">1堂25分鐘課</div>
                         </div>
                         <div class="course-discount d-flex">
                             <div class="course-discount-logo d-none">5% Off</div>
                             <i class="fa-solid fa-angle-right"></i>
                         </div>
-                    </div>
+                    </div> *@
 
-                    @foreach (var price in course.TwentyFiveDiscountedPrice)
+                    @foreach (var item in Model.TwentyFiveDiscountedPrice)
                     {
                         
                         <div class="course-info-card d-flex">
                             <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$ @price.FiveOffPrice</div>
-                                <div class="course-number-time">10堂25分鐘課</div>
+                                <div class="charging-fee">NT$ @item.DiscountPrice</div>
+                                <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
                             </div>
                             <div class="course-discount d-flex">
-                                <div class="course-discount-logo">5% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </div>
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$ @price.TenOffPrice</div>
-                                <div class="course-number-time">20堂25分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">10% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </div>
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$ @price.FifteenOffPrice</div>
-                                <div class="course-number-time">40堂25分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">15% Off</div>
+                                <div class="course-discount-logo">@(item.Discount)% Off</div>
                                 <i class="fa-solid fa-angle-right"></i>
                             </div>
                         </div>
                     }
                 </div>
+                
                 <div class="course-info-group min-50 d-none">
-                    <div class="course-info-card d-flex">
+                    @* <div class="course-info-card d-flex">
                         <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$@course.FiftyMinPriceNTD</div>
+                            <div class="charging-fee">NT$@Model.FiftyMinPriceNTD</div>
                             <div class="course-number-time">1堂50分鐘課</div>
                         </div>
                         <div class="course-discount d-flex">
                             <div class="course-discount-logo d-none">5% Off</div>
                             <i class="fa-solid fa-angle-right"></i>
                         </div>
-                    </div>
-                    @foreach (var price in course.FiftyDiscountedPrice)
+                    </div>  *@
+                    @foreach (var item in Model.FiftyDiscountedPrice)
                     {
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$@price.FiveOffPrice</div>
-                                <div class="course-number-time">5堂50分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">5% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
+                    <div class="course-info-card d-flex">
+                        <div class="course-charging d-flex flex-column">
+                            <div class="charging-fee">NT$ @item.DiscountPrice</div>
+                            <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
                         </div>
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$@price.TenOffPrice</div>
-                                <div class="course-number-time">10堂50分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">10% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
+                        <div class="course-discount d-flex">
+                            <div class="course-discount-logo">@(item.Discount)% Off</div>
+                            <i class="fa-solid fa-angle-right"></i>
                         </div>
-                        <div class="course-info-card d-flex">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$@price.FifteenOffPrice</div>
-                                <div class="course-number-time">20堂50分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">15% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </div>
+                    </div>
+                        
                     }
                 </div>
             </div>
@@ -585,7 +545,7 @@
 </div>
 <div class="lh-rwd-course-info-tab col-12">
     <div class="try-out-class-info">
-        <div class="tab-charging-fee">NT$@course.TrialPriceNTD</div>
+        <div class="tab-charging-fee">This will be replace</div>
         <div class="tab-course-number-time">25分鐘體驗課</div>
     </div>
     <div class="course-button-group">
@@ -731,7 +691,7 @@
 
                 </div>
                 <div class="col-md-6 col-12 comment-card-section h-100">
-                    @foreach (var review in course.ReviewCardList)
+                    @foreach (var review in Model.ReviewCardList)
                     {
                         <div class="comment-card">
                             <div class="comment d-flex ">
@@ -760,9 +720,9 @@
 
 @section endJS
 {
-    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script> *@
+            crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
     <script src="https://unpkg.com/@@primevue/themes/umd/aura.min.js"></script>

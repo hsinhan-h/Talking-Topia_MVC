@@ -1,12 +1,48 @@
-﻿namespace Web.Entities
-{
-    public class TutorTimeSlot
-    {
-        public int TutorTimeSlotId { get; set; }
-        public int MemberID { get; set; }
-        public int Weekday { get; set; }
-        public int CourseHourId { get; set; }
-        public int BookingId { get; set; }
+﻿using System;
+using System.Collections.Generic;
 
-    }
+namespace Web.Entities;
+
+public partial class TutorTimeSlot
+{
+    /// <summary>
+    /// 教師可預約Id
+    /// </summary>
+    public int TutorTimeSlotId { get; set; }
+
+    /// <summary>
+    /// 老師Id
+    /// </summary>
+    public int TutorId { get; set; }
+
+    /// <summary>
+    /// 開課星期
+    /// </summary>
+    public int Weekday { get; set; }
+
+    /// <summary>
+    /// 開課時間
+    /// </summary>
+    public int CourseHourId { get; set; }
+
+    /// <summary>
+    /// 預約課程Id
+    /// </summary>
+    public int BookingId { get; set; }
+
+    /// <summary>
+    /// 建立時間
+    /// </summary>
+    public DateTime Cdate { get; set; }
+
+    /// <summary>
+    /// 修改時間
+    /// </summary>
+    public DateTime? Udate { get; set; }
+
+    public virtual Booking Booking { get; set; }
+
+    public virtual CourseHour CourseHour { get; set; }
+
+    public virtual Member Tutor { get; set; }
 }

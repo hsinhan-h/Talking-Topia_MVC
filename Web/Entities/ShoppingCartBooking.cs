@@ -3,32 +3,34 @@ using System.Collections.Generic;
 
 namespace Web.Entities;
 
-public partial class Education
+public partial class ShoppingCartBooking
 {
     /// <summary>
-    /// 學歷Id
+    /// 課程預定Id
     /// </summary>
-    public int EducationId { get; set; }
+    public int BookingId { get; set; }
 
     /// <summary>
-    /// 學校名稱
+    /// 課程Id
     /// </summary>
-    public string SchoolName { get; set; }
+    public int? CourseId { get; set; }
 
     /// <summary>
-    /// 在學期間起
+    /// 預約日期
     /// </summary>
-    public int StudyStartYear { get; set; }
+    public DateOnly? BookingDate { get; set; }
 
     /// <summary>
-    /// 在學期間迄
+    /// 預約時間
     /// </summary>
-    public int StudyEndYear { get; set; }
+    public short? BookingTime { get; set; }
 
     /// <summary>
-    /// 科系名稱
+    /// 會員Id
     /// </summary>
-    public string DepartmentName { get; set; }
+    public int? MemberId { get; set; }
+
+    public int? TempShoppingCartId { get; set; }
 
     /// <summary>
     /// 建立時間
@@ -40,5 +42,5 @@ public partial class Education
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual ICollection<Member> Members { get; set; } = new List<Member>();
+    public virtual ShoppingCart TempShoppingCart { get; set; }
 }

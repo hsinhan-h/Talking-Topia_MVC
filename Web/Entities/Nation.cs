@@ -1,9 +1,24 @@
-﻿namespace Web.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace Web.Entities;
+
+public partial class Nation
 {
-    public class Nation
-    {
-        public int NationId { get; set; }
-        public string NationName { get; set; }
-        public string FlagUrl { get; set; }
-    }
+    /// <summary>
+    /// 國籍Id
+    /// </summary>
+    public int NationId { get; set; }
+
+    /// <summary>
+    /// 國籍名稱
+    /// </summary>
+    public string NationName { get; set; }
+
+    /// <summary>
+    /// 國籍圖片路徑
+    /// </summary>
+    public string FlagImage { get; set; }
+
+    public virtual ICollection<Member> Members { get; set; } = new List<Member>();
 }
