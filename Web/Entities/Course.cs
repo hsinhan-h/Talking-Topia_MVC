@@ -82,7 +82,7 @@ public partial class Course
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
-    public virtual ICollection<CourseCategory> CourseCategories { get; set; } = new List<CourseCategory>();
+    public virtual CourseCategory Category { get; set; }
 
     public virtual ICollection<CourseImage> CourseImages { get; set; } = new List<CourseImage>();
 

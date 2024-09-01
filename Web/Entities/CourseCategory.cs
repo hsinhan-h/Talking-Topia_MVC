@@ -16,11 +16,6 @@ public partial class CourseCategory
     public string CategorytName { get; set; }
 
     /// <summary>
-    /// 課程Id
-    /// </summary>
-    public int CourseId { get; set; }
-
-    /// <summary>
     /// 建立時間
     /// </summary>
     public DateTime Cdate { get; set; }
@@ -30,7 +25,7 @@ public partial class CourseCategory
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual Course Course { get; set; }
-
     public virtual ICollection<CourseSubject> CourseSubjects { get; set; } = new List<CourseSubject>();
+
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 }
