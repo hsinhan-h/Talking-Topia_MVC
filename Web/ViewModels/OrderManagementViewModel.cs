@@ -2,6 +2,9 @@
 
 namespace Web.ViewModels
 {
+    /// <summary>
+    /// Member-訂單明細
+    /// </summary>
     public class OrderManagementViewModel
     {
         /// <summary>
@@ -100,6 +103,9 @@ namespace Web.ViewModels
         public List<OrderManagementViewModel> OrderManagementList { get; set; }
     }
 
+    /// <summary>
+    /// ShoppingCart-交易完成後的訂單明細
+    /// </summary>
     public class ShoppingCartInfoViewModel
     {
         /// <summary>
