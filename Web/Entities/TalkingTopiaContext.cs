@@ -697,23 +697,23 @@ public partial class TalkingTopiaContext : DbContext
     {
         MemberId = 5,
         HeadShotImage = "~/image/tutor_headshot_imgs/tutor_head_002.png",
-        NationId = 3,
-        IsVerifiedTutor = true,
-        FirstName = "Todd",
-        LastName = "Smith",
+        NationId = 1,
+        IsVerifiedTutor = false,
+        FirstName = "大衛",
+        LastName = "李",
         Password = "hashedpassword5",
         Email = "todd@example.com",
-        Nickname = "Toddy",
+        Nickname = "David",
         Phone = "0700222454",
-        Birthday = new DateTime(1963, 11, 5),
+        Birthday = new DateTime(1993, 11, 5),
         Gender = 1,
         NativeLanguage = "英文",
-        SpokenLanguage = "英文 西班牙語",
+        SpokenLanguage = "英文 中文",
         BankCode = "789",
         BankAccount = "98765432",
         EducationId = 3,
-        TutorIntro = "嗨！我是 👩‍🏫 Todd，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
-        Account = "todd_account",
+        TutorIntro = "嗨！我是 👩‍🏫 李老師，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
+        Account = "david_account",
         AccountType = 1,
         Cdate = DateTime.Now,
         Udate = DateTime.Now,
@@ -778,14 +778,14 @@ public partial class TalkingTopiaContext : DbContext
             CategoryId = 1,
             SubjectId = 1,
             TutorId = 5,
-            Title = "Todd American Teacher!🏅Kid's English🔥精通英文：掌握這門全球流行語言的鑰匙！",
-            SubTitle = "Expert! 🏅 Basic to Advanced😀",
+            Title = "🌟 英語口說提升班：讓你自信流利講英語的最佳選擇",
+            SubTitle = "✨ 從零開始，到流利對話的輕鬆之旅！",
             TwentyFiveMinUnitPrice = 700,
             FiftyMinUnitPrice = 1100,
-            Description = "嗨！我是 👩‍🏫 Todd，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
+            Description = "課程亮點\r\n👶 無論你是剛開始學習英語的初學者，還是想進一步提升口說能力的中級者，我都有合適的教材與方法，讓你逐步克服語言學習的恐懼。\r\n💪 我會引導你在小組討論中與同學練習，透過彼此交流增強口語表達能力。藉助故事、角色扮演以及多媒體資源，我們將一起深入了解英語的美妙！\r\n\r\n自我介紹\r\n❤️ 我熱愛教育，並堅信教育的力量。看到學生從一開始的羞怯逐漸轉變為自信的表達者，這讓我感到無比的成就感。\r\n🎭 在課堂上，我將使用多樣化的教學方法，透過互動遊戲和小組活動，讓你們在享受學習的過程中輕鬆掌握英語。\r\n🌟 我相信，每位學生都是獨一無二的，所以我會耐心地了解每個人的學習需求，並提供針對性的建議和指導。\r\n\r\n課程內容\r\n💬 課程涵蓋日常對話、商業英語、旅遊英語等多個主題，無論你的學習目的為何，都能找到適合的學習內容。\r\n🎉 我會設計有趣的實境練習，讓你能在模擬情境中實踐所學，並且定期進行小組演講和討論，讓你能夠在實際對話中應用所學的知識。\r\n📚 課後，我會提供額外的學習資源和練習題，幫助你持續進步，如影片推薦、English podcasts、以及值得一試的線上學習平台。\r\n\r\n新生福利\r\n🎁 加入我們的課程後，你將獲得一份專屬學習計畫，這份計畫將幫助你規劃和追蹤自己的學習進度，讓你時刻在正確的方向前進。\r\n🌈 我會定期提供語言測試和反饋，確保每位學生都能清楚自己的進步狀況，並持續調整學習策略。\r\n\U0001f973 特別的學習小禮物也會隨著課程頒發，如實用的英語學習工具和資源，讓你的學習之路充滿驚喜！\r\n\r\n期待在課堂上與你見面，一同展開這段精彩的英語學習旅程吧！讓我們一起成為英語口說的高手！👋",
             IsEnabled = true,
-            ThumbnailUrl = "~/image/thumb_nails/tutor002_thumbnail.jpg",
-            VideoUrl = "https://www.youtube.com/embed/xXsfl6RBuhQ",
+            ThumbnailUrl = "~/image/thumb_nails/thumbnail_demo_tw_001.webp",
+            VideoUrl = "https://www.youtube.com/embed/YX6KZIcUeY8?list=PLqivELodHt3jq3oWBZfdhMu0GE7774HBW",
             CoursesStatus = 1,
             Cdate = DateTime.Now
         }
@@ -818,17 +818,56 @@ public partial class TalkingTopiaContext : DbContext
             new CourseHour { CourseHourId = 24, Hour = "23:00", Cdate = DateTime.Now }
 );
         modelBuilder.Entity<CourseCategorite>().HasData(
-    new CourseCategorite { CourseCategoryId = 1, CategorytName = "程式設計", CourseId = 1, Cdate = DateTime.Now },
-    new CourseCategorite { CourseCategoryId = 2, CategorytName = "語言學習", CourseId = 2, Cdate = DateTime.Now }
+    new CourseCategorite { CourseCategoryId = 1, CategorytName = "語言學習", CourseId = 1, Cdate = DateTime.Now },
+    new CourseCategorite { CourseCategoryId = 2, CategorytName = "程式設計", CourseId = 2, Cdate = DateTime.Now },
+    new CourseCategorite { CourseCategoryId = 3, CategorytName = "升學科目", CourseId = 3, Cdate = DateTime.Now }
 );
         modelBuilder.Entity<CourseSubject>().HasData(
-    new CourseSubject { SubjectId = 1, SubjectName = "C#", CourseCategoryId = 1, Cdate = DateTime.Now },
-    new CourseSubject { SubjectId = 2, SubjectName = "日語", CourseCategoryId = 2, Cdate = DateTime.Now }
+    new CourseSubject { SubjectId = 1, SubjectName = "英文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 2, SubjectName = "日文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 3, SubjectName = "中文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 4, SubjectName = "德文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 5, SubjectName = "法文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 6, SubjectName = "西班牙文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 7, SubjectName = "HTML/CSS", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 8, SubjectName = "JavaScript", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 9, SubjectName = "C#", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 10, SubjectName = "SQL", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 11, SubjectName = "Python", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 12, SubjectName = "Java", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 13, SubjectName = "數學", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 14, SubjectName = "物理", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 15, SubjectName = "化學", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 16, SubjectName = "歷史", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 17, SubjectName = "地理", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 18, SubjectName = "生物", CourseCategoryId = 3, Cdate = DateTime.Now }
 );
 
         modelBuilder.Entity<CourseImage>().HasData(
-    new CourseImage { CourseImageId = 1, CourseId = 1, ImageUrl = "csharp_image.jpg", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 2, CourseId = 2, ImageUrl = "japanese_image.jpg", Cdate = DateTime.Now }
+    // CourseId = 1
+    new CourseImage { CourseImageId = 1, CourseId = 1, ImageUrl = "https://picsum.photos/id/100/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 2, CourseId = 1, ImageUrl = "https://picsum.photos/id/101/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 3, CourseId = 1, ImageUrl = "https://picsum.photos/id/102/450/300", Cdate = DateTime.Now },
+
+    // CourseId = 2
+    new CourseImage { CourseImageId = 4, CourseId = 2, ImageUrl = "https://picsum.photos/id/103/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 5, CourseId = 2, ImageUrl = "https://picsum.photos/id/104/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 6, CourseId = 2, ImageUrl = "https://picsum.photos/id/105/450/300", Cdate = DateTime.Now },
+
+    // CourseId = 3
+    new CourseImage { CourseImageId = 7, CourseId = 3, ImageUrl = "https://picsum.photos/id/106/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 8, CourseId = 3, ImageUrl = "https://picsum.photos/id/107/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 9, CourseId = 3, ImageUrl = "https://picsum.photos/id/108/450/300", Cdate = DateTime.Now },
+
+    // CourseId = 4
+    new CourseImage { CourseImageId = 10, CourseId = 4, ImageUrl = "https://picsum.photos/id/109/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 11, CourseId = 4, ImageUrl = "https://picsum.photos/id/110/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 12, CourseId = 4, ImageUrl = "https://picsum.photos/id/111/450/300", Cdate = DateTime.Now },
+
+    // CourseId = 5
+    new CourseImage { CourseImageId = 13, CourseId = 5, ImageUrl = "https://picsum.photos/id/112/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 14, CourseId = 5, ImageUrl = "https://picsum.photos/id/113/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 15, CourseId = 5, ImageUrl = "https://picsum.photos/id/114/450/300", Cdate = DateTime.Now }
         );
         modelBuilder.Entity<Order>().HasData(
     new Order { OrderId = 1, MemberId = 1, PaymentType = "Credit Card", TotalPrice = 1000, TransactionDate = DateTime.Now, InvoiceType = 1, OrderStatusId = 1, Cdate = DateTime.Now },
