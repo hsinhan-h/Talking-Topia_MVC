@@ -3,6 +3,12 @@ using NuGet.Protocol;
 
 namespace Web.ViewModels
 {
+    public class TutorResumeListViewModel
+    {
+        public List<TutorResumeViewModel> TutorResumeList { get; set; }
+    }
+
+
     public class TutorResumeViewModel
     {
         /// <summary>

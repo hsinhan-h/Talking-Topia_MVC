@@ -1,4 +1,5 @@
-﻿@section topCSS
+﻿@model TutorResumeListViewModel
+@section topCSS
 {
     <link href="~/css/layout.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/normalize.css" rel="stylesheet" asp-append-version="true" />
@@ -37,10 +38,13 @@
                 <p class="my-1">請提供大頭貼</p>
                 <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入..." @* value="item.ImageUrl *@">
             </div>
+            @foreach (var item in Model.TutorResumeList)
+                { 
             <div class="col-12 mt-4">
                 <p class="my-1 bgc fs-4">【學校名稱】</p>
-                <input class="form-control my-1" type="text" placeholder="輸入..." @* value="item.SchoolName" *@ />
-            </div>
+                    <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.SchoolName" />
+                </div>
+                }
             <div class="col-12 mt-2">
                 <p class="my-1 bgc fs-4">【就學期間】</p>
                 <div class="input-group my-1">
