@@ -55,7 +55,7 @@ public partial class TalkingTopiaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Database=TalkingTopia;integrated security=True;MultipleActiveResultSets=True");
+        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Database=TalkingTopia;Trusted_Connection=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -193,13 +193,16 @@ public partial class TalkingTopiaContext : DbContext
             entity.Property(e => e.VideoUrl)
                 .IsRequired()
                 .HasComment("影片路徑");
+
+            entity.HasOne(d => d.Category).WithMany(p => p.Courses)
+                .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Courses_CourseCategories");
         });
 
         modelBuilder.Entity<CourseCategory>(entity =>
         {
             entity.HasKey(e => e.CourseCategoryId).HasName("PK__CourseCa__4D67EBB68E28BA31");
-
-            entity.HasIndex(e => e.CourseId, "IX_CourseCategorites_CourseId");
 
             entity.Property(e => e.CourseCategoryId).HasComment("課程類別Id");
             entity.Property(e => e.CategorytName)
@@ -210,16 +213,10 @@ public partial class TalkingTopiaContext : DbContext
                 .HasComment("建立時間")
                 .HasColumnType("datetime")
                 .HasColumnName("CDate");
-            entity.Property(e => e.CourseId).HasComment("課程Id");
             entity.Property(e => e.Udate)
                 .HasComment("更新時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
-
-            entity.HasOne(d => d.Course).WithMany(p => p.CourseCategories)
-                .HasForeignKey(d => d.CourseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CourseCat__Cours__5812160E");
         });
 
         modelBuilder.Entity<CourseHour>(entity =>
@@ -922,37 +919,39 @@ public partial class TalkingTopiaContext : DbContext
 
 
         modelBuilder.Entity<Course>().HasData(
-        new Course { 
-            CourseId = 1, 
-            CategoryId = 1, 
-            SubjectId = 1, 
-            TutorId = 1, 
-            Title = "C# 入門", 
-            SubTitle = "從零開始學習 C#", 
-            TwentyFiveMinUnitPrice = 500, 
-            FiftyMinUnitPrice = 900, 
-            Description = "適合初學者的 C# 課程", 
-            IsEnabled = true, 
-            ThumbnailUrl = "csharp.jpg", 
-            VideoUrl = "csharp_intro.mp4", 
-            CoursesStatus = 1, Cdate = DateTime.Now 
+        new Course
+        {
+            CourseId = 1,
+            CategoryId = 1,
+            SubjectId = 1,
+            TutorId = 1,
+            Title = "C# 入門",
+            SubTitle = "從零開始學習 C#",
+            TwentyFiveMinUnitPrice = 500,
+            FiftyMinUnitPrice = 900,
+            Description = "適合初學者的 C# 課程",
+            IsEnabled = true,
+            ThumbnailUrl = "csharp.jpg",
+            VideoUrl = "csharp_intro.mp4",
+            CoursesStatus = 1,
+            Cdate = DateTime.Now
         },
-        new Course 
-        { 
-            CourseId = 2, 
-            CategoryId = 2, 
-            SubjectId = 2, 
-            TutorId = 2, 
-            Title = "日語 N5", 
-            SubTitle = "基礎日語學習", 
-            TwentyFiveMinUnitPrice = 400, 
-            FiftyMinUnitPrice = 800, 
-            Description = "日語入門課程", 
-            IsEnabled = true, 
-            ThumbnailUrl = "japanese.jpg", 
-            VideoUrl = "japanese_intro.mp4", 
-            CoursesStatus = 1, 
-            Cdate = DateTime.Now 
+        new Course
+        {
+            CourseId = 2,
+            CategoryId = 2,
+            SubjectId = 2,
+            TutorId = 2,
+            Title = "日語 N5",
+            SubTitle = "基礎日語學習",
+            TwentyFiveMinUnitPrice = 400,
+            FiftyMinUnitPrice = 800,
+            Description = "日語入門課程",
+            IsEnabled = true,
+            ThumbnailUrl = "japanese.jpg",
+            VideoUrl = "japanese_intro.mp4",
+            CoursesStatus = 1,
+            Cdate = DateTime.Now
         },
         new Course
         {
