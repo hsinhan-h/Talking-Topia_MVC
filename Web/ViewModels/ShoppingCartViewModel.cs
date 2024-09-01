@@ -2,7 +2,7 @@
 
 namespace Web.ViewModels
 {
-    public class ShoppingCartCheckViewModel
+    public class ShoppingCartViewModel
     {
         [Display(Name = "課程ID")]
         public int CourseId { get; set; }
@@ -42,9 +42,9 @@ namespace Web.ViewModels
         [Display(Name = "付款方式")]
         public string PaymentType { get; set; }
     }
-    public class ShoppingCartCheckListViewModel
+    public class ShoppingCartListViewModel
     {
-        public List<ShoppingCartCheckViewModel> ShoppingCartCheckList { get; set; }
+        public List<ShoppingCartViewModel> ShoppingCartCheckList { get; set; }
     }
 
 }

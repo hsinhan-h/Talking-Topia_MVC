@@ -2,11 +2,11 @@
 {
     public class ShoppingCartService
     {
-        public async Task<ShoppingCartCheckListViewModel> GetShoppingCartCheckList()
+        public async Task<ShoppingCartListViewModel> GetShoppingCartCheckList()
         {
-            List<ShoppingCartCheckViewModel> order = new List<ShoppingCartCheckViewModel>
+            List<ShoppingCartViewModel> order = new List<ShoppingCartViewModel>
         {
-                new ShoppingCartCheckViewModel
+                new ShoppingCartViewModel
             {
                     CourseId = 1,
                     TrackingNumber="17123456789",
@@ -22,7 +22,7 @@
                     Coupon = "DISCOUNT2024",
                     PaymentType = "Credit Card",
             },
-                new ShoppingCartCheckViewModel
+                new ShoppingCartViewModel
             {
                     CourseId = 2,
                     TrackingNumber="17987654321",
@@ -38,7 +38,7 @@
                     Coupon = "BUSINESS2024",
                     PaymentType = "Bank Transfer",
             },
-                new ShoppingCartCheckViewModel
+                new ShoppingCartViewModel
                 {
                     CourseId = 3,
                     TrackingNumber = "17246813579",
@@ -55,7 +55,7 @@
                     PaymentType = "PayPal",
                 }
         };
-            return new ShoppingCartCheckListViewModel()
+            return new ShoppingCartListViewModel()
             {
                 ShoppingCartCheckList = order,
             };
