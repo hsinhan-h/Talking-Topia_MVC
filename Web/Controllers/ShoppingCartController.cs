@@ -9,6 +9,10 @@ namespace Web.Controllers
         {
             _shoppingCartService = shoppingCartService;
         }
+        /// <summary>
+        /// 原ShoppingCartCheck
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             var shoppingCartData = await _shoppingCartService.GetShoppingCartCheckList();
