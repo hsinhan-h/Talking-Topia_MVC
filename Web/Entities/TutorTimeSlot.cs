@@ -5,18 +5,39 @@ namespace Web.Entities;
 
 public partial class TutorTimeSlot
 {
+    /// <summary>
+    /// 教師可預約Id
+    /// </summary>
     public int TutorTimeSlotId { get; set; }
 
+    /// <summary>
+    /// 老師Id
+    /// </summary>
     public int TutorId { get; set; }
 
+    /// <summary>
+    /// 開課星期
+    /// </summary>
     public int Weekday { get; set; }
 
+    /// <summary>
+    /// 開課時間
+    /// </summary>
     public int CourseHourId { get; set; }
 
+    /// <summary>
+    /// 預約課程Id
+    /// </summary>
     public int BookingId { get; set; }
 
+    /// <summary>
+    /// 建立時間
+    /// </summary>
     public DateTime Cdate { get; set; }
 
+    /// <summary>
+    /// 修改時間
+    /// </summary>
     public DateTime? Udate { get; set; }
 
     public virtual Booking Booking { get; set; }
