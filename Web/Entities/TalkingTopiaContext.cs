@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Web.ntities;
 
 namespace Web.Entities;
 
@@ -883,9 +882,9 @@ public partial class TalkingTopiaContext : DbContext
     new CourseHour { CourseHourId = 1, Hour = "08:00-09:00", Cdate = DateTime.Now },
     new CourseHour { CourseHourId = 2, Hour = "09:00-10:00", Cdate = DateTime.Now }
 );
-        modelBuilder.Entity<CourseCategorite>().HasData(
-    new CourseCategorite { CourseCategoryId = 1, CategorytName = "程式設計", CourseId = 1, Cdate = DateTime.Now },
-    new CourseCategorite { CourseCategoryId = 2, CategorytName = "語言學習", CourseId = 2, Cdate = DateTime.Now }
+        modelBuilder.Entity<CourseCategory>().HasData(
+    new CourseCategory { CourseCategoryId = 1, CategorytName = "程式設計", CourseId = 1, Cdate = DateTime.Now },
+    new CourseCategory { CourseCategoryId = 2, CategorytName = "語言學習", CourseId = 2, Cdate = DateTime.Now }
 );
         modelBuilder.Entity<CourseSubject>().HasData(
     new CourseSubject { SubjectId = 1, SubjectName = "C#", CourseCategoryId = 1, Cdate = DateTime.Now },
