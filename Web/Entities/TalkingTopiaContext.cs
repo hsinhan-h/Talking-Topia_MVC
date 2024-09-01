@@ -994,10 +994,6 @@ public partial class TalkingTopiaContext : DbContext
         }
 );
 
-        modelBuilder.Entity<CourseHour>().HasData(
-    new CourseHour { CourseHourId = 1, Hour = "08:00-09:00", Cdate = DateTime.Now },
-    new CourseHour { CourseHourId = 2, Hour = "09:00-10:00", Cdate = DateTime.Now }
-);
         modelBuilder.Entity<CourseCategory>().HasData(
     new CourseCategory { CourseCategoryId = 1, CategorytName = "語言學習", CourseId = 1, Cdate = DateTime.Now },
     new CourseCategory { CourseCategoryId = 2, CategorytName = "程式設計", CourseId = 2, Cdate = DateTime.Now },
@@ -1116,6 +1112,32 @@ public partial class TalkingTopiaContext : DbContext
     new WorkExperience { WorkExperienceId = 2, MemberId = 2, WorkExperienceFile = "japanese_experience.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now }
 );
 
+        modelBuilder.Entity<CourseHour>().HasData(
+            new CourseHour { CourseHourId = 1, Hour = "00:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 2, Hour = "01:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 3, Hour = "02:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 4, Hour = "03:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 5, Hour = "04:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 6, Hour = "05:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 7, Hour = "06:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 8, Hour = "07:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 9, Hour = "08:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 10, Hour = "09:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 11, Hour = "10:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 12, Hour = "11:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 13, Hour = "12:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 14, Hour = "13:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 15, Hour = "14:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 16, Hour = "15:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 17, Hour = "16:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 18, Hour = "17:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 19, Hour = "18:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 20, Hour = "19:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 21, Hour = "20:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 22, Hour = "21:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 23, Hour = "22:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 24, Hour = "23:00", Cdate = DateTime.Now }
+            );
 
 
         #endregion
