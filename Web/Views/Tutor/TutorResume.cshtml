@@ -44,19 +44,21 @@
                 <p class="my-1 bgc fs-4">【學校名稱】</p>
                     <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.SchoolName" />
                 </div>
-                }
+                
             <div class="col-12 mt-2">
                 <p class="my-1 bgc fs-4">【就學期間】</p>
                 <div class="input-group my-1">
-                    <input type="number" placeholder="開始年份" class="form-control" min="1940" value="@* item.StudyStartYear *@">
-                    <input type="number" placeholder="結束年份" class="form-control" min="1940" value="@* item.StudyEndYear *@">
+                    <input type="number" placeholder="開始年份" class="form-control" min="1940" value="@item.StudyStartYear">
+                    <input type="number" placeholder="結束年份" class="form-control" min="1940" value="@item.StudyEndYear">
                 </div>
             </div>
             <div class="col-12 mt-2 mb-3">
                 <p class="my-1 bgc fs-4">【科系名稱】</p>
-                <input class="form-control my-1" type="text" placeholder="輸入..." value="@* item.DepartmentName *@">
+                <input class="form-control my-1" type="text" placeholder="輸入..." value="@item.DepartmentName">
             </div>
+                }
         </div>
+                
         <div class="row mt-5 resume_border p-3 m-2">
             <div class="d-flex flex-row justify-content-between">
                 <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
@@ -99,40 +101,6 @@
                 </div>
             </div>
         </div>
-                @* <div class="col-12">
-        <p class="my-1 bgc fs-4">【證照】</p>
-        <div class="my-1 d-flex flex-column">
-        @for (int i = 0; i < item.ProfessionalLicenses.Count; i++)
-        {
-        <div class="col-12 mt-2">
-        <p class="my-1 bgc fs-4">【證照 @(i + 1)】</p>
-        <div class="my-1 d-flex flex-column">
-        <input class="form-control my-1" type="text" placeholder="輸入..." value="item.ProfessionalLicenses[i].LicenseName">
-        <input class="my-2" type="file" placeholder="輸入..." value="item.ProfessionalLicenses[i].LicenseFile">
-        </div>
-        </div>
-        }
-        </div>
-        </div>
-        <!-- Collapse trigger -->
-        <div class="apply-expend mb-3" data-bs-toggle="collapse" data-bs-target="#collapselicense-item.Account" aria-expanded="false">
-        <div class="col-12 d-flex flex-row align-items-center justify-content-center">
-        <i class="fa-solid fa-ellipsis"></i>
-        </div>
-        </div>
-        <!-- Collapsible section -->
-        <div class="collapse" id="collapselicense-item.Account">
-        @for (int i = 3; i < item.ProfessionalLicenses.Count; i++)
-        {
-        <div class="col-12 mt-2">
-        <p class="my-1 bgc fs-4">【證照 @(i + 1)】</p>
-        <div class="my-1 d-flex flex-column">
-        <input class="form-control my-1" type="text" placeholder="輸入..." value="item.ProfessionalLicenses[i].LicenseName">
-        <input class="my-2" type="file" placeholder="輸入...">
-        </div>
-        </div>
-        }
-        </div> *@
         <div class="row mt-5 resume_border p-3 m-2">
             <div>
                 <div class="d-flex flex-row justify-content-between">
@@ -162,17 +130,19 @@
                     <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
                 </span>
             </div>
+            @foreach (var item in Model.TutorResumeList)
+                { 
             <div class="col-12 mb-2">
                 <div class="input-group my-2">
                     <div class="col-12">
                         <p class="my-1 bgc fs-4">【工作名稱】</p>
-                        <input class="form-control my-2" type="text" placeholder="輸入...">
+                            <input class="form-control my-2" type="text" placeholder="輸入..." value="@item.WorkName">
                         <input class="form-control my-2" type="file" placeholder="輸入...">
                     </div>
                     <p class="my-1 bgc fs-4">【年資】</p>
                     <div class="input-group my-2">
-                        <input type="number" placeholder="開始年份" class="form-control" min="1940">
-                        <input type="number" placeholder="結束年份" class="form-control" min="1940">
+                            <input type="datetime" placeholder="開始年份" class="form-control" min="1940" value="@item.WorkStartDate.ToString("yyyy-MM-dd")">
+                            <input type="datetime" placeholder="結束年份" class="form-control" min="1940 " value="@item.WorkEndDate.ToString("yyyy-MM-dd")">
                     </div>
                 </div>
             </div>
@@ -193,6 +163,7 @@
                     <i class=" fa-solid fa-ellipsis "></i>
                 </div>
             </div>
+                }
         </div>
         <div class="row mt-3 ">
             <div class="my-3 d-flex flex-row justify-content-end">
@@ -201,4 +172,5 @@
             </div>
         </div>
     </div>
+
 </main>
