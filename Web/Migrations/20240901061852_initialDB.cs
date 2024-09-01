@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Web.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDB : Migration
+    public partial class initialDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -542,8 +542,8 @@ namespace Web.Migrations
                 columns: new[] { "CouponId", "CDate", "CouponCode", "CouponName", "Discount", "DiscountType", "ExpirationDate", "IsActive", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8569), "SUMMER2024", "夏季優惠", 10, 1, new DateTime(2024, 9, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8563), true, null },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8571), "WELCOME2024", "新用戶優惠", 20, 1, new DateTime(2024, 11, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8570), true, null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9980), "SUMMER2024", "夏季優惠", 10, 1, new DateTime(2024, 10, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9963), true, null },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9983), "WELCOME2024", "新用戶優惠", 20, 1, new DateTime(2024, 12, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9982), true, null }
                 });
 
             migrationBuilder.InsertData(
@@ -551,8 +551,30 @@ namespace Web.Migrations
                 columns: new[] { "CourseHourId", "CDate", "Hour", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8398), "08:00-09:00", null },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8399), "09:00-10:00", null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9723), "00:00", null },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9726), "01:00", null },
+                    { 3, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9727), "02:00", null },
+                    { 4, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9729), "03:00", null },
+                    { 5, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9730), "04:00", null },
+                    { 6, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9731), "05:00", null },
+                    { 7, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9733), "06:00", null },
+                    { 8, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9734), "07:00", null },
+                    { 9, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9736), "08:00", null },
+                    { 10, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9737), "09:00", null },
+                    { 11, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9738), "10:00", null },
+                    { 12, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9740), "11:00", null },
+                    { 13, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9741), "12:00", null },
+                    { 14, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9742), "13:00", null },
+                    { 15, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9744), "14:00", null },
+                    { 16, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9745), "15:00", null },
+                    { 17, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9746), "16:00", null },
+                    { 18, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9747), "17:00", null },
+                    { 19, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9749), "18:00", null },
+                    { 20, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9750), "19:00", null },
+                    { 21, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9751), "20:00", null },
+                    { 22, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9753), "21:00", null },
+                    { 23, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9754), "22:00", null },
+                    { 24, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9755), "23:00", null }
                 });
 
             migrationBuilder.InsertData(
@@ -560,8 +582,10 @@ namespace Web.Migrations
                 columns: new[] { "CourseId", "CategoryId", "CDate", "CoursesStatus", "Description", "FiftyMinUnitPrice", "IsEnabled", "SubTitle", "SubjectId", "ThumbnailUrl", "Title", "TutorId", "TwentyFiveMinUnitPrice", "UDate", "VideoUrl" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8375), (short)1, "適合初學者的 C# 課程", 900m, true, "從零開始學習 C#", 1, "csharp.jpg", "C# 入門", 1, 500m, null, "csharp_intro.mp4" },
-                    { 2, 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8379), (short)1, "日語入門課程", 800m, true, "基礎日語學習", 2, "japanese.jpg", "日語 N5", 2, 400m, null, "japanese_intro.mp4" }
+                    { 1, 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9673), (short)1, "適合初學者的 C# 課程", 900m, true, "從零開始學習 C#", 1, "csharp.jpg", "C# 入門", 1, 500m, null, "csharp_intro.mp4" },
+                    { 2, 2, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9681), (short)1, "日語入門課程", 800m, true, "基礎日語學習", 2, "japanese.jpg", "日語 N5", 2, 400m, null, "japanese_intro.mp4" },
+                    { 3, 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9685), (short)1, "📅 隨時隨地進行日文學習，靈活安排時間，讓學習變得更自由！\r\n🗣️ 專屬一對一視訊教學，根據你的需求量身訂製課程內容！✨\r\n\r\n課程介紹文案：\r\n🌟 在全球化的今天，會一門外語是多麼重要！🌍 無論是工作、旅遊✈️還是單純的興趣，學習日文將為你開啟通往日本文化的大門！我們提供專業的線上日文家教，讓你隨時隨地都能學習日文📖，無需擔心地理限制和時間安排的困擾！透過我們的一對一教學，你可以根據自身的學習進度隨時提出問題，獲得即時回饋！💬\r\n\r\n🎥 透過高品質的視訊平台，專業的老師將與你進行一對一的互動，這樣不僅能建立更密切的師生關係🤝，也能確保每堂課都能充分關注你的學習進度和需求。這是在傳統教室中難以實現的優勢！我們的老師將幫助你克服任何學習上的障礙，並給予鼓勵💪，讓學習不再孤單。\r\n\r\n🎳 無論你是語言學習的新手，還是想要進一步提升日文能力的學生，我們的課程都可以根據你的基礎和目標來調整！📈無論是學習日常對話、商務日文📊還是準備JLPT考試🚀，我們都能提供最合適的學習計畫！從發音基礎到語法結構，每一個細節都不會被忽略。\r\n\r\n📚 我們的教師將利用各種多媒體教材📹和互動練習🎮，讓你愉快地學習日文，這包括視聽材料、遊戲、角色扮演及小組討論等多種形式，提升你的聽、說、讀、寫能力。即使是最枯燥的文法📜，在這種輕鬆的氛圍下也變得趣味盎然！\r\n\r\n🌈 除了語言課程，我們的教師將額外分享豐富的日本文化🇯🇵，包括日本的習俗、音樂🎶、美食🍱等，讓你在學習日文的同時，也能欣賞到日本的美好文化。每一堂課都會為你帶來全新的文化體驗😍，讓你不僅是學習文字，更是了解背後的故事！\r\n\r\n🍣 課程中不僅僅是口語練習，老師還將分享正宗的日本料理🍜食譜，幫助你在學習語言的同時，學會一些日本美食的製作！👩‍🍳 你會驚喜於食物背後的文化和歷史，這樣的學習過程使得每堂課都更生動且充滿趣味。\r\n\r\n🏆 現在就加入我們的線上日文家教，設定你自己的學習目標🎯，並開始輕鬆學習！不再只是枯燥的背單字，讓我們用互動式教學讓每次課堂都成為你期待的學習時光！⏰ 在老師的指導下，你很快將能日常自信地用日文交流！\r\n\r\n🎉 無論是準備考試📚、赴日旅行✈️或職場交流，專屬的老師會全力支持你，幫助你達成目標！報名後，無需花費時間尋找合適的教材📦，我們將為你精心準備學習資源，讓你快速進步！🚀 快來預約你的第一堂課，開始放飛你的日文夢想，開啟一段全新的學習旅程吧！🌟", 1088m, true, "💡 從基礎到高階語法—全面提升你的日語能力！", 2, "~/image/thumb_nails/thumbnail_demo_jp_001.webp", "Akimo老師 🔥精通日語：掌握這門全球流行語言的鑰匙！", 4, 560m, null, "https://www.youtube.com/embed/MAhD37a7AlE" },
+                    { 4, 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9689), (short)1, "嗨！我是 👩‍🏫 Todd，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀", 1100m, true, "Expert! 🏅 Basic to Advanced😀", 1, "~/image/thumb_nails/tutor002_thumbnail.jpg", "Todd American Teacher!🏅Kid's English🔥精通英文：掌握這門全球流行語言的鑰匙！", 5, 700m, null, "https://www.youtube.com/embed/xXsfl6RBuhQ" }
                 });
 
             migrationBuilder.InsertData(
@@ -569,9 +593,9 @@ namespace Web.Migrations
                 columns: new[] { "EducationId", "CDate", "DepartmentName", "SchoolName", "StudyEndYear", "StudyStartYear", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8259), "資訊工程", "台灣大學", 2014, 2010, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8272) },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8277), "數學系", "東京大學", 2016, 2012, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8277) },
-                    { 3, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8279), "經濟系", "哈佛大學", 2019, 2015, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8279) }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9455), "資訊工程", "台灣大學", 2014, 2010, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9480) },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9489), "數學系", "東京大學", 2016, 2012, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9489) },
+                    { 3, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9491), "經濟系", "哈佛大學", 2019, 2015, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9492) }
                 });
 
             migrationBuilder.InsertData(
@@ -579,9 +603,9 @@ namespace Web.Migrations
                 columns: new[] { "NationId", "FlagImage", "NationName" },
                 values: new object[,]
                 {
-                    { 1, "taiwan.jpg", "台灣" },
-                    { 2, "japan.jpg", "日本" },
-                    { 3, "usa.jpg", "美國" }
+                    { 1, "~/image/flag_imgs/taiwan_flag.jpg", "台灣" },
+                    { 2, "~/image/flag_imgs/japan_flag.png", "日本" },
+                    { 3, "~/image/flag_imgs/us_flag.png", "美國" }
                 });
 
             migrationBuilder.InsertData(
@@ -589,8 +613,8 @@ namespace Web.Migrations
                 columns: new[] { "CourseCategoryId", "CategorytName", "CDate", "CourseId", "UDate" },
                 values: new object[,]
                 {
-                    { 1, "程式設計", new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8422), 1, null },
-                    { 2, "語言學習", new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8424), 2, null }
+                    { 1, "程式設計", new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9791), 1, null },
+                    { 2, "語言學習", new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9793), 2, null }
                 });
 
             migrationBuilder.InsertData(
@@ -598,8 +622,8 @@ namespace Web.Migrations
                 columns: new[] { "CourseImageId", "CDate", "CourseId", "ImageUrl", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8462), 1, "csharp_image.jpg", null },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8464), 2, "japanese_image.jpg", null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9880), 1, "csharp_image.jpg", null },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9882), 2, "japanese_image.jpg", null }
                 });
 
             migrationBuilder.InsertData(
@@ -607,9 +631,11 @@ namespace Web.Migrations
                 columns: new[] { "MemberId", "Account", "AccountType", "BankAccount", "BankCode", "Birthday", "CDate", "EducationId", "Email", "FirstName", "Gender", "HeadShotImage", "IsTutor", "IsVerifiedTutor", "LastName", "NationId", "NativeLanguage", "Nickname", "Password", "Phone", "SpokenLanguage", "TutorIntro", "UDate" },
                 values: new object[,]
                 {
-                    { 1, "xiaoming_account", 1, "12345678", "123", new DateTime(1990, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8320), 1, "xiaoming@example.com", "小明", (short)1, "xiaoming.jpg", true, true, "王", 1, "中文", "明哥", "hashedpassword1", "0912345678", "英文", "專業C#講師", new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8320) },
-                    { 2, "ken_account", 2, "87654321", "456", new DateTime(1985, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8329), 2, "ken@example.com", "健", (short)1, "ken.jpg", false, false, "佐藤", 2, "日語", "健哥", "hashedpassword2", "0800123456", "中文", "日語教學專家", new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8330) },
-                    { 3, "john_doe_account", 1, "98765432", "789", new DateTime(1992, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8336), 3, "john@example.com", "John", (short)1, "john_doe.jpg", true, true, "Doe", 3, "英文", "Johnny", "hashedpassword3", "0700123456", "西班牙語", "資深英語導師", new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8336) }
+                    { 1, "xiaoming_account", 1, "12345678", "123", new DateTime(1990, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9547), 1, "xiaoming@example.com", "小明", (short)1, "xiaoming.jpg", true, true, "王", 1, "中文", "明哥", "hashedpassword1", "0912345678", "英文", "專業C#講師", new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9548) },
+                    { 2, "ken_account", 2, "87654321", "456", new DateTime(1985, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9599), 2, "ken@example.com", "健", (short)1, "ken.jpg", false, false, "佐藤", 2, "日語", "健哥", "hashedpassword2", "0800123456", "中文", "日語教學專家", new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9600) },
+                    { 3, "john_doe_account", 1, "98765432", "789", new DateTime(1992, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9607), 3, "john@example.com", "John", (short)1, "john_doe.jpg", true, true, "Doe", 3, "英文", "Johnny", "hashedpassword3", "0700123456", "西班牙語", "資深英語導師", new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9608) },
+                    { 4, "akimo_account", 1, "98765432", "700", new DateTime(1990, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9614), 3, "akimo@example.com", "Akimo", (short)0, "~/image/tutor_headshot_imgs/tutor_demo_jp_001.webp", true, true, "Sato", 2, "日文", "Akimo", "hashedpassword4", "0711111111", "日文", "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊", new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9614) },
+                    { 5, "todd_account", 1, "98765432", "789", new DateTime(1963, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9620), 3, "todd@example.com", "Todd", (short)1, "~/image/tutor_headshot_imgs/tutor_head_002.png", true, true, "Smith", 3, "英文", "Toddy", "hashedpassword5", "0700222454", "英文 西班牙語", "嗨！我是 👩‍🏫 Todd，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀", new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9621) }
                 });
 
             migrationBuilder.InsertData(
@@ -617,8 +643,8 @@ namespace Web.Migrations
                 columns: new[] { "ApplyID", "ApplyDateTime", "ApplyStatus", "ApprovedDateTime", "MemberId", "RejectReason", "UpdateStatusDateTime" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8612), true, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8612), 1, "無", new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8613) },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8615), false, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8615), 2, "不符合資格", new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8616) }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(30), true, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(34), 1, "無", new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(35) },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(37), false, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(38), 2, "不符合資格", new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(39) }
                 });
 
             migrationBuilder.InsertData(
@@ -626,8 +652,8 @@ namespace Web.Migrations
                 columns: new[] { "BookingId", "BookingDate", "BookingTime", "CDate", "CourseId", "StudentId", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8635), (short)800, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8636), 1, 1, null },
-                    { 2, new DateTime(2024, 8, 30, 0, 0, 0, 0, DateTimeKind.Local), (short)900, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8642), 2, 2, null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(59), (short)800, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(60), 1, 1, null },
+                    { 2, new DateTime(2024, 9, 1, 0, 0, 0, 0, DateTimeKind.Local), (short)900, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(69), 2, 2, null }
                 });
 
             migrationBuilder.InsertData(
@@ -635,8 +661,8 @@ namespace Web.Migrations
                 columns: new[] { "SubjectId", "CDate", "CourseCategoryId", "SubjectName", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8444), 1, "C#", null },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8446), 2, "日語", null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9861), 1, "C#", null },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9863), 2, "日語", null }
                 });
 
             migrationBuilder.InsertData(
@@ -644,8 +670,8 @@ namespace Web.Migrations
                 columns: new[] { "OrderId", "CDate", "CouponPrice", "InvoiceType", "MemberId", "OrderStatusId", "PaymentType", "SentVATEmail", "TaxIdNumber", "TotalPrice", "TransactionDate", "UDate", "VATNumber" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8515), null, (short)1, 1, (short)1, "Credit Card", null, null, 1000m, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8512), null, null },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8518), null, (short)1, 2, (short)1, "Paypal", null, null, 2000m, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8517), null, null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9913), null, (short)1, 1, (short)1, "Credit Card", null, null, 1000m, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9907), null, null },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9916), null, (short)1, 2, (short)1, "Paypal", null, null, 2000m, new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9915), null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -653,8 +679,8 @@ namespace Web.Migrations
                 columns: new[] { "ProfessionalLicenseId", "CDate", "MemberId", "ProfessionalLicenseName", "ProfessionalLicenseUrl", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8663), 1, "C# 認證", "csharp_certificate.jpg", null },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8664), 2, "日語能力測驗 N1", "jlpt_n1.jpg", null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(91), 1, "C# 認證", "csharp_certificate.jpg", null },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(93), 2, "日語能力測驗 N1", "jlpt_n1.jpg", null }
                 });
 
             migrationBuilder.InsertData(
@@ -662,8 +688,10 @@ namespace Web.Migrations
                 columns: new[] { "ReviewId", "CDate", "CommentText", "CourseId", "Rating", "StudentId", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8683), "很棒的課程！", 1, (byte)5, 1, null },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8684), "非常實用！", 2, (byte)4, 2, null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(112), "很棒的課程！", 1, (byte)5, 1, null },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(114), "非常實用！", 2, (byte)4, 2, null },
+                    { 3, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(116), "講得不錯! 但笑話有點冷", 1, (byte)4, 2, null },
+                    { 4, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(117), "讚讚讚", 1, (byte)4, 3, null }
                 });
 
             migrationBuilder.InsertData(
@@ -671,8 +699,8 @@ namespace Web.Migrations
                 columns: new[] { "ShoppingCartId", "BookingDate", "BookingTime", "CDate", "CourseId", "CourseType", "MemberId", "Quantity", "TotalPrice", "UDate", "UnitPrice" },
                 values: new object[,]
                 {
-                    { 1, null, null, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8711), 1, (short)1, 1, (short)2, 1000m, null, 500m },
-                    { 2, null, null, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8713), 2, (short)1, 2, (short)1, 1000m, null, 1000m }
+                    { 1, null, null, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(152), 1, (short)1, 1, (short)2, 1000m, null, 500m },
+                    { 2, null, null, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(154), 2, (short)1, 2, (short)1, 1000m, null, 1000m }
                 });
 
             migrationBuilder.InsertData(
@@ -680,8 +708,8 @@ namespace Web.Migrations
                 columns: new[] { "WorkExperienceId", "CDate", "MemberId", "UDate", "WorkEndDate", "WorkExperienceFile", "WorkName", "WorkStartDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8786), 1, null, new DateTime(2023, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8785), "csharp_experience.pdf", null, new DateTime(2021, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8783) },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8789), 2, null, new DateTime(2022, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8788), "japanese_experience.pdf", null, new DateTime(2019, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8787) }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(232), 1, null, new DateTime(2023, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(231), "csharp_experience.pdf", null, new DateTime(2021, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(229) },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(235), 2, null, new DateTime(2022, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(234), "japanese_experience.pdf", null, new DateTime(2019, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(233) }
                 });
 
             migrationBuilder.InsertData(
@@ -689,8 +717,8 @@ namespace Web.Migrations
                 columns: new[] { "MemberPreferenceId", "CDate", "MemberId", "SubjecId", "UDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8591), 1, 1, null },
-                    { 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8592), 2, 2, null }
+                    { 1, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(5), 1, 1, null },
+                    { 2, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(6), 2, 2, null }
                 });
 
             migrationBuilder.InsertData(
@@ -707,8 +735,8 @@ namespace Web.Migrations
                 columns: new[] { "BookingId", "BookingDate", "BookingTime", "CDate", "CourseId", "MemberId", "TempShoppingCartId", "UDate" },
                 values: new object[,]
                 {
-                    { 1, null, (short)800, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8736), 1, 1, 1, null },
-                    { 2, null, (short)900, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8738), 2, 2, 2, null }
+                    { 1, null, (short)800, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(184), 1, 1, 1, null },
+                    { 2, null, (short)900, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(187), 2, 2, 2, null }
                 });
 
             migrationBuilder.InsertData(
@@ -716,8 +744,8 @@ namespace Web.Migrations
                 columns: new[] { "TutorTimeSlotId", "BookingId", "CDate", "CourseHourId", "TutorID", "UDate", "Weekday" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8757), 1, 1, null, 1 },
-                    { 2, 2, new DateTime(2024, 8, 30, 17, 55, 31, 223, DateTimeKind.Local).AddTicks(8760), 2, 2, null, 2 }
+                    { 1, 1, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(210), 1, 1, null, 1 },
+                    { 2, 2, new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(212), 2, 2, null, 2 }
                 });
 
             migrationBuilder.CreateIndex(

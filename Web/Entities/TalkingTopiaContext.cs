@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Web.ViewModels;
 using static NuGet.Packaging.PackagingConstants;
 
 namespace Web.Entities;
@@ -576,9 +578,9 @@ public partial class TalkingTopiaContext : DbContext
 
         #region 假資料內容
         modelBuilder.Entity<Nation>().HasData(
-    new Nation { NationId = 1, NationName = "台灣", FlagImage = "taiwan.jpg" },
-    new Nation { NationId = 2, NationName = "日本", FlagImage = "japan.jpg" },
-    new Nation { NationId = 3, NationName = "美國", FlagImage = "usa.jpg" }
+    new Nation { NationId = 1, NationName = "台灣", FlagImage = "~/image/flag_imgs/taiwan_flag.jpg" },
+    new Nation { NationId = 2, NationName = "日本", FlagImage = "~/image/flag_imgs/japan_flag.png" },
+    new Nation { NationId = 3, NationName = "美國", FlagImage = "~/image/flag_imgs/us_flag.png" }
 );
         modelBuilder.Entity<Education>().HasData(
     new Education { EducationId = 1, SchoolName = "台灣大學", StudyStartYear = 2010, StudyEndYear = 2014, DepartmentName = "資訊工程", Cdate = DateTime.Now, Udate = DateTime.Now },
@@ -664,18 +666,156 @@ public partial class TalkingTopiaContext : DbContext
         Cdate = DateTime.Now,
         Udate = DateTime.Now,
         IsTutor = true
+    },
+    new Member
+    {
+        MemberId = 4,
+        HeadShotImage = "~/image/tutor_headshot_imgs/tutor_demo_jp_001.webp",
+        NationId = 2,
+        IsVerifiedTutor = true,
+        FirstName = "Akimo",
+        LastName = "Sato",
+        Password = "hashedpassword4",
+        Email = "akimo@example.com",
+        Nickname = "Akimo",
+        Phone = "0711111111",
+        Birthday = new DateTime(1990, 7, 7),
+        Gender = 0,
+        NativeLanguage = "日文",
+        SpokenLanguage = "日文",
+        BankCode = "700",
+        BankAccount = "98765432",
+        EducationId = 3,
+        TutorIntro = "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊",
+        Account = "akimo_account",
+        AccountType = 1,
+        Cdate = DateTime.Now,
+        Udate = DateTime.Now,
+        IsTutor = true
+    },
+    new Member
+    {
+        MemberId = 5,
+        HeadShotImage = "~/image/tutor_headshot_imgs/tutor_head_002.png",
+        NationId = 3,
+        IsVerifiedTutor = true,
+        FirstName = "Todd",
+        LastName = "Smith",
+        Password = "hashedpassword5",
+        Email = "todd@example.com",
+        Nickname = "Toddy",
+        Phone = "0700222454",
+        Birthday = new DateTime(1963, 11, 5),
+        Gender = 1,
+        NativeLanguage = "英文",
+        SpokenLanguage = "英文 西班牙語",
+        BankCode = "789",
+        BankAccount = "98765432",
+        EducationId = 3,
+        TutorIntro = "嗨！我是 👩‍🏫 Todd，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
+        Account = "todd_account",
+        AccountType = 1,
+        Cdate = DateTime.Now,
+        Udate = DateTime.Now,
+        IsTutor = true
     }
 );
 
 
         modelBuilder.Entity<Course>().HasData(
-    new Course { CourseId = 1, CategoryId = 1, SubjectId = 1, TutorId = 1, Title = "C# 入門", SubTitle = "從零開始學習 C#", TwentyFiveMinUnitPrice = 500, FiftyMinUnitPrice = 900, Description = "適合初學者的 C# 課程", IsEnabled = true, ThumbnailUrl = "csharp.jpg", VideoUrl = "csharp_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
-    new Course { CourseId = 2, CategoryId = 2, SubjectId = 2, TutorId = 2, Title = "日語 N5", SubTitle = "基礎日語學習", TwentyFiveMinUnitPrice = 400, FiftyMinUnitPrice = 800, Description = "日語入門課程", IsEnabled = true, ThumbnailUrl = "japanese.jpg", VideoUrl = "japanese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now }
+        new Course { 
+            CourseId = 1, 
+            CategoryId = 1, 
+            SubjectId = 1, 
+            TutorId = 1, 
+            Title = "C# 入門", 
+            SubTitle = "從零開始學習 C#", 
+            TwentyFiveMinUnitPrice = 500, 
+            FiftyMinUnitPrice = 900, 
+            Description = "適合初學者的 C# 課程", 
+            IsEnabled = true, 
+            ThumbnailUrl = "csharp.jpg", 
+            VideoUrl = "csharp_intro.mp4", 
+            CoursesStatus = 1, Cdate = DateTime.Now 
+        },
+        new Course 
+        { 
+            CourseId = 2, 
+            CategoryId = 2, 
+            SubjectId = 2, 
+            TutorId = 2, 
+            Title = "日語 N5", 
+            SubTitle = "基礎日語學習", 
+            TwentyFiveMinUnitPrice = 400, 
+            FiftyMinUnitPrice = 800, 
+            Description = "日語入門課程", 
+            IsEnabled = true, 
+            ThumbnailUrl = "japanese.jpg", 
+            VideoUrl = "japanese_intro.mp4", 
+            CoursesStatus = 1, 
+            Cdate = DateTime.Now 
+        },
+        new Course
+        {
+            CourseId = 3,
+            CategoryId = 1,
+            SubjectId = 2,
+            TutorId = 4,
+            Title = "Akimo老師 🔥精通日語：掌握這門全球流行語言的鑰匙！",
+            SubTitle = "💡 從基礎到高階語法—全面提升你的日語能力！",
+            TwentyFiveMinUnitPrice = 560,
+            FiftyMinUnitPrice = 1088,
+            Description = "📅 隨時隨地進行日文學習，靈活安排時間，讓學習變得更自由！\r\n🗣️ 專屬一對一視訊教學，根據你的需求量身訂製課程內容！✨\r\n\r\n課程介紹文案：\r\n🌟 在全球化的今天，會一門外語是多麼重要！🌍 無論是工作、旅遊✈️還是單純的興趣，學習日文將為你開啟通往日本文化的大門！我們提供專業的線上日文家教，讓你隨時隨地都能學習日文📖，無需擔心地理限制和時間安排的困擾！透過我們的一對一教學，你可以根據自身的學習進度隨時提出問題，獲得即時回饋！💬\r\n\r\n🎥 透過高品質的視訊平台，專業的老師將與你進行一對一的互動，這樣不僅能建立更密切的師生關係\U0001f91d，也能確保每堂課都能充分關注你的學習進度和需求。這是在傳統教室中難以實現的優勢！我們的老師將幫助你克服任何學習上的障礙，並給予鼓勵💪，讓學習不再孤單。\r\n\r\n🎳 無論你是語言學習的新手，還是想要進一步提升日文能力的學生，我們的課程都可以根據你的基礎和目標來調整！📈無論是學習日常對話、商務日文📊還是準備JLPT考試🚀，我們都能提供最合適的學習計畫！從發音基礎到語法結構，每一個細節都不會被忽略。\r\n\r\n📚 我們的教師將利用各種多媒體教材📹和互動練習🎮，讓你愉快地學習日文，這包括視聽材料、遊戲、角色扮演及小組討論等多種形式，提升你的聽、說、讀、寫能力。即使是最枯燥的文法📜，在這種輕鬆的氛圍下也變得趣味盎然！\r\n\r\n🌈 除了語言課程，我們的教師將額外分享豐富的日本文化🇯🇵，包括日本的習俗、音樂🎶、美食🍱等，讓你在學習日文的同時，也能欣賞到日本的美好文化。每一堂課都會為你帶來全新的文化體驗😍，讓你不僅是學習文字，更是了解背後的故事！\r\n\r\n🍣 課程中不僅僅是口語練習，老師還將分享正宗的日本料理🍜食譜，幫助你在學習語言的同時，學會一些日本美食的製作！👩‍🍳 你會驚喜於食物背後的文化和歷史，這樣的學習過程使得每堂課都更生動且充滿趣味。\r\n\r\n🏆 現在就加入我們的線上日文家教，設定你自己的學習目標🎯，並開始輕鬆學習！不再只是枯燥的背單字，讓我們用互動式教學讓每次課堂都成為你期待的學習時光！⏰ 在老師的指導下，你很快將能日常自信地用日文交流！\r\n\r\n🎉 無論是準備考試📚、赴日旅行✈️或職場交流，專屬的老師會全力支持你，幫助你達成目標！報名後，無需花費時間尋找合適的教材📦，我們將為你精心準備學習資源，讓你快速進步！🚀 快來預約你的第一堂課，開始放飛你的日文夢想，開啟一段全新的學習旅程吧！🌟",
+            IsEnabled = true,
+            ThumbnailUrl = "~/image/thumb_nails/thumbnail_demo_jp_001.webp",
+            VideoUrl = "https://www.youtube.com/embed/MAhD37a7AlE",
+            CoursesStatus = 1,
+            Cdate = DateTime.Now
+        },
+        new Course
+        {
+            CourseId = 4,
+            CategoryId = 1,
+            SubjectId = 1,
+            TutorId = 5,
+            Title = "Todd American Teacher!🏅Kid's English🔥精通英文：掌握這門全球流行語言的鑰匙！",
+            SubTitle = "Expert! 🏅 Basic to Advanced😀",
+            TwentyFiveMinUnitPrice = 700,
+            FiftyMinUnitPrice = 1100,
+            Description = "嗨！我是 👩‍🏫 Todd，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
+            IsEnabled = true,
+            ThumbnailUrl = "~/image/thumb_nails/tutor002_thumbnail.jpg",
+            VideoUrl = "https://www.youtube.com/embed/xXsfl6RBuhQ",
+            CoursesStatus = 1,
+            Cdate = DateTime.Now
+        }
 );
 
         modelBuilder.Entity<CourseHour>().HasData(
-    new CourseHour { CourseHourId = 1, Hour = "08:00-09:00", Cdate = DateTime.Now },
-    new CourseHour { CourseHourId = 2, Hour = "09:00-10:00", Cdate = DateTime.Now }
+            new CourseHour { CourseHourId = 1, Hour = "00:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 2, Hour = "01:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 3, Hour = "02:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 4, Hour = "03:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 5, Hour = "04:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 6, Hour = "05:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 7, Hour = "06:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 8, Hour = "07:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 9, Hour = "08:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 10, Hour = "09:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 11, Hour = "10:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 12, Hour = "11:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 13, Hour = "12:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 14, Hour = "13:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 15, Hour = "14:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 16, Hour = "15:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 17, Hour = "16:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 18, Hour = "17:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 19, Hour = "18:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 20, Hour = "19:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 21, Hour = "20:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 22, Hour = "21:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 23, Hour = "22:00", Cdate = DateTime.Now },
+            new CourseHour { CourseHourId = 24, Hour = "23:00", Cdate = DateTime.Now }
 );
         modelBuilder.Entity<CourseCategorite>().HasData(
     new CourseCategorite { CourseCategoryId = 1, CategorytName = "程式設計", CourseId = 1, Cdate = DateTime.Now },
@@ -703,10 +843,10 @@ public partial class TalkingTopiaContext : DbContext
     new Coupon { CouponId = 2, CouponName = "新用戶優惠", CouponCode = "WELCOME2024", DiscountType = 1, Discount = 20, ExpirationDate = DateTime.Now.AddMonths(3), IsActive = true, Cdate = DateTime.Now }
 );
 
-    //    modelBuilder.Entity<MemberCoupon>().HasData(
-    //new MemberCoupon { MemberCouponId = 1, MemberId = 1, CouponId = 1, IsUsed = false, Cdate = DateTime.Now },
-    //new MemberCoupon { MemberCouponId = 2, MemberId = 2, CouponId = 2, IsUsed = true, Cdate = DateTime.Now }
-    //    );
+        //    modelBuilder.Entity<MemberCoupon>().HasData(
+        //new MemberCoupon { MemberCouponId = 1, MemberId = 1, CouponId = 1, IsUsed = false, Cdate = DateTime.Now },
+        //new MemberCoupon { MemberCouponId = 2, MemberId = 2, CouponId = 2, IsUsed = true, Cdate = DateTime.Now }
+        //    );
 
         modelBuilder.Entity<MemberPreference>().HasData(
     new MemberPreference { MemberPreferenceId = 1, MemberId = 1, SubjecId = 1, Cdate = DateTime.Now },
@@ -753,6 +893,10 @@ public partial class TalkingTopiaContext : DbContext
         modelBuilder.Entity<TutorTimeSlot>().HasData(
     new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 1, BookingId = 1, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 2, Weekday = 2, CourseHourId = 2, BookingId = 2, Cdate = DateTime.Now }
+    //new TutorTimeSlot { TutorTimeSlotId = 3, TutorId = 3, Weekday = 2, CourseHourId = 2, BookingId = 2, Cdate = DateTime.Now },
+    //new TutorTimeSlot { TutorTimeSlotId = 4, TutorId = 4, Weekday = 2, CourseHourId = 2, BookingId = 2, Cdate = DateTime.Now },
+    //new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 4, Weekday = 2, CourseHourId = 3, BookingId = 2, Cdate = DateTime.Now },
+    //new TutorTimeSlot { TutorTimeSlotId = 6, TutorId = 5, Weekday = 2, CourseHourId = 2, BookingId = 2, Cdate = DateTime.Now }
 );
 
 
