@@ -115,11 +115,6 @@ input {
 	box-shadow: var(--button-hover-shadow);
 }
 
-.li-backstage-publish-btn {
-	position: absolute;
-	top: -40%;
-}
-
 .lh-backstage-nav-bar {
 	z-index: 5;
 	background-color: #fff;
@@ -225,6 +220,10 @@ input {
 		height: 30%;
 		margin-top: 1em;
 		padding: 10px;
+	}
+	.li-backstage-publish-btn {
+		position: absolute;
+		top: -25%;
 	}
 }
 /* filters */
