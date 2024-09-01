@@ -892,13 +892,13 @@ public partial class TalkingTopiaContext : DbContext
     new Member
     {
         MemberId = 5,
-        HeadShotImage = "~/image/tutor_headshot_imgs/tutor_head_002.png",
+        HeadShotImage = "~/image/tutor_headshot_imgs/tutor_demo_tw_001.webp",
         NationId = 1,
         IsVerifiedTutor = false,
         FirstName = "大衛",
         LastName = "李",
         Password = "hashedpassword5",
-        Email = "todd@example.com",
+        Email = "david@example.com",
         Nickname = "David",
         Phone = "0700222454",
         Birthday = new DateTime(1993, 11, 5),
@@ -983,7 +983,7 @@ public partial class TalkingTopiaContext : DbContext
             Description = "課程亮點\r\n👶 無論你是剛開始學習英語的初學者，還是想進一步提升口說能力的中級者，我都有合適的教材與方法，讓你逐步克服語言學習的恐懼。\r\n💪 我會引導你在小組討論中與同學練習，透過彼此交流增強口語表達能力。藉助故事、角色扮演以及多媒體資源，我們將一起深入了解英語的美妙！\r\n\r\n自我介紹\r\n❤️ 我熱愛教育，並堅信教育的力量。看到學生從一開始的羞怯逐漸轉變為自信的表達者，這讓我感到無比的成就感。\r\n🎭 在課堂上，我將使用多樣化的教學方法，透過互動遊戲和小組活動，讓你們在享受學習的過程中輕鬆掌握英語。\r\n🌟 我相信，每位學生都是獨一無二的，所以我會耐心地了解每個人的學習需求，並提供針對性的建議和指導。\r\n\r\n課程內容\r\n💬 課程涵蓋日常對話、商業英語、旅遊英語等多個主題，無論你的學習目的為何，都能找到適合的學習內容。\r\n🎉 我會設計有趣的實境練習，讓你能在模擬情境中實踐所學，並且定期進行小組演講和討論，讓你能夠在實際對話中應用所學的知識。\r\n📚 課後，我會提供額外的學習資源和練習題，幫助你持續進步，如影片推薦、English podcasts、以及值得一試的線上學習平台。\r\n\r\n新生福利\r\n🎁 加入我們的課程後，你將獲得一份專屬學習計畫，這份計畫將幫助你規劃和追蹤自己的學習進度，讓你時刻在正確的方向前進。\r\n🌈 我會定期提供語言測試和反饋，確保每位學生都能清楚自己的進步狀況，並持續調整學習策略。\r\n\U0001f973 特別的學習小禮物也會隨著課程頒發，如實用的英語學習工具和資源，讓你的學習之路充滿驚喜！\r\n\r\n期待在課堂上與你見面，一同展開這段精彩的英語學習旅程吧！讓我們一起成為英語口說的高手！👋",
             IsEnabled = true,
             ThumbnailUrl = "~/image/thumb_nails/thumbnail_demo_tw_001.webp",
-            VideoUrl = "https://www.youtube.com/embed/YX6KZIcUeY8?list=PLqivELodHt3jq3oWBZfdhMu0GE7774HBW",
+            VideoUrl = "https://www.youtube.com/embed/MAhD37a7AlE",
             CoursesStatus = 1,
             Cdate = DateTime.Now
         }
@@ -1099,7 +1099,32 @@ public partial class TalkingTopiaContext : DbContext
 
         modelBuilder.Entity<TutorTimeSlot>().HasData(
     new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 12, BookingId=1, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 1, Weekday = 1, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now }
+    new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 1, Weekday = 1, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 3, TutorId = 4, Weekday = 2, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 4, TutorId = 4, Weekday = 2, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 4, Weekday = 2, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 6, TutorId = 4, Weekday = 2, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 7, TutorId = 4, Weekday = 2, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 8, TutorId = 4, Weekday = 2, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 9, TutorId = 5, Weekday = 3, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 10, TutorId = 5, Weekday = 3, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 11, TutorId = 5, Weekday = 3, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 12, TutorId = 5, Weekday = 3, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 13, TutorId = 5, Weekday = 3, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 14, TutorId = 5, Weekday = 3, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 15, TutorId = 5, Weekday = 4, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 16, TutorId = 5, Weekday = 4, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 17, TutorId = 5, Weekday = 4, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 18, TutorId = 5, Weekday = 4, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 19, TutorId = 5, Weekday = 4, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 20, TutorId = 5, Weekday = 4, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 21, TutorId = 5, Weekday = 5, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 22, TutorId = 5, Weekday = 5, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 23, TutorId = 5, Weekday = 5, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 24, TutorId = 5, Weekday = 5, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 25, TutorId = 5, Weekday = 5, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 26, TutorId = 5, Weekday = 5, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now }
+
 );
 
 

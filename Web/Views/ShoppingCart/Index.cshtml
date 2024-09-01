@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.ShoppingCartCheckList)
+                @foreach (var item in Model.ShoppingCartList)
                 {
                     <tr>
                         <td data-label="商品">
@@ -70,7 +70,7 @@
         <div class="coupon">
             <select class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
-                @foreach (var item in Model.ShoppingCartCheckList)
+                @foreach (var item in Model.ShoppingCartList)
                 {
                     <option value="@item.CourseId">@item.Coupon 折價100塊</option>
                     @* <option value="2">整張單據95折</option> *@
@@ -159,7 +159,7 @@
                     @{
                         decimal total = 0;
                     }
-                    @foreach (var item in Model.ShoppingCartCheckList)
+                    @foreach (var item in Model.ShoppingCartList)
                     {
                         <div class="card-teacher">
                             <div class="card-teacher-info">

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Web.Entities;
 using Web.Services;
 
 namespace Web.Controllers
@@ -26,10 +27,10 @@ namespace Web.Controllers
             return View();
         }
 
-        public IActionResult TutorResume()
+        public async Task<IActionResult> TutorResume(int MemberId)
         {
-
-            return View();
+            var model = await _resumeDataService.GetEducationAsync(1);
+            return View(model);
         }
         
         public async Task<IActionResult> PublishCourse(int MemberId)

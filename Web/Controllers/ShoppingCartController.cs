@@ -1,4 +1,5 @@
-﻿using Web.Services;
+﻿using System.Runtime.InteropServices;
+using Web.Entities;
 
 namespace Web.Controllers
 {
@@ -10,27 +11,24 @@ namespace Web.Controllers
             _shoppingCartService = shoppingCartService;
         }
         /// <summary>
-        /// 原ShoppingCartCheck
+        /// ShoppingCart頁面
+        /// Course頁面應回傳時長(value設定為25或50)與堂數(value設定堂數)
+        /// 設計一個VM接收option回傳的值(asp-for="對應value的VM欄位")
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index(int memberId)
+        public async Task<IActionResult> Index(int memberId, int courseId, int courseLength, int quantity)
         {
-            //初次進購物車tempCart為空
-            //todo: 先確認ShoppingCart是否有資料
-            //todo: 無資料 - create路線 - get/post
-            //todo: 有資料 - read路線 - post
+            //todo: 新增課程至購物車
+            var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
+            return View(cartData);
 
-            //todo: 
-            if (memberId > -1)
-            {
-                var shoppingCartData = await _shoppingCartService.GetShoppingCartCheckList();
-                return View(shoppingCartData);
-            }
-            else
-            {
-                return NotFound();
-            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetCart(int memberId, int courseId)
+        {
+            //todo: 確認ShoppingCart是否有資料
+            return View("Index");
+
         }
     }
 }
