@@ -8,14 +8,14 @@ namespace Web.Services
 {
     public class ShoppingCartService
     {
-        private readonly GeneralRepository _generalRepository;
-        public ShoppingCartService(GeneralRepository generalRepository)
+        private readonly IRepository _repository;
+        public ShoppingCartService(IRepository repository)
         {
-            _generalRepository = generalRepository;
+            _repository = repository;
         }
         public async Task<int> GetMemberData(int memberId)
         {
-            var member = await _generalRepository.GetAll<Member>()
+            var member = await _repository.GetAll<Member>()
                                            .Where(x => x.MemberId == memberId)
                                            .FirstOrDefaultAsync();
             if (member == null)
@@ -29,7 +29,7 @@ namespace Web.Services
         }
         public async Task<int> GetCourseData(int courseId)
         {
-            var course = await _generalRepository.GetAll<Course>()
+            var course = await _repository.GetAll<Course>()
                                            .Where(x => x.CourseId == courseId)
                                            .FirstOrDefaultAsync();
             if (course == null)
@@ -47,20 +47,26 @@ namespace Web.Services
         {
             //已確認有member及course
             //todo: 先確認購物車是否已有課程/相同課程
-            bool exists = await _generalRepository.GetAll<ShoppingCart>()
+            bool exists = await _repository.GetAll<ShoppingCart>()
                                                   .AnyAsync(x => x.MemberId == memberId
-                                                         && x.CourseId == courseId);
+                                                              && x.CourseId == courseId);
             if (!exists)
             {
                 throw new Exception("資料不存在，請重新操作");
             }
             else
-            { 
-                var shoppingCart = from cartItem in _generalRepository.GetAll<ShoppingCart>()
-                                   join member in _generalRepository.GetAll<Member>() on cartItem.MemberId equals member.MemberId
-                                   join course in _generalRepository.GetAll<Course>() on cartItem.CourseId equals course.CourseId
-                                   join subject in _generalRepository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
-                                   join category in _generalRepository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
+            {
+                //從前端傳入的value抓db.Course的單價
+                var unitPrice = _repository.GetAll<Course>()
+                          .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
+                          .FirstOrDefault();
+
+                //究級join然後將抓到的值塞進VM
+                var shoppingCart = from cartItem in _repository.GetAll<ShoppingCart>()
+                                   join member in _repository.GetAll<Member>() on cartItem.MemberId equals member.MemberId
+                                   join course in _repository.GetAll<Course>() on cartItem.CourseId equals course.CourseId
+                                   join subject in _repository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
+                                   join category in _repository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
                                    select new ShoppingCartViewModel
                                    {
                                        CourseId = course.CourseId,
@@ -71,9 +77,9 @@ namespace Web.Services
                                        CourseSubject = subject.SubjectName,
                                        CourseCategory = category.CategorytName,
                                        CourseLength = "",
-                                       CourseQuantity = 10,
-                                       UnitPrice = 1000,
-                                       SubtotalNTD = 10 * 1000, 
+                                       CourseQuantity = quantity,
+                                       UnitPrice = unitPrice,
+                                       SubtotalNTD = quantity * unitPrice, 
                                        Coupon = "",
                                        PaymentType = ""
                                    };

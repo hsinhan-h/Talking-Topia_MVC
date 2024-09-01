@@ -11,13 +11,13 @@ namespace Web.Controllers
         }
         /// <summary>
         /// ShoppingCart頁面
-        /// Course頁面應回傳時長與堂數的值
-        /// 我要怎麼從前端的時長、堂數或價格去對應db內的時長與價格
+        /// Course頁面應回傳時長(value設定為25或50)與堂數(value設定堂數)
+        /// 設計一個VM接收option回傳的值(asp-for="對應value的VM欄位")
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index(int memberId, int courseId, int courseLength, int quantity)
         {
-            //todo: 確認是否為有效member及course
+            //todo: 確認是否為有效member及course (可以統一寫在member跟course的service)
             var member = await _shoppingCartService.GetMemberData(memberId);
             var course = await _shoppingCartService.GetCourseData(courseId);
 
