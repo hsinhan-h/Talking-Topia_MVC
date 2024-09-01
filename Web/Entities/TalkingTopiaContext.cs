@@ -994,9 +994,9 @@ public partial class TalkingTopiaContext : DbContext
 );
 
         modelBuilder.Entity<CourseCategory>().HasData(
-    new CourseCategory { CourseCategoryId = 1, CategorytName = "語言學習", CourseId = 1, Cdate = DateTime.Now },
-    new CourseCategory { CourseCategoryId = 2, CategorytName = "程式設計", CourseId = 2, Cdate = DateTime.Now },
-    new CourseCategory { CourseCategoryId = 3, CategorytName = "升學科目", CourseId = 2, Cdate = DateTime.Now }
+    new CourseCategory { CourseCategoryId = 1, CategorytName = "語言學習", Cdate = DateTime.Now },
+    new CourseCategory { CourseCategoryId = 2, CategorytName = "程式設計", Cdate = DateTime.Now },
+    new CourseCategory { CourseCategoryId = 3, CategorytName = "升學科目", Cdate = DateTime.Now }
 );
         modelBuilder.Entity<CourseSubject>().HasData(
     new CourseSubject { SubjectId = 1, SubjectName = "英文", CourseCategoryId = 1, Cdate = DateTime.Now },

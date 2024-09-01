@@ -31,9 +31,10 @@ namespace Web.Controllers
 
             return View();
         }
-        public async Task<IActionResult> PublishCourse()
+        
+        public async Task<IActionResult> PublishCourse(int MemberId)
         {
-            var model = await _bookingService.GetPublishCourseList();
+            var model = await _bookingService.GetPublishCourseList(MemberId);
             return View(model);
         }
         public IActionResult RecommendedTutorAI()
