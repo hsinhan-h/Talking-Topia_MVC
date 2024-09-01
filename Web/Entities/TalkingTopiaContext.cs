@@ -878,10 +878,6 @@ public partial class TalkingTopiaContext : DbContext
     new Course { CourseId = 2, CategoryId = 2, SubjectId = 2, TutorId = 2, Title = "日語 N5", SubTitle = "基礎日語學習", TwentyFiveMinUnitPrice = 400, FiftyMinUnitPrice = 800, Description = "日語入門課程", IsEnabled = true, ThumbnailUrl = "japanese.jpg", VideoUrl = "japanese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now }
 );
 
-        modelBuilder.Entity<CourseHour>().HasData(
-    new CourseHour { CourseHourId = 1, Hour = "08:00-09:00", Cdate = DateTime.Now },
-    new CourseHour { CourseHourId = 2, Hour = "09:00-10:00", Cdate = DateTime.Now }
-);
         modelBuilder.Entity<CourseCategory>().HasData(
     new CourseCategory { CourseCategoryId = 1, CategorytName = "程式設計", CourseId = 1, Cdate = DateTime.Now },
     new CourseCategory { CourseCategoryId = 2, CategorytName = "語言學習", CourseId = 2, Cdate = DateTime.Now }
@@ -965,6 +961,7 @@ public partial class TalkingTopiaContext : DbContext
     new WorkExperience { WorkExperienceId = 1, MemberId = 1, WorkExperienceFile = "csharp_experience.pdf", WorkStartDate = DateTime.Now.AddYears(-3), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now },
     new WorkExperience { WorkExperienceId = 2, MemberId = 2, WorkExperienceFile = "japanese_experience.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now }
 );
+
         modelBuilder.Entity<CourseHour>().HasData(
             new CourseHour { CourseHourId = 1, Hour = "00:00", Cdate = DateTime.Now },
             new CourseHour { CourseHourId = 2, Hour = "01:00", Cdate = DateTime.Now },
