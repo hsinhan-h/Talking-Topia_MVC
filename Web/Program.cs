@@ -25,8 +25,8 @@ namespace Web
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<ShoppingCartService>();
 
-
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
