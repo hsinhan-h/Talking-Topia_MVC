@@ -4,77 +4,34 @@
             <div class="lh-backstage-homepage-section mb-5"
                  id="lh-backstage-homepage-section">
                 <h3 class="lh-backstage-homepage-title my-5">
-                    歡迎回來 <span>Chiaki</span>！這是你的學習課程！
+                    歡迎回來 <span>Chiaki</span>！這是你的課程預約概況！
                 </h3>
                 <div class="lh-backstage-divider"></div>
                 <div class="col-12">
-                    <h3 class="lh-backstage-homepage-title mt-5">學員課程概況</h3>
-                    <div class="lh-backstage-homepage-card-list d-flex flex-wrap">
-                        @* @foreach () *@
-                        {
-                        <div class="card my-1 col-6 col-md-3">
-                            <img src="https://fakeimg.pl/300x200/200"
-                                 class="card-img-top"
-                                 alt="Course Image" />
-                            <div class="card-body">
-                                <h5 class="card-title">兒童英語</h5>
-                                <p class="card-text">Aiden Huang</p>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress"
-                                         style="width: 50%; margin-right: 10px">
-                                        <div class="progress-bar lh-backstage-progress-bar"
-                                             role="progressbar"
-                                             style="width: 5%"
-                                             aria-valuenow="5"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100">
-                                            5% 完成
-                                        </div>
-                                    </div>
-                                    <span>5%</span>
-                                </div>
-                                <div class="mt-3">
-                                    <p>下次上課時間：<span>2024-08-31 16:00</span></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        }
-                    </div>
-                </div>
-                <div class="col-12">
-                    <h3 class="lh-backstage-homepage-title mt-5">課程預約概況</h3>
-                    <div class="lh-backstage-homepage-card-list d-flex">
-                        @* @foreach () *@
-                        {
-                        <div class="card my-1 col-6 col-md-3">
-                            <img src="https://fakeimg.pl/300x200/200"
-                                 class="card-img-top"
-                                 alt="Course Image" />
-                            <div class="card-body">
-                                <h5 class="card-title">兒童英語</h5>
-                                <p class="card-text">Aiden Huang</p>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress"
-                                         style="width: 50%; margin-right: 10px">
-                                        <div class="progress-bar lh-backstage-progress-bar"
-                                             role="progressbar"
-                                             style="width: 5%"
-                                             aria-valuenow="5"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100">
-                                            5% 完成
-                                        </div>
-                                    </div>
-                                    <span>5%</span>
-                                </div>
-                                <div class="mt-3">
-                                    <p>下次上課時間：<span>2024-08-31 16:00</span></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        }
+                    <div class="lh-backstage-appointmentdetails- table">
+                        <table class="lh-backstage-appointmentdetails-detail col-12 mt-5"
+                               border="1">
+                            <thead>
+                                <tr>
+                                    <td>預約日期</td>
+                                    <td>預約時間</td>
+                                    <td>課程名稱</td>
+                                    <td>課程內容</td>
+                                    <td>預約時長</td>
+                                    <td>教師名稱</td>
+                                </tr>
+                            </thead>
+                            <tbody border="1">
+                                <tr>
+                                    <td>2024/09/30</td>
+                                    <td>09:00</td>
+                                    <td>英語日常會話大進擊</td>
+                                    <td>遇到歪果仁問路也不怕</td>
+                                    <td>50分鐘</td>
+                                    <td>安德魯·牛</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
