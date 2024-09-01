@@ -1,6 +1,11 @@
-﻿global using Web.Models;
+﻿global using System;
+global using System.Diagnostics;
+global using System.Collections.Generic;
+global using Web.Models;
+global using Web.Services;
+global using Web.Entities;
+global using Web.ViewModels;
+global using Web.Repository;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
-global using System.Diagnostics;
-global using Web.ViewModels;
-global using Web.Services;
+global using Microsoft.CodeAnalysis;
