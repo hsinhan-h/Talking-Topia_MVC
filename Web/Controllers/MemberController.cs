@@ -14,6 +14,7 @@ namespace Web.Controllers
         }
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
+        /// 調整為學員課程預約明細
         /// </summary>
         /// <returns></returns>
         public IActionResult Index()

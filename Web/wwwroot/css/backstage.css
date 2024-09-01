@@ -144,7 +144,8 @@ input {
 	display: flex;
 }
 
-.lh-backstage-transaction-detail {
+.lh-backstage-transaction-detail,
+.lh-backstage-appointmentdetails-detail {
 	text-align: center;
 }
 
@@ -162,12 +163,14 @@ input {
 		display: none;
 	}
 
-	.lh-backstage-transaction-table {
+	.lh-backstage-transaction-table,
+	.lh-backstage-appointmentdetails-table{
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
 	}
 
-	.lh-backstage-transaction-detail {
+	.lh-backstage-transaction-detail,
+	.lh-backstage-appointmentdetails-detail {
 		table-layout: fixed;
 		word-wrap: break-word;
 		min-width: 600px;
