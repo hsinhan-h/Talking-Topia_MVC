@@ -75,7 +75,9 @@ namespace Web.Services
                                                     .Where(g => g.review != null).Any() ? 
                                                     groupedCourse.Where(g => g.review != null)
                                                     .Average(g => g.review.Rating): 0, 2),
-                              CourseReviews = groupedCourse.Where(g => g.review != null).Count(),
+                              CourseReviews = groupedCourse.Where(g => g.review != null)
+                                                    .GroupBy(g => g.review.ReviewId)
+                                                    .Count(),
                               BookedTimeSlots = groupedCourse
                                                     .Where(g => g.booking != null)
                                                     .Select(g => new TimeSlotViewModel
