@@ -999,8 +999,9 @@ public partial class TalkingTopiaContext : DbContext
     new CourseHour { CourseHourId = 2, Hour = "09:00-10:00", Cdate = DateTime.Now }
 );
         modelBuilder.Entity<CourseCategory>().HasData(
-    new CourseCategory { CourseCategoryId = 1, CategorytName = "程式設計", CourseId = 1, Cdate = DateTime.Now },
-    new CourseCategory { CourseCategoryId = 2, CategorytName = "語言學習", CourseId = 2, Cdate = DateTime.Now }
+    new CourseCategory { CourseCategoryId = 1, CategorytName = "語言學習", CourseId = 1, Cdate = DateTime.Now },
+    new CourseCategory { CourseCategoryId = 2, CategorytName = "程式設計", CourseId = 2, Cdate = DateTime.Now },
+    new CourseCategory { CourseCategoryId = 3, CategorytName = "升學科目", CourseId = 2, Cdate = DateTime.Now }
 );
         modelBuilder.Entity<CourseSubject>().HasData(
     new CourseSubject { SubjectId = 1, SubjectName = "英文", CourseCategoryId = 1, Cdate = DateTime.Now },
@@ -1042,12 +1043,7 @@ public partial class TalkingTopiaContext : DbContext
     // CourseId = 4
     new CourseImage { CourseImageId = 10, CourseId = 4, ImageUrl = "https://picsum.photos/id/109/450/300", Cdate = DateTime.Now },
     new CourseImage { CourseImageId = 11, CourseId = 4, ImageUrl = "https://picsum.photos/id/110/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 12, CourseId = 4, ImageUrl = "https://picsum.photos/id/111/450/300", Cdate = DateTime.Now },
-
-    // CourseId = 5
-    new CourseImage { CourseImageId = 13, CourseId = 5, ImageUrl = "https://picsum.photos/id/112/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 14, CourseId = 5, ImageUrl = "https://picsum.photos/id/113/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 15, CourseId = 5, ImageUrl = "https://picsum.photos/id/114/450/300", Cdate = DateTime.Now }
+    new CourseImage { CourseImageId = 12, CourseId = 4, ImageUrl = "https://picsum.photos/id/111/450/300", Cdate = DateTime.Now }
         );
         modelBuilder.Entity<Order>().HasData(
     new Order { OrderId = 1, MemberId = 1, PaymentType = "Credit Card", TotalPrice = 1000, TransactionDate = DateTime.Now, InvoiceType = 1, OrderStatusId = 1, Cdate = DateTime.Now },

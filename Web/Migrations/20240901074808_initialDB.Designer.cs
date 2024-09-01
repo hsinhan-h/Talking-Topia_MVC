@@ -12,7 +12,7 @@ using Web.Entities;
 namespace Web.Migrations
 {
     [DbContext(typeof(TalkingTopiaContext))]
-    [Migration("20240901061852_initialDB")]
+    [Migration("20240901074808_initialDB")]
     partial class initialDB
     {
         /// <inheritdoc />
@@ -30,28 +30,35 @@ namespace Web.Migrations
                     b.Property<int>("ApplyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("ApplyID");
+                        .HasColumnName("ApplyID")
+                        .HasComment("申請Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ApplyId"));
 
                     b.Property<DateTime>("ApplyDateTime")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("申請日期");
 
                     b.Property<bool>("ApplyStatus")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("申請狀態");
 
-                    b.Property<DateTime>("ApprovedDateTime")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ApprovedDateTime")
+                        .HasColumnType("datetime")
+                        .HasComment("審核通過時間");
 
                     b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     b.Property<string>("RejectReason")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("拒絕原因");
 
                     b.Property<DateTime?>("UpdateStatusDateTime")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("更新審核通過時間");
 
                     b.HasKey("ApplyId")
                         .HasName("PK__ApplyLis__F0687F91F95B14E5");
@@ -64,22 +71,22 @@ namespace Web.Migrations
                         new
                         {
                             ApplyId = 1,
-                            ApplyDateTime = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(30),
+                            ApplyDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2212),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(34),
+                            ApprovedDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2213),
                             MemberId = 1,
                             RejectReason = "無",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(35)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2214)
                         },
                         new
                         {
                             ApplyId = 2,
-                            ApplyDateTime = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(37),
+                            ApplyDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2215),
                             ApplyStatus = false,
-                            ApprovedDateTime = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(38),
+                            ApprovedDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2216),
                             MemberId = 2,
                             RejectReason = "不符合資格",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(39)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2216)
                         });
                 });
 
@@ -87,29 +94,36 @@ namespace Web.Migrations
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("預約Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
                     b.Property<DateTime>("BookingDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("預約上課日期");
 
                     b.Property<short>("BookingTime")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("預約上課時間");
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程Id");
 
                     b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("預約學生Id");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更新時間");
 
                     b.HasKey("BookingId")
                         .HasName("PK__Bookings__73951AEDF4836C80");
@@ -124,9 +138,9 @@ namespace Web.Migrations
                         new
                         {
                             BookingId = 1,
-                            BookingDate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(59),
+                            BookingDate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2233),
                             BookingTime = (short)800,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(60),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2235),
                             CourseId = 1,
                             StudentId = 1
                         },
@@ -135,7 +149,7 @@ namespace Web.Migrations
                             BookingId = 2,
                             BookingDate = new DateTime(2024, 9, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             BookingTime = (short)900,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(69),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2240),
                             CourseId = 2,
                             StudentId = 2
                         });
@@ -145,40 +159,49 @@ namespace Web.Migrations
                 {
                     b.Property<int>("CouponId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("優惠折扣Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CouponId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<string>("CouponCode")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("折扣代碼");
 
                     b.Property<string>("CouponName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nchar(50)")
-                        .IsFixedLength();
+                        .IsFixedLength()
+                        .HasComment("優惠折扣名稱");
 
                     b.Property<int?>("Discount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("折扣");
 
                     b.Property<int>("DiscountType")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("折扣方式");
 
                     b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("折扣到期日");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("是否有效");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更新時間");
 
                     b.HasKey("CouponId")
                         .HasName("PK__Coupons__384AF1BAE1D06BB9");
@@ -189,23 +212,23 @@ namespace Web.Migrations
                         new
                         {
                             CouponId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9980),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2174),
                             CouponCode = "SUMMER2024",
                             CouponName = "夏季優惠",
                             Discount = 10,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2024, 10, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9963),
+                            ExpirationDate = new DateTime(2024, 10, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2166),
                             IsActive = true
                         },
                         new
                         {
                             CouponId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9983),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2177),
                             CouponCode = "WELCOME2024",
                             CouponName = "新用戶優惠",
                             Discount = 20,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2024, 12, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9982),
+                            ExpirationDate = new DateTime(2024, 12, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2176),
                             IsActive = true
                         });
                 });
@@ -214,60 +237,75 @@ namespace Web.Migrations
                 {
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程類別Id");
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<short>("CoursesStatus")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("課程審核狀態");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("課程詳細描述");
 
                     b.Property<decimal>("FiftyMinUnitPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("50分鐘價");
 
                     b.Property<bool>("IsEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("是否顯示");
 
                     b.Property<string>("SubTitle")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasComment("課程副標題");
 
                     b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("科目Id");
 
                     b.Property<string>("ThumbnailUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("影片封面");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasComment("課程標題");
 
                     b.Property<int>("TutorId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("學生Id");
 
                     b.Property<decimal>("TwentyFiveMinUnitPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("25分鐘價");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("修改時間");
 
                     b.Property<string>("VideoUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("影片路徑");
 
                     b.HasKey("CourseId")
                         .HasName("PK__Courses__C92D71A7F51F70E3");
@@ -279,7 +317,7 @@ namespace Web.Migrations
                         {
                             CourseId = 1,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9673),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1941),
                             CoursesStatus = (short)1,
                             Description = "適合初學者的 C# 課程",
                             FiftyMinUnitPrice = 900m,
@@ -296,7 +334,7 @@ namespace Web.Migrations
                         {
                             CourseId = 2,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9681),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1944),
                             CoursesStatus = (short)1,
                             Description = "日語入門課程",
                             FiftyMinUnitPrice = 800m,
@@ -313,7 +351,7 @@ namespace Web.Migrations
                         {
                             CourseId = 3,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9685),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1947),
                             CoursesStatus = (short)1,
                             Description = "📅 隨時隨地進行日文學習，靈活安排時間，讓學習變得更自由！\r\n🗣️ 專屬一對一視訊教學，根據你的需求量身訂製課程內容！✨\r\n\r\n課程介紹文案：\r\n🌟 在全球化的今天，會一門外語是多麼重要！🌍 無論是工作、旅遊✈️還是單純的興趣，學習日文將為你開啟通往日本文化的大門！我們提供專業的線上日文家教，讓你隨時隨地都能學習日文📖，無需擔心地理限制和時間安排的困擾！透過我們的一對一教學，你可以根據自身的學習進度隨時提出問題，獲得即時回饋！💬\r\n\r\n🎥 透過高品質的視訊平台，專業的老師將與你進行一對一的互動，這樣不僅能建立更密切的師生關係🤝，也能確保每堂課都能充分關注你的學習進度和需求。這是在傳統教室中難以實現的優勢！我們的老師將幫助你克服任何學習上的障礙，並給予鼓勵💪，讓學習不再孤單。\r\n\r\n🎳 無論你是語言學習的新手，還是想要進一步提升日文能力的學生，我們的課程都可以根據你的基礎和目標來調整！📈無論是學習日常對話、商務日文📊還是準備JLPT考試🚀，我們都能提供最合適的學習計畫！從發音基礎到語法結構，每一個細節都不會被忽略。\r\n\r\n📚 我們的教師將利用各種多媒體教材📹和互動練習🎮，讓你愉快地學習日文，這包括視聽材料、遊戲、角色扮演及小組討論等多種形式，提升你的聽、說、讀、寫能力。即使是最枯燥的文法📜，在這種輕鬆的氛圍下也變得趣味盎然！\r\n\r\n🌈 除了語言課程，我們的教師將額外分享豐富的日本文化🇯🇵，包括日本的習俗、音樂🎶、美食🍱等，讓你在學習日文的同時，也能欣賞到日本的美好文化。每一堂課都會為你帶來全新的文化體驗😍，讓你不僅是學習文字，更是了解背後的故事！\r\n\r\n🍣 課程中不僅僅是口語練習，老師還將分享正宗的日本料理🍜食譜，幫助你在學習語言的同時，學會一些日本美食的製作！👩‍🍳 你會驚喜於食物背後的文化和歷史，這樣的學習過程使得每堂課都更生動且充滿趣味。\r\n\r\n🏆 現在就加入我們的線上日文家教，設定你自己的學習目標🎯，並開始輕鬆學習！不再只是枯燥的背單字，讓我們用互動式教學讓每次課堂都成為你期待的學習時光！⏰ 在老師的指導下，你很快將能日常自信地用日文交流！\r\n\r\n🎉 無論是準備考試📚、赴日旅行✈️或職場交流，專屬的老師會全力支持你，幫助你達成目標！報名後，無需花費時間尋找合適的教材📦，我們將為你精心準備學習資源，讓你快速進步！🚀 快來預約你的第一堂課，開始放飛你的日文夢想，開啟一段全新的學習旅程吧！🌟",
                             FiftyMinUnitPrice = 1088m,
@@ -330,65 +368,77 @@ namespace Web.Migrations
                         {
                             CourseId = 4,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9689),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1950),
                             CoursesStatus = (short)1,
-                            Description = "嗨！我是 👩‍🏫 Todd，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
+                            Description = "課程亮點\r\n👶 無論你是剛開始學習英語的初學者，還是想進一步提升口說能力的中級者，我都有合適的教材與方法，讓你逐步克服語言學習的恐懼。\r\n💪 我會引導你在小組討論中與同學練習，透過彼此交流增強口語表達能力。藉助故事、角色扮演以及多媒體資源，我們將一起深入了解英語的美妙！\r\n\r\n自我介紹\r\n❤️ 我熱愛教育，並堅信教育的力量。看到學生從一開始的羞怯逐漸轉變為自信的表達者，這讓我感到無比的成就感。\r\n🎭 在課堂上，我將使用多樣化的教學方法，透過互動遊戲和小組活動，讓你們在享受學習的過程中輕鬆掌握英語。\r\n🌟 我相信，每位學生都是獨一無二的，所以我會耐心地了解每個人的學習需求，並提供針對性的建議和指導。\r\n\r\n課程內容\r\n💬 課程涵蓋日常對話、商業英語、旅遊英語等多個主題，無論你的學習目的為何，都能找到適合的學習內容。\r\n🎉 我會設計有趣的實境練習，讓你能在模擬情境中實踐所學，並且定期進行小組演講和討論，讓你能夠在實際對話中應用所學的知識。\r\n📚 課後，我會提供額外的學習資源和練習題，幫助你持續進步，如影片推薦、English podcasts、以及值得一試的線上學習平台。\r\n\r\n新生福利\r\n🎁 加入我們的課程後，你將獲得一份專屬學習計畫，這份計畫將幫助你規劃和追蹤自己的學習進度，讓你時刻在正確的方向前進。\r\n🌈 我會定期提供語言測試和反饋，確保每位學生都能清楚自己的進步狀況，並持續調整學習策略。\r\n🥳 特別的學習小禮物也會隨著課程頒發，如實用的英語學習工具和資源，讓你的學習之路充滿驚喜！\r\n\r\n期待在課堂上與你見面，一同展開這段精彩的英語學習旅程吧！讓我們一起成為英語口說的高手！👋",
                             FiftyMinUnitPrice = 1100m,
                             IsEnabled = true,
-                            SubTitle = "Expert! 🏅 Basic to Advanced😀",
+                            SubTitle = "✨ 從零開始，到流利對話的輕鬆之旅！",
                             SubjectId = 1,
-                            ThumbnailUrl = "~/image/thumb_nails/tutor002_thumbnail.jpg",
-                            Title = "Todd American Teacher!🏅Kid's English🔥精通英文：掌握這門全球流行語言的鑰匙！",
+                            ThumbnailUrl = "~/image/thumb_nails/thumbnail_demo_tw_001.webp",
+                            Title = "🌟 英語口說提升班：讓你自信流利講英語的最佳選擇",
                             TutorId = 5,
                             TwentyFiveMinUnitPrice = 700m,
-                            VideoUrl = "https://www.youtube.com/embed/xXsfl6RBuhQ"
+                            VideoUrl = "https://www.youtube.com/embed/YX6KZIcUeY8?list=PLqivELodHt3jq3oWBZfdhMu0GE7774HBW"
                         });
                 });
 
-            modelBuilder.Entity("Web.Entities.CourseCategorite", b =>
+            modelBuilder.Entity("Web.Entities.CourseCategory", b =>
                 {
                     b.Property<int>("CourseCategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程類別Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseCategoryId"));
 
                     b.Property<string>("CategorytName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("課程類別名稱");
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程Id");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更新時間");
 
                     b.HasKey("CourseCategoryId")
                         .HasName("PK__CourseCa__4D67EBB68E28BA31");
 
                     b.HasIndex(new[] { "CourseId" }, "IX_CourseCategorites_CourseId");
 
-                    b.ToTable("CourseCategorites");
+                    b.ToTable("CourseCategories");
 
                     b.HasData(
                         new
                         {
                             CourseCategoryId = 1,
-                            CategorytName = "程式設計",
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9791),
+                            CategorytName = "語言學習",
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1989),
                             CourseId = 1
                         },
                         new
                         {
                             CourseCategoryId = 2,
-                            CategorytName = "語言學習",
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9793),
+                            CategorytName = "程式設計",
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1990),
+                            CourseId = 2
+                        },
+                        new
+                        {
+                            CourseCategoryId = 3,
+                            CategorytName = "升學科目",
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1992),
                             CourseId = 2
                         });
                 });
@@ -397,22 +447,26 @@ namespace Web.Migrations
                 {
                     b.Property<int>("CourseHourId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程時間Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseHourId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<string>("Hour")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("小時時段");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更改時間");
 
                     b.HasKey("CourseHourId")
                         .HasName("PK__CourseHo__AE73575BBC30FF2E");
@@ -423,146 +477,14 @@ namespace Web.Migrations
                         new
                         {
                             CourseHourId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9723),
-                            Hour = "00:00"
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1970),
+                            Hour = "08:00-09:00"
                         },
                         new
                         {
                             CourseHourId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9726),
-                            Hour = "01:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 3,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9727),
-                            Hour = "02:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 4,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9729),
-                            Hour = "03:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 5,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9730),
-                            Hour = "04:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 6,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9731),
-                            Hour = "05:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 7,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9733),
-                            Hour = "06:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 8,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9734),
-                            Hour = "07:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 9,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9736),
-                            Hour = "08:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 10,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9737),
-                            Hour = "09:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 11,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9738),
-                            Hour = "10:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 12,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9740),
-                            Hour = "11:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 13,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9741),
-                            Hour = "12:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 14,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9742),
-                            Hour = "13:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 15,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9744),
-                            Hour = "14:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 16,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9745),
-                            Hour = "15:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 17,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9746),
-                            Hour = "16:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 18,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9747),
-                            Hour = "17:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 19,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9749),
-                            Hour = "18:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 20,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9750),
-                            Hour = "19:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 21,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9751),
-                            Hour = "20:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 22,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9753),
-                            Hour = "21:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 23,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9754),
-                            Hour = "22:00"
-                        },
-                        new
-                        {
-                            CourseHourId = 24,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9755),
-                            Hour = "23:00"
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1972),
+                            Hour = "09:00-10:00"
                         });
                 });
 
@@ -570,24 +492,29 @@ namespace Web.Migrations
                 {
                     b.Property<int>("CourseImageId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程照片Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseImageId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程Id");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("圖片路徑");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更改時間");
 
                     b.HasKey("CourseImageId")
                         .HasName("PK__CourseIm__349B6FE480594337");
@@ -600,16 +527,86 @@ namespace Web.Migrations
                         new
                         {
                             CourseImageId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9880),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2082),
                             CourseId = 1,
-                            ImageUrl = "csharp_image.jpg"
+                            ImageUrl = "https://picsum.photos/id/100/450/300"
                         },
                         new
                         {
                             CourseImageId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9882),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2084),
+                            CourseId = 1,
+                            ImageUrl = "https://picsum.photos/id/101/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 3,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2085),
+                            CourseId = 1,
+                            ImageUrl = "https://picsum.photos/id/102/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 4,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2086),
                             CourseId = 2,
-                            ImageUrl = "japanese_image.jpg"
+                            ImageUrl = "https://picsum.photos/id/103/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 5,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2087),
+                            CourseId = 2,
+                            ImageUrl = "https://picsum.photos/id/104/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 6,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2088),
+                            CourseId = 2,
+                            ImageUrl = "https://picsum.photos/id/105/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 7,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2089),
+                            CourseId = 3,
+                            ImageUrl = "https://picsum.photos/id/106/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 8,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2090),
+                            CourseId = 3,
+                            ImageUrl = "https://picsum.photos/id/107/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 9,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2091),
+                            CourseId = 3,
+                            ImageUrl = "https://picsum.photos/id/108/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 10,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2092),
+                            CourseId = 4,
+                            ImageUrl = "https://picsum.photos/id/109/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 11,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2093),
+                            CourseId = 4,
+                            ImageUrl = "https://picsum.photos/id/110/450/300"
+                        },
+                        new
+                        {
+                            CourseImageId = 12,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2094),
+                            CourseId = 4,
+                            ImageUrl = "https://picsum.photos/id/111/450/300"
                         });
                 });
 
@@ -617,25 +614,30 @@ namespace Web.Migrations
                 {
                     b.Property<int>("SubjectId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程科目Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("CourseCategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程類別Id");
 
                     b.Property<string>("SubjectName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("課程科目名稱");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更新時間");
 
                     b.HasKey("SubjectId")
                         .HasName("PK__CourseSu__AC1BA3A8B5819935");
@@ -648,16 +650,128 @@ namespace Web.Migrations
                         new
                         {
                             SubjectId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9861),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2007),
                             CourseCategoryId = 1,
-                            SubjectName = "C#"
+                            SubjectName = "英文"
                         },
                         new
                         {
                             SubjectId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9863),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2008),
+                            CourseCategoryId = 1,
+                            SubjectName = "日文"
+                        },
+                        new
+                        {
+                            SubjectId = 3,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2010),
+                            CourseCategoryId = 1,
+                            SubjectName = "中文"
+                        },
+                        new
+                        {
+                            SubjectId = 4,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2011),
+                            CourseCategoryId = 1,
+                            SubjectName = "德文"
+                        },
+                        new
+                        {
+                            SubjectId = 5,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2012),
+                            CourseCategoryId = 1,
+                            SubjectName = "法文"
+                        },
+                        new
+                        {
+                            SubjectId = 6,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2013),
+                            CourseCategoryId = 1,
+                            SubjectName = "西班牙文"
+                        },
+                        new
+                        {
+                            SubjectId = 7,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2014),
                             CourseCategoryId = 2,
-                            SubjectName = "日語"
+                            SubjectName = "HTML/CSS"
+                        },
+                        new
+                        {
+                            SubjectId = 8,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2015),
+                            CourseCategoryId = 2,
+                            SubjectName = "JavaScript"
+                        },
+                        new
+                        {
+                            SubjectId = 9,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2016),
+                            CourseCategoryId = 2,
+                            SubjectName = "C#"
+                        },
+                        new
+                        {
+                            SubjectId = 10,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2017),
+                            CourseCategoryId = 2,
+                            SubjectName = "SQL"
+                        },
+                        new
+                        {
+                            SubjectId = 11,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2018),
+                            CourseCategoryId = 2,
+                            SubjectName = "Python"
+                        },
+                        new
+                        {
+                            SubjectId = 12,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2019),
+                            CourseCategoryId = 2,
+                            SubjectName = "Java"
+                        },
+                        new
+                        {
+                            SubjectId = 13,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2020),
+                            CourseCategoryId = 3,
+                            SubjectName = "數學"
+                        },
+                        new
+                        {
+                            SubjectId = 14,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2021),
+                            CourseCategoryId = 3,
+                            SubjectName = "物理"
+                        },
+                        new
+                        {
+                            SubjectId = 15,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2024),
+                            CourseCategoryId = 3,
+                            SubjectName = "化學"
+                        },
+                        new
+                        {
+                            SubjectId = 16,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2025),
+                            CourseCategoryId = 3,
+                            SubjectName = "歷史"
+                        },
+                        new
+                        {
+                            SubjectId = 17,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2026),
+                            CourseCategoryId = 3,
+                            SubjectName = "地理"
+                        },
+                        new
+                        {
+                            SubjectId = 18,
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2027),
+                            CourseCategoryId = 3,
+                            SubjectName = "生物"
                         });
                 });
 
@@ -665,32 +779,39 @@ namespace Web.Migrations
                 {
                     b.Property<int>("EducationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("學歷Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EducationId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<string>("DepartmentName")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("科系名稱");
 
                     b.Property<string>("SchoolName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("學校名稱");
 
                     b.Property<int>("StudyEndYear")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("在學期間迄");
 
                     b.Property<int>("StudyStartYear")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("在學期間起");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("修改時間");
 
                     b.HasKey("EducationId")
                         .HasName("PK__Educatio__4BBE38058A56247B");
@@ -701,32 +822,32 @@ namespace Web.Migrations
                         new
                         {
                             EducationId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9455),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1796),
                             DepartmentName = "資訊工程",
                             SchoolName = "台灣大學",
                             StudyEndYear = 2014,
                             StudyStartYear = 2010,
-                            Udate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9480)
+                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1811)
                         },
                         new
                         {
                             EducationId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9489),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1817),
                             DepartmentName = "數學系",
                             SchoolName = "東京大學",
                             StudyEndYear = 2016,
                             StudyStartYear = 2012,
-                            Udate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9489)
+                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1818)
                         },
                         new
                         {
                             EducationId = 3,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9491),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1819),
                             DepartmentName = "經濟系",
                             SchoolName = "哈佛大學",
                             StudyEndYear = 2019,
                             StudyStartYear = 2015,
-                            Udate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9492)
+                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1820)
                         });
                 });
 
@@ -734,95 +855,118 @@ namespace Web.Migrations
                 {
                     b.Property<int>("MemberId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberId"));
 
                     b.Property<string>("Account")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("帳號");
 
                     b.Property<int>("AccountType")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("帳號類型");
 
                     b.Property<string>("BankAccount")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("帳戶名稱");
 
                     b.Property<string>("BankCode")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("銀行代碼");
 
                     b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("生日");
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int?>("EducationId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("最高學歷Id");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasComment("電子郵件信箱");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("名字");
 
                     b.Property<short>("Gender")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("性別");
 
                     b.Property<string>("HeadShotImage")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("會員頭像");
 
                     b.Property<bool>("IsTutor")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("是否為教師");
 
                     b.Property<bool>("IsVerifiedTutor")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("優質會員");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("姓氏");
 
                     b.Property<int?>("NationId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("國籍Id");
 
                     b.Property<string>("NativeLanguage")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasComment("母語");
 
                     b.Property<string>("Nickname")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("綽號");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasComment("密碼");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("char(50)")
-                        .IsFixedLength();
+                        .IsFixedLength()
+                        .HasComment("電話");
 
                     b.Property<string>("SpokenLanguage")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasComment("會的語言");
 
                     b.Property<string>("TutorIntro")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("教師自介");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更新時間");
 
                     b.HasKey("MemberId")
                         .HasName("PK__Members__0CF04B1808627D7C");
@@ -842,7 +986,7 @@ namespace Web.Migrations
                             BankAccount = "12345678",
                             BankCode = "123",
                             Birthday = new DateTime(1990, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9547),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1883),
                             EducationId = 1,
                             Email = "xiaoming@example.com",
                             FirstName = "小明",
@@ -858,7 +1002,7 @@ namespace Web.Migrations
                             Phone = "0912345678",
                             SpokenLanguage = "英文",
                             TutorIntro = "專業C#講師",
-                            Udate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9548)
+                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1885)
                         },
                         new
                         {
@@ -868,7 +1012,7 @@ namespace Web.Migrations
                             BankAccount = "87654321",
                             BankCode = "456",
                             Birthday = new DateTime(1985, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9599),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1890),
                             EducationId = 2,
                             Email = "ken@example.com",
                             FirstName = "健",
@@ -884,7 +1028,7 @@ namespace Web.Migrations
                             Phone = "0800123456",
                             SpokenLanguage = "中文",
                             TutorIntro = "日語教學專家",
-                            Udate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9600)
+                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1891)
                         },
                         new
                         {
@@ -894,7 +1038,7 @@ namespace Web.Migrations
                             BankAccount = "98765432",
                             BankCode = "789",
                             Birthday = new DateTime(1992, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9607),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1895),
                             EducationId = 3,
                             Email = "john@example.com",
                             FirstName = "John",
@@ -910,7 +1054,7 @@ namespace Web.Migrations
                             Phone = "0700123456",
                             SpokenLanguage = "西班牙語",
                             TutorIntro = "資深英語導師",
-                            Udate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9608)
+                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1896)
                         },
                         new
                         {
@@ -920,7 +1064,7 @@ namespace Web.Migrations
                             BankAccount = "98765432",
                             BankCode = "700",
                             Birthday = new DateTime(1990, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9614),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1900),
                             EducationId = 3,
                             Email = "akimo@example.com",
                             FirstName = "Akimo",
@@ -936,33 +1080,33 @@ namespace Web.Migrations
                             Phone = "0711111111",
                             SpokenLanguage = "日文",
                             TutorIntro = "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊",
-                            Udate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9614)
+                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1901)
                         },
                         new
                         {
                             MemberId = 5,
-                            Account = "todd_account",
+                            Account = "david_account",
                             AccountType = 1,
                             BankAccount = "98765432",
                             BankCode = "789",
-                            Birthday = new DateTime(1963, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9620),
+                            Birthday = new DateTime(1993, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1905),
                             EducationId = 3,
                             Email = "todd@example.com",
-                            FirstName = "Todd",
+                            FirstName = "大衛",
                             Gender = (short)1,
                             HeadShotImage = "~/image/tutor_headshot_imgs/tutor_head_002.png",
                             IsTutor = true,
-                            IsVerifiedTutor = true,
-                            LastName = "Smith",
-                            NationId = 3,
+                            IsVerifiedTutor = false,
+                            LastName = "李",
+                            NationId = 1,
                             NativeLanguage = "英文",
-                            Nickname = "Toddy",
+                            Nickname = "David",
                             Password = "hashedpassword5",
                             Phone = "0700222454",
-                            SpokenLanguage = "英文 西班牙語",
-                            TutorIntro = "嗨！我是 👩‍🏫 Todd，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
-                            Udate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9621)
+                            SpokenLanguage = "英文 中文",
+                            TutorIntro = "嗨！我是 👩‍🏫 李老師，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
+                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1905)
                         });
                 });
 
@@ -970,19 +1114,24 @@ namespace Web.Migrations
                 {
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("CouponId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("優惠折扣Id");
 
                     b.Property<bool>("IsUsed")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("是否使用");
 
                     b.Property<int>("MemberCouponId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員優惠Id");
 
                     b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     b.HasIndex(new[] { "CouponId" }, "IX_MemberCoupons_CouponId");
 
@@ -994,21 +1143,29 @@ namespace Web.Migrations
             modelBuilder.Entity("Web.Entities.MemberPreference", b =>
                 {
                     b.Property<int>("MemberPreferenceId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("會員偏好Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberPreferenceId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     b.Property<int>("SubjecId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("主題Id");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("修改時間");
 
                     b.HasKey("MemberPreferenceId")
                         .HasName("PK__MemberPr__5B2A2D7058311916");
@@ -1023,14 +1180,14 @@ namespace Web.Migrations
                         new
                         {
                             MemberPreferenceId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(5),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2193),
                             MemberId = 1,
                             SubjecId = 1
                         },
                         new
                         {
                             MemberPreferenceId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(6),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2194),
                             MemberId = 2,
                             SubjecId = 2
                         });
@@ -1040,18 +1197,21 @@ namespace Web.Migrations
                 {
                     b.Property<int>("NationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("國籍Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NationId"));
 
                     b.Property<string>("FlagImage")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("國籍圖片路徑");
 
                     b.Property<string>("NationName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("國籍名稱");
 
                     b.HasKey("NationId")
                         .HasName("PK__Nations__211B9BBEE3B01F5C");
@@ -1062,19 +1222,19 @@ namespace Web.Migrations
                         new
                         {
                             NationId = 1,
-                            FlagImage = "~/image/flag_imgs/taiwan_flag.jpg",
+                            FlagImage = "taiwan.jpg",
                             NationName = "台灣"
                         },
                         new
                         {
                             NationId = 2,
-                            FlagImage = "~/image/flag_imgs/japan_flag.png",
+                            FlagImage = "japan.jpg",
                             NationName = "日本"
                         },
                         new
                         {
                             NationId = 3,
-                            FlagImage = "~/image/flag_imgs/us_flag.png",
+                            FlagImage = "usa.jpg",
                             NationName = "美國"
                         });
                 });
@@ -1083,55 +1243,68 @@ namespace Web.Migrations
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("訂單Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<decimal?>("CouponPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("優惠金額");
 
                     b.Property<short>("InvoiceType")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("發票類型");
 
                     b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     b.Property<short>("OrderStatusId")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("訂單狀態");
 
                     b.Property<string>("PaymentType")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("付款方式");
 
                     b.Property<string>("SentVatemail")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasColumnName("SentVATEmail");
+                        .HasColumnName("SentVATEmail")
+                        .HasComment("寄送Mail");
 
                     b.Property<string>("TaxIdNumber")
                         .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("varchar(10)")
+                        .HasComment("統一編號");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("總金額");
 
                     b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("交易日期");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更新時間");
 
                     b.Property<string>("Vatnumber")
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)")
-                        .HasColumnName("VATNumber");
+                        .HasColumnName("VATNumber")
+                        .HasComment("發票號碼");
 
                     b.HasKey("OrderId")
                         .HasName("PK__Orders__C3905BCFBCC07793");
@@ -1144,24 +1317,24 @@ namespace Web.Migrations
                         new
                         {
                             OrderId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9913),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2123),
                             InvoiceType = (short)1,
                             MemberId = 1,
                             OrderStatusId = (short)1,
                             PaymentType = "Credit Card",
                             TotalPrice = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9907)
+                            TransactionDate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2122)
                         },
                         new
                         {
                             OrderId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9916),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2126),
                             InvoiceType = (short)1,
                             MemberId = 2,
                             OrderStatusId = (short)1,
                             PaymentType = "Paypal",
                             TotalPrice = 2000m,
-                            TransactionDate = new DateTime(2024, 9, 1, 14, 18, 51, 441, DateTimeKind.Local).AddTicks(9915)
+                            TransactionDate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2125)
                         });
                 });
 
@@ -1169,42 +1342,53 @@ namespace Web.Migrations
                 {
                     b.Property<int>("OrderDetailId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("訂單明細Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
 
                     b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("訂單Id");
 
                     b.Property<string>("CourseCategory")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("課程類別");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程Id");
 
                     b.Property<string>("CourseSubject")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("課程主題");
 
                     b.Property<string>("CourseTitle")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasComment("課程名稱");
 
                     b.Property<short>("CourseType")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("課程類別");
 
                     b.Property<decimal?>("DiscountPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("折扣金額");
 
                     b.Property<short>("Quantity")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("購買堂數");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("總價");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("課程單價");
 
                     b.HasKey("OrderDetailId", "OrderId")
                         .HasName("PK__OrderDet__3F80D6D0305DA525");
@@ -1248,29 +1432,35 @@ namespace Web.Migrations
                 {
                     b.Property<int>("ProfessionalLicenseId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("證照Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfessionalLicenseId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     b.Property<string>("ProfessionalLicenseName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasComment("證照名稱");
 
                     b.Property<string>("ProfessionalLicenseUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("證照路徑");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("更新時間");
 
                     b.HasKey("ProfessionalLicenseId")
                         .HasName("PK__Professi__E1630CEE26905146");
@@ -1283,7 +1473,7 @@ namespace Web.Migrations
                         new
                         {
                             ProfessionalLicenseId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(91),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2256),
                             MemberId = 1,
                             ProfessionalLicenseName = "C# 認證",
                             ProfessionalLicenseUrl = "csharp_certificate.jpg"
@@ -1291,7 +1481,7 @@ namespace Web.Migrations
                         new
                         {
                             ProfessionalLicenseId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(93),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2257),
                             MemberId = 2,
                             ProfessionalLicenseName = "日語能力測驗 N1",
                             ProfessionalLicenseUrl = "jlpt_n1.jpg"
@@ -1302,29 +1492,36 @@ namespace Web.Migrations
                 {
                     b.Property<int>("ReviewId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程評論Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("評論日期");
 
                     b.Property<string>("CommentText")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("評論內容");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程Id");
 
                     b.Property<byte>("Rating")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("tinyint")
+                        .HasComment("評分");
 
                     b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("學生Id");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("修改日期");
 
                     b.HasKey("ReviewId")
                         .HasName("PK__Reviews__74BC79CE821ED086");
@@ -1339,7 +1536,7 @@ namespace Web.Migrations
                         new
                         {
                             ReviewId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(112),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2275),
                             CommentText = "很棒的課程！",
                             CourseId = 1,
                             Rating = (byte)5,
@@ -1348,7 +1545,7 @@ namespace Web.Migrations
                         new
                         {
                             ReviewId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(114),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2276),
                             CommentText = "非常實用！",
                             CourseId = 2,
                             Rating = (byte)4,
@@ -1357,7 +1554,7 @@ namespace Web.Migrations
                         new
                         {
                             ReviewId = 3,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(116),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2278),
                             CommentText = "講得不錯! 但笑話有點冷",
                             CourseId = 1,
                             Rating = (byte)4,
@@ -1366,7 +1563,7 @@ namespace Web.Migrations
                         new
                         {
                             ReviewId = 4,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(117),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2279),
                             CommentText = "讚讚讚",
                             CourseId = 1,
                             Rating = (byte)4,
@@ -1378,41 +1575,52 @@ namespace Web.Migrations
                 {
                     b.Property<int>("ShoppingCartId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("購物車Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShoppingCartId"));
 
                     b.Property<DateTime?>("BookingDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("預約日期");
 
                     b.Property<DateTime?>("BookingTime")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("預約時間");
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程Id");
 
                     b.Property<short>("CourseType")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("課程類型");
 
                     b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     b.Property<short>("Quantity")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("購買堂數");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("單筆總價");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("修改時間");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("money");
+                        .HasColumnType("money")
+                        .HasComment("課程單價");
 
                     b.HasKey("ShoppingCartId")
                         .HasName("PK__TempOrde__38D216B780E2926D");
@@ -1427,7 +1635,7 @@ namespace Web.Migrations
                         new
                         {
                             ShoppingCartId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(152),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2302),
                             CourseId = 1,
                             CourseType = (short)1,
                             MemberId = 1,
@@ -1438,7 +1646,7 @@ namespace Web.Migrations
                         new
                         {
                             ShoppingCartId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(154),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2304),
                             CourseId = 2,
                             CourseType = (short)1,
                             MemberId = 2,
@@ -1452,32 +1660,39 @@ namespace Web.Migrations
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程預定Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
                     b.Property<DateOnly?>("BookingDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasComment("預約日期");
 
                     b.Property<short?>("BookingTime")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasComment("預約時間");
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int?>("CourseId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("課程Id");
 
                     b.Property<int?>("MemberId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     b.Property<int?>("TempShoppingCartId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("修改時間");
 
                     b.HasKey("BookingId")
                         .HasName("PK__Shopping__73951AED7A624397");
@@ -1491,7 +1706,7 @@ namespace Web.Migrations
                         {
                             BookingId = 1,
                             BookingTime = (short)800,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(184),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2325),
                             CourseId = 1,
                             MemberId = 1,
                             TempShoppingCartId = 1
@@ -1500,7 +1715,7 @@ namespace Web.Migrations
                         {
                             BookingId = 2,
                             BookingTime = (short)900,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(187),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2327),
                             CourseId = 2,
                             MemberId = 2,
                             TempShoppingCartId = 2
@@ -1511,30 +1726,37 @@ namespace Web.Migrations
                 {
                     b.Property<int>("TutorTimeSlotId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("教師可預約Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TutorTimeSlotId"));
 
                     b.Property<int>("BookingId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("預約課程Id");
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("CourseHourId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("開課時間");
 
                     b.Property<int>("TutorId")
                         .HasColumnType("int")
-                        .HasColumnName("TutorID");
+                        .HasColumnName("TutorID")
+                        .HasComment("老師Id");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("修改時間");
 
                     b.Property<int>("Weekday")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("開課星期");
 
                     b.HasKey("TutorTimeSlotId")
                         .HasName("PK__TutorTim__E709EE17B13CB862");
@@ -1552,7 +1774,7 @@ namespace Web.Migrations
                         {
                             TutorTimeSlotId = 1,
                             BookingId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(210),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2342),
                             CourseHourId = 1,
                             TutorId = 1,
                             Weekday = 1
@@ -1561,7 +1783,7 @@ namespace Web.Migrations
                         {
                             TutorTimeSlotId = 2,
                             BookingId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(212),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2344),
                             CourseHourId = 2,
                             TutorId = 2,
                             Weekday = 2
@@ -1572,34 +1794,42 @@ namespace Web.Migrations
                 {
                     b.Property<int>("WorkExperienceId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("工作經驗Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkExperienceId"));
 
                     b.Property<DateTime>("Cdate")
                         .HasColumnType("datetime")
-                        .HasColumnName("CDate");
+                        .HasColumnName("CDate")
+                        .HasComment("建立時間");
 
                     b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("會員Id");
 
                     b.Property<DateTime?>("Udate")
                         .HasColumnType("datetime")
-                        .HasColumnName("UDate");
+                        .HasColumnName("UDate")
+                        .HasComment("修改時間");
 
                     b.Property<DateTime>("WorkEndDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("工作結束日");
 
                     b.Property<string>("WorkExperienceFile")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("工作經驗檔案路徑");
 
                     b.Property<string>("WorkName")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("工作經驗名稱");
 
                     b.Property<DateTime>("WorkStartDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasComment("工作起始日");
 
                     b.HasKey("WorkExperienceId")
                         .HasName("PK__WorkExpe__55A2B889201583D4");
@@ -1612,20 +1842,20 @@ namespace Web.Migrations
                         new
                         {
                             WorkExperienceId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(232),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2362),
                             MemberId = 1,
-                            WorkEndDate = new DateTime(2023, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(231),
+                            WorkEndDate = new DateTime(2023, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2361),
                             WorkExperienceFile = "csharp_experience.pdf",
-                            WorkStartDate = new DateTime(2021, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(229)
+                            WorkStartDate = new DateTime(2021, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2360)
                         },
                         new
                         {
                             WorkExperienceId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(235),
+                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2365),
                             MemberId = 2,
-                            WorkEndDate = new DateTime(2022, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(234),
+                            WorkEndDate = new DateTime(2022, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2364),
                             WorkExperienceFile = "japanese_experience.pdf",
-                            WorkStartDate = new DateTime(2019, 9, 1, 14, 18, 51, 442, DateTimeKind.Local).AddTicks(233)
+                            WorkStartDate = new DateTime(2019, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2363)
                         });
                 });
 
@@ -1659,10 +1889,10 @@ namespace Web.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Web.Entities.CourseCategorite", b =>
+            modelBuilder.Entity("Web.Entities.CourseCategory", b =>
                 {
                     b.HasOne("Web.Entities.Course", "Course")
-                        .WithMany("CourseCategorites")
+                        .WithMany("CourseCategories")
                         .HasForeignKey("CourseId")
                         .IsRequired()
                         .HasConstraintName("FK__CourseCat__Cours__5812160E");
@@ -1683,7 +1913,7 @@ namespace Web.Migrations
 
             modelBuilder.Entity("Web.Entities.CourseSubject", b =>
                 {
-                    b.HasOne("Web.Entities.CourseCategorite", "CourseCategory")
+                    b.HasOne("Web.Entities.CourseCategory", "CourseCategory")
                         .WithMany("CourseSubjects")
                         .HasForeignKey("CourseCategoryId")
                         .IsRequired()
@@ -1883,7 +2113,7 @@ namespace Web.Migrations
                 {
                     b.Navigation("Bookings");
 
-                    b.Navigation("CourseCategorites");
+                    b.Navigation("CourseCategories");
 
                     b.Navigation("CourseImages");
 
@@ -1894,7 +2124,7 @@ namespace Web.Migrations
                     b.Navigation("ShoppingCarts");
                 });
 
-            modelBuilder.Entity("Web.Entities.CourseCategorite", b =>
+            modelBuilder.Entity("Web.Entities.CourseCategory", b =>
                 {
                     b.Navigation("CourseSubjects");
                 });
