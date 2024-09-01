@@ -4,42 +4,69 @@ namespace Web.ViewModels
 {
     public class ShoppingCartViewModel
     {
-        [Display(Name = "課程ID")]
+        /// <summary>
+        /// 課程ID from CoursePage
+        /// </summary>
         public int CourseId { get; set; }
-        [Display(Name = "訂單編號")]
+
+        /// <summary>
+        /// 訂單編號
+        /// </summary>
         public string TrackingNumber { get; set; }
 
-        [Display(Name = "教師頭像")]
+        /// <summary>
+        /// 教師頭像
+        /// </summary>
         public string HeadShotImage { get; set; }
 
-        [Display(Name = "教師名字")]
+        /// <summary>
+        /// 教師名字
+        /// </summary>
         public string FullName { get; set; }
 
-        [Display(Name = "課程名稱")]
+        /// <summary>
+        /// 課程名稱
+        /// </summary>
         public string CourseTitle { get; set; }
 
-        [Display(Name = "課程科目")]
+        /// <summary>
+        /// 課程科目
+        /// </summary>
         public string CourseSubject { get; set; }
 
-        [Display(Name = "課程類別")]
+        /// <summary>
+        /// 課程類別
+        /// </summary>
         public string CourseCategory { get; set; }
 
-        [Display(Name = "分鐘數")]
+        /// <summary>
+        /// 分鐘數
+        /// </summary>
         public string CourseLength { get; set; }
 
-        [Display(Name = "堂數")]
+        /// <summary>
+        /// 堂數
+        /// </summary>
         public int CourseQuantity { get; set; }
 
-        [Display(Name = "單價")]
+        /// <summary>
+        /// 單價
+        /// </summary>
         public decimal UnitPrice { get; set; }
 
-        [Display(Name = "小計")]
+        /// <summary>
+        /// 小計
+        /// </summary>
         public decimal SubtotalNTD { get; set; }
 
-        [Display(Name = "優惠券")]
+        /// <summary>
+        /// 優惠券
+        /// </summary>
         public string Coupon { get; set; }
 
-        [Display(Name = "付款方式")]
+        /// <summary>
+        /// 付款方式
+        /// </summary>
         public string PaymentType { get; set; }
     }
     public class ShoppingCartListViewModel

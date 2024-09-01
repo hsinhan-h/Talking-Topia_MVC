@@ -83,7 +83,7 @@ namespace Web.Services
                                                     .Select(g => new TimeSlotViewModel
                                                     {
                                                         Date = g.booking.BookingDate,
-                                                        StartHour = g.booking.BookingTime
+                                                        StartHour = g.booking.BookingTime - 1 //因資料表時間Id從1開始對應0:00起始時間
                                                     })
                                                     .ToList(),
                               AvailableTimeSlots = groupedCourse
@@ -91,7 +91,7 @@ namespace Web.Services
                                                     .Select(g => new TimeSlotViewModel
                                                     {
                                                         Weekday = g.tutorTimeSlot.Weekday,
-                                                        StartHour = g.booking.BookingTime
+                                                        StartHour = g.tutorTimeSlot.CourseHourId - 1 //因資料表時間Id從1開始對應0:00起始時間
                                                     })
                                                     .ToList()
                           };

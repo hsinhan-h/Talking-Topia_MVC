@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
-namespace Web.Entities;
+﻿namespace Web.Entities;
 
 public partial class TalkingTopiaContext : DbContext
 {
@@ -778,9 +774,9 @@ public partial class TalkingTopiaContext : DbContext
 
         #region 假資料內容
         modelBuilder.Entity<Nation>().HasData(
-    new Nation { NationId = 1, NationName = "台灣", FlagImage = "taiwan.jpg" },
-    new Nation { NationId = 2, NationName = "日本", FlagImage = "japan.jpg" },
-    new Nation { NationId = 3, NationName = "美國", FlagImage = "usa.jpg" }
+        new Nation { NationId = 1, NationName = "台灣", FlagImage = "~/image/flag_imgs/taiwan_flag.jpg" },
+        new Nation { NationId = 2, NationName = "日本", FlagImage = "~/image/flag_imgs/japan_flag.png" },
+        new Nation { NationId = 3, NationName = "美國", FlagImage = "~/image/flag_imgs/us_flag.png" }
 );
         modelBuilder.Entity<Education>().HasData(
     new Education { EducationId = 1, SchoolName = "台灣大學", StudyStartYear = 2010, StudyEndYear = 2014, DepartmentName = "資訊工程", Cdate = DateTime.Now, Udate = DateTime.Now },
@@ -1070,8 +1066,9 @@ public partial class TalkingTopiaContext : DbContext
 
 
         modelBuilder.Entity<Booking>().HasData(
-    new Booking { BookingId = 1, CourseId = 1, BookingDate = DateTime.Now, BookingTime = 800, StudentId = 1, Cdate = DateTime.Now },
-    new Booking { BookingId = 2, CourseId = 2, BookingDate = DateTime.Today, BookingTime = 900, StudentId = 2, Cdate = DateTime.Now }
+    new Booking { BookingId = 1, CourseId = 1, BookingDate = new DateTime(2024, 9, 3, 15, 0, 0).Date, BookingTime = 15, StudentId = 2, Cdate = DateTime.Now },
+    new Booking { BookingId = 2, CourseId = 2, BookingDate = new DateTime(2024, 9, 3, 16, 0, 0).Date, BookingTime = 16, StudentId = 2, Cdate = DateTime.Now },
+    new Booking { BookingId = 3, CourseId = 2, BookingDate = new DateTime(2024, 9, 3, 16, 0, 0).Date, BookingTime = 16, StudentId = 4, Cdate = DateTime.Now }
 );
 
         modelBuilder.Entity<ProfessionalLicense>().HasData(
@@ -1101,8 +1098,8 @@ public partial class TalkingTopiaContext : DbContext
 
 
         modelBuilder.Entity<TutorTimeSlot>().HasData(
-    new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 1, BookingId = 1, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 2, Weekday = 2, CourseHourId = 2, BookingId = 2, Cdate = DateTime.Now }
+    new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 12, BookingId=1, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 1, Weekday = 1, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now }
 );
 
 

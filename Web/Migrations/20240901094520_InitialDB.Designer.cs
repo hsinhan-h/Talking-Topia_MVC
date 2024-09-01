@@ -12,8 +12,8 @@ using Web.Entities;
 namespace Web.Migrations
 {
     [DbContext(typeof(TalkingTopiaContext))]
-    [Migration("20240901074808_initialDB")]
-    partial class initialDB
+    [Migration("20240901094520_InitialDB")]
+    partial class InitialDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,22 +71,22 @@ namespace Web.Migrations
                         new
                         {
                             ApplyId = 1,
-                            ApplyDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2212),
+                            ApplyDateTime = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5901),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2213),
+                            ApprovedDateTime = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5902),
                             MemberId = 1,
                             RejectReason = "無",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2214)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5904)
                         },
                         new
                         {
                             ApplyId = 2,
-                            ApplyDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2215),
+                            ApplyDateTime = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5906),
                             ApplyStatus = false,
-                            ApprovedDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2216),
+                            ApprovedDateTime = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5907),
                             MemberId = 2,
                             RejectReason = "不符合資格",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2216)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5908)
                         });
                 });
 
@@ -138,20 +138,29 @@ namespace Web.Migrations
                         new
                         {
                             BookingId = 1,
-                            BookingDate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2233),
-                            BookingTime = (short)800,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2235),
+                            BookingDate = new DateTime(2024, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookingTime = (short)15,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5936),
                             CourseId = 1,
-                            StudentId = 1
+                            StudentId = 2
                         },
                         new
                         {
                             BookingId = 2,
-                            BookingDate = new DateTime(2024, 9, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            BookingTime = (short)900,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2240),
+                            BookingDate = new DateTime(2024, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookingTime = (short)16,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5939),
                             CourseId = 2,
                             StudentId = 2
+                        },
+                        new
+                        {
+                            BookingId = 3,
+                            BookingDate = new DateTime(2024, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookingTime = (short)16,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5942),
+                            CourseId = 2,
+                            StudentId = 4
                         });
                 });
 
@@ -212,23 +221,23 @@ namespace Web.Migrations
                         new
                         {
                             CouponId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2174),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5838),
                             CouponCode = "SUMMER2024",
                             CouponName = "夏季優惠",
                             Discount = 10,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2024, 10, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2166),
+                            ExpirationDate = new DateTime(2024, 10, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5827),
                             IsActive = true
                         },
                         new
                         {
                             CouponId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2177),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5842),
                             CouponCode = "WELCOME2024",
                             CouponName = "新用戶優惠",
                             Discount = 20,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2024, 12, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2176),
+                            ExpirationDate = new DateTime(2024, 12, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5840),
                             IsActive = true
                         });
                 });
@@ -317,7 +326,7 @@ namespace Web.Migrations
                         {
                             CourseId = 1,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1941),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5480),
                             CoursesStatus = (short)1,
                             Description = "適合初學者的 C# 課程",
                             FiftyMinUnitPrice = 900m,
@@ -334,7 +343,7 @@ namespace Web.Migrations
                         {
                             CourseId = 2,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1944),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5485),
                             CoursesStatus = (short)1,
                             Description = "日語入門課程",
                             FiftyMinUnitPrice = 800m,
@@ -351,7 +360,7 @@ namespace Web.Migrations
                         {
                             CourseId = 3,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1947),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5489),
                             CoursesStatus = (short)1,
                             Description = "📅 隨時隨地進行日文學習，靈活安排時間，讓學習變得更自由！\r\n🗣️ 專屬一對一視訊教學，根據你的需求量身訂製課程內容！✨\r\n\r\n課程介紹文案：\r\n🌟 在全球化的今天，會一門外語是多麼重要！🌍 無論是工作、旅遊✈️還是單純的興趣，學習日文將為你開啟通往日本文化的大門！我們提供專業的線上日文家教，讓你隨時隨地都能學習日文📖，無需擔心地理限制和時間安排的困擾！透過我們的一對一教學，你可以根據自身的學習進度隨時提出問題，獲得即時回饋！💬\r\n\r\n🎥 透過高品質的視訊平台，專業的老師將與你進行一對一的互動，這樣不僅能建立更密切的師生關係🤝，也能確保每堂課都能充分關注你的學習進度和需求。這是在傳統教室中難以實現的優勢！我們的老師將幫助你克服任何學習上的障礙，並給予鼓勵💪，讓學習不再孤單。\r\n\r\n🎳 無論你是語言學習的新手，還是想要進一步提升日文能力的學生，我們的課程都可以根據你的基礎和目標來調整！📈無論是學習日常對話、商務日文📊還是準備JLPT考試🚀，我們都能提供最合適的學習計畫！從發音基礎到語法結構，每一個細節都不會被忽略。\r\n\r\n📚 我們的教師將利用各種多媒體教材📹和互動練習🎮，讓你愉快地學習日文，這包括視聽材料、遊戲、角色扮演及小組討論等多種形式，提升你的聽、說、讀、寫能力。即使是最枯燥的文法📜，在這種輕鬆的氛圍下也變得趣味盎然！\r\n\r\n🌈 除了語言課程，我們的教師將額外分享豐富的日本文化🇯🇵，包括日本的習俗、音樂🎶、美食🍱等，讓你在學習日文的同時，也能欣賞到日本的美好文化。每一堂課都會為你帶來全新的文化體驗😍，讓你不僅是學習文字，更是了解背後的故事！\r\n\r\n🍣 課程中不僅僅是口語練習，老師還將分享正宗的日本料理🍜食譜，幫助你在學習語言的同時，學會一些日本美食的製作！👩‍🍳 你會驚喜於食物背後的文化和歷史，這樣的學習過程使得每堂課都更生動且充滿趣味。\r\n\r\n🏆 現在就加入我們的線上日文家教，設定你自己的學習目標🎯，並開始輕鬆學習！不再只是枯燥的背單字，讓我們用互動式教學讓每次課堂都成為你期待的學習時光！⏰ 在老師的指導下，你很快將能日常自信地用日文交流！\r\n\r\n🎉 無論是準備考試📚、赴日旅行✈️或職場交流，專屬的老師會全力支持你，幫助你達成目標！報名後，無需花費時間尋找合適的教材📦，我們將為你精心準備學習資源，讓你快速進步！🚀 快來預約你的第一堂課，開始放飛你的日文夢想，開啟一段全新的學習旅程吧！🌟",
                             FiftyMinUnitPrice = 1088m,
@@ -368,7 +377,7 @@ namespace Web.Migrations
                         {
                             CourseId = 4,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1950),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5494),
                             CoursesStatus = (short)1,
                             Description = "課程亮點\r\n👶 無論你是剛開始學習英語的初學者，還是想進一步提升口說能力的中級者，我都有合適的教材與方法，讓你逐步克服語言學習的恐懼。\r\n💪 我會引導你在小組討論中與同學練習，透過彼此交流增強口語表達能力。藉助故事、角色扮演以及多媒體資源，我們將一起深入了解英語的美妙！\r\n\r\n自我介紹\r\n❤️ 我熱愛教育，並堅信教育的力量。看到學生從一開始的羞怯逐漸轉變為自信的表達者，這讓我感到無比的成就感。\r\n🎭 在課堂上，我將使用多樣化的教學方法，透過互動遊戲和小組活動，讓你們在享受學習的過程中輕鬆掌握英語。\r\n🌟 我相信，每位學生都是獨一無二的，所以我會耐心地了解每個人的學習需求，並提供針對性的建議和指導。\r\n\r\n課程內容\r\n💬 課程涵蓋日常對話、商業英語、旅遊英語等多個主題，無論你的學習目的為何，都能找到適合的學習內容。\r\n🎉 我會設計有趣的實境練習，讓你能在模擬情境中實踐所學，並且定期進行小組演講和討論，讓你能夠在實際對話中應用所學的知識。\r\n📚 課後，我會提供額外的學習資源和練習題，幫助你持續進步，如影片推薦、English podcasts、以及值得一試的線上學習平台。\r\n\r\n新生福利\r\n🎁 加入我們的課程後，你將獲得一份專屬學習計畫，這份計畫將幫助你規劃和追蹤自己的學習進度，讓你時刻在正確的方向前進。\r\n🌈 我會定期提供語言測試和反饋，確保每位學生都能清楚自己的進步狀況，並持續調整學習策略。\r\n🥳 特別的學習小禮物也會隨著課程頒發，如實用的英語學習工具和資源，讓你的學習之路充滿驚喜！\r\n\r\n期待在課堂上與你見面，一同展開這段精彩的英語學習旅程吧！讓我們一起成為英語口說的高手！👋",
                             FiftyMinUnitPrice = 1100m,
@@ -424,21 +433,21 @@ namespace Web.Migrations
                         {
                             CourseCategoryId = 1,
                             CategorytName = "語言學習",
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1989),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5518),
                             CourseId = 1
                         },
                         new
                         {
                             CourseCategoryId = 2,
                             CategorytName = "程式設計",
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1990),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5520),
                             CourseId = 2
                         },
                         new
                         {
                             CourseCategoryId = 3,
                             CategorytName = "升學科目",
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1992),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5523),
                             CourseId = 2
                         });
                 });
@@ -477,14 +486,146 @@ namespace Web.Migrations
                         new
                         {
                             CourseHourId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1970),
-                            Hour = "08:00-09:00"
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6137),
+                            Hour = "00:00"
                         },
                         new
                         {
                             CourseHourId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1972),
-                            Hour = "09:00-10:00"
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6139),
+                            Hour = "01:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 3,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6163),
+                            Hour = "02:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 4,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6165),
+                            Hour = "03:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 5,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6166),
+                            Hour = "04:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 6,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6168),
+                            Hour = "05:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 7,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6170),
+                            Hour = "06:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 8,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6171),
+                            Hour = "07:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 9,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6173),
+                            Hour = "08:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 10,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6174),
+                            Hour = "09:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 11,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6176),
+                            Hour = "10:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 12,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6177),
+                            Hour = "11:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 13,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6179),
+                            Hour = "12:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 14,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6180),
+                            Hour = "13:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 15,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6182),
+                            Hour = "14:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 16,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6183),
+                            Hour = "15:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 17,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6185),
+                            Hour = "16:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 18,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6186),
+                            Hour = "17:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 19,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6188),
+                            Hour = "18:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 20,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6189),
+                            Hour = "19:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 21,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6191),
+                            Hour = "20:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 22,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6192),
+                            Hour = "21:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 23,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6194),
+                            Hour = "22:00"
+                        },
+                        new
+                        {
+                            CourseHourId = 24,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6195),
+                            Hour = "23:00"
                         });
                 });
 
@@ -527,84 +668,84 @@ namespace Web.Migrations
                         new
                         {
                             CourseImageId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2082),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5636),
                             CourseId = 1,
                             ImageUrl = "https://picsum.photos/id/100/450/300"
                         },
                         new
                         {
                             CourseImageId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2084),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5638),
                             CourseId = 1,
                             ImageUrl = "https://picsum.photos/id/101/450/300"
                         },
                         new
                         {
                             CourseImageId = 3,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2085),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5681),
                             CourseId = 1,
                             ImageUrl = "https://picsum.photos/id/102/450/300"
                         },
                         new
                         {
                             CourseImageId = 4,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2086),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5683),
                             CourseId = 2,
                             ImageUrl = "https://picsum.photos/id/103/450/300"
                         },
                         new
                         {
                             CourseImageId = 5,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2087),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5685),
                             CourseId = 2,
                             ImageUrl = "https://picsum.photos/id/104/450/300"
                         },
                         new
                         {
                             CourseImageId = 6,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2088),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5687),
                             CourseId = 2,
                             ImageUrl = "https://picsum.photos/id/105/450/300"
                         },
                         new
                         {
                             CourseImageId = 7,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2089),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5689),
                             CourseId = 3,
                             ImageUrl = "https://picsum.photos/id/106/450/300"
                         },
                         new
                         {
                             CourseImageId = 8,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2090),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5691),
                             CourseId = 3,
                             ImageUrl = "https://picsum.photos/id/107/450/300"
                         },
                         new
                         {
                             CourseImageId = 9,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2091),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5693),
                             CourseId = 3,
                             ImageUrl = "https://picsum.photos/id/108/450/300"
                         },
                         new
                         {
                             CourseImageId = 10,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2092),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5695),
                             CourseId = 4,
                             ImageUrl = "https://picsum.photos/id/109/450/300"
                         },
                         new
                         {
                             CourseImageId = 11,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2093),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5697),
                             CourseId = 4,
                             ImageUrl = "https://picsum.photos/id/110/450/300"
                         },
                         new
                         {
                             CourseImageId = 12,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2094),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5700),
                             CourseId = 4,
                             ImageUrl = "https://picsum.photos/id/111/450/300"
                         });
@@ -650,126 +791,126 @@ namespace Web.Migrations
                         new
                         {
                             SubjectId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2007),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5556),
                             CourseCategoryId = 1,
                             SubjectName = "英文"
                         },
                         new
                         {
                             SubjectId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2008),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5559),
                             CourseCategoryId = 1,
                             SubjectName = "日文"
                         },
                         new
                         {
                             SubjectId = 3,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2010),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5561),
                             CourseCategoryId = 1,
                             SubjectName = "中文"
                         },
                         new
                         {
                             SubjectId = 4,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2011),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5563),
                             CourseCategoryId = 1,
                             SubjectName = "德文"
                         },
                         new
                         {
                             SubjectId = 5,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2012),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5565),
                             CourseCategoryId = 1,
                             SubjectName = "法文"
                         },
                         new
                         {
                             SubjectId = 6,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2013),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5567),
                             CourseCategoryId = 1,
                             SubjectName = "西班牙文"
                         },
                         new
                         {
                             SubjectId = 7,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2014),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5569),
                             CourseCategoryId = 2,
                             SubjectName = "HTML/CSS"
                         },
                         new
                         {
                             SubjectId = 8,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2015),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5572),
                             CourseCategoryId = 2,
                             SubjectName = "JavaScript"
                         },
                         new
                         {
                             SubjectId = 9,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2016),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5574),
                             CourseCategoryId = 2,
                             SubjectName = "C#"
                         },
                         new
                         {
                             SubjectId = 10,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2017),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5575),
                             CourseCategoryId = 2,
                             SubjectName = "SQL"
                         },
                         new
                         {
                             SubjectId = 11,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2018),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5577),
                             CourseCategoryId = 2,
                             SubjectName = "Python"
                         },
                         new
                         {
                             SubjectId = 12,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2019),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5579),
                             CourseCategoryId = 2,
                             SubjectName = "Java"
                         },
                         new
                         {
                             SubjectId = 13,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2020),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5582),
                             CourseCategoryId = 3,
                             SubjectName = "數學"
                         },
                         new
                         {
                             SubjectId = 14,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2021),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5584),
                             CourseCategoryId = 3,
                             SubjectName = "物理"
                         },
                         new
                         {
                             SubjectId = 15,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2024),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5586),
                             CourseCategoryId = 3,
                             SubjectName = "化學"
                         },
                         new
                         {
                             SubjectId = 16,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2025),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5588),
                             CourseCategoryId = 3,
                             SubjectName = "歷史"
                         },
                         new
                         {
                             SubjectId = 17,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2026),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5590),
                             CourseCategoryId = 3,
                             SubjectName = "地理"
                         },
                         new
                         {
                             SubjectId = 18,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2027),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5592),
                             CourseCategoryId = 3,
                             SubjectName = "生物"
                         });
@@ -822,32 +963,32 @@ namespace Web.Migrations
                         new
                         {
                             EducationId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1796),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5285),
                             DepartmentName = "資訊工程",
                             SchoolName = "台灣大學",
                             StudyEndYear = 2014,
                             StudyStartYear = 2010,
-                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1811)
+                            Udate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5303)
                         },
                         new
                         {
                             EducationId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1817),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5312),
                             DepartmentName = "數學系",
                             SchoolName = "東京大學",
                             StudyEndYear = 2016,
                             StudyStartYear = 2012,
-                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1818)
+                            Udate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5312)
                         },
                         new
                         {
                             EducationId = 3,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1819),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5315),
                             DepartmentName = "經濟系",
                             SchoolName = "哈佛大學",
                             StudyEndYear = 2019,
                             StudyStartYear = 2015,
-                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1820)
+                            Udate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5315)
                         });
                 });
 
@@ -986,7 +1127,7 @@ namespace Web.Migrations
                             BankAccount = "12345678",
                             BankCode = "123",
                             Birthday = new DateTime(1990, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1883),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5360),
                             EducationId = 1,
                             Email = "xiaoming@example.com",
                             FirstName = "小明",
@@ -1002,7 +1143,7 @@ namespace Web.Migrations
                             Phone = "0912345678",
                             SpokenLanguage = "英文",
                             TutorIntro = "專業C#講師",
-                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1885)
+                            Udate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5363)
                         },
                         new
                         {
@@ -1012,7 +1153,7 @@ namespace Web.Migrations
                             BankAccount = "87654321",
                             BankCode = "456",
                             Birthday = new DateTime(1985, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1890),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5407),
                             EducationId = 2,
                             Email = "ken@example.com",
                             FirstName = "健",
@@ -1028,7 +1169,7 @@ namespace Web.Migrations
                             Phone = "0800123456",
                             SpokenLanguage = "中文",
                             TutorIntro = "日語教學專家",
-                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1891)
+                            Udate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5408)
                         },
                         new
                         {
@@ -1038,7 +1179,7 @@ namespace Web.Migrations
                             BankAccount = "98765432",
                             BankCode = "789",
                             Birthday = new DateTime(1992, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1895),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5417),
                             EducationId = 3,
                             Email = "john@example.com",
                             FirstName = "John",
@@ -1054,7 +1195,7 @@ namespace Web.Migrations
                             Phone = "0700123456",
                             SpokenLanguage = "西班牙語",
                             TutorIntro = "資深英語導師",
-                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1896)
+                            Udate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5417)
                         },
                         new
                         {
@@ -1064,7 +1205,7 @@ namespace Web.Migrations
                             BankAccount = "98765432",
                             BankCode = "700",
                             Birthday = new DateTime(1990, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1900),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5424),
                             EducationId = 3,
                             Email = "akimo@example.com",
                             FirstName = "Akimo",
@@ -1080,7 +1221,7 @@ namespace Web.Migrations
                             Phone = "0711111111",
                             SpokenLanguage = "日文",
                             TutorIntro = "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊",
-                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1901)
+                            Udate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5424)
                         },
                         new
                         {
@@ -1090,7 +1231,7 @@ namespace Web.Migrations
                             BankAccount = "98765432",
                             BankCode = "789",
                             Birthday = new DateTime(1993, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1905),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5431),
                             EducationId = 3,
                             Email = "todd@example.com",
                             FirstName = "大衛",
@@ -1106,7 +1247,7 @@ namespace Web.Migrations
                             Phone = "0700222454",
                             SpokenLanguage = "英文 中文",
                             TutorIntro = "嗨！我是 👩‍🏫 李老師，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
-                            Udate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(1905)
+                            Udate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5432)
                         });
                 });
 
@@ -1180,14 +1321,14 @@ namespace Web.Migrations
                         new
                         {
                             MemberPreferenceId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2193),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5874),
                             MemberId = 1,
                             SubjecId = 1
                         },
                         new
                         {
                             MemberPreferenceId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2194),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5876),
                             MemberId = 2,
                             SubjecId = 2
                         });
@@ -1222,19 +1363,19 @@ namespace Web.Migrations
                         new
                         {
                             NationId = 1,
-                            FlagImage = "taiwan.jpg",
+                            FlagImage = "~/image/flag_imgs/taiwan_flag.jpg",
                             NationName = "台灣"
                         },
                         new
                         {
                             NationId = 2,
-                            FlagImage = "japan.jpg",
+                            FlagImage = "~/image/flag_imgs/japan_flag.png",
                             NationName = "日本"
                         },
                         new
                         {
                             NationId = 3,
-                            FlagImage = "usa.jpg",
+                            FlagImage = "~/image/flag_imgs/us_flag.png",
                             NationName = "美國"
                         });
                 });
@@ -1317,24 +1458,24 @@ namespace Web.Migrations
                         new
                         {
                             OrderId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2123),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5752),
                             InvoiceType = (short)1,
                             MemberId = 1,
                             OrderStatusId = (short)1,
                             PaymentType = "Credit Card",
                             TotalPrice = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2122)
+                            TransactionDate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5749)
                         },
                         new
                         {
                             OrderId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2126),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5757),
                             InvoiceType = (short)1,
                             MemberId = 2,
                             OrderStatusId = (short)1,
                             PaymentType = "Paypal",
                             TotalPrice = 2000m,
-                            TransactionDate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2125)
+                            TransactionDate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5755)
                         });
                 });
 
@@ -1473,7 +1614,7 @@ namespace Web.Migrations
                         new
                         {
                             ProfessionalLicenseId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2256),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5967),
                             MemberId = 1,
                             ProfessionalLicenseName = "C# 認證",
                             ProfessionalLicenseUrl = "csharp_certificate.jpg"
@@ -1481,7 +1622,7 @@ namespace Web.Migrations
                         new
                         {
                             ProfessionalLicenseId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2257),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5969),
                             MemberId = 2,
                             ProfessionalLicenseName = "日語能力測驗 N1",
                             ProfessionalLicenseUrl = "jlpt_n1.jpg"
@@ -1536,7 +1677,7 @@ namespace Web.Migrations
                         new
                         {
                             ReviewId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2275),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(5997),
                             CommentText = "很棒的課程！",
                             CourseId = 1,
                             Rating = (byte)5,
@@ -1545,7 +1686,7 @@ namespace Web.Migrations
                         new
                         {
                             ReviewId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2276),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6000),
                             CommentText = "非常實用！",
                             CourseId = 2,
                             Rating = (byte)4,
@@ -1554,7 +1695,7 @@ namespace Web.Migrations
                         new
                         {
                             ReviewId = 3,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2278),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6002),
                             CommentText = "講得不錯! 但笑話有點冷",
                             CourseId = 1,
                             Rating = (byte)4,
@@ -1563,7 +1704,7 @@ namespace Web.Migrations
                         new
                         {
                             ReviewId = 4,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2279),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6004),
                             CommentText = "讚讚讚",
                             CourseId = 1,
                             Rating = (byte)4,
@@ -1635,7 +1776,7 @@ namespace Web.Migrations
                         new
                         {
                             ShoppingCartId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2302),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6029),
                             CourseId = 1,
                             CourseType = (short)1,
                             MemberId = 1,
@@ -1646,7 +1787,7 @@ namespace Web.Migrations
                         new
                         {
                             ShoppingCartId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2304),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6032),
                             CourseId = 2,
                             CourseType = (short)1,
                             MemberId = 2,
@@ -1706,7 +1847,7 @@ namespace Web.Migrations
                         {
                             BookingId = 1,
                             BookingTime = (short)800,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2325),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6059),
                             CourseId = 1,
                             MemberId = 1,
                             TempShoppingCartId = 1
@@ -1715,7 +1856,7 @@ namespace Web.Migrations
                         {
                             BookingId = 2,
                             BookingTime = (short)900,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2327),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6061),
                             CourseId = 2,
                             MemberId = 2,
                             TempShoppingCartId = 2
@@ -1774,8 +1915,8 @@ namespace Web.Migrations
                         {
                             TutorTimeSlotId = 1,
                             BookingId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2342),
-                            CourseHourId = 1,
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6085),
+                            CourseHourId = 12,
                             TutorId = 1,
                             Weekday = 1
                         },
@@ -1783,10 +1924,10 @@ namespace Web.Migrations
                         {
                             TutorTimeSlotId = 2,
                             BookingId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2344),
-                            CourseHourId = 2,
-                            TutorId = 2,
-                            Weekday = 2
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6087),
+                            CourseHourId = 13,
+                            TutorId = 1,
+                            Weekday = 1
                         });
                 });
 
@@ -1842,20 +1983,20 @@ namespace Web.Migrations
                         new
                         {
                             WorkExperienceId = 1,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2362),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6111),
                             MemberId = 1,
-                            WorkEndDate = new DateTime(2023, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2361),
+                            WorkEndDate = new DateTime(2023, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6109),
                             WorkExperienceFile = "csharp_experience.pdf",
-                            WorkStartDate = new DateTime(2021, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2360)
+                            WorkStartDate = new DateTime(2021, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6108)
                         },
                         new
                         {
                             WorkExperienceId = 2,
-                            Cdate = new DateTime(2024, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2365),
+                            Cdate = new DateTime(2024, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6114),
                             MemberId = 2,
-                            WorkEndDate = new DateTime(2022, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2364),
+                            WorkEndDate = new DateTime(2022, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6113),
                             WorkExperienceFile = "japanese_experience.pdf",
-                            WorkStartDate = new DateTime(2019, 9, 1, 15, 48, 7, 402, DateTimeKind.Local).AddTicks(2363)
+                            WorkStartDate = new DateTime(2019, 9, 1, 17, 45, 19, 894, DateTimeKind.Local).AddTicks(6112)
                         });
                 });
 
