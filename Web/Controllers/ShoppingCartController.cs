@@ -1,4 +1,4 @@
-﻿using Web.Services;
+﻿using System.Runtime.InteropServices;
 
 namespace Web.Controllers
 {
@@ -10,27 +10,35 @@ namespace Web.Controllers
             _shoppingCartService = shoppingCartService;
         }
         /// <summary>
-        /// 原ShoppingCartCheck
+        /// ShoppingCart頁面
+        /// Course頁面應回傳時長與堂數的值
+        /// 我要怎麼從前端的時長、堂數或價格去對應db內的時長與價格
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index(int memberId)
+        public async Task<IActionResult> Index(int memberId, int courseId, int courseLength, int quantity)
         {
-            //初次進購物車tempCart為空
-            //todo: 先確認ShoppingCart是否有資料
-            //todo: 無資料 - create路線 - get/post
-            //todo: 有資料 - read路線 - post
+            //todo: 確認是否為有效member及course
+            var member = await _shoppingCartService.GetMemberData(memberId);
+            var course = await _shoppingCartService.GetCourseData(courseId);
 
-            //todo: 
-            if (memberId > -1)
-            {
-                var shoppingCartData = await _shoppingCartService.GetShoppingCartCheckList();
-                return View(shoppingCartData);
-            }
-            else
-            {
-                return NotFound();
-            }
+            //todo: 確認ShoppingCart是否有資料
+            var cartData = await _shoppingCartService.GetShoppingCartData(member, course, courseLength, quantity);
+
+            //todo: 新增課程至購物車
+
+            return View(cartData);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetCart(int memberId, int courseId)
+        {
+            //todo: 確認是否為有效member
+            var member = await _shoppingCartService.GetMemberData(memberId);
+
+            //todo: 確認ShoppingCart是否有資料
+
+            return View("Index");
+
         }
     }
 }
