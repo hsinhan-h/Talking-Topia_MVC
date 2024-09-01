@@ -4,58 +4,94 @@ namespace Web.ViewModels
 {
     public class OrderManagementViewModel
     {
-        [Display(Name = "課程ID")]
-        public int CourseId { get; set; } 
+        /// <summary>
+        /// 課程ID
+        /// </summary>
+        public int CourseId { get; set; }
 
-        [Display(Name = "訂單編號")]
+        /// <summary>
+        /// 訂單編號
+        /// </summary>
         public string TrackingNumber { get; set; }
 
-        [Display(Name = "教師頭像")]
+        /// <summary>
+        /// 教師頭像
+        /// </summary>
         public string HeadShotImage { get; set; }
 
-        [Display(Name = "教師名字")]
+        /// <summary>
+        /// 教師名字
+        /// </summary>
         public string FullName { get; set; }
 
-        [Display(Name = "課程名稱")]
+        /// <summary>
+        /// 課程名稱
+        /// </summary>
         public string CourseTitle { get; set; }
 
-        [Display(Name = "課程科目")]
+        /// <summary>
+        /// 課程科目
+        /// </summary>
         public string CourseSubject { get; set; }
 
-        [Display(Name = "課程類別")]
+        /// <summary>
+        /// 課程類別
+        /// </summary>
         public string CourseCategory { get; set; }
 
-        [Display(Name = "分鐘數")]
+        /// <summary>
+        /// 分鐘數
+        /// </summary>
         public string CourseLength { get; set; }
 
-        [Display(Name = "堂數")]
+        /// <summary>
+        /// 堂數
+        /// </summary>
         public int CourseQuantity { get; set; }
 
-        [Display(Name = "單價")]
+        /// <summary>
+        /// 單價
+        /// </summary>
         public decimal UnitPrice { get; set; }
 
-        [Display(Name = "小計")]
+        /// <summary>
+        /// 小計
+        /// </summary>
         public decimal SubtotalNTD { get; set; }
 
-        [Display(Name = "優惠券")]
+        /// <summary>
+        /// 優惠券
+        /// </summary>
         public string Coupon { get; set; }
 
-        [Display(Name = "付款方式")]
+        /// <summary>
+        /// 付款方式
+        /// </summary>
         public string PaymentType { get; set; }
 
-        [Display(Name = "統一編號")]
+        /// <summary>
+        /// 統一編號
+        /// </summary>
         public string TaxIdNumber { get; set; }
 
-        [Display(Name = "交易時間")]
+        /// <summary>
+        /// 交易時間
+        /// </summary>
         public string OrderDatetime { get; set; }
 
-        [Display(Name = "預約日期")]
+        /// <summary>
+        ///  預約時間
+        /// </summary>
         public DateTime BookingDate { get; set; }
 
-        [Display(Name = "預約時段")]
+        /// <summary>
+        /// 預約時段
+        /// </summary>
         public DateTime BookingTime { get; set; }
 
-        [Display(Name = "訂單狀態")]
+        /// <summary>
+        /// 訂單狀態
+        /// </summary>
         public string OrderStatus { get; set; }
     }
 
@@ -66,33 +102,54 @@ namespace Web.ViewModels
 
     public class ShoppingCartInfoViewModel
     {
-        [Display(Name = "課程ID")]
+        /// <summary>
+        /// 課程ID
+        /// </summary>
         public int CourseId { get; set; }
-        [Display(Name = "訂單編號")]
+
+        /// <summary>
+        /// 訂單編號
+        /// </summary>
         public string TrackingNumber { get; set; }
 
-        [Display(Name = "教師名字")]
+        /// <summary>
+        /// 教師名字
+        /// </summary>
         public string FullName { get; set; }
 
-        [Display(Name = "課程名稱")]
+        /// <summary>
+        /// 課程名稱
+        /// </summary>
         public string CourseTitle { get; set; }
 
-        [Display(Name = "堂數")]
+        /// <summary>
+        /// 堂數
+        /// </summary>
         public int CourseQuantity { get; set; }
 
-        [Display(Name = "小計")]
+        /// <summary>
+        /// 小計
+        /// </summary>
         public decimal SubtotalNTD { get; set; }
 
-        [Display(Name = "統一編號")]
+        /// <summary>
+        /// 統一編號
+        /// </summary>
         public string TaxIdNumber { get; set; }
 
-        [Display(Name = "交易時間")]
+        /// <summary>
+        /// 交易時間
+        /// </summary>
         public string OrderDatetime { get; set; }
 
-        [Display(Name = "預約日期")]
+        /// <summary>
+        /// 預約日期
+        /// </summary>
         public DateTime BookingDate { get; set; }
 
-        [Display(Name = "預約時段")]
+        /// <summary>
+        /// 預約時段
+        /// </summary>
         public DateTime BookingTime { get; set; }
     }
 
