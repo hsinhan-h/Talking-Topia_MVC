@@ -869,27 +869,177 @@ public partial class TalkingTopiaContext : DbContext
         Cdate = DateTime.Now,
         Udate = DateTime.Now,
         IsTutor = true
+    },
+    new Member
+    {
+        MemberId = 4,
+        HeadShotImage = "~/image/tutor_headshot_imgs/tutor_demo_jp_001.webp",
+        NationId = 2,
+        IsVerifiedTutor = true,
+        FirstName = "Akimo",
+        LastName = "Sato",
+        Password = "hashedpassword4",
+        Email = "akimo@example.com",
+        Nickname = "Akimo",
+        Phone = "0711111111",
+        Birthday = new DateTime(1990, 7, 7),
+        Gender = 0,
+        NativeLanguage = "日文",
+        SpokenLanguage = "日文",
+        BankCode = "700",
+        BankAccount = "98765432",
+        EducationId = 3,
+        TutorIntro = "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊",
+        Account = "akimo_account",
+        AccountType = 1,
+        Cdate = DateTime.Now,
+        Udate = DateTime.Now,
+        IsTutor = true
+    },
+    new Member
+    {
+        MemberId = 5,
+        HeadShotImage = "~/image/tutor_headshot_imgs/tutor_head_002.png",
+        NationId = 1,
+        IsVerifiedTutor = false,
+        FirstName = "大衛",
+        LastName = "李",
+        Password = "hashedpassword5",
+        Email = "todd@example.com",
+        Nickname = "David",
+        Phone = "0700222454",
+        Birthday = new DateTime(1993, 11, 5),
+        Gender = 1,
+        NativeLanguage = "英文",
+        SpokenLanguage = "英文 中文",
+        BankCode = "789",
+        BankAccount = "98765432",
+        EducationId = 3,
+        TutorIntro = "嗨！我是 👩‍🏫 李老師，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
+        Account = "david_account",
+        AccountType = 1,
+        Cdate = DateTime.Now,
+        Udate = DateTime.Now,
+        IsTutor = true
     }
 );
 
 
         modelBuilder.Entity<Course>().HasData(
-    new Course { CourseId = 1, CategoryId = 1, SubjectId = 1, TutorId = 1, Title = "C# 入門", SubTitle = "從零開始學習 C#", TwentyFiveMinUnitPrice = 500, FiftyMinUnitPrice = 900, Description = "適合初學者的 C# 課程", IsEnabled = true, ThumbnailUrl = "csharp.jpg", VideoUrl = "csharp_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
-    new Course { CourseId = 2, CategoryId = 2, SubjectId = 2, TutorId = 2, Title = "日語 N5", SubTitle = "基礎日語學習", TwentyFiveMinUnitPrice = 400, FiftyMinUnitPrice = 800, Description = "日語入門課程", IsEnabled = true, ThumbnailUrl = "japanese.jpg", VideoUrl = "japanese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now }
+        new Course { 
+            CourseId = 1, 
+            CategoryId = 1, 
+            SubjectId = 1, 
+            TutorId = 1, 
+            Title = "C# 入門", 
+            SubTitle = "從零開始學習 C#", 
+            TwentyFiveMinUnitPrice = 500, 
+            FiftyMinUnitPrice = 900, 
+            Description = "適合初學者的 C# 課程", 
+            IsEnabled = true, 
+            ThumbnailUrl = "csharp.jpg", 
+            VideoUrl = "csharp_intro.mp4", 
+            CoursesStatus = 1, Cdate = DateTime.Now 
+        },
+        new Course 
+        { 
+            CourseId = 2, 
+            CategoryId = 2, 
+            SubjectId = 2, 
+            TutorId = 2, 
+            Title = "日語 N5", 
+            SubTitle = "基礎日語學習", 
+            TwentyFiveMinUnitPrice = 400, 
+            FiftyMinUnitPrice = 800, 
+            Description = "日語入門課程", 
+            IsEnabled = true, 
+            ThumbnailUrl = "japanese.jpg", 
+            VideoUrl = "japanese_intro.mp4", 
+            CoursesStatus = 1, 
+            Cdate = DateTime.Now 
+        },
+        new Course
+        {
+            CourseId = 3,
+            CategoryId = 1,
+            SubjectId = 2,
+            TutorId = 4,
+            Title = "Akimo老師 🔥精通日語：掌握這門全球流行語言的鑰匙！",
+            SubTitle = "💡 從基礎到高階語法—全面提升你的日語能力！",
+            TwentyFiveMinUnitPrice = 560,
+            FiftyMinUnitPrice = 1088,
+            Description = "📅 隨時隨地進行日文學習，靈活安排時間，讓學習變得更自由！\r\n🗣️ 專屬一對一視訊教學，根據你的需求量身訂製課程內容！✨\r\n\r\n課程介紹文案：\r\n🌟 在全球化的今天，會一門外語是多麼重要！🌍 無論是工作、旅遊✈️還是單純的興趣，學習日文將為你開啟通往日本文化的大門！我們提供專業的線上日文家教，讓你隨時隨地都能學習日文📖，無需擔心地理限制和時間安排的困擾！透過我們的一對一教學，你可以根據自身的學習進度隨時提出問題，獲得即時回饋！💬\r\n\r\n🎥 透過高品質的視訊平台，專業的老師將與你進行一對一的互動，這樣不僅能建立更密切的師生關係\U0001f91d，也能確保每堂課都能充分關注你的學習進度和需求。這是在傳統教室中難以實現的優勢！我們的老師將幫助你克服任何學習上的障礙，並給予鼓勵💪，讓學習不再孤單。\r\n\r\n🎳 無論你是語言學習的新手，還是想要進一步提升日文能力的學生，我們的課程都可以根據你的基礎和目標來調整！📈無論是學習日常對話、商務日文📊還是準備JLPT考試🚀，我們都能提供最合適的學習計畫！從發音基礎到語法結構，每一個細節都不會被忽略。\r\n\r\n📚 我們的教師將利用各種多媒體教材📹和互動練習🎮，讓你愉快地學習日文，這包括視聽材料、遊戲、角色扮演及小組討論等多種形式，提升你的聽、說、讀、寫能力。即使是最枯燥的文法📜，在這種輕鬆的氛圍下也變得趣味盎然！\r\n\r\n🌈 除了語言課程，我們的教師將額外分享豐富的日本文化🇯🇵，包括日本的習俗、音樂🎶、美食🍱等，讓你在學習日文的同時，也能欣賞到日本的美好文化。每一堂課都會為你帶來全新的文化體驗😍，讓你不僅是學習文字，更是了解背後的故事！\r\n\r\n🍣 課程中不僅僅是口語練習，老師還將分享正宗的日本料理🍜食譜，幫助你在學習語言的同時，學會一些日本美食的製作！👩‍🍳 你會驚喜於食物背後的文化和歷史，這樣的學習過程使得每堂課都更生動且充滿趣味。\r\n\r\n🏆 現在就加入我們的線上日文家教，設定你自己的學習目標🎯，並開始輕鬆學習！不再只是枯燥的背單字，讓我們用互動式教學讓每次課堂都成為你期待的學習時光！⏰ 在老師的指導下，你很快將能日常自信地用日文交流！\r\n\r\n🎉 無論是準備考試📚、赴日旅行✈️或職場交流，專屬的老師會全力支持你，幫助你達成目標！報名後，無需花費時間尋找合適的教材📦，我們將為你精心準備學習資源，讓你快速進步！🚀 快來預約你的第一堂課，開始放飛你的日文夢想，開啟一段全新的學習旅程吧！🌟",
+            IsEnabled = true,
+            ThumbnailUrl = "~/image/thumb_nails/thumbnail_demo_jp_001.webp",
+            VideoUrl = "https://www.youtube.com/embed/MAhD37a7AlE",
+            CoursesStatus = 1,
+            Cdate = DateTime.Now
+        },
+        new Course
+        {
+            CourseId = 4,
+            CategoryId = 1,
+            SubjectId = 1,
+            TutorId = 5,
+            Title = "🌟 英語口說提升班：讓你自信流利講英語的最佳選擇",
+            SubTitle = "✨ 從零開始，到流利對話的輕鬆之旅！",
+            TwentyFiveMinUnitPrice = 700,
+            FiftyMinUnitPrice = 1100,
+            Description = "課程亮點\r\n👶 無論你是剛開始學習英語的初學者，還是想進一步提升口說能力的中級者，我都有合適的教材與方法，讓你逐步克服語言學習的恐懼。\r\n💪 我會引導你在小組討論中與同學練習，透過彼此交流增強口語表達能力。藉助故事、角色扮演以及多媒體資源，我們將一起深入了解英語的美妙！\r\n\r\n自我介紹\r\n❤️ 我熱愛教育，並堅信教育的力量。看到學生從一開始的羞怯逐漸轉變為自信的表達者，這讓我感到無比的成就感。\r\n🎭 在課堂上，我將使用多樣化的教學方法，透過互動遊戲和小組活動，讓你們在享受學習的過程中輕鬆掌握英語。\r\n🌟 我相信，每位學生都是獨一無二的，所以我會耐心地了解每個人的學習需求，並提供針對性的建議和指導。\r\n\r\n課程內容\r\n💬 課程涵蓋日常對話、商業英語、旅遊英語等多個主題，無論你的學習目的為何，都能找到適合的學習內容。\r\n🎉 我會設計有趣的實境練習，讓你能在模擬情境中實踐所學，並且定期進行小組演講和討論，讓你能夠在實際對話中應用所學的知識。\r\n📚 課後，我會提供額外的學習資源和練習題，幫助你持續進步，如影片推薦、English podcasts、以及值得一試的線上學習平台。\r\n\r\n新生福利\r\n🎁 加入我們的課程後，你將獲得一份專屬學習計畫，這份計畫將幫助你規劃和追蹤自己的學習進度，讓你時刻在正確的方向前進。\r\n🌈 我會定期提供語言測試和反饋，確保每位學生都能清楚自己的進步狀況，並持續調整學習策略。\r\n\U0001f973 特別的學習小禮物也會隨著課程頒發，如實用的英語學習工具和資源，讓你的學習之路充滿驚喜！\r\n\r\n期待在課堂上與你見面，一同展開這段精彩的英語學習旅程吧！讓我們一起成為英語口說的高手！👋",
+            IsEnabled = true,
+            ThumbnailUrl = "~/image/thumb_nails/thumbnail_demo_tw_001.webp",
+            VideoUrl = "https://www.youtube.com/embed/YX6KZIcUeY8?list=PLqivELodHt3jq3oWBZfdhMu0GE7774HBW",
+            CoursesStatus = 1,
+            Cdate = DateTime.Now
+        }
 );
 
         modelBuilder.Entity<CourseCategory>().HasData(
-    new CourseCategory { CourseCategoryId = 1, CategorytName = "程式設計", CourseId = 1, Cdate = DateTime.Now },
-    new CourseCategory { CourseCategoryId = 2, CategorytName = "語言學習", CourseId = 2, Cdate = DateTime.Now }
+    new CourseCategory { CourseCategoryId = 1, CategorytName = "語言學習", CourseId = 1, Cdate = DateTime.Now },
+    new CourseCategory { CourseCategoryId = 2, CategorytName = "程式設計", CourseId = 2, Cdate = DateTime.Now },
+    new CourseCategory { CourseCategoryId = 3, CategorytName = "升學科目", CourseId = 2, Cdate = DateTime.Now }
 );
         modelBuilder.Entity<CourseSubject>().HasData(
-    new CourseSubject { SubjectId = 1, SubjectName = "C#", CourseCategoryId = 1, Cdate = DateTime.Now },
-    new CourseSubject { SubjectId = 2, SubjectName = "日語", CourseCategoryId = 2, Cdate = DateTime.Now }
+    new CourseSubject { SubjectId = 1, SubjectName = "英文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 2, SubjectName = "日文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 3, SubjectName = "中文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 4, SubjectName = "德文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 5, SubjectName = "法文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 6, SubjectName = "西班牙文", CourseCategoryId = 1, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 7, SubjectName = "HTML/CSS", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 8, SubjectName = "JavaScript", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 9, SubjectName = "C#", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 10, SubjectName = "SQL", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 11, SubjectName = "Python", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 12, SubjectName = "Java", CourseCategoryId = 2, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 13, SubjectName = "數學", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 14, SubjectName = "物理", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 15, SubjectName = "化學", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 16, SubjectName = "歷史", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 17, SubjectName = "地理", CourseCategoryId = 3, Cdate = DateTime.Now },
+    new CourseSubject { SubjectId = 18, SubjectName = "生物", CourseCategoryId = 3, Cdate = DateTime.Now }
 );
 
         modelBuilder.Entity<CourseImage>().HasData(
-    new CourseImage { CourseImageId = 1, CourseId = 1, ImageUrl = "csharp_image.jpg", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 2, CourseId = 2, ImageUrl = "japanese_image.jpg", Cdate = DateTime.Now }
+    // CourseId = 1
+    new CourseImage { CourseImageId = 1, CourseId = 1, ImageUrl = "https://picsum.photos/id/100/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 2, CourseId = 1, ImageUrl = "https://picsum.photos/id/101/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 3, CourseId = 1, ImageUrl = "https://picsum.photos/id/102/450/300", Cdate = DateTime.Now },
+
+    // CourseId = 2
+    new CourseImage { CourseImageId = 4, CourseId = 2, ImageUrl = "https://picsum.photos/id/103/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 5, CourseId = 2, ImageUrl = "https://picsum.photos/id/104/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 6, CourseId = 2, ImageUrl = "https://picsum.photos/id/105/450/300", Cdate = DateTime.Now },
+
+    // CourseId = 3
+    new CourseImage { CourseImageId = 7, CourseId = 3, ImageUrl = "https://picsum.photos/id/106/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 8, CourseId = 3, ImageUrl = "https://picsum.photos/id/107/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 9, CourseId = 3, ImageUrl = "https://picsum.photos/id/108/450/300", Cdate = DateTime.Now },
+
+    // CourseId = 4
+    new CourseImage { CourseImageId = 10, CourseId = 4, ImageUrl = "https://picsum.photos/id/109/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 11, CourseId = 4, ImageUrl = "https://picsum.photos/id/110/450/300", Cdate = DateTime.Now },
+    new CourseImage { CourseImageId = 12, CourseId = 4, ImageUrl = "https://picsum.photos/id/111/450/300", Cdate = DateTime.Now }
         );
         modelBuilder.Entity<Order>().HasData(
     new Order { OrderId = 1, MemberId = 1, PaymentType = "Credit Card", TotalPrice = 1000, TransactionDate = DateTime.Now, InvoiceType = 1, OrderStatusId = 1, Cdate = DateTime.Now },
