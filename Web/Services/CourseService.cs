@@ -13,6 +13,47 @@ namespace Web.Services
             _repository = repository;
         }
 
+
+        public async Task<CourseInfoListViewModel> GetCourseCardsListRepo()
+        {
+            var courses = from course in _repository.GetAll<Course>()
+                          join member in _repository.GetAll<Member>()
+                          on course.TutorId equals member.MemberId
+                          join nation in _repository.GetAll<Nation>()
+                          on member.NationId equals nation.NationId
+                          join review in _repository.GetAll<Review>()
+                          on course.CourseId equals review.CourseId
+                          join booking in _repository.GetAll<Booking>()
+                          on course.CourseId equals booking.CourseId
+                          join tutorTimeSlot in _repository.GetAll<TutorTimeSlot>()
+                          on booking.BookingId equals tutorTimeSlot.BookingId
+                          join courseImage in _repository.GetAll<CourseImage>()
+                          on course.CourseId equals courseImage.CourseId
+                          group new { course, member, nation, review, courseImage } by course.CourseId into groupedCourse
+                          select new CourseInfoViewModel
+                          {
+                              CourseId = groupedCourse.Key,
+                              TutorHeadShotImage = groupedCourse.FirstOrDefault().member.HeadShotImage,
+                              TutorFlagImage = groupedCourse.FirstOrDefault().nation.FlagImage,
+                              IsVerifiedTutor = (bool)groupedCourse.FirstOrDefault().member.IsVerifiedTutor,
+                              CourseTitle = groupedCourse.FirstOrDefault().course.Title,
+                              CourseSubTitle = groupedCourse.FirstOrDefault().course.SubTitle,
+                              TutorIntro = groupedCourse.FirstOrDefault().member.TutorIntro,
+                              TwentyFiveMinUnitPrice = groupedCourse.FirstOrDefault().course.TwentyFiveMinUnitPrice,
+                              FiftyMinUnitPrice = groupedCourse.FirstOrDefault().course.FiftyMinUnitPrice,
+                              CourseVideo = groupedCourse.FirstOrDefault().course.VideoUrl,
+                              CourseVideoThumbnail = groupedCourse.FirstOrDefault().course.ThumbnailUrl,
+                              CourseImages = groupedCourse.Select(g => new CourseImageViewModel { ImageUrl = g.courseImage.ImageUrl }).ToList(),
+                              CourseRatings = groupedCourse.Average(g => g.review.Rating),
+                              CourseReviews = groupedCourse.Where(g => g.review != null).Count()
+                          };
+
+            return new CourseInfoListViewModel
+            {
+                CourseInfoList = await courses.ToListAsync()
+            };
+        }
+
         public async Task<CourseInfoListViewModel> GetCourseCardsList()
         {
             var courseList = new List<CourseInfoViewModel>
@@ -343,7 +384,7 @@ namespace Web.Services
             var courseRatings = _repository.GetAll<Review>()
                 .Where(review => review.CourseId == courseId)
                 .Select(review => (double)review.Rating);
-            return courseRatings.Any() ? courseRatings.Average() : 0;  
+            return courseRatings.Any() ? courseRatings.Average() : 0;
         }
     }
 }

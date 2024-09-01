@@ -19,7 +19,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> CourseList()
         {
-            var model = await _courseService.GetCourseCardsList();
+            var model = await _courseService.GetCourseCardsListRepo();
             return View(model);
         }
 
