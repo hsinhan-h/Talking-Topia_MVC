@@ -33,7 +33,7 @@ namespace Web.Services
                           from booking in bookingGroup.DefaultIfEmpty() //left join booking
 
                           join tutorTimeSlot in _repository.GetAll<TutorTimeSlot>()
-                          on booking.BookingId equals tutorTimeSlot.BookingId into tutorTimeSlotGroup
+                          on member.MemberId equals tutorTimeSlot.TutorId into tutorTimeSlotGroup
                           from tutorTimeSlot in tutorTimeSlotGroup.DefaultIfEmpty() //left join tutortimeslot
 
                           join courseImage in _repository.GetAll<CourseImage>()
