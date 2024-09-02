@@ -1081,7 +1081,12 @@ public partial class TalkingTopiaContext : DbContext
     new Review { ReviewId = 1, StudentId = 1, CourseId = 1, Rating = 5, CommentText = "很棒的課程！", Cdate = DateTime.Now },
     new Review { ReviewId = 2, StudentId = 2, CourseId = 2, Rating = 4, CommentText = "非常實用！", Cdate = DateTime.Now },
     new Review { ReviewId = 3, StudentId = 2, CourseId = 1, Rating = 4, CommentText = "講得不錯! 但笑話有點冷", Cdate = DateTime.Now },
-    new Review { ReviewId = 4, StudentId = 3, CourseId = 1, Rating = 4, CommentText = "讚讚讚", Cdate = DateTime.Now }
+    new Review { ReviewId = 4, StudentId = 3, CourseId = 1, Rating = 4, CommentText = "讚讚讚", Cdate = DateTime.Now },
+    new Review { ReviewId = 5, StudentId = 1, CourseId = 4, Rating = 5, CommentText = "讚讚實用！", Cdate = DateTime.Now },
+    new Review { ReviewId = 6, StudentId = 2, CourseId = 3, Rating = 4, CommentText = "實用！", Cdate = DateTime.Now },
+    new Review { ReviewId = 7, StudentId = 2, CourseId = 3, Rating = 5, CommentText = "Akimo老師No.1", Cdate = DateTime.Now },
+    new Review { ReviewId = 8, StudentId = 3, CourseId = 4, Rating = 5, CommentText = "讚讚讚", Cdate = DateTime.Now },
+    new Review { ReviewId = 9, StudentId = 3, CourseId = 4, Rating = 3, CommentText = "老師太帥難以專心", Cdate = DateTime.Now }
 );
 
 
