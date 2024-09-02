@@ -140,5 +140,7 @@ public partial class Member
 
     public virtual ICollection<TutorTimeSlot> TutorTimeSlots { get; set; } = new List<TutorTimeSlot>();
 
+    public virtual WatchList WatchList { get; set; }
+
     public virtual ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
 }
