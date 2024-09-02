@@ -9,3 +9,4 @@ global using Web.Repository;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.CodeAnalysis;
+global using System.ComponentModel.DataAnnotations;
