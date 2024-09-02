@@ -42,5 +42,11 @@ namespace Web.Controllers
         {
             return View();
         }
+
+        public IActionResult GotoResume()
+        {
+
+            return RedirectToAction("TutorResume");
+        }
     }
 }
