@@ -7,31 +7,17 @@
     public class WatchViewModel
     {
         /// <summary>
-        /// 教師頭像
+        /// 關注ID
         /// </summary>
-        public string HeadShotImage { get; set; }
+        public int WatchListId { get; set; }
         /// <summary>
-        /// 課程名稱
+        /// 送出關注的人
         /// </summary>
-        public string CourseTitle { get; set; }
+        public int FollowerId { get; set; }
 
         /// <summary>
-        /// 課程科目
+        /// 關注的課程
         /// </summary>
-        public string CourseSubject { get; set; }
-
-        /// <summary>
-        /// 教師簡介
-        /// </summary>
-        public string TutorIntro { get; set; }
-        /// <summary>
-        /// 25分鐘價格
-        /// </summary>
-        public int TwentyFiveMinPriceNTD { get; set; }
-        /// <summary>
-        /// 50分鐘價格
-        /// </summary>
-        public int FiftyMinPriceNTD { get; set; }
-
+        public int CourseId { get; set; }
     }
 }

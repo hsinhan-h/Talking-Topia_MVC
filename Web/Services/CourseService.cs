@@ -17,8 +17,8 @@ namespace Web.Services
         public async Task<CourseInfoListViewModel> GetCourseCardsListRepo()
         {
             //real data from database
-            var courses = from course in _repository.GetAll<Course>()
-                          join member in _repository.GetAll<Member>()
+            IQueryable<CourseInfoViewModel> courses = from course in _repository.GetAll<Course>().AsNoTracking()
+                          join member in _repository.GetAll<Member>().AsNoTracking()
                           on course.TutorId equals member.MemberId
 
                           join nation in _repository.GetAll<Nation>()

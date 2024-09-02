@@ -1,4 +1,8 @@
-﻿namespace Web.Entities;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace Web.Entities;
 
 public partial class TalkingTopiaContext : DbContext
 {
@@ -50,6 +54,8 @@ public partial class TalkingTopiaContext : DbContext
     public virtual DbSet<ShoppingCartBooking> ShoppingCartBookings { get; set; }
 
     public virtual DbSet<TutorTimeSlot> TutorTimeSlots { get; set; }
+
+    public virtual DbSet<WatchList> WatchLists { get; set; }
 
     public virtual DbSet<WorkExperience> WorkExperiences { get; set; }
 
@@ -155,6 +161,8 @@ public partial class TalkingTopiaContext : DbContext
         modelBuilder.Entity<Course>(entity =>
         {
             entity.HasKey(e => e.CourseId).HasName("PK__Courses__C92D71A7F51F70E3");
+
+            entity.HasIndex(e => e.CategoryId, "IX_Courses_CategoryId");
 
             entity.Property(e => e.CourseId).HasComment("課程Id");
             entity.Property(e => e.CategoryId).HasComment("課程類別Id");
@@ -697,14 +705,11 @@ public partial class TalkingTopiaContext : DbContext
         {
             entity.HasKey(e => e.TutorTimeSlotId).HasName("PK__TutorTim__E709EE17B13CB862");
 
-            entity.HasIndex(e => e.BookingId, "IX_TutorTimeSlots_BookingId");
-
             entity.HasIndex(e => e.CourseHourId, "IX_TutorTimeSlots_CourseHourId");
 
             entity.HasIndex(e => e.TutorId, "IX_TutorTimeSlots_TutorID");
 
             entity.Property(e => e.TutorTimeSlotId).HasComment("教師可預約Id");
-            entity.Property(e => e.BookingId).HasComment("預約課程Id");
             entity.Property(e => e.Cdate)
                 .HasComment("建立時間")
                 .HasColumnType("datetime")
@@ -719,11 +724,6 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnName("UDate");
             entity.Property(e => e.Weekday).HasComment("開課星期");
 
-            entity.HasOne(d => d.Booking).WithMany(p => p.TutorTimeSlots)
-                .HasForeignKey(d => d.BookingId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TutorTime__Booki__5DCAEF64");
-
             entity.HasOne(d => d.CourseHour).WithMany(p => p.TutorTimeSlots)
                 .HasForeignKey(d => d.CourseHourId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -733,6 +733,24 @@ public partial class TalkingTopiaContext : DbContext
                 .HasForeignKey(d => d.TutorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TutorTime__Membe__5535A963");
+        });
+
+        modelBuilder.Entity<WatchList>(entity =>
+        {
+            entity.Property(e => e.WatchListId)
+                .ValueGeneratedOnAdd()
+                .HasComment("關注Id");
+            entity.Property(e => e.CourseId).HasComment("關注的課程");
+            entity.Property(e => e.FollowerId).HasComment("送出關注的人");
+
+            entity.HasOne(d => d.Course).WithMany(p => p.WatchLists)
+                .HasForeignKey(d => d.CourseId)
+                .HasConstraintName("FK_WatchLists_Courses");
+
+            entity.HasOne(d => d.WatchListNavigation).WithOne(p => p.WatchList)
+                .HasForeignKey<WatchList>(d => d.WatchListId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WatchLists_WatchLists");
         });
 
         modelBuilder.Entity<WorkExperience>(entity =>
@@ -1081,7 +1099,12 @@ public partial class TalkingTopiaContext : DbContext
     new Review { ReviewId = 1, StudentId = 1, CourseId = 1, Rating = 5, CommentText = "很棒的課程！", Cdate = DateTime.Now },
     new Review { ReviewId = 2, StudentId = 2, CourseId = 2, Rating = 4, CommentText = "非常實用！", Cdate = DateTime.Now },
     new Review { ReviewId = 3, StudentId = 2, CourseId = 1, Rating = 4, CommentText = "講得不錯! 但笑話有點冷", Cdate = DateTime.Now },
-    new Review { ReviewId = 4, StudentId = 3, CourseId = 1, Rating = 4, CommentText = "讚讚讚", Cdate = DateTime.Now }
+    new Review { ReviewId = 4, StudentId = 3, CourseId = 1, Rating = 4, CommentText = "讚讚讚", Cdate = DateTime.Now },
+    new Review { ReviewId = 5, StudentId = 1, CourseId = 4, Rating = 5, CommentText = "讚讚實用！", Cdate = DateTime.Now },
+    new Review { ReviewId = 6, StudentId = 2, CourseId = 3, Rating = 4, CommentText = "實用！", Cdate = DateTime.Now },
+    new Review { ReviewId = 7, StudentId = 2, CourseId = 3, Rating = 5, CommentText = "Akimo老師No.1", Cdate = DateTime.Now },
+    new Review { ReviewId = 8, StudentId = 3, CourseId = 4, Rating = 5, CommentText = "讚讚讚", Cdate = DateTime.Now },
+    new Review { ReviewId = 9, StudentId = 3, CourseId = 4, Rating = 3, CommentText = "老師太帥難以專心", Cdate = DateTime.Now }
 );
 
 
@@ -1098,32 +1121,32 @@ public partial class TalkingTopiaContext : DbContext
 
 
         modelBuilder.Entity<TutorTimeSlot>().HasData(
-    new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 12, BookingId=1, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 1, Weekday = 1, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 3, TutorId = 4, Weekday = 2, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 4, TutorId = 4, Weekday = 2, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 4, Weekday = 2, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 6, TutorId = 4, Weekday = 2, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 7, TutorId = 4, Weekday = 2, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 8, TutorId = 4, Weekday = 2, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 9, TutorId = 5, Weekday = 3, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 10, TutorId = 5, Weekday = 3, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 11, TutorId = 5, Weekday = 3, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 12, TutorId = 5, Weekday = 3, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 13, TutorId = 5, Weekday = 3, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 14, TutorId = 5, Weekday = 3, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 15, TutorId = 5, Weekday = 4, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 16, TutorId = 5, Weekday = 4, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 17, TutorId = 5, Weekday = 4, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 18, TutorId = 5, Weekday = 4, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 19, TutorId = 5, Weekday = 4, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 20, TutorId = 5, Weekday = 4, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 21, TutorId = 5, Weekday = 5, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 22, TutorId = 5, Weekday = 5, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 23, TutorId = 5, Weekday = 5, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 24, TutorId = 5, Weekday = 5, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 25, TutorId = 5, Weekday = 5, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 26, TutorId = 5, Weekday = 5, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now }
+    new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 12, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 1, Weekday = 1, CourseHourId = 13, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 3, TutorId = 4, Weekday = 2, CourseHourId = 13, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 4, TutorId = 4, Weekday = 2, CourseHourId = 14, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 4, Weekday = 2, CourseHourId = 15, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 6, TutorId = 4, Weekday = 2, CourseHourId = 20, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 7, TutorId = 4, Weekday = 2, CourseHourId = 21, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 8, TutorId = 4, Weekday = 2, CourseHourId = 22, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 9, TutorId = 5, Weekday = 3, CourseHourId = 13, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 10, TutorId = 5, Weekday = 3, CourseHourId = 14, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 11, TutorId = 5, Weekday = 3, CourseHourId = 15, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 12, TutorId = 5, Weekday = 3, CourseHourId = 20, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 13, TutorId = 5, Weekday = 3, CourseHourId = 21, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 14, TutorId = 5, Weekday = 3, CourseHourId = 22, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 15, TutorId = 5, Weekday = 4, CourseHourId = 13, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 16, TutorId = 5, Weekday = 4, CourseHourId = 14, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 17, TutorId = 5, Weekday = 4, CourseHourId = 15, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 18, TutorId = 5, Weekday = 4, CourseHourId = 20, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 19, TutorId = 5, Weekday = 4, CourseHourId = 21, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 20, TutorId = 5, Weekday = 4, CourseHourId = 22, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 21, TutorId = 5, Weekday = 5, CourseHourId = 13, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 22, TutorId = 5, Weekday = 5, CourseHourId = 14, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 23, TutorId = 5, Weekday = 5, CourseHourId = 15, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 24, TutorId = 5, Weekday = 5, CourseHourId = 20, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 25, TutorId = 5, Weekday = 5, CourseHourId = 21, Cdate = DateTime.Now },
+new TutorTimeSlot { TutorTimeSlotId = 26, TutorId = 5, Weekday = 5, CourseHourId = 22, Cdate = DateTime.Now }
 
 );
 
