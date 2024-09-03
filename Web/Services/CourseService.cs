@@ -231,6 +231,12 @@ namespace Web.Services
             };
         }
 
+        public async Task<int> GetTotalCourseQty()
+        {
+            return  _repository.GetAll<Course>().Count();
+        }
+
+
         public async Task<CourseMainPageViewModel> GetCourseMainPage(int id)
         {
 
