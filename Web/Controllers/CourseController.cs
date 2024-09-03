@@ -17,9 +17,10 @@ namespace Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CourseList()
+        public async Task<IActionResult> CourseList(int page = 1)
         {
-            var model = await _courseService.GetCourseCardsListRepo();
+            int pageSize = 3;
+            var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
             return View(model);
         }
 

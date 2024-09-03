@@ -105,7 +105,7 @@ namespace Web.Services
         //    };
         //}
 
-        public async Task<CourseInfoListViewModel> GetCourseCardsListRepo()
+        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize)
         {
             //主查詢
             var courseMainInfo = await (
@@ -128,7 +128,10 @@ namespace Web.Services
                 FiftyMinUnitPrice = course.FiftyMinUnitPrice,
                 CourseVideo = course.VideoUrl,
                 CourseVideoThumbnail = course.ThumbnailUrl
-            }).ToListAsync();
+            })
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
 
             // 圖片查詢
             var courseImagesInfo = await (

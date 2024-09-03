@@ -1086,7 +1086,10 @@ public partial class TalkingTopiaContext : DbContext
         modelBuilder.Entity<Booking>().HasData(
     new Booking { BookingId = 1, CourseId = 1, BookingDate = new DateTime(2024, 9, 3, 15, 0, 0).Date, BookingTime = 15, StudentId = 2, Cdate = DateTime.Now },
     new Booking { BookingId = 2, CourseId = 2, BookingDate = new DateTime(2024, 9, 3, 16, 0, 0).Date, BookingTime = 16, StudentId = 2, Cdate = DateTime.Now },
-    new Booking { BookingId = 3, CourseId = 2, BookingDate = new DateTime(2024, 9, 3, 16, 0, 0).Date, BookingTime = 16, StudentId = 4, Cdate = DateTime.Now }
+    new Booking { BookingId = 3, CourseId = 2, BookingDate = new DateTime(2024, 9, 3, 16, 0, 0).Date, BookingTime = 16, StudentId = 4, Cdate = DateTime.Now },
+    new Booking { BookingId = 4, CourseId = 4, BookingDate = new DateTime(2024, 9, 4, 15, 0, 0).Date, BookingTime = 15, StudentId = 3, Cdate = DateTime.Now },
+    new Booking { BookingId = 5, CourseId = 4, BookingDate = new DateTime(2024, 9, 4, 16, 0, 0).Date, BookingTime = 16, StudentId = 3, Cdate = DateTime.Now },
+    new Booking { BookingId = 6, CourseId = 4, BookingDate = new DateTime(2024, 9, 5, 16, 0, 0).Date, BookingTime = 16, StudentId = 2, Cdate = DateTime.Now }
 );
 
         modelBuilder.Entity<ProfessionalLicense>().HasData(
@@ -1115,8 +1118,8 @@ public partial class TalkingTopiaContext : DbContext
 
 
         modelBuilder.Entity<ShoppingCartBooking>().HasData(
-    new ShoppingCartBooking { BookingId = 1, CourseId = 1, BookingTime = 800, MemberId = 1, TempShoppingCartId = 1, Cdate = DateTime.Now },
-    new ShoppingCartBooking { BookingId = 2, CourseId = 2, BookingTime = 900, MemberId = 2, TempShoppingCartId = 2, Cdate = DateTime.Now }
+    new ShoppingCartBooking { BookingId = 1, CourseId = 3, BookingTime = 800, MemberId = 1, TempShoppingCartId = 1, Cdate = DateTime.Now },
+    new ShoppingCartBooking { BookingId = 2, CourseId = 3, BookingTime = 900, MemberId = 2, TempShoppingCartId = 2, Cdate = DateTime.Now }
 );
 
 
@@ -1127,26 +1130,26 @@ public partial class TalkingTopiaContext : DbContext
     new TutorTimeSlot { TutorTimeSlotId = 4, TutorId = 4, Weekday = 2, CourseHourId = 14, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 4, Weekday = 2, CourseHourId = 15, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 6, TutorId = 4, Weekday = 2, CourseHourId = 20, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 7, TutorId = 4, Weekday = 2, CourseHourId = 21, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 8, TutorId = 4, Weekday = 2, CourseHourId = 22, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 7, TutorId = 4, Weekday = 2, CourseHourId = 21, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 8, TutorId = 4, Weekday = 2, CourseHourId = 22, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 9, TutorId = 5, Weekday = 3, CourseHourId = 13, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 10, TutorId = 5, Weekday = 3, CourseHourId = 14, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 11, TutorId = 5, Weekday = 3, CourseHourId = 15, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 12, TutorId = 5, Weekday = 3, CourseHourId = 20, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 13, TutorId = 5, Weekday = 3, CourseHourId = 21, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 14, TutorId = 5, Weekday = 3, CourseHourId = 22, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 13, TutorId = 5, Weekday = 3, CourseHourId = 21, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 14, TutorId = 5, Weekday = 3, CourseHourId = 22, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 15, TutorId = 5, Weekday = 4, CourseHourId = 13, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 16, TutorId = 5, Weekday = 4, CourseHourId = 14, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 17, TutorId = 5, Weekday = 4, CourseHourId = 15, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 18, TutorId = 5, Weekday = 4, CourseHourId = 20, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 19, TutorId = 5, Weekday = 4, CourseHourId = 21, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 20, TutorId = 5, Weekday = 4, CourseHourId = 22, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 19, TutorId = 5, Weekday = 4, CourseHourId = 21, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 20, TutorId = 5, Weekday = 4, CourseHourId = 22, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 21, TutorId = 5, Weekday = 5, CourseHourId = 13, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 22, TutorId = 5, Weekday = 5, CourseHourId = 14, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 23, TutorId = 5, Weekday = 5, CourseHourId = 15, Cdate = DateTime.Now },
     new TutorTimeSlot { TutorTimeSlotId = 24, TutorId = 5, Weekday = 5, CourseHourId = 20, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 25, TutorId = 5, Weekday = 5, CourseHourId = 21, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 26, TutorId = 5, Weekday = 5, CourseHourId = 22, Cdate = DateTime.Now }
+    new TutorTimeSlot { TutorTimeSlotId = 25, TutorId = 5, Weekday = 5, CourseHourId = 21, Cdate = DateTime.Now },
+    new TutorTimeSlot { TutorTimeSlotId = 26, TutorId = 5, Weekday = 5, CourseHourId = 22, Cdate = DateTime.Now }
 
 );
 
