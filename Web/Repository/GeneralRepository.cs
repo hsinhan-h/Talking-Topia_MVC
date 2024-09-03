@@ -44,5 +44,11 @@ namespace Web.Repository
         {
             _context?.Dispose();
         }
+
+        public T FirstOrDefault<T>(Func<T, bool> predicate) where T : class
+        {
+            return _context.Set<T>().FirstOrDefault(predicate);
+
+        }
     }
 }
