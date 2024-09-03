@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Web.Entities;
 using Web.Repository;
 
@@ -23,9 +25,9 @@ namespace Web.Services
                                    StudyEndYear = e.StudyEndYear,
                                    StudyStartYear = e.StudyStartYear,
                                    DepartmentName = e.DepartmentName,
-                                   WorkEndDate = w.WorkEndDate,
-                                   WorkStartDate = w.WorkStartDate,
-                                   WorkName= w.WorkName,
+                                   //WorkEndDate = w.WorkEndDate,
+                                   //WorkStartDate = w.WorkStartDate,
+                                   //WorkName= w.WorkName,
                                };
 
             return new TutorResumeListViewModel()
@@ -33,5 +35,34 @@ namespace Web.Services
                 TutorResumeList = await resumeValues.ToListAsync(),
             };
         }
+        public async Task<(bool Success, string Message)> AddQuestionaryAsync(TutorResumeViewModel qVM)
+        {
+            try
+            {
+                var education = new Education
+                {
+                    SchoolName = qVM.SchoolName,
+                    StudyStartYear = qVM.StudyStartYear,
+                    StudyEndYear = qVM.StudyEndYear,
+                    DepartmentName = qVM.DepartmentName,
+                    Cdate = DateTime.Now,
+                    Udate = null
+                };
+
+                _repository.Create(education);
+                _repository.SaveChanges();
+
+                return (true, "新增資料成功");
+            }
+            catch (DbUpdateException ex)
+            {
+                return (false, $"錯誤訊息: {ex.Message}");
+            }
+        }
+        public class TutorResumeDataModel
+        {
+            public Education Education { get; set; }
+        }
+
     }
 }

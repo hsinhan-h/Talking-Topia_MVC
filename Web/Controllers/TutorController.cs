@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web.Entities;
 using Web.Services;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+
 
 namespace Web.Controllers
 {
@@ -26,12 +29,29 @@ namespace Web.Controllers
 
             return View();
         }
-
-        public async Task<IActionResult> TutorResume(int MemberId)
+        [HttpGet]
+        public IActionResult TutorResume()
         {
-            var model = await _resumeDataService.GetEducationAsync(1);
-            return View(model);
+            var qVM = new TutorResumeViewModel();
+            return View(qVM);
         }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> TutorResume(TutorResumeViewModel qVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _resumeDataService.AddQuestionaryAsync(qVM);
+
+                ViewData["Header"] = result.Success ? "問卷調查新增" : "錯誤訊息";
+                ViewData["Message"] = result.Message;
+
+                return View("ShowMessage");
+            }
+
+            return View(qVM);
+        }
+
         
         public async Task<IActionResult> PublishCourse(int MemberId)
         {
