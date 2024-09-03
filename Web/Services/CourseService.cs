@@ -16,213 +16,217 @@ namespace Web.Services
         }
 
 
+        //public async Task<CourseInfoListViewModel> GetCourseCardsListRepo()
+        //{
+
+        //    IQueryable<CourseInfoViewModel> courses =
+        //        from course in _repository.GetAll<Course>().AsNoTracking()
+        //        join member in _repository.GetAll<Member>().AsNoTracking()
+        //        on course.TutorId equals member.MemberId
+
+        //        join nation in _repository.GetAll<Nation>()
+        //        on member.NationId equals nation.NationId
+
+        //        join review in _repository.GetAll<Review>()
+        //        on course.CourseId equals review.CourseId into reviewGroup
+        //        from review in reviewGroup.DefaultIfEmpty() //left join review
+
+        //        join booking in _repository.GetAll<Booking>()
+        //        on course.CourseId equals booking.CourseId into bookingGroup
+        //        from booking in bookingGroup.DefaultIfEmpty() //left join booking
+
+        //        join tutorTimeSlot in _repository.GetAll<TutorTimeSlot>()
+        //        on member.MemberId equals tutorTimeSlot.TutorId into tutorTimeSlotGroup
+        //        from tutorTimeSlot in tutorTimeSlotGroup.DefaultIfEmpty() //left join tutortimeslot
+
+        //        join courseImage in _repository.GetAll<CourseImage>()
+        //        on course.CourseId equals courseImage.CourseId into courseImageGroup
+        //        from courseImage in courseImageGroup.DefaultIfEmpty()
+
+        //        group new { course, member, nation, review, booking, tutorTimeSlot, courseImage } by course.CourseId into groupedCourse
+        //        select new CourseInfoViewModel
+        //        {
+        //            CourseId = groupedCourse.Key,
+        //            TutorHeadShotImage = groupedCourse
+        //                                 .FirstOrDefault().member.HeadShotImage,
+        //            TutorFlagImage = groupedCourse
+        //                                  .FirstOrDefault().nation.FlagImage,
+        //            IsVerifiedTutor = (bool)groupedCourse
+        //                                  .FirstOrDefault().member.IsVerifiedTutor,
+        //            CourseTitle = groupedCourse
+        //                                  .FirstOrDefault().course.Title,
+        //            CourseSubTitle = groupedCourse
+        //                                  .FirstOrDefault().course.SubTitle,
+        //            TutorIntro = groupedCourse
+        //                                  .FirstOrDefault().member.TutorIntro,
+        //            TwentyFiveMinUnitPrice = groupedCourse
+        //                                  .FirstOrDefault().course.TwentyFiveMinUnitPrice,
+        //            FiftyMinUnitPrice = groupedCourse
+        //                                  .FirstOrDefault().course.FiftyMinUnitPrice,
+        //            CourseVideo = groupedCourse
+        //                                  .FirstOrDefault().course.VideoUrl,
+        //            CourseVideoThumbnail = groupedCourse
+        //                                  .FirstOrDefault().course.ThumbnailUrl,
+        //            CourseImages = groupedCourse
+        //                                  .Where(g => g.courseImage != null)
+        //                                  .Select(g => new CourseImageViewModel
+        //                                  {
+        //                                      ImageUrl = g.courseImage.ImageUrl
+        //                                  })
+        //                                  .ToList(),
+        //            CourseRatings = Math.Round(groupedCourse
+        //                                  .Where(g => g.review != null).Any() ?
+        //                                  groupedCourse.Where(g => g.review != null)
+        //                                  .Average(g => g.review.Rating) : 0, 2),
+        //            CourseReviews = groupedCourse.Where(g => g.review != null)
+        //                                  .GroupBy(g => g.review.ReviewId)
+        //                                  .Count(),
+        //            BookedTimeSlots = groupedCourse
+        //                                  .Where(g => g.booking != null)
+        //                                  .Select(g => new TimeSlotViewModel
+        //                                  {
+        //                                      Date = g.booking.BookingDate,
+        //                                      StartHour = g.booking.BookingTime - 1 //因資料表時間Id從1開始對應0:00起始時間
+        //                                  })
+        //                                  .ToList(),
+        //            AvailableTimeSlots = groupedCourse
+        //                                  .Where(g => g.tutorTimeSlot != null)
+        //                                  .Select(g => new TimeSlotViewModel
+        //                                  {
+        //                                      Weekday = g.tutorTimeSlot.Weekday,
+        //                                      StartHour = g.tutorTimeSlot.CourseHourId - 1 //因資料表時間Id從1開始對應0:00起始時間
+        //                                  })
+        //                                  .ToList()
+        //        };
+
+        //    return new CourseInfoListViewModel
+        //    {
+        //        CourseInfoList = await courses.ToListAsync()
+        //    };
+        //}
+
         public async Task<CourseInfoListViewModel> GetCourseCardsListRepo()
         {
-            //    //主查詢
-            //    IQueryable<CourseInfoViewModel> courseMainInfo =
-            //        from course in _repository.GetAll<Course>().AsNoTracking()
-            //        join member in _repository.GetAll<Member>().AsNoTracking()
-            //        on course.TutorId equals member.MemberId
-            //        join nation in _repository.GetAll<Nation>().AsNoTracking()
-            //        on member.NationId equals nation.NationId
-            //        select new CourseInfoViewModel
-            //        {
-            //            CourseId = course.CourseId,
-            //            TutorHeadShotImage = member.HeadShotImage,
-            //            IsVerifiedTutor = member.IsVerifiedTutor,
-            //            CourseTitle = course.Title,
-            //            CourseSubTitle = course.SubTitle,
-            //            TutorIntro = member.TutorIntro,
-            //            TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
-            //            FiftyMinUnitPrice = course.FiftyMinUnitPrice,
-            //            CourseVideo = course.VideoUrl,
-            //            CourseVideoThumbnail = course.ThumbnailUrl
-            //        };
+            //主查詢
+            var courseMainInfo = await (
+            from course in _repository.GetAll<Course>().AsNoTracking()
+            join member in _repository.GetAll<Member>().AsNoTracking()
+            on course.TutorId equals member.MemberId
+            join nation in _repository.GetAll<Nation>().AsNoTracking()
+            on member.NationId equals nation.NationId
+            select new CourseInfoViewModel
+            {
+                MemberId = member.MemberId,
+                CourseId = course.CourseId,
+                TutorHeadShotImage = member.HeadShotImage,
+                TutorFlagImage = nation.FlagImage,
+                IsVerifiedTutor = member.IsVerifiedTutor,
+                CourseTitle = course.Title,
+                CourseSubTitle = course.SubTitle,
+                TutorIntro = member.TutorIntro,
+                TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
+                FiftyMinUnitPrice = course.FiftyMinUnitPrice,
+                CourseVideo = course.VideoUrl,
+                CourseVideoThumbnail = course.ThumbnailUrl
+            }).ToListAsync();
 
-            //    //圖片查詢
-            //    IQueryable<CourseInfoViewModel> courseImagesInfo =
-            //        from course in _repository.GetAll<Course>().AsNoTracking()
-            //        join courseImage in _repository.GetAll<CourseImage>().AsNoTracking()
-            //        on course.CourseId equals courseImage.CourseId
-            //        group courseImage by course.CourseId into gpImage
-            //        select new CourseInfoViewModel
-            //        {
-            //            CourseId = gpImage.Key,
-            //            CourseImages = gpImage.Select(ci => new CourseImageViewModel
-            //            {
-            //                ImageUrl = ci.ImageUrl
-            //            }).ToList()
-            //        };
-
-            //    //評價及評論數查詢
-            //    IQueryable<CourseInfoViewModel> courseRatingsAndReviewsInfo =
-            //        from course in _repository.GetAll<Course>().AsNoTracking()
-            //        join review in _repository.GetAll<Review>().AsNoTracking()
-            //        on course.CourseId equals review.CourseId
-            //        group review by course.CourseId into gpReview
-            //        select new CourseInfoViewModel
-            //        {
-            //            CourseId = gpReview.Key,
-            //            CourseRatings = gpReview.Any() ?
-            //                            Math.Round(gpReview.Average(cr => cr.Rating), 2) : 0,
-            //            CourseReviews = gpReview.Count()
-            //        };
-
-            //    //已被預約時間查詢
-            //    IQueryable<CourseInfoViewModel> bookedTimeSlotsInfo =
-            //        from course in _repository.GetAll<Course>().AsNoTracking()
-            //        join booking in _repository.GetAll<Booking>().AsNoTracking()
-            //        on course.CourseId equals booking.CourseId
-            //        group booking by course.CourseId into gpBooking
-            //        select new CourseInfoViewModel
-            //        {
-            //            CourseId = gpBooking.Key,
-            //            BookedTimeSlots = gpBooking.Select(cb => new TimeSlotViewModel
-            //            {
-            //                Date = cb.BookingDate,
-            //                StartHour = cb.BookingTime - 1 //id - 1對應實際起始時間
-            //            }).ToList()
-            //        };
-
-            //    //教師可預約時間查詢
-            //    IQueryable<CourseInfoViewModel> availableTimeSlotsInfo =
-            //        from member in _repository.GetAll<Member>().AsNoTracking()
-            //        join tutorTimeSlot in _repository.GetAll<TutorTimeSlot>().AsNoTracking()
-            //        on member.MemberId equals tutorTimeSlot.TutorId
-            //        group tutorTimeSlot by member.MemberId into gpMember
-            //        select new CourseInfoViewModel
-            //        {
-            //            MemberId = gpMember.Key,
-            //            AvailableTimeSlots = gpMember.Select(mt => new TimeSlotViewModel
-            //            {
-            //                Weekday = mt.Weekday,
-            //                StartHour = mt.CourseHourId - 1,
-            //            }).ToList()
-            //        };
-
-            //    //合併查詢
-            //    IQueryable<CourseInfoViewModel> completeCoursesInfo =
-            //        from courseMain in courseMainInfo
-            //        join imgInfo in courseImagesInfo on courseMain.CourseId equals imgInfo.CourseId into imgInfoGroup
-            //        from imgInfo in imgInfoGroup.DefaultIfEmpty()
-            //        join revInfo in courseRatingsAndReviewsInfo on courseMain.CourseId equals revInfo.CourseId into revInfoGroup
-            //        from revInfo in revInfoGroup.DefaultIfEmpty()
-            //        join bookInfo in bookedTimeSlotsInfo on courseMain.CourseId equals bookInfo.CourseId into bookInfoGroup
-            //        from bookInfo in bookInfoGroup.DefaultIfEmpty()
-            //        join tTimeInfo in availableTimeSlotsInfo on courseMain.MemberId equals tTimeInfo.MemberId into tTimeInfoGroup
-            //        from tTimeInfo in tTimeInfoGroup.DefaultIfEmpty()
-            //        select new CourseInfoViewModel
-            //        {
-            //            CourseId = courseMain.CourseId,
-            //            TutorHeadShotImage = courseMain.TutorHeadShotImage,
-            //            TutorFlagImage = courseMain.TutorFlagImage,
-            //            IsVerifiedTutor = courseMain.IsVerifiedTutor,
-            //            CourseTitle = courseMain.CourseTitle,
-            //            CourseSubTitle = courseMain.CourseSubTitle,
-            //            TutorIntro = courseMain.TutorIntro,
-            //            TwentyFiveMinUnitPrice = courseMain.TwentyFiveMinUnitPrice,
-            //            FiftyMinUnitPrice = courseMain.FiftyMinUnitPrice,
-            //            CourseVideo = courseMain.CourseVideo,
-            //            CourseVideoThumbnail = courseMain.CourseVideoThumbnail,
-            //            CourseImages = imgInfo != null ? imgInfo.CourseImages : new List<CourseImageViewModel>(),
-            //            CourseRatings = revInfo != null ? revInfo.CourseRatings : 0,
-            //            CourseReviews = revInfo != null ? revInfo.CourseReviews : 0,
-            //            BookedTimeSlots = bookInfo != null ? bookInfo.BookedTimeSlots : new List<TimeSlotViewModel>(),
-            //            AvailableTimeSlots = tTimeInfo != null ? tTimeInfo.AvailableTimeSlots : new List<TimeSlotViewModel>()
-            //        };
-
-            //    return new CourseInfoListViewModel
-            //    {
-            //        CourseInfoList = await completeCoursesInfo.ToListAsync()
-            //    };
-
-            IQueryable < CourseInfoViewModel > courses =
+            // 圖片查詢
+            var courseImagesInfo = await (
                 from course in _repository.GetAll<Course>().AsNoTracking()
-                join member in _repository.GetAll<Member>().AsNoTracking()
-                on course.TutorId equals member.MemberId
-
-                join nation in _repository.GetAll<Nation>()
-                on member.NationId equals nation.NationId
-
-                join review in _repository.GetAll<Review>()
-                on course.CourseId equals review.CourseId into reviewGroup
-                from review in reviewGroup.DefaultIfEmpty() //left join review
-
-                join booking in _repository.GetAll<Booking>()
-                on course.CourseId equals booking.CourseId into bookingGroup
-                from booking in bookingGroup.DefaultIfEmpty() //left join booking
-
-                join tutorTimeSlot in _repository.GetAll<TutorTimeSlot>()
-                on member.MemberId equals tutorTimeSlot.TutorId into tutorTimeSlotGroup
-                from tutorTimeSlot in tutorTimeSlotGroup.DefaultIfEmpty() //left join tutortimeslot
-
-                join courseImage in _repository.GetAll<CourseImage>()
-                on course.CourseId equals courseImage.CourseId into courseImageGroup
-                from courseImage in courseImageGroup.DefaultIfEmpty()
-
-                group new { course, member, nation, review, booking, tutorTimeSlot, courseImage } by course.CourseId into groupedCourse
+                join courseImage in _repository.GetAll<CourseImage>().AsNoTracking()
+                on course.CourseId equals courseImage.CourseId
+                group courseImage by course.CourseId into gpImage
                 select new CourseInfoViewModel
                 {
-                    CourseId = groupedCourse.Key,
-                    TutorHeadShotImage = groupedCourse
-                                         .FirstOrDefault().member.HeadShotImage,
-                    TutorFlagImage = groupedCourse
-                                          .FirstOrDefault().nation.FlagImage,
-                    IsVerifiedTutor = (bool)groupedCourse
-                                          .FirstOrDefault().member.IsVerifiedTutor,
-                    CourseTitle = groupedCourse
-                                          .FirstOrDefault().course.Title,
-                    CourseSubTitle = groupedCourse
-                                          .FirstOrDefault().course.SubTitle,
-                    TutorIntro = groupedCourse
-                                          .FirstOrDefault().member.TutorIntro,
-                    TwentyFiveMinUnitPrice = groupedCourse
-                                          .FirstOrDefault().course.TwentyFiveMinUnitPrice,
-                    FiftyMinUnitPrice = groupedCourse
-                                          .FirstOrDefault().course.FiftyMinUnitPrice,
-                    CourseVideo = groupedCourse
-                                          .FirstOrDefault().course.VideoUrl,
-                    CourseVideoThumbnail = groupedCourse
-                                          .FirstOrDefault().course.ThumbnailUrl,
-                    CourseImages = groupedCourse
-                                          .Where(g => g.courseImage != null)
-                                          .Select(g => new CourseImageViewModel
-                                          {
-                                              ImageUrl = g.courseImage.ImageUrl
-                                          })
-                                          .ToList(),
-                    CourseRatings = Math.Round(groupedCourse
-                                          .Where(g => g.review != null).Any() ?
-                                          groupedCourse.Where(g => g.review != null)
-                                          .Average(g => g.review.Rating) : 0, 2),
-                    CourseReviews = groupedCourse.Where(g => g.review != null)
-                                          .GroupBy(g => g.review.ReviewId)
-                                          .Count(),
-                    BookedTimeSlots = groupedCourse
-                                          .Where(g => g.booking != null)
-                                          .Select(g => new TimeSlotViewModel
-                                          {
-                                              Date = g.booking.BookingDate,
-                                              StartHour = g.booking.BookingTime - 1 //因資料表時間Id從1開始對應0:00起始時間
-                                          })
-                                          .ToList(),
-                    AvailableTimeSlots = groupedCourse
-                                          .Where(g => g.tutorTimeSlot != null)
-                                          .Select(g => new TimeSlotViewModel
-                                          {
-                                              Weekday = g.tutorTimeSlot.Weekday,
-                                              StartHour = g.tutorTimeSlot.CourseHourId - 1 //因資料表時間Id從1開始對應0:00起始時間
-                                          })
-                                          .ToList()
-                };
+                    CourseId = gpImage.Key,
+                    CourseImages = gpImage.Select(ci => new CourseImageViewModel
+                    {
+                        ImageUrl = ci.ImageUrl
+                    }).ToList()
+                }).ToListAsync();
+
+            // 評價及評論數查詢
+            var courseRatingsAndReviewsInfo = await (
+                from course in _repository.GetAll<Course>().AsNoTracking()
+                join review in _repository.GetAll<Review>().AsNoTracking()
+                on course.CourseId equals review.CourseId
+                group review by course.CourseId into gpReview
+                select new CourseInfoViewModel
+                {
+                    CourseId = gpReview.Key,
+                    CourseRatings = gpReview.Any() ?
+                                    Math.Round(gpReview.Average(cr => cr.Rating), 2) : 0,
+                    CourseReviews = gpReview.Count()
+                }).ToListAsync();
+
+            // 已被預約時間查詢
+            var bookedTimeSlotsInfo = await (
+                from course in _repository.GetAll<Course>().AsNoTracking()
+                join booking in _repository.GetAll<Booking>().AsNoTracking()
+                on course.CourseId equals booking.CourseId
+                group booking by course.CourseId into gpBooking
+                select new CourseInfoViewModel
+                {
+                    CourseId = gpBooking.Key,
+                    BookedTimeSlots = gpBooking.Select(cb => new TimeSlotViewModel
+                    {
+                        Date = cb.BookingDate,
+                        StartHour = cb.BookingTime - 1 // id - 1 對應實際起始時間
+                    }).ToList()
+                }).ToListAsync();
+
+            // 教師可預約時間查詢
+            var availableTimeSlotsInfo = await (
+                from member in _repository.GetAll<Member>().AsNoTracking()
+                join tutorTimeSlot in _repository.GetAll<TutorTimeSlot>().AsNoTracking()
+                on member.MemberId equals tutorTimeSlot.TutorId
+                group tutorTimeSlot by member.MemberId into gpMember
+                select new CourseInfoViewModel
+                {
+                    MemberId = gpMember.Key,
+                    AvailableTimeSlots = gpMember.Select(mt => new TimeSlotViewModel
+                    {
+                        Weekday = mt.Weekday,
+                        StartHour = mt.CourseHourId - 1,
+                    }).ToList()
+                }).ToListAsync();
+
+            // 合併查詢
+            var completeCoursesInfo = (
+                from courseMain in courseMainInfo
+                join imgInfo in courseImagesInfo on courseMain.CourseId equals imgInfo.CourseId into imgInfoGroup
+                from imgInfo in imgInfoGroup.DefaultIfEmpty()
+                join revInfo in courseRatingsAndReviewsInfo on courseMain.CourseId equals revInfo.CourseId into revInfoGroup
+                from revInfo in revInfoGroup.DefaultIfEmpty()
+                join bookInfo in bookedTimeSlotsInfo on courseMain.CourseId equals bookInfo.CourseId into bookInfoGroup
+                from bookInfo in bookInfoGroup.DefaultIfEmpty()
+                join tTimeInfo in availableTimeSlotsInfo on courseMain.MemberId equals tTimeInfo.MemberId into tTimeInfoGroup
+                from tTimeInfo in tTimeInfoGroup.DefaultIfEmpty()
+                select new CourseInfoViewModel
+                {
+                    CourseId = courseMain.CourseId,
+                    TutorHeadShotImage = courseMain.TutorHeadShotImage,
+                    TutorFlagImage = courseMain.TutorFlagImage,
+                    IsVerifiedTutor = courseMain.IsVerifiedTutor,
+                    CourseTitle = courseMain.CourseTitle,
+                    CourseSubTitle = courseMain.CourseSubTitle,
+                    TutorIntro = courseMain.TutorIntro,
+                    TwentyFiveMinUnitPrice = courseMain.TwentyFiveMinUnitPrice,
+                    FiftyMinUnitPrice = courseMain.FiftyMinUnitPrice,
+                    CourseVideo = courseMain.CourseVideo,
+                    CourseVideoThumbnail = courseMain.CourseVideoThumbnail,
+                    CourseImages = imgInfo?.CourseImages ?? new List<CourseImageViewModel>(),
+                    CourseRatings = revInfo?.CourseRatings ?? 0,
+                    CourseReviews = revInfo?.CourseReviews ?? 0,
+                    BookedTimeSlots = bookInfo?.BookedTimeSlots ?? new List<TimeSlotViewModel>(),
+                    AvailableTimeSlots = tTimeInfo?.AvailableTimeSlots ?? new List<TimeSlotViewModel>()
+                }).ToList();
 
             return new CourseInfoListViewModel
             {
-                CourseInfoList = await courses.ToListAsync()
+                CourseInfoList = completeCoursesInfo
             };
         }
-
-
 
         public async Task<CourseMainPageViewModel> GetCourseMainPage(int id)
         {
