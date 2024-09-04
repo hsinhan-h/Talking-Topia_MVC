@@ -315,35 +315,46 @@ namespace Web.Services
                         ReviewDate = DateTime.Now.AddDays(-9).ToString("yyyy/MM/dd"),
                         ReviewContent = "感謝老師詳細的講解和課堂上的實踐練習，讓我在短時間內掌握了日語的基礎用法，非常受益！"
                     }
+                },
+                ExperienceList = new List<TutorExperience>
+                {
+                    new TutorExperience
+                    {
+                        StartYear = 2015,
+                        EndYear = 2018,
+                        WorkTitle = "語言學校日語講師"
+                    },
+                    new TutorExperience
+                    {
+                        StartYear = 2019,
+                        EndYear = 2021,
+                        WorkTitle = "國際日語學院資深教師"
+                    },
+                    new TutorExperience
+                    {
+                        StartYear = 2022,
+                        EndYear = 2024,
+                        WorkTitle = "線上日語課程導師"
+                    },
+                    new TutorExperience
+                    {
+                        StartYear = 2017,
+                        EndYear = 2020,
+                        WorkTitle = "日本語學校教學主任"
+                    },
+                    new TutorExperience
+                    {
+                        StartYear = 2020,
+                        EndYear = 2023,
+                        WorkTitle = "語言中心教學協調員"
+                    }
                 }
-            };
-
-            // 設置 TwentyFiveDiscountedPrice，使用 TwentyFiveMinPriceNTD 的值進行計算
-            //courseInfo.TwentyFiveDiscountedPrice = new List<TwentyFiveDiscountedPriceList>
-            //{
-            //    new TwentyFiveDiscountedPriceList
-            //    {
-            //        FiveOffPrice = (decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD  * 0.95),   // 5% off
-            //        TenOffPrice = (decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD  * 0.9),    // 10% off
-            //        FifteenOffPrice =(decimal)Math.Round(courseInfo.TwentyFiveMinPriceNTD * 0.85) // 15% off
-            //    }
-            //};
-
-            //courseInfo.FiftyDiscountedPrice = new List<FiftyDiscountedPriceList>
-            //{
-            //    new FiftyDiscountedPriceList
-            //    {
-            //        FiveOffPrice = (decimal)Math.Round(courseInfo.FiftyMinPriceNTD  * 0.95),   // 5% off
-            //        TenOffPrice = (decimal)Math.Round(courseInfo.FiftyMinPriceNTD  * 0.9),    // 10% off
-            //        FifteenOffPrice =(decimal)Math.Round(courseInfo.FiftyMinPriceNTD* 0.85) // 15% off
-            //    }
-            //};
-
-
+            };            
             return courseInfo;
-
         }
-
+        /// <summary>
+        /// 25/50分鐘課程、價錢、折扣的方法
+        /// </summary>
         private List<BaseDiscountPice> GettCoursePriceList(List<CourseCountDiscount> courseCounts, int time, decimal price)
         {
 
@@ -353,11 +364,9 @@ namespace Web.Services
                 CourseCount = x.CourseCount,
                 CourseDurance = time,
                 Discount = (int)x.Discount,
-                DiscountPrice = x.Discount == 0 ? price.ToString() : (price * (1 - (x.Discount / 100))).ToString(),
+                DiscountPrice = x.Discount == 0 ? price.ToString() : (price * (1 - (x.Discount / 100))).ToString("0"),
 
             }).ToList();
-
-
             return result;
         }
         /// <summary>
