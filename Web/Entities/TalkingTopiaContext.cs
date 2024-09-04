@@ -512,7 +512,7 @@ public partial class TalkingTopiaContext : DbContext
                 .HasComment("更新時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
-            entity.Property(e => e.Vatnumber)
+            entity.Property(e => e.VATNumber)
                 .HasMaxLength(8)
                 .HasComment("發票號碼")
                 .HasColumnName("VATNumber");
