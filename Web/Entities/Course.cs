@@ -91,4 +91,6 @@ public partial class Course
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
+
+    public virtual ICollection<WatchList> WatchLists { get; set; } = new List<WatchList>();
 }

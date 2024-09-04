@@ -43,6 +43,4 @@ public partial class Booking
     public virtual Course Course { get; set; }
 
     public virtual Member Student { get; set; }
-
-    public virtual ICollection<TutorTimeSlot> TutorTimeSlots { get; set; } = new List<TutorTimeSlot>();
 }
