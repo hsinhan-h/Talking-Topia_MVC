@@ -13,56 +13,67 @@ namespace Web.Services
         {
             _repository = repository;
         }
-        public async Task<int> GetMemberData(int memberId)
+        public bool HasMemberData(int memberId)
         {
-            var member = await _repository.GetAll<Member>()
-                                           .Where(x => x.MemberId == memberId)
-                                           .FirstOrDefaultAsync();
-            if (member == null)
-            {
-                throw new Exception("會員不存在");
-            }
-            else
-            {
-                return member.MemberId;
-            }
+            return _repository.GetAll<Member>().Any(x => x.MemberId == memberId);
         }
-        public async Task<int> GetCourseData(int courseId)
+        public bool HasCourseData(int courseId)
         {
-            var course = await _repository.GetAll<Course>()
-                                           .Where(x => x.CourseId == courseId)
-                                           .FirstOrDefaultAsync();
-            if (course == null)
+            return _repository.GetAll<Course>().Any(x => x.CourseId == courseId);
+        }
+        public bool HasCartData(int memberId, int courseId)
+        {
+            return _repository.GetAll<ShoppingCart>().Any(x => x.MemberId == memberId && x.CourseId == courseId);
+        }
+        public decimal GetUnitPrice(int courseId, int courseLength)
+        {
+            var price = _repository.GetAll<Course>()
+                       .Where(x => x.CourseId == courseId)
+                       .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
+                       .FirstOrDefault();
+
+            return price;
+        }
+        public ShoppingCart ShoppingCartVMToDM(ShoppingCartViewModel scVM)
+        {
+            // 感覺哪裡怪怪的
+            ShoppingCart cart = new ShoppingCart()
             {
-                throw new Exception("課程不存在");
-            }
-            else
-            {
-                return course.CourseId;
-            }
+                CourseId = scVM.CourseId,
+                UnitPrice = scVM.UnitPrice,
+                Quantity = (short)scVM.CourseQuantity,
+                TotalPrice = scVM.CourseQuantity * scVM.UnitPrice,
+                // MemberId = scVM.MemberId, //少這個= =?
+                CourseType = 1, // 用enum設定?
+                Cdate = DateTime.Now,
+                Udate = DateTime.Now,
+                // BookingDate = scVM.BookingDate,
+                // BookingTime = scVM.BookingTime,
+                //Course
+                //Member
+                //ShoppingCartBookings
+            };
+            return cart;
         }
 
         public async Task<ShoppingCartListViewModel> GetShoppingCartData(int memberId, int courseId,
                                                                          int courseLength, int quantity)
         {
-            //已確認有member及course
-            //todo: 先確認購物車是否已有課程/相同課程
-            bool exists = await _repository.GetAll<ShoppingCart>()
-                                                  .AnyAsync(x => x.MemberId == memberId
-                                                              && x.CourseId == courseId);
-            if (!exists)
-            {
-                throw new Exception("資料不存在，請重新操作");
-            }
-            else
+            //todo: 確認是否為有效member及course (感覺要統一寫在member跟course的service)
+            if (!HasMemberData(memberId))
+            { throw new Exception("會員不存在，請重新操作"); }
+            if (!HasCourseData(courseId))
+            { throw new Exception("課程不存在，請重新操作"); }
+
+            //todo: 確認購物車是否已有課程/相同課程
+            if (!HasCartData(memberId, courseId)) //沒有就新增
             {
                 //從前端傳入的value抓db.Course的單價
-                var unitPrice = _repository.GetAll<Course>()
-                          .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
-                          .FirstOrDefault();
+                var unitPrice = GetUnitPrice(courseId, courseLength);
 
                 //究級join然後將抓到的值塞進VM
                 var shoppingCart = from cartItem in _repository.GetAll<ShoppingCart>()
+                                       //如果沒有要怎麼從購物車抓資料 = = 我思考思考...
                                    join member in _repository.GetAll<Member>() on cartItem.MemberId equals member.MemberId
                                    join course in _repository.GetAll<Course>() on cartItem.CourseId equals course.CourseId
                                    join subject in _repository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
@@ -79,7 +90,7 @@ namespace Web.Services
                                        CourseLength = "",
                                        CourseQuantity = quantity,
                                        UnitPrice = unitPrice,
-                                       SubtotalNTD = quantity * unitPrice, 
+                                       SubtotalNTD = quantity * unitPrice,
                                        Coupon = "",
                                        PaymentType = ""
                                    };
@@ -87,6 +98,12 @@ namespace Web.Services
                 {
                     ShoppingCartList = await shoppingCart.ToListAsync(),
                 };
+
+            }
+            else
+            {
+                //有就更新同筆課程的明細
+                return null;
             }
         }
 

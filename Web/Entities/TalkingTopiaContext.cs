@@ -1,4 +1,8 @@
-﻿namespace Web.Entities;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace Web.Entities;
 
 public partial class TalkingTopiaContext : DbContext
 {
@@ -50,6 +54,8 @@ public partial class TalkingTopiaContext : DbContext
     public virtual DbSet<ShoppingCartBooking> ShoppingCartBookings { get; set; }
 
     public virtual DbSet<TutorTimeSlot> TutorTimeSlots { get; set; }
+
+    public virtual DbSet<WatchList> WatchLists { get; set; }
 
     public virtual DbSet<WorkExperience> WorkExperiences { get; set; }
 
@@ -155,6 +161,8 @@ public partial class TalkingTopiaContext : DbContext
         modelBuilder.Entity<Course>(entity =>
         {
             entity.HasKey(e => e.CourseId).HasName("PK__Courses__C92D71A7F51F70E3");
+
+            entity.HasIndex(e => e.CategoryId, "IX_Courses_CategoryId");
 
             entity.Property(e => e.CourseId).HasComment("課程Id");
             entity.Property(e => e.CategoryId).HasComment("課程類別Id");
@@ -504,7 +512,7 @@ public partial class TalkingTopiaContext : DbContext
                 .HasComment("更新時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
-            entity.Property(e => e.Vatnumber)
+            entity.Property(e => e.VATNumber)
                 .HasMaxLength(8)
                 .HasComment("發票號碼")
                 .HasColumnName("VATNumber");
@@ -697,14 +705,11 @@ public partial class TalkingTopiaContext : DbContext
         {
             entity.HasKey(e => e.TutorTimeSlotId).HasName("PK__TutorTim__E709EE17B13CB862");
 
-            entity.HasIndex(e => e.BookingId, "IX_TutorTimeSlots_BookingId");
-
             entity.HasIndex(e => e.CourseHourId, "IX_TutorTimeSlots_CourseHourId");
 
             entity.HasIndex(e => e.TutorId, "IX_TutorTimeSlots_TutorID");
 
             entity.Property(e => e.TutorTimeSlotId).HasComment("教師可預約Id");
-            entity.Property(e => e.BookingId).HasComment("預約課程Id");
             entity.Property(e => e.Cdate)
                 .HasComment("建立時間")
                 .HasColumnType("datetime")
@@ -719,11 +724,6 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnName("UDate");
             entity.Property(e => e.Weekday).HasComment("開課星期");
 
-            entity.HasOne(d => d.Booking).WithMany(p => p.TutorTimeSlots)
-                .HasForeignKey(d => d.BookingId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TutorTime__Booki__5DCAEF64");
-
             entity.HasOne(d => d.CourseHour).WithMany(p => p.TutorTimeSlots)
                 .HasForeignKey(d => d.CourseHourId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -733,6 +733,24 @@ public partial class TalkingTopiaContext : DbContext
                 .HasForeignKey(d => d.TutorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TutorTime__Membe__5535A963");
+        });
+
+        modelBuilder.Entity<WatchList>(entity =>
+        {
+            entity.Property(e => e.WatchListId)
+                .ValueGeneratedOnAdd()
+                .HasComment("關注Id");
+            entity.Property(e => e.CourseId).HasComment("關注的課程");
+            entity.Property(e => e.FollowerId).HasComment("送出關注的人");
+
+            entity.HasOne(d => d.Course).WithMany(p => p.WatchLists)
+                .HasForeignKey(d => d.CourseId)
+                .HasConstraintName("FK_WatchLists_Courses");
+
+            entity.HasOne(d => d.WatchListNavigation).WithOne(p => p.WatchList)
+                .HasForeignKey<WatchList>(d => d.WatchListId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WatchLists_WatchLists");
         });
 
         modelBuilder.Entity<WorkExperience>(entity =>
@@ -774,220 +792,107 @@ public partial class TalkingTopiaContext : DbContext
 
         #region 假資料內容
         modelBuilder.Entity<Nation>().HasData(
-        new Nation { NationId = 1, NationName = "台灣", FlagImage = "~/image/flag_imgs/taiwan_flag.jpg" },
-        new Nation { NationId = 2, NationName = "日本", FlagImage = "~/image/flag_imgs/japan_flag.png" },
-        new Nation { NationId = 3, NationName = "美國", FlagImage = "~/image/flag_imgs/us_flag.png" }
+    new Nation { NationId = 1, NationName = "Taiwan", FlagImage = "https://flagcdn.com/w320/tw.png" },
+    new Nation { NationId = 2, NationName = "Japan", FlagImage = "https://flagcdn.com/w320/jp.png" },
+    new Nation { NationId = 3, NationName = "South Korea", FlagImage = "https://flagcdn.com/w320/kr.png" },
+    new Nation { NationId = 4, NationName = "United States", FlagImage = "https://flagcdn.com/w320/us.png" },
+    new Nation { NationId = 5, NationName = "Germany", FlagImage = "https://flagcdn.com/w320/de.png" },
+    new Nation { NationId = 6, NationName = "France", FlagImage = "https://flagcdn.com/w320/fr.png" },
+    new Nation { NationId = 7, NationName = "Spain", FlagImage = "https://flagcdn.com/w320/es.png" },
+    new Nation { NationId = 8, NationName = "United Kingdom", FlagImage = "https://flagcdn.com/w320/gb.png" },
+    new Nation { NationId = 9, NationName = "Canada", FlagImage = "https://flagcdn.com/w320/ca.png" },
+    new Nation { NationId = 10, NationName = "India", FlagImage = "https://flagcdn.com/w320/in.png" }
 );
         modelBuilder.Entity<Education>().HasData(
-    new Education { EducationId = 1, SchoolName = "台灣大學", StudyStartYear = 2010, StudyEndYear = 2014, DepartmentName = "資訊工程", Cdate = DateTime.Now, Udate = DateTime.Now },
-    new Education { EducationId = 2, SchoolName = "東京大學", StudyStartYear = 2012, StudyEndYear = 2016, DepartmentName = "數學系", Cdate = DateTime.Now, Udate = DateTime.Now },
-    new Education { EducationId = 3, SchoolName = "哈佛大學", StudyStartYear = 2015, StudyEndYear = 2019, DepartmentName = "經濟系", Cdate = DateTime.Now, Udate = DateTime.Now }
+    new Education { EducationId = 1, SchoolName = "National Taiwan University", StudyStartYear = 2010, StudyEndYear = 2014, DepartmentName = "Computer Science", Cdate = DateTime.Now },
+    new Education { EducationId = 2, SchoolName = "Kyoto University", StudyStartYear = 2012, StudyEndYear = 2016, DepartmentName = "Economics", Cdate = DateTime.Now },
+    new Education { EducationId = 3, SchoolName = "Seoul National University", StudyStartYear = 2011, StudyEndYear = 2015, DepartmentName = "Engineering", Cdate = DateTime.Now },
+    new Education { EducationId = 4, SchoolName = "Harvard University", StudyStartYear = 2008, StudyEndYear = 2012, DepartmentName = "Law", Cdate = DateTime.Now },
+    new Education { EducationId = 5, SchoolName = "Stanford University", StudyStartYear = 2009, StudyEndYear = 2013, DepartmentName = "Business", Cdate = DateTime.Now },
+    new Education { EducationId = 6, SchoolName = "University of Oxford", StudyStartYear = 2007, StudyEndYear = 2011, DepartmentName = "Philosophy", Cdate = DateTime.Now },
+    new Education { EducationId = 7, SchoolName = "University of Cambridge", StudyStartYear = 2006, StudyEndYear = 2010, DepartmentName = "Mathematics", Cdate = DateTime.Now },
+    new Education { EducationId = 8, SchoolName = "Massachusetts Institute of Technology", StudyStartYear = 2013, StudyEndYear = 2017, DepartmentName = "Physics", Cdate = DateTime.Now },
+    new Education { EducationId = 9, SchoolName = "University of California, Berkeley", StudyStartYear = 2010, StudyEndYear = 2014, DepartmentName = "Chemistry", Cdate = DateTime.Now },
+    new Education { EducationId = 10, SchoolName = "University of Toronto", StudyStartYear = 2012, StudyEndYear = 2016, DepartmentName = "Biology", Cdate = DateTime.Now }
 );
+
 
         modelBuilder.Entity<Member>().HasData(
-    new Member
-    {
-        MemberId = 1,
-        HeadShotImage = "xiaoming.jpg",
-        NationId = 1,
-        IsVerifiedTutor = true,
-        FirstName = "小明",
-        LastName = "王",
-        Password = "hashedpassword1",
-        Email = "xiaoming@example.com",
-        Nickname = "明哥",
-        Phone = "0912345678",
-        Birthday = new DateTime(1990, 5, 20),
-        Gender = 1,
-        NativeLanguage = "中文",
-        SpokenLanguage = "英文",
-        BankCode = "123",
-        BankAccount = "12345678",
-        EducationId = 1,
-        TutorIntro = "專業C#講師",
-        Account = "xiaoming_account",
-        AccountType = 1,
-        Cdate = DateTime.Now,
-        Udate = DateTime.Now,
-        IsTutor = true
-    },
-    new Member
-    {
-        MemberId = 2,
-        HeadShotImage = "ken.jpg",
-        NationId = 2,
-        IsVerifiedTutor = false,
-        FirstName = "健",
-        LastName = "佐藤",
-        Password = "hashedpassword2",
-        Email = "ken@example.com",
-        Nickname = "健哥",
-        Phone = "0800123456",
-        Birthday = new DateTime(1985, 8, 15),
-        Gender = 1,
-        NativeLanguage = "日語",
-        SpokenLanguage = "中文",
-        BankCode = "456",
-        BankAccount = "87654321",
-        EducationId = 2,
-        TutorIntro = "日語教學專家",
-        Account = "ken_account",
-        AccountType = 2,
-        Cdate = DateTime.Now,
-        Udate = DateTime.Now,
-        IsTutor = false
-    },
-    new Member
-    {
-        MemberId = 3,
-        HeadShotImage = "john_doe.jpg",
-        NationId = 3,
-        IsVerifiedTutor = true,
-        FirstName = "John",
-        LastName = "Doe",
-        Password = "hashedpassword3",
-        Email = "john@example.com",
-        Nickname = "Johnny",
-        Phone = "0700123456",
-        Birthday = new DateTime(1992, 11, 30),
-        Gender = 1,
-        NativeLanguage = "英文",
-        SpokenLanguage = "西班牙語",
-        BankCode = "789",
-        BankAccount = "98765432",
-        EducationId = 3,
-        TutorIntro = "資深英語導師",
-        Account = "john_doe_account",
-        AccountType = 1,
-        Cdate = DateTime.Now,
-        Udate = DateTime.Now,
-        IsTutor = true
-    },
-    new Member
-    {
-        MemberId = 4,
-        HeadShotImage = "~/image/tutor_headshot_imgs/tutor_demo_jp_001.webp",
-        NationId = 2,
-        IsVerifiedTutor = true,
-        FirstName = "Akimo",
-        LastName = "Sato",
-        Password = "hashedpassword4",
-        Email = "akimo@example.com",
-        Nickname = "Akimo",
-        Phone = "0711111111",
-        Birthday = new DateTime(1990, 7, 7),
-        Gender = 0,
-        NativeLanguage = "日文",
-        SpokenLanguage = "日文",
-        BankCode = "700",
-        BankAccount = "98765432",
-        EducationId = 3,
-        TutorIntro = "こんにちは！👋 私は Akimoです。生まれも育ちも日本で、日本語を教えることに情熱を持っています。🇯🇵 私は大学で日本語教育を専攻し、修士課程を修了後、さまざまな学校や語学機関で7年間教鞭を執ってきました。📚 これまでに、世界中の多くの学生たちに日本語の魅力を伝え、彼らが日本語能力試験に合格し、仕事や日常生活で日本語を自由に使えるようにサポートしてきました。🎓\r\n\r\n私は、生徒一人ひとりの個性を大切にし、それぞれの目標に応じた最適な学習プランを提供します。🎯 私の授業では、単なる文法や単語の暗記だけでなく、実際に使える日本語を身につけることに重点を置いています。具体的な場面を想定した会話練習や、文化についてのディスカッションを通じて、言葉の背景にある日本の文化や価値観も理解していただけるよう努めています。🎌\r\n\r\n私の目標は、皆さんが日本語を学ぶ楽しさを実感し、自信を持って日本語を使えるようになることです。💪 一緒に日本語の世界を探求し、新しい可能性を広げていきましょう！🚀 お会いできるのを楽しみにしています。😊",
-        Account = "akimo_account",
-        AccountType = 1,
-        Cdate = DateTime.Now,
-        Udate = DateTime.Now,
-        IsTutor = true
-    },
-    new Member
-    {
-        MemberId = 5,
-        HeadShotImage = "~/image/tutor_headshot_imgs/tutor_demo_tw_001.webp",
-        NationId = 1,
-        IsVerifiedTutor = false,
-        FirstName = "大衛",
-        LastName = "李",
-        Password = "hashedpassword5",
-        Email = "david@example.com",
-        Nickname = "David",
-        Phone = "0700222454",
-        Birthday = new DateTime(1993, 11, 5),
-        Gender = 1,
-        NativeLanguage = "英文",
-        SpokenLanguage = "英文 中文",
-        BankCode = "789",
-        BankAccount = "98765432",
-        EducationId = 3,
-        TutorIntro = "嗨！我是 👩‍🏫 李老師，擁有 10 年的教學經驗！📚\r\n\r\n🎓 我持有 英文教師證 的證書，並且擁有多次國際英語教學的實戰經驗。對於不同年齡層的學生，我都有教學的方法與技巧，尤其擅長讓學習變得有趣且富有成效。🌈\r\n\r\n在這堂課中，我會根據學生的需求和程度量身定製教學計畫，讓每一位學生都能在輕鬆的氛圍中學習。課程的設計旨在建立自信心，讓你能夠在日常生活中自如地使用英語，無論是與朋友交談、旅遊還是商務會議中，都能夠流利溝通。🚀",
-        Account = "david_account",
-        AccountType = 1,
-        Cdate = DateTime.Now,
-        Udate = DateTime.Now,
-        IsTutor = true
-    }
+    new Member { MemberId = 1, HeadShotImage = "https://randomuser.me/api/portraits/men/1.jpg", NationId = 1, IsVerifiedTutor = true, FirstName = "John", LastName = "Doe", Password = "password1", Email = "john.doe@example.com", Nickname = "JohnD", Phone = "123456789", Birthday = DateTime.Now.AddYears(-30), Gender = 1, NativeLanguage = "English", SpokenLanguage = "English", BankCode = "001", BankAccount = "1234567890", EducationId = 1, TutorIntro = "Experienced English tutor", Account = "john_doe", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 2, HeadShotImage = "https://randomuser.me/api/portraits/women/2.jpg", NationId = 2, IsVerifiedTutor = false, FirstName = "Jane", LastName = "Smith", Password = "password2", Email = "jane.smith@example.com", Nickname = "JaneS", Phone = "987654321", Birthday = DateTime.Now.AddYears(-25), Gender = 2, NativeLanguage = "Japanese", SpokenLanguage = "Japanese", BankCode = "002", BankAccount = "2345678901", EducationId = 2, TutorIntro = "Japanese language specialist", Account = "jane_smith", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 3, HeadShotImage = "https://randomuser.me/api/portraits/men/3.jpg", NationId = 3, IsVerifiedTutor = true, FirstName = "Mark", LastName = "Brown", Password = "password3", Email = "mark.brown@example.com", Nickname = "MarkB", Phone = "123123123", Birthday = DateTime.Now.AddYears(-28), Gender = 1, NativeLanguage = "Korean", SpokenLanguage = "Korean, English", BankCode = "003", BankAccount = "3456789012", EducationId = 3, TutorIntro = "Korean language expert", Account = "mark_brown", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 4, HeadShotImage = "https://randomuser.me/api/portraits/men/4.jpg", NationId = 4, IsVerifiedTutor = true, FirstName = "Chris", LastName = "Taylor", Password = "password4", Email = "chris.taylor@example.com", Nickname = "ChrisT", Phone = "444555666", Birthday = DateTime.Now.AddYears(-33), Gender = 1, NativeLanguage = "German", SpokenLanguage = "German, English", BankCode = "004", BankAccount = "4567890123", EducationId = 4, TutorIntro = "German language expert", Account = "chris_taylor", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 5, HeadShotImage = "https://randomuser.me/api/portraits/women/5.jpg", NationId = 5, IsVerifiedTutor = false, FirstName = "Samantha", LastName = "White", Password = "password5", Email = "samantha.white@example.com", Nickname = "SamW", Phone = "555666777", Birthday = DateTime.Now.AddYears(-27), Gender = 2, NativeLanguage = "French", SpokenLanguage = "French, English", BankCode = "005", BankAccount = "5678901234", EducationId = 5, TutorIntro = "French language expert", Account = "sam_white", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 6, HeadShotImage = "https://randomuser.me/api/portraits/men/6.jpg", NationId = 6, IsVerifiedTutor = true, FirstName = "Paul", LastName = "Walker", Password = "password6", Email = "paul.walker@example.com", Nickname = "PaulW", Phone = "666777888", Birthday = DateTime.Now.AddYears(-32), Gender = 1, NativeLanguage = "Spanish", SpokenLanguage = "Spanish, English", BankCode = "006", BankAccount = "6789012345", EducationId = 6, TutorIntro = "Spanish language expert", Account = "paul_walker", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 7, HeadShotImage = "https://randomuser.me/api/portraits/women/7.jpg", NationId = 7, IsVerifiedTutor = false, FirstName = "Laura", LastName = "Martin", Password = "password7", Email = "laura.martin@example.com", Nickname = "LauraM", Phone = "777888999", Birthday = DateTime.Now.AddYears(-29), Gender = 2, NativeLanguage = "Chinese", SpokenLanguage = "Chinese, English", BankCode = "007", BankAccount = "7890123456", EducationId = 7, TutorIntro = "Chinese language expert", Account = "laura_martin", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 8, HeadShotImage = "https://randomuser.me/api/portraits/men/8.jpg", NationId = 8, IsVerifiedTutor = true, FirstName = "David", LastName = "Jones", Password = "password8", Email = "david.jones@example.com", Nickname = "DavidJ", Phone = "888999000", Birthday = DateTime.Now.AddYears(-31), Gender = 1, NativeLanguage = "Russian", SpokenLanguage = "Russian, English", BankCode = "008", BankAccount = "8901234567", EducationId = 8, TutorIntro = "Russian language expert", Account = "david_jones", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 9, HeadShotImage = "https://randomuser.me/api/portraits/women/9.jpg", NationId = 9, IsVerifiedTutor = false, FirstName = "Emily", LastName = "Davis", Password = "password9", Email = "emily.davis@example.com", Nickname = "EmilyD", Phone = "999000111", Birthday = DateTime.Now.AddYears(-26), Gender = 2, NativeLanguage = "Italian", SpokenLanguage = "Italian, English", BankCode = "009", BankAccount = "9012345678", EducationId = 9, TutorIntro = "Italian language expert", Account = "emily_davis", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 10, HeadShotImage = "https://randomuser.me/api/portraits/men/10.jpg", NationId = 10, IsVerifiedTutor = true, FirstName = "Michael", LastName = "Wilson", Password = "password10", Email = "michael.wilson@example.com", Nickname = "MichaelW", Phone = "000111222", Birthday = DateTime.Now.AddYears(-34), Gender = 1, NativeLanguage = "Portuguese", SpokenLanguage = "Portuguese, English", BankCode = "010", BankAccount = "0123456789", EducationId = 10, TutorIntro = "Portuguese language expert", Account = "michael_wilson", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+     new Member { MemberId = 11, HeadShotImage = "https://randomuser.me/api/portraits/men/11.jpg", NationId = 1, IsVerifiedTutor = true, FirstName = "Carlos", LastName = "Miller", Password = "password11", Email = "carlos.miller@example.com", Nickname = "CarlosM", Phone = "101010101", Birthday = DateTime.Now.AddYears(-29), Gender = 1, NativeLanguage = "English", SpokenLanguage = "English, Spanish", BankCode = "011", BankAccount = "3456781234", EducationId = 1, TutorIntro = "Experienced tutor in English and Spanish", Account = "carlos_miller", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 12, HeadShotImage = "https://randomuser.me/api/portraits/women/12.jpg", NationId = 2, IsVerifiedTutor = false, FirstName = "Olivia", LastName = "Brown", Password = "password12", Email = "olivia.brown@example.com", Nickname = "OliviaB", Phone = "202020202", Birthday = DateTime.Now.AddYears(-24), Gender = 2, NativeLanguage = "Japanese", SpokenLanguage = "Japanese, English", BankCode = "012", BankAccount = "4567892345", EducationId = 2, TutorIntro = "Expert in Japanese language", Account = "olivia_brown", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 13, HeadShotImage = "https://randomuser.me/api/portraits/men/13.jpg", NationId = 3, IsVerifiedTutor = true, FirstName = "James", LastName = "Johnson", Password = "password13", Email = "james.johnson@example.com", Nickname = "JamesJ", Phone = "303030303", Birthday = DateTime.Now.AddYears(-35), Gender = 1, NativeLanguage = "Korean", SpokenLanguage = "Korean, English", BankCode = "013", BankAccount = "5678913456", EducationId = 3, TutorIntro = "Korean language specialist", Account = "james_johnson", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 14, HeadShotImage = "https://randomuser.me/api/portraits/women/14.jpg", NationId = 4, IsVerifiedTutor = false, FirstName = "Emma", LastName = "Garcia", Password = "password14", Email = "emma.garcia@example.com", Nickname = "EmmaG", Phone = "404040404", Birthday = DateTime.Now.AddYears(-22), Gender = 2, NativeLanguage = "German", SpokenLanguage = "German, English", BankCode = "014", BankAccount = "6789124567", EducationId = 4, TutorIntro = "Expert in German language", Account = "emma_garcia", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 15, HeadShotImage = "https://randomuser.me/api/portraits/men/15.jpg", NationId = 5, IsVerifiedTutor = true, FirstName = "Robert", LastName = "Martinez", Password = "password15", Email = "robert.martinez@example.com", Nickname = "RobertM", Phone = "505050505", Birthday = DateTime.Now.AddYears(-26), Gender = 1, NativeLanguage = "French", SpokenLanguage = "French, English", BankCode = "015", BankAccount = "7891235678", EducationId = 5, TutorIntro = "French language specialist", Account = "robert_martinez", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 16, HeadShotImage = "https://randomuser.me/api/portraits/women/16.jpg", NationId = 6, IsVerifiedTutor = false, FirstName = "Sophia", LastName = "Rodriguez", Password = "password16", Email = "sophia.rodriguez@example.com", Nickname = "SophiaR", Phone = "606060606", Birthday = DateTime.Now.AddYears(-21), Gender = 2, NativeLanguage = "Spanish", SpokenLanguage = "Spanish, English", BankCode = "016", BankAccount = "8902346789", EducationId = 6, TutorIntro = "Spanish language expert", Account = "sophia_rodriguez", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 17, HeadShotImage = "https://randomuser.me/api/portraits/men/17.jpg", NationId = 7, IsVerifiedTutor = true, FirstName = "Liam", LastName = "Hernandez", Password = "password17", Email = "liam.hernandez@example.com", Nickname = "LiamH", Phone = "707070707", Birthday = DateTime.Now.AddYears(-33), Gender = 1, NativeLanguage = "Chinese", SpokenLanguage = "Chinese, English", BankCode = "017", BankAccount = "9013457890", EducationId = 7, TutorIntro = "Chinese language expert", Account = "liam_hernandez", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 18, HeadShotImage = "https://randomuser.me/api/portraits/women/18.jpg", NationId = 8, IsVerifiedTutor = false, FirstName = "Isabella", LastName = "Lopez", Password = "password18", Email = "isabella.lopez@example.com", Nickname = "IsabellaL", Phone = "808080808", Birthday = DateTime.Now.AddYears(-20), Gender = 2, NativeLanguage = "Russian", SpokenLanguage = "Russian, English", BankCode = "018", BankAccount = "0123456789", EducationId = 8, TutorIntro = "Russian language expert", Account = "isabella_lopez", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 19, HeadShotImage = "https://randomuser.me/api/portraits/men/19.jpg", NationId = 9, IsVerifiedTutor = true, FirstName = "Benjamin", LastName = "Gonzalez", Password = "password19", Email = "benjamin.gonzalez@example.com", Nickname = "BenG", Phone = "909090909", Birthday = DateTime.Now.AddYears(-28), Gender = 1, NativeLanguage = "Italian", SpokenLanguage = "Italian, English", BankCode = "019", BankAccount = "1234567890", EducationId = 9, TutorIntro = "Italian language expert", Account = "benjamin_gonzalez", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 20, HeadShotImage = "https://randomuser.me/api/portraits/women/20.jpg", NationId = 10, IsVerifiedTutor = false, FirstName = "Mia", LastName = "Wilson", Password = "password20", Email = "mia.wilson@example.com", Nickname = "MiaW", Phone = "1010101010", Birthday = DateTime.Now.AddYears(-27), Gender = 2, NativeLanguage = "Portuguese", SpokenLanguage = "Portuguese, English", BankCode = "020", BankAccount = "2345678901", EducationId = 10, TutorIntro = "Portuguese language expert", Account = "mia_wilson", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+     new Member { MemberId = 21, HeadShotImage = "https://randomuser.me/api/portraits/men/21.jpg", NationId = 1, IsVerifiedTutor = true, FirstName = "Daniel", LastName = "Anderson", Password = "password21", Email = "daniel.anderson@example.com", Nickname = "DanA", Phone = "111111111", Birthday = DateTime.Now.AddYears(-29), Gender = 1, NativeLanguage = "English", SpokenLanguage = "English, Spanish", BankCode = "021", BankAccount = "3456781234", EducationId = 1, TutorIntro = "Experienced tutor in English and Spanish", Account = "daniel_anderson", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 22, HeadShotImage = "https://randomuser.me/api/portraits/women/22.jpg", NationId = 2, IsVerifiedTutor = false, FirstName = "Ava", LastName = "Thomas", Password = "password22", Email = "ava.thomas@example.com", Nickname = "AvaT", Phone = "222222222", Birthday = DateTime.Now.AddYears(-24), Gender = 2, NativeLanguage = "Japanese", SpokenLanguage = "Japanese, English", BankCode = "022", BankAccount = "4567892345", EducationId = 2, TutorIntro = "Expert in Japanese language", Account = "ava_thomas", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 23, HeadShotImage = "https://randomuser.me/api/portraits/men/23.jpg", NationId = 3, IsVerifiedTutor = true, FirstName = "Matthew", LastName = "Jackson", Password = "password23", Email = "matthew.jackson@example.com", Nickname = "MattJ", Phone = "333333333", Birthday = DateTime.Now.AddYears(-35), Gender = 1, NativeLanguage = "Korean", SpokenLanguage = "Korean, English", BankCode = "023", BankAccount = "5678913456", EducationId = 3, TutorIntro = "Korean language specialist", Account = "matthew_jackson", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 24, HeadShotImage = "https://randomuser.me/api/portraits/women/24.jpg", NationId = 4, IsVerifiedTutor = false, FirstName = "Ella", LastName = "Harris", Password = "password24", Email = "ella.harris@example.com", Nickname = "EllaH", Phone = "444444444", Birthday = DateTime.Now.AddYears(-22), Gender = 2, NativeLanguage = "German", SpokenLanguage = "German, English", BankCode = "024", BankAccount = "6789124567", EducationId = 4, TutorIntro = "Expert in German language", Account = "ella_harris", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 25, HeadShotImage = "https://randomuser.me/api/portraits/men/25.jpg", NationId = 5, IsVerifiedTutor = true, FirstName = "Lucas", LastName = "Clark", Password = "password25", Email = "lucas.clark@example.com", Nickname = "LukeC", Phone = "555555555", Birthday = DateTime.Now.AddYears(-26), Gender = 1, NativeLanguage = "French", SpokenLanguage = "French, English", BankCode = "025", BankAccount = "7891235678", EducationId = 5, TutorIntro = "French language specialist", Account = "lucas_clark", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 26, HeadShotImage = "https://randomuser.me/api/portraits/women/26.jpg", NationId = 6, IsVerifiedTutor = false, FirstName = "Mia", LastName = "Lewis", Password = "password26", Email = "mia.lewis@example.com", Nickname = "MiaL", Phone = "666666666", Birthday = DateTime.Now.AddYears(-21), Gender = 2, NativeLanguage = "Spanish", SpokenLanguage = "Spanish, English", BankCode = "026", BankAccount = "8902346789", EducationId = 6, TutorIntro = "Spanish language expert", Account = "mia_lewis", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 27, HeadShotImage = "https://randomuser.me/api/portraits/men/27.jpg", NationId = 7, IsVerifiedTutor = true, FirstName = "Logan", LastName = "Young", Password = "password27", Email = "logan.young@example.com", Nickname = "LoganY", Phone = "777777777", Birthday = DateTime.Now.AddYears(-33), Gender = 1, NativeLanguage = "Chinese", SpokenLanguage = "Chinese, English", BankCode = "027", BankAccount = "9013457890", EducationId = 7, TutorIntro = "Chinese language expert", Account = "logan_young", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 28, HeadShotImage = "https://randomuser.me/api/portraits/women/28.jpg", NationId = 8, IsVerifiedTutor = false, FirstName = "Aria", LastName = "King", Password = "password28", Email = "aria.king@example.com", Nickname = "AriaK", Phone = "888888888", Birthday = DateTime.Now.AddYears(-20), Gender = 2, NativeLanguage = "Russian", SpokenLanguage = "Russian, English", BankCode = "028", BankAccount = "0123456789", EducationId = 8, TutorIntro = "Russian language expert", Account = "aria_king", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 29, HeadShotImage = "https://randomuser.me/api/portraits/men/29.jpg", NationId = 9, IsVerifiedTutor = true, FirstName = "Ethan", LastName = "Wright", Password = "password29", Email = "ethan.wright@example.com", Nickname = "EthanW", Phone = "999999999", Birthday = DateTime.Now.AddYears(-28), Gender = 1, NativeLanguage = "Italian", SpokenLanguage = "Italian, English", BankCode = "029", BankAccount = "1234567890", EducationId =9, TutorIntro = "Italian language expert", Account = "ethan_wright", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
+    new Member { MemberId = 30, HeadShotImage = "https://randomuser.me/api/portraits/women/30.jpg", NationId = 10, IsVerifiedTutor = false, FirstName = "Charlotte", LastName = "Hill", Password = "password30", Email = "charlotte.hill@example.com", Nickname = "CharlotteH", Phone = "1010101010", Birthday = DateTime.Now.AddYears(-27), Gender = 2, NativeLanguage = "Portuguese", SpokenLanguage = "Portuguese, English", BankCode = "030", BankAccount = "2345678901", EducationId = 10, TutorIntro = "Portuguese language expert", Account = "charlotte_hill", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true }
+
+
+
 );
-
-
         modelBuilder.Entity<Course>().HasData(
-        new Course
-        {
-            CourseId = 1,
-            CategoryId = 1,
-            SubjectId = 1,
-            TutorId = 1,
-            Title = "C# 入門",
-            SubTitle = "從零開始學習 C#",
-            TwentyFiveMinUnitPrice = 500,
-            FiftyMinUnitPrice = 900,
-            Description = "適合初學者的 C# 課程",
-            IsEnabled = true,
-            ThumbnailUrl = "csharp.jpg",
-            VideoUrl = "csharp_intro.mp4",
-            CoursesStatus = 1,
-            Cdate = DateTime.Now
-        },
-        new Course
-        {
-            CourseId = 2,
-            CategoryId = 2,
-            SubjectId = 2,
-            TutorId = 2,
-            Title = "日語 N5",
-            SubTitle = "基礎日語學習",
-            TwentyFiveMinUnitPrice = 400,
-            FiftyMinUnitPrice = 800,
-            Description = "日語入門課程",
-            IsEnabled = true,
-            ThumbnailUrl = "japanese.jpg",
-            VideoUrl = "japanese_intro.mp4",
-            CoursesStatus = 1,
-            Cdate = DateTime.Now
-        },
-        new Course
-        {
-            CourseId = 3,
-            CategoryId = 1,
-            SubjectId = 2,
-            TutorId = 4,
-            Title = "Akimo老師 🔥精通日語：掌握這門全球流行語言的鑰匙！",
-            SubTitle = "💡 從基礎到高階語法—全面提升你的日語能力！",
-            TwentyFiveMinUnitPrice = 560,
-            FiftyMinUnitPrice = 1088,
-            Description = "📅 隨時隨地進行日文學習，靈活安排時間，讓學習變得更自由！\r\n🗣️ 專屬一對一視訊教學，根據你的需求量身訂製課程內容！✨\r\n\r\n課程介紹文案：\r\n🌟 在全球化的今天，會一門外語是多麼重要！🌍 無論是工作、旅遊✈️還是單純的興趣，學習日文將為你開啟通往日本文化的大門！我們提供專業的線上日文家教，讓你隨時隨地都能學習日文📖，無需擔心地理限制和時間安排的困擾！透過我們的一對一教學，你可以根據自身的學習進度隨時提出問題，獲得即時回饋！💬\r\n\r\n🎥 透過高品質的視訊平台，專業的老師將與你進行一對一的互動，這樣不僅能建立更密切的師生關係\U0001f91d，也能確保每堂課都能充分關注你的學習進度和需求。這是在傳統教室中難以實現的優勢！我們的老師將幫助你克服任何學習上的障礙，並給予鼓勵💪，讓學習不再孤單。\r\n\r\n🎳 無論你是語言學習的新手，還是想要進一步提升日文能力的學生，我們的課程都可以根據你的基礎和目標來調整！📈無論是學習日常對話、商務日文📊還是準備JLPT考試🚀，我們都能提供最合適的學習計畫！從發音基礎到語法結構，每一個細節都不會被忽略。\r\n\r\n📚 我們的教師將利用各種多媒體教材📹和互動練習🎮，讓你愉快地學習日文，這包括視聽材料、遊戲、角色扮演及小組討論等多種形式，提升你的聽、說、讀、寫能力。即使是最枯燥的文法📜，在這種輕鬆的氛圍下也變得趣味盎然！\r\n\r\n🌈 除了語言課程，我們的教師將額外分享豐富的日本文化🇯🇵，包括日本的習俗、音樂🎶、美食🍱等，讓你在學習日文的同時，也能欣賞到日本的美好文化。每一堂課都會為你帶來全新的文化體驗😍，讓你不僅是學習文字，更是了解背後的故事！\r\n\r\n🍣 課程中不僅僅是口語練習，老師還將分享正宗的日本料理🍜食譜，幫助你在學習語言的同時，學會一些日本美食的製作！👩‍🍳 你會驚喜於食物背後的文化和歷史，這樣的學習過程使得每堂課都更生動且充滿趣味。\r\n\r\n🏆 現在就加入我們的線上日文家教，設定你自己的學習目標🎯，並開始輕鬆學習！不再只是枯燥的背單字，讓我們用互動式教學讓每次課堂都成為你期待的學習時光！⏰ 在老師的指導下，你很快將能日常自信地用日文交流！\r\n\r\n🎉 無論是準備考試📚、赴日旅行✈️或職場交流，專屬的老師會全力支持你，幫助你達成目標！報名後，無需花費時間尋找合適的教材📦，我們將為你精心準備學習資源，讓你快速進步！🚀 快來預約你的第一堂課，開始放飛你的日文夢想，開啟一段全新的學習旅程吧！🌟",
-            IsEnabled = true,
-            ThumbnailUrl = "~/image/thumb_nails/thumbnail_demo_jp_001.webp",
-            VideoUrl = "https://www.youtube.com/embed/MAhD37a7AlE",
-            CoursesStatus = 1,
-            Cdate = DateTime.Now
-        },
-        new Course
-        {
-            CourseId = 4,
-            CategoryId = 1,
-            SubjectId = 1,
-            TutorId = 5,
-            Title = "🌟 英語口說提升班：讓你自信流利講英語的最佳選擇",
-            SubTitle = "✨ 從零開始，到流利對話的輕鬆之旅！",
-            TwentyFiveMinUnitPrice = 700,
-            FiftyMinUnitPrice = 1100,
-            Description = "課程亮點\r\n👶 無論你是剛開始學習英語的初學者，還是想進一步提升口說能力的中級者，我都有合適的教材與方法，讓你逐步克服語言學習的恐懼。\r\n💪 我會引導你在小組討論中與同學練習，透過彼此交流增強口語表達能力。藉助故事、角色扮演以及多媒體資源，我們將一起深入了解英語的美妙！\r\n\r\n自我介紹\r\n❤️ 我熱愛教育，並堅信教育的力量。看到學生從一開始的羞怯逐漸轉變為自信的表達者，這讓我感到無比的成就感。\r\n🎭 在課堂上，我將使用多樣化的教學方法，透過互動遊戲和小組活動，讓你們在享受學習的過程中輕鬆掌握英語。\r\n🌟 我相信，每位學生都是獨一無二的，所以我會耐心地了解每個人的學習需求，並提供針對性的建議和指導。\r\n\r\n課程內容\r\n💬 課程涵蓋日常對話、商業英語、旅遊英語等多個主題，無論你的學習目的為何，都能找到適合的學習內容。\r\n🎉 我會設計有趣的實境練習，讓你能在模擬情境中實踐所學，並且定期進行小組演講和討論，讓你能夠在實際對話中應用所學的知識。\r\n📚 課後，我會提供額外的學習資源和練習題，幫助你持續進步，如影片推薦、English podcasts、以及值得一試的線上學習平台。\r\n\r\n新生福利\r\n🎁 加入我們的課程後，你將獲得一份專屬學習計畫，這份計畫將幫助你規劃和追蹤自己的學習進度，讓你時刻在正確的方向前進。\r\n🌈 我會定期提供語言測試和反饋，確保每位學生都能清楚自己的進步狀況，並持續調整學習策略。\r\n\U0001f973 特別的學習小禮物也會隨著課程頒發，如實用的英語學習工具和資源，讓你的學習之路充滿驚喜！\r\n\r\n期待在課堂上與你見面，一同展開這段精彩的英語學習旅程吧！讓我們一起成為英語口說的高手！👋",
-            IsEnabled = true,
-            ThumbnailUrl = "~/image/thumb_nails/thumbnail_demo_tw_001.webp",
-            VideoUrl = "https://www.youtube.com/embed/MAhD37a7AlE",
-            CoursesStatus = 1,
-            Cdate = DateTime.Now
-        }
-);
+ new Course { CourseId = 1, CategoryId = 1, SubjectId = 1, TutorId = 1, Title = "基礎英文", SubTitle = "從零開始學英文", TwentyFiveMinUnitPrice = 50m, FiftyMinUnitPrice = 90m, Description = "適合初學者的英文課程", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/english.jpg", VideoUrl = "https://example.com/courses/english_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 2, CategoryId = 1, SubjectId = 2, TutorId = 2, Title = "日語入門", SubTitle = "日語學習的基礎", TwentyFiveMinUnitPrice = 60m, FiftyMinUnitPrice = 100m, Description = "基礎日語語法和詞彙", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/japanese.jpg", VideoUrl = "https://example.com/courses/japanese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 3, CategoryId = 1, SubjectId = 3, TutorId = 3, Title = "中文語法", SubTitle = "掌握中文語法", TwentyFiveMinUnitPrice = 70m, FiftyMinUnitPrice = 120m, Description = "全面學習中文語法", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/chinese.jpg", VideoUrl = "https://example.com/courses/chinese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 4, CategoryId = 1, SubjectId = 4, TutorId = 4, Title = "德語會話", SubTitle = "學習德語會話技巧", TwentyFiveMinUnitPrice = 65m, FiftyMinUnitPrice = 110m, Description = "提高德語口語能力", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/german.jpg", VideoUrl = "https://example.com/courses/german_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 5, CategoryId = 1, SubjectId = 5, TutorId = 5, Title = "法語閱讀", SubTitle = "學習法語閱讀理解", TwentyFiveMinUnitPrice = 55m, FiftyMinUnitPrice = 95m, Description = "提升法語閱讀能力", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/french.jpg", VideoUrl = "https://example.com/courses/french_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 6, CategoryId = 1, SubjectId = 6, TutorId = 6, Title = "西班牙語寫作", SubTitle = "掌握西班牙語寫作技巧", TwentyFiveMinUnitPrice = 60m, FiftyMinUnitPrice = 100m, Description = "提高西班牙語寫作能力", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/spanish.jpg", VideoUrl = "https://example.com/courses/spanish_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 7, CategoryId = 2, SubjectId = 7, TutorId = 7, Title = "HTML/CSS 基礎", SubTitle = "學習網頁開發基礎", TwentyFiveMinUnitPrice = 75m, FiftyMinUnitPrice = 125m, Description = "從頭開始學習HTML和CSS", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/html_css.jpg", VideoUrl = "https://example.com/courses/html_css_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 8, CategoryId = 2, SubjectId = 8, TutorId = 8, Title = "JavaScript 編程", SubTitle = "JavaScript 編程基礎", TwentyFiveMinUnitPrice = 85m, FiftyMinUnitPrice = 140m, Description = "學習JavaScript語法和應用", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/javascript.jpg", VideoUrl = "https://example.com/courses/javascript_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 9, CategoryId = 2, SubjectId = 9, TutorId = 9, Title = "C# 進階", SubTitle = "掌握C#的進階技巧", TwentyFiveMinUnitPrice = 90m, FiftyMinUnitPrice = 150m, Description = "深入學習C#編程", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/csharp.jpg", VideoUrl = "https://example.com/courses/csharp_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 10, CategoryId = 2, SubjectId = 10, TutorId = 10, Title = "SQL 資料庫", SubTitle = "學習SQL語法和資料庫操作", TwentyFiveMinUnitPrice = 80m, FiftyMinUnitPrice = 130m, Description = "從零開始學習SQL", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/sql.jpg", VideoUrl = "https://example.com/courses/sql_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 11, CategoryId = 2, SubjectId = 11, TutorId = 11, Title = "Python 入門", SubTitle = "掌握Python的基礎知識", TwentyFiveMinUnitPrice = 85m, FiftyMinUnitPrice = 140m, Description = "從頭開始學習Python編程", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/python.jpg", VideoUrl = "https://example.com/courses/python_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 12, CategoryId = 2, SubjectId = 12, TutorId = 12, Title = "Java 基礎", SubTitle = "Java編程的入門課程", TwentyFiveMinUnitPrice = 90m, FiftyMinUnitPrice = 150m, Description = "從零開始學習Java語言", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/java.jpg", VideoUrl = "https://example.com/courses/java_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 13, CategoryId = 3, SubjectId = 13, TutorId = 13, Title = "數學基礎", SubTitle = "學習數學的基本概念", TwentyFiveMinUnitPrice = 60m, FiftyMinUnitPrice = 100m, Description = "提升數學基礎知識", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/math.jpg", VideoUrl = "https://example.com/courses/math_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 14, CategoryId = 3, SubjectId = 14, TutorId = 14, Title = "物理入門", SubTitle = "學習物理的基本理論", TwentyFiveMinUnitPrice = 65m, FiftyMinUnitPrice = 110m, Description = "物理學基礎知識", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/physics.jpg", VideoUrl = "https://example.com/courses/physics_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 15, CategoryId = 3, SubjectId = 15, TutorId = 15, Title = "化學基礎", SubTitle = "學習化學的基本概念", TwentyFiveMinUnitPrice = 70m, FiftyMinUnitPrice = 120m, Description = "全面了解化學基礎知識", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/chemistry.jpg", VideoUrl = "https://example.com/courses/chemistry_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 16, CategoryId = 3, SubjectId = 16, TutorId = 16, Title = "歷史研究", SubTitle = "深入了解歷史事件", TwentyFiveMinUnitPrice = 75m, FiftyMinUnitPrice = 125m, Description = "歷史事件和背景的深入分析", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/history.jpg", VideoUrl = "https://example.com/courses/history_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 17, CategoryId = 3, SubjectId = 17, TutorId = 17, Title = "地理概論", SubTitle = "學習地理的基本知識", TwentyFiveMinUnitPrice = 65m, FiftyMinUnitPrice = 110m, Description = "全面了解地理學的基礎", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/geography.jpg", VideoUrl = "https://example.com/courses/geography_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 18, CategoryId = 3, SubjectId = 18, TutorId = 18, Title = "生物學基礎", SubTitle = "深入理解生物學", TwentyFiveMinUnitPrice = 70m, FiftyMinUnitPrice = 120m, Description = "深入學習生物學的基本概念", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/biology.jpg", VideoUrl = "https://example.com/courses/biology_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 19, CategoryId = 1, SubjectId = 1, TutorId = 19, Title = "高級英文", SubTitle = "提升英語會話能力", TwentyFiveMinUnitPrice = 100m, FiftyMinUnitPrice = 180m, Description = "深入練習英語會話和詞彙", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_english.jpg", VideoUrl = "https://example.com/courses/advanced_english_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 20, CategoryId = 1, SubjectId = 2, TutorId = 20, Title = "進階日語", SubTitle = "提升日語語法和會話技巧", TwentyFiveMinUnitPrice = 110m, FiftyMinUnitPrice = 200m, Description = "提升日語會話和語法能力", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_japanese.jpg", VideoUrl = "https://example.com/courses/advanced_japanese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 21, CategoryId = 1, SubjectId = 3, TutorId = 21, Title = "高級中文", SubTitle = "提升中文語法和詞彙", TwentyFiveMinUnitPrice = 120m, FiftyMinUnitPrice = 220m, Description = "深入學習中文語法和詞彙", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_chinese.jpg", VideoUrl = "https://example.com/courses/advanced_chinese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 22, CategoryId = 1, SubjectId = 4, TutorId = 22, Title = "高級德語", SubTitle = "提升德語會話技巧", TwentyFiveMinUnitPrice = 130m, FiftyMinUnitPrice = 240m, Description = "德語會話和詞彙的深入練習", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_german.jpg", VideoUrl = "https://example.com/courses/advanced_german_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 23, CategoryId = 1, SubjectId = 5, TutorId = 23, Title = "高級法語", SubTitle = "提升法語閱讀和寫作能力", TwentyFiveMinUnitPrice = 125m, FiftyMinUnitPrice = 230m, Description = "法語閱讀和寫作的深入研究", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_french.jpg", VideoUrl = "https://example.com/courses/advanced_french_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 24, CategoryId = 1, SubjectId = 6, TutorId = 24, Title = "高級西班牙語", SubTitle = "提升西班牙語寫作和語法", TwentyFiveMinUnitPrice = 135m, FiftyMinUnitPrice = 250m, Description = "西班牙語寫作和語法的深入練習", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_spanish.jpg", VideoUrl = "https://example.com/courses/advanced_spanish_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 25, CategoryId = 2, SubjectId = 7, TutorId = 25, Title = "高級HTML/CSS", SubTitle = "深入學習HTML和CSS技術", TwentyFiveMinUnitPrice = 150m, FiftyMinUnitPrice = 270m, Description = "高級網頁設計和開發技術", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_html_css.jpg", VideoUrl = "https://example.com/courses/advanced_html_css_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 26, CategoryId = 2, SubjectId = 8, TutorId = 26, Title = "高級JavaScript", SubTitle = "深入掌握JavaScript編程", TwentyFiveMinUnitPrice = 160m, FiftyMinUnitPrice = 280m, Description = "JavaScript編程的高級應用和技巧", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_javascript.jpg", VideoUrl = "https://example.com/courses/advanced_javascript_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 27, CategoryId = 2, SubjectId = 9, TutorId = 27, Title = "C# 高級應用", SubTitle = "學習C#的高級應用技術", TwentyFiveMinUnitPrice = 170m, FiftyMinUnitPrice = 300m, Description = "深入掌握C#編程的高級技術", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_csharp.jpg", VideoUrl = "https://example.com/courses/advanced_csharp_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 28, CategoryId = 2, SubjectId = 10, TutorId = 28, Title = "SQL 高級資料庫操作", SubTitle = "深入學習SQL資料庫管理", TwentyFiveMinUnitPrice = 155m, FiftyMinUnitPrice = 275m, Description = "SQL資料庫管理和優化的高級技術", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_sql.jpg", VideoUrl = "https://example.com/courses/advanced_sql_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 29, CategoryId = 2, SubjectId = 11, TutorId = 29, Title = "Python 高級應用", SubTitle = "深入學習Python的高級應用", TwentyFiveMinUnitPrice = 165m, FiftyMinUnitPrice = 290m, Description = "Python編程的高級應用和數據處理", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_python.jpg", VideoUrl = "https://example.com/courses/advanced_python_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 30, CategoryId = 2, SubjectId = 12, TutorId = 30, Title = "Java 高級應用", SubTitle = "深入學習Java的高級應用技術", TwentyFiveMinUnitPrice = 175m, FiftyMinUnitPrice = 310m, Description = "Java編程的高級技術和應用", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_java.jpg", VideoUrl = "https://example.com/courses/advanced_java_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 31, CategoryId = 3, SubjectId = 13, TutorId = 31, Title = "高等數學", SubTitle = "深入學習數學的高級概念", TwentyFiveMinUnitPrice = 140m, FiftyMinUnitPrice = 250m, Description = "高等數學理論和應用", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_math.jpg", VideoUrl = "https://example.com/courses/advanced_math_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 32, CategoryId = 3, SubjectId = 14, TutorId = 32, Title = "高等物理", SubTitle = "深入理解物理學的高級理論", TwentyFiveMinUnitPrice = 145m, FiftyMinUnitPrice = 255m, Description = "物理學的高級理論和應用", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_physics.jpg", VideoUrl = "https://example.com/courses/advanced_physics_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 33, CategoryId = 3, SubjectId = 15, TutorId = 33, Title = "高等化學", SubTitle = "深入理解化學的高級理論", TwentyFiveMinUnitPrice = 150m, FiftyMinUnitPrice = 260m, Description = "化學的高級理論和應用", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_chemistry.jpg", VideoUrl = "https://example.com/courses/advanced_chemistry_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 34, CategoryId = 3, SubjectId = 16, TutorId = 34, Title = "高等歷史研究", SubTitle = "深入分析歷史事件和背景", TwentyFiveMinUnitPrice = 160m, FiftyMinUnitPrice = 275m, Description = "歷史研究的高級技術和方法", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_history.jpg", VideoUrl = "https://example.com/courses/advanced_history_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 35, CategoryId = 3, SubjectId = 17, TutorId = 35, Title = "高等地理學", SubTitle = "深入理解地理學的高級概念", TwentyFiveMinUnitPrice = 150m, FiftyMinUnitPrice = 265m, Description = "地理學的高級理論和應用", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_geography.jpg", VideoUrl = "https://example.com/courses/advanced_geography_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 36, CategoryId = 3, SubjectId = 18, TutorId = 36, Title = "高等生物學", SubTitle = "深入理解生物學的高級理論", TwentyFiveMinUnitPrice = 160m, FiftyMinUnitPrice = 275m, Description = "生物學的高級理論和應用", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/advanced_biology.jpg", VideoUrl = "https://example.com/courses/advanced_biology_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 37, CategoryId = 1, SubjectId = 1, TutorId = 37, Title = "專業英文寫作", SubTitle = "掌握專業英文寫作技巧", TwentyFiveMinUnitPrice = 180m, FiftyMinUnitPrice = 320m, Description = "專業英文寫作的高級技巧", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/professional_english.jpg", VideoUrl = "https://example.com/courses/professional_english_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 38, CategoryId = 1, SubjectId = 2, TutorId = 38, Title = "專業日語寫作", SubTitle = "掌握專業日語寫作技巧", TwentyFiveMinUnitPrice = 190m, FiftyMinUnitPrice = 340m, Description = "專業日語寫作的高級技巧", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/professional_japanese.jpg", VideoUrl = "https://example.com/courses/professional_japanese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 39, CategoryId = 1, SubjectId = 3, TutorId = 39, Title = "專業中文寫作", SubTitle = "掌握專業中文寫作技巧", TwentyFiveMinUnitPrice = 200m, FiftyMinUnitPrice = 360m, Description = "專業中文寫作的高級技巧", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/professional_chinese.jpg", VideoUrl = "https://example.com/courses/professional_chinese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
+ new Course { CourseId = 40, CategoryId = 1, SubjectId = 4, TutorId = 40, Title = "專業德語寫作", SubTitle = "掌握專業德語寫作技巧", TwentyFiveMinUnitPrice = 210m, FiftyMinUnitPrice = 380m, Description = "專業德語寫作的高級技巧", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/professional_german.jpg", VideoUrl = "https://example.com/courses/professional_german_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now });
 
         modelBuilder.Entity<CourseCategory>().HasData(
     new CourseCategory { CourseCategoryId = 1, CategorytName = "語言學習", Cdate = DateTime.Now },
@@ -1016,37 +921,91 @@ public partial class TalkingTopiaContext : DbContext
 );
 
         modelBuilder.Entity<CourseImage>().HasData(
-    // CourseId = 1
-    new CourseImage { CourseImageId = 1, CourseId = 1, ImageUrl = "https://picsum.photos/id/100/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 2, CourseId = 1, ImageUrl = "https://picsum.photos/id/101/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 3, CourseId = 1, ImageUrl = "https://picsum.photos/id/102/450/300", Cdate = DateTime.Now },
+// CourseId = 1
+new CourseImage { CourseImageId = 1, CourseId = 1, ImageUrl = "https://picsum.photos/id/100/450/300", Cdate = DateTime.Now },
+new CourseImage { CourseImageId = 2, CourseId = 1, ImageUrl = "https://picsum.photos/id/101/450/300", Cdate = DateTime.Now },
+new CourseImage { CourseImageId = 3, CourseId = 1, ImageUrl = "https://picsum.photos/id/102/450/300", Cdate = DateTime.Now },
 
-    // CourseId = 2
-    new CourseImage { CourseImageId = 4, CourseId = 2, ImageUrl = "https://picsum.photos/id/103/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 5, CourseId = 2, ImageUrl = "https://picsum.photos/id/104/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 6, CourseId = 2, ImageUrl = "https://picsum.photos/id/105/450/300", Cdate = DateTime.Now },
+// CourseId = 2
+new CourseImage { CourseImageId = 4, CourseId = 2, ImageUrl = "https://picsum.photos/id/103/450/300", Cdate = DateTime.Now },
+new CourseImage { CourseImageId = 5, CourseId = 2, ImageUrl = "https://picsum.photos/id/104/450/300", Cdate = DateTime.Now },
+new CourseImage { CourseImageId = 6, CourseId = 2, ImageUrl = "https://picsum.photos/id/105/450/300", Cdate = DateTime.Now },
 
-    // CourseId = 3
-    new CourseImage { CourseImageId = 7, CourseId = 3, ImageUrl = "https://picsum.photos/id/106/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 8, CourseId = 3, ImageUrl = "https://picsum.photos/id/107/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 9, CourseId = 3, ImageUrl = "https://picsum.photos/id/108/450/300", Cdate = DateTime.Now },
+// CourseId = 3
+new CourseImage { CourseImageId = 7, CourseId = 3, ImageUrl = "https://picsum.photos/id/106/450/300", Cdate = DateTime.Now },
+new CourseImage { CourseImageId = 8, CourseId = 3, ImageUrl = "https://picsum.photos/id/107/450/300", Cdate = DateTime.Now },
+new CourseImage { CourseImageId = 9, CourseId = 3, ImageUrl = "https://picsum.photos/id/108/450/300", Cdate = DateTime.Now },
 
-    // CourseId = 4
-    new CourseImage { CourseImageId = 10, CourseId = 4, ImageUrl = "https://picsum.photos/id/109/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 11, CourseId = 4, ImageUrl = "https://picsum.photos/id/110/450/300", Cdate = DateTime.Now },
-    new CourseImage { CourseImageId = 12, CourseId = 4, ImageUrl = "https://picsum.photos/id/111/450/300", Cdate = DateTime.Now }
-        );
+// CourseId = 4
+new CourseImage { CourseImageId = 10, CourseId = 4, ImageUrl = "https://picsum.photos/id/109/450/300", Cdate = DateTime.Now },
+new CourseImage { CourseImageId = 11, CourseId = 4, ImageUrl = "https://picsum.photos/id/110/450/300", Cdate = DateTime.Now },
+new CourseImage { CourseImageId = 12, CourseId = 4, ImageUrl = "https://picsum.photos/id/111/450/300", Cdate = DateTime.Now }
+);
         modelBuilder.Entity<Order>().HasData(
-    new Order { OrderId = 1, MemberId = 1, PaymentType = "Credit Card", TotalPrice = 1000, TransactionDate = DateTime.Now, InvoiceType = 1, OrderStatusId = 1, Cdate = DateTime.Now },
-    new Order { OrderId = 2, MemberId = 2, PaymentType = "Paypal", TotalPrice = 2000, TransactionDate = DateTime.Now, InvoiceType = 1, OrderStatusId = 1, Cdate = DateTime.Now }
+    new Order { OrderId = 1, MemberId = 1, PaymentType = "CreditCard", TotalPrice = 1000.00m, TransactionDate = DateTime.Now.AddDays(-10), CouponPrice = 100.00m, TaxIdNumber = "A123456789", InvoiceType = 1, VATNumber = "12345678", SentVatemail = "order1@domain.com", OrderStatusId = 1, Cdate = DateTime.Now.AddDays(-10), Udate = DateTime.Now.AddDays(-9) },
+    new Order { OrderId = 2, MemberId = 2, PaymentType = "PayPal", TotalPrice = 1500.00m, TransactionDate = DateTime.Now.AddDays(-9), CouponPrice = 150.00m, TaxIdNumber = "B123456789", InvoiceType = 2, VATNumber = "22345678", SentVatemail = "order2@domain.com", OrderStatusId = 2, Cdate = DateTime.Now.AddDays(-9), Udate = DateTime.Now.AddDays(-8) },
+    new Order { OrderId = 3, MemberId = 3, PaymentType = "BankTransfer", TotalPrice = 2000.00m, TransactionDate = DateTime.Now.AddDays(-8), CouponPrice = 200.00m, TaxIdNumber = "C123456789", InvoiceType = 1, VATNumber = "32345678", SentVatemail = "order3@domain.com", OrderStatusId = 3, Cdate = DateTime.Now.AddDays(-8), Udate = DateTime.Now.AddDays(-7) },
+    new Order { OrderId = 4, MemberId = 4, PaymentType = "CreditCard", TotalPrice = 2500.00m, TransactionDate = DateTime.Now.AddDays(-7), CouponPrice = 250.00m, TaxIdNumber = "D123456789", InvoiceType = 2, VATNumber = "42345678", SentVatemail = "order4@domain.com", OrderStatusId = 1, Cdate = DateTime.Now.AddDays(-7), Udate = DateTime.Now.AddDays(-6) },
+    new Order { OrderId = 5, MemberId = 5, PaymentType = "PayPal", TotalPrice = 3000.00m, TransactionDate = DateTime.Now.AddDays(-6), CouponPrice = 300.00m, TaxIdNumber = "E123456789", InvoiceType = 1, VATNumber = "52345678", SentVatemail = "order5@domain.com", OrderStatusId = 2, Cdate = DateTime.Now.AddDays(-6), Udate = DateTime.Now.AddDays(-5) },
+    new Order { OrderId = 6, MemberId = 6, PaymentType = "BankTransfer", TotalPrice = 3500.00m, TransactionDate = DateTime.Now.AddDays(-5), CouponPrice = 350.00m, TaxIdNumber = "F123456789", InvoiceType = 2, VATNumber = "62345678", SentVatemail = "order6@domain.com", OrderStatusId = 3, Cdate = DateTime.Now.AddDays(-5), Udate = DateTime.Now.AddDays(-4) },
+    new Order { OrderId = 7, MemberId = 7, PaymentType = "CreditCard", TotalPrice = 4000.00m, TransactionDate = DateTime.Now.AddDays(-4), CouponPrice = 400.00m, TaxIdNumber = "G123456789", InvoiceType = 1, VATNumber = "72345678", SentVatemail = "order7@domain.com", OrderStatusId = 1, Cdate = DateTime.Now.AddDays(-4), Udate = DateTime.Now.AddDays(-3) },
+    new Order { OrderId = 8, MemberId = 8, PaymentType = "PayPal", TotalPrice = 4500.00m, TransactionDate = DateTime.Now.AddDays(-3), CouponPrice = 450.00m, TaxIdNumber = "H123456789", InvoiceType = 2, VATNumber = "82345678", SentVatemail = "order8@domain.com", OrderStatusId = 2, Cdate = DateTime.Now.AddDays(-3), Udate = DateTime.Now.AddDays(-2) },
+    new Order { OrderId = 9, MemberId = 9, PaymentType = "BankTransfer", TotalPrice = 5000.00m, TransactionDate = DateTime.Now.AddDays(-2), CouponPrice = 500.00m, TaxIdNumber = "I123456789", InvoiceType = 1, VATNumber = "92345678", SentVatemail = "order9@domain.com", OrderStatusId = 3, Cdate = DateTime.Now.AddDays(-2), Udate = DateTime.Now.AddDays(-1) },
+    new Order { OrderId = 10, MemberId = 10, PaymentType = "CreditCard", TotalPrice = 5500.00m, TransactionDate = DateTime.Now.AddDays(-1), CouponPrice = 550.00m, TaxIdNumber = "J123456789", InvoiceType = 2, VATNumber = "01234567", SentVatemail = "order10@domain.com", OrderStatusId = 1, Cdate = DateTime.Now.AddDays(-1), Udate = DateTime.Now },
+    new Order { OrderId = 11, MemberId = 11, PaymentType = "CreditCard", TotalPrice = 6000.00m, TransactionDate = DateTime.Now, CouponPrice = 600.00m, TaxIdNumber = "K123456789", InvoiceType = 1, VATNumber = "12345679", SentVatemail = "order11@domain.com", OrderStatusId = 1, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(1) },
+    new Order { OrderId = 12, MemberId = 12, PaymentType = "PayPal", TotalPrice = 6500.00m, TransactionDate = DateTime.Now.AddDays(1), CouponPrice = 650.00m, TaxIdNumber = "L123456789", InvoiceType = 2, VATNumber = "22345679", SentVatemail = "order12@domain.com", OrderStatusId = 2, Cdate = DateTime.Now.AddDays(1), Udate = DateTime.Now.AddDays(2) },
+    new Order { OrderId = 13, MemberId = 13, PaymentType = "BankTransfer", TotalPrice = 7000.00m, TransactionDate = DateTime.Now.AddDays(2), CouponPrice = 700.00m, TaxIdNumber = "M123456789", InvoiceType = 1, VATNumber = "32345679", SentVatemail = "order13@domain.com", OrderStatusId = 3, Cdate = DateTime.Now.AddDays(2), Udate = DateTime.Now.AddDays(3) },
+    new Order { OrderId = 14, MemberId = 14, PaymentType = "CreditCard", TotalPrice = 7500.00m, TransactionDate = DateTime.Now.AddDays(3), CouponPrice = 750.00m, TaxIdNumber = "N123456789", InvoiceType = 2, VATNumber = "42345679", SentVatemail = "order14@domain.com", OrderStatusId = 1, Cdate = DateTime.Now.AddDays(3), Udate = DateTime.Now.AddDays(4) },
+    new Order { OrderId = 15, MemberId = 15, PaymentType = "PayPal", TotalPrice = 8000.00m, TransactionDate = DateTime.Now.AddDays(4), CouponPrice = 800.00m, TaxIdNumber = "O123456789", InvoiceType = 1, VATNumber = "52345679", SentVatemail = "order15@domain.com", OrderStatusId = 2, Cdate = DateTime.Now.AddDays(4), Udate = DateTime.Now.AddDays(5) },
+    new Order { OrderId = 16, MemberId = 16, PaymentType = "BankTransfer", TotalPrice = 8500.00m, TransactionDate = DateTime.Now.AddDays(5), CouponPrice = 850.00m, TaxIdNumber = "P123456789", InvoiceType = 2, VATNumber = "62345679", SentVatemail = "order16@domain.com", OrderStatusId = 3, Cdate = DateTime.Now.AddDays(5), Udate = DateTime.Now.AddDays(6) },
+    new Order { OrderId = 17, MemberId = 17, PaymentType = "CreditCard", TotalPrice = 9000.00m, TransactionDate = DateTime.Now.AddDays(6), CouponPrice = 900.00m, TaxIdNumber = "Q123456789", InvoiceType = 1, VATNumber = "72345679", SentVatemail = "order17@domain.com", OrderStatusId = 1, Cdate = DateTime.Now.AddDays(6), Udate = DateTime.Now.AddDays(7) },
+    new Order { OrderId = 18, MemberId = 18, PaymentType = "PayPal", TotalPrice = 9500.00m, TransactionDate = DateTime.Now.AddDays(7), CouponPrice = 950.00m, TaxIdNumber = "R123456789", InvoiceType = 2, VATNumber = "82345679", SentVatemail = "order18@domain.com", OrderStatusId = 2, Cdate = DateTime.Now.AddDays(7), Udate = DateTime.Now.AddDays(8) },
+    new Order { OrderId = 19, MemberId = 19, PaymentType = "BankTransfer", TotalPrice = 10000.00m, TransactionDate = DateTime.Now.AddDays(8), CouponPrice = 1000.00m, TaxIdNumber = "S123456789", InvoiceType = 1, VATNumber = "92345679", SentVatemail = "order19@domain.com", OrderStatusId = 3, Cdate = DateTime.Now.AddDays(8), Udate = DateTime.Now.AddDays(9) },
+    new Order { OrderId = 20, MemberId = 20, PaymentType = "CreditCard", TotalPrice = 10500.00m, TransactionDate = DateTime.Now.AddDays(9), CouponPrice = 1050.00m, TaxIdNumber = "T123456789", InvoiceType = 2, VATNumber = "01234579", SentVatemail = "order20@domain.com", OrderStatusId = 1, Cdate = DateTime.Now.AddDays(9), Udate = DateTime.Now.AddDays(10) }
 );
         modelBuilder.Entity<OrderDetail>().HasData(
-    new OrderDetail { OrderDetailId = 1, OrderId = 1, CourseId = 1, UnitPrice = 500, Quantity = 2, TotalPrice = 1000, CourseType = 1, CourseTitle = "C# 入門", CourseCategory = "程式設計", CourseSubject = "C#" },
-    new OrderDetail { OrderDetailId = 2, OrderId = 2, CourseId = 2, UnitPrice = 1000, Quantity = 2, TotalPrice = 2000, CourseType = 1, CourseTitle = "日語 N5", CourseCategory = "語言學習", CourseSubject = "日語" }
-);
+     new OrderDetail { OrderDetailId = 1, OrderId = 1, CourseId = 1, UnitPrice = 100.00m, Quantity = 10, DiscountPrice = 10.00m, TotalPrice = 900.00m, CourseType = 1, CourseTitle = "英文基礎", CourseCategory = "語言學習", CourseSubject = "英文" },
+     new OrderDetail { OrderDetailId = 2, OrderId = 2, CourseId = 2, UnitPrice = 200.00m, Quantity = 5, DiscountPrice = 20.00m, TotalPrice = 980.00m, CourseType = 1, CourseTitle = "日文會話", CourseCategory = "語言學習", CourseSubject = "日文" },
+     new OrderDetail { OrderDetailId = 3, OrderId = 3, CourseId = 3, UnitPrice = 300.00m, Quantity = 3, DiscountPrice = 30.00m, TotalPrice = 870.00m, CourseType = 1, CourseTitle = "C# 基礎", CourseCategory = "程式設計", CourseSubject = "C#" },
+     new OrderDetail { OrderDetailId = 4, OrderId = 4, CourseId = 4, UnitPrice = 400.00m, Quantity = 2, DiscountPrice = 40.00m, TotalPrice = 760.00m, CourseType = 2, CourseTitle = "SQL進階", CourseCategory = "程式設計", CourseSubject = "SQL" },
+     new OrderDetail { OrderDetailId = 5, OrderId = 5, CourseId = 5, UnitPrice = 500.00m, Quantity = 4, DiscountPrice = 50.00m, TotalPrice = 1950.00m, CourseType = 2, CourseTitle = "Java 進階", CourseCategory = "程式設計", CourseSubject = "Java" },
+     new OrderDetail { OrderDetailId = 6, OrderId = 6, CourseId = 6, UnitPrice = 600.00m, Quantity = 1, DiscountPrice = 60.00m, TotalPrice = 540.00m, CourseType = 1, CourseTitle = "數學基礎", CourseCategory = "升學科目", CourseSubject = "數學" },
+     new OrderDetail { OrderDetailId = 7, OrderId = 7, CourseId = 7, UnitPrice = 700.00m, Quantity = 3, DiscountPrice = 70.00m, TotalPrice = 1890.00m, CourseType = 1, CourseTitle = "物理基礎", CourseCategory = "升學科目", CourseSubject = "物理" },
+     new OrderDetail { OrderDetailId = 8, OrderId = 8, CourseId = 8, UnitPrice = 800.00m, Quantity = 2, DiscountPrice = 80.00m, TotalPrice = 1520.00m, CourseType = 2, CourseTitle = "化學進階", CourseCategory = "升學科目", CourseSubject = "化學" },
+     new OrderDetail { OrderDetailId = 9, OrderId = 9, CourseId = 9, UnitPrice = 900.00m, Quantity = 1, DiscountPrice = 90.00m, TotalPrice = 810.00m, CourseType = 2, CourseTitle = "歷史進階", CourseCategory = "升學科目", CourseSubject = "歷史" },
+     new OrderDetail { OrderDetailId = 10, OrderId = 10, CourseId = 10, UnitPrice = 1000.00m, Quantity = 2, DiscountPrice = 100.00m, TotalPrice = 1900.00m, CourseType = 1, CourseTitle = "地理基礎", CourseCategory = "升學科目", CourseSubject = "地理" },
+     new OrderDetail { OrderDetailId = 11, OrderId = 11, CourseId = 11, UnitPrice = 1100.00m, Quantity = 1, DiscountPrice = 110.00m, TotalPrice = 990.00m, CourseType = 1, CourseTitle = "生物基礎", CourseCategory = "升學科目", CourseSubject = "生物" },
+     new OrderDetail { OrderDetailId = 12, OrderId = 12, CourseId = 12, UnitPrice = 1200.00m, Quantity = 4, DiscountPrice = 120.00m, TotalPrice = 4680.00m, CourseType = 2, CourseTitle = "英文進階", CourseCategory = "語言學習", CourseSubject = "英文" },
+     new OrderDetail { OrderDetailId = 13, OrderId = 13, CourseId = 13, UnitPrice = 1300.00m, Quantity = 3, DiscountPrice = 130.00m, TotalPrice = 3690.00m, CourseType = 1, CourseTitle = "日文基礎", CourseCategory = "語言學習", CourseSubject = "日文" },
+     new OrderDetail { OrderDetailId = 14, OrderId = 14, CourseId = 14, UnitPrice = 1400.00m, Quantity = 2, DiscountPrice = 140.00m, TotalPrice = 2660.00m, CourseType = 2, CourseTitle = "中文進階", CourseCategory = "語言學習", CourseSubject = "中文" },
+     new OrderDetail { OrderDetailId = 15, OrderId = 15, CourseId = 15, UnitPrice = 1500.00m, Quantity = 5, DiscountPrice = 150.00m, TotalPrice = 7050.00m, CourseType = 1, CourseTitle = "德文基礎", CourseCategory = "語言學習", CourseSubject = "德文" },
+     new OrderDetail { OrderDetailId = 16, OrderId = 16, CourseId = 16, UnitPrice = 1600.00m, Quantity = 4, DiscountPrice = 160.00m, TotalPrice = 6240.00m, CourseType = 1, CourseTitle = "法文基礎", CourseCategory = "語言學習", CourseSubject = "法文" },
+     new OrderDetail { OrderDetailId = 17, OrderId = 17, CourseId = 17, UnitPrice = 1700.00m, Quantity = 2, DiscountPrice = 170.00m, TotalPrice = 3230.00m, CourseType = 2, CourseTitle = "西班牙文進階", CourseCategory = "語言學習", CourseSubject = "西班牙文" },
+     new OrderDetail { OrderDetailId = 18, OrderId = 18, CourseId = 18, UnitPrice = 1800.00m, Quantity = 1, DiscountPrice = 180.00m, TotalPrice = 1620.00m, CourseType = 2, CourseTitle = "HTML/CSS進階", CourseCategory = "程式設計", CourseSubject = "HTML/CSS" },
+     new OrderDetail { OrderDetailId = 19, OrderId = 19, CourseId = 19, UnitPrice = 1900.00m, Quantity = 4, DiscountPrice = 190.00m, TotalPrice = 7370.00m, CourseType = 1, CourseTitle = "JavaScript基礎", CourseCategory = "程式設計", CourseSubject = "JavaScript" },
+     new OrderDetail { OrderDetailId = 20, OrderId = 20, CourseId = 20, UnitPrice = 2000.00m, Quantity = 2, DiscountPrice = 200.00m, TotalPrice = 3800.00m, CourseType = 2, CourseTitle = "Python進階", CourseCategory = "程式設計", CourseSubject = "Python" }
+ );
         modelBuilder.Entity<Coupon>().HasData(
-    new Coupon { CouponId = 1, CouponName = "夏季優惠", CouponCode = "SUMMER2024", DiscountType = 1, Discount = 10, ExpirationDate = DateTime.Now.AddMonths(1), IsActive = true, Cdate = DateTime.Now },
-    new Coupon { CouponId = 2, CouponName = "新用戶優惠", CouponCode = "WELCOME2024", DiscountType = 1, Discount = 20, ExpirationDate = DateTime.Now.AddMonths(3), IsActive = true, Cdate = DateTime.Now }
+            new Coupon { CouponId = 1, CouponName = "Welcome10", CouponCode = "WELCOME10", DiscountType = 1, Discount = 10, ExpirationDate = DateTime.Now.AddMonths(1), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(1) },
+new Coupon { CouponId = 2, CouponName = "SummerSale", CouponCode = "SUMMER20", DiscountType = 2, Discount = 20, ExpirationDate = DateTime.Now.AddMonths(2), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(2) },
+new Coupon { CouponId = 3, CouponName = "FallSavings", CouponCode = "FALL15", DiscountType = 1, Discount = 15, ExpirationDate = DateTime.Now.AddMonths(3), IsActive = false, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(3) },
+new Coupon { CouponId = 4, CouponName = "WinterDeal", CouponCode = "WINTER25", DiscountType = 2, Discount = 25, ExpirationDate = DateTime.Now.AddMonths(4), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(4) },
+new Coupon { CouponId = 5, CouponName = "SpringSave", CouponCode = "SPRING30", DiscountType = 1, Discount = 30, ExpirationDate = DateTime.Now.AddMonths(5), IsActive = false, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(5) },
+new Coupon { CouponId = 6, CouponName = "Holiday50", CouponCode = "HOLIDAY50", DiscountType = 2, Discount = 50, ExpirationDate = DateTime.Now.AddMonths(6), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(6) },
+new Coupon { CouponId = 7, CouponName = "NewYear15", CouponCode = "NEWYEAR15", DiscountType = 1, Discount = 15, ExpirationDate = DateTime.Now.AddMonths(7), IsActive = false, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(7) },
+new Coupon { CouponId = 8, CouponName = "CyberMonday", CouponCode = "CYBER20", DiscountType = 2, Discount = 20, ExpirationDate = DateTime.Now.AddMonths(8), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(8) },
+new Coupon { CouponId = 9, CouponName = "BlackFriday", CouponCode = "BLACK30", DiscountType = 1, Discount = 30, ExpirationDate = DateTime.Now.AddMonths(9), IsActive = false, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(9) },
+new Coupon { CouponId = 10, CouponName = "WelcomeBack", CouponCode = "WELCOME5", DiscountType = 2, Discount = 5, ExpirationDate = DateTime.Now.AddMonths(10), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(10) },
+new Coupon { CouponId = 11, CouponName = "BackToSchool", CouponCode = "SCHOOL25", DiscountType = 1, Discount = 25, ExpirationDate = DateTime.Now.AddMonths(11), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(11) },
+new Coupon { CouponId = 12, CouponName = "EarlyBird", CouponCode = "EARLY10", DiscountType = 2, Discount = 10, ExpirationDate = DateTime.Now.AddMonths(12), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(12) },
+new Coupon { CouponId = 13, CouponName = "FlashSale", CouponCode = "FLASH50", DiscountType = 1, Discount = 50, ExpirationDate = DateTime.Now.AddMonths(13), IsActive = false, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(13) },
+new Coupon { CouponId = 14, CouponName = "NewCustomer", CouponCode = "NEWCUST20", DiscountType = 2, Discount = 20, ExpirationDate = DateTime.Now.AddMonths(14), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(14) },
+new Coupon { CouponId = 15, CouponName = "LoyaltyReward", CouponCode = "LOYALTY10", DiscountType = 1, Discount = 10, ExpirationDate = DateTime.Now.AddMonths(15), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(15) },
+new Coupon { CouponId = 16, CouponName = "ReferralBonus", CouponCode = "REFERRAL15", DiscountType = 2, Discount = 15, ExpirationDate = DateTime.Now.AddMonths(16), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(16) },
+new Coupon { CouponId = 17, CouponName = "SummerSpecial", CouponCode = "SUMMER10", DiscountType = 1, Discount = 10, ExpirationDate = DateTime.Now.AddMonths(17), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(17) },
+new Coupon { CouponId = 18, CouponName = "WinterWonder", CouponCode = "WINTER20", DiscountType = 2, Discount = 20, ExpirationDate = DateTime.Now.AddMonths(18), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(18) },
+new Coupon { CouponId = 19, CouponName = "SpringBlossom", CouponCode = "SPRING25", DiscountType = 1, Discount = 25, ExpirationDate = DateTime.Now.AddMonths(19), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(19) },
+new Coupon { CouponId = 20, CouponName = "AutumnLeaves", CouponCode = "AUTUMN15", DiscountType = 2, Discount = 15, ExpirationDate = DateTime.Now.AddMonths(20), IsActive = true, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(20) }
 );
 
         //    modelBuilder.Entity<MemberCoupon>().HasData(
@@ -1055,110 +1014,276 @@ public partial class TalkingTopiaContext : DbContext
         //    );
 
         modelBuilder.Entity<MemberPreference>().HasData(
-    new MemberPreference { MemberPreferenceId = 1, MemberId = 1, SubjecId = 1, Cdate = DateTime.Now },
-    new MemberPreference { MemberPreferenceId = 2, MemberId = 2, SubjecId = 2, Cdate = DateTime.Now }
+          new MemberPreference { MemberPreferenceId = 1, MemberId = 1, SubjecId = 1, Cdate = DateTime.Now.AddMonths(-5), Udate = DateTime.Now.AddMonths(-4) },
+new MemberPreference { MemberPreferenceId = 2, MemberId = 2, SubjecId = 2, Cdate = DateTime.Now.AddMonths(-4), Udate = DateTime.Now.AddMonths(-3) },
+new MemberPreference { MemberPreferenceId = 3, MemberId = 3, SubjecId = 3, Cdate = DateTime.Now.AddMonths(-3), Udate = DateTime.Now.AddMonths(-2) },
+new MemberPreference { MemberPreferenceId = 4, MemberId = 4, SubjecId = 4, Cdate = DateTime.Now.AddMonths(-2), Udate = DateTime.Now.AddMonths(-1) },
+new MemberPreference { MemberPreferenceId = 5, MemberId = 5, SubjecId = 5, Cdate = DateTime.Now.AddMonths(-1), Udate = DateTime.Now },
+new MemberPreference { MemberPreferenceId = 6, MemberId = 6, SubjecId = 6, Cdate = DateTime.Now.AddMonths(-6), Udate = DateTime.Now.AddMonths(-5) },
+new MemberPreference { MemberPreferenceId = 7, MemberId = 7, SubjecId = 7, Cdate = DateTime.Now.AddMonths(-5), Udate = DateTime.Now.AddMonths(-4) },
+new MemberPreference { MemberPreferenceId = 8, MemberId = 8, SubjecId = 8, Cdate = DateTime.Now.AddMonths(-4), Udate = DateTime.Now.AddMonths(-3) },
+new MemberPreference { MemberPreferenceId = 9, MemberId = 9, SubjecId = 9, Cdate = DateTime.Now.AddMonths(-3), Udate = DateTime.Now.AddMonths(-2) },
+new MemberPreference { MemberPreferenceId = 10, MemberId = 10, SubjecId = 10, Cdate = DateTime.Now.AddMonths(-2), Udate = DateTime.Now.AddMonths(-1) },
+new MemberPreference { MemberPreferenceId = 11, MemberId = 11, SubjecId = 11, Cdate = DateTime.Now.AddMonths(-1), Udate = DateTime.Now },
+new MemberPreference { MemberPreferenceId = 12, MemberId = 12, SubjecId = 12, Cdate = DateTime.Now.AddMonths(-6), Udate = DateTime.Now.AddMonths(-5) },
+new MemberPreference { MemberPreferenceId = 13, MemberId = 13, SubjecId = 13, Cdate = DateTime.Now.AddMonths(-5), Udate = DateTime.Now.AddMonths(-4) },
+new MemberPreference { MemberPreferenceId = 14, MemberId = 14, SubjecId = 14, Cdate = DateTime.Now.AddMonths(-4), Udate = DateTime.Now.AddMonths(-3) },
+new MemberPreference { MemberPreferenceId = 15, MemberId = 15, SubjecId = 15, Cdate = DateTime.Now.AddMonths(-3), Udate = DateTime.Now.AddMonths(-2) },
+new MemberPreference { MemberPreferenceId = 16, MemberId = 16, SubjecId = 16, Cdate = DateTime.Now.AddMonths(-2), Udate = DateTime.Now.AddMonths(-1) },
+new MemberPreference { MemberPreferenceId = 17, MemberId = 17, SubjecId = 17, Cdate = DateTime.Now.AddMonths(-1), Udate = DateTime.Now },
+new MemberPreference { MemberPreferenceId = 18, MemberId = 18, SubjecId = 18, Cdate = DateTime.Now.AddMonths(-6), Udate = DateTime.Now.AddMonths(-5) },
+new MemberPreference { MemberPreferenceId = 19, MemberId = 19, SubjecId = 1, Cdate = DateTime.Now.AddMonths(-5), Udate = DateTime.Now.AddMonths(-4) },
+new MemberPreference { MemberPreferenceId = 20, MemberId = 20, SubjecId = 2, Cdate = DateTime.Now.AddMonths(-4), Udate = DateTime.Now.AddMonths(-3) }
 );
-
         modelBuilder.Entity<ApplyList>().HasData(
-    new ApplyList { ApplyId = 1, MemberId = 1, ApplyStatus = true, ApplyDateTime = DateTime.Now, ApprovedDateTime = DateTime.Now, UpdateStatusDateTime = DateTime.Now, RejectReason = "無" },
-    new ApplyList { ApplyId = 2, MemberId = 2, ApplyStatus = false, ApplyDateTime = DateTime.Now, ApprovedDateTime = DateTime.Now, UpdateStatusDateTime = DateTime.Now, RejectReason = "不符合資格" }
+    new ApplyList { ApplyId = 1, MemberId = 1, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(-10), ApprovedDateTime = DateTime.Now.AddDays(-8), UpdateStatusDateTime = DateTime.Now.AddDays(-7), RejectReason = null },
+new ApplyList { ApplyId = 2, MemberId = 2, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(-9), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(-6), RejectReason = "Incomplete application" },
+new ApplyList { ApplyId = 3, MemberId = 3, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(-8), ApprovedDateTime = DateTime.Now.AddDays(-7), UpdateStatusDateTime = DateTime.Now.AddDays(-5), RejectReason = null },
+new ApplyList { ApplyId = 4, MemberId = 4, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(-7), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(-4), RejectReason = "Failed verification" },
+new ApplyList { ApplyId = 5, MemberId = 5, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(-6), ApprovedDateTime = DateTime.Now.AddDays(-5), UpdateStatusDateTime = DateTime.Now.AddDays(-3), RejectReason = null },
+new ApplyList { ApplyId = 6, MemberId = 6, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(-5), ApprovedDateTime = DateTime.Now.AddDays(-3), UpdateStatusDateTime = DateTime.Now.AddDays(-2), RejectReason = null },
+new ApplyList { ApplyId = 7, MemberId = 7, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(-4), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(-1), RejectReason = "Incorrect details" },
+new ApplyList { ApplyId = 8, MemberId = 8, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(-3), ApprovedDateTime = DateTime.Now.AddDays(-2), UpdateStatusDateTime = DateTime.Now, RejectReason = null },
+new ApplyList { ApplyId = 9, MemberId = 9, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(-2), ApprovedDateTime = DateTime.Now, UpdateStatusDateTime = DateTime.Now.AddDays(1), RejectReason = null },
+new ApplyList { ApplyId = 10, MemberId = 10, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(-1), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(2), RejectReason = "Missing documents" },
+new ApplyList { ApplyId = 11, MemberId = 11, ApplyStatus = true, ApplyDateTime = DateTime.Now, ApprovedDateTime = DateTime.Now.AddDays(1), UpdateStatusDateTime = DateTime.Now.AddDays(2), RejectReason = null },
+new ApplyList { ApplyId = 12, MemberId = 12, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(1), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(3), RejectReason = "Not eligible" },
+new ApplyList { ApplyId = 13, MemberId = 13, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(2), ApprovedDateTime = DateTime.Now.AddDays(3), UpdateStatusDateTime = DateTime.Now.AddDays(4), RejectReason = null },
+new ApplyList { ApplyId = 14, MemberId = 14, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(3), ApprovedDateTime = DateTime.Now.AddDays(4), UpdateStatusDateTime = DateTime.Now.AddDays(5), RejectReason = null },
+new ApplyList { ApplyId = 15, MemberId = 15, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(4), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(6), RejectReason = "Failed interview" },
+new ApplyList { ApplyId = 16, MemberId = 16, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(5), ApprovedDateTime = DateTime.Now.AddDays(6), UpdateStatusDateTime = DateTime.Now.AddDays(7), RejectReason = null },
+new ApplyList { ApplyId = 17, MemberId = 17, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(6), ApprovedDateTime = DateTime.Now.AddDays(7), UpdateStatusDateTime = DateTime.Now.AddDays(8), RejectReason = null },
+new ApplyList { ApplyId = 18, MemberId = 18, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(7), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(9), RejectReason = "Incorrect documentation" },
+new ApplyList { ApplyId = 19, MemberId = 19, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(8), ApprovedDateTime = DateTime.Now.AddDays(9), UpdateStatusDateTime = DateTime.Now.AddDays(10), RejectReason = null },
+new ApplyList { ApplyId = 20, MemberId = 20, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(9), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(11), RejectReason = "Unverified information" }
+
 );
-
-
         modelBuilder.Entity<Booking>().HasData(
-    new Booking { BookingId = 1, CourseId = 1, BookingDate = new DateTime(2024, 9, 3, 15, 0, 0).Date, BookingTime = 15, StudentId = 2, Cdate = DateTime.Now },
-    new Booking { BookingId = 2, CourseId = 2, BookingDate = new DateTime(2024, 9, 3, 16, 0, 0).Date, BookingTime = 16, StudentId = 2, Cdate = DateTime.Now },
-    new Booking { BookingId = 3, CourseId = 2, BookingDate = new DateTime(2024, 9, 3, 16, 0, 0).Date, BookingTime = 16, StudentId = 4, Cdate = DateTime.Now }
-);
+    new Booking { BookingId = 1, CourseId = 1, BookingDate = DateTime.Now.AddDays(-10), BookingTime = 900, StudentId = 1, Cdate = DateTime.Now.AddDays(-15), Udate = DateTime.Now },
+new Booking { BookingId = 2, CourseId = 2, BookingDate = DateTime.Now.AddDays(-9), BookingTime = 1100, StudentId = 2, Cdate = DateTime.Now.AddDays(-14), Udate = DateTime.Now },
+new Booking { BookingId = 3, CourseId = 3, BookingDate = DateTime.Now.AddDays(-8), BookingTime = 1400, StudentId = 3, Cdate = DateTime.Now.AddDays(-13), Udate = DateTime.Now },
+new Booking { BookingId = 4, CourseId = 4, BookingDate = DateTime.Now.AddDays(-7), BookingTime = 1500, StudentId = 4, Cdate = DateTime.Now.AddDays(-12), Udate = DateTime.Now },
+new Booking { BookingId = 5, CourseId = 5, BookingDate = DateTime.Now.AddDays(-6), BookingTime = 1600, StudentId = 5, Cdate = DateTime.Now.AddDays(-11), Udate = DateTime.Now },
+new Booking { BookingId = 6, CourseId = 6, BookingDate = DateTime.Now.AddDays(-5), BookingTime = 1000, StudentId = 6, Cdate = DateTime.Now.AddDays(-10), Udate = DateTime.Now },
+new Booking { BookingId = 7, CourseId = 7, BookingDate = DateTime.Now.AddDays(-4), BookingTime = 900, StudentId = 7, Cdate = DateTime.Now.AddDays(-9), Udate = DateTime.Now },
+new Booking { BookingId = 8, CourseId = 8, BookingDate = DateTime.Now.AddDays(-3), BookingTime = 1100, StudentId = 8, Cdate = DateTime.Now.AddDays(-8), Udate = DateTime.Now },
+new Booking { BookingId = 9, CourseId = 9, BookingDate = DateTime.Now.AddDays(-2), BookingTime = 1400, StudentId = 9, Cdate = DateTime.Now.AddDays(-7), Udate = DateTime.Now },
+new Booking { BookingId = 10, CourseId = 10, BookingDate = DateTime.Now.AddDays(-1), BookingTime = 1500, StudentId = 10, Cdate = DateTime.Now.AddDays(-6), Udate = DateTime.Now },
+new Booking { BookingId = 11, CourseId = 11, BookingDate = DateTime.Now, BookingTime = 1600, StudentId = 11, Cdate = DateTime.Now.AddDays(-5), Udate = DateTime.Now },
+new Booking { BookingId = 12, CourseId = 12, BookingDate = DateTime.Now.AddDays(1), BookingTime = 1000, StudentId = 12, Cdate = DateTime.Now.AddDays(-4), Udate = DateTime.Now },
+new Booking { BookingId = 13, CourseId = 13, BookingDate = DateTime.Now.AddDays(2), BookingTime = 900, StudentId = 13, Cdate = DateTime.Now.AddDays(-3), Udate = DateTime.Now },
+new Booking { BookingId = 14, CourseId = 14, BookingDate = DateTime.Now.AddDays(3), BookingTime = 1100, StudentId = 14, Cdate = DateTime.Now.AddDays(-2), Udate = DateTime.Now },
+new Booking { BookingId = 15, CourseId = 15, BookingDate = DateTime.Now.AddDays(4), BookingTime = 1400, StudentId = 15, Cdate = DateTime.Now.AddDays(-1), Udate = DateTime.Now },
+new Booking { BookingId = 16, CourseId = 16, BookingDate = DateTime.Now.AddDays(5), BookingTime = 1500, StudentId = 16, Cdate = DateTime.Now, Udate = DateTime.Now },
+new Booking { BookingId = 17, CourseId = 17, BookingDate = DateTime.Now.AddDays(6), BookingTime = 1600, StudentId = 17, Cdate = DateTime.Now.AddDays(1), Udate = DateTime.Now },
+new Booking { BookingId = 18, CourseId = 18, BookingDate = DateTime.Now.AddDays(7), BookingTime = 1000, StudentId = 18, Cdate = DateTime.Now.AddDays(2), Udate = DateTime.Now },
+new Booking { BookingId = 19, CourseId = 19, BookingDate = DateTime.Now.AddDays(8), BookingTime = 900, StudentId = 19, Cdate = DateTime.Now.AddDays(3), Udate = DateTime.Now },
+new Booking { BookingId = 20, CourseId = 20, BookingDate = DateTime.Now.AddDays(9), BookingTime = 1100, StudentId = 20, Cdate = DateTime.Now.AddDays(4), Udate = DateTime.Now },
+new Booking { BookingId = 21, CourseId = 21, BookingDate = DateTime.Now.AddDays(-10), BookingTime = 1200, StudentId = 21, Cdate = DateTime.Now.AddDays(-15), Udate = DateTime.Now },
+new Booking { BookingId = 22, CourseId = 22, BookingDate = DateTime.Now.AddDays(-9), BookingTime = 1300, StudentId = 22, Cdate = DateTime.Now.AddDays(-14), Udate = DateTime.Now },
+new Booking { BookingId = 23, CourseId = 23, BookingDate = DateTime.Now.AddDays(-8), BookingTime = 900, StudentId = 23, Cdate = DateTime.Now.AddDays(-13), Udate = DateTime.Now },
+new Booking { BookingId = 24, CourseId = 24, BookingDate = DateTime.Now.AddDays(-7), BookingTime = 1100, StudentId = 24, Cdate = DateTime.Now.AddDays(-12), Udate = DateTime.Now },
+new Booking { BookingId = 25, CourseId = 25, BookingDate = DateTime.Now.AddDays(-6), BookingTime = 1400, StudentId = 25, Cdate = DateTime.Now.AddDays(-11), Udate = DateTime.Now },
+new Booking { BookingId = 26, CourseId = 26, BookingDate = DateTime.Now.AddDays(-5), BookingTime = 1500, StudentId = 26, Cdate = DateTime.Now.AddDays(-10), Udate = DateTime.Now },
+new Booking { BookingId = 27, CourseId = 27, BookingDate = DateTime.Now.AddDays(-4), BookingTime = 1600, StudentId = 27, Cdate = DateTime.Now.AddDays(-9), Udate = DateTime.Now },
+new Booking { BookingId = 28, CourseId = 28, BookingDate = DateTime.Now.AddDays(-3), BookingTime = 1000, StudentId = 28, Cdate = DateTime.Now.AddDays(-8), Udate = DateTime.Now },
+new Booking { BookingId = 29, CourseId = 29, BookingDate = DateTime.Now.AddDays(-2), BookingTime = 1200, StudentId = 29, Cdate = DateTime.Now.AddDays(-7), Udate = DateTime.Now },
+new Booking { BookingId = 30, CourseId = 30, BookingDate = DateTime.Now.AddDays(-1), BookingTime = 1400, StudentId = 30, Cdate = DateTime.Now.AddDays(-6), Udate = DateTime.Now }
 
+);
         modelBuilder.Entity<ProfessionalLicense>().HasData(
-    new ProfessionalLicense { ProfessionalLicenseId = 1, MemberId = 1, ProfessionalLicenseName = "C# 認證", ProfessionalLicenseUrl = "csharp_certificate.jpg", Cdate = DateTime.Now },
-    new ProfessionalLicense { ProfessionalLicenseId = 2, MemberId = 2, ProfessionalLicenseName = "日語能力測驗 N1", ProfessionalLicenseUrl = "jlpt_n1.jpg", Cdate = DateTime.Now }
-);
-
-
+            new ProfessionalLicense { ProfessionalLicenseId = 1, ProfessionalLicenseName = "Certified Java Developer", MemberId = 1, ProfessionalLicenseUrl = "https://example.com/licenses/java_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 2, ProfessionalLicenseName = "Certified Python Developer", MemberId = 2, ProfessionalLicenseUrl = "https://example.com/licenses/python_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 3, ProfessionalLicenseName = "Certified C# Developer", MemberId = 3, ProfessionalLicenseUrl = "https://example.com/licenses/csharp_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 4, ProfessionalLicenseName = "Certified SQL Developer", MemberId = 4, ProfessionalLicenseUrl = "https://example.com/licenses/sql_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 5, ProfessionalLicenseName = "Certified JavaScript Developer", MemberId = 5, ProfessionalLicenseUrl = "https://example.com/licenses/js_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 6, ProfessionalLicenseName = "Certified Data Analyst", MemberId = 6, ProfessionalLicenseUrl = "https://example.com/licenses/data_analyst_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 7, ProfessionalLicenseName = "Certified Project Manager", MemberId = 7, ProfessionalLicenseUrl = "https://example.com/licenses/project_manager_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 8, ProfessionalLicenseName = "Certified Network Engineer", MemberId = 8, ProfessionalLicenseUrl = "https://example.com/licenses/network_engineer_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 9, ProfessionalLicenseName = "Certified Cloud Architect", MemberId = 9, ProfessionalLicenseUrl = "https://example.com/licenses/cloud_architect_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 10, ProfessionalLicenseName = "Certified DevOps Engineer", MemberId = 10, ProfessionalLicenseUrl = "https://example.com/licenses/devops_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 11, ProfessionalLicenseName = "Certified Ethical Hacker", MemberId = 11, ProfessionalLicenseUrl = "https://example.com/licenses/ethical_hacker_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 12, ProfessionalLicenseName = "Certified AI Engineer", MemberId = 12, ProfessionalLicenseUrl = "https://example.com/licenses/ai_engineer_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 13, ProfessionalLicenseName = "Certified ML Engineer", MemberId = 13, ProfessionalLicenseUrl = "https://example.com/licenses/ml_engineer_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 14, ProfessionalLicenseName = "Certified Blockchain Developer", MemberId = 14, ProfessionalLicenseUrl = "https://example.com/licenses/blockchain_dev_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 15, ProfessionalLicenseName = "Certified UX Designer", MemberId = 15, ProfessionalLicenseUrl = "https://example.com/licenses/ux_designer_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 16, ProfessionalLicenseName = "Certified UI Designer", MemberId = 16, ProfessionalLicenseUrl = "https://example.com/licenses/ui_designer_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 17, ProfessionalLicenseName = "Certified Product Manager", MemberId = 17, ProfessionalLicenseUrl = "https://example.com/licenses/product_manager_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 18, ProfessionalLicenseName = "Certified IT Security Specialist", MemberId = 18, ProfessionalLicenseUrl = "https://example.com/licenses/it_security_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 19, ProfessionalLicenseName = "Certified Web Developer", MemberId = 19, ProfessionalLicenseUrl = "https://example.com/licenses/web_dev_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now },
+            new ProfessionalLicense { ProfessionalLicenseId = 20, ProfessionalLicenseName = "Certified Software Tester", MemberId = 20, ProfessionalLicenseUrl = "https://example.com/licenses/software_tester_certified.jpg", Cdate = DateTime.Now.AddYears(-1), Udate = DateTime.Now }
+        );
         modelBuilder.Entity<Review>().HasData(
-    new Review { ReviewId = 1, StudentId = 1, CourseId = 1, Rating = 5, CommentText = "很棒的課程！", Cdate = DateTime.Now },
-    new Review { ReviewId = 2, StudentId = 2, CourseId = 2, Rating = 4, CommentText = "非常實用！", Cdate = DateTime.Now },
-    new Review { ReviewId = 3, StudentId = 2, CourseId = 1, Rating = 4, CommentText = "講得不錯! 但笑話有點冷", Cdate = DateTime.Now },
-    new Review { ReviewId = 4, StudentId = 3, CourseId = 1, Rating = 4, CommentText = "讚讚讚", Cdate = DateTime.Now }
+    new Review { ReviewId = 1, StudentId = 1, CourseId = 1, Rating = 5, CommentText = "Great course!", Cdate = DateTime.Now.AddDays(-10), Udate = DateTime.Now },
+new Review { ReviewId = 2, StudentId = 2, CourseId = 2, Rating = 4, CommentText = "Very informative.", Cdate = DateTime.Now.AddDays(-9), Udate = DateTime.Now },
+new Review { ReviewId = 3, StudentId = 3, CourseId = 3, Rating = 5, CommentText = "Excellent content.", Cdate = DateTime.Now.AddDays(-8), Udate = DateTime.Now },
+new Review { ReviewId = 4, StudentId = 4, CourseId = 4, Rating = 4, CommentText = "Good explanations.", Cdate = DateTime.Now.AddDays(-7), Udate = DateTime.Now },
+new Review { ReviewId = 5, StudentId = 5, CourseId = 5, Rating = 5, CommentText = "Highly recommend.", Cdate = DateTime.Now.AddDays(-6), Udate = DateTime.Now },
+new Review { ReviewId = 6, StudentId = 6, CourseId = 6, Rating = 4, CommentText = "Well structured.", Cdate = DateTime.Now.AddDays(-5), Udate = DateTime.Now },
+new Review { ReviewId = 7, StudentId = 7, CourseId = 7, Rating = 5, CommentText = "Learned a lot.", Cdate = DateTime.Now.AddDays(-4), Udate = DateTime.Now },
+new Review { ReviewId = 8, StudentId = 8, CourseId = 8, Rating = 4, CommentText = "Great examples.", Cdate = DateTime.Now.AddDays(-3), Udate = DateTime.Now },
+new Review { ReviewId = 9, StudentId = 9, CourseId = 9, Rating = 5, CommentText = "In-depth knowledge.", Cdate = DateTime.Now.AddDays(-2), Udate = DateTime.Now },
+new Review { ReviewId = 10, StudentId = 10, CourseId = 10, Rating = 4, CommentText = "Comprehensive.", Cdate = DateTime.Now.AddDays(-1), Udate = DateTime.Now },
+new Review { ReviewId = 11, StudentId = 11, CourseId = 11, Rating = 5, CommentText = "Loved it!", Cdate = DateTime.Now, Udate = DateTime.Now },
+new Review { ReviewId = 12, StudentId = 12, CourseId = 12, Rating = 4, CommentText = "Very useful.", Cdate = DateTime.Now.AddDays(1), Udate = DateTime.Now },
+new Review { ReviewId = 13, StudentId = 13, CourseId = 13, Rating = 5, CommentText = "Fantastic course!", Cdate = DateTime.Now.AddDays(2), Udate = DateTime.Now },
+new Review { ReviewId = 14, StudentId = 14, CourseId = 14, Rating = 4, CommentText = "Great teacher.", Cdate = DateTime.Now.AddDays(3), Udate = DateTime.Now },
+new Review { ReviewId = 15, StudentId = 15, CourseId = 15, Rating = 5, CommentText = "Well explained.", Cdate = DateTime.Now.AddDays(4), Udate = DateTime.Now },
+new Review { ReviewId = 16, StudentId = 16, CourseId = 16, Rating = 4, CommentText = "Good coverage.", Cdate = DateTime.Now.AddDays(5), Udate = DateTime.Now },
+new Review { ReviewId = 17, StudentId = 17, CourseId = 17, Rating = 5, CommentText = "Loved the content.", Cdate = DateTime.Now.AddDays(6), Udate = DateTime.Now },
+new Review { ReviewId = 18, StudentId = 18, CourseId = 18, Rating = 4, CommentText = "Very clear.", Cdate = DateTime.Now.AddDays(7), Udate = DateTime.Now },
+new Review { ReviewId = 19, StudentId = 19, CourseId = 19, Rating = 5, CommentText = "Highly informative.", Cdate = DateTime.Now.AddDays(8), Udate = DateTime.Now },
+new Review { ReviewId = 20, StudentId = 20, CourseId = 20, Rating = 4, CommentText = "Helpful.", Cdate = DateTime.Now.AddDays(9), Udate = DateTime.Now },
+new Review { ReviewId = 21, StudentId = 21, CourseId = 21, Rating = 5, CommentText = "Amazing course!", Cdate = DateTime.Now.AddDays(-10), Udate = DateTime.Now },
+new Review { ReviewId = 22, StudentId = 22, CourseId = 22, Rating = 4, CommentText = "Well organized.", Cdate = DateTime.Now.AddDays(-9), Udate = DateTime.Now },
+new Review { ReviewId = 23, StudentId = 23, CourseId = 23, Rating = 5, CommentText = "Great insights.", Cdate = DateTime.Now.AddDays(-8), Udate = DateTime.Now },
+new Review { ReviewId = 24, StudentId = 24, CourseId = 24, Rating = 4, CommentText = "Valuable lessons.", Cdate = DateTime.Now.AddDays(-7), Udate = DateTime.Now },
+new Review { ReviewId = 25, StudentId = 25, CourseId = 25, Rating = 5, CommentText = "Excellent teaching.", Cdate = DateTime.Now.AddDays(-6), Udate = DateTime.Now },
+new Review { ReviewId = 26, StudentId = 26, CourseId = 26, Rating = 4, CommentText = "Clear and concise.", Cdate = DateTime.Now.AddDays(-5), Udate = DateTime.Now },
+new Review { ReviewId = 27, StudentId = 27, CourseId = 27, Rating = 5, CommentText = "Very educational.", Cdate = DateTime.Now.AddDays(-4), Udate = DateTime.Now },
+new Review { ReviewId = 28, StudentId = 28, CourseId = 28, Rating = 4, CommentText = "Useful information.", Cdate = DateTime.Now.AddDays(-3), Udate = DateTime.Now },
+new Review { ReviewId = 29, StudentId = 29, CourseId = 29, Rating = 5, CommentText = "Well presented.", Cdate = DateTime.Now.AddDays(-2), Udate = DateTime.Now },
+new Review { ReviewId = 30, StudentId = 30, CourseId = 30, Rating = 4, CommentText = "Good pacing.", Cdate = DateTime.Now.AddDays(-1), Udate = DateTime.Now }
+
 );
-
-
         modelBuilder.Entity<ShoppingCart>().HasData(
-    new ShoppingCart { ShoppingCartId = 1, CourseId = 1, UnitPrice = 500, Quantity = 2, TotalPrice = 1000, MemberId = 1, CourseType = 1, Cdate = DateTime.Now },
-    new ShoppingCart { ShoppingCartId = 2, CourseId = 2, UnitPrice = 1000, Quantity = 1, TotalPrice = 1000, MemberId = 2, CourseType = 1, Cdate = DateTime.Now }
-);
-
-
+new ShoppingCart { ShoppingCartId = 1, CourseId = 1, UnitPrice = 100.00m, Quantity = 10, TotalPrice = 1000.00m, MemberId = 1, CourseType = 1, Cdate = DateTime.Now.AddDays(-20), Udate = DateTime.Now.AddDays(-19), BookingDate = DateTime.Now.AddDays(-18), BookingTime = DateTime.Now.AddDays(-18) },
+new ShoppingCart { ShoppingCartId = 2, CourseId = 2, UnitPrice = 200.00m, Quantity = 5, TotalPrice = 1000.00m, MemberId = 2, CourseType = 2, Cdate = DateTime.Now.AddDays(-19), Udate = DateTime.Now.AddDays(-18), BookingDate = DateTime.Now.AddDays(-17), BookingTime = DateTime.Now.AddDays(-17) },
+new ShoppingCart { ShoppingCartId = 3, CourseId = 3, UnitPrice = 300.00m, Quantity = 3, TotalPrice = 900.00m, MemberId = 3, CourseType = 1, Cdate = DateTime.Now.AddDays(-18), Udate = DateTime.Now.AddDays(-17), BookingDate = DateTime.Now.AddDays(-16), BookingTime = DateTime.Now.AddDays(-16) },
+new ShoppingCart { ShoppingCartId = 4, CourseId = 4, UnitPrice = 400.00m, Quantity = 2, TotalPrice = 800.00m, MemberId = 4, CourseType = 2, Cdate = DateTime.Now.AddDays(-17), Udate = DateTime.Now.AddDays(-16), BookingDate = DateTime.Now.AddDays(-15), BookingTime = DateTime.Now.AddDays(-15) },
+new ShoppingCart { ShoppingCartId = 5, CourseId = 5, UnitPrice = 500.00m, Quantity = 4, TotalPrice = 2000.00m, MemberId = 5, CourseType = 1, Cdate = DateTime.Now.AddDays(-16), Udate = DateTime.Now.AddDays(-15), BookingDate = DateTime.Now.AddDays(-14), BookingTime = DateTime.Now.AddDays(-14) },
+new ShoppingCart { ShoppingCartId = 6, CourseId = 6, UnitPrice = 600.00m, Quantity = 1, TotalPrice = 600.00m, MemberId = 6, CourseType = 2, Cdate = DateTime.Now.AddDays(-15), Udate = DateTime.Now.AddDays(-14), BookingDate = DateTime.Now.AddDays(-13), BookingTime = DateTime.Now.AddDays(-13) },
+new ShoppingCart { ShoppingCartId = 7, CourseId = 7, UnitPrice = 700.00m, Quantity = 3, TotalPrice = 2100.00m, MemberId = 7, CourseType = 1, Cdate = DateTime.Now.AddDays(-14), Udate = DateTime.Now.AddDays(-13), BookingDate = DateTime.Now.AddDays(-12), BookingTime = DateTime.Now.AddDays(-12) },
+new ShoppingCart { ShoppingCartId = 8, CourseId = 8, UnitPrice = 800.00m, Quantity = 2, TotalPrice = 1600.00m, MemberId = 8, CourseType = 2, Cdate = DateTime.Now.AddDays(-13), Udate = DateTime.Now.AddDays(-12), BookingDate = DateTime.Now.AddDays(-11), BookingTime = DateTime.Now.AddDays(-11) },
+new ShoppingCart { ShoppingCartId = 9, CourseId = 9, UnitPrice = 900.00m, Quantity = 1, TotalPrice = 900.00m, MemberId = 9, CourseType = 1, Cdate = DateTime.Now.AddDays(-12), Udate = DateTime.Now.AddDays(-11), BookingDate = DateTime.Now.AddDays(-10), BookingTime = DateTime.Now.AddDays(-10) },
+new ShoppingCart { ShoppingCartId = 10, CourseId = 10, UnitPrice = 1000.00m, Quantity = 2, TotalPrice = 2000.00m, MemberId = 10, CourseType = 2, Cdate = DateTime.Now.AddDays(-11), Udate = DateTime.Now.AddDays(-10), BookingDate = DateTime.Now.AddDays(-9), BookingTime = DateTime.Now.AddDays(-9) },
+new ShoppingCart { ShoppingCartId = 11, CourseId = 11, UnitPrice = 1100.00m, Quantity = 4, TotalPrice = 4400.00m, MemberId = 11, CourseType = 1, Cdate = DateTime.Now.AddDays(-10), Udate = DateTime.Now.AddDays(-9), BookingDate = DateTime.Now.AddDays(-8), BookingTime = DateTime.Now.AddDays(-8) },
+new ShoppingCart { ShoppingCartId = 12, CourseId = 12, UnitPrice = 1200.00m, Quantity = 3, TotalPrice = 3600.00m, MemberId = 12, CourseType = 2, Cdate = DateTime.Now.AddDays(-9), Udate = DateTime.Now.AddDays(-8), BookingDate = DateTime.Now.AddDays(-7), BookingTime = DateTime.Now.AddDays(-7) },
+new ShoppingCart { ShoppingCartId = 13, CourseId = 13, UnitPrice = 1300.00m, Quantity = 5, TotalPrice = 6500.00m, MemberId = 13, CourseType = 1, Cdate = DateTime.Now.AddDays(-8), Udate = DateTime.Now.AddDays(-7), BookingDate = DateTime.Now.AddDays(-6), BookingTime = DateTime.Now.AddDays(-6) },
+new ShoppingCart { ShoppingCartId = 14, CourseId = 14, UnitPrice = 1400.00m, Quantity = 2, TotalPrice = 2800.00m, MemberId = 14, CourseType = 2, Cdate = DateTime.Now.AddDays(-7), Udate = DateTime.Now.AddDays(-6), BookingDate = DateTime.Now.AddDays(-5), BookingTime = DateTime.Now.AddDays(-5) },
+new ShoppingCart { ShoppingCartId = 15, CourseId = 15, UnitPrice = 1500.00m, Quantity = 1, TotalPrice = 1500.00m, MemberId = 15, CourseType = 1, Cdate = DateTime.Now.AddDays(-6), Udate = DateTime.Now.AddDays(-5), BookingDate = DateTime.Now.AddDays(-4), BookingTime = DateTime.Now.AddDays(-4) },
+new ShoppingCart { ShoppingCartId = 16, CourseId = 16, UnitPrice = 1600.00m, Quantity = 3, TotalPrice = 4800.00m, MemberId = 16, CourseType = 2, Cdate = DateTime.Now.AddDays(-5), Udate = DateTime.Now.AddDays(-4), BookingDate = DateTime.Now.AddDays(-3), BookingTime = DateTime.Now.AddDays(-3) },
+new ShoppingCart { ShoppingCartId = 17, CourseId = 17, UnitPrice = 1700.00m, Quantity = 2, TotalPrice = 3400.00m, MemberId = 17, CourseType = 1, Cdate = DateTime.Now.AddDays(-4), Udate = DateTime.Now.AddDays(-3), BookingDate = DateTime.Now.AddDays(-2), BookingTime = DateTime.Now.AddDays(-2) },
+new ShoppingCart { ShoppingCartId = 18, CourseId = 18, UnitPrice = 1800.00m, Quantity = 4, TotalPrice = 7200.00m, MemberId = 18, CourseType = 2, Cdate = DateTime.Now.AddDays(-3), Udate = DateTime.Now.AddDays(-2), BookingDate = DateTime.Now.AddDays(-1), BookingTime = DateTime.Now.AddDays(-1) },
+new ShoppingCart { ShoppingCartId = 19, CourseId = 19, UnitPrice = 1900.00m, Quantity = 1, TotalPrice = 1900.00m, MemberId = 19, CourseType = 1, Cdate = DateTime.Now.AddDays(-2), Udate = DateTime.Now.AddDays(-1), BookingDate = DateTime.Now, BookingTime = DateTime.Now },
+new ShoppingCart { ShoppingCartId = 20, CourseId = 20, UnitPrice = 2000.00m, Quantity = 2, TotalPrice = 4000.00m, MemberId = 20, CourseType = 2, Cdate = DateTime.Now.AddDays(-1), Udate = DateTime.Now, BookingDate = DateTime.Now.AddDays(1), BookingTime = DateTime.Now.AddDays(1) }
+        );
         modelBuilder.Entity<ShoppingCartBooking>().HasData(
-    new ShoppingCartBooking { BookingId = 1, CourseId = 1, BookingTime = 800, MemberId = 1, TempShoppingCartId = 1, Cdate = DateTime.Now },
-    new ShoppingCartBooking { BookingId = 2, CourseId = 2, BookingTime = 900, MemberId = 2, TempShoppingCartId = 2, Cdate = DateTime.Now }
+new ShoppingCartBooking { BookingId = 1, CourseId = 1, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-20)), BookingTime = 10, MemberId = 1, TempShoppingCartId = 1, Cdate = DateTime.Now.AddDays(-20), Udate = DateTime.Now.AddDays(-19) },
+new ShoppingCartBooking { BookingId = 2, CourseId = 2, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-19)), BookingTime = 11, MemberId = 2, TempShoppingCartId = 2, Cdate = DateTime.Now.AddDays(-19), Udate = DateTime.Now.AddDays(-18) },
+new ShoppingCartBooking { BookingId = 3, CourseId = 3, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-18)), BookingTime = 12, MemberId = 3, TempShoppingCartId = 3, Cdate = DateTime.Now.AddDays(-18), Udate = DateTime.Now.AddDays(-17) },
+new ShoppingCartBooking { BookingId = 4, CourseId = 4, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-17)), BookingTime = 13, MemberId = 4, TempShoppingCartId = 4, Cdate = DateTime.Now.AddDays(-17), Udate = DateTime.Now.AddDays(-16) },
+new ShoppingCartBooking { BookingId = 5, CourseId = 5, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-16)), BookingTime = 14, MemberId = 5, TempShoppingCartId = 5, Cdate = DateTime.Now.AddDays(-16), Udate = DateTime.Now.AddDays(-15) },
+new ShoppingCartBooking { BookingId = 6, CourseId = 6, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-15)), BookingTime = 15, MemberId = 6, TempShoppingCartId = 6, Cdate = DateTime.Now.AddDays(-15), Udate = DateTime.Now.AddDays(-14) },
+new ShoppingCartBooking { BookingId = 7, CourseId = 7, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-14)), BookingTime = 16, MemberId = 7, TempShoppingCartId = 7, Cdate = DateTime.Now.AddDays(-14), Udate = DateTime.Now.AddDays(-13) },
+new ShoppingCartBooking { BookingId = 8, CourseId = 8, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-13)), BookingTime = 17, MemberId = 8, TempShoppingCartId = 8, Cdate = DateTime.Now.AddDays(-13), Udate = DateTime.Now.AddDays(-12) },
+new ShoppingCartBooking { BookingId = 9, CourseId = 9, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-12)), BookingTime = 18, MemberId = 9, TempShoppingCartId = 9, Cdate = DateTime.Now.AddDays(-12), Udate = DateTime.Now.AddDays(-11) },
+new ShoppingCartBooking { BookingId = 10, CourseId = 10, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-11)), BookingTime = 19, MemberId = 10, TempShoppingCartId = 10, Cdate = DateTime.Now.AddDays(-11), Udate = DateTime.Now.AddDays(-10) },
+new ShoppingCartBooking { BookingId = 11, CourseId = 11, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), BookingTime = 20, MemberId = 11, TempShoppingCartId = 11, Cdate = DateTime.Now.AddDays(-10), Udate = DateTime.Now.AddDays(-9) },
+new ShoppingCartBooking { BookingId = 12, CourseId = 12, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-9)), BookingTime = 21, MemberId = 12, TempShoppingCartId = 12, Cdate = DateTime.Now.AddDays(-9), Udate = DateTime.Now.AddDays(-8) },
+new ShoppingCartBooking { BookingId = 13, CourseId = 13, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-8)), BookingTime = 22, MemberId = 13, TempShoppingCartId = 13, Cdate = DateTime.Now.AddDays(-8), Udate = DateTime.Now.AddDays(-7) },
+new ShoppingCartBooking { BookingId = 14, CourseId = 14, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-7)), BookingTime = 23, MemberId = 14, TempShoppingCartId = 14, Cdate = DateTime.Now.AddDays(-7), Udate = DateTime.Now.AddDays(-6) },
+new ShoppingCartBooking { BookingId = 15, CourseId = 15, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-6)), BookingTime = 24, MemberId = 15, TempShoppingCartId = 15, Cdate = DateTime.Now.AddDays(-6), Udate = DateTime.Now.AddDays(-5) },
+new ShoppingCartBooking { BookingId = 16, CourseId = 16, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), BookingTime = 25, MemberId = 16, TempShoppingCartId = 16, Cdate = DateTime.Now.AddDays(-5), Udate = DateTime.Now.AddDays(-4) },
+new ShoppingCartBooking { BookingId = 17, CourseId = 17, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), BookingTime = 26, MemberId = 17, TempShoppingCartId = 17, Cdate = DateTime.Now.AddDays(-4), Udate = DateTime.Now.AddDays(-3) },
+new ShoppingCartBooking { BookingId = 18, CourseId = 18, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), BookingTime = 27, MemberId = 18, TempShoppingCartId = 18, Cdate = DateTime.Now.AddDays(-3), Udate = DateTime.Now.AddDays(-2) },
+new ShoppingCartBooking { BookingId = 19, CourseId = 19, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)), BookingTime = 28, MemberId = 19, TempShoppingCartId = 19, Cdate = DateTime.Now.AddDays(-2), Udate = DateTime.Now.AddDays(-1) },
+new ShoppingCartBooking { BookingId = 20, CourseId = 20, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)), BookingTime = 29, MemberId = 20, TempShoppingCartId = 20, Cdate = DateTime.Now.AddDays(-1), Udate = DateTime.Now }
 );
-
-
         modelBuilder.Entity<TutorTimeSlot>().HasData(
-    new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 12, BookingId=1, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 1, Weekday = 1, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 3, TutorId = 4, Weekday = 2, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 4, TutorId = 4, Weekday = 2, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 4, Weekday = 2, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 6, TutorId = 4, Weekday = 2, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 7, TutorId = 4, Weekday = 2, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 8, TutorId = 4, Weekday = 2, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 9, TutorId = 5, Weekday = 3, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 10, TutorId = 5, Weekday = 3, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 11, TutorId = 5, Weekday = 3, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 12, TutorId = 5, Weekday = 3, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 13, TutorId = 5, Weekday = 3, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 14, TutorId = 5, Weekday = 3, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 15, TutorId = 5, Weekday = 4, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 16, TutorId = 5, Weekday = 4, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 17, TutorId = 5, Weekday = 4, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 18, TutorId = 5, Weekday = 4, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 19, TutorId = 5, Weekday = 4, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 20, TutorId = 5, Weekday = 4, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 21, TutorId = 5, Weekday = 5, CourseHourId = 13, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 22, TutorId = 5, Weekday = 5, CourseHourId = 14, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 23, TutorId = 5, Weekday = 5, CourseHourId = 15, BookingId = 2, Cdate = DateTime.Now },
-    new TutorTimeSlot { TutorTimeSlotId = 24, TutorId = 5, Weekday = 5, CourseHourId = 20, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 25, TutorId = 5, Weekday = 5, CourseHourId = 21, BookingId = 2, Cdate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 26, TutorId = 5, Weekday = 5, CourseHourId = 22, BookingId = 2, Cdate = DateTime.Now }
-
-);
-
-
+new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 1, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(1) },
+new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 2, Weekday = 2, CourseHourId = 2, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(2) },
+new TutorTimeSlot { TutorTimeSlotId = 3, TutorId = 3, Weekday = 3, CourseHourId = 3, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(3) },
+new TutorTimeSlot { TutorTimeSlotId = 4, TutorId = 4, Weekday = 4, CourseHourId = 4, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(4) },
+new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 5, Weekday = 5, CourseHourId = 5, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(5) },
+new TutorTimeSlot { TutorTimeSlotId = 6, TutorId = 6, Weekday = 6, CourseHourId = 6, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(6) },
+new TutorTimeSlot { TutorTimeSlotId = 7, TutorId = 7, Weekday = 7, CourseHourId = 7, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(7) },
+new TutorTimeSlot { TutorTimeSlotId = 8, TutorId = 8, Weekday = 1, CourseHourId = 8, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(8) },
+new TutorTimeSlot { TutorTimeSlotId = 9, TutorId = 9, Weekday = 2, CourseHourId = 9, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(9) },
+new TutorTimeSlot { TutorTimeSlotId = 10, TutorId = 10, Weekday = 3, CourseHourId = 10, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(10) },
+new TutorTimeSlot { TutorTimeSlotId = 11, TutorId = 11, Weekday = 4, CourseHourId = 11, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(11) },
+new TutorTimeSlot { TutorTimeSlotId = 12, TutorId = 12, Weekday = 5, CourseHourId = 12, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(12) },
+new TutorTimeSlot { TutorTimeSlotId = 13, TutorId = 13, Weekday = 6, CourseHourId = 13, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(13) },
+new TutorTimeSlot { TutorTimeSlotId = 14, TutorId = 14, Weekday = 7, CourseHourId = 14, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(14) },
+new TutorTimeSlot { TutorTimeSlotId = 15, TutorId = 15, Weekday = 1, CourseHourId = 15, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(15) },
+new TutorTimeSlot { TutorTimeSlotId = 16, TutorId = 16, Weekday = 2, CourseHourId = 16, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(16) },
+new TutorTimeSlot { TutorTimeSlotId = 17, TutorId = 17, Weekday = 3, CourseHourId = 17, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(17) },
+new TutorTimeSlot { TutorTimeSlotId = 18, TutorId = 18, Weekday = 4, CourseHourId = 18, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(18) },
+new TutorTimeSlot { TutorTimeSlotId = 19, TutorId = 19, Weekday = 5, CourseHourId = 19, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(19) },
+new TutorTimeSlot { TutorTimeSlotId = 20, TutorId = 20, Weekday = 6, CourseHourId = 20, Cdate = DateTime.Now, Udate = DateTime.Now.AddDays(20) }
+ );
         modelBuilder.Entity<WorkExperience>().HasData(
-    new WorkExperience { WorkExperienceId = 1, MemberId = 1, WorkExperienceFile = "csharp_experience.pdf", WorkStartDate = DateTime.Now.AddYears(-3), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now },
-    new WorkExperience { WorkExperienceId = 2, MemberId = 2, WorkExperienceFile = "japanese_experience.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now }
-);
-
+new WorkExperience { WorkExperienceId = 1, MemberId = 1, WorkName = "Software Engineer", WorkExperienceFile = "https://example.com/resume/software_engineer_1.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now.AddYears(-5), Udate = DateTime.Now.AddYears(-2) },
+new WorkExperience { WorkExperienceId = 2, MemberId = 2, WorkName = "Data Analyst", WorkExperienceFile = "https://example.com/resume/data_analyst_2.pdf", WorkStartDate = DateTime.Now.AddYears(-4), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now.AddYears(-4), Udate = DateTime.Now.AddYears(-1) },
+new WorkExperience { WorkExperienceId = 3, MemberId = 3, WorkName = "Web Developer", WorkExperienceFile = "https://example.com/resume/web_developer_3.pdf", WorkStartDate = DateTime.Now.AddYears(-3), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now.AddYears(-3), Udate = DateTime.Now.AddYears(-1) },
+new WorkExperience { WorkExperienceId = 4, MemberId = 4, WorkName = "Database Administrator", WorkExperienceFile = "https://example.com/resume/db_admin_4.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-3), Cdate = DateTime.Now.AddYears(-5), Udate = DateTime.Now.AddYears(-3) },
+new WorkExperience { WorkExperienceId = 5, MemberId = 5, WorkName = "Network Engineer", WorkExperienceFile = "https://example.com/resume/network_engineer_5.pdf", WorkStartDate = DateTime.Now.AddYears(-6), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now.AddYears(-6), Udate = DateTime.Now.AddYears(-2) },
+new WorkExperience { WorkExperienceId = 6, MemberId = 6, WorkName = "System Analyst", WorkExperienceFile = "https://example.com/resume/system_analyst_6.pdf", WorkStartDate = DateTime.Now.AddYears(-7), WorkEndDate = DateTime.Now.AddYears(-3), Cdate = DateTime.Now.AddYears(-7), Udate = DateTime.Now.AddYears(-3) },
+new WorkExperience { WorkExperienceId = 7, MemberId = 7, WorkName = "Project Manager", WorkExperienceFile = "https://example.com/resume/project_manager_7.pdf", WorkStartDate = DateTime.Now.AddYears(-8), WorkEndDate = DateTime.Now.AddYears(-4), Cdate = DateTime.Now.AddYears(-8), Udate = DateTime.Now.AddYears(-4) },
+new WorkExperience { WorkExperienceId = 8, MemberId = 8, WorkName = "UI/UX Designer", WorkExperienceFile = "https://example.com/resume/ui_ux_designer_8.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now.AddYears(-5), Udate = DateTime.Now.AddYears(-1) },
+new WorkExperience { WorkExperienceId = 9, MemberId = 9, WorkName = "DevOps Engineer", WorkExperienceFile = "https://example.com/resume/devops_engineer_9.pdf", WorkStartDate = DateTime.Now.AddYears(-4), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now.AddYears(-4), Udate = DateTime.Now.AddYears(-2) },
+new WorkExperience { WorkExperienceId = 10, MemberId = 10, WorkName = "Software Architect", WorkExperienceFile = "https://example.com/resume/software_architect_10.pdf", WorkStartDate = DateTime.Now.AddYears(-6), WorkEndDate = DateTime.Now.AddYears(-3), Cdate = DateTime.Now.AddYears(-6), Udate = DateTime.Now.AddYears(-3) },
+new WorkExperience { WorkExperienceId = 11, MemberId = 11, WorkName = "Business Analyst", WorkExperienceFile = "https://example.com/resume/business_analyst_11.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now.AddYears(-5), Udate = DateTime.Now.AddYears(-2) },
+new WorkExperience { WorkExperienceId = 12, MemberId = 12, WorkName = "Product Manager", WorkExperienceFile = "https://example.com/resume/product_manager_12.pdf", WorkStartDate = DateTime.Now.AddYears(-6), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now.AddYears(-6), Udate = DateTime.Now.AddYears(-1) },
+new WorkExperience { WorkExperienceId = 13, MemberId = 13, WorkName = "Marketing Specialist", WorkExperienceFile = "https://example.com/resume/marketing_specialist_13.pdf", WorkStartDate = DateTime.Now.AddYears(-7), WorkEndDate = DateTime.Now.AddYears(-3), Cdate = DateTime.Now.AddYears(-7), Udate = DateTime.Now.AddYears(-3) },
+new WorkExperience { WorkExperienceId = 14, MemberId = 14, WorkName = "SEO Specialist", WorkExperienceFile = "https://example.com/resume/seo_specialist_14.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now.AddYears(-5), Udate = DateTime.Now.AddYears(-1) },
+new WorkExperience { WorkExperienceId = 15, MemberId = 15, WorkName = "Content Manager", WorkExperienceFile = "https://example.com/resume/content_manager_15.pdf", WorkStartDate = DateTime.Now.AddYears(-6), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now.AddYears(-6), Udate = DateTime.Now.AddYears(-2) },
+new WorkExperience { WorkExperienceId = 16, MemberId = 16, WorkName = "Cybersecurity Specialist", WorkExperienceFile = "https://example.com/resume/cybersecurity_specialist_16.pdf", WorkStartDate = DateTime.Now.AddYears(-4), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now.AddYears(-4), Udate = DateTime.Now.AddYears(-1) },
+new WorkExperience { WorkExperienceId = 17, MemberId = 17, WorkName = "AI Engineer", WorkExperienceFile = "https://example.com/resume/ai_engineer_17.pdf", WorkStartDate = DateTime.Now.AddYears(-3), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now.AddYears(-3), Udate = DateTime.Now.AddYears(-1) },
+new WorkExperience { WorkExperienceId = 18, MemberId = 18, WorkName = "Machine Learning Engineer", WorkExperienceFile = "https://example.com/resume/ml_engineer_18.pdf", WorkStartDate = DateTime.Now.AddYears(-2), WorkEndDate = DateTime.Now, Cdate = DateTime.Now.AddYears(-2), Udate = DateTime.Now },
+new WorkExperience { WorkExperienceId = 19, MemberId = 19, WorkName = "Blockchain Developer", WorkExperienceFile = "https://example.com/resume/blockchain_developer_19.pdf", WorkStartDate = DateTime.Now.AddYears(-4), WorkEndDate = DateTime.Now.AddYears(-1), Cdate = DateTime.Now.AddYears(-4), Udate = DateTime.Now.AddYears(-1) },
+new WorkExperience { WorkExperienceId = 20, MemberId = 20, WorkName = "Full Stack Developer", WorkExperienceFile = "https://example.com/resume/full_stack_developer_20.pdf", WorkStartDate = DateTime.Now.AddYears(-5), WorkEndDate = DateTime.Now.AddYears(-2), Cdate = DateTime.Now.AddYears(-5), Udate = DateTime.Now.AddYears(-2) }
+        );
         modelBuilder.Entity<CourseHour>().HasData(
             new CourseHour { CourseHourId = 1, Hour = "00:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 2, Hour = "01:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 3, Hour = "02:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 4, Hour = "03:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 5, Hour = "04:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 6, Hour = "05:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 7, Hour = "06:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 8, Hour = "07:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 9, Hour = "08:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 10, Hour = "09:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 11, Hour = "10:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 12, Hour = "11:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 13, Hour = "12:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 14, Hour = "13:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 15, Hour = "14:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 16, Hour = "15:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 17, Hour = "16:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 18, Hour = "17:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 19, Hour = "18:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 20, Hour = "19:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 21, Hour = "20:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 22, Hour = "21:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 23, Hour = "22:00", Cdate = DateTime.Now },
-            new CourseHour { CourseHourId = 24, Hour = "23:00", Cdate = DateTime.Now }
+new CourseHour { CourseHourId = 2, Hour = "01:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 3, Hour = "02:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 4, Hour = "03:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 5, Hour = "04:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 6, Hour = "05:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 7, Hour = "06:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 8, Hour = "07:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 9, Hour = "08:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 10, Hour = "09:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 11, Hour = "10:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 12, Hour = "11:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 13, Hour = "12:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 14, Hour = "13:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 15, Hour = "14:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 16, Hour = "15:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 17, Hour = "16:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 18, Hour = "17:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 19, Hour = "18:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 20, Hour = "19:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 21, Hour = "20:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 22, Hour = "21:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 23, Hour = "22:00", Cdate = DateTime.Now },
+new CourseHour { CourseHourId = 24, Hour = "23:00", Cdate = DateTime.Now }
+
             );
+
+        modelBuilder.Entity<WatchList>().HasData(
+    new WatchList { WatchListId = 1, FollowerId = 1, CourseId = 1 },
+    new WatchList { WatchListId = 2, FollowerId = 2, CourseId = 2 },
+    new WatchList { WatchListId = 3, FollowerId = 3, CourseId = 3 },
+    new WatchList { WatchListId = 4, FollowerId = 4, CourseId = 4 },
+    new WatchList { WatchListId = 5, FollowerId = 5, CourseId = 5 },
+    new WatchList { WatchListId = 6, FollowerId = 6, CourseId = 6 },
+    new WatchList { WatchListId = 7, FollowerId = 7, CourseId = 7 },
+    new WatchList { WatchListId = 8, FollowerId = 8, CourseId = 8 },
+    new WatchList { WatchListId = 9, FollowerId = 9, CourseId = 9 },
+    new WatchList { WatchListId = 10, FollowerId = 10, CourseId = 10 },
+    new WatchList { WatchListId = 11, FollowerId = 11, CourseId = 11 },
+    new WatchList { WatchListId = 12, FollowerId = 12, CourseId = 12 },
+    new WatchList { WatchListId = 13, FollowerId = 13, CourseId = 13 },
+    new WatchList { WatchListId = 14, FollowerId = 14, CourseId = 14 },
+    new WatchList { WatchListId = 15, FollowerId = 15, CourseId = 15 },
+    new WatchList { WatchListId = 16, FollowerId = 16, CourseId = 16 },
+    new WatchList { WatchListId = 17, FollowerId = 17, CourseId = 17 },
+    new WatchList { WatchListId = 18, FollowerId = 18, CourseId = 18 },
+    new WatchList { WatchListId = 19, FollowerId = 19, CourseId = 19 },
+    new WatchList { WatchListId = 20, FollowerId = 20, CourseId = 20 }
+);
 
 
         #endregion

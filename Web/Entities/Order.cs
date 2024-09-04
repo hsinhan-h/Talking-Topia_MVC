@@ -48,7 +48,7 @@ public partial class Order
     /// <summary>
     /// 發票號碼
     /// </summary>
-    public string Vatnumber { get; set; }
+    public string VATNumber { get; set; }
 
     /// <summary>
     /// 寄送Mail

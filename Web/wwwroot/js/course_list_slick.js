@@ -1,5 +1,5 @@
-﻿//到時候這區包成funciton, 每次讀取卡後資料後渲染後重新呼叫slick一次
-$(document).ready(function () {
+﻿//slick套件 (note:到時可能需包成funciton, 每次讀取卡後資料後渲染後重新呼叫slick一次)
+$(function () {
     $(".lh-tutor-cards").on(
         "mouseenter",
         ".lh-tutor-card:not(.lh-tutor-card-floating-popup)",
@@ -25,7 +25,7 @@ $(document).ready(function () {
                         nextArrow: arrowNext,
                     });
                 } else {
-                    slider.slick("setPosition"); //recalculate after position/ window size changes
+                    slider.slick("setPosition"); //位置或視窗大小變更後重新計算
                 }
             }
         }
@@ -43,11 +43,6 @@ badgeTooltips.forEach((tooltip) => {
     new bootstrap.Tooltip(tooltip);
 });
 
-//reset expand table btn
-$(".lh-tutor-card__book-btn").on("click", () => {
-    $("#bookingTableBodyWrapper").css("maxHeight", "480px");
-    $("#expandBookingTable").css("display", "block");
-});
 
 //youtube彈出視窗
 function autoPlayYouTubeModal() {
@@ -63,3 +58,5 @@ function autoPlayYouTubeModal() {
     });
 }
 autoPlayYouTubeModal();
+
+

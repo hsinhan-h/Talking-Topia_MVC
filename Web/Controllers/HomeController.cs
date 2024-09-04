@@ -4,6 +4,7 @@ namespace Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly CourseService _courseService;
+        
 
         public HomeController(ILogger<HomeController> logger, CourseService courseService)
         {
@@ -16,11 +17,19 @@ namespace Web.Controllers
             var course = await _courseService.GetCourseList();
             return View(course);
         }
+        public IActionResult Account()
+        {
+            return View();
+        }
         public IActionResult Login()
         {
             return View();
         }
         public IActionResult Register()
+        {
+            return View();
+        }
+        public IActionResult Logout()
         {
             return View();
         }

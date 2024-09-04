@@ -26,11 +26,6 @@ public partial class TutorTimeSlot
     public int CourseHourId { get; set; }
 
     /// <summary>
-    /// 預約課程Id
-    /// </summary>
-    public int BookingId { get; set; }
-
-    /// <summary>
     /// 建立時間
     /// </summary>
     public DateTime Cdate { get; set; }
@@ -39,8 +34,6 @@ public partial class TutorTimeSlot
     /// 修改時間
     /// </summary>
     public DateTime? Udate { get; set; }
-
-    public virtual Booking Booking { get; set; }
 
     public virtual CourseHour CourseHour { get; set; }
 

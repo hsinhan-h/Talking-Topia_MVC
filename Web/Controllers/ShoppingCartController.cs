@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using Web.Entities;
 
 namespace Web.Controllers
 {
@@ -17,26 +18,15 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int memberId, int courseId, int courseLength, int quantity)
         {
-            //todo: 確認是否為有效member及course (可以統一寫在member跟course的service)
-            var member = await _shoppingCartService.GetMemberData(memberId);
-            var course = await _shoppingCartService.GetCourseData(courseId);
-
-            //todo: 確認ShoppingCart是否有資料
-            var cartData = await _shoppingCartService.GetShoppingCartData(member, course, courseLength, quantity);
-
             //todo: 新增課程至購物車
-
+            var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
             return View(cartData);
 
         }
         [HttpPost]
         public async Task<IActionResult> GetCart(int memberId, int courseId)
         {
-            //todo: 確認是否為有效member
-            var member = await _shoppingCartService.GetMemberData(memberId);
-
             //todo: 確認ShoppingCart是否有資料
-
             return View("Index");
 
         }
