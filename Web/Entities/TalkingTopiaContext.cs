@@ -816,7 +816,7 @@ public partial class TalkingTopiaContext : DbContext
     new Education { EducationId = 10, SchoolName = "University of Toronto", StudyStartYear = 2012, StudyEndYear = 2016, DepartmentName = "Biology", Cdate = DateTime.Now }
 );
 
-    
+
         modelBuilder.Entity<Member>().HasData(
     new Member { MemberId = 1, HeadShotImage = "https://randomuser.me/api/portraits/men/1.jpg", NationId = 1, IsVerifiedTutor = true, FirstName = "John", LastName = "Doe", Password = "password1", Email = "john.doe@example.com", Nickname = "JohnD", Phone = "123456789", Birthday = DateTime.Now.AddYears(-30), Gender = 1, NativeLanguage = "English", SpokenLanguage = "English", BankCode = "001", BankAccount = "1234567890", EducationId = 1, TutorIntro = "Experienced English tutor", Account = "john_doe", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
     new Member { MemberId = 2, HeadShotImage = "https://randomuser.me/api/portraits/women/2.jpg", NationId = 2, IsVerifiedTutor = false, FirstName = "Jane", LastName = "Smith", Password = "password2", Email = "jane.smith@example.com", Nickname = "JaneS", Phone = "987654321", Birthday = DateTime.Now.AddYears(-25), Gender = 2, NativeLanguage = "Japanese", SpokenLanguage = "Japanese", BankCode = "002", BankAccount = "2345678901", EducationId = 2, TutorIntro = "Japanese language specialist", Account = "jane_smith", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
@@ -1279,6 +1279,30 @@ new CourseHour { CourseHourId = 23, Hour = "22:00", Cdate = DateTime.Now },
 new CourseHour { CourseHourId = 24, Hour = "23:00", Cdate = DateTime.Now }
 
             );
+
+        modelBuilder.Entity<WatchList>().HasData(
+    new WatchList { WatchListId = 1, FollowerId = 1, CourseId = 101 },
+    new WatchList { WatchListId = 2, FollowerId = 2, CourseId = 102 },
+    new WatchList { WatchListId = 3, FollowerId = 3, CourseId = 103 },
+    new WatchList { WatchListId = 4, FollowerId = 4, CourseId = 104 },
+    new WatchList { WatchListId = 5, FollowerId = 5, CourseId = 105 },
+    new WatchList { WatchListId = 6, FollowerId = 6, CourseId = 106 },
+    new WatchList { WatchListId = 7, FollowerId = 7, CourseId = 107 },
+    new WatchList { WatchListId = 8, FollowerId = 8, CourseId = 108 },
+    new WatchList { WatchListId = 9, FollowerId = 9, CourseId = 109 },
+    new WatchList { WatchListId = 10, FollowerId = 10, CourseId = 110 },
+    new WatchList { WatchListId = 11, FollowerId = 11, CourseId = 111 },
+    new WatchList { WatchListId = 12, FollowerId = 12, CourseId = 112 },
+    new WatchList { WatchListId = 13, FollowerId = 13, CourseId = 113 },
+    new WatchList { WatchListId = 14, FollowerId = 14, CourseId = 114 },
+    new WatchList { WatchListId = 15, FollowerId = 15, CourseId = 115 },
+    new WatchList { WatchListId = 16, FollowerId = 16, CourseId = 116 },
+    new WatchList { WatchListId = 17, FollowerId = 17, CourseId = 117 },
+    new WatchList { WatchListId = 18, FollowerId = 18, CourseId = 118 },
+    new WatchList { WatchListId = 19, FollowerId = 19, CourseId = 119 },
+    new WatchList { WatchListId = 20, FollowerId = 20, CourseId = 120 }
+);
+
 
         #endregion
     }
