@@ -1020,27 +1020,27 @@ new Coupon { CouponId = 20, CouponName = "AutumnLeaves", CouponCode = "AUTUMN15"
         //    );
 
         modelBuilder.Entity<MemberPreference>().HasData(
-            new MemberPreference { MemberPreferenceId = 1, MemberId = 1, SubjecId = 1, CDate = DateTime.Now.AddMonths(-5), UDate = DateTime.Now.AddMonths(-4) },
-            new MemberPreference { MemberPreferenceId = 2, MemberId = 2, SubjecId = 2, CDate = DateTime.Now.AddMonths(-4), UDate = DateTime.Now.AddMonths(-3) },
-            new MemberPreference { MemberPreferenceId = 3, MemberId = 3, SubjecId = 3, CDate = DateTime.Now.AddMonths(-3), UDate = DateTime.Now.AddMonths(-2) },
-            new MemberPreference { MemberPreferenceId = 4, MemberId = 4, SubjecId = 4, CDate = DateTime.Now.AddMonths(-2), UDate = DateTime.Now.AddMonths(-1) },
-            new MemberPreference { MemberPreferenceId = 5, MemberId = 5, SubjecId = 5, CDate = DateTime.Now.AddMonths(-1), UDate = DateTime.Now },
-            new MemberPreference { MemberPreferenceId = 6, MemberId = 6, SubjecId = 6, CDate = DateTime.Now.AddMonths(-6), UDate = DateTime.Now.AddMonths(-5) },
-            new MemberPreference { MemberPreferenceId = 7, MemberId = 7, SubjecId = 7, CDate = DateTime.Now.AddMonths(-5), UDate = DateTime.Now.AddMonths(-4) },
-            new MemberPreference { MemberPreferenceId = 8, MemberId = 8, SubjecId = 8, CDate = DateTime.Now.AddMonths(-4), UDate = DateTime.Now.AddMonths(-3) },
-            new MemberPreference { MemberPreferenceId = 9, MemberId = 9, SubjecId = 9, CDate = DateTime.Now.AddMonths(-3), UDate = DateTime.Now.AddMonths(-2) },
-            new MemberPreference { MemberPreferenceId = 10, MemberId = 10, SubjecId = 10, CDate = DateTime.Now.AddMonths(-2), UDate = DateTime.Now.AddMonths(-1) },
-            new MemberPreference { MemberPreferenceId = 11, MemberId = 11, SubjecId = 11, CDate = DateTime.Now.AddMonths(-1), UDate = DateTime.Now },
-            new MemberPreference { MemberPreferenceId = 12, MemberId = 12, SubjecId = 12, CDate = DateTime.Now.AddMonths(-6), UDate = DateTime.Now.AddMonths(-5) },
-            new MemberPreference { MemberPreferenceId = 13, MemberId = 13, SubjecId = 13, CDate = DateTime.Now.AddMonths(-5), UDate = DateTime.Now.AddMonths(-4) },
-            new MemberPreference { MemberPreferenceId = 14, MemberId = 14, SubjecId = 14, CDate = DateTime.Now.AddMonths(-4), UDate = DateTime.Now.AddMonths(-3) },
-            new MemberPreference { MemberPreferenceId = 15, MemberId = 15, SubjecId = 15, CDate = DateTime.Now.AddMonths(-3), UDate = DateTime.Now.AddMonths(-2) },
-            new MemberPreference { MemberPreferenceId = 16, MemberId = 16, SubjecId = 16, CDate = DateTime.Now.AddMonths(-2), UDate = DateTime.Now.AddMonths(-1) },
-            new MemberPreference { MemberPreferenceId = 17, MemberId = 17, SubjecId = 17, CDate = DateTime.Now.AddMonths(-1), UDate = DateTime.Now },
-            new MemberPreference { MemberPreferenceId = 18, MemberId = 18, SubjecId = 18, CDate = DateTime.Now.AddMonths(-6), UDate = DateTime.Now.AddMonths(-5) },
-            new MemberPreference { MemberPreferenceId = 19, MemberId = 19, SubjecId = 1, CDate = DateTime.Now.AddMonths(-5), UDate = DateTime.Now.AddMonths(-4) },
-            new MemberPreference { MemberPreferenceId = 20, MemberId = 20, SubjecId = 2, CDate = DateTime.Now.AddMonths(-4), UDate = DateTime.Now.AddMonths(-3) }
-        );
+          new MemberPreference { MemberPreferenceId = 1, MemberId = 1, SubjecId = 1, Cdate = DateTime.Now.AddMonths(-5), Udate = DateTime.Now.AddMonths(-4) },
+new MemberPreference { MemberPreferenceId = 2, MemberId = 2, SubjecId = 2, Cdate = DateTime.Now.AddMonths(-4), Udate = DateTime.Now.AddMonths(-3) },
+new MemberPreference { MemberPreferenceId = 3, MemberId = 3, SubjecId = 3, Cdate = DateTime.Now.AddMonths(-3), Udate = DateTime.Now.AddMonths(-2) },
+new MemberPreference { MemberPreferenceId = 4, MemberId = 4, SubjecId = 4, Cdate = DateTime.Now.AddMonths(-2), Udate = DateTime.Now.AddMonths(-1) },
+new MemberPreference { MemberPreferenceId = 5, MemberId = 5, SubjecId = 5, Cdate = DateTime.Now.AddMonths(-1), Udate = DateTime.Now },
+new MemberPreference { MemberPreferenceId = 6, MemberId = 6, SubjecId = 6, Cdate = DateTime.Now.AddMonths(-6), Udate = DateTime.Now.AddMonths(-5) },
+new MemberPreference { MemberPreferenceId = 7, MemberId = 7, SubjecId = 7, Cdate = DateTime.Now.AddMonths(-5), Udate = DateTime.Now.AddMonths(-4) },
+new MemberPreference { MemberPreferenceId = 8, MemberId = 8, SubjecId = 8, Cdate = DateTime.Now.AddMonths(-4), Udate = DateTime.Now.AddMonths(-3) },
+new MemberPreference { MemberPreferenceId = 9, MemberId = 9, SubjecId = 9, Cdate = DateTime.Now.AddMonths(-3), Udate = DateTime.Now.AddMonths(-2) },
+new MemberPreference { MemberPreferenceId = 10, MemberId = 10, SubjecId = 10, Cdate = DateTime.Now.AddMonths(-2), Udate = DateTime.Now.AddMonths(-1) },
+new MemberPreference { MemberPreferenceId = 11, MemberId = 11, SubjecId = 11, Cdate = DateTime.Now.AddMonths(-1), Udate = DateTime.Now },
+new MemberPreference { MemberPreferenceId = 12, MemberId = 12, SubjecId = 12, Cdate = DateTime.Now.AddMonths(-6), Udate = DateTime.Now.AddMonths(-5) },
+new MemberPreference { MemberPreferenceId = 13, MemberId = 13, SubjecId = 13, Cdate = DateTime.Now.AddMonths(-5), Udate = DateTime.Now.AddMonths(-4) },
+new MemberPreference { MemberPreferenceId = 14, MemberId = 14, SubjecId = 14, Cdate = DateTime.Now.AddMonths(-4), Udate = DateTime.Now.AddMonths(-3) },
+new MemberPreference { MemberPreferenceId = 15, MemberId = 15, SubjecId = 15, Cdate = DateTime.Now.AddMonths(-3), Udate = DateTime.Now.AddMonths(-2) },
+new MemberPreference { MemberPreferenceId = 16, MemberId = 16, SubjecId = 16, Cdate = DateTime.Now.AddMonths(-2), Udate = DateTime.Now.AddMonths(-1) },
+new MemberPreference { MemberPreferenceId = 17, MemberId = 17, SubjecId = 17, Cdate = DateTime.Now.AddMonths(-1), Udate = DateTime.Now },
+new MemberPreference { MemberPreferenceId = 18, MemberId = 18, SubjecId = 18, Cdate = DateTime.Now.AddMonths(-6), Udate = DateTime.Now.AddMonths(-5) },
+new MemberPreference { MemberPreferenceId = 19, MemberId = 19, SubjecId = 1, Cdate = DateTime.Now.AddMonths(-5), Udate = DateTime.Now.AddMonths(-4) },
+new MemberPreference { MemberPreferenceId = 20, MemberId = 20, SubjecId = 2, Cdate = DateTime.Now.AddMonths(-4), Udate = DateTime.Now.AddMonths(-3) }
+);
         modelBuilder.Entity<ApplyList>().HasData(
     new ApplyList { ApplyId = 1, MemberId = 1, ApplyStatus = true, ApplyDateTime = DateTime.Now.AddDays(-10), ApprovedDateTime = DateTime.Now.AddDays(-8), UpdateStatusDateTime = DateTime.Now.AddDays(-7), RejectReason = null },
 new ApplyList { ApplyId = 2, MemberId = 2, ApplyStatus = false, ApplyDateTime = DateTime.Now.AddDays(-9), ApprovedDateTime = null, UpdateStatusDateTime = DateTime.Now.AddDays(-6), RejectReason = "Incomplete application" },
