@@ -23,7 +23,6 @@ $(function () {
             pageTextEl.text(currentPage);
             window.location.href = `?page=${currentPage}`;
         }
-        
     })
 })
 

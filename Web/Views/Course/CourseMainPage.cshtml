@@ -349,13 +349,10 @@
                 <div class="tutor-resume-content">
                     工作經驗
                     <ul>
-                        <li>2021 - 2021 兩家台灣知名連鎖語言補習班 韓語老師</li>
-                        <li>2021 - 2021 多家旅行社 企業外派韓語講師</li>
-                        <li>2020 - 2021 韓國/台灣線上韓語教師/中文教師/面授家教</li>
-                        <li>2018 - 2018 香港TVB電視台 韓國旅遊節目 來韓採訪口譯及公關</li>
-                        <li>2019 - 2020 韓國Culcom英中文終身教育中心</li>
-                        <li>2017 - 2017 韓國觀光公社</li>
-                        <li>2009 - 2009 韓國安養大學</li>
+                        @foreach (var work in Model.ExperienceList)
+                        {
+                            <li>@(work.StartYear) - @(work.EndYear) @(work.WorkTitle)</li>                     
+                        }
                     </ul>
                 </div>
                 <div class="tutor-resume-content ">
@@ -472,20 +469,8 @@
                 </div>
 
                 <div class="course-info-group min-25">
-                    @* <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$@Model.TwentyFiveMinPriceNTD</div>
-                            <div class="course-number-time">1堂25分鐘課</div>
-                        </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo d-none">5% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div> *@
-
                     @foreach (var item in Model.TwentyFiveDiscountedPrice)
-                    {
-                        
+                    {                        
                         <div class="course-info-card d-flex">
                             <div class="course-charging d-flex flex-column">
                                 <div class="charging-fee">NT$ @item.DiscountPrice</div>
@@ -500,29 +485,18 @@
                 </div>
                 
                 <div class="course-info-group min-50 d-none">
-                    @* <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$@Model.FiftyMinPriceNTD</div>
-                            <div class="course-number-time">1堂50分鐘課</div>
-                        </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo d-none">5% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div>  *@
                     @foreach (var item in Model.FiftyDiscountedPrice)
                     {
-                    <div class="course-info-card d-flex">
-                        <div class="course-charging d-flex flex-column">
-                            <div class="charging-fee">NT$ @item.DiscountPrice</div>
-                            <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
-                        </div>
-                        <div class="course-discount d-flex">
-                            <div class="course-discount-logo">@(item.Discount)% Off</div>
-                            <i class="fa-solid fa-angle-right"></i>
-                        </div>
-                    </div>
-                        
+                        <div class="course-info-card d-flex">
+                            <div class="course-charging d-flex flex-column">
+                                <div class="charging-fee">NT$ @item.DiscountPrice</div>
+                                <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
+                            </div>
+                            <div class="course-discount d-flex">
+                                <div class="course-discount-logo">@(item.Discount)% Off</div>
+                                <i class="fa-solid fa-angle-right"></i>
+                            </div>
+                        </div>                        
                     }
                 </div>
             </div>

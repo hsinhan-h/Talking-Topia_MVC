@@ -19,7 +19,7 @@ namespace Web.ViewModels
         [Display(Name = "學歷")]
         public string EducationDegree { get; set; }
         [Display(Name = "經歷")]
-        public string Experience { get; set; }
+        public List<TutorExperience> ExperienceList { get; set; }
         [Display(Name = "課程名稱")]
         public string CourseTitle { get; set; }
         [Display(Name = "課程副標題")]
@@ -30,11 +30,11 @@ namespace Web.ViewModels
         public string CourseIntro { get; set; }
         [Display(Name = "25分鐘台幣價格")]
         public int TwentyFiveMinPriceNTD { get; set; }
-
         public List<BaseDiscountPice> TwentyFiveDiscountedPrice { get; set; }
 
         [Display(Name = "50分鐘台幣價格")]
         public int FiftyMinPriceNTD { get; set; }
+        
         public List<BaseDiscountPice> FiftyDiscountedPrice { get; set; }
 
         [Display(Name = "課程影片")]
@@ -59,13 +59,20 @@ namespace Web.ViewModels
         
     }
 
-    public class TimeSlot
+    public class TutorExperience 
     {
-        public DateTime Date { get; set; }
-        public int Weekday { get; set; }
-        public int StartHour { get; set; }
-        public string StartHourText { get; set; }  //string表示的時間格式
+        public int StartYear { get; set; }
+        public int EndYear { get; set; }
+        public string WorkTitle { get; set; }
     }
+
+    //public class TimeSlot
+    //{
+    //    public DateTime Date { get; set; }
+    //    public int Weekday { get; set; }
+    //    public int StartHour { get; set; }
+    //    public string StartHourText { get; set; }  //string表示的時間格式
+    //}
 
     public class ReviewViewModel
     {
@@ -76,19 +83,7 @@ namespace Web.ViewModels
     }
 
 
-    public class TwentyFiveDiscountedPriceList
-    {
-        public decimal FiveOffPrice { get; set; }
-        public decimal TenOffPrice { get; set; }
-        public decimal FifteenOffPrice { get; set; }
-    }
-
-    public class FiftyDiscountedPriceList
-    {
-        public decimal FiveOffPrice { get; set; }
-        public decimal TenOffPrice { get; set; }
-        public decimal FifteenOffPrice { get; set; }
-    }
+    
     public class BaseDiscountPice
     {
        public int CourseCount { get; set; }

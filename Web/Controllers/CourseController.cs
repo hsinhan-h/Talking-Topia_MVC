@@ -19,7 +19,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> CourseList(int page = 1)
         {
-            int pageSize = 3;
+            int pageSize = 6;
             int totalCourseQty = await _courseService.GetTotalCourseQty();
             int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
             ViewData["TotalPages"] = totalPages;
