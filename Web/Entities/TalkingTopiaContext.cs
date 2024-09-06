@@ -1183,7 +1183,7 @@ new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId 
 new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 1, Weekday = 1, CourseHourId = 9, Cdate = DateTime.Now, Udate = DateTime.Now },
 new TutorTimeSlot { TutorTimeSlotId = 3, TutorId = 1, Weekday = 1, CourseHourId = 10, Cdate = DateTime.Now, Udate = DateTime.Now },
 new TutorTimeSlot { TutorTimeSlotId = 4, TutorId = 1, Weekday = 1, CourseHourId = 11, Cdate = DateTime.Now, Udate = DateTime.Now },
-new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 1, Weekday = 1, CourseHourId = 12, Cdate = DateTime.Now, Udate = DateTime.Now },-
+new TutorTimeSlot { TutorTimeSlotId = 5, TutorId = 1, Weekday = 1, CourseHourId = 12, Cdate = DateTime.Now, Udate = DateTime.Now },
 new TutorTimeSlot { TutorTimeSlotId = 6, TutorId = 1, Weekday = 1, CourseHourId = 13, Cdate = DateTime.Now, Udate = DateTime.Now },
 new TutorTimeSlot { TutorTimeSlotId = 7, TutorId = 1, Weekday = 1, CourseHourId = 14, Cdate = DateTime.Now, Udate = DateTime.Now },
 new TutorTimeSlot { TutorTimeSlotId = 8, TutorId = 1, Weekday = 1, CourseHourId = 15, Cdate = DateTime.Now, Udate = DateTime.Now },
