@@ -471,7 +471,8 @@
                 <div class="course-info-group min-25">
                     @foreach (var item in Model.TwentyFiveDiscountedPrice)
                     {                        
-                        <div class="course-info-card d-flex">
+                        <a href="~/ShoppingCart/Index?memberId=@Model.MemberId&courseId=@Model.CourseId&courseLength=25&quantity=@item.CourseCount"
+                           class="course-info-card d-flex text-decoration-none text-reset">
                             <div class="course-charging d-flex flex-column">
                                 <div class="charging-fee">NT$ @item.DiscountPrice</div>
                                 <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
@@ -480,14 +481,15 @@
                                 <div class="course-discount-logo">@(item.Discount)% Off</div>
                                 <i class="fa-solid fa-angle-right"></i>
                             </div>
-                        </div>
+                        </a>
                     }
                 </div>
                 
-                <div class="course-info-group min-50 d-none">
+                <div class="course-info-group min-50 d-none ">
                     @foreach (var item in Model.FiftyDiscountedPrice)
                     {
-                        <div class="course-info-card d-flex">
+                        <a href="~/ShoppingCart/Index?memberId=@Model.MemberId&courseId=@Model.CourseId&courseLength=50&quantity=@item.CourseCount"
+                            class="course-info-card d-flex text-decoration-none text-reset">
                             <div class="course-charging d-flex flex-column">
                                 <div class="charging-fee">NT$ @item.DiscountPrice</div>
                                 <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
@@ -496,7 +498,7 @@
                                 <div class="course-discount-logo">@(item.Discount)% Off</div>
                                 <i class="fa-solid fa-angle-right"></i>
                             </div>
-                        </div>                        
+                        </a>                        
                     }
                 </div>
             </div>
