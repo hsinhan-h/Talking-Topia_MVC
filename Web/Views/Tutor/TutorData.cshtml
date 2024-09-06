@@ -1,4 +1,6 @@
-﻿    <div class="container lh-backstage mt-5" id="app">
+﻿@model TutorDataViewModel
+ 
+<div class="container lh-backstage mt-5" id="app">
         <div class="row">
             <div class="col-12 lh-backstage-main-section">
                 <div class="lh-backstage-member-section mb-5">
@@ -10,67 +12,80 @@
                                             <h3>家教資料</h3>
                                     <div class="row">
                                         <div class="col-12 col-md-4">
-                                            <div class="form-floating mb-3">
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="floatingInput4"
-                                                       placeholder=""
-                                                       value="" />
-                                                <label for="floatingInput4">國籍</label>
+                                            <div>
+                                                <select class="form-select select-form" aria-label="Default select example" name="SelectedNation">
+                                                  <option selected>選擇國籍</option>
+                                                  <option value="1">台灣</option>
+                                                  <option value="2">日本</option>
+                                                  <option value="3">英國</option>
+                                                  <option value="4">美國</option>
+                                                  <option value="5">德國</option>
+                                                  <option value="6">法國</option>
+                                                  <option value="7">西班牙</option>
+                                                  <option value="8">印度</option>
+                                                  <option value="9">其他</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-floating mb-3">
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="floatingInput5"
-                                                       placeholder=""
-                                                       value="" />
-                                                <label for="floatingInput5">母語</label>
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text"
+                                                    class="form-control"
+                                                    id="floatingInput5"
+                                                    placeholder=""
+                                                           value="@Model.NativeLanguage" />
+                                                    <label for="floatingInput5">母語</label>
+                                                </div>
                                             </div>
-                                        </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-floating mb-3">
                                                 <input type="text"
                                                        class="form-control"
                                                        id="floatingInput6"
                                                        placeholder=""
-                                                       value="" />
+                                                       value="@Model.SpokenLanguage" />
                                                 <label for="floatingInput6">會說的語言</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-floating mb-3">
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="floatingInput13"
-                                                       value=""
-                                                       placeholder="" />
-                                                <label for="floatingInput13">銀行代號</label>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text"
+                                                    class="form-control"
+                                                    id="floatingInput13"
+                                                    value="@Model.BankCode"
+                                                    placeholder="" />
+                                                    <label for="floatingInput13">銀行代號</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text"
+                                                    class="form-control"
+                                                    id="floatingInput14"
+                                                    value=" @Model.BankAccount"
+                                                    placeholder="" />
+                                                    <label for="floatingInput14">銀行帳戶</label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-floating mb-3">
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="floatingInput14"
-                                                       value=""
-                                                       placeholder="" />
-                                                <label for="floatingInput14">銀行帳戶</label>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
+                               
                                         <div class="lh-baclstage-member-data-list mt-3">
                                             <h4>學歷</h4>
                                             <ul>
-                                                <li></li>
+                                            @foreach (var edu in Model.EducationalBackground)
+                                            {
+                                                <li>@edu.SchoolName - @edu.StudyStartYear 至 @edu.StudyEndYear</li>
+                                            }
                                             </ul>
                                             <h4>經歷</h4>
                                             <ul>
-                                                <li></li>
+                                            @foreach (var work in Model.WorkBackground)
+                                            {
+                                                <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
+                                            }
                                             </ul>
                                             <h4>可接受預約時段</h4>
                                             <ul v-if="slots.length > 0">
@@ -86,13 +101,16 @@
                                                     data-bs-target="#editTimeSlotModal">
                                                 編輯教師可預約時段
                                             </button>
-                                        </div>
+                                        </div> 
                                         <div class="lh-backstage-member-card-list d-flex">
+                                            @foreach (var course in Model.Course)
+                                            {
                                             <div class="card col-12 col-md-3 me-2 p-2">
-                                                <img src="~/image/backstage/programming.png"
+                                                @* <img src="~/image/backstage/programming.png" *@
                                                      class="card-img-top w-100" />
+                                                     @course.CategoryName
                                                 <div class="card-body">
-                                                    <p class="card-text">申請科目：<span>C#</span></p>
+                                                    <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
                                                     <p class="card-text">
                                                         申請狀態：<span>已審核</span>
                                                     </p>
@@ -107,6 +125,7 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                            }
                                             <div class="card col-12 col-md-3 me-2 p-2">
                                                 <img src="~/image/backstage/subjects.png"
                                                      class="card-img-top w-100" />
@@ -154,7 +173,11 @@
                     <div class="modal-body">
                         <section class="lh-backstage-lh-backstage-tutor-data">
                             <ul>
-                                <li>可無限增生的證照</li>
+                            @foreach (var lisence in Model.License) { 
+                            <li>證照名稱：@lisence.ProfessionalLicenseName</li>
+                                <input id="prolicense" class="form-control my-1" type="file" placeholder="輸入..." value="">
+                                <lable for="prolicens">證照檔案：@lisence.ProfessionalLicenseUrl</lable>
+                            }
                             </ul>
                         </section>
                     </div>
@@ -267,8 +290,8 @@
         </div>
     </div>
 @section topCSS {
-    <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
+        <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 }
 @section endJS {
-    <script src="~/js/timeslot-setting.js"></script>
+        <script src="~/js/timeslot-setting.js"></script>
 }
