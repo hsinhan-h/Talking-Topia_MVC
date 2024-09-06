@@ -39,36 +39,36 @@ namespace Web.ViewModels
         /// 證照
         /// </summary>
         //[Required]
-        //public List<string> ProfessionalLicenseName { get; set; }
+        public List<string> ProfessionalLicenseName { get; set; }
         ///// <summary>
         ///// 證照Url
         ///// </summary>
         ////[Required]
-        //public List<string> ProfessionalLicenseUrl { get; set; }
+        public List<string> ProfessionalLicenseUrl { get; set; }
         ///// <summary>
         ///// 語言分類
         ///// </summary>
         ////[Required]
-        //public List<SelectListItem> Category { get; set; }
+        public List<SelectListItem> Category { get; set; }
         ///// <summary>
         ///// 工作起始日期
         ///// </summary>
         ////[Required]
-        //public DateTime WorkStartDate { get; set; }
+        public DateTime WorkStartDate { get; set; }
         ///// <summary>
         ///// 工作結束日期
         ///// </summary>
         ////[Required]
-        //public DateTime WorkEndDate { get; set; }
+        public DateTime WorkEndDate { get; set; }
         ///// <summary>
         ///// 工作名稱
         ///// </summary>
         ////[Required]
-        //public string WorkName { get; set; }
+        public string WorkName { get; set; }
         ///// <summary>
         ///// 工作簡述檔案
         ///// </summary>
         ////[Required(ErrorMessage = "請上傳檔案")]
-        //public string WorkExperienceFile { get; set; }
+        public string WorkExperienceFile { get; set; }
     }
 }
