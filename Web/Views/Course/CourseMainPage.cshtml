@@ -470,35 +470,53 @@
 
                 <div class="course-info-group min-25">
                     @foreach (var item in Model.TwentyFiveDiscountedPrice)
-                    {                        
-                        <a href="~/ShoppingCart/Index?memberId=@Model.MemberId&courseId=@Model.CourseId&courseLength=25&quantity=@item.CourseCount"
-                           class="course-info-card d-flex text-decoration-none text-reset">
+                    {
+                        <form method="post" action="/ShoppingCart/Index" class="course-info-card d-flex text-decoration-none text-reset" style="background: none; border: none; padding: 0;">
+                             @Html.AntiForgeryToken() <!-- CSRF 保護 -->
+
+                             <!-- 隱藏表單字段傳遞參數 -->
+                             <input type="hidden" name="memberId" value="@Model.MemberId" />
+                             <input type="hidden" name="courseId" value="@Model.CourseId" />
+                             <input type="hidden" name="courseLength" value="25" />
+                             <input type="hidden" name="quantity" value="@item.CourseCount" />
+
+                            <button type="submit" class="course-info-card d-flex w-100 text-left" style="background: none; border: none; min-height:65px;">
                             <div class="course-charging d-flex flex-column">
                                 <div class="charging-fee">NT$ @item.DiscountPrice</div>
-                                <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
+                                <div class="course-number-time mt-2">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
                             </div>
                             <div class="course-discount d-flex">
                                 <div class="course-discount-logo">@(item.Discount)% Off</div>
                                 <i class="fa-solid fa-angle-right"></i>
                             </div>
-                        </a>
+                        </button>
+                        </form>
                     }
                 </div>
                 
                 <div class="course-info-group min-50 d-none ">
                     @foreach (var item in Model.FiftyDiscountedPrice)
                     {
-                        <a href="~/ShoppingCart/Index?memberId=@Model.MemberId&courseId=@Model.CourseId&courseLength=50&quantity=@item.CourseCount"
-                            class="course-info-card d-flex text-decoration-none text-reset">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$ @item.DiscountPrice</div>
-                                <div class="course-number-time">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">@(item.Discount)% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </a>                        
+                        <form method="post" action="/ShoppingCart/Index" class="course-info-card d-flex text-decoration-none text-reset" style="background: none; border: none; padding: 0;">
+                             @Html.AntiForgeryToken() <!-- CSRF 保護 -->
+
+                             <!-- 隱藏表單字段傳遞參數 -->
+                             <input type="hidden" name="memberId" value="@Model.MemberId" />
+                             <input type="hidden" name="courseId" value="@Model.CourseId" />
+                             <input type="hidden" name="courseLength" value="25" />
+                             <input type="hidden" name="quantity" value="@item.CourseCount" />
+
+                            <button type="submit" class="course-info-card d-flex w-100 text-left" style="background: none; border: none; min-height:65px;">
+                                <div class="course-charging d-flex flex-column">
+                                    <div class="charging-fee">NT$ @item.DiscountPrice</div>
+                                    <div class="course-number-time mt-2">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
+                                </div>
+                                <div class="course-discount d-flex">
+                                    <div class="course-discount-logo">@(item.Discount)% Off</div>
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </button>
+                        </form>
                     }
                 </div>
             </div>
@@ -705,5 +723,4 @@
     <script src="~/js/booking_table_modal.js" asp-append-version="true"></script>
     <script src="~/js/course-main-page.js" asp-append-version="true"></script>
     <script src="~/js/tutor_recommend_carousel.js" asp-append-version="true"></script>
-
 }
