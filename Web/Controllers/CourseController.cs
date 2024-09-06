@@ -27,9 +27,9 @@ namespace Web.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> CourseMainPage(int id)
+        public async Task<IActionResult> CourseMainPage([FromQuery] int courseid)
         {
-            var model = await _courseService.GetCourseMainPage(id);
+            var model = await _courseService.GetCourseMainPage(courseid);
             return View(model);
         }
     }

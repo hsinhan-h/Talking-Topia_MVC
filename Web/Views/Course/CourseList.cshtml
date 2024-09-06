@@ -351,7 +351,7 @@
                     </div>
                     <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
                         <div class="tutor-description-title-wrapper d-flex justify-content-between">
-                            <a class="tutor-description-title" href="#">
+                            <a asp-controller="Course" asp-action="CourseMainPage" asp-route-courseid="@courseCard.CourseId" class="tutor-description-title">
                                 @courseCard.CourseTitle
                             </a>
                             @if (@courseCard.IsVerifiedTutor == true)
@@ -378,7 +378,7 @@
                         <p class="tutor-intro-text mb-2">
                             @courseCard.TutorIntro
                         </p>
-                        <a href="#" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
+                        <a asp-controller="Course" asp-action="CourseMainPage" asp-route-courseid="@courseCard.CourseId" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
                     </div>
                     <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
                         <div class="course-pricing d-flex">
