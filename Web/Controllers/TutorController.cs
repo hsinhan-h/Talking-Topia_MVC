@@ -84,5 +84,10 @@ namespace Web.Controllers
 
             return RedirectToAction("TutorResume");
         }
+
+        public IActionResult AppointmentDetails()
+        {
+            return View();
+        }
     }
 }
