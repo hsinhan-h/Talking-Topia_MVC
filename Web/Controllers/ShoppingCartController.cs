@@ -1,8 +1,11 @@
-﻿using System.Runtime.InteropServices;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Runtime.InteropServices;
 using Web.Entities;
 
 namespace Web.Controllers
 {
+    [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class ShoppingCartController : Controller
     {
         private readonly ShoppingCartService _shoppingCartService;
@@ -24,9 +27,10 @@ namespace Web.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> GetCart(int memberId, int courseId)
+        public async Task<IActionResult> GetCart([FromQuery] int memberId, [FromQuery] int courseId, [FromQuery] int courseLength, [FromQuery] int quantity)
         {
             //todo: 確認ShoppingCart是否有資料(Read)
+            var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
             return View("Index");
 
         }
