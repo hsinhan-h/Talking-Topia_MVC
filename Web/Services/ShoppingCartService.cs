@@ -50,54 +50,62 @@ namespace Web.Services
                 //新增資料塞到db，儲存
                 CreateShoppingCartData(memberId, courseId, courseLength, quantity, unitPrice);
             }
+            //要重新渲染出ShoppingCart內的資料才正確，我沒正確帶到資料
             //todo: return View Model to View
-            var shoppingCart = await (from item in _repository.GetAll<ShoppingCart>()
-                                      join member in _repository.GetAll<Member>() on item.MemberId equals member.MemberId
-                                      join course in _repository.GetAll<Course>() on item.CourseId equals course.CourseId
-                                      join subject in _repository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
-                                      join category in _repository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
-                                      join memberCoupon in _repository.GetAll<MemberCoupon>() on member.MemberId equals memberCoupon.MemberId
-                                      join coupon in _repository.GetAll<Coupon>() on memberCoupon.CouponId equals coupon.CouponId
-                                      select new ShoppingCartViewModel
-                                      {
-                                          CourseId = item.CourseId,
-                                          TrackingNumber = "",
-                                          HeadShotImage = member.HeadShotImage,
-                                          FullName = member.FirstName + " " + member.LastName,
-                                          CourseTitle = course.Title,
-                                          CourseSubject = subject.SubjectName,
-                                          CourseCategory = category.CategorytName,
-                                          CourseLength = courseLength.ToString(),
-                                          CourseQuantity = quantity,
-                                          UnitPrice = unitPrice,
-                                          SubtotalNTD = quantity * unitPrice,
-                                          Coupon = coupon.CouponName,
-                                          PaymentType = ""
-                                      }).ToListAsync();
+            var shoppingCart = await GetShoppingCartViewModelsAsync(memberId);
 
             return new ShoppingCartListViewModel
             {
                 ShoppingCartList = shoppingCart
             };
         }
+        public async Task<List<ShoppingCartViewModel>> GetShoppingCartViewModelsAsync(int memberId)
+        {
+            
+            var result = await (from item in _repository.GetAll<ShoppingCart>()
+                                where item.MemberId == memberId
+                                join member in _repository.GetAll<Member>() on item.MemberId equals member.MemberId
+                                join course in _repository.GetAll<Course>() on item.CourseId equals course.CourseId
+                                join subject in _repository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
+                                join category in _repository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
+                                join memberCoupon in _repository.GetAll<MemberCoupon>() on member.MemberId equals memberCoupon.MemberId into mcGroup
+                                from mc in mcGroup.DefaultIfEmpty()
+                                join coupon in _repository.GetAll<Coupon>() on mc.CouponId equals coupon.CouponId into cGroup
+                                from co in cGroup.DefaultIfEmpty()
+                                select new ShoppingCartViewModel
+                                {
+                                    CourseId = item.CourseId,
+                                    TrackingNumber = "",
+                                    HeadShotImage = member.HeadShotImage,
+                                    FullName = member.FirstName + " " + member.LastName,
+                                    CourseTitle = course.Title,
+                                    CourseSubject = subject.SubjectName,
+                                    CourseCategory = category.CategorytName,
+                                    CourseLength = item.CourseType == 1 ? "25分鐘" : "50分鐘",
+                                    CourseQuantity = item.Quantity,
+                                    UnitPrice = item.UnitPrice,
+                                    SubtotalNTD = item.Quantity * item.UnitPrice,
+                                    Coupon = co != null ? co.CouponName : "==========",
+                                    PaymentType = ""
+                                }).ToListAsync();
+
+            return result;
+        }
 
         public void CreateShoppingCartData(int memberId, int courseId, int courseLength, int quantity, decimal unitPrice)
         {
             //todo: VM塞DM -> Create -> SaveChange
-            var result = from member in _repository.GetAll<Member>()
-                         where member.MemberId == memberId
-                         join course in _repository.GetAll<Course>() on courseId equals course.CourseId
-                         select new ShoppingCart
-                         {
-                             CourseId = courseId,
-                             UnitPrice = unitPrice,
-                             Quantity = (short)quantity,
-                             TotalPrice = unitPrice * quantity,
-                             MemberId = memberId,
-                             CourseType = courseLength == 25 ? (short)CourseTypes.TwentyFiveMinUnitPrice : (short)CourseTypes.FiftyMinUnitPrice,
-                             Cdate = DateTime.Now,
-                         };
-            _repository.Create(result);
+            var shoppingCart =  new ShoppingCart
+                                {
+                                    CourseId = courseId,
+                                    UnitPrice = unitPrice,
+                                    Quantity = (short)quantity,
+                                    TotalPrice = unitPrice * quantity,
+                                    MemberId = memberId,
+                                    CourseType = courseLength == 25 ? (short)CourseTypes.TwentyFiveMinUnitPrice : (short)CourseTypes.FiftyMinUnitPrice,
+                                    Cdate = DateTime.Now,
+                                };
+            _repository.Create(shoppingCart);
             _repository.SaveChanges();
         }
 
