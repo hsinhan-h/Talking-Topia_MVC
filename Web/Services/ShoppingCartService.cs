@@ -22,6 +22,10 @@ namespace Web.Services
         {
             return _repository.GetAll<Course>().Any(x => x.CourseId == courseId);
         }
+        public bool HasCartData(int memberId)
+        {
+            return _repository.GetAll<ShoppingCart>().Any(x => x.MemberId == memberId);
+        }
         public bool HasCartData(int memberId, int courseId)
         {
             return _repository.GetAll<ShoppingCart>().Any(x => x.MemberId == memberId && x.CourseId == courseId);
