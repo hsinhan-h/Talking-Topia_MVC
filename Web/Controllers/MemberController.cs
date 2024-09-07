@@ -4,12 +4,10 @@ namespace Web.Controllers
 {
     public class MemberController : Controller
     {
-        private readonly OrderService _orderService;
         private readonly MemberDataService _memberDataService;
-        
-        public MemberController(OrderService orderService, MemberDataService memberDataService)
+
+        public MemberController(MemberDataService memberDataService)
         {
-            _orderService = orderService;
             _memberDataService = memberDataService;
         }
         /// <summary>
@@ -28,8 +26,8 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> MemberTransaction()
         {
-            var orderManagementListViewModel = await _orderService.GetOrderList();
-            return View(orderManagementListViewModel);
+            //var orderManagementListViewModel = await _orderService.GetOrderList();
+            return View();
         }
         public IActionResult WatchList()
         {
