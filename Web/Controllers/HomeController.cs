@@ -11,7 +11,6 @@ namespace Web.Controllers
             _logger = logger;
             _courseService = courseService;
         }
-
         public async Task <IActionResult> Index()
         {
             var course = await _courseService.GetCourseList();
@@ -19,6 +18,8 @@ namespace Web.Controllers
         }
         public IActionResult Account()
         {
+            bool isLoggedIn = User.Identity.IsAuthenticated;
+            ViewData["IsLoggedIn"] = isLoggedIn; // 將登入狀態存入 ViewData
             return View();
         }
         public IActionResult Login()
