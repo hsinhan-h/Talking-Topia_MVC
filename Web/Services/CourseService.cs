@@ -147,76 +147,38 @@ namespace Web.Services
             return _repository.GetAll<Course>().Count();
         }
 
-        public async Task<CourseInfoListViewModel> GetBookingTableAsync(int courseId)
+        public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
         {
             var courseInfo = await _repository
-                .GetAll<Course>().AsNoTracking()
+                .GetAll<Course>()
+                .AsNoTracking()
                 .Where(course => course.CourseId == courseId)
                 .Select(course => new CourseInfoViewModel
                 {
-                    CourseId = courseId,
-                    MemberId = course.TutorId
-                }
-                )
-                .ToListAsync();
-
-            if (courseInfo == null)
-            {
-                return null;
-            }
-
-            //教課時段
-            var tutorSlotsInfo = await _repository
-                .GetAll<TutorTimeSlot>().AsNoTracking()
-                .Where(ts => ts.TutorId == courseInfo.FirstOrDefault().MemberId)
-                .GroupBy(ts => ts.TutorId)
-                .Select(tgp => new CourseInfoViewModel
-                {
-                    MemberId = tgp.Key,
-                    AvailableTimeSlots = tgp.Select(ts => new TimeSlotViewModel
-                    {
-                        Weekday = ts.Weekday,
-                        StartHour = ts.CourseHourId
-                    }).ToList()
-                }
-                )
-                .ToListAsync();
-
-
-            //已被預約時段
-            var bookedSlotsInfo = await _repository
-                .GetAll<Booking>().AsNoTracking()
-                .Where(bk => bk.CourseId == courseId)
-                .GroupBy(bk => bk.CourseId)
-                .Select(bgp => new CourseInfoViewModel
-                {
-                    CourseId = bgp.Key,
-                    BookedTimeSlots = bgp.Select(bk => new TimeSlotViewModel
-                    {
-                        Date = bk.BookingDate,
-                        StartHour = bk.BookingTime
-                    }).ToList()
-                }
-                )
-                .ToListAsync();
-
-            var bookinTableInfo = (
-                from course in courseInfo
-                join tutorSlots in tutorSlotsInfo on course.MemberId equals tutorSlots.MemberId
-                join bookedSlots in bookedSlotsInfo on course.CourseId equals bookedSlots.CourseId
-                select new CourseInfoViewModel
-                {
                     CourseId = course.CourseId,
-                    MemberId = course.MemberId,
-                    AvailableTimeSlots = tutorSlots.AvailableTimeSlots,
-                    BookedTimeSlots = bookedSlots.BookedTimeSlots
-                }
-            ).ToList();
+                    MemberId = course.TutorId,
+                    AvailableTimeSlots = _repository
+                        .GetAll<TutorTimeSlot>()
+                        .AsNoTracking()
+                        .Where(ts => ts.TutorId == course.TutorId)
+                        .Select(ts => new TimeSlotViewModel
+                        {
+                            Weekday = ts.Weekday,
+                            StartHour = ts.CourseHourId
+                        }).ToList(),
+                    BookedTimeSlots = _repository
+                        .GetAll<Booking>()
+                        .AsNoTracking()
+                        .Where(bk => bk.CourseId == course.CourseId)
+                        .Select(bk => new TimeSlotViewModel
+                        {
+                            Date = bk.BookingDate,
+                            StartHour = bk.BookingTime
+                        }).ToList()
+                })
+                .FirstOrDefaultAsync();
 
-            return new CourseInfoListViewModel
-            {
-                CourseInfoList = bookinTableInfo
-            };
+            return courseInfo;
         }
 
         public async Task<CourseMainPageViewModel> GetCourseMainPage(int id)
@@ -396,7 +358,7 @@ namespace Web.Services
                     SubjectId=1,
                     SubjectName="法文",
                     TwentyFiveMinUnitPrice=100,
-                    HeadShotImage="https://fakeimg.pl/300x300/?text=France"
+                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=France"
                 },
                 new CourseInfoViewModel
                 {
@@ -404,7 +366,7 @@ namespace Web.Services
                     SubjectId=1,
                     SubjectName="國文",
                     TwentyFiveMinUnitPrice=150,
-                    HeadShotImage="https://fakeimg.pl/300x300/?text=Chinese"
+                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=Chinese"
                 },
                 new CourseInfoViewModel
                 {
@@ -412,7 +374,7 @@ namespace Web.Services
                     SubjectId=1,
                     SubjectName="日文",
                     TwentyFiveMinUnitPrice=200,
-                    HeadShotImage="https://fakeimg.pl/300x300/?text=Japen"
+                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=Japen"
                 }
                 ,
                 new CourseInfoViewModel
@@ -421,7 +383,7 @@ namespace Web.Services
                     SubjectId=1,
                     SubjectName="台語",
                     TwentyFiveMinUnitPrice=250,
-                    HeadShotImage="https://fakeimg.pl/300x300/?text=Taiwaness"
+                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=Taiwaness"
                 }
                 ,
                 new CourseInfoViewModel
@@ -430,7 +392,7 @@ namespace Web.Services
                     SubjectId=1,
                     SubjectName="韓文",
                     TwentyFiveMinUnitPrice=300,
-                    HeadShotImage="https://fakeimg.pl/300x300/?text=Karen"
+                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=Karen"
                 }
                 ,
                 new CourseInfoViewModel
@@ -439,7 +401,7 @@ namespace Web.Services
                     SubjectId=1,
                     SubjectName="英文",
                     TwentyFiveMinUnitPrice=350,
-                    HeadShotImage="https://fakeimg.pl/300x300/?text=English"
+                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=English"
                 }
             };
 

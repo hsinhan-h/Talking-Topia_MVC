@@ -27,13 +27,6 @@ namespace Web.Controllers
             return View(model);
         }
 
-        //[HttpGet("api/BookingTable")]
-        //public async Task<IActionResult> GetBookingTable([FromQuery] int courseId)
-        //{
-        //    var courseInfoListVIewModel = await _courseService.GetBookingTableAsync(courseId);
-        //    return Ok(courseInfoListVIewModel);
-        //}
-
 
         public async Task<IActionResult> CourseMainPage([FromQuery] int courseId)
         {
