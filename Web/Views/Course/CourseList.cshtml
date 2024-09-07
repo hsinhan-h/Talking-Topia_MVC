@@ -407,7 +407,7 @@
                 <div class="lh-tutor-card__book d-flex justify-content-center">
                     <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
                             data-bs-target="#bookingTableModal"
-                            onclick="fetchBookingTableData(@courseCard.CourseId)">
+                            onclick="generateBookingTable(new Date(), @courseCard.CourseId)">
                         預約立即體驗
                     </button>
                 </div>
@@ -488,7 +488,7 @@
                             <span class="color-block available me-1"></span>尚有可預約時段
                         </div>
                     </div>
-                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">
+                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100" >
                         瀏覽更多
                     </button>
                 </div>
@@ -586,7 +586,7 @@
     <script src="~/js/course_list_pagination.js"></script>
     <script src="~/js/course_api.js"></script>
     <script src="~/js/nested_dropdown.js"></script>
-    <script src="~/js/booking_table_modal.js"></script>
+    <script  src="~/js/booking_table_modal.js"></script>
 }
 
 @functions {

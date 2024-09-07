@@ -723,4 +723,12 @@
     <script src="~/js/booking_table_modal.js" asp-append-version="true"></script>
     <script src="~/js/course-main-page.js" asp-append-version="true"></script>
     <script src="~/js/tutor_recommend_carousel.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get courseId and bookingDateStart from the model or DOM elements
+            var courseId = @ViewData["CourseId"];
+            var bookingDateStart = new Date();
+            generateBookingTable(bookingDateStart, courseId);
+        });
+    </script>
 }
