@@ -21,8 +21,8 @@ namespace Web.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var shoppingCartInfoList = await _orderService.GetShoppingCartInfoAsync();
-            return View(shoppingCartInfoList);
+            //var shoppingCartInfoList = await _orderService.GetShoppingCartInfoAsync();
+            return View();
         }
     }
 }
