@@ -20,17 +20,28 @@ namespace Web.Controllers
         public async Task<IActionResult> CourseList(int page = 1)
         {
             int pageSize = 6;
-            int totalCourseQty = await _courseService.GetTotalCourseQty();
+            int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
             int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
             ViewData["TotalPages"] = totalPages;
             var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
             return View(model);
         }
 
-        public async Task<IActionResult> CourseMainPage(int id)
+        //[HttpGet("api/BookingTable")]
+        //public async Task<IActionResult> GetBookingTable([FromQuery] int courseId)
+        //{
+        //    var courseInfoListVIewModel = await _courseService.GetBookingTableAsync(courseId);
+        //    return Ok(courseInfoListVIewModel);
+        //}
+
+
+        public async Task<IActionResult> CourseMainPage([FromQuery] int courseId)
         {
-            var model = await _courseService.GetCourseMainPage(id);
+            var model = await _courseService.GetCourseMainPage(courseId);
             return View(model);
         }
     }
+
+
+    
 }

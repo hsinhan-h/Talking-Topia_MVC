@@ -193,16 +193,18 @@
             </div>
         </div>
     </div>
-                        @*     <div class="remark">
+    @*     <div class="remark">
     <p>
     100% 滿意保證：當您不滿意教師時，能免費轉為 TalkingTopia
     幣更換教師，如因教師品質問題造成體驗不佳可全額退款總金額包含服務費。
     </p>
     </div> *@
-    <div class="btn-goback">
-        <button class="return-order_btn text-white" type="button">確認並支付</button>
+
+    <form asp-controller="Order" asp-action="Index">
+        <input />
+        <button type="submit" class="return-order_btn text-white">確認並支付</button>
         <br>
         <br>
-    </div>
+   </form>
 
 </div>

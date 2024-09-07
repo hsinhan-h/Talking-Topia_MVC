@@ -3,6 +3,10 @@
 	margin-top:50px;
 }
 
+.select-form {
+	height: calc(3.5rem + 2px);
+}
+
 a {
 	text-decoration: none;
 	color: var(--theme-color);

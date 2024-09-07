@@ -81,10 +81,4 @@ namespace Web.ViewModels
         public int StartHour { get; set; }
         public string StartHourText { get; set; }  //string表示的時間格式
     }
-
-    
-
-
-    
-
 }

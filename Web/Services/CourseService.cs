@@ -3,6 +3,7 @@ using Web.Entities;
 using Web.Repository;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Net.WebRequestMethods;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Web.Services
 {
@@ -14,96 +15,6 @@ namespace Web.Services
         {
             _repository = repository;
         }
-
-
-        //public async Task<CourseInfoListViewModel> GetCourseCardsListRepo()
-        //{
-
-        //    IQueryable<CourseInfoViewModel> courses =
-        //        from course in _repository.GetAll<Course>().AsNoTracking()
-        //        join member in _repository.GetAll<Member>().AsNoTracking()
-        //        on course.TutorId equals member.MemberId
-
-        //        join nation in _repository.GetAll<Nation>()
-        //        on member.NationId equals nation.NationId
-
-        //        join review in _repository.GetAll<Review>()
-        //        on course.CourseId equals review.CourseId into reviewGroup
-        //        from review in reviewGroup.DefaultIfEmpty() //left join review
-
-        //        join booking in _repository.GetAll<Booking>()
-        //        on course.CourseId equals booking.CourseId into bookingGroup
-        //        from booking in bookingGroup.DefaultIfEmpty() //left join booking
-
-        //        join tutorTimeSlot in _repository.GetAll<TutorTimeSlot>()
-        //        on member.MemberId equals tutorTimeSlot.TutorId into tutorTimeSlotGroup
-        //        from tutorTimeSlot in tutorTimeSlotGroup.DefaultIfEmpty() //left join tutortimeslot
-
-        //        join courseImage in _repository.GetAll<CourseImage>()
-        //        on course.CourseId equals courseImage.CourseId into courseImageGroup
-        //        from courseImage in courseImageGroup.DefaultIfEmpty()
-
-        //        group new { course, member, nation, review, booking, tutorTimeSlot, courseImage } by course.CourseId into groupedCourse
-        //        select new CourseInfoViewModel
-        //        {
-        //            CourseId = groupedCourse.Key,
-        //            TutorHeadShotImage = groupedCourse
-        //                                 .FirstOrDefault().member.HeadShotImage,
-        //            TutorFlagImage = groupedCourse
-        //                                  .FirstOrDefault().nation.FlagImage,
-        //            IsVerifiedTutor = (bool)groupedCourse
-        //                                  .FirstOrDefault().member.IsVerifiedTutor,
-        //            CourseTitle = groupedCourse
-        //                                  .FirstOrDefault().course.Title,
-        //            CourseSubTitle = groupedCourse
-        //                                  .FirstOrDefault().course.SubTitle,
-        //            TutorIntro = groupedCourse
-        //                                  .FirstOrDefault().member.TutorIntro,
-        //            TwentyFiveMinUnitPrice = groupedCourse
-        //                                  .FirstOrDefault().course.TwentyFiveMinUnitPrice,
-        //            FiftyMinUnitPrice = groupedCourse
-        //                                  .FirstOrDefault().course.FiftyMinUnitPrice,
-        //            CourseVideo = groupedCourse
-        //                                  .FirstOrDefault().course.VideoUrl,
-        //            CourseVideoThumbnail = groupedCourse
-        //                                  .FirstOrDefault().course.ThumbnailUrl,
-        //            CourseImages = groupedCourse
-        //                                  .Where(g => g.courseImage != null)
-        //                                  .Select(g => new CourseImageViewModel
-        //                                  {
-        //                                      ImageUrl = g.courseImage.ImageUrl
-        //                                  })
-        //                                  .ToList(),
-        //            CourseRatings = Math.Round(groupedCourse
-        //                                  .Where(g => g.review != null).Any() ?
-        //                                  groupedCourse.Where(g => g.review != null)
-        //                                  .Average(g => g.review.Rating) : 0, 2),
-        //            CourseReviews = groupedCourse.Where(g => g.review != null)
-        //                                  .GroupBy(g => g.review.ReviewId)
-        //                                  .Count(),
-        //            BookedTimeSlots = groupedCourse
-        //                                  .Where(g => g.booking != null)
-        //                                  .Select(g => new TimeSlotViewModel
-        //                                  {
-        //                                      Date = g.booking.BookingDate,
-        //                                      StartHour = g.booking.BookingTime - 1 //因資料表時間Id從1開始對應0:00起始時間
-        //                                  })
-        //                                  .ToList(),
-        //            AvailableTimeSlots = groupedCourse
-        //                                  .Where(g => g.tutorTimeSlot != null)
-        //                                  .Select(g => new TimeSlotViewModel
-        //                                  {
-        //                                      Weekday = g.tutorTimeSlot.Weekday,
-        //                                      StartHour = g.tutorTimeSlot.CourseHourId - 1 //因資料表時間Id從1開始對應0:00起始時間
-        //                                  })
-        //                                  .ToList()
-        //        };
-
-        //    return new CourseInfoListViewModel
-        //    {
-        //        CourseInfoList = await courses.ToListAsync()
-        //    };
-        //}
 
         public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize)
         {
@@ -231,11 +142,82 @@ namespace Web.Services
             };
         }
 
-        public async Task<int> GetTotalCourseQty()
+        public async Task<int> GetTotalCourseQtyAsync()
         {
-            return  _repository.GetAll<Course>().Count();
+            return _repository.GetAll<Course>().Count();
         }
 
+        public async Task<CourseInfoListViewModel> GetBookingTableAsync(int courseId)
+        {
+            var courseInfo = await _repository
+                .GetAll<Course>().AsNoTracking()
+                .Where(course => course.CourseId == courseId)
+                .Select(course => new CourseInfoViewModel
+                {
+                    CourseId = courseId,
+                    MemberId = course.TutorId
+                }
+                )
+                .ToListAsync();
+
+            if (courseInfo == null)
+            {
+                return null;
+            }
+
+            //教課時段
+            var tutorSlotsInfo = await _repository
+                .GetAll<TutorTimeSlot>().AsNoTracking()
+                .Where(ts => ts.TutorId == courseInfo.FirstOrDefault().MemberId)
+                .GroupBy(ts => ts.TutorId)
+                .Select(tgp => new CourseInfoViewModel
+                {
+                    MemberId = tgp.Key,
+                    AvailableTimeSlots = tgp.Select(ts => new TimeSlotViewModel
+                    {
+                        Weekday = ts.Weekday,
+                        StartHour = ts.CourseHourId
+                    }).ToList()
+                }
+                )
+                .ToListAsync();
+
+
+            //已被預約時段
+            var bookedSlotsInfo = await _repository
+                .GetAll<Booking>().AsNoTracking()
+                .Where(bk => bk.CourseId == courseId)
+                .GroupBy(bk => bk.CourseId)
+                .Select(bgp => new CourseInfoViewModel
+                {
+                    CourseId = bgp.Key,
+                    BookedTimeSlots = bgp.Select(bk => new TimeSlotViewModel
+                    {
+                        Date = bk.BookingDate,
+                        StartHour = bk.BookingTime
+                    }).ToList()
+                }
+                )
+                .ToListAsync();
+
+            var bookinTableInfo = (
+                from course in courseInfo
+                join tutorSlots in tutorSlotsInfo on course.MemberId equals tutorSlots.MemberId
+                join bookedSlots in bookedSlotsInfo on course.CourseId equals bookedSlots.CourseId
+                select new CourseInfoViewModel
+                {
+                    CourseId = course.CourseId,
+                    MemberId = course.MemberId,
+                    AvailableTimeSlots = tutorSlots.AvailableTimeSlots,
+                    BookedTimeSlots = bookedSlots.BookedTimeSlots
+                }
+            ).ToList();
+
+            return new CourseInfoListViewModel
+            {
+                CourseInfoList = bookinTableInfo
+            };
+        }
 
         public async Task<CourseMainPageViewModel> GetCourseMainPage(int id)
         {
@@ -380,7 +362,7 @@ namespace Web.Services
                         WorkTitle = "語言中心教學協調員"
                     }
                 }
-            };            
+            };
             return courseInfo;
         }
         /// <summary>
