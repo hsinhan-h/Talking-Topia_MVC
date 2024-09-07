@@ -24,6 +24,10 @@
     {
       "library": "vue@3.4.38",
       "destination": "wwwroot/lib/vue/"
+    },
+    {
+      "library": "popper.js@2.11.8",
+      "destination": "wwwroot/lib/popper.js/"
     }
   ]
 }

@@ -1,12 +1,13 @@
 ﻿
-async function handleCourseClick(event, courseId, redirectUrl) {
+async function handleCourseLinkClick(event, courseId, redirectUrl) {
     event.preventDefault(); //防止跳轉
-    await fetcheBookingTableData(courseId);
+    await fetchBookingTableData(courseId);
     // 抓到資料後再後導向CourseMainPage
-    window.location.href = redirectUrl;
+    //window.location.href = redirectUrl;
 }
 
-async function fetcheBookingTableData(courseId) {
+
+async function fetchBookingTableData(courseId) {
     const url = `/api/BookingTableApi?courseId=${courseId}`;
 
     try {

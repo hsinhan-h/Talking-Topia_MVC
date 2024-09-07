@@ -79,17 +79,27 @@ const bookedSlots = [
 
 let bookingDateStart = new Date();
 bookingDateStart.setDate(bookingDateStart.getDate());
+let globCourseId = 1;
+let tutorSlots = [];
+
 
 //傳入confirmBookingModel的資訊
-let courseTitle;
-let tutorHeadShot;
-const bookBtn = document.querySelectorAll('.lh-tutor-card__book-btn');
-bookBtn.forEach((btn) => btn.addEventListener("click", (e) => {
-    courseTitle = e.target.getAttribute('data-course-title');
-    tutorHeadShot = e.target.getAttribute('data-tutor-headshot').slice(1);
-}))
+//let courseTitle;
+//let tutorHeadShot;
+//const bookBtn = document.querySelectorAll('.lh-tutor-card__book-btn');
+//bookBtn.forEach((btn) => btn.addEventListener("click", (e) => {
+//    courseTitle = e.target.getAttribute('data-course-title');
+//    tutorHeadShot = e.target.getAttribute('data-tutor-headshot').slice(1);
+//}))
 
-function generateBookingTable(weekStart) {
+
+
+async function generateBookingTable(weekStart, courseId) {
+    globCourseId = courseId;
+    const fetchedData = await fetchBookingTableData(courseId);
+    tutorSlots = fetchedData.availableTimeSlots;
+    console.log(tutorSlots);
+
     bookingTableBody.innerHTML = "";
     bookingTableHeader.innerHTML = "";
     const dates = [];
@@ -137,7 +147,7 @@ function generateBookingTable(weekStart) {
                 : "available";
 
             //如果日期不在教師的教課時間內, 隱藏日期
-            if (!inTutorTime(engWeekdays[weekday], time)) {
+            if (!inTutorTime(weekday, time)) {
                 cell.classList.add("d-none");
             }
 
@@ -191,8 +201,16 @@ function isBooked(date, time, bookedSlots) {
 }
 
 function inTutorTime(weekday, time) {
-    for (const tutorAvailableSlot of tutorAvailableSlots) {
-        if (tutorAvailableSlot[0] == weekday && tutorAvailableSlot[1] == time) {
+    //for (const tutorAvailableSlot of tutorAvailableSlots) {
+    //    if (tutorAvailableSlot[0] == weekday && tutorAvailableSlot[1] == time) {
+    //        return true;
+    //    }
+    //}
+    //return false;
+    for (const tutorSlot of tutorSlots) {
+        console.log(weekday);
+        console.log(tutorSlot.weekday == weekday);
+        if (tutorSlot.weekday == weekday && `${String(tutorSlot.startHour - 1).padStart(2, "0")}:00` == time) {
             return true;
         }
     }
@@ -201,12 +219,12 @@ function inTutorTime(weekday, time) {
 
 prevWeekBtn.addEventListener("click", () => {
     bookingDateStart.setDate(bookingDateStart.getDate() - 7);
-    generateBookingTable(bookingDateStart);
+    generateBookingTable(bookingDateStart, globCourseId);
 });
 
 nextWeekBtn.addEventListener("click", () => {
     bookingDateStart.setDate(bookingDateStart.getDate() + 7);
-    generateBookingTable(bookingDateStart);
+    generateBookingTable(bookingDateStart, globCourseId);
 });
 
-generateBookingTable(bookingDateStart);
+generateBookingTable(bookingDateStart, courseId);

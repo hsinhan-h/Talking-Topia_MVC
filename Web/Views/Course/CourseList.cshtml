@@ -351,7 +351,7 @@
                     </div>
                     <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
                         <div class="tutor-description-title-wrapper d-flex justify-content-between">
-                            <a asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" class="tutor-description-title">
+                            <a href="javascript:void(0)" class="tutor-description-title" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">
                                 @courseCard.CourseTitle
                             </a>
                             @if (@courseCard.IsVerifiedTutor == true)
@@ -378,8 +378,7 @@
                         <p class="tutor-intro-text mb-2">
                             @courseCard.TutorIntro
                         </p>
-                        @* <a asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="fetcheBookingTableData(@courseCard.CourseId)">瀏覽更多</a> *@
-                        <a href="javascript:void(0)" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="handleCourseClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">瀏覽更多</a>
+                        <a href="javascript:void(0)" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">瀏覽更多</a>
                     </div>
                     <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
                         <div class="course-pricing d-flex">
@@ -391,9 +390,7 @@
                             </div>
                         </div>
                         <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
-                                data-bs-target="#bookingTableModal"
-                                data-tutor-headshot="@courseCard.TutorHeadShotImage"
-                                data-course-title="@courseCard.CourseTitle">
+                                data-bs-target="#bookingTableModal" onclick="generateBookingTable(new Date(), @courseCard.CourseId)">
                             預約課程
                         </button>
                         <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
@@ -409,9 +406,8 @@
                 </div>
                 <div class="lh-tutor-card__book d-flex justify-content-center">
                     <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal" 
-                            data-tutor-headshot="@courseCard.TutorHeadShotImage"
-                            data-course-title="@courseCard.CourseTitle">
+                            data-bs-target="#bookingTableModal"
+                            onclick="fetchBookingTableData(@courseCard.CourseId)">
                         預約立即體驗
                     </button>
                 </div>
@@ -492,7 +488,7 @@
                             <span class="color-block available me-1"></span>尚有可預約時段
                         </div>
                     </div>
-                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100">
+                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">
                         瀏覽更多
                     </button>
                 </div>
