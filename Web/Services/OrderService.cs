@@ -1,130 +1,94 @@
-﻿using Web.ViewModels;
+﻿using Microsoft.Extensions.Hosting;
+using Web.ViewModels;
 
 namespace Web.Services
 {
     public class OrderService
     {
-        public async Task<OrderManagementListViewModel> GetOrderList()
+        private readonly IRepository _repository;
+        //private readonly IHostedService _hostedService;
+        private readonly TalkingTopiaContext _dbContext;
+
+        public OrderService(IRepository repository, IHostedService hostedService, TalkingTopiaContext dbContext)
         {
-            List<OrderManagementViewModel> order = new List<OrderManagementViewModel>
-        {
-                new OrderManagementViewModel
-            {
-                    CourseId = 1,
-                    TrackingNumber="17123456789",
-                    HeadShotImage = "https://example.com/images/headshot123.jpg",
-                    FullName = "John Doe",
-                    CourseTitle = "英文生活會話",
-                    CourseSubject = "英文",
-                    CourseCategory = "語言",
-                    CourseLength = "25",
-                    CourseQuantity = 10,
-                    UnitPrice = 800,
-                    SubtotalNTD = 8000,
-                    Coupon = "DISCOUNT2024",
-                    PaymentType = "Credit Card",
-                    TaxIdNumber = "12345678",
-                    OrderDatetime = "2024/08/24 14:35:00",
-                    OrderStatus = "Confirmed",
-                    BookingDate = new DateTime(2024, 8, 24),
-                    BookingTime = new DateTime(23,00),
-            },
-                new OrderManagementViewModel
-            {
-                    CourseId = 2,
-                    TrackingNumber="17987654321",
-                    HeadShotImage = "https://example.com/images/headshot456.jpg",
-                    FullName = "Jane Smith",
-                    CourseTitle = "商務英文會話",
-                    CourseSubject = "英文",
-                    CourseCategory = "語言",
-                    CourseLength = "25",
-                    CourseQuantity = 20,
-                    UnitPrice = 1000,
-                    SubtotalNTD = 20000,
-                    Coupon = "BUSINESS2024",
-                    PaymentType = "Bank Transfer",
-                    TaxIdNumber = "87654321",
-                    OrderDatetime = "2024/08/23 10:15:00",
-                    OrderStatus = "Pending",
-                    BookingDate = new DateTime(2024, 8, 25),
-                    BookingTime = new DateTime(14,00),
-            },
-                new OrderManagementViewModel
-                {
-                    CourseId = 3,
-                    TrackingNumber = "17246813579",
-                    HeadShotImage = "https://example.com/images/headshot789.jpg",
-                    FullName = "Michael Johnson",
-                    CourseTitle = "基礎英文聽力與發音",
-                    CourseSubject = "英文",
-                    CourseCategory = "語言",
-                    CourseLength = "50",
-                    CourseQuantity = 10,
-                    UnitPrice = 700,
-                    SubtotalNTD = 7000,
-                    Coupon = "LEARN2024",
-                    PaymentType = "PayPal",
-                    TaxIdNumber = "13572468",
-                    OrderDatetime = "2024/08/22 08:45:00",
-                    OrderStatus = "Completed",
-                    BookingDate = new DateTime(2024, 8, 26),
-                    BookingTime = new DateTime(09, 00),
-                }
-        };
-            return new OrderManagementListViewModel()
-            {
-                OrderManagementList = order,
-            };
+            _repository = repository;
+            //_hostedService = hostedService;
+            _dbContext = dbContext;
         }
-        public async Task<ShoppingCartInfoListViewModel> GetShoppingCartInfoList()
+        //todo: 訂單加密 -> IHostedService
+        //todo: 判斷交易是否成功 -> 接收ECPay回應成功/失敗訊息 -> 支付系統延遲的循環機制
+        //      失敗 rollback -> db的Transaction機制 -> 提示Member重試或連繫客服
+        //todo: 成功 寫入資料庫 -> Orders && OrderDetails -> SaveChangeAsync()
+        //todo: 將該筆交易渲染至訂單完成頁面 -> 撈Orders && OrderDetails 最新一筆交易 && MemberId
+
+        /// <summary>
+        /// 驗證會員
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <returns></returns>
+        public bool HasMemberData(int memberId)
         {
-            List<ShoppingCartInfoViewModel> order = new List<ShoppingCartInfoViewModel>
+            return _repository.GetAll<Member>().Any(x => x.MemberId == memberId);
+        }
+        /// <summary>
+        /// 綠界回應代號
+        /// </summary>
+        /// <param name="rtnCode"></param>
+        /// <returns></returns>
+        //public Task<bool> IsSuccess(int rtnCode)
+        //{
+            //todo: int rtnCode = 2 (ATM) || 10100073 (CVS/BARCODE)為成功，其餘皆為失敗
+
+
+         //   return true;
+        //}
+
+
+
+        /*public async Task<OperationResult> Create(Order)
         {
-                new ShoppingCartInfoViewModel
+            var result = new OperationResult();
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
-                    CourseId = 1,
-                    TrackingNumber="17123456789",
-                    FullName = "John Doe",
-                    CourseTitle = "英文生活會話",
-                    CourseQuantity = 10,
-                    SubtotalNTD = 8000,
-                    TaxIdNumber = "12345678",
-                    OrderDatetime = "2024/08/24 14:35:00",
-                    BookingDate = new DateTime(2024, 8, 24),
-                    BookingTime = new DateTime(23,00),
-            },
-                new ShoppingCartInfoViewModel
-            {
-                    CourseId = 2,
-                    TrackingNumber="17987654321",
-                    FullName = "Jane Smith",
-                    CourseTitle = "商務英文會話",
-                    CourseQuantity = 20,
-                    SubtotalNTD = 20000,
-                    TaxIdNumber = "87654321",
-                    OrderDatetime = "2024/08/23 10:15:00",
-                    BookingDate = new DateTime(2024, 8, 25),
-                    BookingTime = new DateTime(14,00),
-            },
-                new ShoppingCartInfoViewModel
+                try
                 {
-                    CourseId = 3,
-                    TrackingNumber = "17246813579",
-                    FullName = "Michael Johnson",
-                    CourseTitle = "基礎英文聽力與發音",
-                    CourseQuantity = 10,
-                    SubtotalNTD = 7000,
-                    TaxIdNumber = "13572468",
-                    OrderDatetime = "2024/08/22 08:45:00",
-                    BookingDate = new DateTime(2024, 8, 26),
-                    BookingTime = new DateTime(09, 00),
+                    //todo: 驗證會員
+                    if (!HasMemberData(memberId))
+                    { throw new Exception("會員不存在，請重新操作"); }
+                    
+
+
+
+
+
                 }
-        };
-            return new ShoppingCartInfoListViewModel()
-            {
-                ShoppingCartInfoList = order,
-            };
+                catch (Exception ex)
+                {
+                    result.IsSuccessful = false;
+                    result.Exception = ex;
+                    transaction.Rollback();
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+            
+        }*/
+
+        public enum OrderStatusId
+        {
+            Success = 1,
+            Failure = 2,
+            PendingPayment = 3,
         }
     }
 }
