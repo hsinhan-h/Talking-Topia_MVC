@@ -725,7 +725,6 @@
     <script src="~/js/tutor_recommend_carousel.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Get courseId and bookingDateStart from the model or DOM elements
             var courseId = @ViewData["CourseId"];
             var bookingDateStart = new Date();
             generateBookingTable(bookingDateStart, courseId);

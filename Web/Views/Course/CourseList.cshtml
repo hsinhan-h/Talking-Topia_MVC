@@ -351,7 +351,7 @@
                     </div>
                     <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
                         <div class="tutor-description-title-wrapper d-flex justify-content-between">
-                            <a href="javascript:void(0)" class="tutor-description-title" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">
+                            <a class="tutor-description-title" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" >
                                 @courseCard.CourseTitle
                             </a>
                             @if (@courseCard.IsVerifiedTutor == true)
@@ -378,7 +378,8 @@
                         <p class="tutor-intro-text mb-2">
                             @courseCard.TutorIntro
                         </p>
-                        <a href="javascript:void(0)" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">瀏覽更多</a>
+                        @* <a href="javascript:void(0)" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">瀏覽更多</a> *@
+                        <a class="tutor-viewmore d-none d-md-block mb-md-1" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" >瀏覽更多</a>
                     </div>
                     <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
                         <div class="course-pricing d-flex">

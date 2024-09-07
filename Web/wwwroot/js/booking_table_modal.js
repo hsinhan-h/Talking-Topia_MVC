@@ -158,8 +158,6 @@ function isBooked(date, time, bookedSlots) {
 
 function inTutorTime(weekday, time) {
     for (const tutorSlot of tutorSlots) {
-        console.log(weekday);
-        console.log(tutorSlot.weekday == weekday);
         if (tutorSlot.weekday == weekday && `${String(tutorSlot.startHour - 1).padStart(2, "0")}:00` == time) {
             return true;
         }
