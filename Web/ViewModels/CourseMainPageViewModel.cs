@@ -15,7 +15,7 @@ namespace Web.ViewModels
         [Display(Name = "優良教師")]
         public bool IsVerifiedTutor { get; set; }
         [Display(Name = "會說的語言")]
-        public List<string> SpokenLanguage { get; set; }
+        public string SpokenLanguage { get; set; }
         [Display(Name = "學歷")]
         public string EducationDegree { get; set; }
         [Display(Name = "經歷")]
@@ -29,11 +29,11 @@ namespace Web.ViewModels
         [Display(Name = "課程介紹")]
         public string CourseIntro { get; set; }
         [Display(Name = "25分鐘台幣價格")]
-        public int TwentyFiveMinPriceNTD { get; set; }
+        public decimal TwentyFiveMinPrice { get; set; }
         public List<BaseDiscountPice> TwentyFiveDiscountedPrice { get; set; }
 
         [Display(Name = "50分鐘台幣價格")]
-        public int FiftyMinPriceNTD { get; set; }
+        public decimal FiftyMinPrice { get; set; }
         
         public List<BaseDiscountPice> FiftyDiscountedPrice { get; set; }
 
