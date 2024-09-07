@@ -42,7 +42,7 @@
                     <h3>自我介紹</h3>
                 </div>
                 <div class="self-intro-body">
-                    <div class="can-speak"><strong>會說</strong> @string.Join("、", @Model.SpokenLanguage)</div>
+                    <div class="can-speak"><strong>會說</strong> @Model.SpokenLanguage </div>
                     <div class="self-intro-content">
                         <p class="self-intro-paragraph">
                             @Model.TutorIntro
@@ -142,7 +142,7 @@
                         <i class="fa-regular fa-star-half-stroke"></i>
                     </div>
                 </div>
-                @foreach (var review in Model.ReviewCardList.Take(2))
+                @* @foreach (var review in Model.ReviewCardList)
                 {
                     <div class="comment-card">
                         <div class="comment d-flex ">
@@ -161,7 +161,7 @@
                         </p>
                     </div>
                 }
-                
+                 *@
                 <button type="button" class="btn more-comment" data-bs-target="#moreInfoModal" data-bs-toggle="modal">
                     顯示全部410則評論
                     <i class="fa-solid fa-chevron-down"></i>
