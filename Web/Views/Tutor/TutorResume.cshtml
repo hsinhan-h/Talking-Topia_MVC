@@ -56,13 +56,13 @@
                     <input class="form-control my-1" type="text" placeholder="輸入..." value="" name="DepartmentName">
                 </div>
             </div>
-            <div class="row mt-3 ">
+            @* <div class="row mt-3 ">
                 <div class="my-3 d-flex flex-row justify-content-end">
                     <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
                     <button type="submit" class="btn resume_border resume_btn m-2">下一步</button>
                 </div>
-            </div>
-    </form>
+            </div> *@
+    
             <div class="row mt-5 resume_border p-3 m-2">
                 <div class="d-flex flex-row justify-content-between">
                     <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
@@ -143,12 +143,15 @@
                         </div>
                         <p class="my-1 bgc fs-4">【年資】</p>
                         <div class="input-group my-2">
-                            <input type="datetime" placeholder="開始年份" class="form-control" min="1940" value="" name="WorkStartDate">
-                            <input type="datetime" placeholder="結束年份" class="form-control" min="1940 " value="" name="WorkEndDate">
+                            <!-- 開始日期 -->
+                            <input type="date" placeholder="開始年份" class="form-control" min="1940-01-01" max="2099-12-31" name="WorkStartDate">
+
+                            <!-- 結束日期 -->
+                            <input type="date" placeholder="結束年份" class="form-control" min="1940-01-01" max="2099-12-31" name="WorkEndDate">
                         </div>
                     </div>
                 </div>
-                <div class="col-12 mb-2 collapse" id="collapsework">
+                @* <div class="col-12 mb-2 collapse" id="collapsework">
                     <div class="col-12">
                         <p class="my-1 bgc fs-4">【工作名稱】</p>
                         <input class="form-control my-2" type="text" placeholder="輸入...">
@@ -156,22 +159,25 @@
                     </div>
                     <p class="my-1 bgc fs-4">【年資】</p>
                     <div class="input-group my-2">
-                        <input type="number" placeholder="開始年份" class="form-control" min="1940">
-                        <input type="number" placeholder="結束年份" class="form-control" min="1940">
+                        <!-- 開始日期 -->
+                        <input type="date" placeholder="開始年份" class="form-control" min="1940-01-01" max="2099-12-31">
+
+                        <!-- 結束日期 -->
+                        <input type="date" placeholder="結束年份" class="form-control" min="1940-01-01" max="2099-12-31">
                     </div>
-                </div>
+                </div> *@
                 <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
                     <div class="col-12 d-flex flex-row align-items-center justify-content-center">
                         <i class=" fa-solid fa-ellipsis "></i>
                     </div>
                 </div>
             </div>
-            @* <div class="row mt-3 ">
+            <div class="row mt-3 ">
                 <div class="my-3 d-flex flex-row justify-content-end">
                     <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
                     <button type="submit" class="btn resume_border resume_btn m-2">下一步</button>
                 </div>
-            </div> *@
+            </div>
         </div>
-    
+    </form>
 </main>

@@ -1,8 +1,10 @@
-﻿using System.Runtime.InteropServices;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Runtime.InteropServices;
 using Web.Entities;
 
 namespace Web.Controllers
 {
+    //[Authorize]
     public class ShoppingCartController : Controller
     {
         private readonly ShoppingCartService _shoppingCartService;
@@ -16,19 +18,24 @@ namespace Web.Controllers
         /// 設計一個VM接收option回傳的值(asp-for="對應value的VM欄位")
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Index(int memberId, int courseId, int courseLength, int quantity)
+        public async Task<IActionResult> Index([FromQuery] int memberId)
         {
-            //todo: 新增課程至購物車
-            var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
-            return View(cartData);
+            //todo: 確認ShoppingCart是否有資料(Read)
+            var cartData = await _shoppingCartService.GetShoppingCartViewModelsAsync(memberId);
+            var result = new ShoppingCartListViewModel
+            {
+                ShoppingCartList = cartData
+            };
+            return View(result);
 
         }
         [HttpPost]
-        public async Task<IActionResult> GetCart(int memberId, int courseId)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
-            //todo: 確認ShoppingCart是否有資料
-            return View("Index");
-
+            //todo: 新增課程至購物車(Create)
+            var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
+            return RedirectToAction("Index", new { MemberId = memberId });
         }
     }
 }

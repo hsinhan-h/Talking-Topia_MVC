@@ -77,55 +77,30 @@
                                             <ul class="list-unstyled">
                                                 <li class="dropdown-menu-item"><a href="#">英文</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">日文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">韓文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">西班牙文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">法文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">閩南語</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">中文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">泰語</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">德文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">義大利文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">越南文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">葡萄牙文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">印尼語</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">粵語</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">荷蘭文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">俄文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">馬來語</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">拉丁文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">客家話</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">瑞典文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">土耳其語</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">芬蘭文</a></li>
+                                                <li class="dropdown-menu-item"><a href="#">法文</a></li>
+                                                <li class="dropdown-menu-item"><a href="#">西班牙文</a></li>
                                             </ul>
                                         </div>
                                         <div class="sub-menu programming-language">
                                             <ul class="list-unstyled">
                                                 <li class="dropdown-menu-item"><a href="#">HTML/CSS</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">Java Script</a></li>
+                                                <li class="dropdown-menu-item"><a href="#">JavaScript</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">C#</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">SQL</a></li>
-                                                <li class="dropdown-menu-item">
-                                                    <a href="#">.NET Core MVC</a>
-                                                </li>
-                                                <li class="dropdown-menu-item"><a href="#">Azure DevOps</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">AI工程</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">C/C++</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">Python</a></li>
+                                                <li class="dropdown-menu-item"><a href="#">Java</a></li>
                                             </ul>
                                         </div>
                                         <div class="sub-menu academic">
                                             <ul class="list-unstyled">
-                                                <li class="dropdown-menu-item"><a href="#">國文</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">自然</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">地理</a></li>
+                                                <li class="dropdown-menu-item"><a href="#">數學</a></li>
+                                                <li class="dropdown-menu-item"><a href="#">物理</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">化學</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">歷史</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">社會</a></li>
+                                                <li class="dropdown-menu-item"><a href="#">地理</a></li>
                                                 <li class="dropdown-menu-item"><a href="#">生物</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">科學</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">通識</a></li>
-                                                <li class="dropdown-menu-item"><a href="#">ICT</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -150,7 +125,7 @@
                         </li>
 
                     </ul>
-                    <ul class="navbar-nav ms-auto">
+                    @* <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/Apply_teacher/myTeacher.html">成為教師</a>
                         </li>
@@ -172,6 +147,51 @@
                                 <img src="https://fakeimg.pl/20x20/200" alt="">
                             </a>
                         </li>
+                    </ul> *@
+                    <ul class="navbar-nav ms-auto">
+                        @if (ViewData["IsLoggedIn"] != null && (bool)ViewData["IsLoggedIn"])
+                        {
+                            <!-- 登入後的選單 -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/TeacherSystem">教師系統</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/WatchList">關注列表</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Logout">登出</a>
+                            </li>
+                            <li class="nav-item shopping-bag">
+                                <a class="nav-link" href="https://購物車頁面">
+                                    <img src="https://fakeimg.pl/20x20/200" alt="">購物車
+                                </a>
+                            </li>
+                            <li class="nav-item message-item">
+                                <a class="nav-link" href="">
+                                    <i class="fa-regular fa-comments"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item user-item">
+                                <a class="nav-link" href="https://會員中心">
+                                    <img src="https://fakeimg.pl/20x20/200" alt="">
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <!-- 登入前的選單 -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Apply_teacher/myTeacher.html">成為教師</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入/註冊</a>
+                            </li>
+                            <li class="nav-item message-item">
+                                <a class="nav-link" href="">
+                                    <i class="fa-regular fa-comments"></i>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -377,8 +397,9 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    @* <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script> *@
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>  *@
     <script src="~/js/site.js" asp-append-version="true"></script>
+
 
     <script src="~/js/layout.js"></script>
     <script src="~/lib/slick-1.8.1/slick/slick.js"></script>

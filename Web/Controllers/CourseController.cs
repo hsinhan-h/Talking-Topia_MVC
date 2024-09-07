@@ -19,18 +19,22 @@ namespace Web.Controllers
 
         public async Task<IActionResult> CourseList(int page = 1)
         {
-            int pageSize = 3;
-            int totalCourseQty = await _courseService.GetTotalCourseQty();
+            int pageSize = 6;
+            int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
             int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
             ViewData["TotalPages"] = totalPages;
             var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
             return View(model);
         }
 
-        public async Task<IActionResult> CourseMainPage(int courseId)
+
+        public async Task<IActionResult> CourseMainPage([FromQuery] int courseId)
         {
             var model = await _courseService.GetCourseMainPage(courseId);
             return View(model);
         }
     }
+
+
+    
 }

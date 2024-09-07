@@ -23,6 +23,7 @@ namespace Web
             builder.Services.AddScoped<MemberDataService>();
             builder.Services.AddScoped<OrderService>();
             builder.Services.AddScoped<ResumeDataService>();
+            builder.Services.AddScoped<TutorDataservice>();
             builder.Services.AddScoped<ShoppingCartService>();
 
             var app = builder.Build();
