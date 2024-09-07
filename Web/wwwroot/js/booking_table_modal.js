@@ -209,9 +209,4 @@ nextWeekBtn.addEventListener("click", () => {
     generateBookingTable(bookingDateStart);
 });
 
-// expandTableBtn.addEventListener("click", () => {
-//   bookingTableBodyWrapper.style.maxHeight = "none";
-//   expandTableBtn.style.display = "none";
-// });
-
 generateBookingTable(bookingDateStart);
