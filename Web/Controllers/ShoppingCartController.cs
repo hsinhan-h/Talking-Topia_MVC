@@ -32,7 +32,7 @@ namespace Web.Controllers
         public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
             var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
-            return RedirectToAction("Index", new { MemberId = memberId });
+            return RedirectToAction(nameof(Index), new { MemberId = memberId });
         }
     }
 }
