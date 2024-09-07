@@ -147,78 +147,6 @@ namespace Web.Services
             return _repository.GetAll<Course>().Count();
         }
 
-        //public async Task<CourseInfoListViewModel> GetBookingTableAsync(int courseId)
-        //{
-        //    var courseInfo = await _repository
-        //        .GetAll<Course>().AsNoTracking()
-        //        .Where(course => course.CourseId == courseId)
-        //        .Select(course => new CourseInfoViewModel
-        //        {
-        //            CourseId = courseId,
-        //            MemberId = course.TutorId
-        //        }
-        //        )
-        //        .ToListAsync();
-
-        //    if (courseInfo == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    //教課時段
-        //    var tutorSlotsInfo = await _repository
-        //        .GetAll<TutorTimeSlot>().AsNoTracking()
-        //        .Where(ts => ts.TutorId == courseInfo.FirstOrDefault().MemberId)
-        //        .GroupBy(ts => ts.TutorId)
-        //        .Select(tgp => new CourseInfoViewModel
-        //        {
-        //            MemberId = tgp.Key,
-        //            AvailableTimeSlots = tgp.Select(ts => new TimeSlotViewModel
-        //            {
-        //                Weekday = ts.Weekday,
-        //                StartHour = ts.CourseHourId
-        //            }).ToList()
-        //        }
-        //        )
-        //        .ToListAsync();
-
-
-        //    //已被預約時段
-        //    var bookedSlotsInfo = await _repository
-        //        .GetAll<Booking>().AsNoTracking()
-        //        .Where(bk => bk.CourseId == courseId)
-        //        .GroupBy(bk => bk.CourseId)
-        //        .Select(bgp => new CourseInfoViewModel
-        //        {
-        //            CourseId = bgp.Key,
-        //            BookedTimeSlots = bgp.Select(bk => new TimeSlotViewModel
-        //            {
-        //                Date = bk.BookingDate,
-        //                StartHour = bk.BookingTime
-        //            }).ToList()
-        //        }
-        //        )
-        //        .ToListAsync();
-
-        //    var bookinTableInfo = (
-        //        from course in courseInfo
-        //        join tutorSlots in tutorSlotsInfo on course.MemberId equals tutorSlots.MemberId
-        //        join bookedSlots in bookedSlotsInfo on course.CourseId equals bookedSlots.CourseId
-        //        select new CourseInfoViewModel
-        //        {
-        //            CourseId = course.CourseId,
-        //            MemberId = course.MemberId,
-        //            AvailableTimeSlots = tutorSlots.AvailableTimeSlots,
-        //            BookedTimeSlots = bookedSlots.BookedTimeSlots
-        //        }
-        //    ).ToList();
-
-        //    return new CourseInfoListViewModel
-        //    {
-        //        CourseInfoList = bookinTableInfo
-        //    };
-        //}
-
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
         {
             var courseInfo = await _repository
@@ -251,16 +179,6 @@ namespace Web.Services
                 .FirstOrDefaultAsync();
 
             return courseInfo;
-
-            //if (courseInfo == null)
-            //{
-            //    return null;
-            //}
-
-            //return new CourseInfoListViewModel
-            //{
-            //    CourseInfoList = new List<CourseInfoViewModel> { courseInfo }
-            //};
         }
 
         public async Task<CourseMainPageViewModel> GetCourseMainPage(int id)
