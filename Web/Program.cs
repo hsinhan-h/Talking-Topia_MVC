@@ -18,6 +18,7 @@ namespace Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IHostedService,BackgroundTaskService>();
             builder.Services.AddScoped<BookingService>();
             builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<MemberDataService>();
