@@ -23,49 +23,6 @@ const bookingTableBodyWrapper = document.getElementById(
     "bookingTableBodyWrapper"
 );
 
-//教師有教課的時間由此匯入
-const tutorAvailableSlots = [
-    ["tuesday", "00:00"],
-    ["tuesday", "01:00"],
-    ["tuesday", "02:00"],
-    ["tuesday", "03:00"],
-    ["tuesday", "04:00"],
-    ["tuesday", "05:00"],
-    ["tuesday", "06:00"],
-    ["tuesday", "07:00"],
-    ["tuesday", "08:00"],
-    ["tuesday", "09:00"],
-    ["tuesday", "10:00"],
-    ["tuesday", "11:00"],
-    ["tuesday", "12:00"],
-    ["tuesday", "13:00"],
-    ["tuesday", "14:00"],
-    ["tuesday", "15:00"],
-    ["tuesday", "16:00"],
-    ["tuesday", "17:00"],
-    ["tuesday", "18:00"],
-    ["tuesday", "19:00"],
-    ["tuesday", "20:00"],
-    ["tuesday", "21:00"],
-    ["tuesday", "22:00"],
-    ["tuesday", "23:00"],
-    ["wednesday", "10:00"],
-    ["thursday", "13:00"],
-    ["thursday", "14:00"],
-    ["thursday", "15:00"],
-    ["thursday", "16:00"],
-    ["thursday", "17:00"],
-    ["friday", "13:00"],
-    ["friday", "14:00"],
-    ["friday", "15:00"],
-    ["friday", "16:00"],
-    ["friday", "17:00"],
-    ["saturday", "13:00"],
-    ["saturday", "14:00"],
-    ["saturday", "15:00"],
-    ["saturday", "16:00"],
-];
-
 //已被預約的時間由此匯入
 const bookedSlots = [
     "2024-08-15 12:00",
@@ -91,7 +48,6 @@ let tutorSlots = [];
 //    courseTitle = e.target.getAttribute('data-course-title');
 //    tutorHeadShot = e.target.getAttribute('data-tutor-headshot').slice(1);
 //}))
-
 
 
 async function generateBookingTable(weekStart, courseId) {
@@ -201,15 +157,7 @@ function isBooked(date, time, bookedSlots) {
 }
 
 function inTutorTime(weekday, time) {
-    //for (const tutorAvailableSlot of tutorAvailableSlots) {
-    //    if (tutorAvailableSlot[0] == weekday && tutorAvailableSlot[1] == time) {
-    //        return true;
-    //    }
-    //}
-    //return false;
     for (const tutorSlot of tutorSlots) {
-        console.log(weekday);
-        console.log(tutorSlot.weekday == weekday);
         if (tutorSlot.weekday == weekday && `${String(tutorSlot.startHour - 1).padStart(2, "0")}:00` == time) {
             return true;
         }
@@ -228,3 +176,28 @@ nextWeekBtn.addEventListener("click", () => {
 });
 
 generateBookingTable(bookingDateStart, courseId);
+
+async function fetchBookingTableData(courseId) {
+    const url = `/api/BookingTableApi?courseId=${courseId}`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            console.error(`Fetching BookingTableData時發生錯誤, status: ${response.status} `);
+            return null;
+        }
+
+        const bookingTableData = await response.json();
+        if (!bookingTableData) {
+            console.error('沒有fetching到任何BookingTable資料!');
+            return null;
+        }
+
+        console.log(bookingTableData);
+        return bookingTableData;
+
+    } catch (error) {
+        console.error('Fetching BookingTableData時發生錯誤:', error);
+    }
+}
