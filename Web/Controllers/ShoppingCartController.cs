@@ -23,6 +23,7 @@ namespace Web.Controllers
             var cartData = await _shoppingCartService.GetShoppingCartViewModelsAsync(memberId);
             var result = new ShoppingCartListViewModel
             {
+                MemberId = memberId,
                 ShoppingCartList = cartData
             };
             return View(result);
@@ -36,6 +37,13 @@ namespace Web.Controllers
             if (!_shoppingCartService.HasCourseData(courseId))
             { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }
             await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
+            return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
+        }
+
+        public  IActionResult Delete([FromForm] int memberId, [FromForm] int courseId)
+        {
+
+
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
     }
