@@ -493,7 +493,29 @@
                         瀏覽更多
                     </button>
                 </div>
+                <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <partial name="_BookingTablePartial" model="new CourseMainPageViewModel {
+                                 TutorHeadShotImage = courseCard.TutorHeadShotImage,
+                                 CourseTitle = courseCard.CourseTitle,
+                                 CourseId = courseCard.CourseId }" />
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+            @* var bookingTableModel = new CourseMainPageViewModel
+            //為了和CourseMainPage裡bookingTable partial view帶入的VM一致所以用CourseMainPageVM
+            {
+                TutorHeadShotImage = @courseCard.TutorHeadShotImage,
+                CourseTitle = @courseCard.CourseTitle,
+                CourseId = @courseCard.CourseId
+            }; *@
+
+
+            
         }
     </div>
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal"
@@ -509,14 +531,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <partial name="_BookingTablePartial" />
-            </div>
-        </div>
-    </div>
+    
     <div class="modal fade" id="contactTutorModal" tabindex="-1" aria-labelledby="contactTutorModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">

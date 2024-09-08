@@ -1,4 +1,6 @@
-﻿<div class="container booking-table-container py-3">
+﻿@model CourseMainPageViewModel
+
+<div class="container booking-table-container py-3">
     
     <div class="booking-table-title d-flex justify-content-between">
         
@@ -41,9 +43,9 @@
             </div>
             <div class="modal-body ">
                 <img class="tutor-headshot rounded-circle" id="confirmBookingModalTutorHeadshot"
-                     src="" alt="Tutor's Photo" >
+                     src="@Model.TutorHeadShotImage" alt="Tutor's Photo">
                 <p class="overflow-hidden" >
-                    <strong>課程名稱：</strong><span id="confirmBookingModalCourseTitle"></span> 
+                    <strong>課程名稱：</strong><span id="confirmBookingModalCourseTitle">@Model.CourseTitle</span>
                 </p>
                 <p><strong>預約堂數：</strong>1</p>
 

@@ -49,7 +49,6 @@ let tutorSlots = [];
 //    tutorHeadShot = e.target.getAttribute('data-tutor-headshot').slice(1);
 //}))
 
-
 async function generateBookingTable(weekStart, courseId) {
     globCourseId = courseId;
     const fetchedData = await fetchBookingTableData(courseId);
@@ -112,8 +111,8 @@ async function generateBookingTable(weekStart, courseId) {
             //如果時段還沒被預約, 加入confirmBookingModal事件
             if (!isBooked(date, time, bookedSlots)) {
                 cell.addEventListener("click", (e) => {
-                    confirmBookingModalCourseTitle.textContent = courseTitle;
-                    confirmBookingModalTutorHeadshot.src = tutorHeadShot;
+                    //confirmBookingModalCourseTitle.textContent = courseTitle;
+                    //confirmBookingModalTutorHeadshot.src = tutorHeadShot;
                     confirmBookingModalDate.textContent = `${formatDate(date)} (${standardWeekdays[date.getDay()]
                         })`;               
                     confirmBookingModalTime.textContent = time;
@@ -175,8 +174,9 @@ nextWeekBtn.addEventListener("click", () => {
     generateBookingTable(bookingDateStart, globCourseId);
 });
 
-generateBookingTable(bookingDateStart, courseId);
 
+
+//fetch BookingTable API
 async function fetchBookingTableData(courseId) {
     const url = `/api/BookingTableApi?courseId=${courseId}`;
 
