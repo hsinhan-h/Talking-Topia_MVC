@@ -101,32 +101,35 @@
                                                     data-bs-target="#editTimeSlotModal">
                                                 編輯教師可預約時段
                                             </button>
-                                        </div> 
+                                        </div>
                                         <div class="lh-backstage-member-card-list d-flex">
+                                            <div class="card col-12 col-md-3 me-2 p-2">
                                             @foreach (var course in Model.Course)
                                             {
-                                            <div class="card col-12 col-md-3 me-2 p-2">
-                                                @* <img src="~/image/backstage/programming.png" *@
-                                                     class="card-img-top w-100" />
-                                                     @course.CategoryName
-                                                <div class="card-body">
-                                                    <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
-                                                    <p class="card-text">
-                                                        申請狀態：<span>已審核</span>
-                                                    </p>
-                                                    <button class="btn lh-backstage-submit-btn"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#lh-backstage-tutor-application-audit">
-                                                        證照資訊
-                                                    </button>
-                                                    <a href="/TalkingTopia/Apply_teacher/myResume.html"
-                                                       class="btn lh-backstage-submit-btn">
-                                                        編輯家教資料
-                                                    </a>
-                                                </div>
-                                            </div>
+                                                <div class="fs-2 ps-3">@course.CategoryName</div>
                                             }
-                                            <div class="card col-12 col-md-3 me-2 p-2">
+                                            @* <img src="~/image/backstage/programming.png" *@
+                                            @* class="card-img-top w-100" /> *@
+                                            <div class="card-body">
+                                                @foreach (var course in Model.Course)
+                                                {
+                                                    <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
+                                                }
+                                                <p class="card-text">
+                                                    申請狀態：<span>@Model.Coursestatus</span>
+                                                </p>
+                                                <button class="btn lh-backstage-submit-btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#lh-backstage-tutor-application-audit">
+                                                    證照資訊
+                                                </button>
+                                                <a href="/TalkingTopia/Apply_teacher/myResume.html"
+                                                   class="btn lh-backstage-submit-btn">
+                                                    編輯家教資料
+                                                </a>
+                                            </div>
+                                        </div>
+                                            @* <div class="card col-12 col-md-3 me-2 p-2">
                                                 <img src="~/image/backstage/subjects.png"
                                                      class="card-img-top w-100" />
                                                 <div class="card-body">
@@ -144,8 +147,8 @@
                                                         編輯家教資料
                                                     </a>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </div> *@
+                                        
                                     </div>
                                 </section>
                             </div>

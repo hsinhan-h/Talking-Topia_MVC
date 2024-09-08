@@ -28,20 +28,27 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> TutorData()
         {
-            int memberId = 1;
-
-            var tutorData = await _tutorDataService.GetTutorDataAsync(memberId);
+            int memberId = 19;
+            string subjectName = "程式設計";
+            var tutorData = await _tutorDataService.GetTutorDataAsync(memberId, subjectName);
             if (tutorData == null)
             {
-                return NotFound();  
+                return RedirectToAction("Index", "Tutor");
             }
 
             var tutorCourseData = await _tutorDataService.GetTutorCourseDataAsync(memberId);
             if (tutorCourseData == null)
             {
-                return NotFound();
+                return RedirectToAction("Index", "Tutor");
+            }
+            var tutorCourseStatus = await _tutorDataService.GetCoursestatusAsync(memberId);
+            if (tutorCourseStatus == null)
+            {
+                return RedirectToAction("Index", "Tutor");
             }
             tutorData.Course = tutorCourseData.Course;
+            tutorData.Coursestatus = tutorCourseStatus.Coursestatus;
+
 
             return View(tutorData);
         }
@@ -59,7 +66,7 @@ namespace Web.Controllers
             {
                 var result = await _resumeDataService.AddQuestionaryAsync(qVM);
 
-                ViewData["Header"] = result.Success ? "問卷調查新增" : "錯誤訊息";
+                ViewData["Header"] = result.Success ? "履歷已新增" : "錯誤訊息";
                 ViewData["Message"] = result.Message;
 
                 return View("ShowMessage");

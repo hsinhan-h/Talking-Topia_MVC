@@ -1,4 +1,5 @@
 ﻿using Web.Entities;
+using static Web.Services.TutorDataservice;
 
 namespace Web.Services
 {
@@ -9,9 +10,13 @@ namespace Web.Services
         {
             _repository = repository;
         }
-        public async Task<TutorDataViewModel> GetTutorDataAsync(int memberId)
+        public async Task<TutorDataViewModel> GetTutorDataAsync(int memberId, string subjectName)
         {
-            var tutorData = await (from member in _repository.GetAll<Member>()
+            var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
+                                         where member.MemberId == memberId
+                                         select member.IsVerifiedTutor).FirstOrDefaultAsync();
+            if (isVerifiedTutor) { 
+                var tutorData = await (from member in _repository.GetAll<Member>()
                                    where member.MemberId == memberId
                                    select new TutorDataViewModel
                                    {
@@ -35,16 +40,24 @@ namespace Web.Services
                                                WorkEndDate = wexp.WorkEndDate,
                                                WorkName = wexp.WorkName
                                            }).ToList(),
-                                       License = _repository.GetAll<ProfessionalLicense>()
-                                           .Where(license => license.MemberId == memberId)
-                                           .Select(liecenseitem => new LicenseData
-                                           {
-                                               ProfessionalLicenseName = liecenseitem.ProfessionalLicenseName,
-                                               ProfessionalLicenseUrl = liecenseitem.ProfessionalLicenseUrl
-                                           }).ToList(),
-                                   }).FirstOrDefaultAsync(); 
-
-            return tutorData; 
+                                       License = (from subject in _repository.GetAll<CourseSubject>()
+                                                  join prefersubject in _repository.GetAll<MemberPreference>()
+                                                  on subject.SubjectId equals prefersubject.SubjecId
+                                                  join memb in _repository.GetAll<Member>()
+                                                  on prefersubject.MemberId equals memb.MemberId
+                                                  join license in _repository.GetAll<ProfessionalLicense>()
+                                                  on memb.MemberId equals license.MemberId
+                                                  where prefersubject.MemberId == memberId
+                                                    && subject.SubjectName == subjectName
+                                                  select new LicenseData
+                                                  {
+                                                      ProfessionalLicenseName = license.ProfessionalLicenseName,
+                                                      ProfessionalLicenseUrl = license.ProfessionalLicenseUrl
+                                                  }).ToList()
+                                   }).FirstOrDefaultAsync();
+                return tutorData;
+            }
+            return null;
         }
         public async Task<TutorDataViewModel> GetTutorCourseDataAsync(int memberId)
         {
@@ -54,7 +67,7 @@ namespace Web.Services
 
             var tutorCourseData = new TutorDataViewModel
             {
-                Course = new List<CategoryData>() 
+                Course = new List<CategoryData>()
             };
 
             if (isVerifiedTutor)
@@ -75,6 +88,29 @@ namespace Web.Services
             }
 
             return tutorCourseData;
+        }
+        public async Task<TutorDataViewModel> GetCoursestatusAsync(int memberId)
+        {
+            var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
+                                         where member.MemberId == memberId
+                                         select member.IsVerifiedTutor).FirstOrDefaultAsync();
+            var tutorCourseData = new TutorDataViewModel();
+            tutorCourseData.Coursestatus = await (from member in _repository.GetAll<Member>()
+                                                  join memberPreference in _repository.GetAll<MemberPreference>()
+                                                      on member.MemberId equals memberPreference.MemberId
+                                                  join courseSubject in _repository.GetAll<CourseSubject>()
+                                                      on memberPreference.SubjecId equals courseSubject.SubjectId
+                                                  join courseCategory in _repository.GetAll<CourseCategory>()
+                                                      on courseSubject.CourseCategoryId equals courseCategory.CourseCategoryId
+                                                  join course in _repository.GetAll<Course>()
+                                                      on courseCategory.CourseCategoryId equals course.CategoryId
+                                                  select course.CoursesStatus == 1 ? CourseStatus.已審核 : CourseStatus.未審核).FirstOrDefaultAsync();
+            return tutorCourseData;
+        }
+        public enum CourseStatus
+        {
+            未審核 = 0,
+            已審核 = 1
         }
     }
 }
