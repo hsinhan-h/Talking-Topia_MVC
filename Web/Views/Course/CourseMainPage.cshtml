@@ -144,24 +144,24 @@
                 </div>
                 @* @foreach (var review in Model.ReviewCardList)
                 {
-                    <div class="comment-card">
-                        <div class="comment d-flex ">
-                            <div class="user-icon ">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                                </svg>
-                            </div>
-                            <div class="comment-info d-flex flex-column">
-                                <p class="user-name">@review.ReviewerId</p>
-                                <p class="comment-date">@review.ReviewDate</p>
-                            </div>
-                        </div>
-                        <p>
-                            @review.ReviewContent
-                        </p>
-                    </div>
+                <div class="comment-card">
+                <div class="comment d-flex ">
+                <div class="user-icon ">
+                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                </svg>
+                </div>
+                <div class="comment-info d-flex flex-column">
+                <p class="user-name">@review.ReviewerId</p>
+                <p class="comment-date">@review.ReviewDate</p>
+                </div>
+                </div>
+                <p>
+                @review.ReviewContent
+                </p>
+                </div>
                 }
-                 *@
+                *@
                 <button type="button" class="btn more-comment" data-bs-target="#moreInfoModal" data-bs-toggle="modal">
                     顯示全部410則評論
                     <i class="fa-solid fa-chevron-down"></i>
@@ -351,7 +351,7 @@
                     <ul>
                         @foreach (var work in Model.ExperienceList)
                         {
-                            <li>@(work.StartYear) - @(work.EndYear) @(work.WorkTitle)</li>                     
+                            <li>@(work.StartYear) - @(work.EndYear) @(work.WorkTitle)</li>
                         }
                     </ul>
                 </div>
@@ -471,40 +471,33 @@
                 <div class="course-info-group min-25">
                     @foreach (var item in Model.TwentyFiveDiscountedPrice)
                     {
-                        <form method="post" action="/ShoppingCart/Index" class="course-info-card d-flex text-decoration-none text-reset" style="background: none; border: none; padding: 0;">
-                             @Html.AntiForgeryToken() <!-- CSRF 保護 -->
+                        <form asp-controller="ShoppingCart" asp-action="AddToCart"
+                              asp-route-memberId="@Model.MemberId" asp-route-courseId="@Model.CourseId" asp-route-courseLength="25" asp-route-quantity="@item.CourseCount"
+                              class="course-info-card d-flex text-decoration-none text-reset" style="background: none; border: none; padding: 0;">
 
-                             <!-- 隱藏表單字段傳遞參數 -->
-                             <input type="hidden" name="memberId" value="@Model.MemberId" />
-                             <input type="hidden" name="courseId" value="@Model.CourseId" />
-                             <input type="hidden" name="courseLength" value="25" />
-                             <input type="hidden" name="quantity" value="@item.CourseCount" />
+                            @Html.AntiForgeryToken() <!-- CSRF 保護 -->
 
                             <button type="submit" class="course-info-card d-flex w-100 text-left" style="background: none; border: none; min-height:65px;">
-                            <div class="course-charging d-flex flex-column">
-                                <div class="charging-fee">NT$ @item.DiscountPrice</div>
-                                <div class="course-number-time mt-2">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
-                            </div>
-                            <div class="course-discount d-flex">
-                                <div class="course-discount-logo">@(item.Discount)% Off</div>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </div>
-                        </button>
+                                <div class="course-charging d-flex flex-column">
+                                    <div class="charging-fee">NT$ @item.DiscountPrice</div>
+                                    <div class="course-number-time mt-2">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
+                                </div>
+                                <div class="course-discount d-flex">
+                                    <div class="course-discount-logo">@(item.Discount)% Off</div>
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </button>
                         </form>
                     }
                 </div>
-                
+
                 <div class="course-info-group min-50 d-none ">
                     @foreach (var item in Model.FiftyDiscountedPrice)
                     {
-                        <form method="post" action="/ShoppingCart/Index" class="course-info-card d-flex text-decoration-none text-reset" style="background: none; border: none; padding: 0;">
-                             @Html.AntiForgeryToken() <!-- CSRF 保護 -->
-
-                             <!-- 隱藏表單字段傳遞參數 -->
-                             <input type="hidden" name="memberId" value="@Model.MemberId" />
-                             <input type="hidden" name="courseId" value="@Model.CourseId" />
-                             <input type="hidden" name="courseLength" value="25" />
-                             <input type="hidden" name="quantity" value="@item.CourseCount" />
+                        <form asp-controller="ShoppingCart" asp-action="AddToCart"
+                              asp-route-memberId="@Model.MemberId" asp-route-courseId="@Model.CourseId" asp-route-courseLength="50" asp-route-quantity="@item.CourseCount"
+                              class="course-info-card d-flex text-decoration-none text-reset" style="background: none; border: none; padding: 0;">
+                            @Html.AntiForgeryToken() <!-- CSRF 保護 -->
 
                             <button type="submit" class="course-info-card d-flex w-100 text-left" style="background: none; border: none; min-height:65px;">
                                 <div class="course-charging d-flex flex-column">
