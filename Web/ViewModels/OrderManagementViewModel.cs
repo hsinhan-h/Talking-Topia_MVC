@@ -158,7 +158,6 @@ namespace Web.ViewModels
         /// </summary>
         public DateTime BookingTime { get; set; }
     }
-
     public class ShoppingCartInfoListViewModel
     {
         public List<ShoppingCartInfoViewModel> ShoppingCartInfoList { get; set; }

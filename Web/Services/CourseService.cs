@@ -158,6 +158,13 @@ namespace Web.Services
                 {
                     CourseId = course.CourseId,
                     MemberId = course.TutorId,
+                    TutorHeadShotImage = _repository
+                        .GetAll<Member>()
+                        .AsNoTracking()
+                        .Where(m => m.MemberId == course.TutorId)
+                        .Select(m => m.HeadShotImage)
+                        .FirstOrDefault(),
+                    CourseTitle = course.Title,
                     AvailableTimeSlots = _repository
                         .GetAll<TutorTimeSlot>()
                         .AsNoTracking()

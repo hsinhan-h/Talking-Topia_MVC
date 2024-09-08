@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using Web.Entities;
+using static Web.Services.TutorDataservice;
 
 namespace Web.ViewModels
 {
@@ -47,7 +48,7 @@ namespace Web.ViewModels
         /// 證照
         /// </summary>
         public List<LicenseData> License { get; set; }
-
+        public CourseStatus Coursestatus { get; set; }
     }
 
 
