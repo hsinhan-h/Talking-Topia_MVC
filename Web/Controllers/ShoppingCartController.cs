@@ -40,10 +40,9 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
 
-        public  IActionResult Delete([FromForm] int memberId, [FromForm] int courseId)
+        public IActionResult Delete([FromForm] int memberId, [FromForm] int courseId)
         {
-
-
+            _shoppingCartService.DeleteCartItem(memberId, courseId);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
     }

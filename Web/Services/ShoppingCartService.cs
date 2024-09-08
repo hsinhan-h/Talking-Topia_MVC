@@ -126,6 +126,27 @@ namespace Web.Services
             }
         }
 
+        public void DeleteCartItem(int memberId, int courseId)
+        {
+            try
+            {
+                var target = _repository.GetAll<ShoppingCart>()
+                                        .FirstOrDefault(x => x.MemberId == memberId && x.CourseId == courseId);
+                _repository.Delete(target);
+                _repository.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($"無法存入ShoppingCart: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+                throw;
+            }
+        }
+
         public enum CourseTypes
         {
             TwentyFiveMinUnitPrice = 1,
