@@ -32,8 +32,8 @@
 
 <partial name="_BannerPartial" />
 <div class="booking-success-wrapper col-12 d-flex flex-column align-items-center m-auto">
-    <h2 class="mt-5 mb-3 booking-success">預約成功!</h2>
-    <p class="mb-5" >系統將在 <strong style="color:blue"><span class="countdown">5</span>秒後 </strong> 自動跳轉回課程列表</p>
+    <h2 class="mt-5 mb-3  booking-success">預約成功<i class="bi bi-calendar-check ms-3"></i></h2>
+    <p class="mb-5" >系統將在 <strong style="color:blue"><span class="countdown">6</span>秒後 </strong> 自動跳轉回課程列表</p>
     <div class="slogan-wrapper p-4 w-100">
         <p class="slogan">TalkingTopia：連結世界，開啟學習新境界！</p>
         <p class="slogan">"專業導師，量身定制，讓學習變得輕鬆自在！"</p>
@@ -44,7 +44,7 @@
 
 
 <script>
-    let countdownNumber = 5;
+    let countdownNumber = 6;
     const countdownEl = document.querySelector('.countdown');
 
     const countdownInterval = setInterval(function() {
