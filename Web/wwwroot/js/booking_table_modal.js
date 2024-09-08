@@ -38,6 +38,8 @@ let bookingDateStart = new Date();
 bookingDateStart.setDate(bookingDateStart.getDate());
 let globCourseId = 1;
 let tutorSlots = [];
+let tutorHeadShot = "";
+let courseTitle = "";
 
 
 //傳入confirmBookingModel的資訊
@@ -53,6 +55,9 @@ async function generateBookingTable(weekStart, courseId) {
     globCourseId = courseId;
     const fetchedData = await fetchBookingTableData(courseId);
     tutorSlots = fetchedData.availableTimeSlots;
+    tutorHeadShot = fetchedData.tutorHeadShotImage;
+    courseTitle = fetchedData.courseTitle
+    
     console.log(tutorSlots);
 
     bookingTableBody.innerHTML = "";
@@ -111,8 +116,8 @@ async function generateBookingTable(weekStart, courseId) {
             //如果時段還沒被預約, 加入confirmBookingModal事件
             if (!isBooked(date, time, bookedSlots)) {
                 cell.addEventListener("click", (e) => {
-                    //confirmBookingModalCourseTitle.textContent = courseTitle;
-                    //confirmBookingModalTutorHeadshot.src = tutorHeadShot;
+                    confirmBookingModalCourseTitle.textContent = courseTitle;
+                    confirmBookingModalTutorHeadshot.src = tutorHeadShot;
                     confirmBookingModalDate.textContent = `${formatDate(date)} (${standardWeekdays[date.getDay()]
                         })`;               
                     confirmBookingModalTime.textContent = time;
