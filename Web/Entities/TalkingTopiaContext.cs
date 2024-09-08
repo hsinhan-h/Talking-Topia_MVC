@@ -1076,7 +1076,9 @@ new Booking { BookingId = 16, CourseId = 16, BookingDate = DateTime.Now, Booking
 new Booking { BookingId = 17, CourseId = 17, BookingDate = DateTime.Now, BookingTime = 19, StudentId = 17, Cdate = DateTime.Now, Udate = DateTime.Now },
 new Booking { BookingId = 18, CourseId = 18, BookingDate = DateTime.Now, BookingTime = 20, StudentId = 18, Cdate = DateTime.Now, Udate = DateTime.Now },
 new Booking { BookingId = 19, CourseId = 19, BookingDate = DateTime.Now, BookingTime = 12, StudentId = 19, Cdate = DateTime.Now, Udate = DateTime.Now },
-new Booking { BookingId = 20, CourseId = 20, BookingDate = DateTime.Now, BookingTime = 13, StudentId = 20, Cdate = DateTime.Now, Udate = DateTime.Now }
+new Booking { BookingId = 20, CourseId = 20, BookingDate = DateTime.Now, BookingTime = 13, StudentId = 20, Cdate = DateTime.Now, Udate = DateTime.Now },
+new Booking { BookingId = 21, CourseId = 1, BookingDate = new DateTime(2024, 9, 9), BookingTime = 13, StudentId = 20, Cdate = DateTime.Now, Udate = DateTime.Now },
+new Booking { BookingId = 22, CourseId = 2, BookingDate = new DateTime(2024, 9, 10), BookingTime = 16, StudentId = 21, Cdate = DateTime.Now, Udate = DateTime.Now }
 
 );
         modelBuilder.Entity<ProfessionalLicense>().HasData(

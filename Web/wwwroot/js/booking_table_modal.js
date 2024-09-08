@@ -1,64 +1,37 @@
 ﻿const bookingTableBody = document.getElementById("bookingTableBody");
 const bookingTableHeader = document.getElementById("bookingTableHeader");
+const bookingTableBodyWrapper = document.getElementById("bookingTableBodyWrapper");
 const weekRange = document.getElementById("weekRange");
 const prevWeekBtn = document.getElementById("prevWeek");
 const nextWeekBtn = document.getElementById("nextWeek");
-const confirmBookingModal = new bootstrap.Modal(
-    document.getElementById("confirmBookingModal")
-);
 
-const confirmBookingModalTutorHeadshot = document.getElementById(
-    "confirmBookingModalTutorHeadshot");
 
-const confirmBookingModalCourseTitle = document.getElementById(
-    "confirmBookingModalCourseTitle");
+//確認預約Modal
+const confirmBookingModal = new bootstrap.Modal(document.getElementById("confirmBookingModal"));
+const confirmBookingModalTutorHeadshot = document.getElementById("confirmBookingModalTutorHeadshot");
+const confirmBookingModalCourseTitle = document.getElementById("confirmBookingModalCourseTitle");
+const confirmBookingModalDate = document.getElementById("confirmBookingModalDate");
+const confirmBookingModalTime = document.getElementById("confirmBookingModalTime");
 
-const confirmBookingModalDate = document.getElementById(
-    "confirmBookingModalDate"
-);
-const confirmBookingModalTime = document.getElementById(
-    "confirmBookingModalTime"
-);
-const bookingTableBodyWrapper = document.getElementById(
-    "bookingTableBodyWrapper"
-);
 
-//已被預約的時間由此匯入
-const bookedSlots = [
-    "2024-08-15 12:00",
-    "2024-08-15 13:00",
-    "2024-08-15 14:00",
-    "2024-08-17 15:00",
-    "2024-08-17 16:00",
-    "2024-08-20 13:00",
-    "2024-08-18 18:00",
-];
-
+//初始化資料
 let bookingDateStart = new Date();
 bookingDateStart.setDate(bookingDateStart.getDate());
 let globCourseId = 1;
 let tutorSlots = [];
+let bookedSlots = [];
 let tutorHeadShot = "";
 let courseTitle = "";
 
 
-//傳入confirmBookingModel的資訊
-//let courseTitle;
-//let tutorHeadShot;
-//const bookBtn = document.querySelectorAll('.lh-tutor-card__book-btn');
-//bookBtn.forEach((btn) => btn.addEventListener("click", (e) => {
-//    courseTitle = e.target.getAttribute('data-course-title');
-//    tutorHeadShot = e.target.getAttribute('data-tutor-headshot').slice(1);
-//}))
-
+//Booking Table渲染
 async function generateBookingTable(weekStart, courseId) {
     globCourseId = courseId;
     const fetchedData = await fetchBookingTableData(courseId);
     tutorSlots = fetchedData.availableTimeSlots;
+    bookedSlots = fetchedData.bookedTimeSlots;
     tutorHeadShot = fetchedData.tutorHeadShotImage;
     courseTitle = fetchedData.courseTitle
-    
-    console.log(tutorSlots);
 
     bookingTableBody.innerHTML = "";
     bookingTableHeader.innerHTML = "";
@@ -109,13 +82,11 @@ async function generateBookingTable(weekStart, courseId) {
             //如果日期不在教師的教課時間內, 隱藏日期
             if (!inTutorTime(weekday, time)) {
                 cell.classList.add("d-none");
-            }
-
-            
+            }         
 
             //如果時段還沒被預約, 加入confirmBookingModal事件
             if (!isBooked(date, time, bookedSlots)) {
-                cell.addEventListener("click", (e) => {
+                cell.addEventListener("click", () => {
                     confirmBookingModalCourseTitle.textContent = courseTitle;
                     confirmBookingModalTutorHeadshot.src = tutorHeadShot;
                     confirmBookingModalDate.textContent = `${formatDate(date)} (${standardWeekdays[date.getDay()]
@@ -151,13 +122,16 @@ function generateTimeSlots() {
 
 //把date轉換成yyyy-mm-dd
 function formatDate(date) {
-    let dateInUTC8 = new Date(date);
-    dateInUTC8.setDate(dateInUTC8.getDate());
-    return dateInUTC8.toISOString().split("T")[0];
+    let newDate = new Date(date);
+    let year = newDate.getFullYear();
+    let month = String(newDate.getMonth() + 1).padStart(2, '0');
+    let day = String(newDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
 function isBooked(date, time, bookedSlots) {
-    return bookedSlots.includes(`${formatDate(date)} ${time}`);
+    return bookedSlots.some(bs =>
+        formatDate(bs.date) == formatDate(date) && `${String(bs.startHour - 1).padStart(2, "0")}:00` == time);
 }
 
 function inTutorTime(weekday, time) {
@@ -169,6 +143,7 @@ function inTutorTime(weekday, time) {
     return false;
 }
 
+//前一周&後一周換頁鈕
 prevWeekBtn.addEventListener("click", () => {
     bookingDateStart.setDate(bookingDateStart.getDate() - 7);
     generateBookingTable(bookingDateStart, globCourseId);
