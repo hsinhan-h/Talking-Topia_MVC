@@ -18,6 +18,8 @@ namespace Web.Controllers
         /// </summary>
         public async Task<IActionResult> Index([FromQuery] int memberId)
         {
+            if (!_shoppingCartService.HasMemberData(memberId))
+            { return RedirectToAction(nameof(HomeController.Account), "Home"); }
             var cartData = await _shoppingCartService.GetShoppingCartViewModelsAsync(memberId);
             var result = new ShoppingCartListViewModel
             {
@@ -33,7 +35,7 @@ namespace Web.Controllers
             { return RedirectToAction(nameof(HomeController.Account), "Home"); }
             if (!_shoppingCartService.HasCourseData(courseId))
             { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }
-            var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
+            await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
     }
