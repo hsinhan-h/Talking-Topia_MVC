@@ -26,9 +26,6 @@
             </div>
         </div>
     </div>
-    <!-- <div class="text-center">
-        <button id="expandBookingTable" class="btn btn-open">展開完整時間</button>
-    </div> -->
 </div>
 <div class="modal fade" id="confirmBookingModal" tabindex="-1"
      aria-labelledby="confirmBookingModalLabel" aria-hidden="true">
@@ -64,8 +61,20 @@
             </table>
 
             <div class="modal-footer col-8 mx-auto mb-2 d-flex justify-content-between border-0">
-                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-next">下一步</button>
+                <form id="addToCartForm" method="post" action="" class="d-flex w-100 justify-content-between">
+                    <input type="hidden" name="CourseId" id="formCourseId" />
+                    <input type="hidden" name="UnitPrice" id="formUnitPrice" />
+                    <input type="hidden" name="Quantity" id="formQuantity" />
+                    <input type="hidden" name="TotalPrice" id="formTotalPrice" />
+                    <input type="hidden" name="MemberId" id="formMemberId" />
+                    <input type="hidden" name="CourseType" id="formCourseType" />
+                    <input type="hidden" name="BookingDate" id="formBookingDate" />
+                    <input type="hidden" name="BookingTime" id="formBookingTime" />
+                    
+
+                    <button type="button" id="confirmBookingModalCancelBtn" class="btn btn-cancel" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" id="confirmBookingModalAddToCartBtn" class=" btn btn-next">確認預約</button>
+                </form>                
             </div>
         </div>
     </div>

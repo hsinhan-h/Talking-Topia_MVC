@@ -12,6 +12,7 @@ const confirmBookingModalTutorHeadshot = document.getElementById("confirmBooking
 const confirmBookingModalCourseTitle = document.getElementById("confirmBookingModalCourseTitle");
 const confirmBookingModalDate = document.getElementById("confirmBookingModalDate");
 const confirmBookingModalTime = document.getElementById("confirmBookingModalTime");
+const addToCartBtn = document.getElementById("confirmBookingModalAddToCartBtn");
 
 
 //初始化資料
@@ -22,6 +23,8 @@ let tutorSlots = [];
 let bookedSlots = [];
 let tutorHeadShot = "";
 let courseTitle = "";
+let selectedBookingDate = null;
+let selectedBookingTime = null;
 
 
 //Booking Table渲染
@@ -89,6 +92,10 @@ async function generateBookingTable(weekStart, courseId) {
                 cell.addEventListener("click", () => {
                     confirmBookingModalCourseTitle.textContent = courseTitle;
                     confirmBookingModalTutorHeadshot.src = tutorHeadShot;
+
+                    selectedBookingDate = date;
+                    selectedBookingTime = time;
+
                     confirmBookingModalDate.textContent = `${formatDate(date)} (${standardWeekdays[date.getDay()]
                         })`;               
                     confirmBookingModalTime.textContent = time;
@@ -99,7 +106,7 @@ async function generateBookingTable(weekStart, courseId) {
             }
             column.appendChild(cell);
         }
-        bookingTableBody.appendChild(column);
+        bookingTableBody.appendChild(column);    
     }
 
     // Initialize tooltips
@@ -154,7 +161,12 @@ nextWeekBtn.addEventListener("click", () => {
     generateBookingTable(bookingDateStart, globCourseId);
 });
 
-
+//提交預約表單
+addToCartBtn.addEventListener("click", function () {
+    document.getElementById("formBookingDate").value = selectedBookingDate;
+    document.getElementById("formBookingTime").value = selectedBookingTime;
+    document.getElementById("addToCartForm").submit();
+})
 
 //fetch BookingTable API
 async function fetchBookingTableData(courseId) {
@@ -181,3 +193,8 @@ async function fetchBookingTableData(courseId) {
         console.error('Fetching BookingTableData時發生錯誤:', error);
     }
 }
+
+
+
+
+

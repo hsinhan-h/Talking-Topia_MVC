@@ -34,5 +34,6 @@ namespace Web.Controllers
             var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
             return RedirectToAction(nameof(Index), new { MemberId = memberId });
         }
+
     }
 }
