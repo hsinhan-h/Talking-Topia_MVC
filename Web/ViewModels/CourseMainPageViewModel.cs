@@ -78,7 +78,6 @@ namespace Web.ViewModels
     {
         public int ReviewerId { get; set; }
         public string ReviewDate { get; set; }
-
         public string ReviewContent { get; set; }
     }
 
