@@ -1,0 +1,59 @@
+﻿@section topCSS
+{
+    <link rel="stylesheet" href="~/css/normalize.css" />
+    <link rel="stylesheet" href="~/css/utilities.css" />
+}
+
+<style>
+    .booking-success {
+        color: var(--highlight-color);
+        font-weight: 900;
+    }
+
+    .booking-success-wrapper h2{
+        font-size: 36px;
+    }
+
+    .booking-success-wrapper p {
+        font-size: 20px;
+    }
+
+    .slogan-wrapper {
+        background-color: var(--theme-color);
+    }
+
+    .slogan {
+        color: #fff;
+        font-weight: 600;
+        font-size: 18px;
+        text-align: center;
+    }
+</style>
+
+<partial name="_BannerPartial" />
+<div class="booking-success-wrapper col-12 d-flex flex-column align-items-center m-auto">
+    <h2 class="mt-5 mb-3 booking-success">預約成功!</h2>
+    <p class="mb-5" >系統將在 <strong style="color:blue"><span class="countdown">5</span>秒後 </strong> 自動跳轉回課程列表</p>
+    <div class="slogan-wrapper p-4 w-100">
+        <p class="slogan">TalkingTopia：連結世界，開啟學習新境界！</p>
+        <p class="slogan">"專業導師，量身定制，讓學習變得輕鬆自在！"</p>
+    </div>
+    
+</div>
+
+
+
+<script>
+    let countdownNumber = 5;
+    const countdownEl = document.querySelector('.countdown');
+
+    const countdownInterval = setInterval(function() {
+        countdownNumber--;
+        countdownEl.textContent = countdownNumber;
+
+        if(countdownNumber === 0) {
+            clearInterval(countdownInterval);
+            window.location.href = '/Course/CourseList';
+        } 
+    }, 1000);  
+</script>
