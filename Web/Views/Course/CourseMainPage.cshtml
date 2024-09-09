@@ -476,7 +476,7 @@
 
                             @Html.AntiForgeryToken() <!-- CSRF 保護 -->
 
-                            <input type="hidden" name="memberId" value="@Model.MemberId" />
+                            <input type="hidden" name="memberId" value="@Model.TutorId" />
                             <input type="hidden" name="courseId" value="@Model.CourseId" />
                             <input type="hidden" name="courseLength" value="25" />
                             <input type="hidden" name="quantity" value="@item.CourseCount" />
@@ -484,7 +484,7 @@
 
                             <button type="submit" class="course-info-card d-flex w-100 text-left" style="background: none; border: none; min-height:65px;">
                                 <div class="course-charging d-flex flex-column">
-                                    <div class="charging-fee">NT$ @item.DiscountPrice</div>
+                                    <div class="charging-fee">NT$@(item.DiscountPrice)</div>
                                     <div class="course-number-time mt-2">@(item.CourseCount)堂@(item.CourseDurance)分鐘課</div>
                                 </div>
                                 <div class="course-discount d-flex">
@@ -504,7 +504,7 @@
 
                             @Html.AntiForgeryToken() <!-- CSRF 保護 -->
 
-                            <input type="hidden" name="memberId" value="@Model.MemberId" />
+                            <input type="hidden" name="memberId" value="@Model.TutorId" />
                             <input type="hidden" name="courseId" value="@Model.CourseId" />
                             <input type="hidden" name="courseLength" value="50" />
                             <input type="hidden" name="quantity" value="@item.CourseCount" />
