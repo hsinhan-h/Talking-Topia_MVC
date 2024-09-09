@@ -125,29 +125,7 @@
                         </li>
 
                     </ul>
-                    @* <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/Apply_teacher/myTeacher.html">成為教師</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入/註冊</a>
-                        </li>
-                        <li class="nav-item shopping-bag d-none">
-                            <a class="nav-link" aria-current="page" href="https://購物車頁面">
-                                <img src="https://fakeimg.pl/20x20/200" alt="">購物車
-                            </a>
-                        </li>
-                        <li class="nav-item message-item">
-                            <a class="nav-link" aria-current="page" href="">
-                                <i class="fa-regular fa-comments"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item user-item">
-                            <a class="nav-link" aria-current="page" href="https://會員中心">
-                                <img src="https://fakeimg.pl/20x20/200" alt="">
-                            </a>
-                        </li>
-                    </ul> *@
+                    
                     <ul class="navbar-nav ms-auto">
                         @if (ViewData["IsLoggedIn"] != null && (bool)ViewData["IsLoggedIn"])
                         {
@@ -183,8 +161,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/Tutor/Index">成為教師</a>
                             </li>
-                            <li class="nav-item">
+                           @*  <li class="nav-item">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入/註冊</a>
+                            </li> *@
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Account", "Home")">登入/註冊</a>
                             </li>
                             <li class="nav-item message-item">
                                 <a class="nav-link" href="">
@@ -201,152 +182,7 @@
 
 
 
-        <!-- <template>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" v-if="!isLoggedIn">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="https://TalkingTopia的首頁">
-                <img src="../Layout/layout-img/TalkingTopia logo.png" alt="Logo" width="30" class="d-inline-block align-text-top">
-              </a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">搜尋課程</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">推薦課程</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">評價</a>
-                  </li>
-                </ul>
-
-                <ul class="navbar-nav ms-auto">
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="https://永廷的成為老師html">成為教師</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="https://購物車頁面">
-                      <img src="https://fakeimg.pl/20x20/200" alt="">NT$693
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="https://會員中心">
-                      <img src="https://fakeimg.pl/20x20/200" alt="">
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-
-          <nav class="navbar navbar-expand-lg lh-backstage-navbar" v-else>
-            <a class="navbar-brand" href="#">𝕋𝕒𝕝𝕜𝕚𝕟𝕘𝕋𝕠𝕡𝕚𝕒</a>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="pic lh-backstage-user-photo">
-              <img src="https://picsum.photos/100/100/?random=16" />
-            </div>
-            <div class="collapse navbar-collapse lh-backstage-navbar-list" id="navbarNav">
-              <button class="btn lh-backstage-submit-btn" click="openCalendar">行事曆</button>
-              <a class="lh-backstage-nav-item" href="#lh-backstage-homepage-section">後台首頁</a>
-              <a class="lh-backstage-nav-item" href="#lh-backstage-watchlist-section">關注列表</a>
-              <div class="lh-backstage-divider m-1"></div>
-              <a class="lh-backstage-nav-item" href="#lh-backstage-member-section">個人資料</a>
-              <a class="lh-backstage-nav-item" href="#lh-backstage-transaction-section">交易明細</a>
-              <div class="lh-backstage-divider m-1"></div>
-              <a class="lh-backstage-nav-item" href="#lh-backstage-tutor-section">教師功能</a>
-              <a class="lh-backstage-nav-item" href="#lh-backstage-admin-section">系統功能</a>
-            </div>
-          </nav>
-        </template> -->
-        <!-- 登入/註冊Modal -->
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!-- X 按鈕 -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <!-- 左邊欄位 -->
-                                <div class="col-md-6 d-flex flex-column justify-content-center">
-                                    <h5 class="text-center">請輸入您的電子信箱來登入</h5>
-                                    <form>
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">電子信箱</label>
-                                            <input type="email" class="form-control" id="email" placeholder="happ@example.com">
-                                        </div>
-                                        <button type="submit" class="btn btn-success w-100">確認</button>
-                                    </form>
-                                    <hr>
-                                    <p class="text-center">或</p>
-
-                                    <button class="btn btn-outline-secondary mb-3">
-                                        <img src="~/image/mainpage_imgs/google.png" alt="Google" style="width:20px; height:20px; margin-right:10px;">
-                                        以 Google 登入
-                                    </button>
-                                    <button class="btn btn-outline-secondary mb-3">
-                                        <img src="~/image/mainpage_imgs/line.png" alt="LINE" style="width:20px; height:20px; margin-right:10px;">
-                                        以 LINE 登入
-                                    </button>
-                                </div>
-                                <!-- 右邊欄位 -->
-                                <div class="register-form">
-                                    <p>尚未註冊過，請註冊</p>
-                                    <form id="registerForm">
-                                        <div>
-                                            <input type="text" id="name" placeholder="名字">
-                                            <p id="nameError" class="error-message" style="color:red; display:none;">不可為空</p>
-                                        </div>
-                                        <div>
-                                            <input type="email" id="email" placeholder="信箱">
-                                            <p id="emailError" class="error-message" style="color:red; display:none;">不可為空</p>
-                                        </div>
-                                        <div>
-                                            <input type="password" id="password" placeholder="密碼(至少八個字元)">
-                                            <p id="passwordError" class="error-message" style="color:red; display:none;">不可為空</p>
-                                        </div>
-                                        <div>
-                                            <input type="password" id="confirmPassword" placeholder="確認密碼">
-                                            <p id="confirmPasswordError" class="error-message" style="color:red; display:none;">不可為空</p>
-                                        </div>
-                                        <button type="submit">註冊</button>
-                                        <p class="text-center text-muted small">
-                                            繼續操作表示您同意我們的<a href="#">服務條款</a>，請參閱我們的<a href="#">隱私權政策</a>。
-                                        </p>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <!-- 返回按鈕 -->
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
     </header>
 
