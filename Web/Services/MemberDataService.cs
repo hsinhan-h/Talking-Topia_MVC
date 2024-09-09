@@ -1,4 +1,6 @@
-﻿using Web.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
+using Web.Entities;
 using Web.Repository;
 using Web.ViewModels;
 
@@ -6,53 +8,155 @@ namespace Web.Services
 {
     public class MemberDataService
     {
+        private readonly IRepository _repository;
+
+        public MemberDataService(IRepository repository)
+        {
+            _repository = repository;
+        }
 
         public async Task<MemberProfileViewModel> GetMemberData(string account)
         {
-            // 兩筆假資料
+            // 使用 Email 查詢會員資料
+            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.Email == account);
 
-            var memberData = new MemberProfileViewModel
+            if (member == null)
             {
-                ImageUrl = "https://example.com/image.jpg",
-                Nickname = "Sunny",
-                Birthday = new DateTime(1990, 5, 12),
-                Gender = "Female",
-                Account = "sunny123",
-                FirstName = "Anna",
-                LastName = "Wang",
-                Email = "anna.wang@example.com",
-                Phone = "0987654321",
-                CousePrefer = new List<CouseListViewModel>
-                    {
-                        new CouseListViewModel { CategorytName = "Language", SubjectName = "English" },
-                        new CouseListViewModel { CategorytName = "Language", SubjectName = "Japanese" }
-                    },
+                throw new Exception("會員資料");
+            }
+
+            var coursePreferences = await _repository.GetAll<MemberPreference>()
+                .Where(mp => mp.MemberId == member.MemberId)  // 使用 member.MemberId 進行比較
+                .Select(mp => new CourseListViewModel
+                {
+                    //CategoryName = mp.CategoryName,
+                    //SubjectName = mp.SubjectName
+                }).ToListAsync();
+
+            // 將查詢結果轉換成 ViewModel
+            var memberProfile = new MemberProfileViewModel
+            {
+                ImageUrl = member.HeadShotImage,
+                Nickname = member.Nickname,
+                Birthday = member.Birthday.HasValue ? member.Birthday.Value : DateTime.MinValue,
+                Gender = ((Gender)member.Gender).ToString(),  // 將枚舉轉換為字符串
+                Account = member.Account,
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                Email = member.Email,
+                Phone = member.Phone,
+                CoursePrefer = coursePreferences
             };
 
-            if (memberData == null)
+            return memberProfile;
+        }
+
+        public async Task UpdateMemberData(MemberProfileViewModel updatedData)
+        {
+            if (updatedData == null)
+            {
+                throw new ArgumentNullException(nameof(updatedData), "更新資料不能為空");
+            }
+
+            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.Account == updatedData.Account);
+
+            if (member == null)
             {
                 throw new Exception("會員資料未找到");
             }
 
-            // 將找到的會員資料填寫到 ViewModel 中
-            var result = new MemberProfileViewModel
+            // 更新會員的屬性，根據需要檢查欄位是否有效
+            member.FirstName = string.IsNullOrWhiteSpace(updatedData.FirstName) ? member.FirstName : updatedData.FirstName;
+            member.LastName = string.IsNullOrWhiteSpace(updatedData.LastName) ? member.LastName : updatedData.LastName;
+            member.Nickname = string.IsNullOrWhiteSpace(updatedData.Nickname) ? member.Nickname : updatedData.Nickname;
+
+            // 確保 Gender 值有效
+            if (Enum.TryParse(typeof(Gender), updatedData.Gender, out var genderValue))
             {
-                ImageUrl = memberData.ImageUrl,
-                Nickname = memberData.Nickname,
-                Birthday = memberData.Birthday,
-                Gender = memberData.Gender,
-                Account = memberData.Account,
-                FirstName = memberData.FirstName,
-                LastName = memberData.LastName,
-                Email = memberData.Email,
-                Phone = memberData.Phone,
-                CousePrefer = memberData.CousePrefer,
+                member.Gender = (short)genderValue;
+            }
 
-            };
+            // 檢查生日是否有效
+            if (updatedData.Birthday != DateTime.MinValue)
+            {
+                member.Birthday = updatedData.Birthday;
+            }
 
-            return result;
+            // 更新其他欄位
+            member.Email = string.IsNullOrWhiteSpace(updatedData.Email) ? member.Email : updatedData.Email;
+            member.Phone = string.IsNullOrWhiteSpace(updatedData.Phone) ? member.Phone : updatedData.Phone;
+
+            try
+            {
+                // 保存更新到資料庫
+                _repository.Update(member);
+                await _repository.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                // 錯誤處理: 資料庫更新失敗
+                throw new Exception("更新會員資料時發生錯誤", ex);
+            }
         }
 
-        
     }
+
+    // 更新會員資料
 }
+public enum Gender
+    {
+        Male = 1,
+        Female = 2,
+        Other = 3
+    }
+
+
+    //public async Task<MemberProfileViewModel> GetMemberData(string account)
+    //{
+    //    // 兩筆假資料
+
+    //    var memberData = new MemberProfileViewModel
+    //    {
+    //        ImageUrl = "https://example.com/image.jpg",
+    //        Nickname = "Sunny",
+    //        Birthday = new DateTime(1990, 5, 12),
+    //        Gender = "Female",
+    //        Account = "sunny123",
+    //        FirstName = "Anna",
+    //        LastName = "Wang",
+    //        Email = "anna.wang@example.com",
+    //        Phone = "0987654321",
+    //        CousePrefer = new List<CouseListViewModel>
+    //            {
+    //                new CouseListViewModel { CategorytName = "Language", SubjectName = "English" },
+    //                new CouseListViewModel { CategorytName = "Language", SubjectName = "Japanese" }
+    //            },
+    //    };
+
+    //    if (memberData == null)
+    //    {
+    //        throw new Exception("會員資料未找到");
+    //    }
+
+    //    // 將找到的會員資料填寫到 ViewModel 中
+    //    var result = new MemberProfileViewModel
+    //    {
+    //        ImageUrl = memberData.ImageUrl,
+    //        Nickname = memberData.Nickname,
+    //        Birthday = memberData.Birthday,
+    //        Gender = memberData.Gender,
+    //        Account = memberData.Account,
+    //        FirstName = memberData.FirstName,
+    //        LastName = memberData.LastName,
+    //        Email = memberData.Email,
+    //        Phone = memberData.Phone,
+    //        CousePrefer = memberData.CousePrefer,
+
+    //    };
+
+    //    return result;
+    //}
+
+
+
+
