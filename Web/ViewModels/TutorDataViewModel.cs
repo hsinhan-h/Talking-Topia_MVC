@@ -12,6 +12,10 @@ namespace Web.ViewModels
     public class TutorDataViewModel
     {
         /// <summary>
+        /// 國籍
+        /// </summary>
+        public int NationID { get; set; }
+        /// <summary>
         /// 母語
         /// </summary>
         public string NativeLanguage { get; set; }
