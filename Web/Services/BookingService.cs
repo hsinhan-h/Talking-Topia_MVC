@@ -134,5 +134,10 @@ namespace Web.Services
                 BookingList = await bookingValue.ToListAsync(),
             };
         }
+
+        //public async Task<BookingListViewModel> GetRemainCourseQtyAsync(int MemberId, int CourseId)
+        //{
+        //    var purchasedQty = 
+        //}
     }
 }
