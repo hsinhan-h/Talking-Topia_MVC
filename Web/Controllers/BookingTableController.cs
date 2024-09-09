@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Web.Entities;
 
 namespace Web.Controllers
 {
     public class BookingTableController : Controller
     {
         private readonly BookingService _bookingService;
-        public BookingTableController(BookingService bookingService, CourseService courseService)
+        private readonly CourseService _courseService;
+        private readonly ShoppingCartService _shoppingCartService;
+        public BookingTableController(BookingService bookingService, CourseService courseService, ShoppingCartService shoppingCartService)
         {
             _bookingService = bookingService;
+            _courseService = courseService;
+            _shoppingCartService = shoppingCartService;
         }
 
         [HttpPost]
@@ -25,10 +30,15 @@ namespace Web.Controllers
                 return RedirectToAction("Success", "BookingTable");
             }
 
-            //todo: 剩餘堂數 <= 0, 跳轉購物車, 將課程寫入購物車資料表
-
-            return RedirectToAction("Success", "BookingTable");
-
+            //todo: 剩餘堂數 <= 0, 將課程寫入購物車資料表, 跳轉購物車 
+            //MemberId先暫時用1帶入
+            else
+            {
+                decimal price = _courseService.GetCourse25MinUnitPrice(CourseId);
+                _shoppingCartService.CreateShoppingCartData(1, CourseId, 25, 1, price);
+                return RedirectToAction("Index", "ShoppingCart");
+            }
+            
         }
 
 

@@ -190,6 +190,14 @@ namespace Web.Services
             return courseInfo;
         }
 
+        public decimal GetCourse25MinUnitPrice(int courseId)
+        {
+            return _repository.GetAll<Course>().AsNoTracking()
+                .Where(c => c.CourseId == courseId)
+                .Select(c => c.TwentyFiveMinUnitPrice)
+                .FirstOrDefault();
+        }
+
         public async Task<CourseMainPageViewModel> GetCourseMainPage(int courseId)
         {
             // 查詢課程、會員和國籍資料
