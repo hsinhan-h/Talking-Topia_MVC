@@ -28,9 +28,9 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> TutorData()
         {
-            int memberId = 19;
-            string subjectName = "程式設計";
-            var tutorData = await _tutorDataService.GetTutorDataAsync(memberId, subjectName);
+            int memberId = 1;
+            string categorytName ="程式設計";
+            var tutorData = await _tutorDataService.GetTutorDataAsync(memberId, categorytName);
             if (tutorData == null)
             {
                 return RedirectToAction("Index", "Tutor");
