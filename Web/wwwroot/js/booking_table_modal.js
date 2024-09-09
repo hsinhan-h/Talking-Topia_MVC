@@ -163,6 +163,7 @@ nextWeekBtn.addEventListener("click", () => {
 
 //提交預約表單
 addToCartBtn.addEventListener("click", function () {
+    document.getElementById("formCourseId").value = globCourseId;
     document.getElementById("formBookingDate").value = selectedBookingDate;
     document.getElementById("formBookingTime").value = selectedBookingTime;
     document.getElementById("addToCartForm").submit();
