@@ -23,7 +23,7 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> MemberData()
         {
-            var summaryData = await _memberDataService.GetMemberData("tommy85");
+            var summaryData = await _memberDataService.GetMemberData("john.doe@example.com");  // 替換為你資料庫中存在的 email
             return View(summaryData);
         }
         public async Task<IActionResult> MemberTransaction()
