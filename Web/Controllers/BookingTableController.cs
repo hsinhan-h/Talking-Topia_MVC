@@ -12,7 +12,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToCart(int CourseId, DateTime BookingDate, int BookingTime)
+        public async Task<IActionResult> AddToCart(int CourseId, DateTime BookingDate, short BookingTime)
         {
 
             // todo: 剩餘堂數 > 0, 允許預約

@@ -154,13 +154,13 @@ namespace Web.Services
             return purchasedQty - bookedQty;
         }
 
-        public void CreateBookingData(int courseId, DateTime bookingDate, int bookingTime, int studentId)
+        public void CreateBookingData(int courseId, DateTime bookingDate, short bookingTime, int studentId)
         {
             var booking = new Booking
             {
                 CourseId = courseId,
                 BookingDate = bookingDate,
-                BookingId = bookingTime,
+                BookingTime = bookingTime,
                 StudentId = studentId,
                 Cdate = DateTime.Now,
                 Udate = DateTime.Now
