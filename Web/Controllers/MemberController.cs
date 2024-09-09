@@ -1,4 +1,5 @@
-﻿using Web.Services;
+﻿using Web.Entities;
+using Web.Services;
 
 namespace Web.Controllers
 {
@@ -19,10 +20,14 @@ namespace Web.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> MemberData()
+        public async Task<IActionResult> MemberData(int memberId)
         {
-            var summaryData = await _memberDataService.GetMemberData("john.doe@example.com");  // 替換為你資料庫中存在的 email
-            return View(summaryData);
+            //var summaryData = await _memberDataService.GetMemberData(memberId);  // 使用 MemberId 查找
+            //return View(summaryData);
+            int testMemberId = 2;  // 測試使用 MemberId = 2
+            var memberProfile = await _memberDataService.GetMemberData(testMemberId);
+
+            return View(memberProfile);
         }
         public async Task<IActionResult> MemberTransaction()
         {
