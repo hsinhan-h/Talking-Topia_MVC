@@ -212,8 +212,8 @@ namespace Web.Services
                     CourseTitle = course.Title,
                     CourseSubTitle = course.SubTitle,
                     TutorIntro = member.TutorIntro,
-                    TwentyFiveMinPrice = course.TwentyFiveMinUnitPrice,
-                    FiftyMinPrice = course.FiftyMinUnitPrice,
+                    TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
+                    FiftyMinPrice = (int)course.FiftyMinUnitPrice,
                     CourseVideo = course.VideoUrl,
                     CourseVideoThumbnail = course.ThumbnailUrl
                 })
@@ -284,6 +284,7 @@ namespace Web.Services
             {
                 CourseId = courseMainInfo.CourseId,
                 TutorId = courseMainInfo.TutorId,
+                MemberId = 1,
                 TutorHeadShotImage = courseMainInfo.TutorHeadShotImage,
                 TutorFlagImage = courseMainInfo.TutorFlagImage,
                 IsVerifiedTutor = courseMainInfo.IsVerifiedTutor,

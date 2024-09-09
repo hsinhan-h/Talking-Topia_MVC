@@ -29,7 +29,7 @@ namespace Web.Controllers
         }
 
 
-        public async Task<IActionResult> CourseMainPage(/*[FromQuery, DefaultValue(1)]*/ int courseId)
+        public async Task<IActionResult> CourseMainPage([FromQuery, DefaultValue(1)] int courseId)
         {
             ViewData["CourseId"] = courseId;
             var model = await _courseService.GetCourseMainPage(courseId);

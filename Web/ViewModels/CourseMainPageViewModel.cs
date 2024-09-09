@@ -31,11 +31,11 @@ namespace Web.ViewModels
         [Display(Name = "課程介紹")]
         public string CourseIntro { get; set; }
         [Display(Name = "25分鐘台幣價格")]
-        public decimal TwentyFiveMinPrice { get; set; }
+        public int TwentyFiveMinPrice { get; set; }
         public List<BaseDiscountPice> TwentyFiveDiscountedPrice { get; set; }
 
         [Display(Name = "50分鐘台幣價格")]
-        public decimal FiftyMinPrice { get; set; }
+        public int FiftyMinPrice { get; set; }
         
         public List<BaseDiscountPice> FiftyDiscountedPrice { get; set; }
 
