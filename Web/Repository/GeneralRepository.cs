@@ -50,5 +50,10 @@ namespace Web.Repository
             return _context.Set<T>().FirstOrDefault(predicate);
 
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

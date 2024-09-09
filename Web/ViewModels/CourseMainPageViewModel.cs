@@ -6,8 +6,8 @@ namespace Web.ViewModels
     {
         
         public int CourseId { get; set; }
+        public int TutorId { get; set; }
         public int MemberId { get; set; }
-        public string Title { get; set; }
         [Display(Name = "教師頭像")]
         public string TutorHeadShotImage { get; set; }
         [Display(Name = "教師國旗圖像")]
@@ -16,10 +16,12 @@ namespace Web.ViewModels
         public bool IsVerifiedTutor { get; set; }
         [Display(Name = "會說的語言")]
         public string SpokenLanguage { get; set; }
+        public int EducationId { get; set; }
         [Display(Name = "學歷")]
-        public string EducationDegree { get; set; }
+        public List<TutorEducationList> EducationDegree { get; set; }
         [Display(Name = "經歷")]
         public List<TutorExperience> ExperienceList { get; set; }
+        public List<TutorProfessionList> ProfessionList { get; set; }
         [Display(Name = "課程名稱")]
         public string CourseTitle { get; set; }
         [Display(Name = "課程副標題")]
@@ -29,11 +31,11 @@ namespace Web.ViewModels
         [Display(Name = "課程介紹")]
         public string CourseIntro { get; set; }
         [Display(Name = "25分鐘台幣價格")]
-        public decimal TwentyFiveMinPrice { get; set; }
+        public int TwentyFiveMinPrice { get; set; }
         public List<BaseDiscountPice> TwentyFiveDiscountedPrice { get; set; }
 
         [Display(Name = "50分鐘台幣價格")]
-        public decimal FiftyMinPrice { get; set; }
+        public int FiftyMinPrice { get; set; }
         
         public List<BaseDiscountPice> FiftyDiscountedPrice { get; set; }
 
@@ -65,7 +67,10 @@ namespace Web.ViewModels
         public int EndYear { get; set; }
         public string WorkTitle { get; set; }
     }
-
+    public class TutorProfessionList
+    { 
+        public string ProfessionName { get; set; }
+    }
     //public class TimeSlot
     //{
     //    public DateTime Date { get; set; }
@@ -79,6 +84,13 @@ namespace Web.ViewModels
         public int ReviewerId { get; set; }
         public string ReviewDate { get; set; }
         public string ReviewContent { get; set; }
+    }
+
+    public class TutorEducationList
+    { 
+        public int StudyStartYear { get; set; }
+        public int StudyEndYear { get; set; }
+        public string SchoolAndDepartment { get; set; }
     }
 
 

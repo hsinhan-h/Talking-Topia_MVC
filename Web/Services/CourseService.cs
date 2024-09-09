@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Tracing;
 using System.Drawing;
 using Web.Entities;
 using Web.Repository;
@@ -201,8 +202,9 @@ namespace Web.Services
                 where course.CourseId == courseId
                 select new CourseMainPageViewModel
                 {
-                    MemberId = member.MemberId,
+                    TutorId = member.MemberId,
                     CourseId = course.CourseId,
+                    EducationId= (int)member.EducationId,
                     SpokenLanguage = member.SpokenLanguage,
                     TutorHeadShotImage = member.HeadShotImage,
                     TutorFlagImage = nation.FlagImage,
@@ -210,8 +212,8 @@ namespace Web.Services
                     CourseTitle = course.Title,
                     CourseSubTitle = course.SubTitle,
                     TutorIntro = member.TutorIntro,
-                    TwentyFiveMinPrice = course.TwentyFiveMinUnitPrice,
-                    FiftyMinPrice = course.FiftyMinUnitPrice,
+                    TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
+                    FiftyMinPrice = (int)course.FiftyMinUnitPrice,
                     CourseVideo = course.VideoUrl,
                     CourseVideoThumbnail = course.ThumbnailUrl
                 })
@@ -221,11 +223,33 @@ namespace Web.Services
             if (courseMainInfo == null)
                 return null; // 如果找不到對應的課程資料，返回 null
 
+           //最高學歷的查詢
+            var education = await _repository.GetAll<Education>()
+                                .Where(w => w.EducationId == courseMainInfo.EducationId)
+                                .AsNoTracking().ToListAsync();
+            //專業證照的查詢
+            var professional = await _repository.GetAll<ProfessionalLicense>()
+                                .Where(p=>p.MemberId == courseMainInfo.TutorId)
+                                .AsNoTracking().ToListAsync();
+            var professionallist = professional.Any() ?
+                                    professional.Select(p =>                                    
+                                        new TutorProfessionList
+                                        {
+                                            ProfessionName = p.ProfessionalLicenseName
+                                        }).ToList()
+                                    : new List<TutorProfessionList>
+                                    {
+                                        new TutorProfessionList
+                                        {
+                                            ProfessionName = "目前無專業證照"
+                                        }
+                                    }.ToList();
+
             // 查詢該課程的評論
             var reviews = await _repository.GetAll<Review>()
-                .Where(r => r.CourseId == courseId)
-                .AsNoTracking()
-                .ToListAsync();
+                                .Where(r => r.CourseId == courseId)
+                                .AsNoTracking()
+                                .ToListAsync();
 
             // 若評論為空或 null，添加預設評論
             var reviewCardList = reviews.Any()
@@ -248,9 +272,9 @@ namespace Web.Services
 
             // 查詢教師的工作經驗
             var tutorExperiences = await _repository.GetAll<WorkExperience>()
-                .Where(w => w.MemberId == courseMainInfo.MemberId)
-                .AsNoTracking()
-                .ToListAsync();
+                                .Where(w => w.MemberId == courseMainInfo.TutorId)
+                                .AsNoTracking()
+                                .ToListAsync();
 
             // 計算課程評分
             var averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
@@ -259,7 +283,8 @@ namespace Web.Services
             var courseMainPageViewModel = new CourseMainPageViewModel
             {
                 CourseId = courseMainInfo.CourseId,
-                MemberId = courseMainInfo.MemberId,
+                TutorId = courseMainInfo.TutorId,
+                MemberId = 1,
                 TutorHeadShotImage = courseMainInfo.TutorHeadShotImage,
                 TutorFlagImage = courseMainInfo.TutorFlagImage,
                 IsVerifiedTutor = courseMainInfo.IsVerifiedTutor,
@@ -285,18 +310,28 @@ namespace Web.Services
                     EndYear = e.WorkEndDate.Year,
                     WorkTitle = e.WorkName
                 }).ToList(),
+                EducationDegree = education.Select(w=> new TutorEducationList
+                {
+                    StudyStartYear = w.StudyStartYear,
+                    StudyEndYear = w.StudyEndYear,
+                    SchoolAndDepartment = w.SchoolName + " " + w.DepartmentName, 
+                }).ToList(),
                 CourseImages = new List<CourseImageViewModel>(), // 根據需求查詢並填充
+                ProfessionList = professional.Select(p =>new TutorProfessionList
+                {
+                  ProfessionName = p.ProfessionalLicenseName
+                }).ToList(),
                 FollowingStatus = false // 假設未關注
             };
 
             // 處理折扣價錢
             var courseCountDiscountList = new List<CourseCountDiscount>
-    {
-        new CourseCountDiscount { CourseCount = 1, Discount = 0 },
-        new CourseCountDiscount { CourseCount = 5, Discount = 5 },
-        new CourseCountDiscount { CourseCount = 10, Discount = 10 },
-        new CourseCountDiscount { CourseCount = 20, Discount = 15 }
-    };
+            {
+                new CourseCountDiscount { CourseCount = 1, Discount = 0 },
+                new CourseCountDiscount { CourseCount = 5, Discount = 5 },
+                new CourseCountDiscount { CourseCount = 10, Discount = 10 },
+                new CourseCountDiscount { CourseCount = 20, Discount = 15 }
+            };
 
             courseMainPageViewModel.TwentyFiveDiscountedPrice = GettCoursePriceList(courseCountDiscountList, 25, courseMainPageViewModel.TwentyFiveMinPrice);
             courseMainPageViewModel.FiftyDiscountedPrice = GettCoursePriceList(courseCountDiscountList, 50, courseMainPageViewModel.FiftyMinPrice);

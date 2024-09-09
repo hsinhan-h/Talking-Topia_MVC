@@ -10,16 +10,20 @@ namespace Web.Services
         {
             _repository = repository;
         }
-        public async Task<TutorDataViewModel> GetTutorDataAsync(int memberId, string subjectName)
+        public async Task<TutorDataViewModel> GetTutorDataAsync(int memberId, string categorytName)
         {
+
             var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
                                          where member.MemberId == memberId
                                          select member.IsVerifiedTutor).FirstOrDefaultAsync();
             if (isVerifiedTutor) { 
                 var tutorData = await (from member in _repository.GetAll<Member>()
-                                   where member.MemberId == memberId
+                                       join nation in _repository.GetAll<Nation>()
+                                       on member.NationId equals nation.NationId
+                                       where member.MemberId == memberId
                                    select new TutorDataViewModel
                                    {
+                                       NationID = nation.NationId,
                                        NativeLanguage = member.NativeLanguage,
                                        SpokenLanguage = member.SpokenLanguage,
                                        BankAccount = member.BankAccount,
@@ -40,7 +44,9 @@ namespace Web.Services
                                                WorkEndDate = wexp.WorkEndDate,
                                                WorkName = wexp.WorkName
                                            }).ToList(),
-                                       License = (from subject in _repository.GetAll<CourseSubject>()
+                                       License = (from category in _repository.GetAll<CourseCategory>()
+                                                  join subject in _repository.GetAll<CourseSubject>()
+                                                  on category.CourseCategoryId equals subject.CourseCategoryId
                                                   join prefersubject in _repository.GetAll<MemberPreference>()
                                                   on subject.SubjectId equals prefersubject.SubjecId
                                                   join memb in _repository.GetAll<Member>()
@@ -48,7 +54,7 @@ namespace Web.Services
                                                   join license in _repository.GetAll<ProfessionalLicense>()
                                                   on memb.MemberId equals license.MemberId
                                                   where prefersubject.MemberId == memberId
-                                                    && subject.SubjectName == subjectName
+                                                    && category.CategorytName == categorytName//bug 用字串搜尋不到資料
                                                   select new LicenseData
                                                   {
                                                       ProfessionalLicenseName = license.ProfessionalLicenseName,
@@ -112,5 +118,6 @@ namespace Web.Services
             未審核 = 0,
             已審核 = 1
         }
+       
     }
 }
