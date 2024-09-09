@@ -135,9 +135,38 @@ namespace Web.Services
             };
         }
 
-        //public async Task<BookingListViewModel> GetRemainCourseQtyAsync(int MemberId, int CourseId)
-        //{
-        //    var purchasedQty = 
-        //}
+        public async Task<int> GetRemainCourseQtyAsync(int memberId, int courseId)
+        {
+            //已購買課程數
+            int purchasedQty = (
+                from order in _repository.GetAll<Order>()
+                join orderDetail in _repository.GetAll<OrderDetail>()
+                on order.OrderId equals orderDetail.OrderId
+                where order.MemberId == memberId && orderDetail.CourseId == courseId
+                select (int)orderDetail.Quantity
+                ).Sum();
+
+            //已預約(使用)課程數
+            int bookedQty = _repository.GetAll<Booking>()
+                .Where(bk => bk.CourseId == courseId && bk.StudentId == memberId)
+                .Count();
+                
+            return purchasedQty - bookedQty;
+        }
+
+        public void CreateBookingData(int courseId, DateTime bookingDate, int bookingTime, int studentId)
+        {
+            var booking = new Booking
+            {
+                CourseId = courseId,
+                BookingDate = bookingDate,
+                BookingId = bookingTime,
+                StudentId = studentId,
+                Cdate = DateTime.Now,
+                Udate = DateTime.Now
+            };
+            _repository.Create(booking);
+            _repository.SaveChanges();
+        }
     }
 }
