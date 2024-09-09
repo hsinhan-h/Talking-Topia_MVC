@@ -154,7 +154,7 @@ nextWeekBtn.addEventListener("click", () => {
 //提交預約表單
 addToCartBtn.addEventListener("click", function () {
     document.getElementById("formCourseId").value = globCourseId;
-    document.getElementById("formBookingDate").value = selectedBookingDate.toISOString();
+    document.getElementById("formBookingDate").value = selectedBookingDate.toLocaleDateString('zh-TW');
     document.getElementById("formBookingTime").value = parseInt(selectedBookingTime.split(':')[0]) + 1;
     document.getElementById("addToCartForm").submit();
 })
