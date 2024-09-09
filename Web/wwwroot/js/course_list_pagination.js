@@ -24,5 +24,14 @@ $(function () {
             window.location.href = `?page=${currentPage}`;
         }
     })
+
+
+    //瀏覽更多
+    $('.view-more-btn').on('click', function () {
+        const courseId = $(this).attr('courseId');
+        window.location.href = `/Course/CourseMainPage/?courseId=${courseId}`;
+    })
 })
+
+
 

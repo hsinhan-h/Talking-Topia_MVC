@@ -14,28 +14,37 @@ namespace Web.Controllers
         }
         /// <summary>
         /// ShoppingCart頁面
-        /// Course頁面應回傳時長(value設定為25或50)與堂數(value設定堂數)
         /// 設計一個VM接收option回傳的值(asp-for="對應value的VM欄位")
         /// </summary>
-        [HttpGet]
         public async Task<IActionResult> Index([FromQuery] int memberId)
         {
-            //todo: 確認ShoppingCart是否有資料(Read)
+            if (!_shoppingCartService.HasMemberData(memberId))
+            { return RedirectToAction(nameof(HomeController.Account), "Home"); }
             var cartData = await _shoppingCartService.GetShoppingCartViewModelsAsync(memberId);
             var result = new ShoppingCartListViewModel
             {
+                MemberId = memberId,
                 ShoppingCartList = cartData
             };
             return View(result);
-
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
-            //todo: 新增課程至購物車(Create)
-            var cartData = await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
-            return RedirectToAction("Index", new { MemberId = memberId });
+            if (!_shoppingCartService.HasMemberData(memberId))
+            { return RedirectToAction(nameof(HomeController.Account), "Home"); }
+            if (!_shoppingCartService.HasCourseData(courseId))
+            { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }
+            await _shoppingCartService.GetShoppingCartData(memberId, courseId, courseLength, quantity);
+            return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
+
+        public IActionResult Delete([FromForm] int memberId, [FromForm] int courseId)
+        {
+            _shoppingCartService.DeleteCartItem(memberId, courseId);
+            return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
+        }
+
     }
 }

@@ -71,6 +71,7 @@ namespace Web.ViewModels
     }
     public class ShoppingCartListViewModel
     {
+        public int MemberId { get; set; }
         public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
     }
 

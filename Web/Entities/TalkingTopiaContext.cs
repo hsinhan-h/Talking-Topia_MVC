@@ -51,8 +51,6 @@ public partial class TalkingTopiaContext : DbContext
 
     public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
-    public virtual DbSet<ShoppingCartBooking> ShoppingCartBookings { get; set; }
-
     public virtual DbSet<TutorTimeSlot> TutorTimeSlots { get; set; }
 
     public virtual DbSet<WatchList> WatchLists { get; set; }
@@ -676,31 +674,6 @@ public partial class TalkingTopiaContext : DbContext
                 .HasConstraintName("FK_ShoppingCarts_Members");
         });
 
-        modelBuilder.Entity<ShoppingCartBooking>(entity =>
-        {
-            entity.HasKey(e => e.BookingId).HasName("PK__Shopping__73951AED7A624397");
-
-            entity.HasIndex(e => e.TempShoppingCartId, "IX_ShoppingCartBookings_TempShoppingCartId");
-
-            entity.Property(e => e.BookingId).HasComment("課程預定Id");
-            entity.Property(e => e.BookingDate).HasComment("預約日期");
-            entity.Property(e => e.BookingTime).HasComment("預約時間");
-            entity.Property(e => e.Cdate)
-                .HasComment("建立時間")
-                .HasColumnType("datetime")
-                .HasColumnName("CDate");
-            entity.Property(e => e.CourseId).HasComment("課程Id");
-            entity.Property(e => e.MemberId).HasComment("會員Id");
-            entity.Property(e => e.Udate)
-                .HasComment("修改時間")
-                .HasColumnType("datetime")
-                .HasColumnName("UDate");
-
-            entity.HasOne(d => d.TempShoppingCart).WithMany(p => p.ShoppingCartBookings)
-                .HasForeignKey(d => d.TempShoppingCartId)
-                .HasConstraintName("FK__TempShopp__TempS__60A75C0F");
-        });
-
         modelBuilder.Entity<TutorTimeSlot>(entity =>
         {
             entity.HasKey(e => e.TutorTimeSlotId).HasName("PK__TutorTim__E709EE17B13CB862");
@@ -815,8 +788,6 @@ public partial class TalkingTopiaContext : DbContext
     new Education { EducationId = 9, SchoolName = "University of California, Berkeley", StudyStartYear = 2010, StudyEndYear = 2014, DepartmentName = "Chemistry", Cdate = DateTime.Now },
     new Education { EducationId = 10, SchoolName = "University of Toronto", StudyStartYear = 2012, StudyEndYear = 2016, DepartmentName = "Biology", Cdate = DateTime.Now }
 );
-
-
         modelBuilder.Entity<Member>().HasData(
     new Member { MemberId = 1, HeadShotImage = "https://randomuser.me/api/portraits/men/1.jpg", NationId = 1, IsVerifiedTutor = true, FirstName = "John", LastName = "Doe", Password = "password1", Email = "john.doe@example.com", Nickname = "JohnD", Phone = "123456789", Birthday = DateTime.Now.AddYears(-30), Gender = 1, NativeLanguage = "English", SpokenLanguage = "English", BankCode = "001", BankAccount = "1234567890", EducationId = 1, TutorIntro = "Experienced English tutor", Account = "john_doe", AccountType = 1, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
     new Member { MemberId = 2, HeadShotImage = "https://randomuser.me/api/portraits/women/2.jpg", NationId = 2, IsVerifiedTutor = false, FirstName = "Jane", LastName = "Smith", Password = "password2", Email = "jane.smith@example.com", Nickname = "JaneS", Phone = "987654321", Birthday = DateTime.Now.AddYears(-25), Gender = 2, NativeLanguage = "Japanese", SpokenLanguage = "Japanese", BankCode = "002", BankAccount = "2345678901", EducationId = 2, TutorIntro = "Japanese language specialist", Account = "jane_smith", AccountType = 2, Cdate = DateTime.Now, Udate = DateTime.Now, IsTutor = true },
@@ -893,7 +864,6 @@ public partial class TalkingTopiaContext : DbContext
  new Course { CourseId = 38, CategoryId = 1, SubjectId = 2, TutorId = 38, Title = "專業日語寫作", SubTitle = "掌握專業日語寫作技巧", TwentyFiveMinUnitPrice = 190m, FiftyMinUnitPrice = 340m, Description = "專業日語寫作的高級技巧", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/professional_japanese.jpg", VideoUrl = "https://example.com/courses/professional_japanese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
  new Course { CourseId = 39, CategoryId = 1, SubjectId = 3, TutorId = 39, Title = "專業中文寫作", SubTitle = "掌握專業中文寫作技巧", TwentyFiveMinUnitPrice = 200m, FiftyMinUnitPrice = 360m, Description = "專業中文寫作的高級技巧", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/professional_chinese.jpg", VideoUrl = "https://example.com/courses/professional_chinese_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now },
  new Course { CourseId = 40, CategoryId = 1, SubjectId = 4, TutorId = 40, Title = "專業德語寫作", SubTitle = "掌握專業德語寫作技巧", TwentyFiveMinUnitPrice = 210m, FiftyMinUnitPrice = 380m, Description = "專業德語寫作的高級技巧", IsEnabled = true, ThumbnailUrl = "https://example.com/courses/professional_german.jpg", VideoUrl = "https://example.com/courses/professional_german_intro.mp4", CoursesStatus = 1, Cdate = DateTime.Now });
-
         modelBuilder.Entity<CourseCategory>().HasData(
     new CourseCategory { CourseCategoryId = 1, CategorytName = "語言學習", Cdate = DateTime.Now },
     new CourseCategory { CourseCategoryId = 2, CategorytName = "程式設計", Cdate = DateTime.Now },
@@ -919,7 +889,6 @@ public partial class TalkingTopiaContext : DbContext
     new CourseSubject { SubjectId = 17, SubjectName = "地理", CourseCategoryId = 3, Cdate = DateTime.Now },
     new CourseSubject { SubjectId = 18, SubjectName = "生物", CourseCategoryId = 3, Cdate = DateTime.Now }
 );
-
         modelBuilder.Entity<CourseImage>().HasData(
 // CourseId = 1
 new CourseImage { CourseImageId = 1, CourseId = 1, ImageUrl = "https://picsum.photos/id/100/450/300", Cdate = DateTime.Now },
@@ -1076,7 +1045,9 @@ new Booking { BookingId = 16, CourseId = 16, BookingDate = DateTime.Now, Booking
 new Booking { BookingId = 17, CourseId = 17, BookingDate = DateTime.Now, BookingTime = 19, StudentId = 17, Cdate = DateTime.Now, Udate = DateTime.Now },
 new Booking { BookingId = 18, CourseId = 18, BookingDate = DateTime.Now, BookingTime = 20, StudentId = 18, Cdate = DateTime.Now, Udate = DateTime.Now },
 new Booking { BookingId = 19, CourseId = 19, BookingDate = DateTime.Now, BookingTime = 12, StudentId = 19, Cdate = DateTime.Now, Udate = DateTime.Now },
-new Booking { BookingId = 20, CourseId = 20, BookingDate = DateTime.Now, BookingTime = 13, StudentId = 20, Cdate = DateTime.Now, Udate = DateTime.Now }
+new Booking { BookingId = 20, CourseId = 20, BookingDate = DateTime.Now, BookingTime = 13, StudentId = 20, Cdate = DateTime.Now, Udate = DateTime.Now },
+new Booking { BookingId = 21, CourseId = 1, BookingDate = new DateTime(2024, 9, 9), BookingTime = 13, StudentId = 20, Cdate = DateTime.Now, Udate = DateTime.Now },
+new Booking { BookingId = 22, CourseId = 2, BookingDate = new DateTime(2024, 9, 10), BookingTime = 16, StudentId = 21, Cdate = DateTime.Now, Udate = DateTime.Now }
 
 );
         modelBuilder.Entity<ProfessionalLicense>().HasData(
@@ -1156,28 +1127,6 @@ new ShoppingCart { ShoppingCartId = 18, CourseId = 18, UnitPrice = 1800.00m, Qua
 new ShoppingCart { ShoppingCartId = 19, CourseId = 19, UnitPrice = 1900.00m, Quantity = 1, TotalPrice = 1900.00m, MemberId = 19, CourseType = 1, Cdate = DateTime.Now.AddDays(-2), Udate = DateTime.Now.AddDays(-1), BookingDate = DateTime.Now, BookingTime = DateTime.Now },
 new ShoppingCart { ShoppingCartId = 20, CourseId = 20, UnitPrice = 2000.00m, Quantity = 2, TotalPrice = 4000.00m, MemberId = 20, CourseType = 2, Cdate = DateTime.Now.AddDays(-1), Udate = DateTime.Now, BookingDate = DateTime.Now.AddDays(1), BookingTime = DateTime.Now.AddDays(1) }
         );
-        modelBuilder.Entity<ShoppingCartBooking>().HasData(
-new ShoppingCartBooking { BookingId = 1, CourseId = 1, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-20)), BookingTime = 10, MemberId = 1, TempShoppingCartId = 1, Cdate = DateTime.Now.AddDays(-20), Udate = DateTime.Now.AddDays(-19) },
-new ShoppingCartBooking { BookingId = 2, CourseId = 2, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-19)), BookingTime = 11, MemberId = 2, TempShoppingCartId = 2, Cdate = DateTime.Now.AddDays(-19), Udate = DateTime.Now.AddDays(-18) },
-new ShoppingCartBooking { BookingId = 3, CourseId = 3, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-18)), BookingTime = 12, MemberId = 3, TempShoppingCartId = 3, Cdate = DateTime.Now.AddDays(-18), Udate = DateTime.Now.AddDays(-17) },
-new ShoppingCartBooking { BookingId = 4, CourseId = 4, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-17)), BookingTime = 13, MemberId = 4, TempShoppingCartId = 4, Cdate = DateTime.Now.AddDays(-17), Udate = DateTime.Now.AddDays(-16) },
-new ShoppingCartBooking { BookingId = 5, CourseId = 5, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-16)), BookingTime = 14, MemberId = 5, TempShoppingCartId = 5, Cdate = DateTime.Now.AddDays(-16), Udate = DateTime.Now.AddDays(-15) },
-new ShoppingCartBooking { BookingId = 6, CourseId = 6, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-15)), BookingTime = 15, MemberId = 6, TempShoppingCartId = 6, Cdate = DateTime.Now.AddDays(-15), Udate = DateTime.Now.AddDays(-14) },
-new ShoppingCartBooking { BookingId = 7, CourseId = 7, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-14)), BookingTime = 16, MemberId = 7, TempShoppingCartId = 7, Cdate = DateTime.Now.AddDays(-14), Udate = DateTime.Now.AddDays(-13) },
-new ShoppingCartBooking { BookingId = 8, CourseId = 8, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-13)), BookingTime = 17, MemberId = 8, TempShoppingCartId = 8, Cdate = DateTime.Now.AddDays(-13), Udate = DateTime.Now.AddDays(-12) },
-new ShoppingCartBooking { BookingId = 9, CourseId = 9, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-12)), BookingTime = 18, MemberId = 9, TempShoppingCartId = 9, Cdate = DateTime.Now.AddDays(-12), Udate = DateTime.Now.AddDays(-11) },
-new ShoppingCartBooking { BookingId = 10, CourseId = 10, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-11)), BookingTime = 19, MemberId = 10, TempShoppingCartId = 10, Cdate = DateTime.Now.AddDays(-11), Udate = DateTime.Now.AddDays(-10) },
-new ShoppingCartBooking { BookingId = 11, CourseId = 11, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-10)), BookingTime = 20, MemberId = 11, TempShoppingCartId = 11, Cdate = DateTime.Now.AddDays(-10), Udate = DateTime.Now.AddDays(-9) },
-new ShoppingCartBooking { BookingId = 12, CourseId = 12, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-9)), BookingTime = 21, MemberId = 12, TempShoppingCartId = 12, Cdate = DateTime.Now.AddDays(-9), Udate = DateTime.Now.AddDays(-8) },
-new ShoppingCartBooking { BookingId = 13, CourseId = 13, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-8)), BookingTime = 22, MemberId = 13, TempShoppingCartId = 13, Cdate = DateTime.Now.AddDays(-8), Udate = DateTime.Now.AddDays(-7) },
-new ShoppingCartBooking { BookingId = 14, CourseId = 14, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-7)), BookingTime = 23, MemberId = 14, TempShoppingCartId = 14, Cdate = DateTime.Now.AddDays(-7), Udate = DateTime.Now.AddDays(-6) },
-new ShoppingCartBooking { BookingId = 15, CourseId = 15, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-6)), BookingTime = 24, MemberId = 15, TempShoppingCartId = 15, Cdate = DateTime.Now.AddDays(-6), Udate = DateTime.Now.AddDays(-5) },
-new ShoppingCartBooking { BookingId = 16, CourseId = 16, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), BookingTime = 25, MemberId = 16, TempShoppingCartId = 16, Cdate = DateTime.Now.AddDays(-5), Udate = DateTime.Now.AddDays(-4) },
-new ShoppingCartBooking { BookingId = 17, CourseId = 17, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), BookingTime = 26, MemberId = 17, TempShoppingCartId = 17, Cdate = DateTime.Now.AddDays(-4), Udate = DateTime.Now.AddDays(-3) },
-new ShoppingCartBooking { BookingId = 18, CourseId = 18, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), BookingTime = 27, MemberId = 18, TempShoppingCartId = 18, Cdate = DateTime.Now.AddDays(-3), Udate = DateTime.Now.AddDays(-2) },
-new ShoppingCartBooking { BookingId = 19, CourseId = 19, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)), BookingTime = 28, MemberId = 19, TempShoppingCartId = 19, Cdate = DateTime.Now.AddDays(-2), Udate = DateTime.Now.AddDays(-1) },
-new ShoppingCartBooking { BookingId = 20, CourseId = 20, BookingDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)), BookingTime = 29, MemberId = 20, TempShoppingCartId = 20, Cdate = DateTime.Now.AddDays(-1), Udate = DateTime.Now }
-);
         modelBuilder.Entity<TutorTimeSlot>().HasData(
 new TutorTimeSlot { TutorTimeSlotId = 1, TutorId = 1, Weekday = 1, CourseHourId = 8, Cdate = DateTime.Now, Udate = DateTime.Now },
 new TutorTimeSlot { TutorTimeSlotId = 2, TutorId = 1, Weekday = 1, CourseHourId = 9, Cdate = DateTime.Now, Udate = DateTime.Now },
@@ -1291,7 +1240,6 @@ new CourseHour { CourseHourId = 23, Hour = "22:00", Cdate = DateTime.Now },
 new CourseHour { CourseHourId = 24, Hour = "23:00", Cdate = DateTime.Now }
 
             );
-
         modelBuilder.Entity<WatchList>().HasData(
     new WatchList { WatchListId = 1, FollowerId = 1, CourseId = 1 },
     new WatchList { WatchListId = 2, FollowerId = 2, CourseId = 2 },
@@ -1314,8 +1262,6 @@ new CourseHour { CourseHourId = 24, Hour = "23:00", Cdate = DateTime.Now }
     new WatchList { WatchListId = 19, FollowerId = 19, CourseId = 19 },
     new WatchList { WatchListId = 20, FollowerId = 20, CourseId = 20 }
 );
-
-
         #endregion
     }
 
