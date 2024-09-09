@@ -15,23 +15,27 @@ namespace Web.Services
             _repository = repository;
         }
 
-        public async Task<MemberProfileViewModel> GetMemberData(string account)
+        public async Task<MemberProfileViewModel> GetMemberData(int memberId)
         {
-            // 使用 Email 查詢會員資料
-            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.Email == account);
+            // 使用 MemberId 查詢會員資料
+            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
 
             if (member == null)
             {
-                throw new Exception("會員資料");
+                throw new Exception("找不到會員資料");
             }
 
-            var coursePreferences = await _repository.GetAll<MemberPreference>()
-                .Where(mp => mp.MemberId == member.MemberId)  // 使用 member.MemberId 進行比較
-                .Select(mp => new CourseListViewModel
-                {
-                    //CategoryName = mp.CategoryName,
-                    //SubjectName = mp.SubjectName
-                }).ToListAsync();
+            var coursePreferences = await (from mp in _repository.GetAll<MemberPreference>()
+                                           join cs in _repository.GetAll<CourseSubject>()
+                                               on mp.SubjecId equals cs.SubjectId
+                                           join cc in _repository.GetAll<CourseCategory>()
+                                               on cs.CourseCategoryId equals cc.CourseCategoryId
+                                           where mp.MemberId == member.MemberId
+                                           select new CourseListViewModel
+                                           {
+                                               CategoryName = cc.CategorytName,
+                                               SubjectName = cs.SubjectName
+                                           }).ToListAsync();
 
             // 將查詢結果轉換成 ViewModel
             var memberProfile = new MemberProfileViewModel
