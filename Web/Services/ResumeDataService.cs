@@ -36,9 +36,8 @@ namespace Web.Services
         //        TutorResumeList = await resumeValues.ToListAsync(),
         //    };
         //}
-        public async Task<(bool Success, string Message)> AddQuestionaryAsync(TutorResumeViewModel qVM)
+        public async Task<(bool Success, string Message)> AddResumeAsync(TutorResumeViewModel qVM)
         {
-
             try
             {
                 // 創建 Member 實體並保存

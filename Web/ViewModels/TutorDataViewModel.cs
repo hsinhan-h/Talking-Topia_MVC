@@ -42,7 +42,7 @@ namespace Web.ViewModels
         /// <summary>
         /// 可預約的時段
         /// </summary>
-        //public List<AvailReservation> AvailableReservation  { get; set; }
+        public List<AvailReservation> AvailableReservation { get; set; }
         /// <summary>
         /// 科目類別
         /// </summary>
@@ -77,7 +77,8 @@ namespace Web.ViewModels
 
     public class AvailReservation
     {
-    
+        public int Weekday { get; set; }
+        public string Coursehours { get; set; }
     }
 
     public class LicenseData 

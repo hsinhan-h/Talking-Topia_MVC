@@ -54,7 +54,7 @@ namespace Web.Services
                                                   join license in _repository.GetAll<ProfessionalLicense>()
                                                   on memb.MemberId equals license.MemberId
                                                   where prefersubject.MemberId == memberId
-                                                    && category.CategorytName == categorytName//bug 用字串搜尋不到資料
+                                                    && category.CategorytName == categorytName//要修改關聯
                                                   select new LicenseData
                                                   {
                                                       ProfessionalLicenseName = license.ProfessionalLicenseName,
@@ -101,22 +101,48 @@ namespace Web.Services
                                          where member.MemberId == memberId
                                          select member.IsVerifiedTutor).FirstOrDefaultAsync();
             var tutorCourseData = new TutorDataViewModel();
-            tutorCourseData.Coursestatus = await (from member in _repository.GetAll<Member>()
-                                                  join memberPreference in _repository.GetAll<MemberPreference>()
-                                                      on member.MemberId equals memberPreference.MemberId
-                                                  join courseSubject in _repository.GetAll<CourseSubject>()
-                                                      on memberPreference.SubjecId equals courseSubject.SubjectId
-                                                  join courseCategory in _repository.GetAll<CourseCategory>()
-                                                      on courseSubject.CourseCategoryId equals courseCategory.CourseCategoryId
-                                                  join course in _repository.GetAll<Course>()
-                                                      on courseCategory.CourseCategoryId equals course.CategoryId
-                                                  select course.CoursesStatus == 1 ? CourseStatus.已審核 : CourseStatus.未審核).FirstOrDefaultAsync();
+            if (isVerifiedTutor)
+            {
+                tutorCourseData.Coursestatus = await (from member in _repository.GetAll<Member>()
+                                                  join applylist in _repository.GetAll<ApplyList>()
+                                                      on member.MemberId equals applylist.MemberId
+                                                  select applylist.ApplyStatus ? CourseStatus.已審核 : CourseStatus.未審核).FirstOrDefaultAsync();
+            }
             return tutorCourseData;
         }
+
+        //public async Task<TutorDataViewModel> GetTutorReserveTimeAsync(int memberId)
+        //{
+        //    var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
+        //                                 where member.MemberId == memberId
+        //                                 select member.IsVerifiedTutor).FirstOrDefaultAsync();
+        //    var tutortime = new TutorDataViewModel
+        //    {
+        //        AvailableReservation = new List<AvailReservation>()
+        //    };
+        //    if (isVerifiedTutor)
+        //    {
+        //        tutortime.AvailableReservation = await (from member in _repository.GetAll<Member>()
+        //                                                join tutorTimeSloot in _repository.GetAll<TutorTimeSlot>()
+        //                                                on member.MemberId equals tutorTimeSloot.TutorId
+        //                                                join coursehour in _repository.GetAll<CourseHour>()
+        //                                                on tutorTimeSloot.CourseHourId equals coursehour.CourseHourId
+        //                                                select new AvailReservation
+        //                                                {
+        //                                                    Weekday = tutorTimeSloot.Weekday,
+        //                                                    Coursehours = coursehour.Hour,
+        //                                                }).ToListAsync();
+        //    }
+            
+        //    return tutortime;
+        //}
+
+
         public enum CourseStatus
         {
             未審核 = 0,
-            已審核 = 1
+            已審核 = 1,
+
         }
        
     }
