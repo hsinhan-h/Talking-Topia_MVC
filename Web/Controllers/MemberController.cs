@@ -24,7 +24,7 @@ namespace Web.Controllers
         {
             //var summaryData = await _memberDataService.GetMemberData(memberId);  // 使用 MemberId 查找
             //return View(summaryData);
-            int testMemberId = 2;  // 測試使用 MemberId = 2
+            int testMemberId = 15;  // 測試使用 MemberId
             var memberProfile = await _memberDataService.GetMemberData(testMemberId);
 
             return View(memberProfile);

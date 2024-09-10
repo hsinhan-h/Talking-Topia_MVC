@@ -25,7 +25,7 @@ namespace Web.Services
                 throw new Exception("找不到會員資料");
             }
 
-            var coursePreferences = await (from mp in _repository.GetAll<MemberPreference>()
+            var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
                                            join cs in _repository.GetAll<CourseSubject>()
                                                on mp.SubjecId equals cs.SubjectId
                                            join cc in _repository.GetAll<CourseCategory>()
@@ -42,14 +42,17 @@ namespace Web.Services
             {
                 ImageUrl = member.HeadShotImage,
                 Nickname = member.Nickname,
-                Birthday = member.Birthday.HasValue ? member.Birthday.Value : DateTime.MinValue,
+                //Birthday = member.Birthday ?? DateTime.Now,
+                Birthday = (DateTime)(member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null),
+
+                //Birthday = member.Birthday.HasValue ? member.Birthday.Value : DateTime.MinValue,
                 Gender = ((Gender)member.Gender).ToString(),  // 將枚舉轉換為字符串
                 Account = member.Account,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
                 Email = member.Email,
                 Phone = member.Phone,
-                CoursePrefer = coursePreferences
+                CoursePrefer = coursePrefer
             };
 
             return memberProfile;
