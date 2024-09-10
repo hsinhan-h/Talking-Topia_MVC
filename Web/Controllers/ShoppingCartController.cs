@@ -14,7 +14,6 @@ namespace Web.Controllers
         }
         /// <summary>
         /// ShoppingCart頁面
-        /// 設計一個VM接收option回傳的值(asp-for="對應value的VM欄位")
         /// </summary>
         public async Task<IActionResult> Index([FromQuery] int memberId)
         {

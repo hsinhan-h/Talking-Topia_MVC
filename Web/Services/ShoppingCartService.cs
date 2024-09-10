@@ -39,6 +39,16 @@ namespace Web.Services
 
             return price;
         }
+
+        /// <summary>
+        /// Read Data
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="courseId"></param>
+        /// <param name="courseLength"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<ShoppingCartListViewModel> GetShoppingCartData(int memberId, int courseId,
                                                                          int courseLength, int quantity)
         {
@@ -60,7 +70,7 @@ namespace Web.Services
             };
         }
         /// <summary>
-        /// 讀取資料以渲染頁面
+        /// 轉成View Model
         /// </summary>
         /// <param name="memberId"></param>
         /// <returns></returns>
@@ -97,6 +107,14 @@ namespace Web.Services
             return result;
         }
 
+        /// <summary>
+        /// Create Data
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="courseId"></param>
+        /// <param name="courseLength"></param>
+        /// <param name="quantity"></param>
+        /// <param name="unitPrice"></param>
         public void CreateShoppingCartData(int memberId, int courseId, int courseLength, int quantity, decimal unitPrice)
         {
             try
@@ -116,16 +134,19 @@ namespace Web.Services
             }
             catch (DbUpdateException ex)
             {
-                Console.WriteLine($"無法存入ShoppingCart: {ex.Message}");
-                throw;
+                throw new DbUpdateException($"無法存入ShoppingCart: {ex.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                throw;
+                throw new Exception($"Unexpected error: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Delete Data
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="courseId"></param>
         public void DeleteCartItem(int memberId, int courseId)
         {
             try
@@ -135,15 +156,17 @@ namespace Web.Services
                 _repository.Delete(target);
                 _repository.SaveChanges();
             }
+            catch(ArgumentException ex)
+            {
+                throw new ArgumentException($"無法找到Shopping Cart Item: {ex.Message}");
+            }
             catch (DbUpdateException ex)
             {
-                Console.WriteLine($"無法存入ShoppingCart: {ex.Message}");
-                throw;
+                throw new DbUpdateException($"無法刪除Shopping Cart: {ex.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
