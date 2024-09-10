@@ -40,15 +40,6 @@ async function generateBookingTable(weekStart, courseId) {
     bookingTableHeader.innerHTML = "";
     const dates = [];
     const standardWeekdays = ["日", "一", "二", "三", "四", "五", "六"];
-    const engWeekdays = [
-        "sunday",
-        "monday",
-        "tuesday",
-        "wednesday",
-        "thursday",
-        "friday",
-        "saturday",
-    ];
     const today = new Date().getDay();
     let weekDaysBeginFromToday = standardWeekdays
         .slice(today)
@@ -73,7 +64,6 @@ async function generateBookingTable(weekStart, courseId) {
     for (const date of dates) {
         const column = document.createElement("div");
         const weekday = date.getDay();
-        column.classList.add(engWeekdays[weekday]);
         for (const time of times) {
             const cell = document.createElement("div");
             cell.textContent = time;
@@ -164,8 +154,8 @@ nextWeekBtn.addEventListener("click", () => {
 //提交預約表單
 addToCartBtn.addEventListener("click", function () {
     document.getElementById("formCourseId").value = globCourseId;
-    document.getElementById("formBookingDate").value = selectedBookingDate;
-    document.getElementById("formBookingTime").value = selectedBookingTime;
+    document.getElementById("formBookingDate").value = selectedBookingDate.toLocaleDateString('zh-TW');
+    document.getElementById("formBookingTime").value = parseInt(selectedBookingTime.split(':')[0]) + 1;
     document.getElementById("addToCartForm").submit();
 })
 

@@ -933,7 +933,7 @@ new CourseImage { CourseImageId = 12, CourseId = 4, ImageUrl = "https://picsum.p
     new Order { OrderId = 20, MemberId = 20, PaymentType = "CreditCard", TotalPrice = 10500.00m, TransactionDate = DateTime.Now.AddDays(9), CouponPrice = 1050.00m, TaxIdNumber = "T123456789", InvoiceType = 2, VATNumber = "01234579", SentVatemail = "order20@domain.com", OrderStatusId = 1, Cdate = DateTime.Now.AddDays(9), Udate = DateTime.Now.AddDays(10) }
 );
         modelBuilder.Entity<OrderDetail>().HasData(
-     new OrderDetail { OrderDetailId = 1, OrderId = 1, CourseId = 1, UnitPrice = 100.00m, Quantity = 10, DiscountPrice = 10.00m, TotalPrice = 900.00m, CourseType = 1, CourseTitle = "英文基礎", CourseCategory = "語言學習", CourseSubject = "英文" },
+     new OrderDetail { OrderDetailId = 1, OrderId = 1, CourseId = 2, UnitPrice = 100.00m, Quantity = 10, DiscountPrice = 10.00m, TotalPrice = 900.00m, CourseType = 1, CourseTitle = "日文會話", CourseCategory = "語言學習", CourseSubject = "日文" },
      new OrderDetail { OrderDetailId = 2, OrderId = 2, CourseId = 2, UnitPrice = 200.00m, Quantity = 5, DiscountPrice = 20.00m, TotalPrice = 980.00m, CourseType = 1, CourseTitle = "日文會話", CourseCategory = "語言學習", CourseSubject = "日文" },
      new OrderDetail { OrderDetailId = 3, OrderId = 3, CourseId = 3, UnitPrice = 300.00m, Quantity = 3, DiscountPrice = 30.00m, TotalPrice = 870.00m, CourseType = 1, CourseTitle = "C# 基礎", CourseCategory = "程式設計", CourseSubject = "C#" },
      new OrderDetail { OrderDetailId = 4, OrderId = 4, CourseId = 4, UnitPrice = 400.00m, Quantity = 2, DiscountPrice = 40.00m, TotalPrice = 760.00m, CourseType = 2, CourseTitle = "SQL進階", CourseCategory = "程式設計", CourseSubject = "SQL" },

@@ -29,13 +29,13 @@ namespace Web.Controllers
         public async Task<IActionResult> TutorData()
         {
             int memberId = 1;
-            string categorytName ="程式設計";
+            string categorytName = "程式設計";
+
             var tutorData = await _tutorDataService.GetTutorDataAsync(memberId, categorytName);
             if (tutorData == null)
             {
                 return RedirectToAction("Index", "Tutor");
             }
-
             var tutorCourseData = await _tutorDataService.GetTutorCourseDataAsync(memberId);
             if (tutorCourseData == null)
             {
@@ -46,9 +46,15 @@ namespace Web.Controllers
             {
                 return RedirectToAction("Index", "Tutor");
             }
+            //var tutorReserveTime = await _tutorDataService.GetTutorReserveTimeAsync(memberId);
+            //if (tutorReserveTime == null)
+            //{
+            //    return RedirectToAction("Index", "Tutor");
+            //}
+
             tutorData.Course = tutorCourseData.Course;
             tutorData.Coursestatus = tutorCourseStatus.Coursestatus;
-
+            //tutorData.AvailableReservation = tutorReserveTime.AvailableReservation;
 
             return View(tutorData);
         }
@@ -64,7 +70,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _resumeDataService.AddQuestionaryAsync(qVM);
+                var result = await _resumeDataService.AddResumeAsync(qVM);
 
                 ViewData["Header"] = result.Success ? "履歷已新增" : "錯誤訊息";
                 ViewData["Message"] = result.Message;
