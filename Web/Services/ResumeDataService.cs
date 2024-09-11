@@ -40,7 +40,6 @@ namespace Web.Services
         {
             try
             {
-                // 創建 Member 實體並保存
                 var member = new Member
                 {
                     IsVerifiedTutor = true,
@@ -58,9 +57,8 @@ namespace Web.Services
                     IsTutor = false
                 };
                 _repository.Create(member);
-                _repository.SaveChanges();
+                await _repository.SaveChangesAsync(); 
 
-                // 創建 Education 實體
                 var education = new Education
                 {
                     SchoolName = qVM.SchoolName,
@@ -71,21 +69,41 @@ namespace Web.Services
                     Udate = null
                 };
                 _repository.Create(education);
-                _repository.SaveChanges();
+                await _repository.SaveChangesAsync(); 
 
-                // 創建 WorkExperience 實體並設置 MemberId
                 var workExperience = new WorkExperience
                 {
                     WorkExperienceFile = qVM.WorkExperienceFile,
                     WorkStartDate = qVM.WorkStartDate,
-                    WorkEndDate =qVM.WorkEndDate,
+                    WorkEndDate = qVM.WorkEndDate,
                     WorkName = qVM.WorkName,
                     MemberId = member.MemberId,
                     Cdate = DateTime.Now,
                     Udate = null
                 };
                 _repository.Create(workExperience);
-                _repository.SaveChanges();
+                await _repository.SaveChangesAsync();
+
+                var coursecategory = new CourseCategory
+                {
+                    CategorytName = qVM.SelectedCategory,
+                    Cdate = DateTime.Now,
+                    Udate = null
+
+                };
+                _repository.Create(coursecategory);
+                await _repository.SaveChangesAsync();
+
+                var courseSubject = new CourseSubject
+                {
+                    SubjectName = qVM.SelectedSubcategory,
+                    CourseCategoryId= coursecategory.CourseCategoryId,
+                    Cdate = DateTime.Now,
+                    Udate = null
+
+                };
+                _repository.Create(courseSubject);
+                await _repository.SaveChangesAsync();
 
                 return (true, "新增資料成功");
             }
@@ -94,7 +112,6 @@ namespace Web.Services
                 var innerException = ex.InnerException?.Message ?? "無其他詳細錯誤訊息";
                 return (false, $"錯誤訊息: {ex.Message}. 內部錯誤訊息: {innerException}");
             }
-
         }
 
     }
