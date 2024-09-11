@@ -40,11 +40,6 @@ namespace Web.ViewModels
         ///// </summary>
         ////[Required]
         public List<string> ProfessionalLicenseUrl { get; set; }
-        ///// <summary>
-        ///// 語言分類
-        ///// </summary>
-        ////[Required]
-        //public List<SelectListItem> Category { get; set; }
         /// <summary>
         /// 工作起始日期
         /// </summary>
