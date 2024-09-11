@@ -379,7 +379,7 @@
                             @courseCard.TutorIntro
                         </p>
                         @* <a href="javascript:void(0)" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">瀏覽更多</a> *@
-                        <a class="tutor-viewmore d-none d-md-block mb-md-1" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" >瀏覽更多</a>
+                        <a class="tutor-viewmore d-none d-md-inline" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" >瀏覽更多</a>
                     </div>
                     <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
                         <div class="course-pricing d-flex">
@@ -587,8 +587,9 @@
     <script src="~/js/course_list_slick.js"></script>
     <script src="~/js/course_list_pagination.js"></script>
     <script src="~/js/course_api.js"></script>
-    <script src="~/js/nested_dropdown.js"></script>
+    <script src="~/js/course_list_nested_dropdown.js"></script>
     <script  src="~/js/booking_table_modal.js"></script>
+    <script src="~/lib/myvue/vue.global.min.js " asp-append-version="true"></script>
 }
 
 @functions {
