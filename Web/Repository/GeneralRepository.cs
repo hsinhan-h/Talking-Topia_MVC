@@ -1,4 +1,4 @@
-﻿using Web.Entities;
+﻿using Web.Data;
 
 namespace Web.Repository
 {

@@ -1,4 +1,4 @@
-using Web.Entities;
+using Web.Data;
 using Web.Repository;
 
 namespace Web
