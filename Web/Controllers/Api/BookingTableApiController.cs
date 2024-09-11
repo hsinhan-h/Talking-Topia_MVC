@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web.Services;
 
-namespace Web.Controllers
+namespace Web.Controllers.Api
 {
     [ApiController]
     [Route("api/BookingTableApi")]
