@@ -64,15 +64,13 @@
                 <form id="addToCartForm" method="post" action="/BookingTable/AddToCart" class="d-flex w-100 justify-content-between">
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="CourseId" id="formCourseId" />
-                    <input type="hidden" name="UnitPrice" id="formUnitPrice" />
+                    @* <input type="hidden" name="UnitPrice" id="formUnitPrice" />
                     <input type="hidden" name="Quantity" id="formQuantity" />
-                    <input type="hidden" name="TotalPrice" id="formTotalPrice" />
+                    <input type="hidden" name="TotalPrice" id="formTotalPrice" /> *@
                     <input type="hidden" name="MemberId" id="formMemberId" />
-                    <input type="hidden" name="CourseType" id="formCourseType" />
+                    @* <input type="hidden" name="CourseType" id="formCourseType" /> *@
                     <input type="hidden" name="BookingDate" id="formBookingDate" />
                     <input type="hidden" name="BookingTime" id="formBookingTime" />
-                    
-
                     <button type="button" id="confirmBookingModalCancelBtn" class="btn btn-cancel" data-bs-dismiss="modal">取消</button>
                     <button type="submit" id="confirmBookingModalAddToCartBtn" class=" btn btn-next">確認預約</button>
                 </form>                
