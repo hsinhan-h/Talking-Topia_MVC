@@ -28,21 +28,11 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> TutorData()
         {
-            int memberId = 1;
-
-            var tutorData = await _tutorDataService.GetTutorDataAsync(memberId);
+            var tutorData = await _tutorDataService.GetAllInformationAsync();
             if (tutorData == null)
             {
-                return NotFound();  
+                return RedirectToAction("Index", "Tutor");
             }
-
-            var tutorCourseData = await _tutorDataService.GetTutorCourseDataAsync(memberId);
-            if (tutorCourseData == null)
-            {
-                return NotFound();
-            }
-            tutorData.Course = tutorCourseData.Course;
-
             return View(tutorData);
         }
         [HttpGet]
@@ -57,9 +47,9 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _resumeDataService.AddQuestionaryAsync(qVM);
+                var result = await _resumeDataService.AddResumeAsync(qVM);
 
-                ViewData["Header"] = result.Success ? "問卷調查新增" : "錯誤訊息";
+                ViewData["Header"] = result.Success ? "履歷已新增" : "錯誤訊息";
                 ViewData["Message"] = result.Message;
 
                 return View("ShowMessage");
@@ -89,5 +79,7 @@ namespace Web.Controllers
         {
             return View();
         }
+
+       
     }
 }

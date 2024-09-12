@@ -351,7 +351,7 @@
                     </div>
                     <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
                         <div class="tutor-description-title-wrapper d-flex justify-content-between">
-                            <a href="javascript:void(0)" class="tutor-description-title" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">
+                            <a class="tutor-description-title" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" >
                                 @courseCard.CourseTitle
                             </a>
                             @if (@courseCard.IsVerifiedTutor == true)
@@ -378,7 +378,8 @@
                         <p class="tutor-intro-text mb-2">
                             @courseCard.TutorIntro
                         </p>
-                        <a href="javascript:void(0)" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">瀏覽更多</a>
+                        @* <a href="javascript:void(0)" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">瀏覽更多</a> *@
+                        <a class="tutor-viewmore d-none d-md-inline" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" >瀏覽更多</a>
                     </div>
                     <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
                         <div class="course-pricing d-flex">
@@ -407,7 +408,7 @@
                 <div class="lh-tutor-card__book d-flex justify-content-center">
                     <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
                             data-bs-target="#bookingTableModal"
-                            onclick="fetchBookingTableData(@courseCard.CourseId)">
+                            onclick="generateBookingTable(new Date(), @courseCard.CourseId)">
                         預約立即體驗
                     </button>
                 </div>
@@ -488,11 +489,23 @@
                             <span class="color-block available me-1"></span>尚有可預約時段
                         </div>
                     </div>
-                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">
+                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" courseId="@courseCard.CourseId">
                         瀏覽更多
                     </button>
                 </div>
+                <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <partial name="_BookingTablePartial" model="new CourseMainPageViewModel {
+                                 TutorHeadShotImage = courseCard.TutorHeadShotImage,
+                                 CourseTitle = courseCard.CourseTitle,
+                                 CourseId = courseCard.CourseId }" />
+                        </div>
+                    </div>
+                </div>
             </div>
+            
         }
     </div>
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal"
@@ -508,28 +521,17 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <partial name="_BookingTablePartial" />
-            </div>
-        </div>
-    </div>
+    
     <div class="modal fade" id="contactTutorModal" tabindex="-1" aria-labelledby="contactTutorModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-title d-flex gap-4">
-                        <img class="tutor-headshot" src="~/image/tutor_headshot_imgs/tutor_head_001.jpg"
+                        <img class="tutor-headshot" src=""
                              alt="">
                         <div class="d-flex flex-column">
                             <h4 class="tutor-description-title">
-                                Feds🥇顶级雅思| 批判性思维 |
-                                面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                                面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                                面试教练🥇
                             </h4>
                             <p>傳送訊息給tutorxxx@talkingtopia.com</p>
                             <p class="d-block text-dark">教師將會在有空的時間回覆您訊息</p>
@@ -582,11 +584,11 @@
 
 @section endJS
 {
-    <script src="~/js/course_list_slick.js"></script>
-    <script src="~/js/course_list_pagination.js"></script>
-    <script src="~/js/course_api.js"></script>
-    <script src="~/js/nested_dropdown.js"></script>
-    <script src="~/js/booking_table_modal.js"></script>
+    <script src="~/js/courselist/course_list_slick.js"></script>
+    <script src="~/js/courselist/course_list_pagination.js"></script>
+    <script src="~/js/courselist/course_list_nested_dropdown.js"></script>
+    <script  src="~/js/booking_table_modal.js"></script>
+    <script src="~/lib/myvue/vue.global.min.js " asp-append-version="true"></script>
 }
 
 @functions {

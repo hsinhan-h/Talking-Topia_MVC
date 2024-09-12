@@ -22,36 +22,46 @@ namespace Web.Services
         {
             return _repository.GetAll<Course>().Any(x => x.CourseId == courseId);
         }
+        public bool HasCartData(int memberId)
+        {
+            return _repository.GetAll<ShoppingCart>().Any(x => x.MemberId == memberId);
+        }
         public bool HasCartData(int memberId, int courseId)
         {
             return _repository.GetAll<ShoppingCart>().Any(x => x.MemberId == memberId && x.CourseId == courseId);
         }
         public decimal GetUnitPrice(int courseId, int courseLength)
         {
-            var price = _repository.GetAll<Course>()
+            decimal price = _repository.GetAll<Course>()
                        .Where(x => x.CourseId == courseId)
                        .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
                        .FirstOrDefault();
 
             return price;
         }
+
+        /// <summary>
+        /// Read Data
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="courseId"></param>
+        /// <param name="courseLength"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<ShoppingCartListViewModel> GetShoppingCartData(int memberId, int courseId,
                                                                          int courseLength, int quantity)
         {
-            if (!HasMemberData(memberId)) //應跳轉至登入頁面
-            { throw new Exception("會員不存在，請重新操作"); }
-            if (!HasCourseData(courseId))
-            { throw new Exception("課程不存在，請重新操作"); }
-
-            //從前端傳入的value抓db.Course的單價
-            var unitPrice = GetUnitPrice(courseId, courseLength);
-            if (!HasCartData(memberId, courseId)) //沒有就要新增
+            decimal unitPrice = GetUnitPrice(courseId, courseLength);
+            if (memberId < 1 || courseId < 1 || courseLength < 1 || quantity < 1 || unitPrice < 1)
             {
-                //新增資料塞到db，儲存
+                throw new ArgumentException("Invalid input data");
+            }
+            if (!HasCartData(memberId, courseId))
+            {
                 CreateShoppingCartData(memberId, courseId, courseLength, quantity, unitPrice);
             }
-            //要重新渲染出ShoppingCart內的資料才正確，我沒正確帶到資料
-            //todo: return View Model to View
+            //todo: return View Model to View (這步是不是多餘)
             var shoppingCart = await GetShoppingCartViewModelsAsync(memberId);
 
             return new ShoppingCartListViewModel
@@ -59,9 +69,14 @@ namespace Web.Services
                 ShoppingCartList = shoppingCart
             };
         }
+        /// <summary>
+        /// 轉成View Model
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <returns></returns>
         public async Task<List<ShoppingCartViewModel>> GetShoppingCartViewModelsAsync(int memberId)
         {
-            
+
             var result = await (from item in _repository.GetAll<ShoppingCart>()
                                 where item.MemberId == memberId
                                 join member in _repository.GetAll<Member>() on item.MemberId equals member.MemberId
@@ -92,21 +107,67 @@ namespace Web.Services
             return result;
         }
 
+        /// <summary>
+        /// Create Data
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="courseId"></param>
+        /// <param name="courseLength"></param>
+        /// <param name="quantity"></param>
+        /// <param name="unitPrice"></param>
         public void CreateShoppingCartData(int memberId, int courseId, int courseLength, int quantity, decimal unitPrice)
         {
-            //todo: VM塞DM -> Create -> SaveChange
-            var shoppingCart =  new ShoppingCart
-                                {
-                                    CourseId = courseId,
-                                    UnitPrice = unitPrice,
-                                    Quantity = (short)quantity,
-                                    TotalPrice = unitPrice * quantity,
-                                    MemberId = memberId,
-                                    CourseType = courseLength == 25 ? (short)CourseTypes.TwentyFiveMinUnitPrice : (short)CourseTypes.FiftyMinUnitPrice,
-                                    Cdate = DateTime.Now,
-                                };
-            _repository.Create(shoppingCart);
-            _repository.SaveChanges();
+            try
+            {
+                var shoppingCart = new ShoppingCart
+                {
+                    CourseId = courseId,
+                    UnitPrice = unitPrice,
+                    Quantity = (short)quantity,
+                    TotalPrice = unitPrice * quantity,
+                    MemberId = memberId,
+                    CourseType = courseLength == 25 ? (short)CourseTypes.TwentyFiveMinUnitPrice : (short)CourseTypes.FiftyMinUnitPrice,
+                    Cdate = DateTime.Now,
+                };
+                _repository.Create(shoppingCart);
+                _repository.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException($"無法存入ShoppingCart: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Unexpected error: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Delete Data
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="courseId"></param>
+        public void DeleteCartItem(int memberId, int courseId)
+        {
+            try
+            {
+                var target = _repository.GetAll<ShoppingCart>()
+                                        .FirstOrDefault(x => x.MemberId == memberId && x.CourseId == courseId);
+                _repository.Delete(target);
+                _repository.SaveChanges();
+            }
+            catch(ArgumentException ex)
+            {
+                throw new ArgumentException($"無法找到Shopping Cart Item: {ex.Message}");
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException($"無法刪除Shopping Cart: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public enum CourseTypes
