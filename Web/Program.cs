@@ -1,5 +1,6 @@
 using Web.Entities;
 using Web.Repository;
+using Infrastructure;
 
 namespace Web
 {
@@ -25,6 +26,10 @@ namespace Web
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<TutorDataservice>();
             builder.Services.AddScoped<ShoppingCartService>();
+
+
+            // 要加下面這個 AddInfrastructureService      
+            builder.Services.AddInfrastructureService(builder.Configuration);
 
             var app = builder.Build();
 
