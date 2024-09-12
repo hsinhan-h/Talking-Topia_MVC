@@ -177,7 +177,7 @@ async function fetchBookingTableData(courseId) {
             return null;
         }
 
-        console.log(bookingTableData);
+        //console.log(bookingTableData);
         return bookingTableData;
 
     } catch (error) {
