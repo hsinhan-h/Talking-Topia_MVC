@@ -1,4 +1,5 @@
-﻿using Web.Entities;
+﻿using ApplicationCore.Interfaces;
+using Web.Entities;
 using Web.Repository;
 using Web.ViewModels;
 
@@ -7,9 +8,13 @@ namespace Web.Services
     public class BookingService
     {
         private readonly IRepository _repository;
-        public BookingService(IRepository repository)
+        private readonly IRepository<ApplicationCore.Entities.CourseCategory> _courseCategoryRepository;
+        public BookingService(IRepository repository
+            , IRepository<ApplicationCore.Entities.CourseCategory> courseCategoryRepository
+            )
         {
             _repository = repository;
+            //_courseCategoryRepository = courseCategoryRepository;
         }
 
         public async Task<BookingListViewModel> GetPublishCourseList(int MemberId)
