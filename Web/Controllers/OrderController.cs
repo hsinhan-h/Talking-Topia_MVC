@@ -7,6 +7,7 @@ namespace Web.Controllers
     {
         private readonly OrderService _orderService;
         private readonly ShoppingCartService _shoppingCartService;
+        // 還要注入PaymentService
 
         public OrderController(OrderService orderService, ShoppingCartService shoppingCartService)
         {
@@ -20,6 +21,7 @@ namespace Web.Controllers
         /// 串金流前先直接從ShoppingCart串過來
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public async Task<IActionResult> Index(int memberId)
         {
             // todo: 從Orders抓資料渲染頁面
@@ -33,6 +35,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitOrder(int memberId, string paymentType, short orderStatusId)
         {
             bool isOrderCreated = await _orderService.CreateOrder(memberId,paymentType,orderStatusId);
