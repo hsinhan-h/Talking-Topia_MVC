@@ -1,4 +1,5 @@
-﻿using Infrastructure.ECpay;
+﻿using ApplicationCore.Interfaces;
+using Infrastructure.ECpay;
 using Infrastructure.Interfaces.ECpay;
 
 namespace Web.Configurations
@@ -7,8 +8,9 @@ namespace Web.Configurations
     {
         public static IServiceCollection AddApplicationCoreService(this IServiceCollection services)
         {
-            //services.AddScoped<IOrderService, OrderService>(); 參考格式
             services.AddScoped<IPayment, Payment>();
+            //services.AddScoped<IOrderService, OrderService>(); 大國的，別動Q_Q
+            services.AddScoped<OrderService>();
 
             return services;
         }
