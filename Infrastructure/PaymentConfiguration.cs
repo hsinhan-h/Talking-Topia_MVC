@@ -1,8 +1,8 @@
-using System;
-using FluentEcpay.Interfaces;
-using FluentEcpay.Configurations;
+using Infrastructure.Interfaces;
+using Infrastructure.Enums;
+using Infrastructure.Configurations;
 
-namespace FluentEcpay
+namespace Infrastructure
 {
     public class PaymentConfiguration : IPaymentConfiguration
     {

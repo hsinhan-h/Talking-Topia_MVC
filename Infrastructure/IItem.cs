@@ -1,4 +1,4 @@
-namespace FluentEcpay
+namespace Infrastructure
 {
     /// <summary>
     /// 訂單的商品資料。

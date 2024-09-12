@@ -1,4 +1,4 @@
-namespace FluentEcpay
+namespace Infrastructure
 {
     /// <summary>
     /// 完成綠界金流付款回傳的結果通知之參數資料。

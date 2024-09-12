@@ -1,4 +1,4 @@
-namespace FluentEcpay
+namespace Infrastructure
 {
     public class PaymentResult : IPaymentResult
     {

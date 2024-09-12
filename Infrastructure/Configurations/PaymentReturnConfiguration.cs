@@ -1,7 +1,6 @@
-using System;
-using FluentEcpay.Interfaces;
+using Infrastructure.Interfaces;
 
-namespace FluentEcpay.Configurations
+namespace Infrastructure.Configurations
 {
     public class PaymentReturnConfiguration : IPaymentReturnConfiguration
     {

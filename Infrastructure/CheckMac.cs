@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using FluentEcpay.Interfaces;
+using Infrastructure.Interfaces;
 
-namespace FluentEcpay
+namespace Infrastructure.Enums
 {
     public class CheckMac : ICheckMac
     {

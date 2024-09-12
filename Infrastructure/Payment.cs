@@ -1,6 +1,4 @@
-using FluentEcpay.Interfaces;
-
-namespace FluentEcpay
+namespace Infrastructure
 {
     public class Payment : IPayment
     {

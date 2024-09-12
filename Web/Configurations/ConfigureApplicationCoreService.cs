@@ -1,7 +1,4 @@
-﻿using ApplicationCore.Interfaces;
-using ApplicationCore.Services;
-using FluentEcpay;
-using Web.Services;
+﻿using Infrastructure;
 
 namespace Web.Configurations
 {

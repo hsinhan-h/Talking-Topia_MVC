@@ -1,10 +1,8 @@
-using System;
 using System.Web;
-using System.Linq;
-using System.Collections.Generic;
-using FluentEcpay.Interfaces;
+using Infrastructure.Interfaces;
+using Infrastructure.Enums;
 
-namespace FluentEcpay.Configurations
+namespace Infrastructure.Configurations
 {
     public class PaymentTransactionConfiguration : IPaymentTransactionConfiguration
     {

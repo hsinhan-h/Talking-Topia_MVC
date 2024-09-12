@@ -1,4 +1,6 @@
-namespace FluentEcpay.Interfaces
+using Infrastructure.Enums;
+
+namespace Infrastructure.Interfaces
 {
     /// <summary>
     /// 集中設定與綠界金流服務介接有關之參數。

@@ -1,4 +1,4 @@
-﻿namespace FluentEcpay
+﻿namespace Infrastructure.Enums
 {
     /// <summary>
     /// 付款方式。

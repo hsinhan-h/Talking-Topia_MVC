@@ -1,6 +1,4 @@
-using System;
-
-namespace FluentEcpay
+namespace Infrastructure.Enums
 {
     /// <summary>
     /// 隱藏付款方式。

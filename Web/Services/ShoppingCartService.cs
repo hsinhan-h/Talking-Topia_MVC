@@ -1,11 +1,4 @@
-﻿
-using Humanizer;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Security.AccessControl;
-using System.Security.Policy;
-using Web.Entities;
-
-namespace Web.Services
+﻿namespace Web.Services
 {
     public class ShoppingCartService
     {

@@ -1,4 +1,4 @@
-namespace FluentEcpay
+namespace Infrastructure.Enums
 {
     public enum EPaymentSubMethod
     {

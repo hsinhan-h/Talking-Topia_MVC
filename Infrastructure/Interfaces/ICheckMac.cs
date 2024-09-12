@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+using Infrastructure.Enums;
 
-namespace FluentEcpay.Interfaces
+namespace Infrastructure.Interfaces
 {
     /// <summary>
     /// 綠界服務介接的檢查碼機制。

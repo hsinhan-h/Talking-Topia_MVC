@@ -1,4 +1,4 @@
-namespace FluentEcpay.Interfaces
+namespace Infrastructure.Interfaces
 {
     /// <summary>
     /// 集中設定於綠界付款完成後與回應有關之參數。

@@ -1,7 +1,6 @@
-using System;
-using System.Collections.Generic;
+using Infrastructure.Enums;
 
-namespace FluentEcpay.Interfaces
+namespace Infrastructure.Interfaces
 {
     /// <summary>
     /// 集中設定與綠界訂單交易有關之參數。

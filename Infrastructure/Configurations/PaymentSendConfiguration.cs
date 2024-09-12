@@ -1,7 +1,7 @@
-using System;
-using FluentEcpay.Interfaces;
+using Infrastructure.Enums;
+using Infrastructure.Interfaces;
 
-namespace FluentEcpay.Configurations
+namespace Infrastructure.Configurations
 {
     public class PaymentSendConfiguration : IPaymentSendConfiguration
     {
@@ -65,7 +65,7 @@ namespace FluentEcpay.Configurations
             }
             else throw new ArgumentNullException(nameof(algorithm));
 
-            _setCheckMac(new CheckMac(key,iv));
+            _setCheckMac(new CheckMac(key, iv));
 
             return _configuration;
         }
