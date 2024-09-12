@@ -1,6 +1,6 @@
-using Infrastructure.Enums;
+using Infrastructure.Enums.ECpay;
 
-namespace Infrastructure.Interfaces
+namespace Infrastructure.Interfaces.ECpay
 {
     /// <summary>
     /// 集中設定與綠界訂單交易有關之參數。

@@ -1,4 +1,6 @@
-namespace Infrastructure
+using Infrastructure.Interfaces.ECpay;
+
+namespace Infrastructure.ECpay
 {
     public class Payment : IPayment
     {

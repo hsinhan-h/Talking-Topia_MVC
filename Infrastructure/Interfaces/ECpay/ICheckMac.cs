@@ -1,6 +1,6 @@
-using Infrastructure.Enums;
+using Infrastructure.Enums.ECpay;
 
-namespace Infrastructure.Interfaces
+namespace Infrastructure.Interfaces.ECpay
 {
     /// <summary>
     /// 綠界服務介接的檢查碼機制。

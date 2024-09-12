@@ -1,6 +1,7 @@
-using Infrastructure.Interfaces;
+using Infrastructure.ECpay;
+using Infrastructure.Interfaces.ECpay;
 
-namespace Infrastructure.Configurations
+namespace Infrastructure.Configurations.ECpay
 {
     public class PaymentReturnConfiguration : IPaymentReturnConfiguration
     {

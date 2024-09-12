@@ -1,7 +1,8 @@
-using Infrastructure.Enums;
-using Infrastructure.Interfaces;
+using Infrastructure.ECpay;
+using Infrastructure.Enums.ECpay;
+using Infrastructure.Interfaces.ECpay;
 
-namespace Infrastructure.Configurations
+namespace Infrastructure.Configurations.ECpay
 {
     public class PaymentSendConfiguration : IPaymentSendConfiguration
     {

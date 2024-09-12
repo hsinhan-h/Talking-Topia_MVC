@@ -1,9 +1,10 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using Infrastructure.Interfaces;
+using Infrastructure.Enums.ECpay;
+using Infrastructure.Interfaces.ECpay;
 
-namespace Infrastructure.Enums
+namespace Infrastructure.ECpay
 {
     public class CheckMac : ICheckMac
     {
@@ -44,7 +45,7 @@ namespace Infrastructure.Enums
                     var value = property.GetValue(result);
                     return value is null ? string.Empty : value.ToString();
                 });
-            var toCheck = CheckMac.GetValue(parameters, hashKey, hashIV, encryptType);
+            var toCheck = GetValue(parameters, hashKey, hashIV, encryptType);
             return toCheck == result.CheckMacValue;
         }
         public static string GetValue(IDictionary<string, string> parameters, string key, string iv, EHashAlgorithm encryptType = EHashAlgorithm.SHA256)

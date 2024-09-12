@@ -1,4 +1,4 @@
-namespace Infrastructure.Enums
+namespace Infrastructure.Enums.ECpay
 {
     /// <summary>
     /// 雜湊加密演算法。

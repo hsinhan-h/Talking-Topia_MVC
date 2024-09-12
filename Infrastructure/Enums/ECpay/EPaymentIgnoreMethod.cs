@@ -1,4 +1,4 @@
-namespace Infrastructure.Enums
+namespace Infrastructure.Enums.ECpay
 {
     /// <summary>
     /// 隱藏付款方式。

@@ -1,5 +1,6 @@
-﻿using Infrastructure;
-using Infrastructure.Enums;
+﻿using Infrastructure.ECpay;
+using Infrastructure.Enums.ECpay;
+using Infrastructure.Interfaces.ECpay;
 
 namespace Web.Controllers
 {

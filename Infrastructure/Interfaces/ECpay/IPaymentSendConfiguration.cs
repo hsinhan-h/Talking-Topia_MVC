@@ -1,6 +1,6 @@
-using Infrastructure.Enums;
+using Infrastructure.Enums.ECpay;
 
-namespace Infrastructure.Interfaces
+namespace Infrastructure.Interfaces.ECpay
 {
     /// <summary>
     /// 集中設定與綠界金流服務介接有關之參數。

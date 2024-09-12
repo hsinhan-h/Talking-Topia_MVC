@@ -1,4 +1,5 @@
-﻿using Infrastructure;
+﻿using Infrastructure.ECpay;
+using Infrastructure.Interfaces.ECpay;
 
 namespace Web.Configurations
 {

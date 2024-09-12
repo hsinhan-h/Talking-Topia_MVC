@@ -1,4 +1,4 @@
-namespace Infrastructure.Interfaces
+namespace Infrastructure.Interfaces.ECpay
 {
     /// <summary>
     /// 產生綠界金流訂單的主要設定檔。

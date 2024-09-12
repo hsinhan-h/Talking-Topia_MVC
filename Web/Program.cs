@@ -1,6 +1,6 @@
 using Web.Data;
 using Web.Repository;
-using Infrastructure;
+using Infrastructure.ECpay;
 
 namespace Web
 {
