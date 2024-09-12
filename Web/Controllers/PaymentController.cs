@@ -27,7 +27,7 @@ namespace Web.Controllers
         [HttpGet("checkout")]
         public IActionResult CheckOut()
         {
-
+            // 資料藏在appsettings.json及UserSecret(目前註解中)
             var service = new
             {
                 Url = _configuration["ECpay:Service:Url"],
@@ -40,6 +40,7 @@ namespace Web.Controllers
 
             var transaction = new
             {
+                // todo: 調整參數及串接專案資料庫
                 No = "test00003",
                 Description = "測試購物系統",
                 Date = DateTime.Now,
@@ -85,8 +86,8 @@ namespace Web.Controllers
         [HttpPost("callback")]
         public IActionResult Callback(PaymentResult result)
         {
-            var hashKey = "5294y06JbISpM5x9";
-            var hashIV = "v77hoKGq4kWxNNIS";
+            var hashKey = _configuration["ECpay:Service:HashKey"];
+            var hashIV = _configuration["ECpay:Service:HashIV"];
 
             // 務必判斷檢查碼是否正確。
             if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
