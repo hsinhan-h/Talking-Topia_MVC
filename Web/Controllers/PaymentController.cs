@@ -1,6 +1,8 @@
 ﻿using Infrastructure.ECpay;
 using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
+using System.Collections.Generic;
+using System.Security.Policy;
 
 namespace Web.Controllers
 {
@@ -8,8 +10,10 @@ namespace Web.Controllers
     [ApiController]
     public class PaymentController : Controller
     {
-        public PaymentController()
+        private readonly IConfiguration _configuration;
+        public PaymentController(IConfiguration configuration)
         {
+            _configuration = configuration;
         }
 
         // POST api/payment
@@ -23,15 +27,17 @@ namespace Web.Controllers
         [HttpGet("checkout")]
         public IActionResult CheckOut()
         {
+
             var service = new
             {
-                Url = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5",
-                MerchantId = "2000132",
-                HashKey = "5294y06JbISpM5x9",
-                HashIV = "v77hoKGq4kWxNNIS",
-                ServerUrl = "https://test.com/api/payment/callback",
-                ClientUrl = "https://test.com/payment/success"
+                Url = _configuration["ECpay:Service:Url"],
+                MerchantId = _configuration["ECpay:Service:MerchantId"],
+                HashKey = _configuration["ECpay:Service:HashKey"],
+                HashIV = _configuration["ECpay:Service:HashIV"],
+                ServerUrl = _configuration["ECpay:Service:ServerUrl"],
+                ClientUrl = _configuration["ECpay:Service:ClientUrl"]
             };
+
             var transaction = new
             {
                 No = "test00003",
