@@ -146,7 +146,7 @@ namespace Web.Services
 
         public async Task<int> GetTotalCourseQtyAsync()
         {
-            return _repository.GetAll<Course>().Count();
+            return await _repository.GetAll<Course>().CountAsync();
         }
 
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
