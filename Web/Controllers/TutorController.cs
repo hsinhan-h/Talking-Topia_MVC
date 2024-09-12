@@ -28,34 +28,11 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> TutorData()
         {
-            int memberId = 1;
-            string categorytName = "程式設計";
-
-            var tutorData = await _tutorDataService.GetTutorDataAsync(memberId, categorytName);
+            var tutorData = await _tutorDataService.GetAllInformationAsync();
             if (tutorData == null)
             {
                 return RedirectToAction("Index", "Tutor");
             }
-            var tutorCourseData = await _tutorDataService.GetTutorCourseDataAsync(memberId);
-            if (tutorCourseData == null)
-            {
-                return RedirectToAction("Index", "Tutor");
-            }
-            var tutorCourseStatus = await _tutorDataService.GetCoursestatusAsync(memberId);
-            if (tutorCourseStatus == null)
-            {
-                return RedirectToAction("Index", "Tutor");
-            }
-            //var tutorReserveTime = await _tutorDataService.GetTutorReserveTimeAsync(memberId);
-            //if (tutorReserveTime == null)
-            //{
-            //    return RedirectToAction("Index", "Tutor");
-            //}
-
-            tutorData.Course = tutorCourseData.Course;
-            tutorData.Coursestatus = tutorCourseStatus.Coursestatus;
-            //tutorData.AvailableReservation = tutorReserveTime.AvailableReservation;
-
             return View(tutorData);
         }
         [HttpGet]
@@ -102,5 +79,7 @@ namespace Web.Controllers
         {
             return View();
         }
+
+       
     }
 }

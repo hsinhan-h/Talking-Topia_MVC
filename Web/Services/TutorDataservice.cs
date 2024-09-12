@@ -1,4 +1,6 @@
-﻿using Web.Entities;
+﻿using Microsoft.EntityFrameworkCore.Internal;
+using Web.Entities;
+using Web.Services;
 using static Web.Services.TutorDataservice;
 
 namespace Web.Services
@@ -110,33 +112,59 @@ namespace Web.Services
             }
             return tutorCourseData;
         }
+        //取得可預約時段的方法
+        public async Task<TutorDataViewModel> GetTutorReserveTimeAsync(int memberId)
+        {
+            var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
+                                         where member.MemberId == memberId
+                                         select member.IsVerifiedTutor).FirstOrDefaultAsync();
+            var tutortime = new TutorDataViewModel
+            {
+                AvailableReservation = new List<AvailReservation>()
+            };
+            if (isVerifiedTutor)
+            {
+                tutortime.AvailableReservation = await (from member in _repository.GetAll<Member>()
+                                                        join tutorTimeSloot in _repository.GetAll<TutorTimeSlot>()
+                                                        on member.MemberId equals tutorTimeSloot.TutorId
+                                                        join coursehour in _repository.GetAll<CourseHour>()
+                                                        on tutorTimeSloot.CourseHourId equals coursehour.CourseHourId
+                                                        select new AvailReservation
+                                                        {
+                                                            Weekday = tutorTimeSloot.Weekday,
+                                                            Coursehours = coursehour.Hour,
+                                                        }).ToListAsync();
+            }
 
-        //public async Task<TutorDataViewModel> GetTutorReserveTimeAsync(int memberId)
-        //{
-        //    var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
-        //                                 where member.MemberId == memberId
-        //                                 select member.IsVerifiedTutor).FirstOrDefaultAsync();
-        //    var tutortime = new TutorDataViewModel
-        //    {
-        //        AvailableReservation = new List<AvailReservation>()
-        //    };
-        //    if (isVerifiedTutor)
-        //    {
-        //        tutortime.AvailableReservation = await (from member in _repository.GetAll<Member>()
-        //                                                join tutorTimeSloot in _repository.GetAll<TutorTimeSlot>()
-        //                                                on member.MemberId equals tutorTimeSloot.TutorId
-        //                                                join coursehour in _repository.GetAll<CourseHour>()
-        //                                                on tutorTimeSloot.CourseHourId equals coursehour.CourseHourId
-        //                                                select new AvailReservation
-        //                                                {
-        //                                                    Weekday = tutorTimeSloot.Weekday,
-        //                                                    Coursehours = coursehour.Hour,
-        //                                                }).ToListAsync();
-        //    }
-            
-        //    return tutortime;
-        //}
+            return tutortime;
+        }
+        public async Task<TutorDataViewModel> GetAllInformationAsync()
+        {
+            int memberId = 1;
+            string categorytName = "程式設計";
 
+            var tutorData = await GetTutorDataAsync(memberId, categorytName);
+            if (tutorData == null)
+            {
+                return new TutorDataViewModel();
+            }
+
+            var tutorCourseData = await GetTutorCourseDataAsync(memberId);
+            if (tutorCourseData == null)
+            {
+                return new TutorDataViewModel();
+            }
+
+            var tutorCourseStatus = await GetCoursestatusAsync(memberId);
+            if (tutorCourseStatus == null)
+            {
+                return new TutorDataViewModel();
+            }
+
+            tutorData.Course = tutorCourseData.Course;
+            tutorData.Coursestatus = tutorCourseStatus.Coursestatus;
+            return tutorData;
+        }
 
         public enum CourseStatus
         {
