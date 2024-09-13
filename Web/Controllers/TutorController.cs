@@ -61,7 +61,7 @@ namespace Web.Controllers
             return View(qVM);
         }
  
-        public async Task<IActionResult> AppointmentDetails(int memberId)
+        public async Task<IActionResult> AppointmentDetails(int memberId=1)
         {
             var appointmentDetails = await _appointmentDetailService.GetAppointmentData(memberId);
             return View(appointmentDetails);
