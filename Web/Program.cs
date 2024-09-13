@@ -28,7 +28,7 @@ namespace Web
             builder.Services.AddScoped<MemberDataService>();
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<TutorDataservice>();
-            builder.Services.AddScoped<OrderDetailService>();
+            
             
 
             // 要加下面這個 AddInfrastructureService      
