@@ -28,6 +28,9 @@ namespace Web
             builder.Services.AddScoped<MemberDataService>();
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<TutorDataservice>();
+            builder.Services.AddScoped<ShoppingCartService>();
+            builder.Services.AddScoped<OrderDetailService>();
+            builder.Services.AddScoped<AppointmentDetailService>();
             builder.Services.AddScoped<ShoppingCartViewModelService>();
 
             // 要加下面這個 AddInfrastructureService      

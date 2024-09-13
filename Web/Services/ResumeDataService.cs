@@ -54,7 +54,7 @@ namespace Web.Services
                     Phone = "N/A",
                     Gender = 0,
                     AccountType = 1,
-                    IsTutor = false
+                    IsTutor = true
                 };
                 _repository.Create(member);
                 await _repository.SaveChangesAsync(); 
@@ -94,24 +94,24 @@ namespace Web.Services
                 _repository.Create(coursecategory);
                 await _repository.SaveChangesAsync();
 
-                foreach (var licenseName in qVM.ProfessionalLicenseName)
-                {
-                    var professionalLicense = new ProfessionalLicense
-                    {
-                        ProfessionalLicenseName = licenseName,
-                        Cdate = DateTime.Now
-                    };
-                    _repository.Create(professionalLicense);
-                }
-                foreach (var licenseurl in qVM.ProfessionalLicenseUrl)
-                {
-                    var professionalLicenseurl = new ProfessionalLicense
-                    {
-                        ProfessionalLicenseName = licenseurl
-                    };
-                    _repository.Create(professionalLicenseurl);
-                }
-                await _repository.SaveChangesAsync();
+                //foreach (var licenseName in qVM.ProfessionalLicenseName)
+                //{
+                //    var professionalLicense = new ProfessionalLicense
+                //    {
+                //        ProfessionalLicenseName = licenseName,
+                //        Cdate = DateTime.Now
+                //    };
+                //    _repository.Create(professionalLicense);
+                //}
+                //foreach (var licenseurl in qVM.ProfessionalLicenseUrl)
+                //{
+                //    var professionalLicenseurl = new ProfessionalLicense
+                //    {
+                //        ProfessionalLicenseName = licenseurl
+                //    };
+                //    _repository.Create(professionalLicenseurl);
+                //}
+                //await _repository.SaveChangesAsync();
 
                 var courseSubject = new CourseSubject
                 {

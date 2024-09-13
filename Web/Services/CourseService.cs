@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NuGet.Protocol.Core.Types;
 using System.Diagnostics.Tracing;
 using System.Drawing;
 using Web.Entities;
@@ -438,6 +442,51 @@ namespace Web.Services
                 .Where(review => review.CourseId == courseId)
                 .Select(review => (double)review.Rating);
             return courseRatings.Any() ? courseRatings.Average() : 0;
+        }
+
+        public async Task<TutorRecommendCardViewModel> GetTutorRecommendCard(int categoryId)
+        {            
+            var recomCardList = await (
+                from course in _repository.GetAll<Course>().AsNoTracking()
+                join member in _repository.GetAll<Member>().AsNoTracking()
+                on course.TutorId equals member.MemberId
+                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                on member.NationId equals nation.NationId                
+                where course.CategoryId == categoryId
+                select new TutorRecomCardList
+                       {
+                            CourseId = course.CourseId,
+                            TutorHeadShot = member.HeadShotImage,
+                            NationFlagImg = nation.FlagImage,
+                            CourseTitle = course.Title,
+                            CourseSubTitle = course.SubTitle,
+                            TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
+                            FiftyminPrice = (int) course.FiftyMinUnitPrice,
+                            Description = course.Description,
+                       }).ToListAsync();
+
+            var recomCardReview = await (
+               from course in _repository.GetAll<Course>().AsNoTracking()
+               join review in _repository.GetAll<Review>().AsNoTracking()
+               on course.CourseId equals review.CourseId
+               group review by course.CourseId into Review
+               select new TutorRecomCardList
+               {
+                   CourseId = Review.Key,
+                   Rating = Review.Any() ? Math.Round(Review.Average(cr => cr.Rating), 2) : 0,               
+               }).ToListAsync();
+
+            foreach (var card in recomCardList)
+            {
+                var review = recomCardReview.FirstOrDefault(r => r.CourseId == card.CourseId);
+
+                card.Rating = review?.Rating ?? 0;
+            }
+            
+            return new TutorRecommendCardViewModel
+            {
+                TutorReconmmendCard = recomCardList
+            };
         }
     }
 }

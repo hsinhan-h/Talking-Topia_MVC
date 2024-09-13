@@ -1,24 +1,14 @@
-﻿using Web.Entities;
-using Web.ViewModels;
-
-namespace Web.Services
+﻿namespace Web.Services
 {
-    public class OrderDetailService
+    public class AppointmentDetailService
     {
         private readonly IRepository _repository;
 
-        public OrderDetailService(IRepository repository)
+        public AppointmentDetailService(IRepository repository)
         {
             _repository = repository;
         }
-        public bool HasMemberData(int memberId)
-        {
-            return _repository.GetAll<Member>().Any(x => x.MemberId == memberId);
-        }
-        public bool HasOrderData(int memberId)
-        {
-            return _repository.GetAll<Order>().Any(x =>x.MemberId == memberId);
-        }
+       
         public decimal GetUnitPrice(int courseId, int courseLength)
         {
             var price = _repository.GetAll<Course>()
@@ -30,15 +20,15 @@ namespace Web.Services
         }
         //Logic 
 
-        public async Task<MemberOrderViewModel> GetOrderData(int memberId)
+        public async Task<AppointmentDetailsViewModel> GetAppointmentData(int memberId)
         {
-          
+
             var orders = from Order in _repository.GetAll<Order>()
-                         where Order.MemberId == memberId 
+                         where Order.MemberId == memberId
                          join OrderDetail in _repository.GetAll<OrderDetail>() on Order.OrderId equals OrderDetail.OrderId
                          join member in _repository.GetAll<Member>() on Order.MemberId equals member.MemberId
-                         
-                         select new MemberOrderVM
+
+                         select new AppointmentDetailVM
                          {
                              MemberId = Order.MemberId,          // 會員ID
                              CourseId = OrderDetail.CourseId,   // 課程ID
@@ -50,14 +40,14 @@ namespace Web.Services
                              TotalPrice = OrderDetail.TotalPrice, // 總價
                              TaxIdNumber = Order.TaxIdNumber,  // 統一編號
                              OrderDatetime = Order.TransactionDate.ToString("yyyy-MM-dd HH:mm:ss") // 格式化交易時間
+
                          };
 
             // 返回包含訂單資訊的 ViewModel
-            return new MemberOrderViewModel()
+            return new AppointmentDetailsViewModel()
             {
-                MemberOderList = await orders.ToListAsync(), // 使用非同步處理
+                AppointmentDetailsList = await orders.ToListAsync(), // 使用非同步處理
             };
         }
     }
-
- }
+}
