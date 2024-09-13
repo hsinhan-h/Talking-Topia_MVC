@@ -216,13 +216,14 @@ namespace Web.Services
                 {
                     TutorId = member.MemberId,
                     CourseId = course.CourseId,
+                    CategoryId = course.CategoryId,
                     EducationId= (int)member.EducationId,
                     SpokenLanguage = member.SpokenLanguage,
                     TutorHeadShotImage = member.HeadShotImage,
                     TutorFlagImage = nation.FlagImage,
                     IsVerifiedTutor = member.IsVerifiedTutor,
                     CourseTitle = course.Title,
-                    CourseSubTitle = course.SubTitle,
+                    CourseSubTitle = course.SubTitle, 
                     TutorIntro = member.TutorIntro,
                     TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
                     FiftyMinPrice = (int)course.FiftyMinUnitPrice,
@@ -288,6 +289,8 @@ namespace Web.Services
                                 .AsNoTracking()
                                 .ToListAsync();
 
+            var recomCard = GetTutorRecommendCard(courseMainInfo.CategoryId);
+
             // 計算課程評分
             var averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
 
@@ -322,18 +325,19 @@ namespace Web.Services
                     EndYear = e.WorkEndDate.Year,
                     WorkTitle = e.WorkName
                 }).ToList(),
-                EducationDegree = education.Select(w=> new TutorEducationList
+                EducationDegree = education.Select(w => new TutorEducationList
                 {
                     StudyStartYear = w.StudyStartYear,
                     StudyEndYear = w.StudyEndYear,
-                    SchoolAndDepartment = w.SchoolName + " " + w.DepartmentName, 
+                    SchoolAndDepartment = w.SchoolName + " " + w.DepartmentName,
                 }).ToList(),
                 CourseImages = new List<CourseImageViewModel>(), // 根據需求查詢並填充
-                ProfessionList = professional.Select(p =>new TutorProfessionList
+                ProfessionList = professional.Select(p => new TutorProfessionList
                 {
-                  ProfessionName = p.ProfessionalLicenseName
+                    ProfessionName = p.ProfessionalLicenseName
                 }).ToList(),
-                FollowingStatus = false // 假設未關注
+                FollowingStatus = false ,// 假設未關注
+                TutorReconmmendCard = recomCard
             };
 
             // 處理折扣價錢
@@ -347,6 +351,7 @@ namespace Web.Services
 
             courseMainPageViewModel.TwentyFiveDiscountedPrice = GettCoursePriceList(courseCountDiscountList, 25, courseMainPageViewModel.TwentyFiveMinPrice);
             courseMainPageViewModel.FiftyDiscountedPrice = GettCoursePriceList(courseCountDiscountList, 50, courseMainPageViewModel.FiftyMinPrice);
+
 
             return courseMainPageViewModel;
         }
@@ -444,28 +449,28 @@ namespace Web.Services
             return courseRatings.Any() ? courseRatings.Average() : 0;
         }
 
-        public async Task<TutorRecommendCardViewModel> GetTutorRecommendCard(int categoryId)
+        public List<TutorRecomCardList> GetTutorRecommendCard(int categoryId)
         {            
-            var recomCardList = await (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join member in _repository.GetAll<Member>().AsNoTracking()
-                on course.TutorId equals member.MemberId
-                join nation in _repository.GetAll<Nation>().AsNoTracking()
-                on member.NationId equals nation.NationId                
-                where course.CategoryId == categoryId
-                select new TutorRecomCardList
-                       {
-                            CourseId = course.CourseId,
-                            TutorHeadShot = member.HeadShotImage,
-                            NationFlagImg = nation.FlagImage,
-                            CourseTitle = course.Title,
-                            CourseSubTitle = course.SubTitle,
-                            TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
-                            FiftyminPrice = (int) course.FiftyMinUnitPrice,
-                            Description = course.Description,
-                       }).ToListAsync();
+            var recomCardList = (from course in _repository.GetAll<Course>().AsNoTracking()
+                                join member in _repository.GetAll<Member>().AsNoTracking()
+                                on course.TutorId equals member.MemberId
+                                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                                on member.NationId equals nation.NationId
+                                where course.CategoryId == categoryId
+                                select new TutorRecomCardList
+                                {
+                                    CourseId = course.CourseId,
+                                    TutorHeadShot = member.HeadShotImage,
+                                    NationFlagImg = nation.FlagImage,
+                                    CourseTitle = course.Title,
+                                    CourseSubTitle = course.SubTitle,
+                                    TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
+                                    FiftyminPrice = (int)course.FiftyMinUnitPrice,
+                                    Description = course.Description,
+                                }).ToList();
 
-            var recomCardReview = await (
+
+            var recomCardReview =  (
                from course in _repository.GetAll<Course>().AsNoTracking()
                join review in _repository.GetAll<Review>().AsNoTracking()
                on course.CourseId equals review.CourseId
@@ -474,7 +479,7 @@ namespace Web.Services
                {
                    CourseId = Review.Key,
                    Rating = Review.Any() ? Math.Round(Review.Average(cr => cr.Rating), 2) : 0,               
-               }).ToListAsync();
+               }).ToList();
 
             foreach (var card in recomCardList)
             {
@@ -483,10 +488,7 @@ namespace Web.Services
                 card.Rating = review?.Rating ?? 0;
             }
             
-            return new TutorRecommendCardViewModel
-            {
-                TutorReconmmendCard = recomCardList
-            };
+            return recomCardList;
         }
     }
 }
