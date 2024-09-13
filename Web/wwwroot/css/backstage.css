@@ -3,6 +3,20 @@
 	margin-top:50px;
 }
 
+#reservation-list {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.day-block {
+	flex: 1 1 auto;
+	min-width: 200px; /* 設置最小寬度 */
+	padding: 10px;
+	border: 1px solid #ddd;
+	margin: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .select-form {
 	height: calc(3.5rem + 2px);
 }
