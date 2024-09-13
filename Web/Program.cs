@@ -29,7 +29,7 @@ namespace Web
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<TutorDataservice>();
             builder.Services.AddScoped<OrderDetailService>();
-            builder.Services.AddScoped<AppointmentDetailService>();
+            
 
             // 要加下面這個 AddInfrastructureService      
             builder.Services.AddInfrastructureService(builder.Configuration);
