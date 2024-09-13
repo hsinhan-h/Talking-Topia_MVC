@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace ApplicationCore.Interfaces
 {
     public interface IOrderService
     {
+        public Task<GetAllOrderResult> GetAllOrder(int memberId);
 
     }
 }

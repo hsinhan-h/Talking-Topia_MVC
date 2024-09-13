@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ApplicationCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System.Runtime.InteropServices;
 using Web.Data;
@@ -9,12 +10,12 @@ namespace Web.Services
     public class OrderService
     {
         private readonly IRepository _repository;
-        private readonly ShoppingCartService _shoppingCartService;
+        private readonly IShoppingCartService _shoppingCartService;
         private readonly TalkingTopiaContext _dbContext;
         //todo: 支付延遲的循環機制(若連線問題要在一定時間內重覆傳送授權需求，少說得三次)
         //     ↓DI註冊導致Program無法正常運行，出現無法連結至網路Q Q
         //private readonly IHostedService _hostedService;
-        public OrderService(IRepository repository, ShoppingCartService shoppingCartService, TalkingTopiaContext dbContext)
+        public OrderService(IRepository repository, IShoppingCartService shoppingCartService, TalkingTopiaContext dbContext)
         {
             _repository = repository;
             _shoppingCartService = shoppingCartService;
@@ -78,10 +79,10 @@ namespace Web.Services
         public async Task<bool> CreateOrder(int memberId, string paymentType, short orderStatusId)
         {
             // 如果購物車為空，則無需處理
-            if (!_shoppingCartService.HasCartData(memberId))
-            {
-                throw new InvalidOperationException("購物車為空，無法生成訂單。");
-            }
+            //if (!_shoppingCartService.HasCartItem(memberId,))
+            //{
+            //    throw new InvalidOperationException("購物車為空，無法生成訂單。");
+            //}
 
             // todo: 新增Orders資料列，OrderStatus為待付款
             var cartItems = await _dbContext.ShoppingCarts.Where(x => x.MemberId == memberId).ToListAsync();

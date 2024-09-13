@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Web.Entities;
 
 namespace Web.Controllers
@@ -7,8 +8,8 @@ namespace Web.Controllers
     {
         private readonly BookingService _bookingService;
         private readonly CourseService _courseService;
-        private readonly ShoppingCartService _shoppingCartService;
-        public BookingTableController(BookingService bookingService, CourseService courseService, ShoppingCartService shoppingCartService)
+        private readonly IShoppingCartService _shoppingCartService;
+        public BookingTableController(BookingService bookingService, CourseService courseService, IShoppingCartService shoppingCartService)
         {
             _bookingService = bookingService;
             _courseService = courseService;
@@ -35,7 +36,7 @@ namespace Web.Controllers
             else
             {
                 decimal price = _courseService.GetCourse25MinUnitPrice(CourseId);
-                _shoppingCartService.CreateShoppingCartData(1, CourseId, 25, 1, price);
+                await _shoppingCartService.CreateShoppingCartAsync(1, CourseId, 25, 1);
                 return RedirectToAction("Index", "ShoppingCart");
             }
             
