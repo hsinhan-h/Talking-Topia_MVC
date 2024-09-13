@@ -14,7 +14,6 @@ namespace Infrastructure.Data
     {
         protected readonly TalkingTopiaContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
-        private IDbContextTransaction _transaction;
 
         public EfRepository(TalkingTopiaContext dbContext)
         {
@@ -160,39 +159,6 @@ namespace Infrastructure.Data
             _dbSet.UpdateRange(entities);
             await _dbContext.SaveChangesAsync();
             return entities;
-        }
-
-        public void BeginTransAction()
-        {
-            _transaction = _dbContext.Database.BeginTransaction();
-        }
-
-        public async Task BeginTransActionAsync()
-        {
-            _transaction = await _dbContext.Database.BeginTransactionAsync();
-        }
-
-        public void Commit()
-        {
-            _transaction.Commit();
-            _transaction.Dispose();
-        }
-
-        public async Task CommitAsync()
-        {
-            await _transaction.CommitAsync();
-            _transaction.Dispose();
-        }
-        public void Rollback()
-        {
-            _transaction.Rollback();
-            _transaction.Dispose();
-        }
-
-        public async Task RollbackAsync()
-        {
-            await _transaction.RollbackAsync();
-            _transaction.Dispose();
         }
     }
 }
