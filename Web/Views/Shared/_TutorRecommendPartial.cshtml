@@ -1,14 +1,16 @@
-﻿<div href="" class="lh-tutor-card py-3 px-4 position-relative">
+﻿@model TutorRecomCardList
+
+<div href="" class="lh-tutor-card py-3 px-4 position-relative">
     <div class="lh-tutor-card__header mx-auto d-flex flex-column align-items-center  mx-auto">
         <div class="lh-tutor-images__head position-relative mt-1 mb-2">
             <img class="tutor-headshot rounded-circle"
-                 src="~/image/tutor_headshot_imgs/tutor_head_001.jpg" />
+                 src="@Url.Content(Model.TutorHeadShot)" />
             <img class="tutor-nation-icon rounded-circle border border-white position-absolute "
-                 src="~/image/flag_imgs/uk_flag.png" />
+                 src="@Url.Content(Model.NationFlagImg)" />
             <div class="tutor-online-status"></div>
         </div>
         <div class="tutor-head-brief-pricing">
-            <span class="fifty-min-course-pricing fw-bolder">NT$1,624</span><span class="text">
+            <span class="fifty-min-course-pricing fw-bolder">NT$@(Model.FiftyminPrice)</span><span class="text">
                 /
                 50分鐘
             </span>
@@ -18,27 +20,22 @@
     <div class="lh-tutor-card__body">
         <div class="tutor-title-and-ranking d-flex justify-between align-items-center">
             <a class=" tutor-description-title col-8" href="#">
-                Feds🥇顶级雅思| 批判性思维 |
-                面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                面试教练🥇
+                @Model.CourseTitle;
             </a>
             <div class="tutor-ranking col-4 d-flex justify-content-end">
-                <i class="bi bi-star-fill pe-1"></i><span>4.99</span>
+                <i class="bi bi-star-fill pe-1"></i><span>@Model.Rating</span>
             </div>
         </div>
-        <div class="tutor-subtitle mb-3">今天变得冷静和自信</div>
+        <div class="tutor-subtitle mb-3">@Model.CourseSubTitle</div>
         <p class="tutor-intro-text mb-2">
-            💰你是老师吗？ 获得折扣！🇬🇧 常驻利兹（英国） 🇺🇸 15 年以上国际经验 🌎 曾就职于谷歌、环球音乐和国际特赦组织 🤝 传播专家 👩🏻‍🎓
-            获得学士学位、理学硕士和剑桥资格
-            🥇找到你想要的工作 🔥 在顶尖大学学习 👑 克服你的恐惧 😎 找到你的声音🚀增强你的信心
+            @Model.Description
         </p>
         <div class="course-pricing d-flex justify-content-between mb-2">
             <div class="trail-course-pricing ">
-                NT$469 <div class="text">25分鐘</div>
+                NT$@(Model.TwentyFiveMinPrice) <div class="text">25分鐘</div>
             </div>
             <div class="fifty-min-course-pricing">
-                NT$1,624 <div class="text">50分鐘</div>
+                NT$@(Model.FiftyminPrice) <div class="text">50分鐘</div>
             </div>
         </div>
         <div class="contact-btns-wrapper d-flex gap-1">
