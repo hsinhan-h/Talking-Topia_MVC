@@ -12,11 +12,13 @@ namespace Web.Controllers
         private readonly ResumeDataService _resumeDataService;
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice)
+        private readonly AppointmentDetailService _appointmentDetailService;
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
+            _appointmentDetailService = appointmentDetailService;
         }
         /// <summary>
         /// 原ToTeacher.cshtml的頁面
@@ -57,8 +59,13 @@ namespace Web.Controllers
 
             return View(qVM);
         }
+ 
+        public async Task<IActionResult> AppointmentDetails(int memberId)
+        {
+            var appointmentDetails = await _appointmentDetailService.GetAppointmentData(memberId);
+            return View(appointmentDetails);
+        }
 
-        
         public async Task<IActionResult> PublishCourse(int MemberId)
         {
             var model = await _bookingService.GetPublishCourseList(MemberId);
@@ -75,10 +82,6 @@ namespace Web.Controllers
             return RedirectToAction("TutorResume");
         }
 
-        public IActionResult AppointmentDetails()
-        {
-            return View();
-        }
 
        
     }
