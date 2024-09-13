@@ -61,7 +61,10 @@ namespace Web.Controllers
         
         public async Task<IActionResult> PublishCourse(int MemberId)
         {
+            MemberId = 3;
             var model = await _bookingService.GetPublishCourseList(MemberId);
+            ViewData["HistoryList"]= await _bookingService.GetPublishCourseHistoryList(MemberId);
+            
             return View(model);
         }
         public IActionResult RecommendedTutorAI()
