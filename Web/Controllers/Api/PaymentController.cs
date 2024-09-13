@@ -1,19 +1,23 @@
-﻿using Infrastructure.ECpay;
+﻿using ApplicationCore.Interfaces;
+using Infrastructure.ECpay;
 using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
 using System.Collections.Generic;
 using System.Security.Policy;
 
-namespace Web.Controllers
+namespace Web.Controllers.Api
 {
     [Route("[controller]")]
     [ApiController]
     public class PaymentController : Controller
     {
         private readonly IConfiguration _configuration;
-        public PaymentController(IConfiguration configuration)
+        private readonly IRepository<ShoppingCart> _shoppingCartRepository;
+
+        public PaymentController(IConfiguration configuration, IRepository<ShoppingCart> shoppingCartRepository)
         {
             _configuration = configuration;
+            _shoppingCartRepository = shoppingCartRepository;
         }
 
         // POST api/payment
@@ -25,7 +29,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("checkout")]
-        public IActionResult CheckOut()
+        public async Task<IActionResult> CheckOut()
         {
             // 資料藏在appsettings.json及UserSecret(目前註解中)
             var service = new
@@ -37,6 +41,9 @@ namespace Web.Controllers
                 ServerUrl = _configuration["ECpay:Service:ServerUrl"],
                 ClientUrl = _configuration["ECpay:Service:ClientUrl"]
             };
+
+
+            //var shoppingCart = await _shoppingCartRepository.ListAsync(member => member.MemberId == memberId);
 
             var transaction = new
             {
@@ -95,6 +102,14 @@ namespace Web.Controllers
             // 處理後續訂單狀態的更動等等...。
 
             return Ok("1|OK");
+        }
+
+        [HttpGet]
+        public IActionResult Success()
+        {
+
+            return Redirect("Order/Index");
+
         }
     }
 }
