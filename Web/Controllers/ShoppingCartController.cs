@@ -9,20 +9,23 @@ namespace Web.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService _shoppingCartService;
+        private readonly IMemberService _memberService;
+        private readonly ICourseService _courseService;
         private readonly ShoppingCartViewModelService _shoppingCartViewModelService;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService, ShoppingCartViewModelService shoppingCartViewModelService)
+        public ShoppingCartController(IShoppingCartService shoppingCartService, IMemberService memberService, ICourseService courseService, ShoppingCartViewModelService shoppingCartViewModelService)
         {
             _shoppingCartService = shoppingCartService;
+            _memberService = memberService;
+            _courseService = courseService;
             _shoppingCartViewModelService = shoppingCartViewModelService;
         }
-
         /// <summary>
         /// ShoppingCart頁面
         /// </summary>
         public async Task<IActionResult> Index([FromQuery] int memberId)
         {
-            if (!_shoppingCartService.IsMember(memberId))
+            if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(HomeController.Account), "Home"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
             var result = new ShoppingCartListViewModel
@@ -37,9 +40,9 @@ namespace Web.Controllers
 
         public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
-            if (!_shoppingCartService.IsMember(memberId))
+            if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(HomeController.Account), "Home"); }
-            if (!_shoppingCartService.IsCourse(courseId))
+            if (!_courseService.IsCourse(courseId))
             { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }
             if (!_shoppingCartService.HasCartItem(memberId, courseId))
             { memberId = await _shoppingCartService.CreateShoppingCartAsync(memberId, courseId, courseLength, quantity); }

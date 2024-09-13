@@ -10,8 +10,6 @@ namespace ApplicationCore.Interfaces
 {
     public interface IShoppingCartService
     {
-        public bool IsMember(int memberId);
-        public bool IsCourse(int courseId);
         public bool HasCartItem(int memberId, int courseId);
         public decimal GetUnitPrice(int courseId, int courseLength);
         public Task<GetAllShoppingCartResult> GetAllShoppingCartAsync(int memberId);

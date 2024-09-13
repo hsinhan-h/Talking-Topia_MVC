@@ -12,23 +12,15 @@ namespace ApplicationCore.Services
 {
     public class ShoppingCartService : IShoppingCartService
     {
-        private readonly IRepository<Member> _memberRepository;
-        private readonly IRepository<Course> _courseRepository;
         private readonly IRepository<ShoppingCart> _shoppingCartRepository;
-        public ShoppingCartService(IRepository<Member> memberRepository, IRepository<Course> courseRepository, IRepository<ShoppingCart> shoppingCartRepository)
+        private readonly IRepository<Course> _courseRepository;
+
+        public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository)
         {
-            _memberRepository = memberRepository;
-            _courseRepository = courseRepository;
             _shoppingCartRepository = shoppingCartRepository;
+            _courseRepository = courseRepository;
         }
-        public bool IsMember(int memberId)
-        {
-            return _memberRepository.Any(m => m.MemberId == memberId);
-        }
-        public bool IsCourse(int courseId)
-        {
-            return _courseRepository.Any(c => c.CourseId == courseId);
-        }
+
         public bool HasCartItem(int memberId, int courseId)
         {
             return _shoppingCartRepository.Any(m => m.MemberId == memberId &&  m.CourseId == courseId);
