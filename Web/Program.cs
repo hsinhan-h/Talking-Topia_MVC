@@ -24,6 +24,7 @@ namespace Web
             builder.Services.AddScoped<OrderService>();
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<ShoppingCartService>();
+            builder.Services.AddScoped<OrderDetailService>();
 
             var app = builder.Build();
 
