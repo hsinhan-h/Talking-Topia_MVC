@@ -119,7 +119,7 @@
                     Quantity = (short)quantity,
                     TotalPrice = unitPrice * quantity,
                     MemberId = memberId,
-                    CourseType = courseLength == 25 ? (short)CourseTypes.TwentyFiveMinUnitPrice : (short)CourseTypes.FiftyMinUnitPrice,
+                    CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice,
                     Cdate = DateTime.Now,
                 };
                 _repository.Create(shoppingCart);
@@ -161,12 +161,6 @@
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        public enum CourseTypes
-        {
-            TwentyFiveMinUnitPrice = 1,
-            FiftyMinUnitPrice = 2,
         }
     }
 }

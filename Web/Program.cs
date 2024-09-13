@@ -1,7 +1,7 @@
 using Web.Data;
 using Web.Repository;
-using Infrastructure.ECpay;
 using Web.Configurations;
+using Infrastructure;
 
 namespace Web
 {
