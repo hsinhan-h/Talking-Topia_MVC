@@ -41,19 +41,19 @@ namespace Web.Controllers
             var transaction = new
             {
                 // todo: 調整參數及串接專案資料庫
-                No = "test00003",
+                No = "Ec" + DateTime.Now.ToString("yyyyMMddhhmmss"),
                 Description = "測試購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
                 Items = new List<Item>{
                     new Item{
-                        Name = "手機",
-                        Price = 14000,
+                        CourseName = "手機",
+                        UnitPrice = 14000,
                         Quantity = 2
                     },
                     new Item{
-                        Name = "隨身碟",
-                        Price = 900,
+                        CourseName = "隨身碟",
+                        UnitPrice = 900,
                         Quantity = 10
                     }
                 }

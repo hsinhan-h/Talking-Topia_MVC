@@ -116,14 +116,14 @@ namespace Infrastructure.Configurations.ECpay
 
             foreach (var item in items)
             {
-                amount += item.Price * item.Quantity;
+                amount += item.UnitPrice * item.Quantity;
             }
 
             return amount;
         }
         private string GenerateItemName(IEnumerable<IItem> items)
         {
-            var itemNames = items.Select(i => $"{i.Name} {i.Price} 新臺幣 x {i.Quantity}");
+            var itemNames = items.Select(i => $"{i.CourseName} {i.UnitPrice} 新臺幣 x {i.Quantity}");
             return string.Join("#", itemNames);
         }
         #endregion

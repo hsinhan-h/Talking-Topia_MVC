@@ -8,15 +8,20 @@ namespace Infrastructure.Interfaces.ECpay
         /// <summary>
         /// 商品名稱。
         /// </summary>
-        string Name { get; set; }
+        string CourseName { get; set; }
         /// <summary>
         /// 商品單價。
         /// </summary>
-        int Price { get; set; }
+        int UnitPrice { get; set; }
         /// <summary>
         /// 購買數量。
         /// </summary>
         /// <value></value>
         int Quantity { get; set; }
+        /// <summary>
+        /// 課程類別：25或50
+        /// </summary>
+        short CourseType { get; set; }
+
     }
 }

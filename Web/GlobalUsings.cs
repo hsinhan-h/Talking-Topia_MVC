@@ -10,3 +10,4 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.CodeAnalysis;
 global using System.ComponentModel.DataAnnotations;
+global using ApplicationCore.Enums;

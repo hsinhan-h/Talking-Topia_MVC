@@ -13,5 +13,8 @@ namespace Web.Repository
         void Update<T>(T value) where T : class;
         T FirstOrDefault<T>(Func<T, bool> predicate) where T : class;
         Task SaveChangesAsync();
+        Task BeginTransActionAsync();
+        Task CommitAsync();
+        Task RollbackAsync();
     }
 }
