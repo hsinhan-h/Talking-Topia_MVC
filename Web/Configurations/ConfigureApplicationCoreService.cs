@@ -10,9 +10,10 @@ namespace Web.Configurations
         public static IServiceCollection AddApplicationCoreService(this IServiceCollection services)
         {
             services.AddScoped<IPayment, Payment>();
-            services.AddScoped<IOrderService, ApplicationCore.Services.OrderService>();
-            services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IMemberService, MemberService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICourseService, ApplicationCore.Services.CourseService>();
             services.AddScoped<ICourseService, ApplicationCore.Services.CourseService>();
 
             return services;

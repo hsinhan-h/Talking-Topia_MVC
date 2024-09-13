@@ -13,10 +13,9 @@ namespace Infrastructure.Data
     {
         protected readonly TalkingTopiaContext _dbContext;
         private IDbContextTransaction _transaction;
-        public EfTransaction(TalkingTopiaContext dbContext, IDbContextTransaction transaction)
+        public EfTransaction(TalkingTopiaContext dbContext)
         {
             _dbContext = dbContext;
-            _transaction = transaction;
         }
         public void BeginTransAction()
         {
