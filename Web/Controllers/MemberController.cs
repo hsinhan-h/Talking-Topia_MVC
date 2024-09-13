@@ -1,16 +1,18 @@
-﻿using Web.Services;
+﻿using Web.Entities;
+using Web.Services;
 
 namespace Web.Controllers
 {
     public class MemberController : Controller
     {
-        private readonly OrderService _orderService;
+       
         private readonly MemberDataService _memberDataService;
-        
-        public MemberController(OrderService orderService, MemberDataService memberDataService)
+        private readonly OrderDetailService _orderDetailService;
+
+        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice)
         {
-            _orderService = orderService;
             _memberDataService = memberDataService;
+            _orderDetailService = orderdetailservice;
         }
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
@@ -28,11 +30,17 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> MemberTransaction()
         {
-            var orderManagementListViewModel = await _orderService.GetOrderList();
-            return View(orderManagementListViewModel);
+
+            //for (var x = 0; x < 4; x++)
+            //{
+            //    var OrderDatail = await _orderService.GetOrderData(x);
+            //}
+            var Orderdetail = await _orderDetailService.GetOrderData(1);
+            return View(Orderdetail);
         }
-        public IActionResult WatchList()
+        public async Task <IActionResult> WatchList()
         {
+            ///var WatchListViewModel = await _watchListService.GetWatchList();
             return View();
         }
         public IActionResult ChatWindow()
