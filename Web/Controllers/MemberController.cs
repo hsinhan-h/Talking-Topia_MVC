@@ -5,7 +5,6 @@ namespace Web.Controllers
 {
     public class MemberController : Controller
     {
-       
         private readonly MemberDataService _memberDataService;
         private readonly OrderDetailService _orderDetailService;
 
@@ -23,10 +22,14 @@ namespace Web.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> MemberData()
+        public async Task<IActionResult> MemberData(int memberId)
         {
-            var summaryData = await _memberDataService.GetMemberData("tommy85");
-            return View(summaryData);
+            //var summaryData = await _memberDataService.GetMemberData(memberId);  // 使用 MemberId 查找
+            //return View(summaryData);
+            int testMemberId = 15;  // 測試使用 MemberId
+            var memberProfile = await _memberDataService.GetMemberData(testMemberId);
+
+            return View(memberProfile);
         }
         public async Task<IActionResult> MemberTransaction()
         {

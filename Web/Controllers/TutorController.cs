@@ -11,10 +11,12 @@ namespace Web.Controllers
     {
         private readonly ResumeDataService _resumeDataService;
         private readonly BookingService _bookingService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService)
+        private readonly TutorDataservice _tutorDataService;
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
+            _tutorDataService = tutorDataservice;
         }
         /// <summary>
         /// 原ToTeacher.cshtml的頁面
@@ -24,10 +26,14 @@ namespace Web.Controllers
         {
             return View();
         }
-        public IActionResult TutorData()
+        public async Task<IActionResult> TutorData()
         {
-
-            return View();
+            var tutorData = await _tutorDataService.GetAllInformationAsync();
+            if (tutorData == null)
+            {
+                return RedirectToAction("Index", "Tutor");
+            }
+            return View(tutorData);
         }
         [HttpGet]
         public IActionResult TutorResume()
@@ -41,9 +47,9 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _resumeDataService.AddQuestionaryAsync(qVM);
+                var result = await _resumeDataService.AddResumeAsync(qVM);
 
-                ViewData["Header"] = result.Success ? "問卷調查新增" : "錯誤訊息";
+                ViewData["Header"] = result.Success ? "履歷已新增" : "錯誤訊息";
                 ViewData["Message"] = result.Message;
 
                 return View("ShowMessage");
@@ -73,5 +79,7 @@ namespace Web.Controllers
         {
             return View();
         }
+
+       
     }
 }

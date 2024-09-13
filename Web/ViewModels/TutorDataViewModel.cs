@@ -1,11 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using Web.Entities;
+using static Web.Services.TutorDataservice;
 
 namespace Web.ViewModels
 {
+    //public class TutorDataListViewModel
+    //{
+    //    public List<TutorDataViewModel> TutorDataList { get; set; }
+    //}
     public class TutorDataViewModel
     {
+        /// <summary>
+        /// 國籍
+        /// </summary>
+        public int NationID { get; set; }
         /// <summary>
         /// 母語
         /// </summary>
@@ -33,16 +42,17 @@ namespace Web.ViewModels
         /// <summary>
         /// 可預約的時段
         /// </summary>
-        public List<AvailReservation> AvailableReservation  { get; set; }
+        public List<AvailReservation> AvailableReservation { get; set; }
         /// <summary>
         /// 科目類別
         /// </summary>
-        public List<string> CategoryName { get; set; }
+        public List<CategoryData> Course { get; set; }
+
         /// <summary>
         /// 證照
         /// </summary>
         public List<LicenseData> License { get; set; }
-        
+        public CourseStatus Coursestatus { get; set; }
     }
 
 
@@ -59,14 +69,21 @@ namespace Web.ViewModels
         public DateTime WorkEndDate { get; set; }
         public string WorkName { get; set; }
     }
+    public class CategoryData
+    {
+        public string CategoryName { get; set; }
+        public string SubjectName { get; set; }
+    }
 
     public class AvailReservation
     {
-    
+        public int Weekday { get; set; }
+        public string Coursehours { get; set; }
     }
 
     public class LicenseData 
     {
-    
+        public  string ProfessionalLicenseName { get; set; }
+        public string  ProfessionalLicenseUrl { get; set; }
     }
 }

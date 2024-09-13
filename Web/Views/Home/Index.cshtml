@@ -25,7 +25,7 @@
             @foreach (var item in Model.CourseInfoList)
             {
                 <div class="col-12 col-md-2 lh-layout-course-card">
-                    <img src="@item.HeadShotImage">
+                    <img src="@item.TutorHeadShotImage">
                     <div class="lh-layout-course-info">
                         <p>@item.SubjectName</p>
                         <span>NT$ @item.TwentyFiveMinUnitPrice/堂</span>
@@ -126,7 +126,7 @@
                 </div>
             </div>
             <div class="lh-layout-four-reason-button text-center">
-                <a href="/Tutors/course_list.html" class="btn btn-four-reason">開始挑選教師吧！</a>
+                <a asp-controller="Course" asp-action="CourseList" class="btn btn-four-reason">開始挑選教師吧！</a>
             </div>
 
             <!-- Suitable -->

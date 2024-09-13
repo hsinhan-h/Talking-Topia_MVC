@@ -42,7 +42,7 @@ namespace Web.ViewModels
         /// <summary>
         /// 生日
         /// </summary>
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         /// <summary>
         /// 信箱
@@ -57,19 +57,21 @@ namespace Web.ViewModels
         /// <summary>
         /// 複數欄位 
         /// </summary>
-        public List<CouseListViewModel> CousePrefer { get; set; }
+        public List<CourseListViewModel> CoursePrefer { get; set; }
+
     }
-    public class CouseListViewModel
+    public class CourseListViewModel
     {
         /// <summary>
         /// 課程類別
         /// </summary>
-        public string CategorytName { get; set; }
+        public string CategoryName { get; set; }
 
         /// <summary>
         /// 課程科目
         /// </summary>
         public string SubjectName { get; set; }
+        public int MemberId { get; internal set; }
     }
 
 }

@@ -63,6 +63,4 @@ public partial class ShoppingCart
     public virtual Course Course { get; set; }
 
     public virtual Member Member { get; set; }
-
-    public virtual ICollection<ShoppingCartBooking> ShoppingCartBookings { get; set; } = new List<ShoppingCartBooking>();
 }
