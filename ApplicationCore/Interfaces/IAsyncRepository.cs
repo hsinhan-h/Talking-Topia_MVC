@@ -21,5 +21,8 @@ namespace ApplicationCore.Interfaces
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
         Task<List<TEntity>> ListAsync(Expression<Func<TEntity, bool>> predicate);
         Task<List<TEntity>> ListAsync();
+        Task BeginTransActionAsync();
+        Task CommitAsync();
+        Task RollbackAsync();
     }
 }
