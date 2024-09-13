@@ -11,7 +11,7 @@ namespace Web.Configurations
         {
 
             services.AddScoped<ShoppingCartViewModelService>();
-
+            services.AddScoped<AppointmentDetailService>();
             return services;
         }
     }
