@@ -81,7 +81,7 @@ namespace ApplicationCore.Services
                     var shoppingCart = await _shoppingCartRepository.AddAsync(shoppingCartEntity);
                     if (shoppingCart is null)
                     {
-                        throw new Exception("Order could not be created");
+                        throw new Exception("Shopping Cart could not be created");
                     }
 
                     return shoppingCart.MemberId;
