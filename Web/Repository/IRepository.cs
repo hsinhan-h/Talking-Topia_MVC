@@ -1,4 +1,5 @@
 ﻿
+
 namespace Web.Repository
 {
     public interface IRepository
@@ -11,7 +12,9 @@ namespace Web.Repository
         void SaveChanges();
         void Update<T>(T value) where T : class;
         T FirstOrDefault<T>(Func<T, bool> predicate) where T : class;
-
-
+        Task SaveChangesAsync();
+        Task BeginTransActionAsync();
+        Task CommitAsync();
+        Task RollbackAsync();
     }
 }

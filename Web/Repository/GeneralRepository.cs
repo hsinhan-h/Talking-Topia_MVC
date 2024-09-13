@@ -1,4 +1,4 @@
-﻿using Web.Entities;
+﻿using Web.Data;
 
 namespace Web.Repository
 {
@@ -49,6 +49,25 @@ namespace Web.Repository
         {
             return _context.Set<T>().FirstOrDefault(predicate);
 
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task BeginTransActionAsync()
+        {
+            await _context.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitAsync()
+        {
+            await _context.Database.CommitTransactionAsync();
+        }
+        public async Task RollbackAsync()
+        {
+            await _context.Database.RollbackTransactionAsync();
         }
     }
 }

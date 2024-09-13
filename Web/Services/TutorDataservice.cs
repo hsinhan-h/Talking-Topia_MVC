@@ -1,4 +1,6 @@
-﻿using Web.Entities;
+﻿using Microsoft.EntityFrameworkCore.Internal;
+using Web.Entities;
+using Web.Services;
 using static Web.Services.TutorDataservice;
 
 namespace Web.Services
@@ -10,56 +12,65 @@ namespace Web.Services
         {
             _repository = repository;
         }
-        public async Task<TutorDataViewModel> GetTutorDataAsync(int memberId, string subjectName)
+
+        //Read 
+        public async Task<TutorDataViewModel> GetTutorDataAsync(int? memberId, string categorytName)
         {
+
             var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
                                          where member.MemberId == memberId
                                          select member.IsVerifiedTutor).FirstOrDefaultAsync();
-            if (isVerifiedTutor) { 
+            if (isVerifiedTutor)
+            {
                 var tutorData = await (from member in _repository.GetAll<Member>()
-                                   where member.MemberId == memberId
-                                   select new TutorDataViewModel
-                                   {
-                                       NativeLanguage = member.NativeLanguage,
-                                       SpokenLanguage = member.SpokenLanguage,
-                                       BankAccount = member.BankAccount,
-                                       BankCode = member.BankCode,
-                                       EducationalBackground = _repository.GetAll<Education>()
-                                           .Where(edu => edu.EducationId == member.EducationId)
-                                           .Select(edu => new Educational
-                                           {
-                                               SchoolName = edu.SchoolName,
-                                               StudyStartYear = edu.StudyStartYear,
-                                               StudyEndYear = edu.StudyEndYear
-                                           }).ToList(),
-                                       WorkBackground = _repository.GetAll<WorkExperience>()
-                                           .Where(wexp => wexp.MemberId == memberId)
-                                           .Select(wexp => new WorkExp
-                                           {
-                                               WorkStartDate = wexp.WorkStartDate,
-                                               WorkEndDate = wexp.WorkEndDate,
-                                               WorkName = wexp.WorkName
-                                           }).ToList(),
-                                       License = (from subject in _repository.GetAll<CourseSubject>()
-                                                  join prefersubject in _repository.GetAll<MemberPreference>()
-                                                  on subject.SubjectId equals prefersubject.SubjecId
-                                                  join memb in _repository.GetAll<Member>()
-                                                  on prefersubject.MemberId equals memb.MemberId
-                                                  join license in _repository.GetAll<ProfessionalLicense>()
-                                                  on memb.MemberId equals license.MemberId
-                                                  where prefersubject.MemberId == memberId
-                                                    && subject.SubjectName == subjectName
-                                                  select new LicenseData
-                                                  {
-                                                      ProfessionalLicenseName = license.ProfessionalLicenseName,
-                                                      ProfessionalLicenseUrl = license.ProfessionalLicenseUrl
-                                                  }).ToList()
-                                   }).FirstOrDefaultAsync();
+                                       join nation in _repository.GetAll<Nation>()
+                                       on member.NationId equals nation.NationId
+                                       where member.MemberId == memberId
+                                       select new TutorDataViewModel
+                                       {
+                                           NationID = nation.NationId,
+                                           NativeLanguage = member.NativeLanguage,
+                                           SpokenLanguage = member.SpokenLanguage,
+                                           BankAccount = member.BankAccount,
+                                           BankCode = member.BankCode,
+                                           EducationalBackground = _repository.GetAll<Education>()
+                                               .Where(edu => edu.EducationId == member.EducationId)
+                                               .Select(edu => new Educational
+                                               {
+                                                   SchoolName = edu.SchoolName,
+                                                   StudyStartYear = edu.StudyStartYear,
+                                                   StudyEndYear = edu.StudyEndYear
+                                               }).ToList(),
+                                           WorkBackground = _repository.GetAll<WorkExperience>()
+                                               .Where(wexp => wexp.MemberId == memberId)
+                                               .Select(wexp => new WorkExp
+                                               {
+                                                   WorkStartDate = wexp.WorkStartDate,
+                                                   WorkEndDate = wexp.WorkEndDate,
+                                                   WorkName = wexp.WorkName
+                                               }).ToList(),
+                                           License = (from category in _repository.GetAll<CourseCategory>()
+                                                      join subject in _repository.GetAll<CourseSubject>()
+                                                      on category.CourseCategoryId equals subject.CourseCategoryId
+                                                      join prefersubject in _repository.GetAll<MemberPreference>()
+                                                      on subject.SubjectId equals prefersubject.SubjecId
+                                                      join memb in _repository.GetAll<Member>()
+                                                      on prefersubject.MemberId equals memb.MemberId
+                                                      join license in _repository.GetAll<ProfessionalLicense>()
+                                                      on memb.MemberId equals license.MemberId
+                                                      where prefersubject.MemberId == memberId
+                                                        && category.CategorytName == categorytName//要修改關聯
+                                                      select new LicenseData
+                                                      {
+                                                          ProfessionalLicenseName = license.ProfessionalLicenseName,
+                                                          ProfessionalLicenseUrl = license.ProfessionalLicenseUrl
+                                                      }).ToList()
+                                       }).FirstOrDefaultAsync();
                 return tutorData;
             }
             return null;
         }
-        public async Task<TutorDataViewModel> GetTutorCourseDataAsync(int memberId)
+        public async Task<TutorDataViewModel> GetTutorCourseDataAsync(int? memberId)
         {
             var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
                                          where member.MemberId == memberId
@@ -89,28 +100,97 @@ namespace Web.Services
 
             return tutorCourseData;
         }
-        public async Task<TutorDataViewModel> GetCoursestatusAsync(int memberId)
+        public async Task<TutorDataViewModel> GetCoursestatusAsync(int? memberId)
         {
             var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
                                          where member.MemberId == memberId
                                          select member.IsVerifiedTutor).FirstOrDefaultAsync();
             var tutorCourseData = new TutorDataViewModel();
-            tutorCourseData.Coursestatus = await (from member in _repository.GetAll<Member>()
-                                                  join memberPreference in _repository.GetAll<MemberPreference>()
-                                                      on member.MemberId equals memberPreference.MemberId
-                                                  join courseSubject in _repository.GetAll<CourseSubject>()
-                                                      on memberPreference.SubjecId equals courseSubject.SubjectId
-                                                  join courseCategory in _repository.GetAll<CourseCategory>()
-                                                      on courseSubject.CourseCategoryId equals courseCategory.CourseCategoryId
-                                                  join course in _repository.GetAll<Course>()
-                                                      on courseCategory.CourseCategoryId equals course.CategoryId
-                                                  select course.CoursesStatus == 1 ? CourseStatus.已審核 : CourseStatus.未審核).FirstOrDefaultAsync();
+            if (!isVerifiedTutor)
+            {
+                return tutorCourseData;
+            }
+            if (isVerifiedTutor)
+            {
+                tutorCourseData.Coursestatus = await (from member in _repository.GetAll<Member>()
+                                                      join applylist in _repository.GetAll<ApplyList>()
+                                                          on member.MemberId equals applylist.MemberId
+                                                      select applylist.ApplyStatus ? CourseStatus.已審核 : CourseStatus.未審核).FirstOrDefaultAsync();
+            }
             return tutorCourseData;
         }
+        
+        public async Task<TutorDataViewModel> GetAllInformationAsync(int? memberId)
+        {
+            
+            string categorytName = "程式設計";
+
+            var tutorData = await GetTutorDataAsync(memberId, categorytName);
+            if (tutorData == null)
+            {
+                return new TutorDataViewModel();
+            }
+
+            var tutorCourseData = await GetTutorCourseDataAsync(memberId);
+            if (tutorCourseData == null)
+            {
+                return new TutorDataViewModel();
+            }
+
+            var tutorCourseStatus = await GetCoursestatusAsync(memberId);
+            if (tutorCourseStatus == null)
+            {
+                return new TutorDataViewModel();
+            }
+
+            tutorData.Course = tutorCourseData.Course;
+            tutorData.Coursestatus = tutorCourseStatus.Coursestatus;
+            return tutorData;
+        }
+
         public enum CourseStatus
         {
             未審核 = 0,
-            已審核 = 1
+            已審核 = 1,
+
         }
-    }
+        //取得可預約時段的方法
+        public async Task<TutorDataViewModel> GetTutorReserveTimeAsync(int? memberId)
+        {
+            var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
+                                         where member.MemberId == memberId
+                                         select member.IsVerifiedTutor).FirstOrDefaultAsync();
+            var tutortime = new TutorDataViewModel
+            {
+                AvailableReservation = new List<AvailReservation>()
+            };
+            if (!isVerifiedTutor)
+            {
+                return tutortime;
+            }
+
+            // 如果是認證講師，查詢可用的預約時間
+            tutortime.AvailableReservation = await (from member in _repository.GetAll<Member>()
+                                                    join tutorTimeSloot in _repository.GetAll<TutorTimeSlot>()
+                                                    on member.MemberId equals tutorTimeSloot.TutorId
+                                                    join coursehour in _repository.GetAll<CourseHour>()
+                                                    on tutorTimeSloot.CourseHourId equals coursehour.CourseHourId
+                                                    where member.MemberId == memberId
+                                                    select new AvailReservation
+                                                    {
+                                                        Weekday = tutorTimeSloot.Weekday,
+                                                        Coursehours = coursehour.Hour,
+                                                    }).ToListAsync();
+
+            return tutortime;
+        }
+
+
+        //Creat
+        public async Task<TutorDataViewModel> CreatTutorData()
+        {
+            return (new TutorDataViewModel());
+
+        }
+    }   
 }

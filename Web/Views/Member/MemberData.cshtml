@@ -87,7 +87,7 @@
                                        class="form-control"
                                        id="floatingInput2"
                                        placeholder="yyyy-MM-dd"
-                                       value="@Model.Birthday.ToString("yyyy-MM-dd")" />
+                                       value="@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("yyyy-MM-dd") : "")" />
                                 <label for="floatingInput2">生日</label>
                             </div>
                         </div>
@@ -122,20 +122,16 @@
                     <div class="row my-3 p-3">
                         <h4>語言</h4>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   value="中文"
-                                   id="flexCheckChecked" />
+                            <input class="form-check-input" type="checkbox" value="中文" id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "中文") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 中文
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   value="英文"
-                                   id="flexCheckDefault" />
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="英文" id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "英文") ? "checked" : "") />
+                            <label class="form-check-label" for="flexCheckChecked">
                                 英文
                             </label>
                         </div>
@@ -143,7 +139,9 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "日文") ? "checked" : "") />
+                            
                             <label class="form-check-label" for="flexCheckChecked">
                                 日文
                             </label>
@@ -152,7 +150,9 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "法文") ? "checked" : "") />
+                            
                             <label class="form-check-label" for="flexCheckChecked">
                                 法文
                             </label>
@@ -161,7 +161,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "德文") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 德文
                             </label>
@@ -170,7 +171,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "西班牙文") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 西班牙文
                             </label>
@@ -182,8 +184,9 @@
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value="程式設計"
-                                   id="flexCheckChecked" />
+                                   value=""
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "程式設計") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 HTML/CSS
                             </label>
@@ -192,7 +195,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Java Script") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 Java Script
                             </label>
@@ -201,7 +205,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckDefault" />
+                                   id="flexCheckDefault"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "C#") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckDefault">
                                 C#
                             </label>
@@ -210,7 +215,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "SQL") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 SQL
                             </label>
@@ -219,7 +225,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Python") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 Python
                             </label>
@@ -228,7 +235,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Java") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 Java
                             </label>
@@ -241,7 +249,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckDefault" />
+                                   id="flexCheckDefault"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "數學") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckDefault">
                                 數學
                             </label>
@@ -250,7 +259,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "物理") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 物理
                             </label>
@@ -259,7 +269,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "化學") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 化學
                             </label>
@@ -268,7 +279,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "生物") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 生物
                             </label>
@@ -277,7 +289,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "地理") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 地理
                             </label>
@@ -286,7 +299,8 @@
                             <input class="form-check-input"
                                    type="checkbox"
                                    value=""
-                                   id="flexCheckChecked" />
+                                   id="flexCheckChecked"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "歷史") ? "checked" : "") />
                             <label class="form-check-label" for="flexCheckChecked">
                                 歷史
                             </label>

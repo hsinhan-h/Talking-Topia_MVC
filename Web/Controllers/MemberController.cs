@@ -1,14 +1,17 @@
-﻿using Web.Services;
+﻿using Web.Entities;
+using Web.Services;
 
 namespace Web.Controllers
 {
     public class MemberController : Controller
     {
         private readonly MemberDataService _memberDataService;
+        private readonly OrderDetailService _orderDetailService;
 
-        public MemberController(MemberDataService memberDataService)
+        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice)
         {
             _memberDataService = memberDataService;
+            _orderDetailService = orderdetailservice;
         }
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
@@ -19,18 +22,28 @@ namespace Web.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> MemberData()
+        public async Task<IActionResult> MemberData(int memberId)
         {
-            var summaryData = await _memberDataService.GetMemberData("tommy85");
-            return View(summaryData);
+            //var summaryData = await _memberDataService.GetMemberData(memberId);  // 使用 MemberId 查找
+            //return View(summaryData);
+            int testMemberId = 15;  // 測試使用 MemberId
+            var memberProfile = await _memberDataService.GetMemberData(testMemberId);
+
+            return View(memberProfile);
         }
         public async Task<IActionResult> MemberTransaction()
         {
-            //var orderManagementListViewModel = await _orderService.GetOrderList();
-            return View();
+
+            //for (var x = 0; x < 4; x++)
+            //{
+            //    var OrderDatail = await _orderService.GetOrderData(x);
+            //}
+            var Orderdetail = await _orderDetailService.GetOrderData(1);
+            return View(Orderdetail);
         }
-        public IActionResult WatchList()
+        public async Task <IActionResult> WatchList()
         {
+            ///var WatchListViewModel = await _watchListService.GetWatchList();
             return View();
         }
         public IActionResult ChatWindow()

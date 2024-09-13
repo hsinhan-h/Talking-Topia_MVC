@@ -3,11 +3,6 @@
 
 namespace Web.ViewModels
 {
-    public class TutorResumeListViewModel
-    {
-        public List<TutorResumeViewModel> TutorResumeList { get; set; }
-    }
-
 
     public class TutorResumeViewModel
     {
@@ -45,15 +40,10 @@ namespace Web.ViewModels
         ///// </summary>
         ////[Required]
         public List<string> ProfessionalLicenseUrl { get; set; }
-        ///// <summary>
-        ///// 語言分類
-        ///// </summary>
-        ////[Required]
-        public List<SelectListItem> Category { get; set; }
-        ///// <summary>
-        ///// 工作起始日期
-        ///// </summary>
-        ////[Required]
+        /// <summary>
+        /// 工作起始日期
+        /// </summary>
+        //[Required]
         public DateTime WorkStartDate { get; set; }
         ///// <summary>
         ///// 工作結束日期
@@ -70,5 +60,7 @@ namespace Web.ViewModels
         ///// </summary>
         ////[Required(ErrorMessage = "請上傳檔案")]
         public string WorkExperienceFile { get; set; }
+        public string SelectedCategory { get; set; }
+        public string SelectedSubcategory { get; set; }
     }
 }

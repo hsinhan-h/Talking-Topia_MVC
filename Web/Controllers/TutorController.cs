@@ -9,49 +9,35 @@ namespace Web.Controllers
 {
     public class TutorController : Controller
     {
+       
         private readonly ResumeDataService _resumeDataService;
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice)
+        private readonly AppointmentDetailService _appointmentDetailService;
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
+            _appointmentDetailService = appointmentDetailService;
         }
-        /// <summary>
-        /// 原ToTeacher.cshtml的頁面
-        /// </summary>
-        /// <returns></returns>
+       
         public IActionResult Index()
         {
             return View();
         }
-        public async Task<IActionResult> TutorData()
+
+
+        //Tutor Data Read and update
+        public async Task<IActionResult> TutorData(int? memberId = 35)
         {
-            int memberId = 19;
-            string subjectName = "程式設計";
-            var tutorData = await _tutorDataService.GetTutorDataAsync(memberId, subjectName);
-            if (tutorData == null)
-            {
-                return RedirectToAction("Index", "Tutor");
-            }
 
-            var tutorCourseData = await _tutorDataService.GetTutorCourseDataAsync(memberId);
-            if (tutorCourseData == null)
-            {
-                return RedirectToAction("Index", "Tutor");
-            }
-            var tutorCourseStatus = await _tutorDataService.GetCoursestatusAsync(memberId);
-            if (tutorCourseStatus == null)
-            {
-                return RedirectToAction("Index", "Tutor");
-            }
-            tutorData.Course = tutorCourseData.Course;
-            tutorData.Coursestatus = tutorCourseStatus.Coursestatus;
-
-
+            // Edit: 根據ID取得現有會員資料
+            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
             return View(tutorData);
+
         }
+
         [HttpGet]
         public IActionResult TutorResume()
         {
@@ -64,7 +50,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _resumeDataService.AddQuestionaryAsync(qVM);
+                var result = await _resumeDataService.AddResumeAsync(qVM);
 
                 ViewData["Header"] = result.Success ? "履歷已新增" : "錯誤訊息";
                 ViewData["Message"] = result.Message;
@@ -74,8 +60,13 @@ namespace Web.Controllers
 
             return View(qVM);
         }
+ 
+        public async Task<IActionResult> AppointmentDetails(int memberId)
+        {
+            var appointmentDetails = await _appointmentDetailService.GetAppointmentData(memberId);
+            return View(appointmentDetails);
+        }
 
-        
         public async Task<IActionResult> PublishCourse(int MemberId)
         {
             var model = await _bookingService.GetPublishCourseList(MemberId);
@@ -92,9 +83,7 @@ namespace Web.Controllers
             return RedirectToAction("TutorResume");
         }
 
-        public IActionResult AppointmentDetails()
-        {
-            return View();
-        }
+
+       
     }
 }

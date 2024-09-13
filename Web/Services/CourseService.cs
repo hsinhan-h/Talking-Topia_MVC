@@ -150,7 +150,7 @@ namespace Web.Services
 
         public async Task<int> GetTotalCourseQtyAsync()
         {
-            return _repository.GetAll<Course>().Count();
+            return await _repository.GetAll<Course>().CountAsync();
         }
 
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
@@ -192,6 +192,14 @@ namespace Web.Services
                 .FirstOrDefaultAsync();
 
             return courseInfo;
+        }
+
+        public decimal GetCourse25MinUnitPrice(int courseId)
+        {
+            return _repository.GetAll<Course>().AsNoTracking()
+                .Where(c => c.CourseId == courseId)
+                .Select(c => c.TwentyFiveMinUnitPrice)
+                .FirstOrDefault();
         }
 
         public async Task<CourseMainPageViewModel> GetCourseMainPage(int courseId)

@@ -1,42 +1,44 @@
 ﻿@model TutorDataViewModel
- 
+
+
 <div class="container lh-backstage mt-5" id="app">
-        <div class="row">
-            <div class="col-12 lh-backstage-main-section">
-                <div class="lh-backstage-member-section mb-5">
-                        <div class="container" id="lh-backstage-tutor-page">
-                            <div class="lh-backstage-tutor-page mb-5">
-                                <section class="lh-backstage-lh-backstage-tutor-data">
-                                    <div class="row mb-2">
-                                        <div class="col-12">
-                                            <h3>家教資料</h3>
+    <div class="row">
+        <div class="col-12 lh-backstage-main-section">
+            <div class="lh-backstage-member-section mb-5">
+                <div class="container" id="lh-backstage-tutor-page">
+                    <div class="lh-backstage-tutor-page mb-5">
+                        <section class="lh-backstage-lh-backstage-tutor-data">
+                            <div class="row mb-2">
+                                <div class="col-12">
+                                    <h3>家教資料</h3>
                                     <div class="row">
                                         <div class="col-12 col-md-4">
                                             <div>
-                                                <select class="form-select select-form" aria-label="Default select example" name="SelectedNation">
-                                                  <option selected>選擇國籍</option>
-                                                  <option value="1">台灣</option>
-                                                  <option value="2">日本</option>
-                                                  <option value="3">英國</option>
-                                                  <option value="4">美國</option>
-                                                  <option value="5">德國</option>
-                                                  <option value="6">法國</option>
-                                                  <option value="7">西班牙</option>
-                                                  <option value="8">印度</option>
-                                                  <option value="9">其他</option>
+                                                <select asp-for="NationID" asp-items="@(new SelectList(new List<SelectListItem>
+                                                {
+                                                    new SelectListItem { Value = "1", Text = "台灣" },
+                                                    new SelectListItem { Value = "2", Text = "日本" },
+                                                    new SelectListItem { Value = "3", Text = "英國" },
+                                                    new SelectListItem { Value = "4", Text = "美國" },
+                                                    new SelectListItem { Value = "5", Text = "德國" },
+                                                    new SelectListItem { Value = "6", Text = "法國" },
+                                                    new SelectListItem { Value = "7", Text = "西班牙" },
+                                                    new SelectListItem { Value = "8", Text = "印度" },
+                                                    new SelectListItem { Value = "9", Text = "其他" }
+                                                }, "Value", "Text"))" class="form-select select-form" aria-label="Default select example">
                                                 </select>
                                             </div>
                                         </div>
-                                            <div class="col-12 col-md-4">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text"
-                                                    class="form-control"
-                                                    id="floatingInput5"
-                                                    placeholder=""
-                                                           value="@Model.NativeLanguage" />
-                                                    <label for="floatingInput5">母語</label>
-                                                </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-floating mb-3">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="floatingInput5"
+                                                       placeholder=""
+                                                       value="@Model.NativeLanguage" />
+                                                <label for="floatingInput5">母語</label>
                                             </div>
+                                        </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-floating mb-3">
                                                 <input type="text"
@@ -48,253 +50,255 @@
                                             </div>
                                         </div>
                                     </div>
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text"
-                                                    class="form-control"
-                                                    id="floatingInput13"
-                                                    value="@Model.BankCode"
-                                                    placeholder="" />
-                                                    <label for="floatingInput13">銀行代號</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text"
-                                                    class="form-control"
-                                                    id="floatingInput14"
-                                                    value=" @Model.BankAccount"
-                                                    placeholder="" />
-                                                    <label for="floatingInput14">銀行帳戶</label>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="floatingInput13"
+                                                       value="@Model.BankCode"
+                                                       placeholder="" />
+                                                <label for="floatingInput13">銀行代號</label>
                                             </div>
                                         </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="floatingInput14"
+                                                       value=" @Model.BankAccount"
+                                                       placeholder="" />
+                                                <label for="floatingInput14">銀行帳戶</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                               
-                                        <div class="lh-baclstage-member-data-list mt-3">
-                                            <h4>學歷</h4>
-                                            <ul>
-                                            @foreach (var edu in Model.EducationalBackground)
-                                            {
-                                                <li>@edu.SchoolName - @edu.StudyStartYear 至 @edu.StudyEndYear</li>
-                                            }
-                                            </ul>
-                                            <h4>經歷</h4>
-                                            <ul>
-                                            @foreach (var work in Model.WorkBackground)
-                                            {
-                                                <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
-                                            }
-                                            </ul>
-                                            <h4>可接受預約時段</h4>
-                                            <ul v-if="slots.length > 0">
-                                                <li v-for="slot in slots" :key="slot.id">
-                                                    <p>
-                                                        <span>星期二</span><span>13</span>點至<span>15</span>點
-                                                    </p>
-                                                </li>
-                                            </ul>
-                                            <button type="button"
-                                                    class="btn lh-backstage-submit-btn"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editTimeSlotModal">
-                                                編輯教師可預約時段
-                                            </button>
-                                        </div>
-                                        <div class="lh-backstage-member-card-list d-flex">
-                                            <div class="card col-12 col-md-3 me-2 p-2">
+
+                                <div class="lh-baclstage-member-data-list mt-3">
+                                    <h4>學歷</h4>
+                                    <ul>
+                                        @foreach (var edu in Model.EducationalBackground)
+                                        {
+                                            <li>@edu.SchoolName - @edu.StudyStartYear 至 @edu.StudyEndYear</li>
+                                        }
+                                    </ul>
+                                    <h4>經歷</h4>
+                                    <ul>
+                                        @foreach (var work in Model.WorkBackground)
+                                        {
+                                            <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
+                                        }
+                                    </ul>
+                                    <h4>可接受預約時段</h4>
+                                    <div class=" d-flex flex-wrap col-10" id="reservation-list">
+                                        
+                                    </div>
+                                    <button type="button"
+                                            class="btn lh-backstage-submit-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editTimeSlotModal">
+                                        編輯教師可預約時段
+                                    </button>
+                                </div>
+                                <div class="lh-backstage-member-card-list d-flex">
+                                    <div class="card col-12 col-md-3 me-2 p-2">
+                                        @if (Model.HasCourses)
+                                        {
                                             @foreach (var course in Model.Course)
                                             {
                                                 <div class="fs-2 ps-3">@course.CategoryName</div>
-                                            }
-                                            @* <img src="~/image/backstage/programming.png" *@
-                                            @* class="card-img-top w-100" /> *@
-                                            <div class="card-body">
-                                                @foreach (var course in Model.Course)
-                                                {
-                                                    <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
-                                                }
-                                                <p class="card-text">
-                                                    申請狀態：<span>@Model.Coursestatus</span>
-                                                </p>
-                                                <button class="btn lh-backstage-submit-btn"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#lh-backstage-tutor-application-audit">
-                                                    證照資訊
-                                                </button>
-                                                <a href="/TalkingTopia/Apply_teacher/myResume.html"
-                                                   class="btn lh-backstage-submit-btn">
-                                                    編輯家教資料
-                                                </a>
-                                            </div>
-                                        </div>
-                                            @* <div class="card col-12 col-md-3 me-2 p-2">
-                                                <img src="~/image/backstage/subjects.png"
-                                                     class="card-img-top w-100" />
                                                 <div class="card-body">
-                                                    <p class="card-text">申請科目：<span>國文</span></p>
-                                                    <p class="card-text">
-                                                        申請狀態：<span>未審核</span>
-                                                    </p>
+                                                    <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
+                                                    <p class="card-text">申請狀態：<span>@Model.Coursestatus</span></p>
                                                     <button class="btn lh-backstage-submit-btn"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#lh-backstage-tutor-application-audit">
                                                         證照資訊
                                                     </button>
-                                                    <a href="/TalkingTopia/Apply_teacher/myResume.html"
-                                                       class="btn lh-backstage-submit-btn">
+                                                    @*  要return回履歷 <a href="/TalkingTopia/Tutor/TutorResume.html?memberId=@Model.MemberId"
+                                                                        class="btn lh-backstage-submit-btn">編輯家教資料 *@
+                                                    <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
                                                         編輯家教資料
                                                     </a>
                                                 </div>
-                                            </div> *@
-                                        
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="fs-2 ps-3"></div>
+                                            <div class="card-body">
+                                                <p class="card-text">申請科目：<span></span></p>
+                                                <p class="card-text">申請狀態：<span></span></p>
+                                                <button class="btn lh-backstage-submit-btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#lh-backstage-tutor-application-audit">
+                                                    證照資訊
+                                                </button>
+                                                <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
+                                                    編輯家教資料
+                                                </a>
+                                            </div>
+                                        }
+
+                                           
                                     </div>
-                                </section>
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <!-- screen modal for 家教申請審核-->
-        <div class="modal fade"
-             id="lh-backstage-tutor-application-audit"
-             tabindex="-1"
-             aria-labelledby=""
-             aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content container">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                            證照資訊
-                        </h1>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <section class="lh-backstage-lh-backstage-tutor-data">
-                            <ul>
-                            @foreach (var lisence in Model.License) { 
-                            <li>證照名稱：@lisence.ProfessionalLicenseName</li>
-                                <input id="prolicense" class="form-control my-1" type="file" placeholder="輸入..." value="">
-                                <lable for="prolicens">證照檔案：@lisence.ProfessionalLicenseUrl</lable>
-                            }
-                            </ul>
-                        </section>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button"
-                                class="btn btn-secondary lh-backstage-submit-btn"
-                                data-bs-dismiss="modal">
-                            確認
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- modal 時段-->
-        <div class="modal fade"
-             id="editTimeSlotModal"
-             tabindex="-1"
-             aria-labelledby="editModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">
-                            編輯教師可預約時段
-                        </h5>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- 星期區塊 -->
-                        <div class="row" id="timeslot-row">
-                            <div class="col-12">
-                                <div class="weekday-checkbox">
-                                    <span class="fw-bolder mb-3 d-inline-block">請選擇可預約星期</span>
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value="monday"
-                                               id="monday"
-                                               name="weekday" />
-                                        <label class="form-check-label" for="monday">星期一</label>
+                                    @* <div class="card col-12 col-md-3 me-2 p-2">
+                                    <img src="~/image/backstage/subjects.png"
+                                    class="card-img-top w-100" />
+                                    <div class="card-body">
+                                    <p class="card-text">申請科目：<span>國文</span></p>
+                                    <p class="card-text">
+                                    申請狀態：<span>未審核</span>
+                                    </p>
+                                    <button class="btn lh-backstage-submit-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#lh-backstage-tutor-application-audit">
+                                    證照資訊
+                                    </button>
+                                    <a href="/TalkingTopia/Apply_teacher/myResume.html"
+                                    class="btn lh-backstage-submit-btn">
+                                    編輯家教資料
+                                    </a>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value="tuesday"
-                                               id="tuesday"
-                                               name="weekday" />
-                                        <label class="form-check-label" for="tuesday">星期二</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value="wednesday"
-                                               id="wednesday"
-                                               name="weekday" />
-                                        <label class="form-check-label" for="wednesday">星期三</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value="thursday"
-                                               id="thursday"
-                                               name="weekday" />
-                                        <label class="form-check-label" for="thursday">星期四</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value="friday"
-                                               id="friday"
-                                               name="weekday" />
-                                        <label class="form-check-label" for="friday">星期五</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value="saturday"
-                                               id="saturday"
-                                               name="weekday" />
-                                        <label class="form-check-label" for="saturday">星期六</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value="sunday"
-                                               id="sunday"
-                                               name="weekday" />
-                                        <label class="form-check-label" for="sunday">星期日</label>
-                                    </div>
+                                    </div> *@
+
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button"
-                                class="btn btn-light"
-                                data-bs-dismiss="modal">
-                            關閉
-                        </button>
-                        <button type="button"
-                                class="btn lh-backstage-submit-btn">
-                            儲存
-                        </button>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn lh-backstage-submit-btn">
+                                        編輯
+                                    </button>
+                                    <button type="button" class="btn lh-backstage-submit-btn">
+                                        儲存會員資料
+                                    </button>
+                                </div>
+                                
+                                
+                        </section>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- screen modal for 家教申請審核-->
+    <div class="modal fade"
+         id="lh-backstage-tutor-application-audit"
+         tabindex="-1"
+         aria-labelledby=""
+         aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content container">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
+                        證照資訊
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <section class="lh-backstage-lh-backstage-tutor-data">
+                        @*當lisence關聯修好後再測試*@
+                        @* <ul>
+                            @foreach (var lisence in Model.License)
+                            {
+                                <li>證照名稱：@lisence.ProfessionalLicenseName</li>
+                                <input id="prolicense" class="form-control my-1" type="file" placeholder="輸入..." value=""/>
+                                <lable for="prolicense">證照檔案：@lisence.ProfessionalLicenseUrl</lable>
+                            }
+                        </ul> *@
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        確認
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal 時段-->
+    <div class="modal fade"
+         id="editTimeSlotModal"
+         tabindex="-1"
+         aria-labelledby="editModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">
+                        編輯教師可預約時段
+                    </h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 星期區塊 -->
+                    <div class="row" id="timeslot-row">
+                        <div class="col-12">
+                            <div class="weekday-checkbox">
+                                <span class="fw-bolder mb-3 d-inline-block">請選擇可預約星期</span>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox" id="weekday-1" name="weekday" value="1">
+                                    <label class="form-check-label" for="monday">星期一</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox" id="weekday-2" name="weekday" value="2">
+                                    <label class="form-check-label" for="tuesday">星期二</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox" id="weekday-3" name="weekday" value="3">
+                                    <label class="form-check-label" for="wednesday">星期三</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox" id="weekday-4" name="weekday" value="4">
+                                    <label class="form-check-label" for="thursday">星期四</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox" id="weekday-5" name="weekday" value="5">
+                                    <label class="form-check-label" for="friday">星期五</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox" id="weekday-6" name="weekday" value="6">
+                                    <label class="form-check-label" for="saturday">星期六</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox" id="weekday-0" name="weekday" value="0">
+                                    <label class="form-check-label" for="sunday">星期日</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        關閉
+                    </button>
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn">
+                        儲存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @section topCSS {
-        <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
+    <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 }
 @section endJS {
-        <script src="~/js/timeslot-setting.js"></script>
+    <script src="~/js/timeslot-setting.js"></script>
 }

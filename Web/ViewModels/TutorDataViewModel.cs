@@ -5,12 +5,12 @@ using static Web.Services.TutorDataservice;
 
 namespace Web.ViewModels
 {
-    //public class TutorDataListViewModel
-    //{
-    //    public List<TutorDataViewModel> TutorDataList { get; set; }
-    //}
     public class TutorDataViewModel
     {
+        /// <summary>
+        /// 國籍
+        /// </summary>
+        public int NationID { get; set; }
         /// <summary>
         /// 母語
         /// </summary>
@@ -30,25 +30,31 @@ namespace Web.ViewModels
         /// <summary>
         /// 學歷
         /// </summary>
-        public List<Educational> EducationalBackground { get; set; }
+        public List<Educational> EducationalBackground { get; set; } = new List<Educational>();
         /// <summary>
         /// 經歷
         /// </summary>
-        public List<WorkExp> WorkBackground { get; set; }
+        public List<WorkExp> WorkBackground { get; set; } = new List<WorkExp>();
         /// <summary>
         /// 可預約的時段
         /// </summary>
-        //public List<AvailReservation> AvailableReservation  { get; set; }
+        public List<AvailReservation> AvailableReservation { get; set; } = new List<AvailReservation>();
         /// <summary>
         /// 科目類別
         /// </summary>
-        public List<CategoryData> Course { get; set; }
+        public List<CategoryData> Course { get; set; } = new List<CategoryData>();
+
 
         /// <summary>
         /// 證照
         /// </summary>
-        public List<LicenseData> License { get; set; }
+        public List<LicenseData> License { get; set; } = new List<LicenseData>();
         public CourseStatus Coursestatus { get; set; }
+
+        public bool HasCourses
+        {
+            get { return Course != null && Course.Any(); }
+        }
     }
 
 
@@ -73,7 +79,8 @@ namespace Web.ViewModels
 
     public class AvailReservation
     {
-    
+        public int Weekday { get; set; }
+        public string Coursehours { get; set; }
     }
 
     public class LicenseData 
