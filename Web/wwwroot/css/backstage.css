@@ -154,7 +154,9 @@ input {
 }
 
 #editor1,
-#editor2 {
+#editor2,
+#editor3,
+#editor4 {
 	min-height: 100px;
 	max-height: 200px;
 	overflow-y: auto;
