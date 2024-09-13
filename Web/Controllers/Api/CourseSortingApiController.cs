@@ -14,6 +14,15 @@ namespace Web.Controllers.Api
             _courseService = courseService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetCourses([FromQuery] int page)
+        {
+            var courses = await _courseService.GetCourseCardsListAsync(page, 6);
+            return Ok(courses);
+        }
+
+        
+
         //[HttpGet]
         //public async Task<IActionResult> GetSortedCourses(string sortBy, 
         //    [FromQuery, DefaultValue(1)] int page, int pageSize = 6)
@@ -31,7 +40,7 @@ namespace Web.Controllers.Api
         //[HttpGet]
         //public async Task<IActionResult> GetAllNations()
         //{
-            
+
 
         //}
     }
