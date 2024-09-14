@@ -516,3 +516,29 @@
     background-color: var(--highlight-color);
     color: #fff;
 }
+
+[v-cloak] {
+    opacity: 0;
+    background-color: var(--theme-color);
+}
+
+@keyframes loading-text {
+    0% {
+        background-position: -200px 0;
+    }
+
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+.loading-text {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: transparent;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+    background-size: 200px 100%;
+    background-clip: text;
+    animation: loading-text 1.5s infinite linear;
+}
+
