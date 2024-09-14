@@ -56,29 +56,38 @@ namespace ApplicationCore.Services
             return result;
         }
 
-        // 創建訂單並處理交易(需刷新交易狀態/OrderStatusId，另外invice尚未考慮)
-        public async Task<bool> CreateOrderAsync(int memberId,string paymentType)
+        /// <summary>
+        /// 建單並串至綠界(callback後會再呼叫Update刷新OrderStatusId)
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="paymentType"></param>
+        /// <param name="taxIdNumber"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> CreateOrderAsync(int memberId, string paymentType, string taxIdNumber)
         {
             using var transaction = _transaction.BeginTransActionAsync();
             {
                 try
                 {
-                    // 如果購物車為空，則無需處理
                     if (!_shoppingCartService.HasCartItem(memberId))
                     {
                         throw new InvalidOperationException("購物車為空，無法生成訂單。");
                     }
-                    //todo: 新增Orders資料列，OrderStatus為待付款
-                    var order = await _shoppingCartRepository.ListAsync(x => x.MemberId == memberId);
-                    var totalPrice = order.Sum(x => x.Quantity * x.UnitPrice);
-                    //todo: 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
+                    var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
+                    var totalPrice = shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
+
+                    // 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
                     var orders = new Order
                     {
                         MemberId = memberId,
                         PaymentType = paymentType,
                         TotalPrice = totalPrice,
                         TransactionDate = DateTime.Now,
-                        InvoiceType = 1,
+                        TaxIdNumber = taxIdNumber,
+                        InvoiceType = taxIdNumber == null ? (short)EInvoiceType.NormalInvoice : (short)EInvoiceType.GUIInvoice,
+                        // VATNumber要等綠界交易完成回來才會有紀錄
+                        // SentVATEmail預設為Member的Email?
                         OrderStatusId = (short)EOrderStatus.Outstanding,
                         Cdate = DateTime.Now,
                     };
@@ -98,25 +107,31 @@ namespace ApplicationCore.Services
                 }
             }
         }
-        public EOrderStatus ValidatePaymentResult(int rtnCode)
+
+        public async Task<bool> UpdateOrderAsync(int orderId, EOrderStatus orderStatus)
         {
-            //todo: int rtnCode = 2(ATM) || 10100073(CVS / BARCODE)為成功，其餘皆為失敗
-            //是否先判斷rtnCodeType為ATM或CVS/BARCODE
-            //todo: 訂單加密、解密由EC API端實作，但ServerSide要考慮傳送與接收相同檢查碼的問題
-            if (rtnCode == 2 || rtnCode == 10100073)
+            using var transaction = _transaction.BeginTransActionAsync();
             {
-                return EOrderStatus.Success;
-            }
-            else
-            {
-                return EOrderStatus.Failed;
+                try
+                {
+                    var order = await _orderRepository.GetByIdAsync(orderId);
+                    
+                    if (orderStatus == EOrderStatus.Success)
+                    {
+                        order.OrderStatusId = (short)EOrderStatus.Success;
+                        await _orderRepository.UpdateAsync(order);
+                        return true;
+                    }
+                    else if (orderStatus == EOrderStatus.Failed) { return false; }
+                    else { return false; }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"UpDate error: {ex.Message}");
+                }
             }
         }
-        /// <summary>
-        /// 驗證綠界API回傳的結果
-        /// </summary>
-        /// <param name="rtnCode"></param>
-        /// <returns></returns>
+
         public TimeSpan ConvertSmallintToTime(short timeValue)
         {
             int hours = timeValue / 100;
@@ -124,6 +139,5 @@ namespace ApplicationCore.Services
 
             return new TimeSpan(hours, minutes, 0);
         }
-
     }
 }
