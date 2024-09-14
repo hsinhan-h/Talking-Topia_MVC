@@ -2,6 +2,7 @@
 using Infrastructure.ECpay;
 using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
+using Infrastructure.Service;
 using System.Collections.Generic;
 using System.Security.Policy;
 
@@ -12,12 +13,12 @@ namespace Web.Controllers.Api
     public class PaymentController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly IRepository<ShoppingCart> _shoppingCartRepository;
+        private readonly ECpayService _ecpayService;
 
-        public PaymentController(IConfiguration configuration, IRepository<ShoppingCart> shoppingCartRepository)
+        public PaymentController(IConfiguration configuration, ECpayService ecpayService)
         {
             _configuration = configuration;
-            _shoppingCartRepository = shoppingCartRepository;
+            _ecpayService = ecpayService;
         }
 
         // POST api/payment
@@ -42,9 +43,6 @@ namespace Web.Controllers.Api
                 ClientUrl = _configuration["ECpay:Service:ClientUrl"]
             };
 
-
-            //var shoppingCart = await _shoppingCartRepository.ListAsync(member => member.MemberId == memberId);
-
             var transaction = new
             {
                 // todo: 調整參數及串接專案資料庫
@@ -52,18 +50,21 @@ namespace Web.Controllers.Api
                 Description = "測試購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
-                Items = new List<Item>{
-                    new Item{
-                        CourseName = "手機",
-                        UnitPrice = 14000,
-                        Quantity = 2
-                    },
-                    new Item{
-                        CourseName = "隨身碟",
-                        UnitPrice = 900,
-                        Quantity = 10
-                    }
-                }
+                Items = await _ecpayService.GetItemsToECStageDtoAsync(1)
+
+                //new List<Item>{
+                //    new Item{
+                //        CourseName = "手機",
+                //        UnitPrice = 14000,
+                //        Quantity = 2
+                //    },
+                //    new Item{
+                //        CourseName = "隨身碟",
+                //        UnitPrice = 900,
+                //        Quantity = 10
+                //    }
+                //}
+
             };
             IPayment payment = new PaymentConfiguration()
                 .Send.ToApi(

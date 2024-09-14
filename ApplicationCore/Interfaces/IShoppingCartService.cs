@@ -14,7 +14,6 @@ namespace ApplicationCore.Interfaces
         public bool HasCartItem(int memberId, int courseId);
         public decimal GetUnitPrice(int courseId, int courseLength);
         public Task<GetAllShoppingCartResultDto> GetAllShoppingCartAsync(int memberId);
-        public Task<GetItemsToECStageDto> GetItemsToECStageDtoAsync(int memberId);
         public Task<int> CreateShoppingCartAsync(int memberId, int courseId, int courseLength, int quantity);
         public Task<int> CreateShoppingCartAsync(int memberId, int courseId, int courseLength, int quantity, DateTime bookingDate, short bookingTime);
         public void DeleteCartItem(int memberId, int courseId);

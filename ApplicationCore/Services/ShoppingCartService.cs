@@ -152,22 +152,6 @@ namespace ApplicationCore.Services
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<GetItemsToECStageDto> GetItemsToECStageDtoAsync(int memberId)
-        {
-            var items = await _shoppingCartRepository.ListAsync(item => item.MemberId == memberId);
-            var result = new List<GetItemToECStage>();
-            foreach (var item in items)
-            {
-                var course = await _courseRepository.GetByIdAsync(item.CourseId);
-                result.Add(new GetItemToECStage
-                {
-                    CourseName = course.Title,
-                    UnitPrice = item.UnitPrice,
-                    Quantity = item.Quantity,
-                    CourseType = item.CourseType,
-                });
-            }
-            return new GetItemsToECStageDto { GetItemsToECStage = result };
-        }
+
     }
 }
