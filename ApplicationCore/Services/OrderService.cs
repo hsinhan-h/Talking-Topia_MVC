@@ -66,6 +66,7 @@ namespace ApplicationCore.Services
         /// <exception cref="Exception"></exception>
         public async Task<bool> CreateOrderAsync(int memberId, string paymentType, string taxIdNumber)
         {
+            Console.WriteLine($"memberId: {memberId}, paymentType: {paymentType}, taxIdNumber: {taxIdNumber}");
             using var transaction = _transaction.BeginTransActionAsync();
             {
                 try
