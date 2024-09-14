@@ -25,13 +25,14 @@ namespace Web.Controllers
             return View();
         }
 
-
+        
         //Tutor Data Read and update
-        public async Task<IActionResult> TutorData(int? memberId = 35)
+        public async Task<IActionResult> TutorData(int? memberId)
         {
 
             // Edit: 根據ID取得現有會員資料
             var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
+
             return View(tutorData);
 
         }
