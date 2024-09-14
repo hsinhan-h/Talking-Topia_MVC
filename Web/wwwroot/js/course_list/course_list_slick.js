@@ -46,7 +46,7 @@ export function initTooltips() {
 
 
 //youtube彈出視窗
-function autoPlayYouTubeModal() {
+export function autoPlayYouTubeModal() {
     var trigger = $("body").find('[data-bs-toggle="modal"]');
     trigger.click(function () {
         var theModal = $(this).data("bs-target"),
