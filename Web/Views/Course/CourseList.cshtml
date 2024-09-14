@@ -15,7 +15,7 @@
 }
 
 <partial name="_BannerPartial" />
-<section class="tutors mb-3">
+<section class="tutors mb-3" id="course-cards-app">
     <div class="lh-tutors-filter d-flex">
         <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-3">
             <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown"
@@ -69,14 +69,19 @@
         </div>
         <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
             <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                教師國籍 <i class="bi bi-filter"></i>
+                {{ selectedNation ? selectedNation : '教師國籍' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">台灣</button></li>
+                <li v-for="nation in nations" :key="nation">
+                    <button class="dropdown-item" type="button" v-on:click="filterByNation(nation)">
+                        {{ nation }}
+                    </button>
+                </li>
+                @* <li><button class="dropdown-item" type="button">台灣</button></li>
                 <li><button class="dropdown-item" type="button">美國</button></li>
                 <li><button class="dropdown-item" type="button">英國</button></li>
                 <li><button class="dropdown-item" type="button">法國</button></li>
-                <li><button class="dropdown-item" type="button">德國</button></li>
+                <li><button class="dropdown-item" type="button">德國</button></li> *@
             </ul>
         </div>
         <div class="btn-group course-time-filter me-1 mx-sm-2 mt-4 mb-3">
@@ -341,7 +346,7 @@
         <a href="">多評價數優先</a>
     </div>
     <div v-if="loading"></div>
-    <div v-else id="course-cards-app" class="lh-tutor-cards">
+    <div v-else class="lh-tutor-cards">
         <div v-for="(courseCard, index) in courses" :key="courseCard.courseId" class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
             <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
                 <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">

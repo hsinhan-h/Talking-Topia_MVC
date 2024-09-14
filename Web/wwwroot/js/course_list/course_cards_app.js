@@ -11,13 +11,15 @@ const courseCardsApp = Vue.createApp({
             loading: true,
             selectedNationality: null,
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
-            bookedSlots: [] //二維陣列, 元素為各課程的被預約時段Array
+            bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array
+            nations: []
         };
     },
     mounted() {
         const params = new URLSearchParams(window.location.search);
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
         this.fetchCourses();
+        this.fetchNations();
     },
     updated() {
         //DOM 已更新完後, 重新呼叫slick function & tooltips & modals
@@ -91,6 +93,19 @@ const courseCardsApp = Vue.createApp({
                 return 'available';
             }
             return '';
+        },
+        async fetchNations() {
+            try {
+                const response = await fetch('/api/NationApi');
+                if (response.ok) {
+                    const nationNameData = await response.json();
+                    this.nations = nationNameData;
+                }
+            } catch (e) {
+                this.error = e;
+            } finally {
+                this.loading = false;
+            }
         }
 
     }
