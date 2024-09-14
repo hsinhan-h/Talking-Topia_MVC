@@ -28,13 +28,17 @@ let selectedBookingTime = null;
 
 
 //Booking Table渲染
-async function generateBookingTable(weekStart, courseId) {
+export async function generateBookingTable(weekStart, courseId) {
+
     globCourseId = courseId;
     const fetchedData = await fetchBookingTableData(courseId);
+    console.log(fetchedData);
     tutorSlots = fetchedData.availableTimeSlots;
     bookedSlots = fetchedData.bookedTimeSlots;
     tutorHeadShot = fetchedData.tutorHeadShotImage;
     courseTitle = fetchedData.courseTitle
+    console.log(tutorSlots);
+
 
     bookingTableBody.innerHTML = "";
     bookingTableHeader.innerHTML = "";
@@ -53,6 +57,7 @@ async function generateBookingTable(weekStart, courseId) {
         const divTableHead = document.createElement("div");
         divTableHead.innerHTML = `${weekDaysBeginFromToday[i]
             }<br>${date.getDate()}`;
+        console.log(divTableHead);
         bookingTableHeader.appendChild(divTableHead);
     }
     weekRange.textContent = `${formatDate(dates[0])} 
@@ -75,7 +80,7 @@ async function generateBookingTable(weekStart, courseId) {
             //如果日期不在教師的教課時間內, 隱藏日期
             if (!inTutorTime(weekday, time)) {
                 cell.classList.add("d-none");
-            }         
+            }
 
             //如果時段還沒被預約, 加入confirmBookingModal事件
             if (!isBooked(date, time, bookedSlots)) {
@@ -87,7 +92,7 @@ async function generateBookingTable(weekStart, courseId) {
                     selectedBookingTime = time;
 
                     confirmBookingModalDate.textContent = `${formatDate(date)} (${standardWeekdays[date.getDay()]
-                        })`;               
+                        })`;
                     confirmBookingModalTime.textContent = time;
                     confirmBookingModal.show();
                 });
@@ -96,7 +101,7 @@ async function generateBookingTable(weekStart, courseId) {
             }
             column.appendChild(cell);
         }
-        bookingTableBody.appendChild(column);    
+        bookingTableBody.appendChild(column);
     }
 
     // Initialize tooltips
@@ -162,12 +167,12 @@ addToCartBtn.addEventListener("click", function () {
 //fetch BookingTable API
 async function fetchBookingTableData(courseId) {
     const url = `/api/BookingTableApi?courseId=${courseId}`;
-
+    console.log(url);
     try {
         const response = await fetch(url);
 
         if (!response.ok) {
-            console.error(`HTTP error, status: ${response.status} `);
+            console.error(`網路發生錯誤, status: ${response.status} `);
             return null;
         }
 
@@ -177,15 +182,9 @@ async function fetchBookingTableData(courseId) {
             return null;
         }
 
-        //console.log(bookingTableData);
         return bookingTableData;
 
     } catch (error) {
         console.error('Fetching BookingTableData時發生錯誤:', error);
     }
 }
-
-
-
-
-
