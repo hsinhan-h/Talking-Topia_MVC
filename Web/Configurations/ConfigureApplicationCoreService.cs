@@ -2,6 +2,7 @@
 using ApplicationCore.Services;
 using Infrastructure.ECpay;
 using Infrastructure.Interfaces.ECpay;
+using Infrastructure.Service;
 
 namespace Web.Configurations
 {
@@ -14,7 +15,7 @@ namespace Web.Configurations
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICourseService, ApplicationCore.Services.CourseService>();
-            services.AddScoped<ICourseService, ApplicationCore.Services.CourseService>();
+            services.AddScoped<PaymentResultService>();
 
             return services;
         }
