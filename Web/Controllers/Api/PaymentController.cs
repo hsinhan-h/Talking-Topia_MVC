@@ -22,7 +22,7 @@ namespace Web.Controllers.Api
 
         // POST api/payment
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult New()
         {
             return RedirectToAction("checkout");
