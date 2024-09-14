@@ -68,182 +68,182 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ApplyId = 1,
-                            ApplyDateTime = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(74),
+                            ApplyDateTime = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8933),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(75),
+                            ApprovedDateTime = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8934),
                             MemberId = 1,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(76)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8935)
                         },
                         new
                         {
                             ApplyId = 2,
-                            ApplyDateTime = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(77),
+                            ApplyDateTime = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8936),
                             ApplyStatus = false,
                             MemberId = 2,
                             RejectReason = "Incomplete application",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(78)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8937)
                         },
                         new
                         {
                             ApplyId = 3,
-                            ApplyDateTime = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(79),
+                            ApplyDateTime = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8938),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(80),
+                            ApprovedDateTime = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8939),
                             MemberId = 3,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(81)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8939)
                         },
                         new
                         {
                             ApplyId = 4,
-                            ApplyDateTime = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(82),
+                            ApplyDateTime = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8941),
                             ApplyStatus = false,
                             MemberId = 4,
                             RejectReason = "Failed verification",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(83)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8941)
                         },
                         new
                         {
                             ApplyId = 5,
-                            ApplyDateTime = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(84),
+                            ApplyDateTime = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8943),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(85),
+                            ApprovedDateTime = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8943),
                             MemberId = 5,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(85)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8944)
                         },
                         new
                         {
                             ApplyId = 6,
-                            ApplyDateTime = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(87),
+                            ApplyDateTime = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8969),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(87),
+                            ApprovedDateTime = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8970),
                             MemberId = 6,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(89)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8971)
                         },
                         new
                         {
                             ApplyId = 7,
-                            ApplyDateTime = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(92),
+                            ApplyDateTime = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8972),
                             ApplyStatus = false,
                             MemberId = 7,
                             RejectReason = "Incorrect details",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(93)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8973)
                         },
                         new
                         {
                             ApplyId = 8,
-                            ApplyDateTime = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(98),
+                            ApplyDateTime = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8974),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(99),
+                            ApprovedDateTime = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8975),
                             MemberId = 8,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(99)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8975)
                         },
                         new
                         {
                             ApplyId = 9,
-                            ApplyDateTime = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(100),
+                            ApplyDateTime = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8976),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(101),
+                            ApprovedDateTime = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8977),
                             MemberId = 9,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 15, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(102)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8978)
                         },
                         new
                         {
                             ApplyId = 10,
-                            ApplyDateTime = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(103),
+                            ApplyDateTime = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8979),
                             ApplyStatus = false,
                             MemberId = 10,
                             RejectReason = "Missing documents",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 16, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(103)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 16, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8980)
                         },
                         new
                         {
                             ApplyId = 11,
-                            ApplyDateTime = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(105),
+                            ApplyDateTime = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8981),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 15, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(105),
+                            ApprovedDateTime = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8981),
                             MemberId = 11,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 16, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(106)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 16, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8982)
                         },
                         new
                         {
                             ApplyId = 12,
-                            ApplyDateTime = new DateTime(2024, 9, 15, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(107),
+                            ApplyDateTime = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8984),
                             ApplyStatus = false,
                             MemberId = 12,
                             RejectReason = "Not eligible",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 17, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(108)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 17, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8984)
                         },
                         new
                         {
                             ApplyId = 13,
-                            ApplyDateTime = new DateTime(2024, 9, 16, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(109),
+                            ApplyDateTime = new DateTime(2024, 9, 16, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8986),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 17, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(110),
+                            ApprovedDateTime = new DateTime(2024, 9, 17, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8986),
                             MemberId = 13,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 18, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(112)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 18, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8988)
                         },
                         new
                         {
                             ApplyId = 14,
-                            ApplyDateTime = new DateTime(2024, 9, 17, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(113),
+                            ApplyDateTime = new DateTime(2024, 9, 17, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8990),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 18, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(113),
+                            ApprovedDateTime = new DateTime(2024, 9, 18, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8990),
                             MemberId = 14,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 19, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(114)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 19, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8991)
                         },
                         new
                         {
                             ApplyId = 15,
-                            ApplyDateTime = new DateTime(2024, 9, 18, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(115),
+                            ApplyDateTime = new DateTime(2024, 9, 18, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8992),
                             ApplyStatus = false,
                             MemberId = 15,
                             RejectReason = "Failed interview",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 20, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(116)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 20, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8993)
                         },
                         new
                         {
                             ApplyId = 16,
-                            ApplyDateTime = new DateTime(2024, 9, 19, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(117),
+                            ApplyDateTime = new DateTime(2024, 9, 19, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8994),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 20, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(118),
+                            ApprovedDateTime = new DateTime(2024, 9, 20, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8995),
                             MemberId = 16,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 21, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(118)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 21, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8995)
                         },
                         new
                         {
                             ApplyId = 17,
-                            ApplyDateTime = new DateTime(2024, 9, 20, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(120),
+                            ApplyDateTime = new DateTime(2024, 9, 20, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8996),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 21, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(120),
+                            ApprovedDateTime = new DateTime(2024, 9, 21, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8997),
                             MemberId = 17,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 22, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(121)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 22, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8998)
                         },
                         new
                         {
                             ApplyId = 18,
-                            ApplyDateTime = new DateTime(2024, 9, 21, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(123),
+                            ApplyDateTime = new DateTime(2024, 9, 21, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8999),
                             ApplyStatus = false,
                             MemberId = 18,
                             RejectReason = "Incorrect documentation",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 23, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(125)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 23, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8999)
                         },
                         new
                         {
                             ApplyId = 19,
-                            ApplyDateTime = new DateTime(2024, 9, 22, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(126),
+                            ApplyDateTime = new DateTime(2024, 9, 22, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9001),
                             ApplyStatus = true,
-                            ApprovedDateTime = new DateTime(2024, 9, 23, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(127),
+                            ApprovedDateTime = new DateTime(2024, 9, 23, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9001),
                             MemberId = 19,
-                            UpdateStatusDateTime = new DateTime(2024, 9, 24, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(127)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 24, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9002)
                         },
                         new
                         {
                             ApplyId = 20,
-                            ApplyDateTime = new DateTime(2024, 9, 23, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(128),
+                            ApplyDateTime = new DateTime(2024, 9, 23, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9003),
                             ApplyStatus = false,
                             MemberId = 20,
                             RejectReason = "Unverified information",
-                            UpdateStatusDateTime = new DateTime(2024, 9, 25, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(129)
+                            UpdateStatusDateTime = new DateTime(2024, 9, 25, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9004)
                         });
                 });
 
@@ -295,182 +295,182 @@ namespace Infrastructure.Migrations
                         new
                         {
                             BookingId = 3,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(152),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9031),
                             BookingTime = (short)14,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(153),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9032),
                             CourseId = 3,
                             StudentId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(153)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9032)
                         },
                         new
                         {
                             BookingId = 4,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(156),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9035),
                             BookingTime = (short)15,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(156),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9035),
                             CourseId = 4,
                             StudentId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(157)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9036)
                         },
                         new
                         {
                             BookingId = 5,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(158),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9037),
                             BookingTime = (short)16,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(158),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9037),
                             CourseId = 5,
                             StudentId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(159)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9038)
                         },
                         new
                         {
                             BookingId = 6,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(160),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9039),
                             BookingTime = (short)17,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(160),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9040),
                             CourseId = 6,
                             StudentId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(161)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9040)
                         },
                         new
                         {
                             BookingId = 7,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(162),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9041),
                             BookingTime = (short)18,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(162),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9041),
                             CourseId = 7,
                             StudentId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(163)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9042)
                         },
                         new
                         {
                             BookingId = 8,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(194),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9043),
                             BookingTime = (short)19,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(195),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9043),
                             CourseId = 8,
                             StudentId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(195)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9044)
                         },
                         new
                         {
                             BookingId = 9,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(196),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9045),
                             BookingTime = (short)20,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(197),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9045),
                             CourseId = 9,
                             StudentId = 9,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(197)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9046)
                         },
                         new
                         {
                             BookingId = 10,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(198),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9047),
                             BookingTime = (short)12,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(199),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9047),
                             CourseId = 10,
                             StudentId = 10,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(199)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9048)
                         },
                         new
                         {
                             BookingId = 11,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(200),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9049),
                             BookingTime = (short)13,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(201),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9049),
                             CourseId = 11,
                             StudentId = 11,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(201)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9050)
                         },
                         new
                         {
                             BookingId = 12,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(202),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9051),
                             BookingTime = (short)14,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(203),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9051),
                             CourseId = 12,
                             StudentId = 12,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(204)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9052)
                         },
                         new
                         {
                             BookingId = 13,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(204),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9053),
                             BookingTime = (short)15,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(205),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9053),
                             CourseId = 13,
                             StudentId = 13,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(205)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9054)
                         },
                         new
                         {
                             BookingId = 14,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(206),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9055),
                             BookingTime = (short)16,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(207),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9055),
                             CourseId = 14,
                             StudentId = 14,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(208)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9056)
                         },
                         new
                         {
                             BookingId = 15,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(209),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9057),
                             BookingTime = (short)17,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(211),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9059),
                             CourseId = 15,
                             StudentId = 15,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(211)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9059)
                         },
                         new
                         {
                             BookingId = 16,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(212),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9060),
                             BookingTime = (short)18,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(213),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9061),
                             CourseId = 16,
                             StudentId = 16,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(213)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9061)
                         },
                         new
                         {
                             BookingId = 17,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(214),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9062),
                             BookingTime = (short)19,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(215),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9063),
                             CourseId = 17,
                             StudentId = 17,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(215)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9063)
                         },
                         new
                         {
                             BookingId = 18,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(216),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9064),
                             BookingTime = (short)20,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(217),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9065),
                             CourseId = 18,
                             StudentId = 18,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(217)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9065)
                         },
                         new
                         {
                             BookingId = 19,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(218),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9066),
                             BookingTime = (short)12,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(219),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9067),
                             CourseId = 19,
                             StudentId = 19,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(219)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9067)
                         },
                         new
                         {
                             BookingId = 20,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(221),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9068),
                             BookingTime = (short)13,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(221),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9069),
                             CourseId = 20,
                             StudentId = 20,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(222)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9069)
                         });
                 });
 
@@ -531,242 +531,242 @@ namespace Infrastructure.Migrations
                         new
                         {
                             CouponId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9895),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8784),
                             CouponCode = "WELCOME10",
                             CouponName = "Welcome10",
                             Discount = 10,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2024, 10, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9893),
+                            ExpirationDate = new DateTime(2024, 10, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8782),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 15, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9895)
+                            Udate = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8784)
                         },
                         new
                         {
                             CouponId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9898),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8787),
                             CouponCode = "SUMMER20",
                             CouponName = "SummerSale",
                             Discount = 20,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2024, 11, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9897),
+                            ExpirationDate = new DateTime(2024, 11, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8786),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 16, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9899)
+                            Udate = new DateTime(2024, 9, 16, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8787)
                         },
                         new
                         {
                             CouponId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9901),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8790),
                             CouponCode = "FALL15",
                             CouponName = "FallSavings",
                             Discount = 15,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2024, 12, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9900),
+                            ExpirationDate = new DateTime(2024, 12, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8789),
                             IsActive = false,
-                            Udate = new DateTime(2024, 9, 17, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9901)
+                            Udate = new DateTime(2024, 9, 17, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8790)
                         },
                         new
                         {
                             CouponId = 4,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9905),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8794),
                             CouponCode = "WINTER25",
                             CouponName = "WinterDeal",
                             Discount = 25,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2025, 1, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9903),
+                            ExpirationDate = new DateTime(2025, 1, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8792),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 18, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9905)
+                            Udate = new DateTime(2024, 9, 18, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8794)
                         },
                         new
                         {
                             CouponId = 5,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9923),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8796),
                             CouponCode = "SPRING30",
                             CouponName = "SpringSave",
                             Discount = 30,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2025, 2, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9922),
+                            ExpirationDate = new DateTime(2025, 2, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8796),
                             IsActive = false,
-                            Udate = new DateTime(2024, 9, 19, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9923)
+                            Udate = new DateTime(2024, 9, 19, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8797)
                         },
                         new
                         {
                             CouponId = 6,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9925),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8799),
                             CouponCode = "HOLIDAY50",
                             CouponName = "Holiday50",
                             Discount = 50,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2025, 3, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9925),
+                            ExpirationDate = new DateTime(2025, 3, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8799),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 20, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9926)
+                            Udate = new DateTime(2024, 9, 20, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8800)
                         },
                         new
                         {
                             CouponId = 7,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9930),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8803),
                             CouponCode = "NEWYEAR15",
                             CouponName = "NewYear15",
                             Discount = 15,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2025, 4, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9929),
+                            ExpirationDate = new DateTime(2025, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8803),
                             IsActive = false,
-                            Udate = new DateTime(2024, 9, 21, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9930)
+                            Udate = new DateTime(2024, 9, 21, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8804)
                         },
                         new
                         {
                             CouponId = 8,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9933),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8806),
                             CouponCode = "CYBER20",
                             CouponName = "CyberMonday",
                             Discount = 20,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2025, 5, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9932),
+                            ExpirationDate = new DateTime(2025, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8805),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 22, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9933)
+                            Udate = new DateTime(2024, 9, 22, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8806)
                         },
                         new
                         {
                             CouponId = 9,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9935),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8809),
                             CouponCode = "BLACK30",
                             CouponName = "BlackFriday",
                             Discount = 30,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2025, 6, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9934),
+                            ExpirationDate = new DateTime(2025, 6, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8808),
                             IsActive = false,
-                            Udate = new DateTime(2024, 9, 23, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9936)
+                            Udate = new DateTime(2024, 9, 23, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8809)
                         },
                         new
                         {
                             CouponId = 10,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9938),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8811),
                             CouponCode = "WELCOME5",
                             CouponName = "WelcomeBack",
                             Discount = 5,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2025, 7, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9937),
+                            ExpirationDate = new DateTime(2025, 7, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8811),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 24, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9938)
+                            Udate = new DateTime(2024, 9, 24, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8812)
                         },
                         new
                         {
                             CouponId = 11,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9942),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8814),
                             CouponCode = "SCHOOL25",
                             CouponName = "BackToSchool",
                             Discount = 25,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2025, 8, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9941),
+                            ExpirationDate = new DateTime(2025, 8, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8813),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 25, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9943)
+                            Udate = new DateTime(2024, 9, 25, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8814)
                         },
                         new
                         {
                             CouponId = 12,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9945),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8816),
                             CouponCode = "EARLY10",
                             CouponName = "EarlyBird",
                             Discount = 10,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2025, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9944),
+                            ExpirationDate = new DateTime(2025, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8816),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 26, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9945)
+                            Udate = new DateTime(2024, 9, 26, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8817)
                         },
                         new
                         {
                             CouponId = 13,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9947),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8819),
                             CouponCode = "FLASH50",
                             CouponName = "FlashSale",
                             Discount = 50,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2025, 10, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9947),
+                            ExpirationDate = new DateTime(2025, 10, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8818),
                             IsActive = false,
-                            Udate = new DateTime(2024, 9, 27, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9949)
+                            Udate = new DateTime(2024, 9, 27, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8819)
                         },
                         new
                         {
                             CouponId = 14,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9957),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8822),
                             CouponCode = "NEWCUST20",
                             CouponName = "NewCustomer",
                             Discount = 20,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2025, 11, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9955),
+                            ExpirationDate = new DateTime(2025, 11, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8821),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 28, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9957)
+                            Udate = new DateTime(2024, 9, 28, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8822)
                         },
                         new
                         {
                             CouponId = 15,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9960),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8826),
                             CouponCode = "LOYALTY10",
                             CouponName = "LoyaltyReward",
                             Discount = 10,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2025, 12, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9959),
+                            ExpirationDate = new DateTime(2025, 12, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8825),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 29, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9960)
+                            Udate = new DateTime(2024, 9, 29, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8826)
                         },
                         new
                         {
                             CouponId = 16,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9962),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8828),
                             CouponCode = "REFERRAL15",
                             CouponName = "ReferralBonus",
                             Discount = 15,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2026, 1, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9961),
+                            ExpirationDate = new DateTime(2026, 1, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8827),
                             IsActive = true,
-                            Udate = new DateTime(2024, 9, 30, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9962)
+                            Udate = new DateTime(2024, 9, 30, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8829)
                         },
                         new
                         {
                             CouponId = 17,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9966),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8831),
                             CouponCode = "SUMMER10",
                             CouponName = "SummerSpecial",
                             Discount = 10,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2026, 2, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9965),
+                            ExpirationDate = new DateTime(2026, 2, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8830),
                             IsActive = true,
-                            Udate = new DateTime(2024, 10, 1, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9966)
+                            Udate = new DateTime(2024, 10, 1, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8831)
                         },
                         new
                         {
                             CouponId = 18,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9969),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8833),
                             CouponCode = "WINTER20",
                             CouponName = "WinterWonder",
                             Discount = 20,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2026, 3, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9968),
+                            ExpirationDate = new DateTime(2026, 3, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8832),
                             IsActive = true,
-                            Udate = new DateTime(2024, 10, 2, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9969)
+                            Udate = new DateTime(2024, 10, 2, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8834)
                         },
                         new
                         {
                             CouponId = 19,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9973),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8836),
                             CouponCode = "SPRING25",
                             CouponName = "SpringBlossom",
                             Discount = 25,
                             DiscountType = 1,
-                            ExpirationDate = new DateTime(2026, 4, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9971),
+                            ExpirationDate = new DateTime(2026, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8835),
                             IsActive = true,
-                            Udate = new DateTime(2024, 10, 3, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9974)
+                            Udate = new DateTime(2024, 10, 3, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8836)
                         },
                         new
                         {
                             CouponId = 20,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9978),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8838),
                             CouponCode = "AUTUMN15",
                             CouponName = "AutumnLeaves",
                             Discount = 15,
                             DiscountType = 2,
-                            ExpirationDate = new DateTime(2026, 5, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9976),
+                            ExpirationDate = new DateTime(2026, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8837),
                             IsActive = true,
-                            Udate = new DateTime(2024, 10, 4, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9978)
+                            Udate = new DateTime(2024, 10, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8839)
                         });
                 });
 
@@ -856,41 +856,41 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 1,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9327),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8229),
                             CoursesStatus = (short)1,
                             Description = "適合初學者的英文課程",
                             FiftyMinUnitPrice = 595m,
                             IsEnabled = true,
                             SubTitle = "從零開始學英文",
                             SubjectId = 1,
-                            ThumbnailUrl = "https://example.com/courses/english.jpg",
+                            ThumbnailUrl = "/image/thumb_nails/thumbnail_demo_tw_001.webp",
                             Title = "基礎英文",
                             TutorId = 1,
                             TwentyFiveMinUnitPrice = 350m,
-                            VideoUrl = "https://example.com/courses/english_intro.mp4"
+                            VideoUrl = "https://www.youtube.com/embed/1ZYbU82GVz4"
                         },
                         new
                         {
                             CourseId = 2,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9330),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8232),
                             CoursesStatus = (short)1,
                             Description = "基礎日語語法和詞彙",
                             FiftyMinUnitPrice = 680m,
                             IsEnabled = true,
                             SubTitle = "日語學習的基礎",
                             SubjectId = 2,
-                            ThumbnailUrl = "https://example.com/courses/japanese.jpg",
+                            ThumbnailUrl = "/image/thumb_nails/thumbnail_demo_jp_001.webp",
                             Title = "日語入門",
                             TutorId = 2,
                             TwentyFiveMinUnitPrice = 400m,
-                            VideoUrl = "https://example.com/courses/japanese_intro.mp4"
+                            VideoUrl = "https://www.youtube.com/embed/BWAK0J8Uhzk"
                         },
                         new
                         {
                             CourseId = 3,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9335),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8235),
                             CoursesStatus = (short)1,
                             Description = "全面學習中文語法",
                             FiftyMinUnitPrice = 875m,
@@ -907,7 +907,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 4,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9337),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8238),
                             CoursesStatus = (short)1,
                             Description = "提高德語口語能力",
                             FiftyMinUnitPrice = 935m,
@@ -924,7 +924,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 5,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9340),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8241),
                             CoursesStatus = (short)1,
                             Description = "提升法語閱讀能力",
                             FiftyMinUnitPrice = 510m,
@@ -941,7 +941,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 6,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9343),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8244),
                             CoursesStatus = (short)1,
                             Description = "提高西班牙語寫作能力",
                             FiftyMinUnitPrice = 1440m,
@@ -958,7 +958,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 7,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9346),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8246),
                             CoursesStatus = (short)1,
                             Description = "從頭開始學習HTML和CSS",
                             FiftyMinUnitPrice = 765m,
@@ -975,7 +975,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 8,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9349),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8285),
                             CoursesStatus = (short)1,
                             Description = "學習JavaScript語法和應用",
                             FiftyMinUnitPrice = 1050m,
@@ -992,7 +992,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 9,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9351),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8288),
                             CoursesStatus = (short)1,
                             Description = "深入學習C#編程",
                             FiftyMinUnitPrice = 1620m,
@@ -1009,7 +1009,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 10,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9354),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8290),
                             CoursesStatus = (short)1,
                             Description = "從零開始學習SQL",
                             FiftyMinUnitPrice = 595m,
@@ -1026,7 +1026,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 11,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9358),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8294),
                             CoursesStatus = (short)1,
                             Description = "從頭開始學習Python編程",
                             FiftyMinUnitPrice = 935m,
@@ -1043,7 +1043,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 12,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9362),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8297),
                             CoursesStatus = (short)1,
                             Description = "從零開始學習Java語言",
                             FiftyMinUnitPrice = 1080m,
@@ -1060,7 +1060,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 13,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9366),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8299),
                             CoursesStatus = (short)1,
                             Description = "提升數學基礎知識",
                             FiftyMinUnitPrice = 540m,
@@ -1077,7 +1077,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 14,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9369),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8302),
                             CoursesStatus = (short)1,
                             Description = "物理學基礎知識",
                             FiftyMinUnitPrice = 630m,
@@ -1094,7 +1094,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 15,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9372),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8305),
                             CoursesStatus = (short)1,
                             Description = "全面了解化學基礎知識",
                             FiftyMinUnitPrice = 680m,
@@ -1111,7 +1111,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 16,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9399),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8308),
                             CoursesStatus = (short)1,
                             Description = "歷史事件和背景的深入分析",
                             FiftyMinUnitPrice = 1050m,
@@ -1128,7 +1128,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 17,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9402),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8310),
                             CoursesStatus = (short)1,
                             Description = "全面了解地理學的基礎",
                             FiftyMinUnitPrice = 875m,
@@ -1145,7 +1145,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 18,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9404),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8312),
                             CoursesStatus = (short)1,
                             Description = "深入學習生物學的基本概念",
                             FiftyMinUnitPrice = 1350m,
@@ -1162,7 +1162,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 19,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9408),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8316),
                             CoursesStatus = (short)1,
                             Description = "深入練習英語會話和詞彙",
                             FiftyMinUnitPrice = 1135m,
@@ -1179,7 +1179,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 20,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9411),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8319),
                             CoursesStatus = (short)1,
                             Description = "提升日語會話和語法能力",
                             FiftyMinUnitPrice = 1225m,
@@ -1196,7 +1196,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 21,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9413),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8321),
                             CoursesStatus = (short)1,
                             Description = "深入學習中文語法和詞彙",
                             FiftyMinUnitPrice = 1480m,
@@ -1213,7 +1213,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 22,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9416),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8323),
                             CoursesStatus = (short)1,
                             Description = "德語會話和詞彙的深入練習",
                             FiftyMinUnitPrice = 990m,
@@ -1230,7 +1230,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 23,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9418),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8326),
                             CoursesStatus = (short)1,
                             Description = "法語閱讀和寫作的深入研究",
                             FiftyMinUnitPrice = 1365m,
@@ -1247,7 +1247,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 24,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9423),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8328),
                             CoursesStatus = (short)1,
                             Description = "西班牙語寫作和語法的深入練習",
                             FiftyMinUnitPrice = 1620m,
@@ -1264,7 +1264,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 25,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9425),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8331),
                             CoursesStatus = (short)1,
                             Description = "高級網頁設計和開發技術",
                             FiftyMinUnitPrice = 925m,
@@ -1281,7 +1281,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 26,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9428),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8333),
                             CoursesStatus = (short)1,
                             Description = "JavaScript編程的高級應用和技巧",
                             FiftyMinUnitPrice = 1530m,
@@ -1298,7 +1298,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 27,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9432),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8337),
                             CoursesStatus = (short)1,
                             Description = "深入掌握C#編程的高級技術",
                             FiftyMinUnitPrice = 1225m,
@@ -1315,7 +1315,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 28,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9434),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8339),
                             CoursesStatus = (short)1,
                             Description = "SQL資料庫管理和優化的高級技術",
                             FiftyMinUnitPrice = 1080m,
@@ -1332,7 +1332,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 29,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9437),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8372),
                             CoursesStatus = (short)1,
                             Description = "Python編程的高級應用和數據處理",
                             FiftyMinUnitPrice = 1620m,
@@ -1349,7 +1349,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 30,
                             CategoryId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9439),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8374),
                             CoursesStatus = (short)1,
                             Description = "Java編程的高級技術和應用",
                             FiftyMinUnitPrice = 1350m,
@@ -1366,7 +1366,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 31,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9441),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8377),
                             CoursesStatus = (short)1,
                             Description = "高等數學理論和應用",
                             FiftyMinUnitPrice = 890m,
@@ -1383,7 +1383,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 32,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9444),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8379),
                             CoursesStatus = (short)1,
                             Description = "物理學的高級理論和應用",
                             FiftyMinUnitPrice = 1350m,
@@ -1400,7 +1400,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 33,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9446),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8382),
                             CoursesStatus = (short)1,
                             Description = "化學的高級理論和應用",
                             FiftyMinUnitPrice = 900m,
@@ -1417,7 +1417,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 34,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9448),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8384),
                             CoursesStatus = (short)1,
                             Description = "歷史研究的高級技術和方法",
                             FiftyMinUnitPrice = 1050m,
@@ -1434,7 +1434,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 35,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9454),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8388),
                             CoursesStatus = (short)1,
                             Description = "地理學的高級理論和應用",
                             FiftyMinUnitPrice = 1080m,
@@ -1451,7 +1451,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 36,
                             CategoryId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9457),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8391),
                             CoursesStatus = (short)1,
                             Description = "生物學的高級理論和應用",
                             FiftyMinUnitPrice = 1620m,
@@ -1468,7 +1468,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 37,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9513),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8393),
                             CoursesStatus = (short)1,
                             Description = "專業英文寫作的高級技巧",
                             FiftyMinUnitPrice = 935m,
@@ -1485,7 +1485,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 38,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9516),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8396),
                             CoursesStatus = (short)1,
                             Description = "專業日語寫作的高級技巧",
                             FiftyMinUnitPrice = 720m,
@@ -1502,7 +1502,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 39,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9518),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8398),
                             CoursesStatus = (short)1,
                             Description = "專業中文寫作的高級技巧",
                             FiftyMinUnitPrice = 1260m,
@@ -1519,7 +1519,7 @@ namespace Infrastructure.Migrations
                         {
                             CourseId = 40,
                             CategoryId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9520),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8400),
                             CoursesStatus = (short)1,
                             Description = "專業德語寫作的高級技巧",
                             FiftyMinUnitPrice = 1170m,
@@ -1569,19 +1569,19 @@ namespace Infrastructure.Migrations
                         {
                             CourseCategoryId = 1,
                             CategorytName = "語言學習",
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9557)
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8436)
                         },
                         new
                         {
                             CourseCategoryId = 2,
                             CategorytName = "程式設計",
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9559)
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8437)
                         },
                         new
                         {
                             CourseCategoryId = 3,
                             CategorytName = "升學科目",
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9560)
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8438)
                         });
                 });
 
@@ -1619,145 +1619,145 @@ namespace Infrastructure.Migrations
                         new
                         {
                             CourseHourId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1221),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(60),
                             Hour = "00:00"
                         },
                         new
                         {
                             CourseHourId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1222),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(61),
                             Hour = "01:00"
                         },
                         new
                         {
                             CourseHourId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1224),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(63),
                             Hour = "02:00"
                         },
                         new
                         {
                             CourseHourId = 4,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1225),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(64),
                             Hour = "03:00"
                         },
                         new
                         {
                             CourseHourId = 5,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1226),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(65),
                             Hour = "04:00"
                         },
                         new
                         {
                             CourseHourId = 6,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1227),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(66),
                             Hour = "05:00"
                         },
                         new
                         {
                             CourseHourId = 7,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1228),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(67),
                             Hour = "06:00"
                         },
                         new
                         {
                             CourseHourId = 8,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1229),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(68),
                             Hour = "07:00"
                         },
                         new
                         {
                             CourseHourId = 9,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1230),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(123),
                             Hour = "08:00"
                         },
                         new
                         {
                             CourseHourId = 10,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1231),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(124),
                             Hour = "09:00"
                         },
                         new
                         {
                             CourseHourId = 11,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1232),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(125),
                             Hour = "10:00"
                         },
                         new
                         {
                             CourseHourId = 12,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1233),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(126),
                             Hour = "11:00"
                         },
                         new
                         {
                             CourseHourId = 13,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1234),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(127),
                             Hour = "12:00"
                         },
                         new
                         {
                             CourseHourId = 14,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1235),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(128),
                             Hour = "13:00"
                         },
                         new
                         {
                             CourseHourId = 15,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1236),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(129),
                             Hour = "14:00"
                         },
                         new
                         {
                             CourseHourId = 16,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1237),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(130),
                             Hour = "15:00"
                         },
                         new
                         {
                             CourseHourId = 17,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1238),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(131),
                             Hour = "16:00"
                         },
                         new
                         {
                             CourseHourId = 18,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1239),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(132),
                             Hour = "17:00"
                         },
                         new
                         {
                             CourseHourId = 19,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1240),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(133),
                             Hour = "18:00"
                         },
                         new
                         {
                             CourseHourId = 20,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1240),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(133),
                             Hour = "19:00"
                         },
                         new
                         {
                             CourseHourId = 21,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1241),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(134),
                             Hour = "20:00"
                         },
                         new
                         {
                             CourseHourId = 22,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1242),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(135),
                             Hour = "21:00"
                         },
                         new
                         {
                             CourseHourId = 23,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1243),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(136),
                             Hour = "22:00"
                         },
                         new
                         {
                             CourseHourId = 24,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1244),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(137),
                             Hour = "23:00"
                         });
                 });
@@ -1801,84 +1801,84 @@ namespace Infrastructure.Migrations
                         new
                         {
                             CourseImageId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9624),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8533),
                             CourseId = 1,
                             ImageUrl = "https://picsum.photos/id/100/450/300"
                         },
                         new
                         {
                             CourseImageId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9625),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8535),
                             CourseId = 1,
                             ImageUrl = "https://picsum.photos/id/101/450/300"
                         },
                         new
                         {
                             CourseImageId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9628),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8536),
                             CourseId = 1,
                             ImageUrl = "https://picsum.photos/id/102/450/300"
                         },
                         new
                         {
                             CourseImageId = 4,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9630),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8537),
                             CourseId = 2,
                             ImageUrl = "https://picsum.photos/id/103/450/300"
                         },
                         new
                         {
                             CourseImageId = 5,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9631),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8538),
                             CourseId = 2,
                             ImageUrl = "https://picsum.photos/id/104/450/300"
                         },
                         new
                         {
                             CourseImageId = 6,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9632),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8539),
                             CourseId = 2,
                             ImageUrl = "https://picsum.photos/id/105/450/300"
                         },
                         new
                         {
                             CourseImageId = 7,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9633),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8540),
                             CourseId = 3,
                             ImageUrl = "https://picsum.photos/id/106/450/300"
                         },
                         new
                         {
                             CourseImageId = 8,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9634),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8543),
                             CourseId = 3,
                             ImageUrl = "https://picsum.photos/id/107/450/300"
                         },
                         new
                         {
                             CourseImageId = 9,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9634),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8544),
                             CourseId = 3,
                             ImageUrl = "https://picsum.photos/id/108/450/300"
                         },
                         new
                         {
                             CourseImageId = 10,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9635),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8545),
                             CourseId = 4,
                             ImageUrl = "https://picsum.photos/id/109/450/300"
                         },
                         new
                         {
                             CourseImageId = 11,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9637),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8546),
                             CourseId = 4,
                             ImageUrl = "https://picsum.photos/id/110/450/300"
                         },
                         new
                         {
                             CourseImageId = 12,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9638),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8546),
                             CourseId = 4,
                             ImageUrl = "https://picsum.photos/id/111/450/300"
                         });
@@ -1924,126 +1924,126 @@ namespace Infrastructure.Migrations
                         new
                         {
                             SubjectId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9580),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8463),
                             CourseCategoryId = 1,
                             SubjectName = "英文"
                         },
                         new
                         {
                             SubjectId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9582),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8464),
                             CourseCategoryId = 1,
                             SubjectName = "日文"
                         },
                         new
                         {
                             SubjectId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9583),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8465),
                             CourseCategoryId = 1,
                             SubjectName = "中文"
                         },
                         new
                         {
                             SubjectId = 4,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9584),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8467),
                             CourseCategoryId = 1,
                             SubjectName = "德文"
                         },
                         new
                         {
                             SubjectId = 5,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9585),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8468),
                             CourseCategoryId = 1,
                             SubjectName = "法文"
                         },
                         new
                         {
                             SubjectId = 6,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9586),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8469),
                             CourseCategoryId = 1,
                             SubjectName = "西班牙文"
                         },
                         new
                         {
                             SubjectId = 7,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9587),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8470),
                             CourseCategoryId = 2,
                             SubjectName = "HTML/CSS"
                         },
                         new
                         {
                             SubjectId = 8,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9588),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8471),
                             CourseCategoryId = 2,
                             SubjectName = "JavaScript"
                         },
                         new
                         {
                             SubjectId = 9,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9589),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8472),
                             CourseCategoryId = 2,
                             SubjectName = "C#"
                         },
                         new
                         {
                             SubjectId = 10,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9590),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8473),
                             CourseCategoryId = 2,
                             SubjectName = "SQL"
                         },
                         new
                         {
                             SubjectId = 11,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9591),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8474),
                             CourseCategoryId = 2,
                             SubjectName = "Python"
                         },
                         new
                         {
                             SubjectId = 12,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9592),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8475),
                             CourseCategoryId = 2,
                             SubjectName = "Java"
                         },
                         new
                         {
                             SubjectId = 13,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9593),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8476),
                             CourseCategoryId = 3,
                             SubjectName = "數學"
                         },
                         new
                         {
                             SubjectId = 14,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9594),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8477),
                             CourseCategoryId = 3,
                             SubjectName = "物理"
                         },
                         new
                         {
                             SubjectId = 15,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9595),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8478),
                             CourseCategoryId = 3,
                             SubjectName = "化學"
                         },
                         new
                         {
                             SubjectId = 16,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9596),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8479),
                             CourseCategoryId = 3,
                             SubjectName = "歷史"
                         },
                         new
                         {
                             SubjectId = 17,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9597),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8505),
                             CourseCategoryId = 3,
                             SubjectName = "地理"
                         },
                         new
                         {
                             SubjectId = 18,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9598),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8506),
                             CourseCategoryId = 3,
                             SubjectName = "生物"
                         });
@@ -2096,7 +2096,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8900),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7828),
                             DepartmentName = "Computer Science",
                             SchoolName = "National Taiwan University",
                             StudyEndYear = 2014,
@@ -2105,7 +2105,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8915),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7847),
                             DepartmentName = "Economics",
                             SchoolName = "Kyoto University",
                             StudyEndYear = 2016,
@@ -2114,7 +2114,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8916),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7848),
                             DepartmentName = "Engineering",
                             SchoolName = "Seoul National University",
                             StudyEndYear = 2015,
@@ -2123,7 +2123,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 4,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8917),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7849),
                             DepartmentName = "Law",
                             SchoolName = "Harvard University",
                             StudyEndYear = 2012,
@@ -2132,7 +2132,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 5,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8919),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7851),
                             DepartmentName = "Business",
                             SchoolName = "Stanford University",
                             StudyEndYear = 2013,
@@ -2141,7 +2141,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 6,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8920),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7852),
                             DepartmentName = "Philosophy",
                             SchoolName = "University of Oxford",
                             StudyEndYear = 2011,
@@ -2150,7 +2150,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 7,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8922),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7854),
                             DepartmentName = "Mathematics",
                             SchoolName = "University of Cambridge",
                             StudyEndYear = 2010,
@@ -2159,7 +2159,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 8,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8923),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7855),
                             DepartmentName = "Physics",
                             SchoolName = "Massachusetts Institute of Technology",
                             StudyEndYear = 2017,
@@ -2168,7 +2168,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 9,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8924),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7856),
                             DepartmentName = "Chemistry",
                             SchoolName = "University of California, Berkeley",
                             StudyEndYear = 2014,
@@ -2177,7 +2177,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             EducationId = 10,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8926),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7857),
                             DepartmentName = "Biology",
                             SchoolName = "University of Toronto",
                             StudyEndYear = 2016,
@@ -2319,8 +2319,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "1234567890",
                             BankCode = "001",
-                            Birthday = new DateTime(1994, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8962),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8978),
+                            Birthday = new DateTime(1994, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7891),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7910),
                             EducationId = 1,
                             Email = "john.doe@example.com",
                             FirstName = "John",
@@ -2336,7 +2336,7 @@ namespace Infrastructure.Migrations
                             Phone = "123456789",
                             SpokenLanguage = "English",
                             TutorIntro = "Experienced English tutor",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8979)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7911)
                         },
                         new
                         {
@@ -2345,8 +2345,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "2345678901",
                             BankCode = "002",
-                            Birthday = new DateTime(1999, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8982),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8983),
+                            Birthday = new DateTime(1999, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7914),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7916),
                             EducationId = 2,
                             Email = "jane.smith@example.com",
                             FirstName = "Jane",
@@ -2362,7 +2362,7 @@ namespace Infrastructure.Migrations
                             Phone = "987654321",
                             SpokenLanguage = "Japanese",
                             TutorIntro = "Japanese language specialist",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8984)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7916)
                         },
                         new
                         {
@@ -2371,8 +2371,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "3456789012",
                             BankCode = "003",
-                            Birthday = new DateTime(1996, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8987),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8989),
+                            Birthday = new DateTime(1996, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7919),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7922),
                             EducationId = 3,
                             Email = "mark.brown@example.com",
                             FirstName = "Mark",
@@ -2388,7 +2388,7 @@ namespace Infrastructure.Migrations
                             Phone = "123123123",
                             SpokenLanguage = "Korean, English",
                             TutorIntro = "Korean language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8989)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7922)
                         },
                         new
                         {
@@ -2397,8 +2397,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "4567890123",
                             BankCode = "004",
-                            Birthday = new DateTime(1991, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8992),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8995),
+                            Birthday = new DateTime(1991, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7925),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7928),
                             EducationId = 4,
                             Email = "chris.taylor@example.com",
                             FirstName = "Chris",
@@ -2414,7 +2414,7 @@ namespace Infrastructure.Migrations
                             Phone = "444555666",
                             SpokenLanguage = "German, English",
                             TutorIntro = "German language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8996)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7929)
                         },
                         new
                         {
@@ -2423,8 +2423,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "5678901234",
                             BankCode = "005",
-                            Birthday = new DateTime(1997, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(8998),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9000),
+                            Birthday = new DateTime(1997, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7931),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7933),
                             EducationId = 5,
                             Email = "samantha.white@example.com",
                             FirstName = "Samantha",
@@ -2440,7 +2440,7 @@ namespace Infrastructure.Migrations
                             Phone = "555666777",
                             SpokenLanguage = "French, English",
                             TutorIntro = "French language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9001)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7933)
                         },
                         new
                         {
@@ -2449,8 +2449,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "6789012345",
                             BankCode = "006",
-                            Birthday = new DateTime(1992, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9003),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9005),
+                            Birthday = new DateTime(1992, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7962),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7964),
                             EducationId = 6,
                             Email = "paul.walker@example.com",
                             FirstName = "Paul",
@@ -2466,7 +2466,7 @@ namespace Infrastructure.Migrations
                             Phone = "666777888",
                             SpokenLanguage = "Spanish, English",
                             TutorIntro = "Spanish language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9005)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7965)
                         },
                         new
                         {
@@ -2475,8 +2475,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "7890123456",
                             BankCode = "007",
-                            Birthday = new DateTime(1995, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9008),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9010),
+                            Birthday = new DateTime(1995, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7967),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7969),
                             EducationId = 7,
                             Email = "laura.martin@example.com",
                             FirstName = "Laura",
@@ -2492,7 +2492,7 @@ namespace Infrastructure.Migrations
                             Phone = "777888999",
                             SpokenLanguage = "Chinese, English",
                             TutorIntro = "Chinese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9010)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7970)
                         },
                         new
                         {
@@ -2501,8 +2501,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "8901234567",
                             BankCode = "008",
-                            Birthday = new DateTime(1993, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9013),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9014),
+                            Birthday = new DateTime(1993, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7972),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7974),
                             EducationId = 8,
                             Email = "david.jones@example.com",
                             FirstName = "David",
@@ -2518,7 +2518,7 @@ namespace Infrastructure.Migrations
                             Phone = "888999000",
                             SpokenLanguage = "Russian, English",
                             TutorIntro = "Russian language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9015)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7974)
                         },
                         new
                         {
@@ -2527,8 +2527,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "9012345678",
                             BankCode = "009",
-                            Birthday = new DateTime(1998, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9019),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9021),
+                            Birthday = new DateTime(1998, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7977),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7980),
                             EducationId = 9,
                             Email = "emily.davis@example.com",
                             FirstName = "Emily",
@@ -2544,7 +2544,7 @@ namespace Infrastructure.Migrations
                             Phone = "999000111",
                             SpokenLanguage = "Italian, English",
                             TutorIntro = "Italian language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9021)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7981)
                         },
                         new
                         {
@@ -2553,8 +2553,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "0123456789",
                             BankCode = "010",
-                            Birthday = new DateTime(1990, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9024),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9025),
+                            Birthday = new DateTime(1990, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7983),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7985),
                             EducationId = 10,
                             Email = "michael.wilson@example.com",
                             FirstName = "Michael",
@@ -2570,7 +2570,7 @@ namespace Infrastructure.Migrations
                             Phone = "000111222",
                             SpokenLanguage = "Portuguese, English",
                             TutorIntro = "Portuguese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9026)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7985)
                         },
                         new
                         {
@@ -2579,8 +2579,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "3456781234",
                             BankCode = "011",
-                            Birthday = new DateTime(1995, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9060),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9062),
+                            Birthday = new DateTime(1995, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7988),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7990),
                             EducationId = 1,
                             Email = "carlos.miller@example.com",
                             FirstName = "Carlos",
@@ -2596,7 +2596,7 @@ namespace Infrastructure.Migrations
                             Phone = "101010101",
                             SpokenLanguage = "English, Spanish",
                             TutorIntro = "Experienced tutor in English and Spanish",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9062)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7990)
                         },
                         new
                         {
@@ -2605,8 +2605,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "4567892345",
                             BankCode = "012",
-                            Birthday = new DateTime(2000, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9067),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9073),
+                            Birthday = new DateTime(2000, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7993),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7994),
                             EducationId = 2,
                             Email = "olivia.brown@example.com",
                             FirstName = "Olivia",
@@ -2622,7 +2622,7 @@ namespace Infrastructure.Migrations
                             Phone = "202020202",
                             SpokenLanguage = "Japanese, English",
                             TutorIntro = "Expert in Japanese language",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9074)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7995)
                         },
                         new
                         {
@@ -2631,8 +2631,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "5678913456",
                             BankCode = "013",
-                            Birthday = new DateTime(1989, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9076),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9078),
+                            Birthday = new DateTime(1989, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7997),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7999),
                             EducationId = 3,
                             Email = "james.johnson@example.com",
                             FirstName = "James",
@@ -2648,7 +2648,7 @@ namespace Infrastructure.Migrations
                             Phone = "303030303",
                             SpokenLanguage = "Korean, English",
                             TutorIntro = "Korean language specialist",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9078)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(7999)
                         },
                         new
                         {
@@ -2657,8 +2657,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "6789124567",
                             BankCode = "014",
-                            Birthday = new DateTime(2002, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9082),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9087),
+                            Birthday = new DateTime(2002, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8003),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8005),
                             EducationId = 4,
                             Email = "emma.garcia@example.com",
                             FirstName = "Emma",
@@ -2674,7 +2674,7 @@ namespace Infrastructure.Migrations
                             Phone = "404040404",
                             SpokenLanguage = "German, English",
                             TutorIntro = "Expert in German language",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9088)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8005)
                         },
                         new
                         {
@@ -2683,8 +2683,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "7891235678",
                             BankCode = "015",
-                            Birthday = new DateTime(1998, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9090),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9092),
+                            Birthday = new DateTime(1998, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8008),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8009),
                             EducationId = 5,
                             Email = "robert.martinez@example.com",
                             FirstName = "Robert",
@@ -2700,7 +2700,7 @@ namespace Infrastructure.Migrations
                             Phone = "505050505",
                             SpokenLanguage = "French, English",
                             TutorIntro = "French language specialist",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9092)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8010)
                         },
                         new
                         {
@@ -2709,8 +2709,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "8902346789",
                             BankCode = "016",
-                            Birthday = new DateTime(2003, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9095),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9096),
+                            Birthday = new DateTime(2003, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8012),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8014),
                             EducationId = 6,
                             Email = "sophia.rodriguez@example.com",
                             FirstName = "Sophia",
@@ -2726,7 +2726,7 @@ namespace Infrastructure.Migrations
                             Phone = "606060606",
                             SpokenLanguage = "Spanish, English",
                             TutorIntro = "Spanish language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9097)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8014)
                         },
                         new
                         {
@@ -2735,8 +2735,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "9013457890",
                             BankCode = "017",
-                            Birthday = new DateTime(1991, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9099),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9101),
+                            Birthday = new DateTime(1991, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8017),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8018),
                             EducationId = 7,
                             Email = "liam.hernandez@example.com",
                             FirstName = "Liam",
@@ -2752,7 +2752,7 @@ namespace Infrastructure.Migrations
                             Phone = "707070707",
                             SpokenLanguage = "Chinese, English",
                             TutorIntro = "Chinese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9101)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8019)
                         },
                         new
                         {
@@ -2761,8 +2761,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "0123456789",
                             BankCode = "018",
-                            Birthday = new DateTime(2004, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9104),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9105),
+                            Birthday = new DateTime(2004, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8021),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8023),
                             EducationId = 8,
                             Email = "isabella.lopez@example.com",
                             FirstName = "Isabella",
@@ -2778,7 +2778,7 @@ namespace Infrastructure.Migrations
                             Phone = "808080808",
                             SpokenLanguage = "Russian, English",
                             TutorIntro = "Russian language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9106)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8023)
                         },
                         new
                         {
@@ -2787,8 +2787,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "1234567890",
                             BankCode = "019",
-                            Birthday = new DateTime(1996, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9110),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9111),
+                            Birthday = new DateTime(1996, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8027),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8029),
                             EducationId = 9,
                             Email = "benjamin.gonzalez@example.com",
                             FirstName = "Benjamin",
@@ -2804,7 +2804,7 @@ namespace Infrastructure.Migrations
                             Phone = "909090909",
                             SpokenLanguage = "Italian, English",
                             TutorIntro = "Italian language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9112)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8029)
                         },
                         new
                         {
@@ -2813,8 +2813,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "2345678901",
                             BankCode = "020",
-                            Birthday = new DateTime(1997, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9114),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9116),
+                            Birthday = new DateTime(1997, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8056),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8058),
                             EducationId = 10,
                             Email = "mia.wilson@example.com",
                             FirstName = "Mia",
@@ -2830,7 +2830,7 @@ namespace Infrastructure.Migrations
                             Phone = "1010101010",
                             SpokenLanguage = "Portuguese, English",
                             TutorIntro = "Portuguese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9116)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8058)
                         },
                         new
                         {
@@ -2839,8 +2839,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "3456781234",
                             BankCode = "021",
-                            Birthday = new DateTime(1995, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9118),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9120),
+                            Birthday = new DateTime(1995, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8061),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8062),
                             EducationId = 1,
                             Email = "daniel.anderson@example.com",
                             FirstName = "Daniel",
@@ -2856,7 +2856,7 @@ namespace Infrastructure.Migrations
                             Phone = "111111111",
                             SpokenLanguage = "English, Spanish",
                             TutorIntro = "Experienced tutor in English and Spanish",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9120)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8063)
                         },
                         new
                         {
@@ -2865,8 +2865,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "4567892345",
                             BankCode = "022",
-                            Birthday = new DateTime(2000, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9123),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9125),
+                            Birthday = new DateTime(2000, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8065),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8067),
                             EducationId = 2,
                             Email = "ava.thomas@example.com",
                             FirstName = "Ava",
@@ -2882,7 +2882,7 @@ namespace Infrastructure.Migrations
                             Phone = "222222222",
                             SpokenLanguage = "Japanese, English",
                             TutorIntro = "Expert in Japanese language",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9125)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8067)
                         },
                         new
                         {
@@ -2891,8 +2891,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "5678913456",
                             BankCode = "023",
-                            Birthday = new DateTime(1989, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9127),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9131),
+                            Birthday = new DateTime(1989, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8070),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8073),
                             EducationId = 3,
                             Email = "matthew.jackson@example.com",
                             FirstName = "Matthew",
@@ -2908,7 +2908,7 @@ namespace Infrastructure.Migrations
                             Phone = "333333333",
                             SpokenLanguage = "Korean, English",
                             TutorIntro = "Korean language specialist",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9131)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8073)
                         },
                         new
                         {
@@ -2917,8 +2917,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "6789124567",
                             BankCode = "024",
-                            Birthday = new DateTime(2002, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9134),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9135),
+                            Birthday = new DateTime(2002, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8076),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8077),
                             EducationId = 4,
                             Email = "ella.harris@example.com",
                             FirstName = "Ella",
@@ -2934,7 +2934,7 @@ namespace Infrastructure.Migrations
                             Phone = "444444444",
                             SpokenLanguage = "German, English",
                             TutorIntro = "Expert in German language",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9136)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8078)
                         },
                         new
                         {
@@ -2943,8 +2943,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "7891235678",
                             BankCode = "025",
-                            Birthday = new DateTime(1998, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9161),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9164),
+                            Birthday = new DateTime(1998, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8080),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8082),
                             EducationId = 5,
                             Email = "lucas.clark@example.com",
                             FirstName = "Lucas",
@@ -2960,7 +2960,7 @@ namespace Infrastructure.Migrations
                             Phone = "555555555",
                             SpokenLanguage = "French, English",
                             TutorIntro = "French language specialist",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9165)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8082)
                         },
                         new
                         {
@@ -2969,8 +2969,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "8902346789",
                             BankCode = "026",
-                            Birthday = new DateTime(2003, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9169),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9173),
+                            Birthday = new DateTime(2003, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8085),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8086),
                             EducationId = 6,
                             Email = "mia.lewis@example.com",
                             FirstName = "Mia",
@@ -2986,7 +2986,7 @@ namespace Infrastructure.Migrations
                             Phone = "666666666",
                             SpokenLanguage = "Spanish, English",
                             TutorIntro = "Spanish language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9173)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8087)
                         },
                         new
                         {
@@ -2995,8 +2995,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "9013457890",
                             BankCode = "027",
-                            Birthday = new DateTime(1991, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9181),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9182),
+                            Birthday = new DateTime(1991, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8089),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8091),
                             EducationId = 7,
                             Email = "logan.young@example.com",
                             FirstName = "Logan",
@@ -3012,7 +3012,7 @@ namespace Infrastructure.Migrations
                             Phone = "777777777",
                             SpokenLanguage = "Chinese, English",
                             TutorIntro = "Chinese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9183)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8091)
                         },
                         new
                         {
@@ -3021,8 +3021,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "0123456789",
                             BankCode = "028",
-                            Birthday = new DateTime(2004, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9185),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9189),
+                            Birthday = new DateTime(2004, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8093),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8096),
                             EducationId = 8,
                             Email = "aria.king@example.com",
                             FirstName = "Aria",
@@ -3038,7 +3038,7 @@ namespace Infrastructure.Migrations
                             Phone = "888888888",
                             SpokenLanguage = "Russian, English",
                             TutorIntro = "Russian language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9190)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8097)
                         },
                         new
                         {
@@ -3047,8 +3047,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "1234567890",
                             BankCode = "029",
-                            Birthday = new DateTime(1996, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9193),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9197),
+                            Birthday = new DateTime(1996, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8099),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8101),
                             EducationId = 9,
                             Email = "ethan.wright@example.com",
                             FirstName = "Ethan",
@@ -3064,7 +3064,7 @@ namespace Infrastructure.Migrations
                             Phone = "999999999",
                             SpokenLanguage = "Italian, English",
                             TutorIntro = "Italian language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9198)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8101)
                         },
                         new
                         {
@@ -3073,8 +3073,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "2345678901",
                             BankCode = "030",
-                            Birthday = new DateTime(1997, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9202),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9203),
+                            Birthday = new DateTime(1997, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8104),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8105),
                             EducationId = 10,
                             Email = "charlotte.hill@example.com",
                             FirstName = "Charlotte",
@@ -3090,7 +3090,7 @@ namespace Infrastructure.Migrations
                             Phone = "1010101010",
                             SpokenLanguage = "Portuguese, English",
                             TutorIntro = "Portuguese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9204)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8106)
                         },
                         new
                         {
@@ -3099,8 +3099,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "1234567890",
                             BankCode = "031",
-                            Birthday = new DateTime(1994, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9211),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9215),
+                            Birthday = new DateTime(1994, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8108),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8110),
                             EducationId = 1,
                             Email = "henry.evans@example.com",
                             FirstName = "Henry",
@@ -3116,7 +3116,7 @@ namespace Infrastructure.Migrations
                             Phone = "111222333",
                             SpokenLanguage = "English, Spanish",
                             TutorIntro = "Expert in English and Spanish",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9216)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8110)
                         },
                         new
                         {
@@ -3125,8 +3125,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "2345678901",
                             BankCode = "032",
-                            Birthday = new DateTime(2000, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9218),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9220),
+                            Birthday = new DateTime(2000, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8112),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8114),
                             EducationId = 2,
                             Email = "chloe.scott@example.com",
                             FirstName = "Chloe",
@@ -3142,7 +3142,7 @@ namespace Infrastructure.Migrations
                             Phone = "444555666",
                             SpokenLanguage = "Japanese, English",
                             TutorIntro = "Japanese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9220)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8114)
                         },
                         new
                         {
@@ -3151,8 +3151,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "3456789012",
                             BankCode = "033",
-                            Birthday = new DateTime(1995, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9225),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9226),
+                            Birthday = new DateTime(1995, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8118),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8120),
                             EducationId = 3,
                             Email = "jackson.mitchell@example.com",
                             FirstName = "Jackson",
@@ -3168,7 +3168,7 @@ namespace Infrastructure.Migrations
                             Phone = "555666777",
                             SpokenLanguage = "Korean, English",
                             TutorIntro = "Korean language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9227)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8120)
                         },
                         new
                         {
@@ -3177,8 +3177,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "4567890123",
                             BankCode = "034",
-                            Birthday = new DateTime(1999, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9229),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9231),
+                            Birthday = new DateTime(1999, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8123),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8124),
                             EducationId = 4,
                             Email = "amelia.martinez@example.com",
                             FirstName = "Amelia",
@@ -3194,7 +3194,7 @@ namespace Infrastructure.Migrations
                             Phone = "666777888",
                             SpokenLanguage = "German, English",
                             TutorIntro = "Expert in German language",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9231)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8125)
                         },
                         new
                         {
@@ -3203,8 +3203,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "5678901234",
                             BankCode = "035",
-                            Birthday = new DateTime(1998, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9233),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9235),
+                            Birthday = new DateTime(1998, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8141),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8142),
                             EducationId = 5,
                             Email = "sebastian.morris@example.com",
                             FirstName = "Sebastian",
@@ -3220,7 +3220,7 @@ namespace Infrastructure.Migrations
                             Phone = "777888999",
                             SpokenLanguage = "French, English",
                             TutorIntro = "French language specialist",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9235)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8143)
                         },
                         new
                         {
@@ -3229,8 +3229,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "6789012345",
                             BankCode = "036",
-                            Birthday = new DateTime(2001, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9238),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9239),
+                            Birthday = new DateTime(2001, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8145),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8147),
                             EducationId = 6,
                             Email = "grace.cooper@example.com",
                             FirstName = "Grace",
@@ -3246,7 +3246,7 @@ namespace Infrastructure.Migrations
                             Phone = "888999000",
                             SpokenLanguage = "Spanish, English",
                             TutorIntro = "Spanish language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9240)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8147)
                         },
                         new
                         {
@@ -3255,8 +3255,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "7890123456",
                             BankCode = "037",
-                            Birthday = new DateTime(1993, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9242),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9243),
+                            Birthday = new DateTime(1993, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8150),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8151),
                             EducationId = 7,
                             Email = "aiden.perez@example.com",
                             FirstName = "Aiden",
@@ -3272,7 +3272,7 @@ namespace Infrastructure.Migrations
                             Phone = "999000111",
                             SpokenLanguage = "Chinese, English",
                             TutorIntro = "Chinese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9244)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8152)
                         },
                         new
                         {
@@ -3281,8 +3281,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "8901234567",
                             BankCode = "038",
-                            Birthday = new DateTime(2002, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9248),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9249),
+                            Birthday = new DateTime(2002, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8156),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8158),
                             EducationId = 8,
                             Email = "avery.nelson@example.com",
                             FirstName = "Avery",
@@ -3298,7 +3298,7 @@ namespace Infrastructure.Migrations
                             Phone = "000111222",
                             SpokenLanguage = "Russian, English",
                             TutorIntro = "Russian language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9249)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8158)
                         },
                         new
                         {
@@ -3307,8 +3307,8 @@ namespace Infrastructure.Migrations
                             AccountType = 1,
                             BankAccount = "0123456789",
                             BankCode = "039",
-                            Birthday = new DateTime(1990, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9274),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9276),
+                            Birthday = new DateTime(1990, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8160),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8162),
                             EducationId = 9,
                             Email = "oliver.king@example.com",
                             FirstName = "Oliver",
@@ -3324,7 +3324,7 @@ namespace Infrastructure.Migrations
                             Phone = "111222333",
                             SpokenLanguage = "Italian, English",
                             TutorIntro = "Italian language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9276)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8162)
                         },
                         new
                         {
@@ -3333,8 +3333,8 @@ namespace Infrastructure.Migrations
                             AccountType = 2,
                             BankAccount = "2345678901",
                             BankCode = "040",
-                            Birthday = new DateTime(1996, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9279),
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9280),
+                            Birthday = new DateTime(1996, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8165),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8166),
                             EducationId = 10,
                             Email = "ella.wood@example.com",
                             FirstName = "Ella",
@@ -3350,7 +3350,7 @@ namespace Infrastructure.Migrations
                             Phone = "222333444",
                             SpokenLanguage = "Portuguese, English",
                             TutorIntro = "Portuguese language expert",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9281)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8167)
                         });
                 });
 
@@ -3424,162 +3424,162 @@ namespace Infrastructure.Migrations
                         new
                         {
                             MemberPreferenceId = 1,
-                            Cdate = new DateTime(2024, 4, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(7),
+                            Cdate = new DateTime(2024, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8868),
                             MemberId = 1,
                             SubjecId = 1,
-                            Udate = new DateTime(2024, 5, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(8)
+                            Udate = new DateTime(2024, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8869)
                         },
                         new
                         {
                             MemberPreferenceId = 2,
-                            Cdate = new DateTime(2024, 5, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(10),
+                            Cdate = new DateTime(2024, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8871),
                             MemberId = 2,
                             SubjecId = 2,
-                            Udate = new DateTime(2024, 6, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(13)
+                            Udate = new DateTime(2024, 6, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8872)
                         },
                         new
                         {
                             MemberPreferenceId = 3,
-                            Cdate = new DateTime(2024, 6, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(15),
+                            Cdate = new DateTime(2024, 6, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8873),
                             MemberId = 3,
                             SubjecId = 3,
-                            Udate = new DateTime(2024, 7, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(15)
+                            Udate = new DateTime(2024, 7, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8874)
                         },
                         new
                         {
                             MemberPreferenceId = 4,
-                            Cdate = new DateTime(2024, 7, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(16),
+                            Cdate = new DateTime(2024, 7, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8875),
                             MemberId = 4,
                             SubjecId = 4,
-                            Udate = new DateTime(2024, 8, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(17)
+                            Udate = new DateTime(2024, 8, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8876)
                         },
                         new
                         {
                             MemberPreferenceId = 5,
-                            Cdate = new DateTime(2024, 8, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(18),
+                            Cdate = new DateTime(2024, 8, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8877),
                             MemberId = 5,
                             SubjecId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(19)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8878)
                         },
                         new
                         {
                             MemberPreferenceId = 6,
-                            Cdate = new DateTime(2024, 3, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(20),
+                            Cdate = new DateTime(2024, 3, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8879),
                             MemberId = 6,
                             SubjecId = 6,
-                            Udate = new DateTime(2024, 4, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(20)
+                            Udate = new DateTime(2024, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8879)
                         },
                         new
                         {
                             MemberPreferenceId = 7,
-                            Cdate = new DateTime(2024, 4, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(21),
+                            Cdate = new DateTime(2024, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8881),
                             MemberId = 7,
                             SubjecId = 7,
-                            Udate = new DateTime(2024, 5, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(22)
+                            Udate = new DateTime(2024, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8881)
                         },
                         new
                         {
                             MemberPreferenceId = 8,
-                            Cdate = new DateTime(2024, 5, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(23),
+                            Cdate = new DateTime(2024, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8882),
                             MemberId = 8,
                             SubjecId = 8,
-                            Udate = new DateTime(2024, 6, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(24)
+                            Udate = new DateTime(2024, 6, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8883)
                         },
                         new
                         {
                             MemberPreferenceId = 9,
-                            Cdate = new DateTime(2024, 6, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(26),
+                            Cdate = new DateTime(2024, 6, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8884),
                             MemberId = 9,
                             SubjecId = 9,
-                            Udate = new DateTime(2024, 7, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(27)
+                            Udate = new DateTime(2024, 7, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8885)
                         },
                         new
                         {
                             MemberPreferenceId = 10,
-                            Cdate = new DateTime(2024, 7, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(28),
+                            Cdate = new DateTime(2024, 7, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8886),
                             MemberId = 10,
                             SubjecId = 10,
-                            Udate = new DateTime(2024, 8, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(29)
+                            Udate = new DateTime(2024, 8, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8887)
                         },
                         new
                         {
                             MemberPreferenceId = 11,
-                            Cdate = new DateTime(2024, 8, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(31),
+                            Cdate = new DateTime(2024, 8, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8888),
                             MemberId = 11,
                             SubjecId = 11,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(31)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8889)
                         },
                         new
                         {
                             MemberPreferenceId = 12,
-                            Cdate = new DateTime(2024, 3, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(32),
+                            Cdate = new DateTime(2024, 3, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8890),
                             MemberId = 12,
                             SubjecId = 12,
-                            Udate = new DateTime(2024, 4, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(33)
+                            Udate = new DateTime(2024, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8890)
                         },
                         new
                         {
                             MemberPreferenceId = 13,
-                            Cdate = new DateTime(2024, 4, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(34),
+                            Cdate = new DateTime(2024, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8891),
                             MemberId = 13,
                             SubjecId = 13,
-                            Udate = new DateTime(2024, 5, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(34)
+                            Udate = new DateTime(2024, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8892)
                         },
                         new
                         {
                             MemberPreferenceId = 14,
-                            Cdate = new DateTime(2024, 5, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(36),
+                            Cdate = new DateTime(2024, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8893),
                             MemberId = 14,
                             SubjecId = 14,
-                            Udate = new DateTime(2024, 6, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(36)
+                            Udate = new DateTime(2024, 6, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8894)
                         },
                         new
                         {
                             MemberPreferenceId = 15,
-                            Cdate = new DateTime(2024, 6, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(38),
+                            Cdate = new DateTime(2024, 6, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8896),
                             MemberId = 15,
                             SubjecId = 15,
-                            Udate = new DateTime(2024, 7, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(39)
+                            Udate = new DateTime(2024, 7, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8897)
                         },
                         new
                         {
                             MemberPreferenceId = 16,
-                            Cdate = new DateTime(2024, 7, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(40),
+                            Cdate = new DateTime(2024, 7, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8898),
                             MemberId = 16,
                             SubjecId = 16,
-                            Udate = new DateTime(2024, 8, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(40)
+                            Udate = new DateTime(2024, 8, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8899)
                         },
                         new
                         {
                             MemberPreferenceId = 17,
-                            Cdate = new DateTime(2024, 8, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(41),
+                            Cdate = new DateTime(2024, 8, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8900),
                             MemberId = 17,
                             SubjecId = 17,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(42)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8901)
                         },
                         new
                         {
                             MemberPreferenceId = 18,
-                            Cdate = new DateTime(2024, 3, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(43),
+                            Cdate = new DateTime(2024, 3, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8902),
                             MemberId = 18,
                             SubjecId = 18,
-                            Udate = new DateTime(2024, 4, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(44)
+                            Udate = new DateTime(2024, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8902)
                         },
                         new
                         {
                             MemberPreferenceId = 19,
-                            Cdate = new DateTime(2024, 4, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(45),
+                            Cdate = new DateTime(2024, 4, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8903),
                             MemberId = 19,
                             SubjecId = 1,
-                            Udate = new DateTime(2024, 5, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(45)
+                            Udate = new DateTime(2024, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8904)
                         },
                         new
                         {
                             MemberPreferenceId = 20,
-                            Cdate = new DateTime(2024, 5, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(47),
+                            Cdate = new DateTime(2024, 5, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8905),
                             MemberId = 20,
                             SubjecId = 2,
-                            Udate = new DateTime(2024, 6, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(47)
+                            Udate = new DateTime(2024, 6, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8906)
                         });
                 });
 
@@ -3749,7 +3749,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             OrderId = 1,
-                            Cdate = new DateTime(2024, 9, 4, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9672),
+                            Cdate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8581),
                             CouponPrice = 100.00m,
                             InvoiceType = (short)1,
                             MemberId = 1,
@@ -3758,14 +3758,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order1@domain.com",
                             TaxIdNumber = "A123456789",
                             TotalPrice = 1000.00m,
-                            TransactionDate = new DateTime(2024, 9, 4, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9662),
-                            Udate = new DateTime(2024, 9, 5, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9673),
+                            TransactionDate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8572),
+                            Udate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8582),
                             VATNumber = "12345678"
                         },
                         new
                         {
                             OrderId = 2,
-                            Cdate = new DateTime(2024, 9, 5, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9676),
+                            Cdate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8585),
                             CouponPrice = 150.00m,
                             InvoiceType = (short)2,
                             MemberId = 2,
@@ -3774,14 +3774,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order2@domain.com",
                             TaxIdNumber = "B123456789",
                             TotalPrice = 1500.00m,
-                            TransactionDate = new DateTime(2024, 9, 5, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9675),
-                            Udate = new DateTime(2024, 9, 6, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9677),
+                            TransactionDate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8583),
+                            Udate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8585),
                             VATNumber = "22345678"
                         },
                         new
                         {
                             OrderId = 3,
-                            Cdate = new DateTime(2024, 9, 6, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9732),
+                            Cdate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8588),
                             CouponPrice = 200.00m,
                             InvoiceType = (short)1,
                             MemberId = 3,
@@ -3790,14 +3790,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order3@domain.com",
                             TaxIdNumber = "C123456789",
                             TotalPrice = 2000.00m,
-                            TransactionDate = new DateTime(2024, 9, 6, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9731),
-                            Udate = new DateTime(2024, 9, 7, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9733),
+                            TransactionDate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8587),
+                            Udate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8589),
                             VATNumber = "32345678"
                         },
                         new
                         {
                             OrderId = 4,
-                            Cdate = new DateTime(2024, 9, 7, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9737),
+                            Cdate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8593),
                             CouponPrice = 250.00m,
                             InvoiceType = (short)2,
                             MemberId = 4,
@@ -3806,14 +3806,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order4@domain.com",
                             TaxIdNumber = "D123456789",
                             TotalPrice = 2500.00m,
-                            TransactionDate = new DateTime(2024, 9, 7, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9734),
-                            Udate = new DateTime(2024, 9, 8, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9738),
+                            TransactionDate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8590),
+                            Udate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8593),
                             VATNumber = "42345678"
                         },
                         new
                         {
                             OrderId = 5,
-                            Cdate = new DateTime(2024, 9, 8, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9741),
+                            Cdate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8596),
                             CouponPrice = 300.00m,
                             InvoiceType = (short)1,
                             MemberId = 5,
@@ -3822,14 +3822,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order5@domain.com",
                             TaxIdNumber = "E123456789",
                             TotalPrice = 3000.00m,
-                            TransactionDate = new DateTime(2024, 9, 8, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9739),
-                            Udate = new DateTime(2024, 9, 9, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9741),
+                            TransactionDate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8595),
+                            Udate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8597),
                             VATNumber = "52345678"
                         },
                         new
                         {
                             OrderId = 6,
-                            Cdate = new DateTime(2024, 9, 9, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9744),
+                            Cdate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8599),
                             CouponPrice = 350.00m,
                             InvoiceType = (short)2,
                             MemberId = 6,
@@ -3838,14 +3838,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order6@domain.com",
                             TaxIdNumber = "F123456789",
                             TotalPrice = 3500.00m,
-                            TransactionDate = new DateTime(2024, 9, 9, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9743),
-                            Udate = new DateTime(2024, 9, 10, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9745),
+                            TransactionDate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8598),
+                            Udate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8600),
                             VATNumber = "62345678"
                         },
                         new
                         {
                             OrderId = 7,
-                            Cdate = new DateTime(2024, 9, 10, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9748),
+                            Cdate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8604),
                             CouponPrice = 400.00m,
                             InvoiceType = (short)1,
                             MemberId = 7,
@@ -3854,14 +3854,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order7@domain.com",
                             TaxIdNumber = "G123456789",
                             TotalPrice = 4000.00m,
-                            TransactionDate = new DateTime(2024, 9, 10, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9747),
-                            Udate = new DateTime(2024, 9, 11, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9749),
+                            TransactionDate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8603),
+                            Udate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8605),
                             VATNumber = "72345678"
                         },
                         new
                         {
                             OrderId = 8,
-                            Cdate = new DateTime(2024, 9, 11, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9752),
+                            Cdate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8607),
                             CouponPrice = 450.00m,
                             InvoiceType = (short)2,
                             MemberId = 8,
@@ -3870,14 +3870,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order8@domain.com",
                             TaxIdNumber = "H123456789",
                             TotalPrice = 4500.00m,
-                            TransactionDate = new DateTime(2024, 9, 11, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9750),
-                            Udate = new DateTime(2024, 9, 12, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9752),
+                            TransactionDate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8606),
+                            Udate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8608),
                             VATNumber = "82345678"
                         },
                         new
                         {
                             OrderId = 9,
-                            Cdate = new DateTime(2024, 9, 12, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9757),
+                            Cdate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8612),
                             CouponPrice = 500.00m,
                             InvoiceType = (short)1,
                             MemberId = 9,
@@ -3886,14 +3886,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order9@domain.com",
                             TaxIdNumber = "I123456789",
                             TotalPrice = 5000.00m,
-                            TransactionDate = new DateTime(2024, 9, 12, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9754),
-                            Udate = new DateTime(2024, 9, 13, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9757),
+                            TransactionDate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8609),
+                            Udate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8613),
                             VATNumber = "92345678"
                         },
                         new
                         {
                             OrderId = 10,
-                            Cdate = new DateTime(2024, 9, 13, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9760),
+                            Cdate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8616),
                             CouponPrice = 550.00m,
                             InvoiceType = (short)2,
                             MemberId = 10,
@@ -3902,14 +3902,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order10@domain.com",
                             TaxIdNumber = "J123456789",
                             TotalPrice = 5500.00m,
-                            TransactionDate = new DateTime(2024, 9, 13, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9759),
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9760),
+                            TransactionDate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8614),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8616),
                             VATNumber = "01234567"
                         },
                         new
                         {
                             OrderId = 11,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9763),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8619),
                             CouponPrice = 600.00m,
                             InvoiceType = (short)1,
                             MemberId = 11,
@@ -3918,14 +3918,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order11@domain.com",
                             TaxIdNumber = "K123456789",
                             TotalPrice = 6000.00m,
-                            TransactionDate = new DateTime(2024, 9, 14, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9762),
-                            Udate = new DateTime(2024, 9, 15, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9764),
+                            TransactionDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8617),
+                            Udate = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8619),
                             VATNumber = "12345679"
                         },
                         new
                         {
                             OrderId = 12,
-                            Cdate = new DateTime(2024, 9, 15, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9766),
+                            Cdate = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8622),
                             CouponPrice = 650.00m,
                             InvoiceType = (short)2,
                             MemberId = 12,
@@ -3934,14 +3934,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order12@domain.com",
                             TaxIdNumber = "L123456789",
                             TotalPrice = 6500.00m,
-                            TransactionDate = new DateTime(2024, 9, 15, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9765),
-                            Udate = new DateTime(2024, 9, 16, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9767),
+                            TransactionDate = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8620),
+                            Udate = new DateTime(2024, 9, 16, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8622),
                             VATNumber = "22345679"
                         },
                         new
                         {
                             OrderId = 13,
-                            Cdate = new DateTime(2024, 9, 16, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9770),
+                            Cdate = new DateTime(2024, 9, 16, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8625),
                             CouponPrice = 700.00m,
                             InvoiceType = (short)1,
                             MemberId = 13,
@@ -3950,14 +3950,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order13@domain.com",
                             TaxIdNumber = "M123456789",
                             TotalPrice = 7000.00m,
-                            TransactionDate = new DateTime(2024, 9, 16, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9768),
-                            Udate = new DateTime(2024, 9, 17, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9770),
+                            TransactionDate = new DateTime(2024, 9, 16, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8624),
+                            Udate = new DateTime(2024, 9, 17, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8625),
                             VATNumber = "32345679"
                         },
                         new
                         {
                             OrderId = 14,
-                            Cdate = new DateTime(2024, 9, 17, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9773),
+                            Cdate = new DateTime(2024, 9, 17, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8628),
                             CouponPrice = 750.00m,
                             InvoiceType = (short)2,
                             MemberId = 14,
@@ -3966,14 +3966,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order14@domain.com",
                             TaxIdNumber = "N123456789",
                             TotalPrice = 7500.00m,
-                            TransactionDate = new DateTime(2024, 9, 17, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9772),
-                            Udate = new DateTime(2024, 9, 18, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9775),
+                            TransactionDate = new DateTime(2024, 9, 17, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8627),
+                            Udate = new DateTime(2024, 9, 18, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8630),
                             VATNumber = "42345679"
                         },
                         new
                         {
                             OrderId = 15,
-                            Cdate = new DateTime(2024, 9, 18, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9778),
+                            Cdate = new DateTime(2024, 9, 18, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8633),
                             CouponPrice = 800.00m,
                             InvoiceType = (short)1,
                             MemberId = 15,
@@ -3982,14 +3982,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order15@domain.com",
                             TaxIdNumber = "O123456789",
                             TotalPrice = 8000.00m,
-                            TransactionDate = new DateTime(2024, 9, 18, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9776),
-                            Udate = new DateTime(2024, 9, 19, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9778),
+                            TransactionDate = new DateTime(2024, 9, 18, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8632),
+                            Udate = new DateTime(2024, 9, 19, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8633),
                             VATNumber = "52345679"
                         },
                         new
                         {
                             OrderId = 16,
-                            Cdate = new DateTime(2024, 9, 19, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9781),
+                            Cdate = new DateTime(2024, 9, 19, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8636),
                             CouponPrice = 850.00m,
                             InvoiceType = (short)2,
                             MemberId = 16,
@@ -3998,14 +3998,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order16@domain.com",
                             TaxIdNumber = "P123456789",
                             TotalPrice = 8500.00m,
-                            TransactionDate = new DateTime(2024, 9, 19, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9780),
-                            Udate = new DateTime(2024, 9, 20, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9782),
+                            TransactionDate = new DateTime(2024, 9, 19, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8635),
+                            Udate = new DateTime(2024, 9, 20, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8636),
                             VATNumber = "62345679"
                         },
                         new
                         {
                             OrderId = 17,
-                            Cdate = new DateTime(2024, 9, 20, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9784),
+                            Cdate = new DateTime(2024, 9, 20, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8639),
                             CouponPrice = 900.00m,
                             InvoiceType = (short)1,
                             MemberId = 17,
@@ -4014,14 +4014,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order17@domain.com",
                             TaxIdNumber = "Q123456789",
                             TotalPrice = 9000.00m,
-                            TransactionDate = new DateTime(2024, 9, 20, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9783),
-                            Udate = new DateTime(2024, 9, 21, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9785),
+                            TransactionDate = new DateTime(2024, 9, 20, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8638),
+                            Udate = new DateTime(2024, 9, 21, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8639),
                             VATNumber = "72345679"
                         },
                         new
                         {
                             OrderId = 18,
-                            Cdate = new DateTime(2024, 9, 21, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9787),
+                            Cdate = new DateTime(2024, 9, 21, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8642),
                             CouponPrice = 950.00m,
                             InvoiceType = (short)2,
                             MemberId = 18,
@@ -4030,14 +4030,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order18@domain.com",
                             TaxIdNumber = "R123456789",
                             TotalPrice = 9500.00m,
-                            TransactionDate = new DateTime(2024, 9, 21, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9786),
-                            Udate = new DateTime(2024, 9, 22, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9788),
+                            TransactionDate = new DateTime(2024, 9, 21, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8641),
+                            Udate = new DateTime(2024, 9, 22, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8643),
                             VATNumber = "82345679"
                         },
                         new
                         {
                             OrderId = 19,
-                            Cdate = new DateTime(2024, 9, 22, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9792),
+                            Cdate = new DateTime(2024, 9, 22, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8647),
                             CouponPrice = 1000.00m,
                             InvoiceType = (short)1,
                             MemberId = 19,
@@ -4046,14 +4046,14 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order19@domain.com",
                             TaxIdNumber = "S123456789",
                             TotalPrice = 10000.00m,
-                            TransactionDate = new DateTime(2024, 9, 22, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9789),
-                            Udate = new DateTime(2024, 9, 23, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9793),
+                            TransactionDate = new DateTime(2024, 9, 22, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8644),
+                            Udate = new DateTime(2024, 9, 23, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8647),
                             VATNumber = "92345679"
                         },
                         new
                         {
                             OrderId = 20,
-                            Cdate = new DateTime(2024, 9, 23, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9795),
+                            Cdate = new DateTime(2024, 9, 23, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8650),
                             CouponPrice = 1050.00m,
                             InvoiceType = (short)2,
                             MemberId = 20,
@@ -4062,8 +4062,8 @@ namespace Infrastructure.Migrations
                             SentVatemail = "order20@domain.com",
                             TaxIdNumber = "T123456789",
                             TotalPrice = 10500.00m,
-                            TransactionDate = new DateTime(2024, 9, 23, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9794),
-                            Udate = new DateTime(2024, 9, 24, 0, 57, 38, 69, DateTimeKind.Local).AddTicks(9796),
+                            TransactionDate = new DateTime(2024, 9, 23, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8648),
+                            Udate = new DateTime(2024, 9, 24, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(8650),
                             VATNumber = "01234579"
                         });
                 });
@@ -4457,182 +4457,182 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ProfessionalLicenseId = 1,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(251),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9099),
                             MemberId = 1,
                             ProfessionalLicenseName = "Certified Java Developer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/java_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(252)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9100)
                         },
                         new
                         {
                             ProfessionalLicenseId = 2,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(253),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9102),
                             MemberId = 2,
                             ProfessionalLicenseName = "Certified Python Developer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/python_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(254)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9102)
                         },
                         new
                         {
                             ProfessionalLicenseId = 3,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(255),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9103),
                             MemberId = 3,
                             ProfessionalLicenseName = "Certified C# Developer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/csharp_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(256)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9104)
                         },
                         new
                         {
                             ProfessionalLicenseId = 4,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(257),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9105),
                             MemberId = 4,
                             ProfessionalLicenseName = "Certified SQL Developer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/sql_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(257)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9106)
                         },
                         new
                         {
                             ProfessionalLicenseId = 5,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(258),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9107),
                             MemberId = 5,
                             ProfessionalLicenseName = "Certified JavaScript Developer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/js_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(259)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9108)
                         },
                         new
                         {
                             ProfessionalLicenseId = 6,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(260),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9109),
                             MemberId = 6,
                             ProfessionalLicenseName = "Certified Data Analyst",
                             ProfessionalLicenseUrl = "https://example.com/licenses/data_analyst_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(261)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9109)
                         },
                         new
                         {
                             ProfessionalLicenseId = 7,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(263),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9111),
                             MemberId = 7,
                             ProfessionalLicenseName = "Certified Project Manager",
                             ProfessionalLicenseUrl = "https://example.com/licenses/project_manager_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(264)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9112)
                         },
                         new
                         {
                             ProfessionalLicenseId = 8,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(265),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9113),
                             MemberId = 8,
                             ProfessionalLicenseName = "Certified Network Engineer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/network_engineer_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(266)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9114)
                         },
                         new
                         {
                             ProfessionalLicenseId = 9,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(267),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9115),
                             MemberId = 9,
                             ProfessionalLicenseName = "Certified Cloud Architect",
                             ProfessionalLicenseUrl = "https://example.com/licenses/cloud_architect_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(268)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9115)
                         },
                         new
                         {
                             ProfessionalLicenseId = 10,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(269),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9117),
                             MemberId = 10,
                             ProfessionalLicenseName = "Certified DevOps Engineer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/devops_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(269)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9117)
                         },
                         new
                         {
                             ProfessionalLicenseId = 11,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(270),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9118),
                             MemberId = 11,
                             ProfessionalLicenseName = "Certified Ethical Hacker",
                             ProfessionalLicenseUrl = "https://example.com/licenses/ethical_hacker_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(271)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9119)
                         },
                         new
                         {
                             ProfessionalLicenseId = 12,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(272),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9120),
                             MemberId = 12,
                             ProfessionalLicenseName = "Certified AI Engineer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/ai_engineer_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(273)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9120)
                         },
                         new
                         {
                             ProfessionalLicenseId = 13,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(274),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9122),
                             MemberId = 13,
                             ProfessionalLicenseName = "Certified ML Engineer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/ml_engineer_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(274)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9122)
                         },
                         new
                         {
                             ProfessionalLicenseId = 14,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(275),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9123),
                             MemberId = 14,
                             ProfessionalLicenseName = "Certified Blockchain Developer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/blockchain_dev_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(276)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9124)
                         },
                         new
                         {
                             ProfessionalLicenseId = 15,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(277),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9125),
                             MemberId = 15,
                             ProfessionalLicenseName = "Certified UX Designer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/ux_designer_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(278)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9126)
                         },
                         new
                         {
                             ProfessionalLicenseId = 16,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(279),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9127),
                             MemberId = 16,
                             ProfessionalLicenseName = "Certified UI Designer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/ui_designer_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(279)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9127)
                         },
                         new
                         {
                             ProfessionalLicenseId = 17,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(280),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9128),
                             MemberId = 17,
                             ProfessionalLicenseName = "Certified Product Manager",
                             ProfessionalLicenseUrl = "https://example.com/licenses/product_manager_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(281)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9129)
                         },
                         new
                         {
                             ProfessionalLicenseId = 18,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(283),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9131),
                             MemberId = 18,
                             ProfessionalLicenseName = "Certified IT Security Specialist",
                             ProfessionalLicenseUrl = "https://example.com/licenses/it_security_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(284)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9132)
                         },
                         new
                         {
                             ProfessionalLicenseId = 19,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(285),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9133),
                             MemberId = 19,
                             ProfessionalLicenseName = "Certified Web Developer",
                             ProfessionalLicenseUrl = "https://example.com/licenses/web_dev_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(286)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9134)
                         },
                         new
                         {
                             ProfessionalLicenseId = 20,
-                            Cdate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(287),
+                            Cdate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9135),
                             MemberId = 20,
                             ProfessionalLicenseName = "Certified Software Tester",
                             ProfessionalLicenseUrl = "https://example.com/licenses/software_tester_certified.jpg",
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(287)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9135)
                         });
                 });
 
@@ -4684,302 +4684,302 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ReviewId = 1,
-                            Cdate = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(310),
+                            Cdate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9157),
                             CommentText = "Great course!",
                             CourseId = 1,
                             Rating = (byte)5,
                             StudentId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(311)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9158)
                         },
                         new
                         {
                             ReviewId = 2,
-                            Cdate = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(313),
+                            Cdate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9159),
                             CommentText = "Very informative.",
                             CourseId = 2,
                             Rating = (byte)4,
                             StudentId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(313)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9160)
                         },
                         new
                         {
                             ReviewId = 3,
-                            Cdate = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(315),
+                            Cdate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9161),
                             CommentText = "Excellent content.",
                             CourseId = 3,
                             Rating = (byte)5,
                             StudentId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(315)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9161)
                         },
                         new
                         {
                             ReviewId = 4,
-                            Cdate = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(317),
+                            Cdate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9163),
                             CommentText = "Good explanations.",
                             CourseId = 4,
                             Rating = (byte)4,
                             StudentId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(317)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9163)
                         },
                         new
                         {
                             ReviewId = 5,
-                            Cdate = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(318),
+                            Cdate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9164),
                             CommentText = "Highly recommend.",
                             CourseId = 5,
                             Rating = (byte)5,
                             StudentId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(319)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9165)
                         },
                         new
                         {
                             ReviewId = 6,
-                            Cdate = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(320),
+                            Cdate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9166),
                             CommentText = "Well structured.",
                             CourseId = 6,
                             Rating = (byte)4,
                             StudentId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(321)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9167)
                         },
                         new
                         {
                             ReviewId = 7,
-                            Cdate = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(322),
+                            Cdate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9168),
                             CommentText = "Learned a lot.",
                             CourseId = 7,
                             Rating = (byte)5,
                             StudentId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(323)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9168)
                         },
                         new
                         {
                             ReviewId = 8,
-                            Cdate = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(324),
+                            Cdate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9170),
                             CommentText = "Great examples.",
                             CourseId = 8,
                             Rating = (byte)4,
                             StudentId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(325)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9172)
                         },
                         new
                         {
                             ReviewId = 9,
-                            Cdate = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(326),
+                            Cdate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9173),
                             CommentText = "In-depth knowledge.",
                             CourseId = 9,
                             Rating = (byte)5,
                             StudentId = 9,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(327)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9173)
                         },
                         new
                         {
                             ReviewId = 10,
-                            Cdate = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(328),
+                            Cdate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9175),
                             CommentText = "Comprehensive.",
                             CourseId = 10,
                             Rating = (byte)4,
                             StudentId = 10,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(329)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9175)
                         },
                         new
                         {
                             ReviewId = 11,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(330),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9176),
                             CommentText = "Loved it!",
                             CourseId = 11,
                             Rating = (byte)5,
                             StudentId = 11,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(330)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9177)
                         },
                         new
                         {
                             ReviewId = 12,
-                            Cdate = new DateTime(2024, 9, 15, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(332),
+                            Cdate = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9178),
                             CommentText = "Very useful.",
                             CourseId = 12,
                             Rating = (byte)4,
                             StudentId = 12,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(332)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9179)
                         },
                         new
                         {
                             ReviewId = 13,
-                            Cdate = new DateTime(2024, 9, 16, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(333),
+                            Cdate = new DateTime(2024, 9, 16, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9209),
                             CommentText = "Fantastic course!",
                             CourseId = 13,
                             Rating = (byte)5,
                             StudentId = 13,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(334)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9210)
                         },
                         new
                         {
                             ReviewId = 14,
-                            Cdate = new DateTime(2024, 9, 17, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(335),
+                            Cdate = new DateTime(2024, 9, 17, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9211),
                             CommentText = "Great teacher.",
                             CourseId = 14,
                             Rating = (byte)4,
                             StudentId = 14,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(336)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9211)
                         },
                         new
                         {
                             ReviewId = 15,
-                            Cdate = new DateTime(2024, 9, 18, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(337),
+                            Cdate = new DateTime(2024, 9, 18, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9213),
                             CommentText = "Well explained.",
                             CourseId = 15,
                             Rating = (byte)5,
                             StudentId = 15,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(337)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9213)
                         },
                         new
                         {
                             ReviewId = 16,
-                            Cdate = new DateTime(2024, 9, 19, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(338),
+                            Cdate = new DateTime(2024, 9, 19, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9214),
                             CommentText = "Good coverage.",
                             CourseId = 16,
                             Rating = (byte)4,
                             StudentId = 16,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(339)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9215)
                         },
                         new
                         {
                             ReviewId = 17,
-                            Cdate = new DateTime(2024, 9, 20, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(340),
+                            Cdate = new DateTime(2024, 9, 20, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9216),
                             CommentText = "Loved the content.",
                             CourseId = 17,
                             Rating = (byte)5,
                             StudentId = 17,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(341)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9217)
                         },
                         new
                         {
                             ReviewId = 18,
-                            Cdate = new DateTime(2024, 9, 21, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(342),
+                            Cdate = new DateTime(2024, 9, 21, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9218),
                             CommentText = "Very clear.",
                             CourseId = 18,
                             Rating = (byte)4,
                             StudentId = 18,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(343)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9218)
                         },
                         new
                         {
                             ReviewId = 19,
-                            Cdate = new DateTime(2024, 9, 22, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(346),
+                            Cdate = new DateTime(2024, 9, 22, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9221),
                             CommentText = "Highly informative.",
                             CourseId = 19,
                             Rating = (byte)5,
                             StudentId = 19,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(346)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9222)
                         },
                         new
                         {
                             ReviewId = 20,
-                            Cdate = new DateTime(2024, 9, 23, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(347),
+                            Cdate = new DateTime(2024, 9, 23, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9223),
                             CommentText = "Helpful.",
                             CourseId = 20,
                             Rating = (byte)4,
                             StudentId = 20,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(348)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9223)
                         },
                         new
                         {
                             ReviewId = 21,
-                            Cdate = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(349),
+                            Cdate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9224),
                             CommentText = "Amazing course!",
                             CourseId = 21,
                             Rating = (byte)5,
                             StudentId = 21,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(350)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9225)
                         },
                         new
                         {
                             ReviewId = 22,
-                            Cdate = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(351),
+                            Cdate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9226),
                             CommentText = "Well organized.",
                             CourseId = 22,
                             Rating = (byte)4,
                             StudentId = 22,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(351)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9227)
                         },
                         new
                         {
                             ReviewId = 23,
-                            Cdate = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(353),
+                            Cdate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9228),
                             CommentText = "Great insights.",
                             CourseId = 23,
                             Rating = (byte)5,
                             StudentId = 23,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(353)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9229)
                         },
                         new
                         {
                             ReviewId = 24,
-                            Cdate = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(354),
+                            Cdate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9230),
                             CommentText = "Valuable lessons.",
                             CourseId = 24,
                             Rating = (byte)4,
                             StudentId = 24,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(355)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9230)
                         },
                         new
                         {
                             ReviewId = 25,
-                            Cdate = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(356),
+                            Cdate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9231),
                             CommentText = "Excellent teaching.",
                             CourseId = 25,
                             Rating = (byte)5,
                             StudentId = 25,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(357)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9232)
                         },
                         new
                         {
                             ReviewId = 26,
-                            Cdate = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(358),
+                            Cdate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9233),
                             CommentText = "Clear and concise.",
                             CourseId = 26,
                             Rating = (byte)4,
                             StudentId = 26,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(358)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9234)
                         },
                         new
                         {
                             ReviewId = 27,
-                            Cdate = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(360),
+                            Cdate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9235),
                             CommentText = "Very educational.",
                             CourseId = 27,
                             Rating = (byte)5,
                             StudentId = 27,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(360)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9235)
                         },
                         new
                         {
                             ReviewId = 28,
-                            Cdate = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(362),
+                            Cdate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9237),
                             CommentText = "Useful information.",
                             CourseId = 28,
                             Rating = (byte)4,
                             StudentId = 28,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(362)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9237)
                         },
                         new
                         {
                             ReviewId = 29,
-                            Cdate = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(363),
+                            Cdate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9238),
                             CommentText = "Well presented.",
                             CourseId = 29,
                             Rating = (byte)5,
                             StudentId = 29,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(365)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9240)
                         },
                         new
                         {
                             ReviewId = 30,
-                            Cdate = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(366),
+                            Cdate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9242),
                             CommentText = "Good pacing.",
                             CourseId = 30,
                             Rating = (byte)4,
                             StudentId = 30,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(367)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9242)
                         });
                 });
 
@@ -5047,281 +5047,281 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ShoppingCartId = 1,
-                            BookingDate = new DateTime(2024, 8, 27, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(397),
-                            BookingTime = new DateTime(2024, 8, 27, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(398),
-                            Cdate = new DateTime(2024, 8, 25, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(396),
+                            BookingDate = new DateTime(2024, 8, 27, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9274),
+                            BookingTime = new DateTime(2024, 8, 27, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9275),
+                            Cdate = new DateTime(2024, 8, 25, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9273),
                             CourseId = 1,
                             CourseType = (short)1,
                             MemberId = 1,
                             Quantity = (short)10,
                             TotalPrice = 1000.00m,
-                            Udate = new DateTime(2024, 8, 26, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(396),
+                            Udate = new DateTime(2024, 8, 26, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9274),
                             UnitPrice = 100.00m
                         },
                         new
                         {
                             ShoppingCartId = 2,
-                            BookingDate = new DateTime(2024, 8, 28, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(403),
-                            BookingTime = new DateTime(2024, 8, 28, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(404),
-                            Cdate = new DateTime(2024, 8, 26, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(402),
+                            BookingDate = new DateTime(2024, 8, 28, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9280),
+                            BookingTime = new DateTime(2024, 8, 28, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9281),
+                            Cdate = new DateTime(2024, 8, 26, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9279),
                             CourseId = 2,
                             CourseType = (short)2,
                             MemberId = 2,
                             Quantity = (short)5,
                             TotalPrice = 1000.00m,
-                            Udate = new DateTime(2024, 8, 27, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(402),
+                            Udate = new DateTime(2024, 8, 27, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9279),
                             UnitPrice = 200.00m
                         },
                         new
                         {
                             ShoppingCartId = 3,
-                            BookingDate = new DateTime(2024, 8, 29, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(470),
-                            BookingTime = new DateTime(2024, 8, 29, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(470),
-                            Cdate = new DateTime(2024, 8, 27, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(469),
+                            BookingDate = new DateTime(2024, 8, 29, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9284),
+                            BookingTime = new DateTime(2024, 8, 29, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9285),
+                            Cdate = new DateTime(2024, 8, 27, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9283),
                             CourseId = 3,
                             CourseType = (short)1,
                             MemberId = 3,
                             Quantity = (short)3,
                             TotalPrice = 900.00m,
-                            Udate = new DateTime(2024, 8, 28, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(469),
+                            Udate = new DateTime(2024, 8, 28, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9283),
                             UnitPrice = 300.00m
                         },
                         new
                         {
                             ShoppingCartId = 4,
-                            BookingDate = new DateTime(2024, 8, 30, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(475),
-                            BookingTime = new DateTime(2024, 8, 30, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(476),
-                            Cdate = new DateTime(2024, 8, 28, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(472),
+                            BookingDate = new DateTime(2024, 8, 30, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9290),
+                            BookingTime = new DateTime(2024, 8, 30, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9290),
+                            Cdate = new DateTime(2024, 8, 28, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9287),
                             CourseId = 4,
                             CourseType = (short)2,
                             MemberId = 4,
                             Quantity = (short)2,
                             TotalPrice = 800.00m,
-                            Udate = new DateTime(2024, 8, 29, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(473),
+                            Udate = new DateTime(2024, 8, 29, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9287),
                             UnitPrice = 400.00m
                         },
                         new
                         {
                             ShoppingCartId = 5,
-                            BookingDate = new DateTime(2024, 8, 31, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(479),
-                            BookingTime = new DateTime(2024, 8, 31, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(480),
-                            Cdate = new DateTime(2024, 8, 29, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(478),
+                            BookingDate = new DateTime(2024, 8, 31, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9293),
+                            BookingTime = new DateTime(2024, 8, 31, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9294),
+                            Cdate = new DateTime(2024, 8, 29, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9292),
                             CourseId = 5,
                             CourseType = (short)1,
                             MemberId = 5,
                             Quantity = (short)4,
                             TotalPrice = 2000.00m,
-                            Udate = new DateTime(2024, 8, 30, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(478),
+                            Udate = new DateTime(2024, 8, 30, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9293),
                             UnitPrice = 500.00m
                         },
                         new
                         {
                             ShoppingCartId = 6,
-                            BookingDate = new DateTime(2024, 9, 1, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(483),
-                            BookingTime = new DateTime(2024, 9, 1, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(483),
-                            Cdate = new DateTime(2024, 8, 30, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(482),
+                            BookingDate = new DateTime(2024, 9, 1, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9297),
+                            BookingTime = new DateTime(2024, 9, 1, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9298),
+                            Cdate = new DateTime(2024, 8, 30, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9296),
                             CourseId = 6,
                             CourseType = (short)2,
                             MemberId = 6,
                             Quantity = (short)1,
                             TotalPrice = 600.00m,
-                            Udate = new DateTime(2024, 8, 31, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(482),
+                            Udate = new DateTime(2024, 8, 31, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9297),
                             UnitPrice = 600.00m
                         },
                         new
                         {
                             ShoppingCartId = 7,
-                            BookingDate = new DateTime(2024, 9, 2, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(487),
-                            BookingTime = new DateTime(2024, 9, 2, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(487),
-                            Cdate = new DateTime(2024, 8, 31, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(485),
+                            BookingDate = new DateTime(2024, 9, 2, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9302),
+                            BookingTime = new DateTime(2024, 9, 2, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9303),
+                            Cdate = new DateTime(2024, 8, 31, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9300),
                             CourseId = 7,
                             CourseType = (short)1,
                             MemberId = 7,
                             Quantity = (short)3,
                             TotalPrice = 2100.00m,
-                            Udate = new DateTime(2024, 9, 1, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(486),
+                            Udate = new DateTime(2024, 9, 1, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9301),
                             UnitPrice = 700.00m
                         },
                         new
                         {
                             ShoppingCartId = 8,
-                            BookingDate = new DateTime(2024, 9, 3, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(490),
-                            BookingTime = new DateTime(2024, 9, 3, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(491),
-                            Cdate = new DateTime(2024, 9, 1, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(489),
+                            BookingDate = new DateTime(2024, 9, 3, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9306),
+                            BookingTime = new DateTime(2024, 9, 3, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9307),
+                            Cdate = new DateTime(2024, 9, 1, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9305),
                             CourseId = 8,
                             CourseType = (short)2,
                             MemberId = 8,
                             Quantity = (short)2,
                             TotalPrice = 1600.00m,
-                            Udate = new DateTime(2024, 9, 2, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(490),
+                            Udate = new DateTime(2024, 9, 2, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9305),
                             UnitPrice = 800.00m
                         },
                         new
                         {
                             ShoppingCartId = 9,
-                            BookingDate = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(496),
-                            BookingTime = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(496),
-                            Cdate = new DateTime(2024, 9, 2, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(495),
+                            BookingDate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9311),
+                            BookingTime = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9312),
+                            Cdate = new DateTime(2024, 9, 2, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9310),
                             CourseId = 9,
                             CourseType = (short)1,
                             MemberId = 9,
                             Quantity = (short)1,
                             TotalPrice = 900.00m,
-                            Udate = new DateTime(2024, 9, 3, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(495),
+                            Udate = new DateTime(2024, 9, 3, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9311),
                             UnitPrice = 900.00m
                         },
                         new
                         {
                             ShoppingCartId = 10,
-                            BookingDate = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(499),
-                            BookingTime = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(500),
-                            Cdate = new DateTime(2024, 9, 3, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(498),
+                            BookingDate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9315),
+                            BookingTime = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9316),
+                            Cdate = new DateTime(2024, 9, 3, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9314),
                             CourseId = 10,
                             CourseType = (short)2,
                             MemberId = 10,
                             Quantity = (short)2,
                             TotalPrice = 2000.00m,
-                            Udate = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(499),
+                            Udate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9315),
                             UnitPrice = 1000.00m
                         },
                         new
                         {
                             ShoppingCartId = 11,
-                            BookingDate = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(503),
-                            BookingTime = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(504),
-                            Cdate = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(502),
+                            BookingDate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9319),
+                            BookingTime = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9319),
+                            Cdate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9318),
                             CourseId = 11,
                             CourseType = (short)1,
                             MemberId = 11,
                             Quantity = (short)4,
                             TotalPrice = 4400.00m,
-                            Udate = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(503),
+                            Udate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9318),
                             UnitPrice = 1100.00m
                         },
                         new
                         {
                             ShoppingCartId = 12,
-                            BookingDate = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(507),
-                            BookingTime = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(507),
-                            Cdate = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(506),
+                            BookingDate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9323),
+                            BookingTime = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9323),
+                            Cdate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9321),
                             CourseId = 12,
                             CourseType = (short)2,
                             MemberId = 12,
                             Quantity = (short)3,
                             TotalPrice = 3600.00m,
-                            Udate = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(506),
+                            Udate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9322),
                             UnitPrice = 1200.00m
                         },
                         new
                         {
                             ShoppingCartId = 13,
-                            BookingDate = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(512),
-                            BookingTime = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(512),
-                            Cdate = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(509),
+                            BookingDate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9328),
+                            BookingTime = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9328),
+                            Cdate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9325),
                             CourseId = 13,
                             CourseType = (short)1,
                             MemberId = 13,
                             Quantity = (short)5,
                             TotalPrice = 6500.00m,
-                            Udate = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(511),
+                            Udate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9327),
                             UnitPrice = 1300.00m
                         },
                         new
                         {
                             ShoppingCartId = 14,
-                            BookingDate = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(515),
-                            BookingTime = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(516),
-                            Cdate = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(514),
+                            BookingDate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9331),
+                            BookingTime = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9332),
+                            Cdate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9330),
                             CourseId = 14,
                             CourseType = (short)2,
                             MemberId = 14,
                             Quantity = (short)2,
                             TotalPrice = 2800.00m,
-                            Udate = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(515),
+                            Udate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9331),
                             UnitPrice = 1400.00m
                         },
                         new
                         {
                             ShoppingCartId = 15,
-                            BookingDate = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(519),
-                            BookingTime = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(519),
-                            Cdate = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(518),
+                            BookingDate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9335),
+                            BookingTime = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9335),
+                            Cdate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9334),
                             CourseId = 15,
                             CourseType = (short)1,
                             MemberId = 15,
                             Quantity = (short)1,
                             TotalPrice = 1500.00m,
-                            Udate = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(518),
+                            Udate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9334),
                             UnitPrice = 1500.00m
                         },
                         new
                         {
                             ShoppingCartId = 16,
-                            BookingDate = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(522),
-                            BookingTime = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(523),
-                            Cdate = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(521),
+                            BookingDate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9338),
+                            BookingTime = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9339),
+                            Cdate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9337),
                             CourseId = 16,
                             CourseType = (short)2,
                             MemberId = 16,
                             Quantity = (short)3,
                             TotalPrice = 4800.00m,
-                            Udate = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(521),
+                            Udate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9338),
                             UnitPrice = 1600.00m
                         },
                         new
                         {
                             ShoppingCartId = 17,
-                            BookingDate = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(525),
-                            BookingTime = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(526),
-                            Cdate = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(524),
+                            BookingDate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9342),
+                            BookingTime = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9342),
+                            Cdate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9341),
                             CourseId = 17,
                             CourseType = (short)1,
                             MemberId = 17,
                             Quantity = (short)2,
                             TotalPrice = 3400.00m,
-                            Udate = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(525),
+                            Udate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9341),
                             UnitPrice = 1700.00m
                         },
                         new
                         {
                             ShoppingCartId = 18,
-                            BookingDate = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(530),
-                            BookingTime = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(531),
-                            Cdate = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(529),
+                            BookingDate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9347),
+                            BookingTime = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9347),
+                            Cdate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9345),
                             CourseId = 18,
                             CourseType = (short)2,
                             MemberId = 18,
                             Quantity = (short)4,
                             TotalPrice = 7200.00m,
-                            Udate = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(530),
+                            Udate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9346),
                             UnitPrice = 1800.00m
                         },
                         new
                         {
                             ShoppingCartId = 19,
-                            BookingDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(534),
-                            BookingTime = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(534),
-                            Cdate = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(533),
+                            BookingDate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9350),
+                            BookingTime = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9351),
+                            Cdate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9349),
                             CourseId = 19,
                             CourseType = (short)1,
                             MemberId = 19,
                             Quantity = (short)1,
                             TotalPrice = 1900.00m,
-                            Udate = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(533),
+                            Udate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9349),
                             UnitPrice = 1900.00m
                         },
                         new
                         {
                             ShoppingCartId = 20,
-                            BookingDate = new DateTime(2024, 9, 15, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(537),
-                            BookingTime = new DateTime(2024, 9, 15, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(537),
-                            Cdate = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(536),
+                            BookingDate = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9353),
+                            BookingTime = new DateTime(2024, 9, 15, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9354),
+                            Cdate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9352),
                             CourseId = 20,
                             CourseType = (short)2,
                             MemberId = 20,
                             Quantity = (short)2,
                             TotalPrice = 4000.00m,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(536),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9353),
                             UnitPrice = 2000.00m
                         });
                 });
@@ -5377,220 +5377,220 @@ namespace Infrastructure.Migrations
                             BookingId = 1,
                             BookingDate = new DateOnly(2024, 8, 25),
                             BookingTime = (short)10,
-                            Cdate = new DateTime(2024, 8, 25, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(579),
+                            Cdate = new DateTime(2024, 8, 25, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9393),
                             CourseId = 1,
                             MemberId = 1,
                             TempShoppingCartId = 1,
-                            Udate = new DateTime(2024, 8, 26, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(580)
+                            Udate = new DateTime(2024, 8, 26, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9394)
                         },
                         new
                         {
                             BookingId = 2,
                             BookingDate = new DateOnly(2024, 8, 26),
                             BookingTime = (short)11,
-                            Cdate = new DateTime(2024, 8, 26, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(583),
+                            Cdate = new DateTime(2024, 8, 26, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9396),
                             CourseId = 2,
                             MemberId = 2,
                             TempShoppingCartId = 2,
-                            Udate = new DateTime(2024, 8, 27, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(583)
+                            Udate = new DateTime(2024, 8, 27, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9397)
                         },
                         new
                         {
                             BookingId = 3,
                             BookingDate = new DateOnly(2024, 8, 27),
                             BookingTime = (short)12,
-                            Cdate = new DateTime(2024, 8, 27, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(586),
+                            Cdate = new DateTime(2024, 8, 27, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9399),
                             CourseId = 3,
                             MemberId = 3,
                             TempShoppingCartId = 3,
-                            Udate = new DateTime(2024, 8, 28, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(587)
+                            Udate = new DateTime(2024, 8, 28, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9400)
                         },
                         new
                         {
                             BookingId = 4,
                             BookingDate = new DateOnly(2024, 8, 28),
                             BookingTime = (short)13,
-                            Cdate = new DateTime(2024, 8, 28, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(589),
+                            Cdate = new DateTime(2024, 8, 28, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9402),
                             CourseId = 4,
                             MemberId = 4,
                             TempShoppingCartId = 4,
-                            Udate = new DateTime(2024, 8, 29, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(590)
+                            Udate = new DateTime(2024, 8, 29, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9403)
                         },
                         new
                         {
                             BookingId = 5,
                             BookingDate = new DateOnly(2024, 8, 29),
                             BookingTime = (short)14,
-                            Cdate = new DateTime(2024, 8, 29, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(592),
+                            Cdate = new DateTime(2024, 8, 29, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9405),
                             CourseId = 5,
                             MemberId = 5,
                             TempShoppingCartId = 5,
-                            Udate = new DateTime(2024, 8, 30, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(593)
+                            Udate = new DateTime(2024, 8, 30, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9406)
                         },
                         new
                         {
                             BookingId = 6,
                             BookingDate = new DateOnly(2024, 8, 30),
                             BookingTime = (short)15,
-                            Cdate = new DateTime(2024, 8, 30, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(595),
+                            Cdate = new DateTime(2024, 8, 30, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9408),
                             CourseId = 6,
                             MemberId = 6,
                             TempShoppingCartId = 6,
-                            Udate = new DateTime(2024, 8, 31, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(596)
+                            Udate = new DateTime(2024, 8, 31, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9409)
                         },
                         new
                         {
                             BookingId = 7,
                             BookingDate = new DateOnly(2024, 8, 31),
                             BookingTime = (short)16,
-                            Cdate = new DateTime(2024, 8, 31, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(599),
+                            Cdate = new DateTime(2024, 8, 31, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9411),
                             CourseId = 7,
                             MemberId = 7,
                             TempShoppingCartId = 7,
-                            Udate = new DateTime(2024, 9, 1, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(599)
+                            Udate = new DateTime(2024, 9, 1, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9412)
                         },
                         new
                         {
                             BookingId = 8,
                             BookingDate = new DateOnly(2024, 9, 1),
                             BookingTime = (short)17,
-                            Cdate = new DateTime(2024, 9, 1, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(602),
+                            Cdate = new DateTime(2024, 9, 1, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9414),
                             CourseId = 8,
                             MemberId = 8,
                             TempShoppingCartId = 8,
-                            Udate = new DateTime(2024, 9, 2, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(602)
+                            Udate = new DateTime(2024, 9, 2, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9415)
                         },
                         new
                         {
                             BookingId = 9,
                             BookingDate = new DateOnly(2024, 9, 2),
                             BookingTime = (short)18,
-                            Cdate = new DateTime(2024, 9, 2, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(606),
+                            Cdate = new DateTime(2024, 9, 2, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9418),
                             CourseId = 9,
                             MemberId = 9,
                             TempShoppingCartId = 9,
-                            Udate = new DateTime(2024, 9, 3, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(607)
+                            Udate = new DateTime(2024, 9, 3, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9419)
                         },
                         new
                         {
                             BookingId = 10,
                             BookingDate = new DateOnly(2024, 9, 3),
                             BookingTime = (short)19,
-                            Cdate = new DateTime(2024, 9, 3, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(609),
+                            Cdate = new DateTime(2024, 9, 3, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9421),
                             CourseId = 10,
                             MemberId = 10,
                             TempShoppingCartId = 10,
-                            Udate = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(610)
+                            Udate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9422)
                         },
                         new
                         {
                             BookingId = 11,
                             BookingDate = new DateOnly(2024, 9, 4),
                             BookingTime = (short)20,
-                            Cdate = new DateTime(2024, 9, 4, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(612),
+                            Cdate = new DateTime(2024, 9, 4, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9424),
                             CourseId = 11,
                             MemberId = 11,
                             TempShoppingCartId = 11,
-                            Udate = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(613)
+                            Udate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9425)
                         },
                         new
                         {
                             BookingId = 12,
                             BookingDate = new DateOnly(2024, 9, 5),
                             BookingTime = (short)21,
-                            Cdate = new DateTime(2024, 9, 5, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(615),
+                            Cdate = new DateTime(2024, 9, 5, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9427),
                             CourseId = 12,
                             MemberId = 12,
                             TempShoppingCartId = 12,
-                            Udate = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(616)
+                            Udate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9428)
                         },
                         new
                         {
                             BookingId = 13,
                             BookingDate = new DateOnly(2024, 9, 6),
                             BookingTime = (short)22,
-                            Cdate = new DateTime(2024, 9, 6, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(618),
+                            Cdate = new DateTime(2024, 9, 6, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9430),
                             CourseId = 13,
                             MemberId = 13,
                             TempShoppingCartId = 13,
-                            Udate = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(619)
+                            Udate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9430)
                         },
                         new
                         {
                             BookingId = 14,
                             BookingDate = new DateOnly(2024, 9, 7),
                             BookingTime = (short)23,
-                            Cdate = new DateTime(2024, 9, 7, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(621),
+                            Cdate = new DateTime(2024, 9, 7, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9433),
                             CourseId = 14,
                             MemberId = 14,
                             TempShoppingCartId = 14,
-                            Udate = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(622)
+                            Udate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9433)
                         },
                         new
                         {
                             BookingId = 15,
                             BookingDate = new DateOnly(2024, 9, 8),
                             BookingTime = (short)24,
-                            Cdate = new DateTime(2024, 9, 8, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(626),
+                            Cdate = new DateTime(2024, 9, 8, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9464),
                             CourseId = 15,
                             MemberId = 15,
                             TempShoppingCartId = 15,
-                            Udate = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(626)
+                            Udate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9465)
                         },
                         new
                         {
                             BookingId = 16,
                             BookingDate = new DateOnly(2024, 9, 9),
                             BookingTime = (short)25,
-                            Cdate = new DateTime(2024, 9, 9, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(629),
+                            Cdate = new DateTime(2024, 9, 9, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9467),
                             CourseId = 16,
                             MemberId = 16,
                             TempShoppingCartId = 16,
-                            Udate = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(629)
+                            Udate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9468)
                         },
                         new
                         {
                             BookingId = 17,
                             BookingDate = new DateOnly(2024, 9, 10),
                             BookingTime = (short)26,
-                            Cdate = new DateTime(2024, 9, 10, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(632),
+                            Cdate = new DateTime(2024, 9, 10, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9470),
                             CourseId = 17,
                             MemberId = 17,
                             TempShoppingCartId = 17,
-                            Udate = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(632)
+                            Udate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9471)
                         },
                         new
                         {
                             BookingId = 18,
                             BookingDate = new DateOnly(2024, 9, 11),
                             BookingTime = (short)27,
-                            Cdate = new DateTime(2024, 9, 11, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(635),
+                            Cdate = new DateTime(2024, 9, 11, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9473),
                             CourseId = 18,
                             MemberId = 18,
                             TempShoppingCartId = 18,
-                            Udate = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(635)
+                            Udate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9474)
                         },
                         new
                         {
                             BookingId = 19,
                             BookingDate = new DateOnly(2024, 9, 12),
                             BookingTime = (short)28,
-                            Cdate = new DateTime(2024, 9, 12, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(638),
+                            Cdate = new DateTime(2024, 9, 12, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9476),
                             CourseId = 19,
                             MemberId = 19,
                             TempShoppingCartId = 19,
-                            Udate = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(638)
+                            Udate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9477)
                         },
                         new
                         {
                             BookingId = 20,
                             BookingDate = new DateOnly(2024, 9, 13),
                             BookingTime = (short)29,
-                            Cdate = new DateTime(2024, 9, 13, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(641),
+                            Cdate = new DateTime(2024, 9, 13, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9479),
                             CourseId = 20,
                             MemberId = 20,
                             TempShoppingCartId = 20,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(641)
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9480)
                         });
                 });
 
@@ -5639,1666 +5639,1666 @@ namespace Infrastructure.Migrations
                         new
                         {
                             TutorTimeSlotId = 1,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(691),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9506),
                             CourseHourId = 8,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(691),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9507),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 2,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(693),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9508),
                             CourseHourId = 9,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(693),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9509),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 3,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(694),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9510),
                             CourseHourId = 10,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(695),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9510),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 4,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(696),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9512),
                             CourseHourId = 11,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(697),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9512),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 5,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(698),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9513),
                             CourseHourId = 12,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(698),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9514),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 6,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(699),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9515),
                             CourseHourId = 13,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(700),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9515),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 7,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(701),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9517),
                             CourseHourId = 14,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(702),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9517),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 8,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(703),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9518),
                             CourseHourId = 15,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(703),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9519),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 9,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(704),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9520),
                             CourseHourId = 16,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(705),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9521),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 10,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(706),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9522),
                             CourseHourId = 17,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(706),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9522),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 11,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(708),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9523),
                             CourseHourId = 18,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(708),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9524),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 12,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(709),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9525),
                             CourseHourId = 19,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(710),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9525),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 13,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(713),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9528),
                             CourseHourId = 20,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(713),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9529),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 14,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(714),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9530),
                             CourseHourId = 8,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(715),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9530),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 15,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(716),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9531),
                             CourseHourId = 9,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(716),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9532),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 16,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(718),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9533),
                             CourseHourId = 10,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(718),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9533),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 17,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(719),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9535),
                             CourseHourId = 11,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(719),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9535),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 18,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(721),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9536),
                             CourseHourId = 12,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(721),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9537),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 19,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(722),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9538),
                             CourseHourId = 13,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(723),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9538),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 20,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(724),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9539),
                             CourseHourId = 14,
                             TutorId = 1,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(724),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9540),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 21,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(725),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9541),
                             CourseHourId = 8,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(726),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9541),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 22,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(727),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9542),
                             CourseHourId = 9,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(727),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9543),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 23,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(728),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9544),
                             CourseHourId = 10,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(729),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9544),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 24,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(730),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9545),
                             CourseHourId = 11,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(730),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9546),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 25,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(733),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9550),
                             CourseHourId = 12,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(733),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9550),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 26,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(734),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9551),
                             CourseHourId = 13,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(735),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9552),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 27,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(736),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9553),
                             CourseHourId = 14,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(736),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9553),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 28,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(737),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9554),
                             CourseHourId = 15,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(738),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9555),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 29,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(739),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9556),
                             CourseHourId = 16,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(739),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9556),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 30,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(741),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9557),
                             CourseHourId = 17,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(741),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9558),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 31,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(742),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9559),
                             CourseHourId = 18,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(743),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9559),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 32,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(744),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9560),
                             CourseHourId = 19,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(744),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9561),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 33,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(745),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9562),
                             CourseHourId = 20,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(746),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9562),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 34,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(747),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9563),
                             CourseHourId = 8,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(747),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9564),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 35,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(748),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9565),
                             CourseHourId = 9,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(749),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9565),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 36,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(750),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9566),
                             CourseHourId = 10,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(750),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9567),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 37,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(752),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9568),
                             CourseHourId = 11,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(752),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9568),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 38,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(755),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9571),
                             CourseHourId = 12,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(755),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9572),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 39,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(757),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9574),
                             CourseHourId = 13,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(758),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9574),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 40,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(760),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9577),
                             CourseHourId = 14,
                             TutorId = 2,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(761),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9577),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 41,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(762),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9580),
                             CourseHourId = 8,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(762),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9580),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 42,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(763),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9581),
                             CourseHourId = 9,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(764),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9582),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 43,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(765),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9583),
                             CourseHourId = 10,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(765),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9583),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 44,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(766),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9584),
                             CourseHourId = 11,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(767),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9586),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 45,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(768),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9587),
                             CourseHourId = 12,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(768),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9587),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 46,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(770),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9588),
                             CourseHourId = 13,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(770),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9588),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 47,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(771),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9589),
                             CourseHourId = 14,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(772),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9590),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 48,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(773),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9591),
                             CourseHourId = 15,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(773),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9591),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 49,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(774),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9592),
                             CourseHourId = 16,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(775),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9593),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 50,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(777),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9595),
                             CourseHourId = 17,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(778),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9596),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 51,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(779),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9597),
                             CourseHourId = 18,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(779),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9597),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 52,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(780),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9598),
                             CourseHourId = 19,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(781),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9599),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 53,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(782),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9600),
                             CourseHourId = 20,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(782),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9600),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 54,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(783),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9601),
                             CourseHourId = 8,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(784),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9602),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 55,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(785),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9603),
                             CourseHourId = 9,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(785),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9603),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 56,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(787),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9604),
                             CourseHourId = 10,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(787),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9604),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 57,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(788),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9605),
                             CourseHourId = 11,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(788),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9606),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 58,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(790),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9607),
                             CourseHourId = 12,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(790),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9607),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 59,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(791),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9608),
                             CourseHourId = 13,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(792),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9609),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 60,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(793),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9610),
                             CourseHourId = 14,
                             TutorId = 3,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(793),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9610),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 61,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(794),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9612),
                             CourseHourId = 8,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(795),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9612),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 62,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(797),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9614),
                             CourseHourId = 9,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(798),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9615),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 63,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(799),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9616),
                             CourseHourId = 10,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(799),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9616),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 64,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(800),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9617),
                             CourseHourId = 11,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(801),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9618),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 65,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(802),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9619),
                             CourseHourId = 12,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(802),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9619),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 66,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(803),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9620),
                             CourseHourId = 13,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(804),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9621),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 67,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(805),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9622),
                             CourseHourId = 8,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(805),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9622),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 68,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(806),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9623),
                             CourseHourId = 9,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(807),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9623),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 69,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(808),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9625),
                             CourseHourId = 10,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(808),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9625),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 70,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(809),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9626),
                             CourseHourId = 11,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(810),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9626),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 71,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(811),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9628),
                             CourseHourId = 12,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(811),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9628),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 72,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(813),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9629),
                             CourseHourId = 13,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(813),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9629),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 73,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(814),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9631),
                             CourseHourId = 8,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(814),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9631),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 74,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(816),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9632),
                             CourseHourId = 9,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(816),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9632),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 75,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(819),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9633),
                             CourseHourId = 10,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(819),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9634),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 76,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(820),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9653),
                             CourseHourId = 11,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(821),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9654),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 77,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(822),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9655),
                             CourseHourId = 12,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(822),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9655),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 78,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(823),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9656),
                             CourseHourId = 13,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(824),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9657),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 79,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(825),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9658),
                             CourseHourId = 8,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(825),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9658),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 80,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(826),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9659),
                             CourseHourId = 9,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(827),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9660),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 81,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(828),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9661),
                             CourseHourId = 10,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(828),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9661),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 82,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(829),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9662),
                             CourseHourId = 11,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(830),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9663),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 83,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(831),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9664),
                             CourseHourId = 12,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(831),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9664),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 84,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(832),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9665),
                             CourseHourId = 13,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(833),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9666),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 85,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(834),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9667),
                             CourseHourId = 8,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(834),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9667),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 86,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(836),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9668),
                             CourseHourId = 9,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(836),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9669),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 87,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(839),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9672),
                             CourseHourId = 10,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(839),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9672),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 88,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(840),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9673),
                             CourseHourId = 11,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(841),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9674),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 89,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(842),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9675),
                             CourseHourId = 12,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(842),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9675),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 90,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(843),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9676),
                             CourseHourId = 13,
                             TutorId = 4,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(844),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9676),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 91,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(845),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9678),
                             CourseHourId = 8,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(845),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9678),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 92,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(846),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9679),
                             CourseHourId = 9,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(847),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9680),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 93,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(848),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9681),
                             CourseHourId = 10,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(848),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9681),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 94,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(849),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9682),
                             CourseHourId = 11,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(850),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9682),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 95,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(851),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9684),
                             CourseHourId = 12,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(851),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9684),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 96,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(852),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9685),
                             CourseHourId = 13,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(853),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9685),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 97,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(854),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9686),
                             CourseHourId = 14,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(854),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9687),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 98,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(855),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9688),
                             CourseHourId = 8,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(856),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9688),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 99,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(858),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9691),
                             CourseHourId = 9,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(859),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9691),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 100,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(860),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9693),
                             CourseHourId = 10,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(860),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9693),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 101,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(861),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9694),
                             CourseHourId = 11,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(862),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9694),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 102,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(863),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9696),
                             CourseHourId = 12,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(863),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9696),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 103,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(864),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9697),
                             CourseHourId = 8,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(865),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9698),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 104,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(866),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9699),
                             CourseHourId = 9,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(866),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9700),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 105,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(867),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9701),
                             CourseHourId = 10,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(868),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9701),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 106,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(869),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9702),
                             CourseHourId = 11,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(869),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9703),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 107,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(870),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9704),
                             CourseHourId = 12,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(871),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9704),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 108,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(872),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9705),
                             CourseHourId = 8,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(872),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9706),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 109,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(873),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9707),
                             CourseHourId = 9,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(874),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9707),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 110,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(875),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9708),
                             CourseHourId = 10,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(875),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9708),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 111,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(876),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9709),
                             CourseHourId = 11,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(880),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9711),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 112,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(881),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9712),
                             CourseHourId = 12,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(881),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9713),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 113,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(882),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9714),
                             CourseHourId = 13,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(883),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9714),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 114,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(907),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9715),
                             CourseHourId = 14,
                             TutorId = 5,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(908),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9716),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 115,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(909),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9717),
                             CourseHourId = 10,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(910),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9717),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 116,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(911),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9718),
                             CourseHourId = 11,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(911),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9719),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 117,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(912),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9720),
                             CourseHourId = 12,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(913),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9720),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 118,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(914),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9721),
                             CourseHourId = 13,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(914),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9722),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 119,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(915),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9723),
                             CourseHourId = 15,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(916),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9723),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 120,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(917),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9724),
                             CourseHourId = 16,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(917),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9725),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 121,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(918),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9726),
                             CourseHourId = 17,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(919),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9726),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 122,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(920),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9727),
                             CourseHourId = 10,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(920),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9728),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 123,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(921),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9729),
                             CourseHourId = 11,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(922),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9729),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 124,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(924),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9732),
                             CourseHourId = 12,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(925),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9732),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 125,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(926),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9733),
                             CourseHourId = 13,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(926),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9734),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 126,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(927),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9735),
                             CourseHourId = 9,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(928),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9735),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 127,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(929),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9736),
                             CourseHourId = 10,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(929),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9736),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 128,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(930),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9738),
                             CourseHourId = 11,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(931),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9738),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 129,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(932),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9739),
                             CourseHourId = 14,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(932),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9739),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 130,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(933),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9741),
                             CourseHourId = 15,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(934),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9741),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 131,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(935),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9742),
                             CourseHourId = 16,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(935),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9742),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 132,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(937),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9743),
                             CourseHourId = 18,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(937),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9744),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 133,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(938),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9745),
                             CourseHourId = 19,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(938),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9745),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 134,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(939),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9746),
                             CourseHourId = 20,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(940),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9747),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 135,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(941),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9748),
                             CourseHourId = 21,
                             TutorId = 6,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(941),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9748),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 136,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(944),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9751),
                             CourseHourId = 9,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(944),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9751),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 137,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(945),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9752),
                             CourseHourId = 10,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(946),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9753),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 138,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(947),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9754),
                             CourseHourId = 11,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(948),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9754),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 139,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(949),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9755),
                             CourseHourId = 12,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(949),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9756),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 140,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(950),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9757),
                             CourseHourId = 13,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(951),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9757),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 141,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(952),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9758),
                             CourseHourId = 14,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(952),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9758),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 142,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(953),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9759),
                             CourseHourId = 15,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(954),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9760),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 143,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(955),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9761),
                             CourseHourId = 16,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(955),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9761),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 144,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(956),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9762),
                             CourseHourId = 18,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(956),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9763),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 145,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(958),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9764),
                             CourseHourId = 19,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(958),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9764),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 146,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(959),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9765),
                             CourseHourId = 20,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(960),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9766),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 147,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(961),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9767),
                             CourseHourId = 21,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(961),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9767),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 148,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(962),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9770),
                             CourseHourId = 8,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(964),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9770),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 149,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(965),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9771),
                             CourseHourId = 9,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(965),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9772),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 150,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(966),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9773),
                             CourseHourId = 10,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(967),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9773),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 151,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(968),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9774),
                             CourseHourId = 12,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(968),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9775),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 152,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(969),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9776),
                             CourseHourId = 13,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(970),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9776),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 153,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(971),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9777),
                             CourseHourId = 14,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(971),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9778),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 154,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(972),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9779),
                             CourseHourId = 16,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(973),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9779),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 155,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(974),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9780),
                             CourseHourId = 17,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(974),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9781),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 156,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(975),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9782),
                             CourseHourId = 18,
                             TutorId = 7,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(976),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9782),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 157,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(977),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9783),
                             CourseHourId = 9,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(977),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9784),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 158,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(978),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9785),
                             CourseHourId = 10,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(979),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9785),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 159,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(980),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9786),
                             CourseHourId = 11,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(980),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9787),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 160,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(981),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9788),
                             CourseHourId = 12,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(982),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9788),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 161,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(984),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9791),
                             CourseHourId = 14,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(985),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9791),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 162,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(986),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9792),
                             CourseHourId = 15,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(986),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9792),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 163,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(987),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9793),
                             CourseHourId = 16,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(988),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9794),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 164,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(989),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9795),
                             CourseHourId = 17,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(989),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9795),
                             Weekday = 1
                         },
                         new
                         {
                             TutorTimeSlotId = 165,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(990),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9796),
                             CourseHourId = 18,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(991),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9797),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 166,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(992),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9798),
                             CourseHourId = 19,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(992),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9798),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 167,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(993),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9799),
                             CourseHourId = 20,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(994),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9800),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 168,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(995),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9801),
                             CourseHourId = 21,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(995),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9802),
                             Weekday = 2
                         },
                         new
                         {
                             TutorTimeSlotId = 169,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(996),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9803),
                             CourseHourId = 8,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(997),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9803),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 170,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(998),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9804),
                             CourseHourId = 9,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(998),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9805),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 171,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(999),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9806),
                             CourseHourId = 10,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1000),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9806),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 172,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1001),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9807),
                             CourseHourId = 11,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1001),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9808),
                             Weekday = 3
                         },
                         new
                         {
                             TutorTimeSlotId = 173,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1004),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9810),
                             CourseHourId = 13,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1004),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9811),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 174,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1005),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9812),
                             CourseHourId = 14,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1006),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9812),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 175,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1007),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9813),
                             CourseHourId = 15,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1007),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9814),
                             Weekday = 4
                         },
                         new
                         {
                             TutorTimeSlotId = 176,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1008),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9815),
                             CourseHourId = 17,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1009),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9815),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 177,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1010),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9816),
                             CourseHourId = 18,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1010),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9817),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 178,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1011),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9818),
                             CourseHourId = 19,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1012),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9818),
                             Weekday = 5
                         },
                         new
                         {
                             TutorTimeSlotId = 179,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1013),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9819),
                             CourseHourId = 20,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1013),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9820),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 180,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1015),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9821),
                             CourseHourId = 21,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1015),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9821),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 181,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1016),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9822),
                             CourseHourId = 22,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1016),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9823),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 182,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1018),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9824),
                             CourseHourId = 23,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1018),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9824),
                             Weekday = 6
                         },
                         new
                         {
                             TutorTimeSlotId = 183,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1019),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9825),
                             CourseHourId = 12,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1020),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9826),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 184,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1021),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9827),
                             CourseHourId = 13,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1021),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9827),
                             Weekday = 0
                         },
                         new
                         {
                             TutorTimeSlotId = 185,
-                            Cdate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1024),
+                            Cdate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9829),
                             CourseHourId = 14,
                             TutorId = 8,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1024),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9829),
                             Weekday = 0
                         });
                 });
@@ -7498,222 +7498,222 @@ namespace Infrastructure.Migrations
                         new
                         {
                             WorkExperienceId = 1,
-                            Cdate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1135),
+                            Cdate = new DateTime(2019, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9972),
                             MemberId = 1,
-                            Udate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1136),
-                            WorkEndDate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1135),
+                            Udate = new DateTime(2022, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9973),
+                            WorkEndDate = new DateTime(2022, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9971),
                             WorkExperienceFile = "https://example.com/resume/software_engineer_1.pdf",
                             WorkName = "Software Engineer",
-                            WorkStartDate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1134)
+                            WorkStartDate = new DateTime(2019, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9970)
                         },
                         new
                         {
                             WorkExperienceId = 2,
-                            Cdate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1139),
+                            Cdate = new DateTime(2020, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9976),
                             MemberId = 2,
-                            Udate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1140),
-                            WorkEndDate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1138),
+                            Udate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9976),
+                            WorkEndDate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9975),
                             WorkExperienceFile = "https://example.com/resume/data_analyst_2.pdf",
                             WorkName = "Data Analyst",
-                            WorkStartDate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1138)
+                            WorkStartDate = new DateTime(2020, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9974)
                         },
                         new
                         {
                             WorkExperienceId = 3,
-                            Cdate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1142),
+                            Cdate = new DateTime(2021, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9979),
                             MemberId = 3,
-                            Udate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1143),
-                            WorkEndDate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1142),
+                            Udate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9979),
+                            WorkEndDate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9978),
                             WorkExperienceFile = "https://example.com/resume/web_developer_3.pdf",
                             WorkName = "Web Developer",
-                            WorkStartDate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1141)
+                            WorkStartDate = new DateTime(2021, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9978)
                         },
                         new
                         {
                             WorkExperienceId = 4,
-                            Cdate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1145),
+                            Cdate = new DateTime(2019, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9982),
                             MemberId = 4,
-                            Udate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1146),
-                            WorkEndDate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1145),
+                            Udate = new DateTime(2021, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9983),
+                            WorkEndDate = new DateTime(2021, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9982),
                             WorkExperienceFile = "https://example.com/resume/db_admin_4.pdf",
                             WorkName = "Database Administrator",
-                            WorkStartDate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1144)
+                            WorkStartDate = new DateTime(2019, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9981)
                         },
                         new
                         {
                             WorkExperienceId = 5,
-                            Cdate = new DateTime(2018, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1148),
+                            Cdate = new DateTime(2018, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9985),
                             MemberId = 5,
-                            Udate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1149),
-                            WorkEndDate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1148),
+                            Udate = new DateTime(2022, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9986),
+                            WorkEndDate = new DateTime(2022, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9985),
                             WorkExperienceFile = "https://example.com/resume/network_engineer_5.pdf",
                             WorkName = "Network Engineer",
-                            WorkStartDate = new DateTime(2018, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1147)
+                            WorkStartDate = new DateTime(2018, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9984)
                         },
                         new
                         {
                             WorkExperienceId = 6,
-                            Cdate = new DateTime(2017, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1151),
+                            Cdate = new DateTime(2017, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9988),
                             MemberId = 6,
-                            Udate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1152),
-                            WorkEndDate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1151),
+                            Udate = new DateTime(2021, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9989),
+                            WorkEndDate = new DateTime(2021, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9988),
                             WorkExperienceFile = "https://example.com/resume/system_analyst_6.pdf",
                             WorkName = "System Analyst",
-                            WorkStartDate = new DateTime(2017, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1150)
+                            WorkStartDate = new DateTime(2017, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9987)
                         },
                         new
                         {
                             WorkExperienceId = 7,
-                            Cdate = new DateTime(2016, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1155),
+                            Cdate = new DateTime(2016, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9993),
                             MemberId = 7,
-                            Udate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1157),
-                            WorkEndDate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1154),
+                            Udate = new DateTime(2020, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9993),
+                            WorkEndDate = new DateTime(2020, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9991),
                             WorkExperienceFile = "https://example.com/resume/project_manager_7.pdf",
                             WorkName = "Project Manager",
-                            WorkStartDate = new DateTime(2016, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1153)
+                            WorkStartDate = new DateTime(2016, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9990)
                         },
                         new
                         {
                             WorkExperienceId = 8,
-                            Cdate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1161),
+                            Cdate = new DateTime(2019, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9996),
                             MemberId = 8,
-                            Udate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1161),
-                            WorkEndDate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1160),
+                            Udate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9997),
+                            WorkEndDate = new DateTime(2023, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9995),
                             WorkExperienceFile = "https://example.com/resume/ui_ux_designer_8.pdf",
                             WorkName = "UI/UX Designer",
-                            WorkStartDate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1159)
+                            WorkStartDate = new DateTime(2019, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9995)
                         },
                         new
                         {
                             WorkExperienceId = 9,
-                            Cdate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1164),
+                            Cdate = new DateTime(2020, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9999),
                             MemberId = 9,
-                            Udate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1164),
-                            WorkEndDate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1163),
+                            Udate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local),
+                            WorkEndDate = new DateTime(2022, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9999),
                             WorkExperienceFile = "https://example.com/resume/devops_engineer_9.pdf",
                             WorkName = "DevOps Engineer",
-                            WorkStartDate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1163)
+                            WorkStartDate = new DateTime(2020, 9, 14, 15, 28, 22, 873, DateTimeKind.Local).AddTicks(9998)
                         },
                         new
                         {
                             WorkExperienceId = 10,
-                            Cdate = new DateTime(2018, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1167),
+                            Cdate = new DateTime(2018, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(2),
                             MemberId = 10,
-                            Udate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1167),
-                            WorkEndDate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1166),
+                            Udate = new DateTime(2021, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(3),
+                            WorkEndDate = new DateTime(2021, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(2),
                             WorkExperienceFile = "https://example.com/resume/software_architect_10.pdf",
                             WorkName = "Software Architect",
-                            WorkStartDate = new DateTime(2018, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1166)
+                            WorkStartDate = new DateTime(2018, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(1)
                         },
                         new
                         {
                             WorkExperienceId = 11,
-                            Cdate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1170),
+                            Cdate = new DateTime(2019, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(5),
                             MemberId = 11,
-                            Udate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1170),
-                            WorkEndDate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1169),
+                            Udate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(6),
+                            WorkEndDate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(5),
                             WorkExperienceFile = "https://example.com/resume/business_analyst_11.pdf",
                             WorkName = "Business Analyst",
-                            WorkStartDate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1169)
+                            WorkStartDate = new DateTime(2019, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(4)
                         },
                         new
                         {
                             WorkExperienceId = 12,
-                            Cdate = new DateTime(2018, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1173),
+                            Cdate = new DateTime(2018, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(8),
                             MemberId = 12,
-                            Udate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1173),
-                            WorkEndDate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1172),
+                            Udate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(9),
+                            WorkEndDate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(7),
                             WorkExperienceFile = "https://example.com/resume/product_manager_12.pdf",
                             WorkName = "Product Manager",
-                            WorkStartDate = new DateTime(2018, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1172)
+                            WorkStartDate = new DateTime(2018, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(7)
                         },
                         new
                         {
                             WorkExperienceId = 13,
-                            Cdate = new DateTime(2017, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1176),
+                            Cdate = new DateTime(2017, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(11),
                             MemberId = 13,
-                            Udate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1177),
-                            WorkEndDate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1176),
+                            Udate = new DateTime(2021, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(11),
+                            WorkEndDate = new DateTime(2021, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(10),
                             WorkExperienceFile = "https://example.com/resume/marketing_specialist_13.pdf",
                             WorkName = "Marketing Specialist",
-                            WorkStartDate = new DateTime(2017, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1174)
+                            WorkStartDate = new DateTime(2017, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(10)
                         },
                         new
                         {
                             WorkExperienceId = 14,
-                            Cdate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1179),
+                            Cdate = new DateTime(2019, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(14),
                             MemberId = 14,
-                            Udate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1179),
-                            WorkEndDate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1178),
+                            Udate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(16),
+                            WorkEndDate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(13),
                             WorkExperienceFile = "https://example.com/resume/seo_specialist_14.pdf",
                             WorkName = "SEO Specialist",
-                            WorkStartDate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1178)
+                            WorkStartDate = new DateTime(2019, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(13)
                         },
                         new
                         {
                             WorkExperienceId = 15,
-                            Cdate = new DateTime(2018, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1182),
+                            Cdate = new DateTime(2018, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(18),
                             MemberId = 15,
-                            Udate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1182),
-                            WorkEndDate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1181),
+                            Udate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(19),
+                            WorkEndDate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(18),
                             WorkExperienceFile = "https://example.com/resume/content_manager_15.pdf",
                             WorkName = "Content Manager",
-                            WorkStartDate = new DateTime(2018, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1181)
+                            WorkStartDate = new DateTime(2018, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(17)
                         },
                         new
                         {
                             WorkExperienceId = 16,
-                            Cdate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1185),
+                            Cdate = new DateTime(2020, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(21),
                             MemberId = 16,
-                            Udate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1185),
-                            WorkEndDate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1184),
+                            Udate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(22),
+                            WorkEndDate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(21),
                             WorkExperienceFile = "https://example.com/resume/cybersecurity_specialist_16.pdf",
                             WorkName = "Cybersecurity Specialist",
-                            WorkStartDate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1183)
+                            WorkStartDate = new DateTime(2020, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(20)
                         },
                         new
                         {
                             WorkExperienceId = 17,
-                            Cdate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1188),
+                            Cdate = new DateTime(2021, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(24),
                             MemberId = 17,
-                            Udate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1188),
-                            WorkEndDate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1187),
+                            Udate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(25),
+                            WorkEndDate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(24),
                             WorkExperienceFile = "https://example.com/resume/ai_engineer_17.pdf",
                             WorkName = "AI Engineer",
-                            WorkStartDate = new DateTime(2021, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1186)
+                            WorkStartDate = new DateTime(2021, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(23)
                         },
                         new
                         {
                             WorkExperienceId = 18,
-                            Cdate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1190),
+                            Cdate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(27),
                             MemberId = 18,
-                            Udate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1191),
-                            WorkEndDate = new DateTime(2024, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1190),
+                            Udate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(27),
+                            WorkEndDate = new DateTime(2024, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(27),
                             WorkExperienceFile = "https://example.com/resume/ml_engineer_18.pdf",
                             WorkName = "Machine Learning Engineer",
-                            WorkStartDate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1189)
+                            WorkStartDate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(26)
                         },
                         new
                         {
                             WorkExperienceId = 19,
-                            Cdate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1193),
+                            Cdate = new DateTime(2020, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(30),
                             MemberId = 19,
-                            Udate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1194),
-                            WorkEndDate = new DateTime(2023, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1192),
+                            Udate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(30),
+                            WorkEndDate = new DateTime(2023, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(29),
                             WorkExperienceFile = "https://example.com/resume/blockchain_developer_19.pdf",
                             WorkName = "Blockchain Developer",
-                            WorkStartDate = new DateTime(2020, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1192)
+                            WorkStartDate = new DateTime(2020, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(29)
                         },
                         new
                         {
                             WorkExperienceId = 20,
-                            Cdate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1196),
+                            Cdate = new DateTime(2019, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(33),
                             MemberId = 20,
-                            Udate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1196),
-                            WorkEndDate = new DateTime(2022, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1195),
+                            Udate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(33),
+                            WorkEndDate = new DateTime(2022, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(32),
                             WorkExperienceFile = "https://example.com/resume/full_stack_developer_20.pdf",
                             WorkName = "Full Stack Developer",
-                            WorkStartDate = new DateTime(2019, 9, 14, 0, 57, 38, 70, DateTimeKind.Local).AddTicks(1195)
+                            WorkStartDate = new DateTime(2019, 9, 14, 15, 28, 22, 874, DateTimeKind.Local).AddTicks(32)
                         });
                 });
 

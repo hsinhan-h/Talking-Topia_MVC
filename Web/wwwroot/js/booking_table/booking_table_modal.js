@@ -57,7 +57,6 @@ export async function generateBookingTable(weekStart, courseId) {
         const divTableHead = document.createElement("div");
         divTableHead.innerHTML = `${weekDaysBeginFromToday[i]
             }<br>${date.getDate()}`;
-        console.log(divTableHead);
         bookingTableHeader.appendChild(divTableHead);
     }
     weekRange.textContent = `${formatDate(dates[0])} 
