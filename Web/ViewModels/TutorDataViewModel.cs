@@ -7,6 +7,7 @@ namespace Web.ViewModels
 {
     public class TutorDataViewModel
     {
+        public int TutorId { get; set; }    
         /// <summary>
         /// 國籍
         /// </summary>

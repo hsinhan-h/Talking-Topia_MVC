@@ -14,7 +14,7 @@ namespace Web.Services
         }
 
         //Read 
-        public async Task<TutorDataViewModel> GetTutorDataAsync(int? memberId, string categorytName)
+        public async Task<TutorDataViewModel> GetTutorDataAsync(int? memberId)
         {
 
             var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
@@ -23,11 +23,14 @@ namespace Web.Services
             if (isVerifiedTutor)
             {
                 var tutorData = await (from member in _repository.GetAll<Member>()
+                                       join tutortimslot in _repository.GetAll<TutorTimeSlot>()
+                                       on member.MemberId equals tutortimslot.TutorId
                                        join nation in _repository.GetAll<Nation>()
                                        on member.NationId equals nation.NationId
                                        where member.MemberId == memberId
                                        select new TutorDataViewModel
                                        {
+                                           TutorId = tutortimslot.TutorId,
                                            NationID = nation.NationId,
                                            NativeLanguage = member.NativeLanguage,
                                            SpokenLanguage = member.SpokenLanguage,
@@ -49,22 +52,22 @@ namespace Web.Services
                                                    WorkEndDate = wexp.WorkEndDate,
                                                    WorkName = wexp.WorkName
                                                }).ToList(),
-                                           License = (from category in _repository.GetAll<CourseCategory>()
-                                                      join subject in _repository.GetAll<CourseSubject>()
-                                                      on category.CourseCategoryId equals subject.CourseCategoryId
-                                                      join prefersubject in _repository.GetAll<MemberPreference>()
-                                                      on subject.SubjectId equals prefersubject.SubjecId
-                                                      join memb in _repository.GetAll<Member>()
-                                                      on prefersubject.MemberId equals memb.MemberId
-                                                      join license in _repository.GetAll<ProfessionalLicense>()
-                                                      on memb.MemberId equals license.MemberId
-                                                      where prefersubject.MemberId == memberId
-                                                        && category.CategorytName == categorytName//要修改關聯
-                                                      select new LicenseData
-                                                      {
-                                                          ProfessionalLicenseName = license.ProfessionalLicenseName,
-                                                          ProfessionalLicenseUrl = license.ProfessionalLicenseUrl
-                                                      }).ToList()
+                                           //License = (from category in _repository.GetAll<CourseCategory>()
+                                           //           join subject in _repository.GetAll<CourseSubject>()
+                                           //           on category.CourseCategoryId equals subject.CourseCategoryId
+                                           //           join prefersubject in _repository.GetAll<MemberPreference>()
+                                           //           on subject.SubjectId equals prefersubject.SubjecId
+                                           //           join memb in _repository.GetAll<Member>()
+                                           //           on prefersubject.MemberId equals memb.MemberId
+                                           //           join license in _repository.GetAll<ProfessionalLicense>()
+                                           //           on memb.MemberId equals license.MemberId
+                                           //           where prefersubject.MemberId == memberId
+                                           //             && category.CategorytName == categorytName//要修改關聯
+                                           //           select new LicenseData
+                                           //           {
+                                           //               ProfessionalLicenseName = license.ProfessionalLicenseName,
+                                           //               ProfessionalLicenseUrl = license.ProfessionalLicenseUrl
+                                           //           }).ToList()
                                        }).FirstOrDefaultAsync();
                 return tutorData;
             }
@@ -122,10 +125,8 @@ namespace Web.Services
         
         public async Task<TutorDataViewModel> GetAllInformationAsync(int? memberId)
         {
-            
-            string categorytName = "程式設計";
-
-            var tutorData = await GetTutorDataAsync(memberId, categorytName);
+           
+            var tutorData = await GetTutorDataAsync(memberId);
             if (tutorData == null)
             {
                 return new TutorDataViewModel();
