@@ -25,6 +25,8 @@ namespace Web.Controllers
         /// </summary>
         public async Task<IActionResult> Index([FromQuery] int memberId)
         {
+            //var user = HttpContext.User.Identity.Name;
+            //var member = _memberService.GetMemberId(user);
             if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(AccountController.Account), "Home"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
@@ -40,6 +42,8 @@ namespace Web.Controllers
 
         public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
+            //var user = HttpContext.User.Identity.Name;
+            //var member = _memberService.GetMemberId(user);
             if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(AccountController.Account), "Home"); }
             if (!_courseService.IsCourse(courseId))
@@ -52,6 +56,8 @@ namespace Web.Controllers
 
         public IActionResult Delete([FromForm] int memberId, [FromForm] int courseId)
         {
+            //var user = HttpContext.User.Identity.Name;
+            //var member = _memberService.GetMemberId(user);
             _shoppingCartService.DeleteCartItem(memberId, courseId);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
