@@ -24,14 +24,16 @@
                                        class="form-control"
                                        id="floatingInput7"
                                        value="@Model.Account"
-                                       placeholder="" />
+                                       placeholder=""
+                                       disabled />
                                 <label for="floatingInput7">帳號</label>
                             </div>
                         </div>
+                        <!-- 修改密碼按鈕 -->
                         <div class="col-12 col-md-6">
                             <button class="btn lh-backstage-submit-btn mt-2"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
+                                    data-bs-target="#step1Modal">
                                 修改密碼
                             </button>
                         </div>
@@ -43,7 +45,8 @@
                                        class="form-control"
                                        id="floatingInput8"
                                        value="@Model.LastName"
-                                       placeholder="" />
+                                       placeholder=""
+                                       disabled />
                                 <label for="floatingInput8">名字</label>
                             </div>
                         </div>
@@ -53,7 +56,8 @@
                                        class="form-control"
                                        id="floatingInput9"
                                        value="@Model.FirstName"
-                                       placeholder="" />
+                                       placeholder=""
+                                       disabled />
                                 <label for="floatingInput9">姓氏</label>
                             </div>
                         </div>
@@ -64,8 +68,9 @@
                                 <input type="text"
                                        class="form-control"
                                        id="floatingInput1"
+                                       value="@Model.Nickname"
                                        placeholder=""
-                                       value="@Model.Nickname" />
+                                       disabled />
                                 <label for="floatingInput1">暱稱</label>
                             </div>
                         </div>
@@ -74,8 +79,9 @@
                                 <input type="text"
                                        class="form-control"
                                        id="floatingInput3"
+                                       value="@Model.Gender" 
                                        placeholder=""
-                                       value="@Model.Gender" />
+                                       disabled />
                                 <label for="floatingInput3">性別</label>
                             </div>
                         </div>
@@ -86,8 +92,9 @@
                                 <input type="date"
                                        class="form-control"
                                        id="floatingInput2"
+                                       value="@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("yyyy-MM-dd") : "")"
                                        placeholder="yyyy-MM-dd"
-                                       value="@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("yyyy-MM-dd") : "")" />
+                                       disabled />
                                 <label for="floatingInput2">生日</label>
                             </div>
                         </div>
@@ -97,7 +104,8 @@
                                        class="form-control"
                                        id="floatingInput10"
                                        value="@Model.Email"
-                                       placeholder="name@example.com" />
+                                       placeholder="name@example.com" 
+                                       disabled />
                                 <label for="floatingInput10">電子信箱</label>
                             </div>
                         </div>
@@ -107,7 +115,8 @@
                                        class="form-control"
                                        id="floatingInput11"
                                        value="@Model.Phone"
-                                       placeholder="" />
+                                       placeholder=""
+                                       disabled />
                                 <label for="floatingInput11">電話</label>
                             </div>
                         </div>
@@ -122,58 +131,68 @@
                     <div class="row my-3 p-3">
                         <h4>語言</h4>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                            <input class="form-check-input" type="checkbox" value="中文" id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "中文") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="中文"
+                                   id="flexCheckChinese"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "中文") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckChinese">
                                 中文
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                            <input class="form-check-input" type="checkbox" value="英文" id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "英文") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="英文"
+                                   id="flexCheckEnglish"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "英文") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckEnglish">
                                 英文
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "日文") ? "checked" : "") />
-                            
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="日文"
+                                   id="flexCheckJapanese"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "日文") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckJapanese">
                                 日文
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "法文") ? "checked" : "") />
-                            
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="法文"
+                                   id="flexCheckFrench"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "法文") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckFrench">
                                 法文
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "德文") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="德文"
+                                   id="flexCheckGerman"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "德文") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckGerman">
                                 德文
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "西班牙文") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="西班牙文"
+                                   id="flexCheckSpanish"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "西班牙文") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckSpanish">
                                 西班牙文
                             </label>
                         </div>
@@ -184,60 +203,66 @@
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "程式設計") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="HTML/CSS"
+                                   id="flexCheckHtmlCss"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "程式設計") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckHtmlCss">
                                 HTML/CSS
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Java Script") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="Java Script"
+                                   id="flexCheckJavaScript"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Java Script") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckJavaScript">
                                 Java Script
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckDefault"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "C#") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckDefault">
+                                   value="C#"
+                                   id="flexCheckCSharp"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "C#") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckCSharp">
                                 C#
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "SQL") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="SQL"
+                                   id="flexCheckSQL"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "SQL") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckSQL">
                                 SQL
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Python") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="Python"
+                                   id="flexCheckPython"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Python") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckPython">
                                 Python
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Java") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="Java"
+                                   id="flexCheckJava"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Java") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckJava">
                                 Java
                             </label>
                         </div>
@@ -248,64 +273,71 @@
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckDefault"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "數學") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckDefault">
+                                   value="數學"
+                                   id="flexCheckMath"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "數學") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckMath">
                                 數學
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "物理") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="物理"
+                                   id="flexCheckPhysics"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "物理") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckPhysics">
                                 物理
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "化學") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="化學"
+                                   id="flexCheckChemistry"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "化學") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckChemistry">
                                 化學
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "生物") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="生物"
+                                   id="flexCheckBiology"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "生物") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckBiology">
                                 生物
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "地理") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="地理"
+                                   id="flexCheckGeography"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "地理") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckGeography">
                                 地理
                             </label>
                         </div>
                         <div class="col-6 col-md-3 form-check lh-backstage-preference">
                             <input class="form-check-input"
                                    type="checkbox"
-                                   value=""
-                                   id="flexCheckChecked"
-                            @(Model.CoursePrefer.Any(p => p.SubjectName == "歷史") ? "checked" : "") />
-                            <label class="form-check-label" for="flexCheckChecked">
+                                   value="歷史"
+                                   id="flexCheckHistory"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "歷史") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckHistory">
                                 歷史
                             </label>
                         </div>
                     </div>
+
                 </section>
                 <div class="row">
                     <div class="col-8"></div>
@@ -313,143 +345,110 @@
                         <input class="btn btn-info col-12 lh-backstage-submit-btn"
                                type="submit"
                                value="儲存"
-                               data-bs-toggle="modal"
-                               data-bs-target="#exampleModal" />
+@*                                data-bs-toggle="modal"
+                               data-bs-target="#exampleModal" *@ />
                     </div>
                     <div class="col-2">
                         <input class="btn btn-info col-12 lh-backstage-submit-btn"
                                type="submit"
                                value="編輯"
-                               data-bs-toggle="modal"
-                               data-bs-target="#exampleModal" />
+@*                                data-bs-toggle="modal"
+                               data-bs-target="#exampleModal" *@ />
                     </div>
                  </div>
             </div>
         </div>
     </div>
-    <!-- modal 第一步-->
-    <div class="modal fade"
-         id="exampleModal"
-         tabindex="-1"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+
+
+    <!-- modal 第一步 -->
+    <div class="modal fade" id="step1Modal" tabindex="-1" aria-labelledby="step1Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        進階驗證：第一步
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                    <h1 class="modal-title fs-5" id="step1Label">進階驗證：第一步</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="step1Form">
                         <div class="mb-3">
-                            <label for="recipient-name1" class="col-form-label">請輸入會員電子信箱</label>
-                            <input type="email" class="form-control" id="recipient-name1" />
+                            <label for="emailInput" class="col-form-label">請輸入會員電子信箱</label>
+                            <input type="email" class="form-control" id="emailInput" required />
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                            class="btn lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        取消
-                    </button>
-                    <button type="button" class="btn lh-backstage-submit-btn">
-                        送出
-                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn lh-backstage-submit-btn" onclick="goToStep2()">送出</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- modal 第二步-->
-    <div class="modal fade"
-         id="exampleModal"
-         tabindex="-1"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+
+    <!-- modal 第二步 -->
+    <div class="modal fade" id="step2Modal" tabindex="-1" aria-labelledby="step2Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        進階驗證：第二步
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                    <h1 class="modal-title fs-5" id="step2Label">進階驗證：第二步</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="step2Form">
                         <div class="mb-3">
-                            <label for="recipient-name2" class="col-form-label">請輸入驗證碼</label>
-                            <input type="tel" class="form-control" id="recipient-name2" />
+                            <label for="verificationCodeInput" class="col-form-label">請輸入驗證碼</label>
+                            <input type="tel" class="form-control" id="verificationCodeInput" required />
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                            class="btn lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        取消
-                    </button>
-                    <button type="button" class="btn lh-backstage-submit-btn">
-                        送出
-                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn lh-backstage-submit-btn" onclick="goToStep3()">送出</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- modal 第三步-->
-    <div class="modal fade"
-         id="exampleModal"
-         tabindex="-1"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+
+    <!-- modal 第三步 -->
+    <div class="modal fade" id="step3Modal" tabindex="-1" aria-labelledby="step3Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        進階驗證：第三步
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                    <h1 class="modal-title fs-5" id="step3Label">進階驗證：第三步</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="step3Form">
                         <div class="mb-3">
-                            <label for="recipient-name3" class="col-form-label">請輸入欲設定的新密碼</label>
-                            <input type="tel" class="form-control" id="recipient-name3" />
+                            <label for="currentPasswordInput" class="col-form-label">請輸入目前密碼</label>
+                            <input type="password" class="form-control" id="currentPasswordInput" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="newPasswordInput" class="col-form-label">請輸入欲設定的新密碼</label>
+                            <input type="password" class="form-control" id="newPasswordInput" required />
                         </div>
                         <div class="mb-3">
-                            <label for="recipient-name4" class="col-form-label">請再輸入一次新密碼</label>
-                            <input type="tel" class="form-control" id="recipient-name4" />
+                            <label for="confirmPasswordInput" class="col-form-label">請再輸入一次新密碼</label>
+                            <input type="password" class="form-control" id="confirmPasswordInput" required />
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                            class="btn lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        取消
-                    </button>
-                    <button type="button" class="btn lh-backstage-submit-btn">
-                        送出
-                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn lh-backstage-submit-btn" onclick="submitPasswordChange()">送出</button>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
+
 
 @section topCSS {
     <link rel="stylesheet" href="~/css/backstage.css" />
 }
 @section endJS {
     <script src="~/js/change-profile-img.js"></script>
+    <script src="~/js/memberdata.js"></script>
 }

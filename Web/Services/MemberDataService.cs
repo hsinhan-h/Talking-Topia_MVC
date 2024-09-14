@@ -3,6 +3,7 @@ using NuGet.Protocol.Core.Types;
 using Web.Entities;
 using Web.Repository;
 using Web.ViewModels;
+using Infrastructure.Data;
 
 namespace Web.Services
 {
@@ -58,7 +59,7 @@ namespace Web.Services
             return memberProfile;
         }
 
-        public async Task UpdateMemberData(MemberProfileViewModel updatedData)
+        public async Task UpdateMemberData(MemberProfileViewModel updatedData, int memberId)
         {
             if (updatedData == null)
             {
@@ -105,6 +106,8 @@ namespace Web.Services
                 throw new Exception("更新會員資料時發生錯誤", ex);
             }
         }
+
+
 
     }
 

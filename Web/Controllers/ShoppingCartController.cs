@@ -26,7 +26,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Index([FromQuery] int memberId)
         {
             if (!_memberService.IsMember(memberId))
-            { return RedirectToAction(nameof(HomeController.Account), "Home"); }
+            { return RedirectToAction(nameof(AccountController.Account), "Home"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
             var result = new ShoppingCartListViewModel
             {
@@ -41,7 +41,7 @@ namespace Web.Controllers
         public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
             if (!_memberService.IsMember(memberId))
-            { return RedirectToAction(nameof(HomeController.Account), "Home"); }
+            { return RedirectToAction(nameof(AccountController.Account), "Home"); }
             if (!_courseService.IsCourse(courseId))
             { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }
             if (!_shoppingCartService.HasCartItem(memberId, courseId))

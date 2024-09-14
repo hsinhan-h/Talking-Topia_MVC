@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Dtos
 {
-    public class GetAllOrderResult
+    public class GetAllOrderResultDto
     {
         public List<GetOrderItem> GetOrderItems { get; set; }
     }

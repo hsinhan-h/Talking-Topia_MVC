@@ -10,7 +10,7 @@ namespace ApplicationCore.Interfaces
 {
     public interface IOrderService
     {
-        public Task<GetAllOrderResult> GetAllOrder(int memberId);
+        public Task<GetAllOrderResultDto> GetAllOrder(int memberId);
         // Create，預設OrderStatus為待付款
         public Task<bool> CreateOrderAsync(int memberId, string paymentType, string taxIdNumber);
         // Update，依rtnCode更新OrderStatus

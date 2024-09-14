@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Dtos
 {
-    public class GetAllShoppingCartResult
+    public class GetAllShoppingCartResultDto
     {
         public List<GetAllShoppingCartItem> GetShoppingCartItems { get; set; }
     }
