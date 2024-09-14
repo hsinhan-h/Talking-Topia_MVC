@@ -1,5 +1,5 @@
 ﻿import { generateBookingTable } from '/js/booking_table/booking_table_modal.js';
-import { initHoverPopup, initTooltips } from '/js/course_list/course_list_slick.js';
+import { initHoverPopup, initTooltips, autoPlayYouTubeModal } from '/js/course_list/course_list_slick.js';
 
 const courseCardsApp = Vue.createApp({
     data() {
@@ -22,6 +22,7 @@ const courseCardsApp = Vue.createApp({
         this.$nextTick(() => {
             initHoverPopup();  
             initTooltips();
+            autoPlayYouTubeModal();
         });
     },
     methods: {
