@@ -34,7 +34,7 @@ namespace ApplicationCore.Services
                                              .FirstOrDefault();
             return price;
         }
-        public async Task<GetAllShoppingCartResult> GetAllShoppingCartAsync(int memberId)
+        public async Task<GetAllShoppingCartResultDto> GetAllShoppingCartAsync(int memberId)
         {
             var items = await _shoppingCartRepository.ListAsync(item => item.MemberId == memberId);
             var getItem = new List<GetAllShoppingCartItem>();
@@ -42,20 +42,20 @@ namespace ApplicationCore.Services
             {
                 getItem.Add
                 (new GetAllShoppingCartItem
-                    {
-                        ShoppingCartId = item.ShoppingCartId,
-                        CourseId = item.CourseId,
-                        UnitPrice = item.UnitPrice,
-                        Quantity = item.Quantity,
-                        TotalPrice = item.TotalPrice,
-                        MemberId = item.MemberId,
-                        CourseType = item.CourseType,
-                        BookingDate = item.BookingDate,
-                        //BookingTime = item.BookingTime,
-                    }
+                {
+                    ShoppingCartId = item.ShoppingCartId,
+                    CourseId = item.CourseId,
+                    UnitPrice = item.UnitPrice,
+                    Quantity = item.Quantity,
+                    TotalPrice = item.TotalPrice,
+                    MemberId = item.MemberId,
+                    CourseType = item.CourseType,
+                    BookingDate = item.BookingDate,
+                    //BookingTime = item.BookingTime,
+                }
                 );
             }
-            var result = new GetAllShoppingCartResult
+            var result = new GetAllShoppingCartResultDto
             {
                 GetShoppingCartItems = getItem,
             };
@@ -152,6 +152,22 @@ namespace ApplicationCore.Services
                 throw new Exception(ex.Message);
             }
         }
-
+        public async Task<GetItemsToECStageDto> GetItemsToECStageDtoAsync(int memberId)
+        {
+            var items = await _shoppingCartRepository.ListAsync(item => item.MemberId == memberId);
+            var result = new List<GetItemToECStage>();
+            foreach (var item in items)
+            {
+                var course = await _courseRepository.GetByIdAsync(item.CourseId);
+                result.Add(new GetItemToECStage
+                {
+                    CourseName = course.Title,
+                    UnitPrice = item.UnitPrice,
+                    Quantity = item.Quantity,
+                    CourseType = item.CourseType,
+                });
+            }
+            return new GetItemsToECStageDto { GetItemsToECStage = result };
+        }
     }
 }
