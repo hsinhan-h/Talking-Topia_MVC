@@ -14,16 +14,18 @@ namespace ApplicationCore.Services
     {
         private readonly IRepository<ShoppingCart> _shoppingCartRepository;
         private readonly IRepository<Course> _courseRepository;
-
         public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _courseRepository = courseRepository;
         }
-
+        public bool HasCartItem(int memberId)
+        {
+            return _shoppingCartRepository.Any(m => m.MemberId == memberId);
+        }
         public bool HasCartItem(int memberId, int courseId)
         {
-            return _shoppingCartRepository.Any(m => m.MemberId == memberId &&  m.CourseId == courseId);
+            return _shoppingCartRepository.Any(m => m.MemberId == memberId && m.CourseId == courseId);
         }
         public decimal GetUnitPrice(int courseId, int courseLength)
         {
@@ -40,17 +42,17 @@ namespace ApplicationCore.Services
             {
                 getItem.Add
                 (new GetAllShoppingCartItem
-                {
-                    ShoppingCartId = item.ShoppingCartId,
-                    CourseId = item.CourseId,
-                    UnitPrice = item.UnitPrice,
-                    Quantity = item.Quantity,
-                    TotalPrice = item.TotalPrice,
-                    MemberId = item.MemberId,
-                    CourseType = item.CourseType,
-                    BookingDate = item.BookingDate,
-                    BookingTime = item.BookingTime,
-                }
+                    {
+                        ShoppingCartId = item.ShoppingCartId,
+                        CourseId = item.CourseId,
+                        UnitPrice = item.UnitPrice,
+                        Quantity = item.Quantity,
+                        TotalPrice = item.TotalPrice,
+                        MemberId = item.MemberId,
+                        CourseType = item.CourseType,
+                        BookingDate = item.BookingDate,
+                        //BookingTime = item.BookingTime,
+                    }
                 );
             }
             var result = new GetAllShoppingCartResult
@@ -59,6 +61,15 @@ namespace ApplicationCore.Services
             };
             return result;
         }
+        /// <summary>
+        /// 無預約時段，單純將課程加入購物車
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="courseId"></param>
+        /// <param name="courseLength"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<int> CreateShoppingCartAsync(int memberId, int courseId, int courseLength, int quantity)
         {
             try
@@ -68,23 +79,57 @@ namespace ApplicationCore.Services
                 {
                     throw new ArgumentException("Invalid input data");
                 }
-                    var shoppingCartEntity = new ShoppingCart()
-                    {
-                        CourseId = courseId,
-                        UnitPrice = unitPrice,
-                        Quantity = (short)quantity,
-                        TotalPrice = unitPrice * quantity,
-                        MemberId = memberId,
-                        CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice,
-                        Cdate = DateTime.Now,
-                    };
-                    var shoppingCart = await _shoppingCartRepository.AddAsync(shoppingCartEntity);
-                    if (shoppingCart is null)
-                    {
-                        throw new Exception("Shopping Cart could not be created");
-                    }
+                var shoppingCartEntity = new ShoppingCart()
+                {
+                    CourseId = courseId,
+                    UnitPrice = unitPrice,
+                    Quantity = (short)quantity,
+                    TotalPrice = unitPrice * quantity,
+                    MemberId = memberId,
+                    CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice,
+                    Cdate = DateTime.Now,
+                };
+                var shoppingCart = await _shoppingCartRepository.AddAsync(shoppingCartEntity);
+                if (shoppingCart is null)
+                {
+                    throw new Exception("Shopping Cart could not be created");
+                }
 
-                    return shoppingCart.MemberId;
+                return shoppingCart.MemberId;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Unexpected error: {ex.Message}");
+            }
+        }
+        public async Task<int> CreateShoppingCartAsync(int memberId, int courseId, int courseLength, int quantity, DateTime bookingDate, short bookingTime)
+        {
+            try
+            {
+                decimal unitPrice = GetUnitPrice(courseId, courseLength);
+                if (memberId < 1 || courseId < 1 || courseLength < 1 || quantity < 1 || unitPrice < 1)
+                {
+                    throw new ArgumentException("Invalid input data");
+                }
+                var shoppingCartEntity = new ShoppingCart()
+                {
+                    CourseId = courseId,
+                    UnitPrice = unitPrice,
+                    Quantity = (short)quantity,
+                    TotalPrice = unitPrice * quantity,
+                    MemberId = memberId,
+                    CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice,
+                    Cdate = DateTime.Now,
+                    BookingDate = bookingDate,
+                    //BookingTime = bookingTime,
+                };
+                var shoppingCart = await _shoppingCartRepository.AddAsync(shoppingCartEntity);
+                if (shoppingCart is null)
+                {
+                    throw new Exception("Shopping Cart could not be created");
+                }
+
+                return shoppingCart.MemberId;
             }
             catch (Exception ex)
             {
@@ -107,5 +152,6 @@ namespace ApplicationCore.Services
                 throw new Exception(ex.Message);
             }
         }
+
     }
 }

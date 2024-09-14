@@ -36,10 +36,10 @@ namespace Web.Controllers
             else
             {
                 decimal price = _courseService.GetCourse25MinUnitPrice(CourseId);
-                await _shoppingCartService.CreateShoppingCartAsync(1, CourseId, 25, 1);
+                await _shoppingCartService.CreateShoppingCartAsync(1, CourseId, 25, 1, BookingDate, BookingTime);
                 return RedirectToAction("Index", "ShoppingCart");
             }
-            
+
         }
 
 
@@ -49,5 +49,5 @@ namespace Web.Controllers
         }
     }
 
-    
+
 }
