@@ -1,5 +1,7 @@
 ﻿
 
+using System.Linq.Expressions;
+
 namespace Web.Repository
 {
     public interface IRepository
@@ -11,7 +13,7 @@ namespace Web.Repository
         IQueryable<T> GetAll<T>() where T : class;
         void SaveChanges();
         void Update<T>(T value) where T : class;
-        T FirstOrDefault<T>(Func<T, bool> predicate) where T : class;
+        T FirstOrDefault<T>(Expression<Func<T, bool>> predicate) where T : class;
         Task SaveChangesAsync();
         Task BeginTransActionAsync();
         Task CommitAsync();
