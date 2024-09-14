@@ -44,8 +44,6 @@ const courseCardsApp = Vue.createApp({
                             this.bookedSlots.push(c.bookedTimeSlots);
                         });                      
                     }
-                    console.log(this.availableSlots);
-                    console.log(this.bookedSlots);
                 } else {
                     throw new Error(`Error: ${response.status} ${response.statusText}`);
                 }
@@ -71,8 +69,21 @@ const courseCardsApp = Vue.createApp({
         },
         addBookingStatusClass(startHour, endHour, weekday, index) {
             const isAvailable = this.availableSlots[index].some(slot => slot.weekday === weekday && slot.startHour >= startHour && slot.startHour < endHour);
-            console.log(this.availableSlots[index]);
-            const isOccupied = this.bookedSlots[index].some(slot => slot.weekday === weekday && slot.startHour >= startHour && slot.startHour < endHour);
+            const isOccupied = this.bookedSlots[index].some(slot => {
+                const today = new Date();
+                const currentDayOfWeek = today.getDay();
+
+                const startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - currentDayOfWeek);
+
+                const endOfWeek = new Date(startOfWeek);
+                endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+                const bookedDate = new Date(slot.date);
+
+                return bookedDate >= startOfWeek && bookedDate <= endOfWeek &&
+                    bookedDate.getDay() === weekday && slot.startHour >= startHour && slot.startHour < endHour;
+            });
             if (isOccupied) {
                 return 'occupied';
             }
