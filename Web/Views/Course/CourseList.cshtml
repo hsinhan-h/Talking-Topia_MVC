@@ -553,11 +553,17 @@
         </div>
     </div>
 
-    <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center" total-pages="@ViewData["TotalPages"]">
+    <div id="course-cards-app" class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center">
+        <button v-on:click="goToPage(page - 1)" type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
+        <div class="page-text mx-3 mx-md-4"> {{ page }} </div>
+        <button v-on:click="goToPage(page + 1)" type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
+    </div>
+
+    @* <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center" total-pages="@ViewData["TotalPages"]">
         <button type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
         <div class="page-text mx-3 mx-md-4"></div>
         <button type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
-    </div>
+    </div> *@
 </section>
 
 

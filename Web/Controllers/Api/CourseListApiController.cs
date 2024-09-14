@@ -17,6 +17,12 @@
             return Ok(courses);
         }
 
+        [HttpGet("GetTotalCourseQty")]
+        public async Task<IActionResult> GetTotalCourseQty()
+        {
+            var courseQty = await _courseService.GetTotalCourseQtyAsync();
+            return Ok(courseQty);
+        }
 
 
     }

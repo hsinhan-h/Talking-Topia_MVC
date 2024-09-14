@@ -7,6 +7,7 @@ const courseCardsApp = Vue.createApp({
             courses: [],
             page: 1,
             pageSize: 6,
+            totalPages: 0,
             error: null,
             loading: true,
             selectedNationality: null,
@@ -20,6 +21,7 @@ const courseCardsApp = Vue.createApp({
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
         this.fetchCourses();
         this.fetchNations();
+        this.fetchTotalCourseQty();
     },
     updated() {
         //DOM 已更新完後, 重新呼叫slick function & tooltips & modals
@@ -99,12 +101,36 @@ const courseCardsApp = Vue.createApp({
                 const response = await fetch('/api/NationApi');
                 if (response.ok) {
                     const nationNameData = await response.json();
-                    this.nations = nationNameData;
+                    this.nations = nationNameData;          
                 }
             } catch (e) {
                 this.error = e;
             } finally {
+                
                 this.loading = false;
+            }
+        },
+        async fetchTotalCourseQty() {
+            try {
+                const response = await fetch('/api/CourseListApi/GetTotalCourseQty');
+                if (response.ok) {
+                    const totalCourseQty = await response.json();
+                    console.log(totalCourseQty);
+                    this.totalPages = Math.ceil(totalCourseQty / this.pageSize);
+                }
+            } catch (e) {
+                this.error = e;
+            } finally {
+
+                this.loading = false;
+            }
+        },
+        //換頁 不刷新頁面
+        goToPage(page) {
+            if (page > 0 && page <= this.totalPages) {
+                this.page = page;
+                this.fetchCourses();
+                history.pushState(null, '', `?page=${this.page}`);
             }
         }
 
