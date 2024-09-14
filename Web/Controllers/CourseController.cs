@@ -24,8 +24,8 @@ namespace Web.Controllers
             int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
             int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
             ViewData["TotalPages"] = totalPages;
-            var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
-            return View(model);
+            //var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
+            return View();
         }
 
 

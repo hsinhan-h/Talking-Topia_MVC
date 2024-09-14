@@ -532,9 +532,9 @@
         <h3 class="my-4 ">相似教師推薦</h3>
         <div class="tutor-recommend-carousel-wrapper w-100 my-2 position-relative">
             <div class="tutor-recommend-carousel">
-                @for (int i = 0; i < 10; i++)
+                @foreach (var card in Model.TutorReconmmendCard)
                 {
-                    <partial name="_TutorRecommendPartial" />
+                    <partial name="_TutorRecommendPartial" model="card" />
                 }
             </div>
             <div class="arrow_prev "><i class="fa-solid fa-angle-left"></i></div>

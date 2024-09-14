@@ -9,9 +9,10 @@ namespace Web.Configurations
     {
         public static IServiceCollection AddWebService(this IServiceCollection services)
         {
-            
-            //services.AddScoped<IProductViewModelService, ProductViewModelService>(); 參考用
-            
+            services.AddScoped<ShoppingCartViewModelService>();
+            services.AddScoped<AppointmentDetailService>();
+            services.AddScoped<OrderDetailService>();
+            services.AddScoped<OrderViewModelService>();
             return services;
         }
     }

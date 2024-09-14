@@ -1,4 +1,5 @@
-﻿<div class="container lh-backstage" id="app">
+﻿@model AppointmentDetailsViewModel
+<div class="container lh-backstage" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
             <div class="lh-backstage-homepage-section mb-5"
@@ -22,14 +23,26 @@
                                 </tr>
                             </thead>
                             <tbody border="1">
+                                @if (Model.AppointmentDetailsList != null && Model.AppointmentDetailsList.Any())
+                                {
+                                    @foreach (var order in Model.AppointmentDetailsList)
+                                    {
+                                        <tr>
+                                            <td>@order.OrderDatetime</td>
+                                            <td>@order.TransactionDate</td>
+                                            <td>@order.CourseTitle</td>
+                                            <td>@order.CourseTitle</td>
+                                            <td>@order.CourseLength</td>
+                                            <td>@order.MemberId</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
                                     <tr>
-                                        <td>2024/09/30</td>
-                                        <td>09:00</td>
-                                        <td>英語日常會話大進擊</td>
-                                        <td>遇到歪果仁問路也不怕</td>
-                                        <td>50分鐘</td>
-                                        <td>王小明</td>
+                                        <td colspan="6">沒有預約資料</td>
                                     </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

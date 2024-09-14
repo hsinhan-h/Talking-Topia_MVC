@@ -1,7 +1,5 @@
 ﻿@model ShoppingCartListViewModel
-@section topCSS {
-    <link rel="stylesheet" href="~/css/ShoppingCartCheck.css" />
-}
+
 
 <div class="container">
     <div class="container-title">
@@ -96,7 +94,7 @@
             <h3>選擇付款方式</h3>
         </div>
         <div class="payment row-payment">
-            <div class="card card-payment col-md-4 col-12">
+            <div class="card card-payment col-md-4 col-12" data-payment="creditcard">
                 <div class="card-body">
                     <h5 class="card-title">信用卡付款</h5>
                     <p class="card-text">Visa, Mastercard, JCB</p>
@@ -121,13 +119,13 @@
                     <p class="card-text">適用台灣</p>
                 </div>
             </div> -->
-            <div class="card card-payment col-md-4 col-12">
+            <div class="card card-payment col-md-4 col-12" data-payment="store">
                 <div class="card-body">
                     <h5 class="card-title">超商繳款</h5>
                     <p class="card-text">適用台灣</p>
                 </div>
             </div>
-            <div class="card card-payment col-md-4 col-12">
+            <div class="card card-payment col-md-4 col-12" data-payment="atm">
                 <div class="card-body">
                     <h5 class="card-title">ATM轉帳</h5>
                     <p class="card-text">適用台灣</p>
@@ -141,7 +139,7 @@
         </div>
         <div class="container invoice">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                <input class="form-check-input lh-shopping-cart-tax-id" type="checkbox" value="" id="flexCheckDefault" />
                 <label class="form-check-label" for="flexCheckDefault">
                     <p>需開立統一編號發票（未填寫統編將自動開立二聯式發票）</p>
                 </label>
@@ -206,18 +204,27 @@
             </div>
         </div>
     </div>
-        <form asp-controller="Payment" asp-action="New" method="post">
+    <form id="shopping-cart-submit-btn" method="post" asp-controller="Order" asp-action="SubmitToOrder">
+        @Html.AntiForgeryToken()
+        @* <input class="sc-input" type="hidden" name="memberId" value="@Model.MemberId" /> *@
+        <input class="sc-input" type="hidden" name="memberId" value="1" />
+        <input class="sc-input" type="hidden" name="paymentType" value="" />
+        <input class="sc-input" type="hidden" name="taxIdNumber" value="" />
 
-            <input type="hidden" name="memberId" value="@Model.MemberId" />
-            <input type="hidden" name="courseId" value="@Model.ShoppingCartList" />
-
-            <button type="submit" class="return-order_btn text-white">確認並支付</button>
-            <br>
-            <br>
-        </form>
+        <button type="submit" class="return-order_btn text-white">確認並支付</button>
+        <br>
+        <br>
+    </form>
 </div>
 
-                        @*
+@section topCSS {
+    <link rel="stylesheet" href="~/css/ShoppingCartCheck.css" />
+}
+@section endJS {
+    <script src="~/js/shoppingcart.js"></script>
+}
+
+@*
     <div class="remark">
     <p>
     100% 滿意保證：當您不滿意教師時，能免費轉為 TalkingTopia

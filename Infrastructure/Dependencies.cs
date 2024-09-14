@@ -13,6 +13,7 @@ namespace Infrastructure
             var connectionString = configuration.GetConnectionString("TalkingTopiaDb");
             services.AddDbContext<TalkingTopiaContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(ITransaction), typeof(EfTransaction));
         }
     }
 }
