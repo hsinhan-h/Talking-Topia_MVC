@@ -22,6 +22,7 @@ const courseCardsApp = Vue.createApp({
         this.fetchCourses();
         this.fetchNations();
         this.fetchTotalCourseQty();
+        
     },
     updated() {
         //DOM 已更新完後, 重新呼叫slick function & tooltips & modals

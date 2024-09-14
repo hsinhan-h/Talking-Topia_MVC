@@ -14,7 +14,7 @@
     </style>
 }
 
-<partial name="_BannerPartial" />
+<partial name="_BannerPartial"  />
 <section class="tutors mb-3" id="course-cards-app">
     <div class="lh-tutors-filter d-flex">
         <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-3">
@@ -479,14 +479,7 @@
 
         </div>
     </div>
-    <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <partial name="_BookingTablePartial" />
-            </div>
-        </div>
-    </div>
+    
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -547,13 +540,11 @@
                     <button type="button" class="btn cancel-btn" data-bs-dismiss="modal">取消</button>
                     <button type="button" class="btn send-btn">傳送訊息</button>
                 </div>
-
-
             </div>
         </div>
     </div>
 
-    <div id="course-cards-app" class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center">
+    <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center">
         <button v-on:click="goToPage(page - 1)" type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
         <div class="page-text mx-3 mx-md-4"> {{ page }} </div>
         <button v-on:click="goToPage(page + 1)" type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
@@ -565,7 +556,14 @@
         <button type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
     </div> *@
 </section>
-
+<div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <partial name="_BookingTablePartial" />
+        </div>
+    </div>
+</div>
 
 @section endJS
 {
