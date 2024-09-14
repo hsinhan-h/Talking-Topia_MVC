@@ -57,14 +57,14 @@ namespace ApplicationCore.Services
         }
 
         // 創建訂單並處理交易(需刷新交易狀態/OrderStatusId，另外invice尚未考慮)
-        public async Task<bool> CreateOrderAsync(int memberId, int courseId, string paymentType)
+        public async Task<bool> CreateOrderAsync(int memberId,string paymentType)
         {
             using var transaction = _transaction.BeginTransActionAsync();
             {
                 try
                 {
                     // 如果購物車為空，則無需處理
-                    if (!_shoppingCartService.HasCartItem(memberId, courseId))
+                    if (!_shoppingCartService.HasCartItem(memberId))
                     {
                         throw new InvalidOperationException("購物車為空，無法生成訂單。");
                     }
@@ -124,5 +124,6 @@ namespace ApplicationCore.Services
 
             return new TimeSpan(hours, minutes, 0);
         }
+
     }
 }

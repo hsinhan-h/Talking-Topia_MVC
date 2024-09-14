@@ -11,7 +11,7 @@ namespace ApplicationCore.Interfaces
     public interface IOrderService
     {
         public Task<GetAllOrderResult> GetAllOrder(int memberId);
-        public Task<bool> CreateOrderAsync(int memberId, int courseId, string paymentType);
+        public Task<bool> CreateOrderAsync(int memberId, string paymentType);
         // Create預設訂單為待付款
         // 另外要寫Update去更新訂單狀態
         public EOrderStatus ValidatePaymentResult(int rtnCode);
