@@ -35,7 +35,6 @@ namespace Web
             builder.Services.AddScoped<MemberDataService>();
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<TutorDataservice>();
-            builder.Services.AddScoped<ShoppingCartService>();
             builder.Services.AddScoped<AccountService>();
 
 
