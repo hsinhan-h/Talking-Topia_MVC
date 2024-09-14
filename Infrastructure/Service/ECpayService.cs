@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Enums;
+using ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Service
 {
-    public class PaymentResultService
+    public class ECpayService
     {
         /// <summary>
         /// 驗證綠界API回傳的結果
