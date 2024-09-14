@@ -13,16 +13,20 @@ namespace Web.Controllers
         private readonly ILogger<OrderController> _logger;
         private readonly IAntiforgery _antiforgery;
         private readonly IOrderService _orderService;
+        private readonly IMemberService _memberService;
         private readonly IShoppingCartService _shoppingCartService;
+        private readonly OrderViewModelService _orderVMService;
         private readonly ECpayService _paymentResultService;
         private readonly ShoppingCartViewModelService _shoppingCartVMService;
 
-        public OrderController(ILogger<OrderController> logger, IAntiforgery antiforgery, IOrderService orderService, IShoppingCartService shoppingCartService, ECpayService paymentResultService, ShoppingCartViewModelService shoppingCartVMService)
+        public OrderController(ILogger<OrderController> logger, IAntiforgery antiforgery, IOrderService orderService, IMemberService memberService, IShoppingCartService shoppingCartService, OrderViewModelService orderVMService, ECpayService paymentResultService, ShoppingCartViewModelService shoppingCartVMService)
         {
             _logger = logger;
             _antiforgery = antiforgery;
             _orderService = orderService;
+            _memberService = memberService;
             _shoppingCartService = shoppingCartService;
+            _orderVMService = orderVMService;
             _paymentResultService = paymentResultService;
             _shoppingCartVMService = shoppingCartVMService;
         }
@@ -34,6 +38,8 @@ namespace Web.Controllers
         /// <returns></returns>
         public IActionResult Index(int memberId)
         {
+            //var user = HttpContext.User.Identity.Name;
+            //var member = _memberService.GetMemberId(user);
             return View();
         }
 
@@ -42,11 +48,12 @@ namespace Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetData(int orderId, int rtnCode)
+        public async Task<IActionResult> GetData(int rtnCode, int orderId = 20)
         {
             var orderStatus = _paymentResultService.ValidatePaymentResult(rtnCode);
             var result = await _orderService.UpdateOrderAsync(orderId, orderStatus);
-            var order = await _orderService.GetAllOrder(orderId);
+            //var order = await _orderService.GetAllOrder(orderId);
+            var order = await _orderVMService.GetData(orderId);
             if (order == null)
             {
                 return NotFound();
@@ -66,6 +73,8 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitToOrder(int memberId, string paymentType, string taxIdNumber)
         {
+            //var user = HttpContext.User.Identity.Name;
+            //var member = _memberService.GetMemberId(user);
             if (memberId < 0)
             { return BadRequest("缺少必要的參數"); }
             if (string.IsNullOrEmpty(paymentType))
