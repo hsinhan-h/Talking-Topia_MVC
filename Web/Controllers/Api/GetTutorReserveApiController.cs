@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Web.Services;
-using Web.ViewModels;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Controllers.Api
 {
-    [ApiController]
     [Route("api/GetTutorReserveApi")]
-    public class GetTutorReserveApiController : Controller
+    [ApiController]
+    public class GetTutorReserveApiController : ControllerBase
     {
         private readonly TutorDataservice _tutorDataService;
         public GetTutorReserveApiController(TutorDataservice tutorDataservice)

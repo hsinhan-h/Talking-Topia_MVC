@@ -1,4 +1,4 @@
-﻿@model OrderManagementListViewModel
+﻿@model MemberOrderViewModel
 
 <div class="container lh-backstage" id="app">
     <div class="row">
@@ -53,7 +53,7 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    @foreach (var order in Model.OrderManagementList)
+                                    @foreach (var order in Model.MemberOderList)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
@@ -61,8 +61,8 @@
                                             <td>@order.FullName</td>
                                             <td>@order.CourseTitle</td>
                                             <td>@order.CourseLength 分鐘</td>
-                                            <td>@order.CourseQuantity 堂</td>
-                                            <td>NT$@order.SubtotalNTD.ToString("#,###")</td>
+                                            <td>@order.Quantity 堂</td>
+                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
                                             <td>@order.TaxIdNumber</td>
                                         </tr>
                                     }
@@ -88,7 +88,7 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    @foreach (var order in Model.OrderManagementList)
+                                    @foreach (var order in Model.MemberOderList)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
@@ -96,8 +96,8 @@
                                             <td>@order.FullName</td>
                                             <td>@order.CourseTitle</td>
                                             <td>@order.CourseLength 分鐘</td>
-                                            <td>@order.CourseQuantity 堂</td>
-                                            <td>NT$@order.SubtotalNTD.ToString("#,###")</td>
+                                            <td>@order.Quantity 堂</td>
+                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
                                             <td>@order.TaxIdNumber</td>
                                         </tr>
                                     }
@@ -122,7 +122,7 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    @foreach (var order in Model.OrderManagementList)
+                                    @foreach (var order in Model.MemberOderList)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
@@ -130,8 +130,8 @@
                                             <td>@order.FullName</td>
                                             <td>@order.CourseTitle</td>
                                             <td>@order.CourseLength 分鐘</td>
-                                            <td>@order.CourseQuantity 堂</td>
-                                            <td>NT$@order.SubtotalNTD.ToString("#,###")</td>
+                                            <td>@order.Quantity 堂</td>
+                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
                                             <td>@order.TaxIdNumber</td>
                                         </tr>
                                     }
@@ -177,7 +177,7 @@
                                 <div class="form-floating mb-3">
                                     <input type="text"
                                            class="form-control"
-                                           id="floatingInput"
+                                          @*  id="floatingInput" *@
                                            placeholder=""
                                            value="教你成為國畫大師" />
                                     <label for="floatingInput">課程內容</label>
@@ -559,7 +559,7 @@
                                 <div class="form-floating mb-3">
                                     <input type="text"
                                            class="form-control"
-                                           id="floatingInput"
+                                         @*   id="floatingInput" *@
                                            placeholder=""
                                            value="9999" />
                                     <label for="floatingInput">金額(台幣/堂)</label>

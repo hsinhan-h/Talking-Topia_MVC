@@ -1,31 +1,36 @@
-﻿using Infrastructure.ECpay;
+﻿using ApplicationCore.Interfaces;
+using Infrastructure.ECpay;
 using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
+using Infrastructure.Service;
 using System.Collections.Generic;
 using System.Security.Policy;
 
-namespace Web.Controllers
+namespace Web.Controllers.Api
 {
     [Route("[controller]")]
     [ApiController]
     public class PaymentController : Controller
     {
         private readonly IConfiguration _configuration;
-        public PaymentController(IConfiguration configuration)
+        private readonly ECpayService _ecpayService;
+
+        public PaymentController(IConfiguration configuration, ECpayService ecpayService)
         {
             _configuration = configuration;
+            _ecpayService = ecpayService;
         }
 
         // POST api/payment
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult New()
         {
             return RedirectToAction("checkout");
         }
 
         [HttpGet("checkout")]
-        public IActionResult CheckOut()
+        public async Task<IActionResult> CheckOut()
         {
             // 資料藏在appsettings.json及UserSecret(目前註解中)
             var service = new
@@ -45,18 +50,21 @@ namespace Web.Controllers
                 Description = "測試購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
-                Items = new List<Item>{
-                    new Item{
-                        CourseName = "手機",
-                        UnitPrice = 14000,
-                        Quantity = 2
-                    },
-                    new Item{
-                        CourseName = "隨身碟",
-                        UnitPrice = 900,
-                        Quantity = 10
-                    }
-                }
+                Items = await _ecpayService.GetItemsToECStageDtoAsync(1)
+
+                //new List<Item>{
+                //    new Item{
+                //        CourseName = "手機",
+                //        UnitPrice = 14000,
+                //        Quantity = 2
+                //    },
+                //    new Item{
+                //        CourseName = "隨身碟",
+                //        UnitPrice = 900,
+                //        Quantity = 10
+                //    }
+                //}
+
             };
             IPayment payment = new PaymentConfiguration()
                 .Send.ToApi(
@@ -95,6 +103,14 @@ namespace Web.Controllers
             // 處理後續訂單狀態的更動等等...。
 
             return Ok("1|OK");
+        }
+
+        [HttpGet]
+        public IActionResult Success()
+        {
+
+            return Redirect("Order/Index");
+
         }
     }
 }

@@ -21,6 +21,5 @@ namespace ApplicationCore.Interfaces
         bool Any(Expression<Func<TEntity, bool>> predicate);
         List<TEntity> List(Expression<Func<TEntity, bool>> predicate);
         List<TEntity> List();
-
     }
 }

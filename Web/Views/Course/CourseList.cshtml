@@ -1,4 +1,4 @@
-﻿@model CourseInfoListViewModel
+﻿@* @model CourseInfoListViewModel *@
 
 @section topCSS
 {
@@ -20,7 +20,7 @@
             <ul class="dropdown-menu">
                 <li class="dropend nested-dropdown">
                     <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
-                            data-bs-auto-close="true" type="button">
+                            data-bs-auto-close="outside" type="button">
                         語言學習
                     </button>
                     <ul class="dropdown-menu">
@@ -34,7 +34,7 @@
                 </li>
                 <li class="dropend nested-dropdown">
                     <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
-                            data-bs-auto-close="true" type="button">
+                            data-bs-auto-close="outside" type="button">
                         程式設計
                     </button>
                     <ul class="dropdown-menu">
@@ -48,7 +48,7 @@
                 </li>
                 <li class="dropend nested-dropdown">
                     <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
-                            data-bs-auto-close="true" type="button">
+                            data-bs-auto-close="outside" type="button">
                         升學科目
                     </button>
                     <ul class="dropdown-menu">
@@ -335,175 +335,163 @@
         <a href="">低價優先</a>
         <a href="">多評價數優先</a>
     </div>
-    <div class="lh-tutor-cards">
-        @foreach (var courseCard in Model.CourseInfoList)
-        {
-            <div class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
-                <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
-                    <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
-                        <div class="lh-tutor-images__head position-relative">
-                            <img class="tutor-headshot rounded-circle"
-                                 src="@Url.Content(@courseCard.TutorHeadShotImage)" />
-                                <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
-                                     src="@Url.Content(@courseCard.TutorFlagImage)" />
-                        </div>
-                        <div class="lh-tutor-follow mt-2">+關注</div>
+    <div v-if="loading"></div>
+    <div v-else id="course-cards-app" class="lh-tutor-cards" v-cloak>
+        <div v-for="courseCard in courses" :key="courseCard.courseId" class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
+            <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
+                <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
+                    <div class="lh-tutor-images__head position-relative">
+                        <img class="tutor-headshot rounded-circle"
+                             :src="courseCard.tutorHeadShotImage" />
+                        <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
+                             :src="courseCard.tutorFlagImage.replace('~', '')" />
                     </div>
-                    <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
-                        <div class="tutor-description-title-wrapper d-flex justify-content-between">
-                            <a class="tutor-description-title" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" >
-                                @courseCard.CourseTitle
-                            </a>
-                            @if (@courseCard.IsVerifiedTutor == true)
-                            {
-                                <span class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
-                                      data-bs-placement="bottom" title="僅有8.5%的優質教師"
-                                      data-bs-custom-class="custom-tooltip">
-                                    <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
-                                </span>
-                            }                           
-                        </div> 
-                        <div class="tutor-subtitle my-1">@courseCard.CourseSubTitle</div>
-                        <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                            <div class="fifty-min-course-pricing">
-                                NT$@FormatPrice(@courseCard.FiftyMinUnitPrice) <span class="text">/ 50分鐘</span>
-                            </div>
-                            <div class="trail-course-pricing">NT$@FormatPrice(@courseCard.TwentyFiveMinUnitPrice) <span class="text">/ 25分鐘</span></div>
-                        </div>
-                        <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                            <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>@courseCard.CourseRatings</span></div>
-                            <div>・</div>
-                            <div class="tutor-total-reviews"><span class="pe-1">@courseCard.CourseReviews</span>個評論</div>
-                        </div>
-                        <p class="tutor-intro-text mb-2">
-                            @courseCard.TutorIntro
-                        </p>
-                        @* <a href="javascript:void(0)" class="tutor-viewmore d-none d-md-block mb-md-1" onclick="handleCourseLinkClick(event, @courseCard.CourseId, '@Url.Action("CourseMainPage", "Course", new {courseId = courseCard.CourseId})')">瀏覽更多</a> *@
-                        <a class="tutor-viewmore d-none d-md-inline" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" >瀏覽更多</a>
-                    </div>
-                    <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
-                        <div class="course-pricing d-flex">
-                            <div class="trail-course-pricing col-6">
-                                NT$@FormatPrice(@courseCard.TwentyFiveMinUnitPrice) <div class="text">25分鐘</div>
-                            </div>
-                            <div class="fifty-min-course-pricing col-6">
-                                NT$@FormatPrice(@courseCard.FiftyMinUnitPrice) <div class="text">50分鐘</div>
-                            </div>
-                        </div>
-                        <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
-                                data-bs-target="#bookingTableModal" onclick="generateBookingTable(new Date(), @courseCard.CourseId)">
-                            預約課程
-                        </button>
-                        <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
-                                data-bs-toggle="modal" data-bs-target="#contactTutorModal">
-                            聯繫老師
-                        </button>
-                    </div>
+                    <div class="lh-tutor-follow mt-2">+關注</div>
                 </div>
-                <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                    <p class="tutor-intro-text">
-                        @courseCard.TutorIntro
-                    </p>
-                </div>
-                <div class="lh-tutor-card__book d-flex justify-content-center">
-                    <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal"
-                            onclick="generateBookingTable(new Date(), @courseCard.CourseId)">
-                        預約立即體驗
-                    </button>
-                </div>
-                <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
-                    <div class="tutor-intro-media-container col-12 mx-auto">
-                        if (@courseCard.CourseVideo != null)
-                        {
-                        <a href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
-                           data-bs-video="@Url.Content(@courseCard.CourseVideo)">
-                            <img src="@Url.Content(@courseCard.CourseVideoThumbnail)" alt="">
+                <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
+                    <div class="tutor-description-title-wrapper d-flex justify-content-between">
+                        <a class="tutor-description-title" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer">
+                            {{ courseCard.courseTitle }}
                         </a>
-                        }
-                        if (@courseCard.CourseImages.Count > 0)
-                        {
-                        @foreach (var image in @courseCard.CourseImages)
-                        {
-                            <img src=@Url.Content(image.ImageUrl) alt="">
-                        }
-                        }
-                        
+
+                        <span v-if="courseCard.isVerifiedTutor" class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
+                              data-bs-placement="bottom" title="僅有8.5%的優質教師"
+                              data-bs-custom-class="custom-tooltip">
+                            <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
+                        </span>
                     </div>
-                    <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
-                    <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
-                    <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
-                    <div class="tutor-timeslot-table col-11 mx-auto">
-                        <div class="row">
-                            <div class="weekday col-3 p-0"></div>
-                            <div class="weekday col p-0">週日</div>
-                            <div class="weekday col p-0">週一</div>
-                            <div class="weekday col p-0">週二</div>
-                            <div class="weekday col p-0">週三</div>
-                            <div class="weekday col p-0">週四</div>
-                            <div class="weekday col p-0">週五</div>
-                            <div class="weekday col p-0">週六</div>
+                    <div class="tutor-subtitle my-1">{{ courseCard.courseSubTitle }}</div>
+                    <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
+                        <div class="fifty-min-course-pricing">
+                            NT${{ formatPrice(courseCard.fiftyMinUnitPrice) }} <span class="text">/ 50分鐘</span>
                         </div>
-                        <div class="row">
-                            <div class="timeslot col-3 p-0">
-                                上午 <div class="time">06:00-12:00</div>
-                            </div>
-                            @for (var weekday = 0; weekday < 7; weekday++)
-                            {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 6, 12, weekday)"></div>                          
-                            }
-                        </div>
-                        <div class="row">
-                            <div class="timeslot col-3 p-0">
-                                下午 <div class="time">12:00-18:00</div>
-                            </div>
-                            @for (var weekday = 0; weekday < 7; weekday++)
-                            {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 12, 18, weekday)"></div>
-                            }
-                        </div>
-                        <div class="row">
-                            <div class="timeslot col-3 p-0">
-                                傍晚 <div class="time">18:00-24:00</div>
-                            </div>
-                            @for (var weekday = 0; weekday < 7; weekday++)
-                            {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 18, 24, weekday)"></div>
-                            }
-                        </div>
-                        <div class="row">
-                            <div class="timeslot col-3 p-0">
-                                深夜 <div class="time">00:00-06:00</div>
-                            </div>
-                            @for (var weekday = 0; weekday < 7; weekday++)
-                            {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 0, 6, weekday)"></div>
-                            }
-                        </div>
+                        <div class="trail-course-pricing">NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <span class="text">/ 25分鐘</span></div>
                     </div>
-                    <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
-                        <div class="d-flex align-items-center">
-                            <span class="color-block occupied me-1"></span>時段內已有預約
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <span class="color-block available me-1"></span>尚有可預約時段
-                        </div>
+                    <div class="tutor-received-feedback d-flex gap-1 my-md-2">
+                        <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>{{ courseCard.courseRatings }}</span></div>
+                        <div>・</div>
+                        <div class="tutor-total-reviews"><span class="pe-1">{{ courseCard.courseReviews }}</span>個評論</div>
                     </div>
-                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100" asp-controller="Course" asp-action="CourseMainPage" asp-route-courseId="@courseCard.CourseId" courseId="@courseCard.CourseId">
-                        瀏覽更多
-                    </button>
+                    <p class="tutor-intro-text mb-2">
+                        {{ courseCard.tutorIntro }}
+                    </p>
+                    <a class="tutor-viewmore d-none d-md-inline" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer">瀏覽更多</a>
                 </div>
-                <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <partial name="_BookingTablePartial" />
+                <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
+                    <div class="course-pricing d-flex">
+                        <div class="trail-course-pricing col-6">
+                            NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <div class="text">25分鐘</div>
+                        </div>
+                        <div class="fifty-min-course-pricing col-6">
+                            NT${{ formatPrice(courseCard.fiftyMinUnitPrice) }} <div class="text">50分鐘</div>
                         </div>
                     </div>
+                    <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" v-on:click="openBookingTable(courseCard.courseId)">
+                        預約課程
+                    </button>
+                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
+                            data-bs-toggle="modal" data-bs-target="#contactTutorModal">
+                        聯繫老師
+                    </button>
                 </div>
             </div>
-            
-        }
+            <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
+                <p class="tutor-intro-text">
+                    {{ courseCard.tutorIntro }}
+                </p>
+            </div>
+            <div class="lh-tutor-card__book d-flex justify-content-center">
+                <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
+                        data-bs-target="#bookingTableModal"
+                        v-on:click="openBookingTable(courseCard.courseId)">
+                    預約立即體驗
+                </button>
+            </div>
+            <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
+                <div class="tutor-intro-media-container col-12 mx-auto">
+                    <a v-if="courseCard.courseVideo" href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
+                       :data-bs-video="courseCard.courseVideo">
+                        <img :src="courseCard.courseVideoThumbnail" alt="">
+                    </a>
+                    <img v-if="courseCard.courseImages.length > 0" v-for="(image, index) in courseCard.courseImages" :key="index" :src="image.imageUrl" alt="">
+                </div>
+                <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
+                <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
+                <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
+                <div class="tutor-timeslot-table col-11 mx-auto">
+                    <div class="row">
+                        <div class="weekday col-3 p-0"></div>
+                        <div class="weekday col p-0">週日</div>
+                        <div class="weekday col p-0">週一</div>
+                        <div class="weekday col p-0">週二</div>
+                        <div class="weekday col p-0">週三</div>
+                        <div class="weekday col p-0">週四</div>
+                        <div class="weekday col p-0">週五</div>
+                        <div class="weekday col p-0">週六</div>
+                    </div>
+                    <div class="row">
+                        <div class="timeslot col-3 p-0">
+                            上午 <div class="time">06:00-12:00</div>
+                        </div>
+                        @* @for (var weekday = 0; weekday < 7; weekday++)
+                        {
+                        <div class="col p-0 "></div>
+                        } *@
+                        <div v-for="weekday in 7" :key="weekday" class="col p-0"></div>
+                    </div>
+                    <div class="row">
+                        <div class="timeslot col-3 p-0">
+                            下午 <div class="time">12:00-18:00</div>
+                        </div>
+                        @* @for (var weekday = 0; weekday < 7; weekday++)
+                        {
+                        <div class="col p-0"></div>
+                        } *@
+                        <div v-for="weekday in 7" :key="weekday" class="col p-0"></div>
+                    </div>
+                    <div class="row">
+                        <div class="timeslot col-3 p-0">
+                            傍晚 <div class="time">18:00-24:00</div>
+                        </div>
+                        @*  @for (var weekday = 0; weekday < 7; weekday++)
+                        {
+                        <div class="col p-0 "></div>
+                        } *@
+                        <div v-for="weekday in 7" :key="weekday" class="col p-0"></div>
+                    </div>
+                    <div class="row">
+                        <div class="timeslot col-3 p-0">
+                            深夜 <div class="time">00:00-06:00</div>
+                        </div>
+                        @*  @for (var weekday = 0; weekday < 7; weekday++)
+                        {
+                        <div class="col p-0"></div>
+                        } *@
+                        <div v-for="weekday in 7" :key="weekday" class="col p-0"></div>
+                    </div>
+                </div>
+                <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
+                    <div class="d-flex align-items-center">
+                        <span class="color-block occupied me-1"></span>時段內已有預約
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="color-block available me-1"></span>尚有可預約時段
+                    </div>
+                </div>
+                <button type="button" class="view-more-btn btn mt-3 p-2 w-100" v-on:click="goToCourseMainPage(courseCard.courseId)">
+                    瀏覽更多
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <partial name="_BookingTablePartial" />
+            </div>
+        </div>
     </div>
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal"
          aria-hidden="true">
@@ -518,7 +506,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="contactTutorModal" tabindex="-1" aria-labelledby="contactTutorModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -581,18 +569,15 @@
 
 @section endJS
 {
-    <script src="~/js/course_list/course_list_slick.js"></script>
+    @* <script src="~/js/course_list/course_list_slick.js"></script> *@
     <script src="~/js/course_list/course_list_pagination.js"></script>
     <script src="~/js/course_list/course_list_nested_dropdown.js"></script>
-    <script  src="~/js/booking_table/booking_table.js"></script>
-    <script src="~/lib/myvue/vue.global.min.js " asp-append-version="true"></script>
+    @* <script type="module" src="~/js/booking_table/booking_table.js"></script>*@
+    <script src="~/lib/myvue/vue.global.prod.js" asp-append-version="true"></script>
+    <script type="module" src="~/js/course_list/course_cards_app.js"></script>
 }
 
 @functions {
-    private string FormatPrice(decimal price)
-    {
-        return String.Format($"{price:n0}");
-    }
 
     private string AddBookingStatusClass(List<TimeSlotViewModel> availableSlots, List<TimeSlotViewModel> bookedSlots,
         int startHour, int endHour, int weekday)

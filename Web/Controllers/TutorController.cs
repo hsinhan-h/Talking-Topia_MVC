@@ -9,32 +9,35 @@ namespace Web.Controllers
 {
     public class TutorController : Controller
     {
+       
         private readonly ResumeDataService _resumeDataService;
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice)
+        private readonly AppointmentDetailService _appointmentDetailService;
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
+            _appointmentDetailService = appointmentDetailService;
         }
-        /// <summary>
-        /// 原ToTeacher.cshtml的頁面
-        /// </summary>
-        /// <returns></returns>
+       
         public IActionResult Index()
         {
             return View();
         }
-        public async Task<IActionResult> TutorData()
+
+
+        //Tutor Data Read and update
+        public async Task<IActionResult> TutorData(int? memberId = 35)
         {
-            var tutorData = await _tutorDataService.GetAllInformationAsync();
-            if (tutorData == null)
-            {
-                return RedirectToAction("Index", "Tutor");
-            }
+
+            // Edit: 根據ID取得現有會員資料
+            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
             return View(tutorData);
+
         }
+
         [HttpGet]
         public IActionResult TutorResume()
         {
@@ -57,8 +60,13 @@ namespace Web.Controllers
 
             return View(qVM);
         }
+ 
+        public async Task<IActionResult> AppointmentDetails(int memberId=1)
+        {
+            var appointmentDetails = await _appointmentDetailService.GetAppointmentData(memberId);
+            return View(appointmentDetails);
+        }
 
-        
         public async Task<IActionResult> PublishCourse(int MemberId)
         {
             var model = await _bookingService.GetPublishCourseList(MemberId);
@@ -75,10 +83,6 @@ namespace Web.Controllers
             return RedirectToAction("TutorResume");
         }
 
-        public IActionResult AppointmentDetails()
-        {
-            return View();
-        }
 
        
     }

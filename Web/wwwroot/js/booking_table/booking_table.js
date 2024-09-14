@@ -167,7 +167,7 @@ async function fetchBookingTableData(courseId) {
         const response = await fetch(url);
 
         if (!response.ok) {
-            console.error(`Fetching BookingTableData時發生錯誤, status: ${response.status} `);
+            console.error(`HTTP error, status: ${response.status} `);
             return null;
         }
 
