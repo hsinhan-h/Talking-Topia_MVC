@@ -141,8 +141,20 @@ const courseCardsApp = Vue.createApp({
             if (page > 0 && page <= this.totalPages) {
                 this.page = page;
                 this.fetchCourses();
-                history.pushState(null, '', `?page=${this.page}`);
+                this.updateQueryString();
+                //history.pushState(null, '', `?page=${this.page}`);
             }
+        },
+        updateQueryString() {
+            const queryParams = new URLSearchParams(window.location.search);
+            queryParams.set('page', this.page);
+            if (this.selectedNation) {
+                queryParams.set('nation', this.selectedNation);
+            } else {
+                queryParams.delete('nation');
+            }
+
+            history.pushState(null, '', '?' + queryParams.toString());
         },
 
         //篩選
@@ -150,10 +162,10 @@ const courseCardsApp = Vue.createApp({
         //2. 國籍
         filterByNation(nation) {
             this.selectedNation = nation;
-            console.log(this.selectedNation);
             this.page = 1;
             this.fetchCourses();
             this.fetchTotalCourseQty();
+            this.updateQueryString();
         }
         
 
