@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Web.Exceptions;
+using Web.Entities;
 
 
 
@@ -23,7 +24,7 @@ namespace Web.Services
             try
             {
                 var existingMember = await _repository.GetAll<Member>()
-                    .SingleOrDefaultAsync(m => m.Email == model.Email);
+                    .SingleOrDefaultAsync(m => m.Email == model.RegisterViewModel.Email);
 
                 if (existingMember != null)
                 {
@@ -32,10 +33,9 @@ namespace Web.Services
 
                 var newMember = new Member
                 {
-
-                    Email = model.Email,
-                    Password = model.Password,
-                    FirstName = model.FirstName,
+                    Email = model.RegisterViewModel.Email,
+                    Password = model.RegisterViewModel.Password,
+                    FirstName = model.RegisterViewModel.FirstName,
                     LastName = "N/A",
                     Birthday = null,
                     Nickname = "N/A",
@@ -47,7 +47,7 @@ namespace Web.Services
                 };
 
                 var passwordHasher = new PasswordHasher<Member>();
-                newMember.Password = passwordHasher.HashPassword(newMember, model.Password);
+                newMember.Password = passwordHasher.HashPassword(newMember, model.RegisterViewModel.Password);
 
                 _repository.Create(newMember);
                 await _repository.SaveChangesAsync();

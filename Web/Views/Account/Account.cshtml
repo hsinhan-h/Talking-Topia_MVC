@@ -8,18 +8,28 @@
     <link href="~/css/homepage.css?v=202408211924" rel="stylesheet" />
 }
 
-
 <div class="container px-5">
     <div class="row">
         <!-- 左邊欄位 -->
         <div class="col-md-6 d-flex flex-column justify-content-center">
             <h5 class="text-center">請輸入您的電子信箱來登入</h5>
-            <form asp-action="Login" method="post">
-                <div class="mb-3">
-                    <label for="loginEmail" class="form-label">電子信箱</label>
-                    <input type="email" class="form-control" id="loginEmail" name="Email" placeholder="happ@example.com" required>
+            <form asp-controller="Account" asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="LoginViewModel.Email"></label>
+                    <input asp-for="LoginViewModel.Email" class="form-control" />
+                    <span asp-validation-for="LoginViewModel.Email" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-success w-100">確認</button>
+                <div class="form-group">
+                    <label asp-for="LoginViewModel.Password"></label>
+                    <input asp-for="LoginViewModel.Password" class="form-control" type="password" />
+                    <span asp-validation-for="LoginViewModel.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="LoginViewModel.ReturnUrl"></label>
+                    <input asp-for="LoginViewModel.ReturnUrl" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">登入</button>
             </form>
             <hr>
             <p class="text-center">或</p>
@@ -32,37 +42,36 @@
                 以 LINE 登入
             </button>
         </div>
-
         <!-- 右邊欄位 -->
         <div class="col-md-6 d-flex flex-column justify-content-center mt-3">
             <p>尚未註冊過，請註冊</p>
             <form asp-action="Register" method="post">
                 <!-- First Name Field -->
                 <div class="mb-3">
-                    <label asp-for="FirstName" class="form-label">名字</label>
-                    <input asp-for="FirstName" class="form-control" placeholder="名字" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <label asp-for="RegisterViewModel.FirstName" class="form-label">名字</label>
+                    <input asp-for="RegisterViewModel.FirstName" class="form-control" placeholder="名字" />
+                    <span asp-validation-for="RegisterViewModel.FirstName" class="text-danger"></span>
                 </div>
 
                 <!-- Email Field -->
                 <div class="mb-3">
-                    <label asp-for="Email" class="form-label">信箱</label>
-                    <input asp-for="Email" class="form-control" placeholder="信箱" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <label asp-for="RegisterViewModel.Email" class="form-label">信箱</label>
+                    <input asp-for="RegisterViewModel.Email" class="form-control" placeholder="信箱" />
+                    <span asp-validation-for="RegisterViewModel.Email" class="text-danger"></span>
                 </div>
 
                 <!-- Password Field -->
                 <div class="mb-3">
-                    <label asp-for="Password" class="form-label">密碼</label>
-                    <input asp-for="Password" class="form-control" placeholder="密碼" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <label asp-for="RegisterViewModel.Password" class="form-label">密碼</label>
+                    <input asp-for="RegisterViewModel.Password" class="form-control" placeholder="密碼" />
+                    <span asp-validation-for="RegisterViewModel.Password" class="text-danger"></span>
                 </div>
 
                 <!-- Confirm Password Field -->
                 <div class="mb-3">
-                    <label asp-for="ConfirmPassword" class="form-label">確認密碼</label>
-                    <input asp-for="ConfirmPassword" class="form-control" placeholder="確認密碼" />
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <label asp-for="RegisterViewModel.ConfirmPassword" class="form-label">確認密碼</label>
+                    <input asp-for="RegisterViewModel.ConfirmPassword" class="form-control" placeholder="確認密碼" />
+                    <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="text-danger"></span>
                 </div>
 
                 <!-- Submit Button -->

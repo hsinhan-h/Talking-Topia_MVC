@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Web.Services;
 
 namespace Web.Controllers
@@ -23,10 +24,16 @@ namespace Web.Controllers
             return View(course);
         }
 
+        [Authorize]
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new Models.ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         public IActionResult Questions()
