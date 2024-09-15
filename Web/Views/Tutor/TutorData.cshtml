@@ -1,6 +1,8 @@
 ﻿@model TutorDataViewModel
 
+<h1>歡迎, 會員</h1>
 
+<p>會員ID: <span id="memberIdDisplay"></span></p>
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
@@ -163,13 +165,9 @@
                                     </div> *@
 
                                 </div>
+                               @*  apply status 為true 預設0*@
                                 <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn lh-backstage-submit-btn">
-                                        編輯
-                                    </button>
-                                    <button type="button" class="btn lh-backstage-submit-btn">
-                                        儲存會員資料
-                                    </button>
+                                    <button type="submit" class="btn lh-backstage-submit-btn">@(Model.TutorId == 0 ? "儲存" : "編輯")</button>
                                 </div>
                                 
                                 

@@ -14,5 +14,13 @@
             var nations = await _repository.GetAll<Nation>().ToListAsync();
             return nations;
         }
+
+        public async Task<List<string>> GetNationNamesAsync()
+        {
+            var nationNames = await _repository.GetAll<Nation>()
+                .Select(n => n.NationName)
+                .ToListAsync();
+            return nationNames;
+        }
     }
 }

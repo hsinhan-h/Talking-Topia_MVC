@@ -36,7 +36,7 @@ namespace Web
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<TutorDataservice>();
             builder.Services.AddScoped<AccountService>();
-
+            builder.Services.AddScoped<NationService>();
 
 
 

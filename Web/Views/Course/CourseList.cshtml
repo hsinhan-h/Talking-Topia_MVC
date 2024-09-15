@@ -7,10 +7,15 @@
     <link rel="stylesheet" href="~/css/course_list.css" />
     <link rel="stylesheet" href="~/css/tutor_intro_medias_slider.css">
     <link rel="stylesheet" href="~/css/booking_table_modal.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 }
 
-<partial name="_BannerPartial" />
-<section class="tutors mb-3">
+<partial name="_BannerPartial"  />
+<section class="tutors mb-3" id="course-cards-app">
     <div class="lh-tutors-filter d-flex">
         <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-3">
             <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown"
@@ -64,14 +69,19 @@
         </div>
         <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
             <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                教師國籍 <i class="bi bi-filter"></i>
+                {{ selectedNation ? selectedNation : '教師國籍' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">台灣</button></li>
+                <li v-for="nation in nations" :key="nation">
+                    <button class="dropdown-item" type="button" v-on:click="filterByNation(nation)">
+                        {{ nation }}
+                    </button>
+                </li>
+                @* <li><button class="dropdown-item" type="button">台灣</button></li>
                 <li><button class="dropdown-item" type="button">美國</button></li>
                 <li><button class="dropdown-item" type="button">英國</button></li>
                 <li><button class="dropdown-item" type="button">法國</button></li>
-                <li><button class="dropdown-item" type="button">德國</button></li>
+                <li><button class="dropdown-item" type="button">德國</button></li> *@
             </ul>
         </div>
         <div class="btn-group course-time-filter me-1 mx-sm-2 mt-4 mb-3">
@@ -336,8 +346,8 @@
         <a href="">多評價數優先</a>
     </div>
     <div v-if="loading"></div>
-    <div v-else id="course-cards-app" class="lh-tutor-cards" v-cloak>
-        <div v-for="courseCard in courses" :key="courseCard.courseId" class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
+    <div v-else class="lh-tutor-cards">
+        <div v-for="(courseCard, index) in courses" :key="courseCard.courseId" class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
             <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
                 <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
                     <div class="lh-tutor-images__head position-relative">
@@ -350,7 +360,7 @@
                 </div>
                 <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
                     <div class="tutor-description-title-wrapper d-flex justify-content-between">
-                        <a class="tutor-description-title" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer">
+                        <a class="tutor-description-title" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer" v-cloak>
                             {{ courseCard.courseTitle }}
                         </a>
 
@@ -360,29 +370,29 @@
                             <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
                         </span>
                     </div>
-                    <div class="tutor-subtitle my-1">{{ courseCard.courseSubTitle }}</div>
+                    <div class="tutor-subtitle my-1" v-cloak>{{ courseCard.courseSubTitle }}</div>
                     <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                        <div class="fifty-min-course-pricing">
+                        <div class="fifty-min-course-pricing" v-cloak>
                             NT${{ formatPrice(courseCard.fiftyMinUnitPrice) }} <span class="text">/ 50分鐘</span>
                         </div>
-                        <div class="trail-course-pricing">NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <span class="text">/ 25分鐘</span></div>
+                        <div class="trail-course-pricing" v-cloak>NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <span class="text">/ 25分鐘</span></div>
                     </div>
                     <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                        <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>{{ courseCard.courseRatings }}</span></div>
+                        <div class="tutor-ranking" v-cloak><i class="bi bi-star-fill pe-1"></i><span>{{ courseCard.courseRatings }}</span></div>
                         <div>・</div>
-                        <div class="tutor-total-reviews"><span class="pe-1">{{ courseCard.courseReviews }}</span>個評論</div>
+                        <div class="tutor-total-reviews" v-cloak><span class="pe-1">{{ courseCard.courseReviews }}</span>個評論</div>
                     </div>
-                    <p class="tutor-intro-text mb-2">
+                    <p class="tutor-intro-text mb-2" v-cloak>
                         {{ courseCard.tutorIntro }}
                     </p>
                     <a class="tutor-viewmore d-none d-md-inline" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer">瀏覽更多</a>
                 </div>
                 <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
                     <div class="course-pricing d-flex">
-                        <div class="trail-course-pricing col-6">
+                        <div class="trail-course-pricing col-6" v-cloak>
                             NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <div class="text">25分鐘</div>
                         </div>
-                        <div class="fifty-min-course-pricing col-6">
+                        <div class="fifty-min-course-pricing col-6" v-cloak>
                             NT${{ formatPrice(courseCard.fiftyMinUnitPrice) }} <div class="text">50分鐘</div>
                         </div>
                     </div>
@@ -396,7 +406,7 @@
                 </div>
             </div>
             <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                <p class="tutor-intro-text">
+                <p class="tutor-intro-text" v-cloak>
                     {{ courseCard.tutorIntro }}
                 </p>
             </div>
@@ -433,41 +443,25 @@
                         <div class="timeslot col-3 p-0">
                             上午 <div class="time">06:00-12:00</div>
                         </div>
-                        @* @for (var weekday = 0; weekday < 7; weekday++)
-                        {
-                        <div class="col p-0 "></div>
-                        } *@
-                        <div v-for="weekday in 7" :key="weekday" class="col p-0"></div>
+                        <div v-for="weekday in 7" :key="weekday" :class="['col p-0', addBookingStatusClass(6, 12, weekday - 1, index)]"></div>
                     </div>
                     <div class="row">
                         <div class="timeslot col-3 p-0">
                             下午 <div class="time">12:00-18:00</div>
                         </div>
-                        @* @for (var weekday = 0; weekday < 7; weekday++)
-                        {
-                        <div class="col p-0"></div>
-                        } *@
-                        <div v-for="weekday in 7" :key="weekday" class="col p-0"></div>
+                        <div v-for="weekday in 7" :key="weekday" :class="['col p-0', addBookingStatusClass(12, 18, weekday - 1, index)]"></div>
                     </div>
                     <div class="row">
                         <div class="timeslot col-3 p-0">
                             傍晚 <div class="time">18:00-24:00</div>
                         </div>
-                        @*  @for (var weekday = 0; weekday < 7; weekday++)
-                        {
-                        <div class="col p-0 "></div>
-                        } *@
-                        <div v-for="weekday in 7" :key="weekday" class="col p-0"></div>
+                        <div v-for="weekday in 7" :key="weekday" :class="['col p-0', addBookingStatusClass(18, 24, weekday - 1, index)]"></div>
                     </div>
                     <div class="row">
                         <div class="timeslot col-3 p-0">
                             深夜 <div class="time">00:00-06:00</div>
                         </div>
-                        @*  @for (var weekday = 0; weekday < 7; weekday++)
-                        {
-                        <div class="col p-0"></div>
-                        } *@
-                        <div v-for="weekday in 7" :key="weekday" class="col p-0"></div>
+                        <div v-for="weekday in 7" :key="weekday" :class="['col p-0', addBookingStatusClass(0, 6, weekday - 1, index)]"></div>
                     </div>
                 </div>
                 <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
@@ -485,14 +479,7 @@
 
         </div>
     </div>
-    <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <partial name="_BookingTablePartial" />
-            </div>
-        </div>
-    </div>
+    
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -553,43 +540,35 @@
                     <button type="button" class="btn cancel-btn" data-bs-dismiss="modal">取消</button>
                     <button type="button" class="btn send-btn">傳送訊息</button>
                 </div>
-
-
             </div>
         </div>
     </div>
 
-    <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center" total-pages="@ViewData["TotalPages"]">
+    <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center">
+        <button v-on:click="goToPage(page - 1)" type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
+        <div class="page-text mx-3 mx-md-4"> {{ page }} </div>
+        <button v-on:click="goToPage(page + 1)" type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
+    </div>
+
+    @* <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center" total-pages="@ViewData["TotalPages"]">
         <button type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
         <div class="page-text mx-3 mx-md-4"></div>
         <button type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
-    </div>
+    </div> *@
 </section>
-
+<div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <partial name="_BookingTablePartial" />
+        </div>
+    </div>
+</div>
 
 @section endJS
 {
-    @* <script src="~/js/course_list/course_list_slick.js"></script> *@
     <script src="~/js/course_list/course_list_pagination.js"></script>
     <script src="~/js/course_list/course_list_nested_dropdown.js"></script>
-    @* <script type="module" src="~/js/booking_table/booking_table.js"></script>*@
     <script src="~/lib/myvue/vue.global.prod.js" asp-append-version="true"></script>
     <script type="module" src="~/js/course_list/course_cards_app.js"></script>
-}
-
-@functions {
-
-    private string AddBookingStatusClass(List<TimeSlotViewModel> availableSlots, List<TimeSlotViewModel> bookedSlots,
-        int startHour, int endHour, int weekday)
-    {
-        var isAvailable = availableSlots
-            .Where(ts => ts.Weekday == weekday && ts.StartHour >= startHour && ts.StartHour < endHour)
-            .Any();
-
-        var isOccupied = bookedSlots
-            .Where(bs => (int)bs.Date.DayOfWeek == weekday && bs.StartHour >= startHour && bs.StartHour < endHour)
-            .Any();
-
-        return isAvailable ? (isOccupied ? "occupied" : "available") : "";
-    }
 }
