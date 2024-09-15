@@ -12,6 +12,7 @@ namespace ApplicationCore.Services
 {
     public class OrderService : IOrderService
     {
+
         private readonly ITransaction _transaction;
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<OrderDetail> _orderDetailRepository;
@@ -26,7 +27,7 @@ namespace ApplicationCore.Services
             _shoppingCartService = shoppingCartService;
         }
 
-        public async Task<GetAllOrderResult> GetAllOrder(int memberId)
+        public async Task<GetAllOrderResultDto> GetAllOrder(int memberId)
         {
             var orders = await _orderRepository.ListAsync(item => item.MemberId == memberId);
             var getOrderItem = new List<GetOrderItem>();
@@ -49,7 +50,7 @@ namespace ApplicationCore.Services
                 }
                 );
             }
-            var result = new GetAllOrderResult
+            var result = new GetAllOrderResultDto
             {
                 GetOrderItems = getOrderItem,
             };

@@ -21,5 +21,10 @@ namespace ApplicationCore.Services
         {
             return _memberRepository.Any(m => m.MemberId == memberId);
         }
+        public async Task<int> GetMemberId(string userAccount)
+        {
+            var result = await _memberRepository.FirstOrDefaultAsync(x => x.Email == userAccount);
+            return result.MemberId;
+        }
     }
 }

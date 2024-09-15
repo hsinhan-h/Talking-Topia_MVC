@@ -19,6 +19,8 @@ namespace Web.ViewModels
         public string TutorHeadShotImage { get; set; }
         [Display(Name = "教師國旗圖像")]
         public string TutorFlagImage { get; set; }
+        [Display(Name ="教師國籍")]
+        public string NationName { get; set; }
         [Display(Name = "優良教師")]
         public bool IsVerifiedTutor { get; set; }
         
