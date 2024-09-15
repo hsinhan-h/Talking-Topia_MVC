@@ -6,12 +6,12 @@ namespace Web.Controllers
     public class MemberController : Controller
     {
         private readonly MemberDataService _memberDataService;
-        private readonly OrderDetailService _orderDetailService;
+        private readonly OrderDetailService _orderDetailService;      
 
         public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice)
         {
             _memberDataService = memberDataService;
-            _orderDetailService = orderdetailservice;
+            _orderDetailService = orderdetailservice;           
         }
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
@@ -41,10 +41,11 @@ namespace Web.Controllers
             var Orderdetail = await _orderDetailService.GetOrderData(1);
             return View(Orderdetail);
         }
-        public async Task <IActionResult> WatchList()
+        public async Task <IActionResult> WatchList(int memberId)
         {
-            ///var WatchListViewModel = await _watchListService.GetWatchList();
-            return View();
+           
+            var watchlist = await _memberDataService.GetWatchList(memberId);
+            return View(watchlist);
         }
         public IActionResult ChatWindow()
         {

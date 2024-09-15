@@ -106,6 +106,53 @@ namespace Web.Services
             }
         }
 
+        public async Task<CourseMainPageViewModel> GetWatchList(int memberId)
+        {
+            var watchCardInfo = (from watch in _repository.GetAll<WatchList>().AsNoTracking()
+                                 join course in _repository.GetAll<Course>().AsNoTracking()
+                                 on watch.CourseId equals course.CourseId
+                                 join member in _repository.GetAll<Member>().AsNoTracking()
+                                 on course.TutorId equals member.MemberId
+                                 join nation in _repository.GetAll<Nation>().AsNoTracking()
+                                 on member.NationId equals nation.NationId
+                                 where watch.FollowerId == memberId
+                                 select new TutorRecomCardList
+                                 {
+                                     CourseId = course.CourseId,
+                                     TutorHeadShot = member.HeadShotImage,
+                                     NationFlagImg = nation.FlagImage,
+                                     CourseTitle = course.Title,
+                                     CourseSubTitle = course.SubTitle,
+                                     TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
+                                     FiftyminPrice = (int)course.FiftyMinUnitPrice,
+                                     Description = course.Description,
+                                 }).ToList();
+             
+            var recomCardReview = (
+               from course in _repository.GetAll<Course>().AsNoTracking()
+               join review in _repository.GetAll<Review>().AsNoTracking()
+               on course.CourseId equals review.CourseId
+               group review by course.CourseId into Review
+               select new TutorRecomCardList
+               {
+                   CourseId = Review.Key,
+                   Rating = Review.Any() ? Math.Round(Review.Average(cr => cr.Rating), 2) : 0,
+               }).ToList();
+
+            foreach (var card in watchCardInfo)
+            {
+                var review = recomCardReview.FirstOrDefault(r => r.CourseId == card.CourseId);
+
+                card.Rating = review?.Rating ?? 0;
+            }
+            var watchlist = new CourseMainPageViewModel
+            {
+                MemberId = memberId,
+                TutorReconmmendCard = watchCardInfo
+            };
+            return watchlist;
+        }
+
     }
 
     // 更新會員資料
