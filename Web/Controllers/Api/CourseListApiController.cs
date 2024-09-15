@@ -24,6 +24,9 @@
             return Ok(courseQty);
         }
 
-
+        //[HttpGet]
+        //public async Task<IActionResult> GetCourses([FromQuery] int page, [FromQuery] string nation)
+        //{
+        //}
     }
 }

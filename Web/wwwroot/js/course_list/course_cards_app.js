@@ -10,7 +10,7 @@ const courseCardsApp = Vue.createApp({
             totalPages: 0,
             error: null,
             loading: true,
-            selectedNationality: null,
+            selectedNation: null,
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
             bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array
             nations: []
@@ -134,6 +134,12 @@ const courseCardsApp = Vue.createApp({
                 history.pushState(null, '', `?page=${this.page}`);
             }
         }
+
+        //篩選
+        //1. 課程種類
+        //2. 國籍
+
+        
 
     }
 });
