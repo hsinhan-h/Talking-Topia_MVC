@@ -16,6 +16,11 @@ namespace Web.Controllers.Api
         public async Task<IActionResult> GetNationNames()
         {
             var nationNames = await _nationService.GetNationNamesAsync();
+
+            if (nationNames == null || nationNames.Count == 0)
+            {
+                return NotFound();
+            }
             return Ok(nationNames);
         }
             

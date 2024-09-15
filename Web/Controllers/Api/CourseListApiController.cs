@@ -14,6 +14,10 @@
         public async Task<IActionResult> GetCourses([FromQuery] int page, [FromQuery] string nation = null)
         {
             var courses = await _courseService.GetCourseCardsListAsync(page, 6, nation);
+            if (courses == null)
+            {
+                return NotFound();
+            }
             return Ok(courses);
         }
 
