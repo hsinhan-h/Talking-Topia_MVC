@@ -10,16 +10,19 @@ const courseCardsApp = Vue.createApp({
             totalPages: 0,
             error: null,
             loading: true,
+            selectedSubject: null,
             selectedNation: null,
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
-            bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array
-            nations: []
+            bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array          
+            courseCategories: [], //動態科目篩選選單資料
+            nations: []  //動態國籍篩選選單資料
         };
     },
     mounted() {
         const params = new URLSearchParams(window.location.search);
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
         this.fetchCourses();
+        this.fetchCategories();
         this.fetchNations();
         this.fetchTotalCourseQty();
         
@@ -102,6 +105,23 @@ const courseCardsApp = Vue.createApp({
             }
             return '';
         },
+
+        //篩選選單動態資料
+        async fetchCategories() {
+            try {
+                const response = await fetch('/api/CourseCategoryApi');
+                if (response.ok) {
+                    const courseCategoriesData = await response.json();
+                    console.log(courseCategoriesData);
+                    this.courseCategories = courseCategoriesData;
+                }
+            } catch (e) {
+                this.error = e;
+            } finally {
+
+                this.loading = false;
+            }
+        },
         async fetchNations() {
             try {
                 const response = await fetch('/api/NationApi');
@@ -116,6 +136,8 @@ const courseCardsApp = Vue.createApp({
                 this.loading = false;
             }
         },
+        
+
         async fetchTotalCourseQty() {
             try {
                 let url = `/api/CourseListApi/GetTotalCourseQty`;
@@ -159,6 +181,9 @@ const courseCardsApp = Vue.createApp({
 
         //篩選
         //1. 課程種類
+        filterBySubject(subject) {
+
+        },
         //2. 國籍
         filterByNation(nation) {
             this.selectedNation = nation;
