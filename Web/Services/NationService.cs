@@ -9,7 +9,7 @@
             _repository = repository;
         }
 
-        public async Task<List<Nation>> GetNations()
+        public async Task<List<Nation>> GetNationsAsync()
         {
             var nations = await _repository.GetAll<Nation>().ToListAsync();
             return nations;

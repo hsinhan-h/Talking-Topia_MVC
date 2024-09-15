@@ -37,6 +37,7 @@ namespace Web
             builder.Services.AddScoped<TutorDataservice>();
             builder.Services.AddScoped<AccountService>();
             builder.Services.AddScoped<NationService>();
+            builder.Services.AddScoped<CourseCategoryService>();
 
 
 
