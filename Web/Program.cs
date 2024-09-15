@@ -58,8 +58,11 @@ namespace Web
                             {
                                 // 登入用路徑
                                 options.LoginPath = "/Account/Login";
+                                // 登出用路徑
+                                options.LogoutPath = "/Account/Logout";
                                 // 沒有權限時的導向(HTTP Status Code: 403)
                                 options.AccessDeniedPath = "/Account/AccessDenied";
+                                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);  // 預設過期時間
                             });
 
             builder.Services.AddAuthorization();
