@@ -20,7 +20,7 @@
         <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-3">
             <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside">
-                學習需求 <i class="bi bi-filter"></i>
+                {{ selectedSubject ? selectedSubject : '學習需求' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
                 <li class="dropend nested-dropdown" v-for="courseCategory in courseCategories" :key="courseCategory.categoryName">
@@ -30,7 +30,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li v-for="subject in courseCategory.subjects" :key="subject.subjectName">
-                            <button class="dropdown-item" type="button">{{ subject.subjectName }}</button>
+                            <button class="dropdown-item" type="button" v-on:click="filterBySubject(subject.subjectName)">{{ subject.subjectName }}</button>
                         </li>
                     </ul>
                 </li>

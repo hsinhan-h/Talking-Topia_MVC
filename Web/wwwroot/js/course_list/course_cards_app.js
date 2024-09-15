@@ -40,6 +40,9 @@ const courseCardsApp = Vue.createApp({
             this.loading = true;
             try {
                 let url = `/api/CourseListApi?page=${this.page}`;
+                if (this.selectedSubject) {
+                    url += `&subject=${this.selectedSubject}`;
+                }
                 if (this.selectedNation) {
                     url += `&nation=${this.selectedNation}`;
                 }
@@ -112,7 +115,6 @@ const courseCardsApp = Vue.createApp({
                 const response = await fetch('/api/CourseCategoryApi');
                 if (response.ok) {
                     const courseCategoriesData = await response.json();
-                    console.log(courseCategoriesData);
                     this.courseCategories = courseCategoriesData;
                 }
             } catch (e) {
@@ -141,6 +143,9 @@ const courseCardsApp = Vue.createApp({
         async fetchTotalCourseQty() {
             try {
                 let url = `/api/CourseListApi/GetTotalCourseQty`;
+                if (this.selectedSubject) {
+                    url += `?subject=${this.selectedSubject}`;
+                }
                 if (this.selectedNation) {
                     url += `?nation=${this.selectedNation}`;
                 }
@@ -170,6 +175,12 @@ const courseCardsApp = Vue.createApp({
         updateQueryString() {
             const queryParams = new URLSearchParams(window.location.search);
             queryParams.set('page', this.page);
+            if (this.selectedSubject) {
+                queryParams.set('subject', this.selectedSubject);
+            } else {
+                queryParams.delete('subject');
+            }
+
             if (this.selectedNation) {
                 queryParams.set('nation', this.selectedNation);
             } else {
@@ -182,7 +193,11 @@ const courseCardsApp = Vue.createApp({
         //篩選
         //1. 課程種類
         filterBySubject(subject) {
-
+            this.selectedSubject = subject;
+            this.page = 1;
+            this.fetchCourses();
+            this.fetchTotalCourseQty();
+            this.updateQueryString();
         },
         //2. 國籍
         filterByNation(nation) {

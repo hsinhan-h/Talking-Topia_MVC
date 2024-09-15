@@ -9,14 +9,17 @@
             _repository = repository;
         }
 
-        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedNation = null)
+        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null)
         {
             IQueryable<CourseInfoViewModel> courseMainInfoQuery = (
                 from course in _repository.GetAll<Course>().AsNoTracking()
                 join member in _repository.GetAll<Member>().AsNoTracking()
                 on course.TutorId equals member.MemberId
+                join subject in _repository.GetAll<CourseSubject>().AsNoTracking()
+                on course.SubjectId equals subject.SubjectId
                 join nation in _repository.GetAll<Nation>().AsNoTracking()
                 on member.NationId equals nation.NationId
+                
                 select new CourseInfoViewModel
                 {
                     MemberId = member.MemberId,
@@ -31,10 +34,16 @@
                     TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
                     FiftyMinUnitPrice = course.FiftyMinUnitPrice,
                     CourseVideo = course.VideoUrl,
-                    CourseVideoThumbnail = course.ThumbnailUrl
+                    CourseVideoThumbnail = course.ThumbnailUrl,
+                    SubjectName = subject.SubjectName
                 });
 
             //國籍篩選
+            if (!string.IsNullOrEmpty(selectedSubject))
+            {
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.SubjectName == selectedSubject);
+            }
+
             if (!string.IsNullOrEmpty(selectedNation))
             {
                 courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
@@ -78,6 +87,7 @@
                     FiftyMinUnitPrice = courseMain.FiftyMinUnitPrice,
                     CourseVideo = courseMain.CourseVideo,
                     CourseVideoThumbnail = courseMain.CourseVideoThumbnail,
+                    SubjectName =courseMain.SubjectName,
                     CourseImages = imgInfo?.CourseImages ?? new List<CourseImageViewModel>(),
                     CourseRatings = revInfo?.CourseRatings ?? 0,
                     CourseReviews = revInfo?.CourseReviews ?? 0,
@@ -162,16 +172,22 @@
         }
 
 
-        public async Task<int> GetTotalCourseQtyAsync(string nation=null)
+        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null)
         {
             var courseQuery = (
                 from course in _repository.GetAll<Course>().AsNoTracking()
                 join member in _repository.GetAll<Member>().AsNoTracking()
                 on course.TutorId equals member.MemberId
+                join subjectE in _repository.GetAll<CourseSubject>().AsNoTracking()
+                on course.SubjectId equals subjectE.SubjectId
                 join nationE in _repository.GetAll<Nation>().AsNoTracking()
                 on member.NationId equals nationE.NationId
-                select new { course, nationE.NationName });
+                select new { course, subjectE.SubjectName, nationE.NationName });
 
+            if (!string.IsNullOrEmpty(subject))
+            {
+                courseQuery = courseQuery.Where(c => c.SubjectName == subject);
+            }
 
             if (!string.IsNullOrEmpty(nation))
             {

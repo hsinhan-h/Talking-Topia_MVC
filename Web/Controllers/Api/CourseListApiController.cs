@@ -11,9 +11,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCourses([FromQuery] int page, [FromQuery] string nation = null)
+        public async Task<IActionResult> GetCourses([FromQuery] int page, [FromQuery] string subject = null, [FromQuery] string nation = null)
         {
-            var courses = await _courseService.GetCourseCardsListAsync(page, 6, nation);
+            var courses = await _courseService.GetCourseCardsListAsync(page, 6, subject, nation);
             if (courses == null)
             {
                 return NotFound();
@@ -22,9 +22,9 @@
         }
 
         [HttpGet("GetTotalCourseQty")]
-        public async Task<IActionResult> GetTotalCourseQty([FromQuery] string nation = null)
+        public async Task<IActionResult> GetTotalCourseQty([FromQuery] string subject = null, [FromQuery] string nation = null)
         {
-            var courseQty = await _courseService.GetTotalCourseQtyAsync(nation);
+            var courseQty = await _courseService.GetTotalCourseQtyAsync(subject, nation);
             return Ok(courseQty);
         }
 
