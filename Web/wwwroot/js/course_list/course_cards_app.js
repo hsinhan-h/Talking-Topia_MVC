@@ -36,7 +36,12 @@ const courseCardsApp = Vue.createApp({
         async fetchCourses() {
             this.loading = true;
             try {
-                const response = await fetch(`/api/CourseListApi?page=${this.page}`);
+                let url = `/api/CourseListApi?page=${this.page}`;
+                if (this.selectedNation) {
+                    url += `&nation=${this.selectedNation}`;
+                }
+
+                const response = await fetch(url);
                 if (response.ok) {
                     const courseData = await response.json();
                     console.log(courseData);
@@ -113,7 +118,12 @@ const courseCardsApp = Vue.createApp({
         },
         async fetchTotalCourseQty() {
             try {
-                const response = await fetch('/api/CourseListApi/GetTotalCourseQty');
+                let url = `/api/CourseListApi/GetTotalCourseQty`;
+                if (this.selectedNation) {
+                    url += `?nation=${this.selectedNation}`;
+                }
+                const response = await fetch(url);
+
                 if (response.ok) {
                     const totalCourseQty = await response.json();
                     console.log(totalCourseQty);
@@ -133,12 +143,18 @@ const courseCardsApp = Vue.createApp({
                 this.fetchCourses();
                 history.pushState(null, '', `?page=${this.page}`);
             }
-        }
+        },
 
         //篩選
         //1. 課程種類
         //2. 國籍
-
+        filterByNation(nation) {
+            this.selectedNation = nation;
+            console.log(this.selectedNation);
+            this.page = 1;
+            this.fetchCourses();
+            this.fetchTotalCourseQty();
+        }
         
 
     }

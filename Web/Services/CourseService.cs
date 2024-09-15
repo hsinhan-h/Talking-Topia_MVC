@@ -34,7 +34,12 @@
                     CourseVideoThumbnail = course.ThumbnailUrl
                 });
 
-            
+            //國籍篩選
+            if (!string.IsNullOrEmpty(selectedNation))
+            {
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
+            }
+
             List<CourseInfoViewModel> courseMainInfo = await courseMainInfoQuery
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -157,9 +162,24 @@
         }
 
 
-        public async Task<int> GetTotalCourseQtyAsync()
+        public async Task<int> GetTotalCourseQtyAsync(string nation=null)
         {
-            return await _repository.GetAll<Course>().CountAsync();
+            var courseQuery = (
+                from course in _repository.GetAll<Course>().AsNoTracking()
+                join member in _repository.GetAll<Member>().AsNoTracking()
+                on course.TutorId equals member.MemberId
+                join nationE in _repository.GetAll<Nation>().AsNoTracking()
+                on member.NationId equals nationE.NationId
+                select new { course, nationE.NationName });
+
+
+            if (!string.IsNullOrEmpty(nation))
+            {
+                courseQuery = courseQuery.Where(c => c.NationName == nation);
+            }
+
+
+            return await courseQuery.CountAsync();
         }
 
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
