@@ -1,7 +1,7 @@
 ﻿<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/Home/Index">
-            <img src="~/image/logo_imgs/TalkingTopia logo_final.png" alt="Logo" width="125"
+            <img src="@Url.Content("~/image/logo_imgs/TalkingTopia logo_final.png")" alt="Logo" width="125"
                  class="d-inline-block align-text-top">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -22,6 +22,7 @@
         </ul>
 
         <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- 左側導覽連結 -->
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#">推薦課程</a>
@@ -32,13 +33,14 @@
                         選擇課程
                     </a>
                     <div class="dropdown-menu mega-menu p-3" aria-labelledby="courseMenu">
-                        <!-- 內容保持不變 -->
+                        <!-- 保持原有選單內容 -->
                     </div>
                 </li>
             </ul>
 
+            <!-- 右側登入狀態顯示 -->
             <ul class="navbar-nav ms-auto">
-                @if (ViewData["IsLoggedIn"] != null && (bool)ViewData["IsLoggedIn"])
+                @if (User.Identity?.IsAuthenticated ?? false)
                 {
                     <!-- 登入後的選單 -->
                     <li class="nav-item">
@@ -48,7 +50,7 @@
                         <a class="nav-link" href="/WatchList">關注列表</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Account/Logout">登出</a> <!-- 更新登出路由 -->
+                        <a class="nav-link" href="/Account/Logout">登出</a>
                     </li>
                     <li class="nav-item shopping-bag">
                         <a class="nav-link" asp-controller="ShoppingCart" asp-action="Index">
@@ -65,6 +67,9 @@
                             <img src="https://fakeimg.pl/20x20/200" alt="">
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <span class="nav-link">@User.Identity.Name</span> <!-- 顯示使用者名稱 -->
+                    </li>
                 }
                 else
                 {
@@ -73,7 +78,7 @@
                         <a class="nav-link" href="/Tutor/Index">成為教師</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Account", "Account")">登入/註冊</a>
+                        <a class="nav-link" href="/Account/Account">登入/註冊</a>
                     </li>
                     <li class="nav-item message-item">
                         <a class="nav-link" href="">

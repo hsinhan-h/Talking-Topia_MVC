@@ -120,6 +120,8 @@ public partial class Member
     /// </summary>
     public bool IsTutor { get; set; }
 
+    public int? UserId { get; set; }
+
     public virtual ICollection<ApplyList> ApplyLists { get; set; } = new List<ApplyList>();
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
@@ -139,6 +141,8 @@ public partial class Member
     public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
 
     public virtual ICollection<TutorTimeSlot> TutorTimeSlots { get; set; } = new List<TutorTimeSlot>();
+
+    public virtual User User { get; set; }
 
     public virtual WatchList WatchList { get; set; }
 
