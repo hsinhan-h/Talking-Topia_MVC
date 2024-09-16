@@ -112,7 +112,7 @@ namespace Infrastructure.Configurations.ECpay
         }
         private int CalculateTotalAmount(IEnumerable<IItem> items)
         {
-            var amount = 0;
+            int amount = 0;
 
             foreach (var item in items)
             {
@@ -123,7 +123,7 @@ namespace Infrastructure.Configurations.ECpay
         }
         private string GenerateItemName(IEnumerable<IItem> items)
         {
-            var itemNames = items.Select(i => $"{i.CourseName} {i.UnitPrice} 新臺幣 x {i.Quantity}");
+            var itemNames = items.Select(i => $"【{i.CourseName}】單價 {i.UnitPrice.ToString("#,###")} 元新臺幣 x {i.Quantity} 堂");
             return string.Join("#", itemNames);
         }
         #endregion

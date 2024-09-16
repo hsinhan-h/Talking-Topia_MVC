@@ -1,4 +1,5 @@
-﻿using Web.Data;
+﻿using System.Linq.Expressions;
+using Web.Data;
 
 namespace Web.Repository
 {
@@ -12,7 +13,7 @@ namespace Web.Repository
 
         public void Create<T>(T value) where T : class
         {
-            _context.Entry(value).State = EntityState.Added;
+            _context.Set<T>().Add(value);  // 正確新增實體
         }
 
         public void Update<T>(T value) where T : class
@@ -54,6 +55,26 @@ namespace Web.Repository
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task BeginTransActionAsync()
+        {
+            await _context.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitAsync()
+        {
+            await _context.Database.CommitTransactionAsync();
+        }
+        public async Task RollbackAsync()
+        {
+            await _context.Database.RollbackTransactionAsync();
+        }
+
+        public T FirstOrDefault<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return _context.Set<T>().FirstOrDefault(predicate);
+
         }
     }
 }

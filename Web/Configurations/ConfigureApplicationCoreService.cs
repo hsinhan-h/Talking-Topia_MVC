@@ -1,6 +1,8 @@
 ﻿using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 using Infrastructure.ECpay;
 using Infrastructure.Interfaces.ECpay;
+using Infrastructure.Service;
 
 namespace Web.Configurations
 {
@@ -9,8 +11,11 @@ namespace Web.Configurations
         public static IServiceCollection AddApplicationCoreService(this IServiceCollection services)
         {
             services.AddScoped<IPayment, Payment>();
-            //services.AddScoped<IOrderService, OrderService>(); 大國的，別動Q_Q
-            services.AddScoped<OrderService>();
+            services.AddScoped<IMemberService, MemberService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICourseService, ApplicationCore.Services.CourseService>();
+            services.AddScoped<ECpayService>();
 
             return services;
         }

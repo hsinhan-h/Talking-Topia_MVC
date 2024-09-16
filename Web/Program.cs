@@ -2,6 +2,8 @@ using Web.Data;
 using Web.Repository;
 using Web.Configurations;
 using Infrastructure;
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Web
 {
@@ -11,9 +13,14 @@ namespace Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Configuration.AddUserSecrets<Program>();
+            }
+
             // Add DbContext configuration
-            builder.Services.AddDbContext<TalkingTopiaContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<Data.TalkingTopiaContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("TalkingTopiaDb")));
 
             //註冊IRepository
             builder.Services.AddScoped<IRepository, GeneralRepository>();
@@ -28,7 +35,11 @@ namespace Web
             builder.Services.AddScoped<MemberDataService>();
             builder.Services.AddScoped<ResumeDataService>();
             builder.Services.AddScoped<TutorDataservice>();
-            builder.Services.AddScoped<ShoppingCartService>();
+            builder.Services.AddScoped<AccountService>();
+            builder.Services.AddScoped<NationService>();
+            builder.Services.AddScoped<CourseCategoryService>();
+
+
 
             // 要加下面這個 AddInfrastructureService      
             builder.Services.AddInfrastructureService(builder.Configuration);
@@ -41,6 +52,21 @@ namespace Web
             //{
             //    builder.Configuration.AddUserSecrets<Program>();
             //}
+
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                            .AddCookie(options =>
+                            {
+                                // 登入用路徑
+                                options.LoginPath = "/Account/Login";
+                                // 登出用路徑
+                                options.LogoutPath = "/Account/Logout";
+                                // 沒有權限時的導向(HTTP Status Code: 403)
+                                options.AccessDeniedPath = "/Account/AccessDenied";
+                                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);  // 預設過期時間
+                            });
+
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -58,6 +84,8 @@ namespace Web
 
             app.UseRouting();
 
+            // 先驗證再授權.
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

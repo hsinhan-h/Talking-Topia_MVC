@@ -9,10 +9,18 @@
             _repository = repository;
         }
 
-        public async Task<List<Nation>> GetNations()
+        public async Task<List<Nation>> GetNationsAsync()
         {
             var nations = await _repository.GetAll<Nation>().ToListAsync();
             return nations;
+        }
+
+        public async Task<List<string>> GetNationNamesAsync()
+        {
+            var nationNames = await _repository.GetAll<Nation>()
+                .Select(n => n.NationName)
+                .ToListAsync();
+            return nationNames;
         }
     }
 }

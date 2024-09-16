@@ -1,13 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Tracing;
-using System.Drawing;
-using Web.Entities;
-using Web.Repository;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Net.WebRequestMethods;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Web.Services
+﻿namespace Web.Services
 {
     public class CourseService
     {
@@ -18,94 +9,58 @@ namespace Web.Services
             _repository = repository;
         }
 
-        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize)
+        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null)
         {
-            //主查詢
-            var courseMainInfo = await (
-            from course in _repository.GetAll<Course>().AsNoTracking()
-            join member in _repository.GetAll<Member>().AsNoTracking()
-            on course.TutorId equals member.MemberId
-            join nation in _repository.GetAll<Nation>().AsNoTracking()
-            on member.NationId equals nation.NationId
-            select new CourseInfoViewModel
+            IQueryable<CourseInfoViewModel> courseMainInfoQuery = (
+                from course in _repository.GetAll<Course>().AsNoTracking()
+                join member in _repository.GetAll<Member>().AsNoTracking()
+                on course.TutorId equals member.MemberId
+                join subject in _repository.GetAll<CourseSubject>().AsNoTracking()
+                on course.SubjectId equals subject.SubjectId
+                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                on member.NationId equals nation.NationId
+                
+                select new CourseInfoViewModel
+                {
+                    MemberId = member.MemberId,
+                    CourseId = course.CourseId,
+                    TutorHeadShotImage = member.HeadShotImage,
+                    NationName = nation.NationName,
+                    TutorFlagImage = nation.FlagImage,
+                    IsVerifiedTutor = member.IsVerifiedTutor,
+                    CourseTitle = course.Title,
+                    CourseSubTitle = course.SubTitle,
+                    TutorIntro = member.TutorIntro,
+                    TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
+                    FiftyMinUnitPrice = course.FiftyMinUnitPrice,
+                    CourseVideo = course.VideoUrl,
+                    CourseVideoThumbnail = course.ThumbnailUrl,
+                    SubjectName = subject.SubjectName
+                });
+
+            //國籍篩選
+            if (!string.IsNullOrEmpty(selectedSubject))
             {
-                MemberId = member.MemberId,
-                CourseId = course.CourseId,
-                TutorHeadShotImage = member.HeadShotImage,
-                TutorFlagImage = nation.FlagImage,
-                IsVerifiedTutor = member.IsVerifiedTutor,
-                CourseTitle = course.Title,
-                CourseSubTitle = course.SubTitle,
-                TutorIntro = member.TutorIntro,
-                TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
-                FiftyMinUnitPrice = course.FiftyMinUnitPrice,
-                CourseVideo = course.VideoUrl,
-                CourseVideoThumbnail = course.ThumbnailUrl
-            })
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.SubjectName == selectedSubject);
+            }
 
-            // 圖片查詢
-            var courseImagesInfo = await (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join courseImage in _repository.GetAll<CourseImage>().AsNoTracking()
-                on course.CourseId equals courseImage.CourseId
-                group courseImage by course.CourseId into gpImage
-                select new CourseInfoViewModel
-                {
-                    CourseId = gpImage.Key,
-                    CourseImages = gpImage.Select(ci => new CourseImageViewModel
-                    {
-                        ImageUrl = ci.ImageUrl
-                    }).ToList()
-                }).ToListAsync();
+            if (!string.IsNullOrEmpty(selectedNation))
+            {
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
+            }
 
-            // 評價及評論數查詢
-            var courseRatingsAndReviewsInfo = await (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join review in _repository.GetAll<Review>().AsNoTracking()
-                on course.CourseId equals review.CourseId
-                group review by course.CourseId into gpReview
-                select new CourseInfoViewModel
-                {
-                    CourseId = gpReview.Key,
-                    CourseRatings = gpReview.Any() ?
-                                    Math.Round(gpReview.Average(cr => cr.Rating), 2) : 0,
-                    CourseReviews = gpReview.Count()
-                }).ToListAsync();
+            List<CourseInfoViewModel> courseMainInfo = await courseMainInfoQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
-            // 已被預約時間查詢
-            var bookedTimeSlotsInfo = await (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join booking in _repository.GetAll<Booking>().AsNoTracking()
-                on course.CourseId equals booking.CourseId
-                group booking by course.CourseId into gpBooking
-                select new CourseInfoViewModel
-                {
-                    CourseId = gpBooking.Key,
-                    BookedTimeSlots = gpBooking.Select(cb => new TimeSlotViewModel
-                    {
-                        Date = cb.BookingDate,
-                        StartHour = cb.BookingTime - 1 // id - 1 對應實際起始時間
-                    }).ToList()
-                }).ToListAsync();
+            List<int> courseIds = courseMainInfo.Select(c => c.CourseId).ToList();
+            List<int> memberIds = courseMainInfo.Select(c => c.MemberId).ToList();
 
-            // 教師可預約時間查詢
-            var availableTimeSlotsInfo = await (
-                from member in _repository.GetAll<Member>().AsNoTracking()
-                join tutorTimeSlot in _repository.GetAll<TutorTimeSlot>().AsNoTracking()
-                on member.MemberId equals tutorTimeSlot.TutorId
-                group tutorTimeSlot by member.MemberId into gpMember
-                select new CourseInfoViewModel
-                {
-                    MemberId = gpMember.Key,
-                    AvailableTimeSlots = gpMember.Select(mt => new TimeSlotViewModel
-                    {
-                        Weekday = mt.Weekday,
-                        StartHour = mt.CourseHourId - 1,
-                    }).ToList()
-                }).ToListAsync();
+            var courseImagesInfo = await GetCourseImagesAsync(courseIds);
+            var courseRatingsAndReviewsInfo = await GetCourseRatingsAndReviewsAsync(courseIds);
+            var bookedTimeSlotsInfo = await GetBookedTimeSlotsAsync(courseIds);
+            var availableTimeSlotsInfo = await GetAvailableTimeSlotsAsync(memberIds);
 
             // 合併查詢
             var completeCoursesInfo = (
@@ -123,6 +78,7 @@ namespace Web.Services
                     CourseId = courseMain.CourseId,
                     TutorHeadShotImage = courseMain.TutorHeadShotImage,
                     TutorFlagImage = courseMain.TutorFlagImage,
+                    NationName = courseMain.NationName,
                     IsVerifiedTutor = courseMain.IsVerifiedTutor,
                     CourseTitle = courseMain.CourseTitle,
                     CourseSubTitle = courseMain.CourseSubTitle,
@@ -131,6 +87,7 @@ namespace Web.Services
                     FiftyMinUnitPrice = courseMain.FiftyMinUnitPrice,
                     CourseVideo = courseMain.CourseVideo,
                     CourseVideoThumbnail = courseMain.CourseVideoThumbnail,
+                    SubjectName =courseMain.SubjectName,
                     CourseImages = imgInfo?.CourseImages ?? new List<CourseImageViewModel>(),
                     CourseRatings = revInfo?.CourseRatings ?? 0,
                     CourseReviews = revInfo?.CourseReviews ?? 0,
@@ -144,9 +101,101 @@ namespace Web.Services
             };
         }
 
-        public async Task<int> GetTotalCourseQtyAsync()
+        // 課程圖片查詢 (by courseIds)
+        private async Task<List<CourseInfoViewModel>> GetCourseImagesAsync(List<int> courseIds)
         {
-            return await _repository.GetAll<Course>().CountAsync();
+            return await (
+                from courseImage in _repository.GetAll<CourseImage>().AsNoTracking()
+                where courseIds.Contains(courseImage.CourseId)
+                group courseImage by courseImage.CourseId into gpImage
+                select new CourseInfoViewModel
+                {
+                    CourseId = gpImage.Key,
+                    CourseImages = gpImage.Select(ci => new CourseImageViewModel
+                    {
+                        ImageUrl = ci.ImageUrl
+                    }).ToList()
+                }).ToListAsync();
+        }
+
+        // 評價及評論數查詢 (by courseIds)
+        private async Task<List<CourseInfoViewModel>> GetCourseRatingsAndReviewsAsync(List<int> courseIds)
+        {
+            return await (
+                from review in _repository.GetAll<Review>().AsNoTracking()
+                where courseIds.Contains(review.CourseId)
+                group review by review.CourseId into gpReview
+                select new CourseInfoViewModel
+                {
+                    CourseId = gpReview.Key,
+                    CourseRatings = gpReview.Any() ?
+                                    Math.Round(gpReview.Average(cr => cr.Rating), 2) : 0,
+                    CourseReviews = gpReview.Count()
+                }).ToListAsync();
+        }
+
+        //已被預約時間查詢 (by courseIds)
+        private async Task<List<CourseInfoViewModel>> GetBookedTimeSlotsAsync(List<int> courseIds)
+        {
+            return await (
+                from booking in _repository.GetAll<Booking>().AsNoTracking()
+                where courseIds.Contains(booking.CourseId)
+                group booking by booking.CourseId into gpBooking
+                select new CourseInfoViewModel
+                {
+                    CourseId = gpBooking.Key,
+                    BookedTimeSlots = gpBooking.Select(cb => new TimeSlotViewModel
+                    {
+                        Date = cb.BookingDate,
+                        StartHour = cb.BookingTime - 1 // id - 1 對應實際起始時間
+                    }).ToList()
+                }).ToListAsync();
+        }
+
+        // 教師可預約時間查詢 (by memberIds)
+        private async Task<List<CourseInfoViewModel>> GetAvailableTimeSlotsAsync(List<int> memberIds)
+        {
+            return await(
+                from tutorTimeSlot in _repository.GetAll<TutorTimeSlot>().AsNoTracking()
+                where memberIds.Contains(tutorTimeSlot.TutorId)
+                group tutorTimeSlot by tutorTimeSlot.TutorId into gpMember
+                select new CourseInfoViewModel
+                {
+                    MemberId = gpMember.Key,
+                    AvailableTimeSlots = gpMember.Select(mt => new TimeSlotViewModel
+                    {
+                        Weekday = mt.Weekday,
+                        StartHour = mt.CourseHourId - 1,
+                    }).ToList()
+                }).ToListAsync();
+
+        }
+
+
+        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null)
+        {
+            var courseQuery = (
+                from course in _repository.GetAll<Course>().AsNoTracking()
+                join member in _repository.GetAll<Member>().AsNoTracking()
+                on course.TutorId equals member.MemberId
+                join subjectE in _repository.GetAll<CourseSubject>().AsNoTracking()
+                on course.SubjectId equals subjectE.SubjectId
+                join nationE in _repository.GetAll<Nation>().AsNoTracking()
+                on member.NationId equals nationE.NationId
+                select new { course, subjectE.SubjectName, nationE.NationName });
+
+            if (!string.IsNullOrEmpty(subject))
+            {
+                courseQuery = courseQuery.Where(c => c.SubjectName == subject);
+            }
+
+            if (!string.IsNullOrEmpty(nation))
+            {
+                courseQuery = courseQuery.Where(c => c.NationName == nation);
+            }
+
+
+            return await courseQuery.CountAsync();
         }
 
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
@@ -212,13 +261,14 @@ namespace Web.Services
                 {
                     TutorId = member.MemberId,
                     CourseId = course.CourseId,
+                    CategoryId = course.CategoryId,
                     EducationId= (int)member.EducationId,
                     SpokenLanguage = member.SpokenLanguage,
                     TutorHeadShotImage = member.HeadShotImage,
                     TutorFlagImage = nation.FlagImage,
                     IsVerifiedTutor = member.IsVerifiedTutor,
                     CourseTitle = course.Title,
-                    CourseSubTitle = course.SubTitle,
+                    CourseSubTitle = course.SubTitle, 
                     TutorIntro = member.TutorIntro,
                     TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
                     FiftyMinPrice = (int)course.FiftyMinUnitPrice,
@@ -284,6 +334,8 @@ namespace Web.Services
                                 .AsNoTracking()
                                 .ToListAsync();
 
+            var recomCard = GetTutorRecommendCard(courseMainInfo.CategoryId);
+
             // 計算課程評分
             var averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
 
@@ -318,18 +370,19 @@ namespace Web.Services
                     EndYear = e.WorkEndDate.Year,
                     WorkTitle = e.WorkName
                 }).ToList(),
-                EducationDegree = education.Select(w=> new TutorEducationList
+                EducationDegree = education.Select(w => new TutorEducationList
                 {
                     StudyStartYear = w.StudyStartYear,
                     StudyEndYear = w.StudyEndYear,
-                    SchoolAndDepartment = w.SchoolName + " " + w.DepartmentName, 
+                    SchoolAndDepartment = w.SchoolName + " " + w.DepartmentName,
                 }).ToList(),
                 CourseImages = new List<CourseImageViewModel>(), // 根據需求查詢並填充
-                ProfessionList = professional.Select(p =>new TutorProfessionList
+                ProfessionList = professional.Select(p => new TutorProfessionList
                 {
-                  ProfessionName = p.ProfessionalLicenseName
+                    ProfessionName = p.ProfessionalLicenseName
                 }).ToList(),
-                FollowingStatus = false // 假設未關注
+                FollowingStatus = false ,// 假設未關注
+                TutorReconmmendCard = recomCard
             };
 
             // 處理折扣價錢
@@ -343,6 +396,7 @@ namespace Web.Services
 
             courseMainPageViewModel.TwentyFiveDiscountedPrice = GettCoursePriceList(courseCountDiscountList, 25, courseMainPageViewModel.TwentyFiveMinPrice);
             courseMainPageViewModel.FiftyDiscountedPrice = GettCoursePriceList(courseCountDiscountList, 50, courseMainPageViewModel.FiftyMinPrice);
+
 
             return courseMainPageViewModel;
         }
@@ -438,6 +492,48 @@ namespace Web.Services
                 .Where(review => review.CourseId == courseId)
                 .Select(review => (double)review.Rating);
             return courseRatings.Any() ? courseRatings.Average() : 0;
+        }
+
+        public List<TutorRecomCardList> GetTutorRecommendCard(int categoryId)
+        {            
+            var recomCardList = (from course in _repository.GetAll<Course>().AsNoTracking()
+                                join member in _repository.GetAll<Member>().AsNoTracking()
+                                on course.TutorId equals member.MemberId
+                                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                                on member.NationId equals nation.NationId
+                                where course.CategoryId == categoryId
+                                select new TutorRecomCardList
+                                {
+                                    CourseId = course.CourseId,
+                                    TutorHeadShot = member.HeadShotImage,
+                                    NationFlagImg = nation.FlagImage,
+                                    CourseTitle = course.Title,
+                                    CourseSubTitle = course.SubTitle,
+                                    TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
+                                    FiftyminPrice = (int)course.FiftyMinUnitPrice,
+                                    Description = course.Description,
+                                }).ToList();
+
+
+            var recomCardReview =  (
+               from course in _repository.GetAll<Course>().AsNoTracking()
+               join review in _repository.GetAll<Review>().AsNoTracking()
+               on course.CourseId equals review.CourseId
+               group review by course.CourseId into Review
+               select new TutorRecomCardList
+               {
+                   CourseId = Review.Key,
+                   Rating = Review.Any() ? Math.Round(Review.Average(cr => cr.Rating), 2) : 0,               
+               }).ToList();
+
+            foreach (var card in recomCardList)
+            {
+                var review = recomCardReview.FirstOrDefault(r => r.CourseId == card.CourseId);
+
+                card.Rating = review?.Rating ?? 0;
+            }
+            
+            return recomCardList;
         }
     }
 }

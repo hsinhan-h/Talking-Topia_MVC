@@ -1,4 +1,7 @@
-﻿<div class="container lh-backstage" id="app">
+﻿@model CourseMainPageViewModel
+
+
+<div class="container lh-backstage" id="app">
     <div class="row overflow-hidden">
         <div class="col-12 lh-backstage-main-section">
             <div class="lh-backstage-watchlist-section mb-5"
@@ -23,21 +26,21 @@
                          id="lh-backstage-watchlist-item">
                         <div class="tutor-recommend-carousel-wrapper w-100 my-2 position-relative">
                             <div class="tutor-recommend-carousel">
-                                @for (int i = 0; i < 5; i++)
+                                @foreach (var card in Model.TutorReconmmendCard)
                                 {
-                                <partial name="_TutorRecommendPartial" />   
+                                    <partial name="_TutorRecommendPartial" model="card"/>   
                                 }
                             </div>
                         </div>
                     </div>
-                    <div class="container tab-pane fade"
+                    @* <div class="container tab-pane fade"
                          id="lh-backstage-watchlist-item-2">
                         <div class="tutor-recommend-carousel-wrapper w-100 my-2 position-relative">
                             <div class="tutor-recommend-carousel">
                                 <partial name="_TutorRecommendPartial" />
                             </div>
                         </div>
-                    </div>
+                    </div> *@
                 </div>
             </div>
         </div>

@@ -181,11 +181,14 @@ a:focus {
     padding: 30px 0 10px 0;
 }
 
-.card-payment:hover {
+.card-payment:hover,
+.card-payment.selected {
     border-color: #02cab9;
     border-width: 2px;
     text-align: center;
+    transition: border-color 0.3s;
 }
+
 
 .card-payment {
     height: 100px;

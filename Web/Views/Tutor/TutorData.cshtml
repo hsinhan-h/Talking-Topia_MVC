@@ -1,5 +1,8 @@
 ﻿@model TutorDataViewModel
 
+<h1>歡迎, 會員</h1>
+
+<p>會員ID: <span id="memberIdDisplay"></span></p>
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
@@ -89,13 +92,9 @@
                                         }
                                     </ul>
                                     <h4>可接受預約時段</h4>
-                                    <ul v-if="slots.length > 0">
-                                        <li v-for="slot in slots" :key="slot.id">
-                                            <p>
-                                                <span>星期二</span><span>13</span>點至<span>15</span>點
-                                            </p>
-                                        </li>
-                                    </ul>
+                                    <div class=" d-flex flex-wrap col-10" id="reservation-list">
+                                        
+                                    </div>
                                     <button type="button"
                                             class="btn lh-backstage-submit-btn"
                                             data-bs-toggle="modal"
@@ -105,28 +104,45 @@
                                 </div>
                                 <div class="lh-backstage-member-card-list d-flex">
                                     <div class="card col-12 col-md-3 me-2 p-2">
-                                        @foreach (var course in Model.Course)
+                                        @if (Model.HasCourses)
                                         {
-                                            <div class="fs-2 ps-3">@course.CategoryName</div>
-
-                                            @* <img src="~/image/backstage/programming.png" *@
-                                            @* class="card-img-top w-100" /> *@
+                                            @foreach (var course in Model.Course)
+                                            {
+                                                <div class="fs-2 ps-3">@course.CategoryName</div>
+                                                <div class="card-body">
+                                                    <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
+                                                    <p class="card-text">申請狀態：<span>@Model.Coursestatus</span></p>
+                                                    <button class="btn lh-backstage-submit-btn"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#lh-backstage-tutor-application-audit">
+                                                        證照資訊
+                                                    </button>
+                                                    @*  要return回履歷 <a href="/TalkingTopia/Tutor/TutorResume.html?memberId=@Model.MemberId"
+                                                                        class="btn lh-backstage-submit-btn">編輯家教資料 *@
+                                                    <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
+                                                        編輯家教資料
+                                                    </a>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="fs-2 ps-3"></div>
                                             <div class="card-body">
-                                                <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
-                                                <p class="card-text">
-                                                    申請狀態：<span>@Model.Coursestatus</span>
-                                                </p>
+                                                <p class="card-text">申請科目：<span></span></p>
+                                                <p class="card-text">申請狀態：<span></span></p>
                                                 <button class="btn lh-backstage-submit-btn"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#lh-backstage-tutor-application-audit">
                                                     證照資訊
                                                 </button>
-                                                <a href="/TalkingTopia/Apply_teacher/myResume.html"
-                                                   class="btn lh-backstage-submit-btn">
+                                                <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
                                                     編輯家教資料
                                                 </a>
                                             </div>
                                         }
+
+                                           
                                     </div>
                                     @* <div class="card col-12 col-md-3 me-2 p-2">
                                     <img src="~/image/backstage/subjects.png"
@@ -149,6 +165,12 @@
                                     </div> *@
 
                                 </div>
+                               @*  apply status 為true 預設0*@
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn lh-backstage-submit-btn">@(Model.TutorId == 0 ? "儲存" : "編輯")</button>
+                                </div>
+                                
+                                
                         </section>
                     </div>
                 </div>
@@ -174,14 +196,15 @@
                 </div>
                 <div class="modal-body">
                     <section class="lh-backstage-lh-backstage-tutor-data">
-                        <ul>
+                        @*當lisence關聯修好後再測試*@
+                        @* <ul>
                             @foreach (var lisence in Model.License)
                             {
                                 <li>證照名稱：@lisence.ProfessionalLicenseName</li>
-                                <input id="prolicense" class="form-control my-1" type="file" placeholder="輸入..." value="">
-                                <lable for="prolicens">證照檔案：@lisence.ProfessionalLicenseUrl</lable>
+                                <input id="prolicense" class="form-control my-1" type="file" placeholder="輸入..." value=""/>
+                                <lable for="prolicense">證照檔案：@lisence.ProfessionalLicenseUrl</lable>
                             }
-                        </ul>
+                        </ul> *@
                     </section>
                 </div>
                 <div class="modal-footer">
@@ -249,7 +272,7 @@
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input"
-                                           type="checkbox" id="weekday-7" name="weekday" value="7">
+                                           type="checkbox" id="weekday-0" name="weekday" value="0">
                                     <label class="form-check-label" for="sunday">星期日</label>
                                 </div>
                             </div>

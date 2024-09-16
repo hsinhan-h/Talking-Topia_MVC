@@ -1,5 +1,4 @@
-﻿//slick套件 (note:到時可能需包成funciton, 每次讀取卡後資料後渲染後重新呼叫slick一次)
-$(function () {
+﻿export function initHoverPopup() {
     $(".lh-tutor-cards").on(
         "mouseenter",
         ".lh-tutor-card:not(.lh-tutor-card-floating-popup)",
@@ -30,7 +29,7 @@ $(function () {
             }
         }
     );
-});
+}
 
 $(window).on("resize", function () {
     if ($(window).width() < 960) {
@@ -38,14 +37,16 @@ $(window).on("resize", function () {
     }
 });
 
-const badgeTooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-badgeTooltips.forEach((tooltip) => {
-    new bootstrap.Tooltip(tooltip);
-});
+export function initTooltips() {
+    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltips.forEach((tooltip) => {
+        new bootstrap.Tooltip(tooltip);
+    });
+}
 
 
 //youtube彈出視窗
-function autoPlayYouTubeModal() {
+export function autoPlayYouTubeModal() {
     var trigger = $("body").find('[data-bs-toggle="modal"]');
     trigger.click(function () {
         var theModal = $(this).data("bs-target"),
