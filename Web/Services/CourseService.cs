@@ -1,4 +1,6 @@
-﻿namespace Web.Services
+﻿using System.Linq;
+
+namespace Web.Services
 {
     public class CourseService
     {
@@ -9,7 +11,7 @@
             _repository = repository;
         }
 
-        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null)
+        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null, string selectedBudget = null)
         {
             IQueryable<CourseInfoViewModel> courseMainInfoQuery = (
                 from course in _repository.GetAll<Course>().AsNoTracking()
@@ -38,7 +40,7 @@
                     SubjectName = subject.SubjectName
                 });
 
-            //國籍篩選
+            //篩選
             if (!string.IsNullOrEmpty(selectedSubject))
             {
                 courseMainInfoQuery = courseMainInfoQuery.Where(c => c.SubjectName == selectedSubject);
@@ -47,6 +49,30 @@
             if (!string.IsNullOrEmpty(selectedNation))
             {
                 courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
+            }
+
+            if (!string.IsNullOrEmpty(selectedBudget))
+            {
+                switch (selectedBudget)
+                {
+                    case "349以下":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 349);
+                        break;
+                    case "350-499":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 499 && c.TwentyFiveMinUnitPrice >= 350);
+                        break;
+                    case "500-799":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 799 && c.TwentyFiveMinUnitPrice >= 500);
+                        break;
+                    case "800-999":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 999 && c.TwentyFiveMinUnitPrice >= 800);
+                        break;
+                    case "1000以上":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice >= 1000);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             List<CourseInfoViewModel> courseMainInfo = await courseMainInfoQuery
