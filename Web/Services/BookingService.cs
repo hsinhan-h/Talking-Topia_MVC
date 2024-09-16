@@ -127,15 +127,15 @@ namespace Web.Services
         public async Task<BookingListViewModel> GetPublishCourse(int MemberId, int CourseId)
         {
             // 將 courseImg 實體化為 List<CouresImagesViewModel>
-            var courseImg =  (from img in _repository.GetAll<CourseImage>()
-                                   join course in _repository.GetAll<Course>() on img.CourseId equals course.CourseId
-                                   where course.TutorId == MemberId && course.CourseId == CourseId
-                                   select new CouresImagesVM
-                                   {
-                                       CourseImageId = img.CourseId,
-                                       CourseId = course.CourseId,
-                                       ImageUrl = img.ImageUrl
-                                   });  // 確保 courseImg 是 List<CouresImagesViewModel>
+            var courseImg = (from img in _repository.GetAll<CourseImage>()
+                             join course in _repository.GetAll<Course>() on img.CourseId equals course.CourseId
+                             where course.TutorId == MemberId && course.CourseId == CourseId
+                             select new CouresImagesVM
+                             {
+                                 CourseImageId = img.CourseId,
+                                 CourseId = course.CourseId,
+                                 ImageUrl = img.ImageUrl
+                             });  // 確保 courseImg 是 List<CouresImagesViewModel>
 
             var bookingValue = from course in _repository.GetAll<Course>()
                                join category in _repository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
@@ -143,7 +143,7 @@ namespace Web.Services
                                //join image in _repository.GetAll<CourseImage>() on course.CourseId equals image.CourseId
                                join member in _repository.GetAll<Member>() on course.TutorId equals member.MemberId
                                //join booking in _repository.GetAll<Booking>() on course.CourseId equals booking.CourseId
-                               where member.MemberId == MemberId && course.CourseId== CourseId
+                               where member.MemberId == MemberId && course.CourseId == CourseId
                                select new BookingViewModel
                                {
                                    UpdateDatetime = DateTime.Now,
@@ -212,9 +212,22 @@ namespace Web.Services
             _repository.Create(booking);
             _repository.SaveChanges();
         }
-
-        public void SaveCourse(int AddOrUpdate)
+        /// <summary>
+        /// 課程新增或修改
+        /// </summary>
+        /// <param name="AddOrUpdate"></param>
+        public void SaveCourse(CRUDStatus status, Course course, CourseImage courseImage)
         {
+            if (status == CRUDStatus.Create)
+            {
+                _repository.Create(course);
+                _repository.SaveChanges();
+            }
+            else if (status == CRUDStatus.Update)
+            {
+                _repository.Update(course);
+                _repository.SaveChanges();
+            }
         }
     }
 }

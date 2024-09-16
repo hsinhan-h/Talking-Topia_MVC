@@ -30,6 +30,17 @@ namespace Web.Controllers.Api
         {
             int memberId = 3;
 
+            var course = new Course()
+            {
+
+            };
+            var courseImg = new CourseImage
+            {
+
+            };
+            _bookingService.SaveCourse(CRUDStatus.Create, course, courseImg);
+            
+
             return Ok();
         }
     }
