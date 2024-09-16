@@ -10,44 +10,97 @@ namespace Web.Services
     public class MemberDataService
     {
         private readonly IRepository _repository;
+        private readonly TalkingTopiaContext _context;
+        private readonly ILogger<MemberDataService> _logger;
 
-        public MemberDataService(IRepository repository)
+        public MemberDataService(IRepository repository, TalkingTopiaContext context, ILogger<MemberDataService> logger)
         {
             _repository = repository;
+            _context = context;
+            _logger = logger;
+
         }
 
+
+
+        //public async Task<MemberProfileViewModel> GetMemberData(int memberId)
+        //{
+
+
+        //    // 使用 MemberId 查詢會員資料
+        //    var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
+
+        //    if (member == null)
+        //    {
+        //        throw new Exception("找不到會員資料");
+        //    }
+
+        //    var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
+        //                                   join cs in _repository.GetAll<CourseSubject>()
+        //                                       on mp.SubjecId equals cs.SubjectId
+        //                                   join cc in _repository.GetAll<CourseCategory>()
+        //                                       on cs.CourseCategoryId equals cc.CourseCategoryId
+        //                                   where mp.MemberId == member.MemberId
+        //                                   select new CourseListViewModel
+        //                                   {
+        //                                       CategoryName = cc.CategorytName,
+        //                                       SubjectName = cs.SubjectName
+        //                                   }).ToListAsync();
+
+        //    // 將查詢結果轉換成 ViewModel
+        //    var memberProfile = new MemberProfileViewModel
+        //    {
+        //        ImageUrl = member.HeadShotImage,
+        //        Nickname = member.Nickname,
+        //        //Birthday = member.Birthday ?? DateTime.Now,
+        //        Birthday = (DateTime)(member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null),
+
+        //        //Birthday = member.Birthday.HasValue ? member.Birthday.Value : DateTime.MinValue,
+        //        Gender = ((Gender)member.Gender).ToString(),  // 將枚舉轉換為字符串
+        //        Account = member.Account,
+        //        FirstName = member.FirstName,
+        //        LastName = member.LastName,
+        //        Email = member.Email,
+        //        Phone = member.Phone,
+        //        CoursePrefer = coursePrefer
+        //    };
+
+        //    return memberProfile;
+        //}
         public async Task<MemberProfileViewModel> GetMemberData(int memberId)
         {
-            // 使用 MemberId 查詢會員資料
+            _logger.LogInformation($"開始查詢會員資料，會員ID: {memberId}");
+
             var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
 
             if (member == null)
             {
-                throw new Exception("找不到會員資料");
+                _logger.LogWarning($"找不到會員資料，會員ID: {memberId}");
+                throw new Exception($"找不到會員資料，會員ID: {memberId}");
             }
 
-            var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
-                                           join cs in _repository.GetAll<CourseSubject>()
-                                               on mp.SubjecId equals cs.SubjectId
-                                           join cc in _repository.GetAll<CourseCategory>()
-                                               on cs.CourseCategoryId equals cc.CourseCategoryId
-                                           where mp.MemberId == member.MemberId
-                                           select new CourseListViewModel
-                                           {
-                                               CategoryName = cc.CategorytName,
-                                               SubjectName = cs.SubjectName
-                                           }).ToListAsync();
+            _logger.LogInformation($"成功查詢會員資料，會員ID: {memberId}");
 
-            // 將查詢結果轉換成 ViewModel
+            // 查詢會員的課程偏好
+            var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
+                                      join cs in _repository.GetAll<CourseSubject>()
+                                          on mp.SubjecId equals cs.SubjectId
+                                      join cc in _repository.GetAll<CourseCategory>()
+                                          on cs.CourseCategoryId equals cc.CourseCategoryId
+                                      where mp.MemberId == member.MemberId
+                                      select new CourseListViewModel
+                                      {
+                                          CategoryName = cc.CategorytName,
+                                          SubjectName = cs.SubjectName
+                                      }).ToListAsync();
+
+            // 轉換為 MemberProfileViewModel，處理可能為 null 的欄位
             var memberProfile = new MemberProfileViewModel
             {
-                ImageUrl = member.HeadShotImage,
-                Nickname = member.Nickname,
-                //Birthday = member.Birthday ?? DateTime.Now,
-                Birthday = (DateTime)(member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null),
-
-                //Birthday = member.Birthday.HasValue ? member.Birthday.Value : DateTime.MinValue,
-                Gender = ((Gender)member.Gender).ToString(),  // 將枚舉轉換為字符串
+                ImageUrl = member.HeadShotImage ?? string.Empty, // 如果圖片為 null，使用空字串代替
+                Nickname = member.Nickname ?? "未設定", // 處理暱稱為 null 的情況
+                Birthday = member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null, // 若無生日資料，設為 null
+                Gender = ((Gender)member.Gender).ToString(), // 將性別枚舉轉為字符串
                 Account = member.Account,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
@@ -56,8 +109,13 @@ namespace Web.Services
                 CoursePrefer = coursePrefer
             };
 
+            _logger.LogInformation($"成功查詢會員資料，MemberId: {memberId}");
+
             return memberProfile;
         }
+
+
+
 
         public async Task UpdateMemberData(MemberProfileViewModel updatedData, int memberId)
         {

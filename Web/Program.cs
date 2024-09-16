@@ -67,7 +67,8 @@ namespace Web
                             });
 
             builder.Services.AddAuthorization();
-
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
             var app = builder.Build();
 
 
