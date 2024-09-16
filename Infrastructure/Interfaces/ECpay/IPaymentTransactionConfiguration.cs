@@ -23,5 +23,7 @@ namespace Infrastructure.Interfaces.ECpay
         /// 提供合作廠商使用記錄用客製化使用欄位。
         /// </summary>
         IPaymentConfiguration WithCustomFields(string field1 = null, string field2 = null, string field3 = null, string field4 = null);
+
+        public string SentTransactionNo();
     }
 }
