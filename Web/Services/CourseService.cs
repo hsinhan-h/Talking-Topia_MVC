@@ -13,34 +13,8 @@ namespace Web.Services
 
         public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null, string selectedBudget = null)
         {
-            IQueryable<CourseInfoViewModel> courseMainInfoQuery = (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join member in _repository.GetAll<Member>().AsNoTracking()
-                on course.TutorId equals member.MemberId
-                join subject in _repository.GetAll<CourseSubject>().AsNoTracking()
-                on course.SubjectId equals subject.SubjectId
-                join nation in _repository.GetAll<Nation>().AsNoTracking()
-                on member.NationId equals nation.NationId
-                
-                select new CourseInfoViewModel
-                {
-                    MemberId = member.MemberId,
-                    CourseId = course.CourseId,
-                    TutorHeadShotImage = member.HeadShotImage,
-                    NationName = nation.NationName,
-                    TutorFlagImage = nation.FlagImage,
-                    IsVerifiedTutor = member.IsVerifiedTutor,
-                    CourseTitle = course.Title,
-                    CourseSubTitle = course.SubTitle,
-                    TutorIntro = member.TutorIntro,
-                    TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
-                    FiftyMinUnitPrice = course.FiftyMinUnitPrice,
-                    CourseVideo = course.VideoUrl,
-                    CourseVideoThumbnail = course.ThumbnailUrl,
-                    SubjectName = subject.SubjectName
-                });
-
-            //篩選
+            //課程主資訊查詢&套用篩選
+            IQueryable<CourseInfoViewModel> courseMainInfoQuery = GetCourseMainInfoQuery();
             courseMainInfoQuery = ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedBudget);
             
 
@@ -97,7 +71,7 @@ namespace Web.Services
         }
 
         //處理篩選
-        private static IQueryable<CourseInfoViewModel> ApplyCourseMainInfoQueryFilters(
+        private IQueryable<CourseInfoViewModel> ApplyCourseMainInfoQueryFilters(
             IQueryable<CourseInfoViewModel> courseMainInfoQuery, 
             string selectedSubject, 
             string selectedNation, 
@@ -137,6 +111,37 @@ namespace Web.Services
                 }
             }
             return courseMainInfoQuery;
+        }
+
+        //主查詢
+        private IQueryable<CourseInfoViewModel> GetCourseMainInfoQuery()
+        {
+            return (
+                from course in _repository.GetAll<Course>().AsNoTracking()
+                join member in _repository.GetAll<Member>().AsNoTracking()
+                on course.TutorId equals member.MemberId
+                join subject in _repository.GetAll<CourseSubject>().AsNoTracking()
+                on course.SubjectId equals subject.SubjectId
+                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                on member.NationId equals nation.NationId
+
+                select new CourseInfoViewModel
+                {
+                    MemberId = member.MemberId,
+                    CourseId = course.CourseId,
+                    TutorHeadShotImage = member.HeadShotImage,
+                    NationName = nation.NationName,
+                    TutorFlagImage = nation.FlagImage,
+                    IsVerifiedTutor = member.IsVerifiedTutor,
+                    CourseTitle = course.Title,
+                    CourseSubTitle = course.SubTitle,
+                    TutorIntro = member.TutorIntro,
+                    TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
+                    FiftyMinUnitPrice = course.FiftyMinUnitPrice,
+                    CourseVideo = course.VideoUrl,
+                    CourseVideoThumbnail = course.ThumbnailUrl,
+                    SubjectName = subject.SubjectName
+                });
         }
 
 
@@ -211,28 +216,10 @@ namespace Web.Services
         }
 
 
-        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null)
+        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null, string budget=null)
         {
-            var courseQuery = (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join member in _repository.GetAll<Member>().AsNoTracking()
-                on course.TutorId equals member.MemberId
-                join subjectE in _repository.GetAll<CourseSubject>().AsNoTracking()
-                on course.SubjectId equals subjectE.SubjectId
-                join nationE in _repository.GetAll<Nation>().AsNoTracking()
-                on member.NationId equals nationE.NationId
-                select new { course, subjectE.SubjectName, nationE.NationName });
-
-            if (!string.IsNullOrEmpty(subject))
-            {
-                courseQuery = courseQuery.Where(c => c.SubjectName == subject);
-            }
-
-            if (!string.IsNullOrEmpty(nation))
-            {
-                courseQuery = courseQuery.Where(c => c.NationName == nation);
-            }
-
+            IQueryable<CourseInfoViewModel> courseQuery = GetCourseMainInfoQuery();
+            courseQuery = ApplyCourseMainInfoQueryFilters(courseQuery, subject, nation, budget);
 
             return await courseQuery.CountAsync();
         }

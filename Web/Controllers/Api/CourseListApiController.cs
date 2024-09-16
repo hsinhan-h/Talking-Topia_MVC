@@ -26,9 +26,9 @@
         }
 
         [HttpGet("GetTotalCourseQty")]
-        public async Task<IActionResult> GetTotalCourseQty([FromQuery] string subject = null, [FromQuery] string nation = null)
+        public async Task<IActionResult> GetTotalCourseQty([FromQuery] string subject = null, [FromQuery] string nation = null, [FromQuery] string budget = null)
         {
-            var courseQty = await _courseService.GetTotalCourseQtyAsync(subject, nation);
+            var courseQty = await _courseService.GetTotalCourseQtyAsync(subject, nation, budget);
             return Ok(courseQty);
         }
 
