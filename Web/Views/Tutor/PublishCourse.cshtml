@@ -39,7 +39,7 @@
                                         <td>更新日期</td>
                                         <td>課程名稱</td>
                                         <td>課程內容</td>
-                                       @*  <td>體驗價</td> *@
+                                        @*  <td>體驗價</td> *@
                                         <td>25分鐘</td>
                                         <td>50分鐘</td>
                                         <td>編輯</td>
@@ -52,13 +52,13 @@
                                             <td>@item.UpdateDatetime</td>
                                             <td>@item.Title</td>
                                             <td>@item.SubTitle</td>
-                                            @* <td>@item.TrialPriceNTD.ToString("#,###")</td> *@
+                                            <td>@item.TrialPriceNTD.ToString("#,###")</td>
                                             <td>@item.TwentyFiveMinPriceNTD.ToString("#,###")</td>
                                             <td>@item.FiftyMinPriceNTD.ToString("#,###")</td>
                                             <td>
                                                 <button class="btn lh-backstage-submit-btn"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#lh-backstage-tutor-data-edit">
+                                                        data-bs-target="#lh-backstage-tutor-data-edit" v-on:click="fetchBookingDetails(@item.CourseId)">
                                                     編輯
                                                 </button>
                                             </td>
@@ -111,7 +111,7 @@
             <div class="modal-content container">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        課程明細
+                        課程明細 
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -119,142 +119,136 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @{
-                        if (Model.BookingList.Count != 0)
-                        {
-                            var firstItem = Model.BookingList.FirstOrDefault();
-                            <section class="lh-backstage-lh-backstage-real-data">
-                                <div class="row mb-2">
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput1"
-                                                   placeholder=""
-                                                   value="@firstItem.Category" />
-                                            <label for="floatingInput1">課程分類(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput2"
-                                                   placeholder=""
-                                                   value="@firstItem.CourseSubject" />
-                                            <label for="floatingInput2">課程科目(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-floating">
-                                            <input type="file"
-                                                   class="form-control"
-                                                   id="floatingInput3"
-                                                   aria-describedby="inputGroupFileAddon04"
-                                                   aria-label="Upload"
-                                                   value="@firstItem.Thumbnail" />
-                                            <label for="floatingInput3">請上傳一張自介照片(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-floating">
-                                            <input type="file"
-                                                   class="form-control"
-                                                   id="floatingInput4"
-                                                   aria-describedby="inputGroupFileAddon04"
-                                                   aria-label="Upload"
-                                                   value="@firstItem.VideoUrl" />
-                                            <label for="floatingInput4">請上傳一支自介影片(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-floating mb-3">
-                                            <input type="file"
-                                                   class="form-control"
-                                                   id="floatingInput5"
-                                                   aria-describedby="inputGroupFileAddon04"
-                                                   aria-label="Upload"
-                                                   multiple />
-                                            <label for="floatingInput5">請上傳多張課程圖片(必填)</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput5"
-                                                   placeholder=""
-                                                   value="@firstItem.Title" />
-                                            <label for="floatingInput5">課程名稱(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput6"
-                                                   placeholder=""
-                                                   value="@firstItem.SubTitle" />
-                                            <label for="floatingInput6">課程簡述(必填)</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <div id="editor1" class="col-12">
-                                                <p style="color: #999">@firstItem.TutorIntro</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <div id="editor2" class="col-12">
-                                                <p style="color: #999">@firstItem.Description</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput7"
-                                                   placeholder=""
-                                                   value="@firstItem.TrialPriceNTD.ToString("#,###")" />
-                                            <label for="floatingInput7">金額(台幣/體驗價/堂)(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput8"
-                                                   placeholder=""
-                                                   value="@firstItem.TwentyFiveMinPriceNTD.ToString("#,###")" />
-                                            <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput9"
-                                                   placeholder=""
-                                                   value="@firstItem.FiftyMinPriceNTD.ToString("#,###")" />
-                                            <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        }
-                    }
 
+                    <section class="lh-backstage-lh-backstage-real-data">
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput1"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.category ]]" />
+                                    <label for="floatingInput1">課程分類(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput2"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.courseSubject ]]" />
+                                    <label for="floatingInput2">課程科目(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput3"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           value="" />
+                                    <label for="floatingInput3">請上傳一張自介照片(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput4"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           value="" />
+                                    <label for="floatingInput4">請上傳一支自介影片(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           multiple />
+                                    <label for="floatingInput5">請上傳多張課程圖片(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.title ]]" />
+                                    <label for="floatingInput5">課程名稱(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput6"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.subTitle ]]" />
+                                    <label for="floatingInput6">課程簡述(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <div id="editor1" class="col-12">
+                                        <p style="color: #999"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <div id="editor2" class="col-12">
+                                        <p style="color: #999"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <!--<div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput7"
+                                           placeholder=""
+                                           value="" />
+                                    <label for="floatingInput7">金額(台幣/體驗價/堂)(必填)</label>
+                                </div>
+                            </div>-->
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput8"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.twentyFiveMinPriceNTD ]]" />
+                                    <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput9"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.fiftyMinPriceNTD ]]" />
+                                    <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
                 <div class="modal-footer">
                     <button type="button"
@@ -285,148 +279,141 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @{
-                        if (Model.BookingList.Count != 0)
-                        {
-                            var firstItem = Model.BookingList.FirstOrDefault();
-                            <section class="lh-backstage-lh-backstage-real-data">
-                                <div class="row mb-2">
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput1"
-                                                   placeholder=""
-                                                   value="@firstItem.Category" />
-                                            <label for="floatingInput1">課程分類(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput2"
-                                                   placeholder=""
-                                                   value="@firstItem.CourseSubject" />
-                                            <label for="floatingInput2">課程科目(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-floating">
-                                            <input type="file"
-                                                   class="form-control"
-                                                   id="floatingInput3"
-                                                   aria-describedby="inputGroupFileAddon04"
-                                                   aria-label="Upload"
-                                                   value="@firstItem.Thumbnail" />
-                                            <label for="floatingInput3">請上傳一張自介照片(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-2">
-                                        <div class="form-floating">
-                                            <input type="file"
-                                                   class="form-control"
-                                                   id="floatingInput4"
-                                                   aria-describedby="inputGroupFileAddon04"
-                                                   aria-label="Upload"
-                                                   value="@firstItem.VideoUrl" />
-                                            <label for="floatingInput4">請上傳一支自介影片(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-floating mb-3">
-                                            <input type="file"
-                                                   class="form-control"
-                                                   id="floatingInput5"
-                                                   aria-describedby="inputGroupFileAddon04"
-                                                   aria-label="Upload"
-                                                   multiple />
-                                            <label for="floatingInput5">請上傳多張課程圖片(必填)</label>
-                                        </div>
+                    <section class="lh-backstage-lh-backstage-real-data">
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput1"
+                                           placeholder=""
+                                           value="" />
+                                    <label for="floatingInput1">課程分類(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput2"
+                                           placeholder=""
+                                           value="" />
+                                    <label for="floatingInput2">課程科目(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput3"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           value="" />
+                                    <label for="floatingInput3">請上傳一張自介照片(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput4"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           value="" />
+                                    <label for="floatingInput4">請上傳一支自介影片(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           multiple />
+                                    <label for="floatingInput5">請上傳多張課程圖片(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           placeholder=""
+                                           value="" />
+                                    <label for="floatingInput5">課程名稱(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput6"
+                                           placeholder=""
+                                           value="" />
+                                    <label for="floatingInput6">課程簡述(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <div id="editor3" class="col-12">
+                                        <p style="color: #999"></p>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput5"
-                                                   placeholder=""
-                                                   value="@firstItem.Title" />
-                                            <label for="floatingInput5">課程名稱(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput6"
-                                                   placeholder=""
-                                                   value="@firstItem.SubTitle" />
-                                            <label for="floatingInput6">課程簡述(必填)</label>
-                                        </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <div id="editor4" class="col-12">
+                                        <p style="color: #999"></p>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <div id="editor3" class="col-12">
-                                                <p style="color: #999">@firstItem.TutorIntro</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <!-- <div class="col-12 col-md-4">
+                                 <div class="form-floating mb-3">
+                                     <input type="text"
+                                            class="form-control"
+                                            id="floatingInput7"
+                                            placeholder=""
+                                            value="" />
+                                     <label for="floatingInput7">金額(台幣/體驗價/堂)(必填)</label>
+                                 </div>
+                             </div> -->
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput8"
+                                           placeholder=""
+                                           value="" />
+                                    <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <div id="editor4" class="col-12">
-                                                <p style="color: #999">@firstItem.Description</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput9"
+                                           placeholder=""
+                                           value="" />
+                                    <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput7"
-                                                   placeholder=""
-                                                   value="@firstItem.TrialPriceNTD.ToString("#,###")" />
-                                            <label for="floatingInput7">金額(台幣/體驗價/堂)(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput8"
-                                                   placeholder=""
-                                                   value="@firstItem.TwentyFiveMinPriceNTD.ToString("#,###")" />
-                                            <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput9"
-                                                   placeholder=""
-                                                   value="@firstItem.FiftyMinPriceNTD.ToString("#,###")" />
-                                            <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        }
-                    }
-
+                            </div>
+                        </div>
+                    </section>
                 </div>
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-secondary lh-backstage-submit-btn"
                             data-bs-dismiss="modal">
-                        儲存
+                        新增
                     </button>
                 </div>
             </div>
@@ -440,4 +427,38 @@
 @section endJS {
     <script src="~/lib/Quill/JS/quill.js"></script>
     <script src="~/js/editor.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            delimiters: ['[[', ']]'], // 改成 [[ ]] 來替代 {{ }}
+            data() {
+                return {
+                    bookingDetails: {}
+                };
+            },
+            methods: {
+                fetchBookingDetails(CourseId) {
+                    axios.get(`/api/PublishCourseApi/${CourseId}`)
+                        .then((response) => {
+                            this.bookingDetails = response.data.bookingList[0]; // 正確設置 this.bookingDetails
+                            // console.log(response);
+                            // console.log(response.data.bookingList);
+                            // console.log(response.data.bookingList[0].courseId);
+
+                            // console.log(this.bookingDetails);
+                            // console.log(this.bookingDetails[0].courseId);
+                            console.log(this.bookingDetails)
+                        })
+                        .catch((error) => {
+                            console.error("Error fetching booking details:", error);
+                        });
+                }
+            }
+        }).mount('#app'); // mount 到 id 為 #app 的元素
+    </script>
+
 }

@@ -2,6 +2,7 @@
 using Web.Entities;
 using Web.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using ApplicationCore.Entities;
 
 
 
@@ -58,13 +59,13 @@ namespace Web.Controllers
             return View(qVM);
         }
 
-        
+        [HttpGet]
         public async Task<IActionResult> PublishCourse(int MemberId)
         {
             MemberId = 3;
             var model = await _bookingService.GetPublishCourseList(MemberId);
-            ViewData["HistoryList"]= await _bookingService.GetPublishCourseHistoryList(MemberId);
-            
+            ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(MemberId);
+
             return View(model);
         }
         public IActionResult RecommendedTutorAI()
@@ -83,6 +84,13 @@ namespace Web.Controllers
             return View();
         }
 
-       
+        public async Task<IActionResult> Test()
+        {
+            int MemberId = 3;
+            var model = await _bookingService.GetPublishCourseList(MemberId);
+            ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(MemberId);
+
+            return View(model);
+        }
     }
 }

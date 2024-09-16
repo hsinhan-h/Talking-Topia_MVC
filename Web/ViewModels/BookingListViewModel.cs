@@ -6,6 +6,13 @@ namespace Web.ViewModels
     public class BookingListViewModel
     {
         public List<BookingViewModel> BookingList { get; set; }
+        public BookingViewModel BookingVM { get; set; }
+    }
+    public class CouresImagesVM
+    {
+        public int CourseImageId { get; set; }
+        public int CourseId {  get; set; }
+        public string ImageUrl {  get; set; }
     }
     public class BookingViewModel
     {
@@ -36,7 +43,9 @@ namespace Web.ViewModels
         /// <summary>
         /// 課程圖片
         /// </summary>
-        public string CourseImageId { get; set; }
+        //public string CourseImageId { get; set; }
+        public List<CouresImagesVM> CouresImagesList {  get; set; }
+
         /// <summary>
         /// 上架課程ID
         /// </summary>
