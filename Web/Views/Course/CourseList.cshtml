@@ -45,6 +45,9 @@
                         {{ nation }}
                     </button>
                 </li>
+                <li v-if="selectedNation">
+                    <button class="dropdown-item cancel-filter-btn" type="button" v-on:click="clearNationFilter"><i class="fa-solid fa-x"></i>  <strong>取消篩選</strong></button>
+                </li>
             </ul>
         </div>
         <div class="btn-group course-time-filter me-1 mx-sm-2 mt-4 mb-3">
