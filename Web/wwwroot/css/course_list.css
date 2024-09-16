@@ -18,8 +18,12 @@
     font-size: 15px;
 }
 
-@media screen and (max-width: 767px) {
+.dropdown-selected {
+    background-color: var(--theme-color);
+    color: #fff;
+}
 
+@media screen and (max-width: 767px) {
     .lh-tutors-filter .dropdown-toggle {
         font-size: 14px;
     }
