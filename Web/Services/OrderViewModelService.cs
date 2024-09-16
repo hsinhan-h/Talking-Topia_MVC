@@ -17,7 +17,7 @@ namespace Web.Services
         private readonly IRepository<Member> _memberRepository;
         private readonly IRepository<Booking> _bookingRepository;
 
-        public OrderViewModelService(IOrderService orderService, IRepository repository)
+        public OrderViewModelService(IOrderService orderService, IRepository repository, IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Course> courseRepository, IRepository<Member> memberRepository, IRepository<Booking> bookingRepository)
         {
             _orderService = orderService;
             _orderRepository = orderRepository;
@@ -27,7 +27,7 @@ namespace Web.Services
             _bookingRepository = bookingRepository;
         }
 
-        public async Task<ShoppingCartInfoListViewModel> GetData(int memberId)
+        public async Task<ShoppingCartInfoListViewModel> GetData(int orderId)
         {
             var orders = await _orderRepository.GetByIdAsync(orderId);
             var orderDetails = await _orderDetailRepository.ListAsync(od => od.OrderId == orders.OrderId);
