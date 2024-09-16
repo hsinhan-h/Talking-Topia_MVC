@@ -93,27 +93,36 @@ namespace Web.Controllers
         public async Task<IActionResult> Login([FromForm] AccountViewModel model)
         {
             var request = model.LoginViewModel;  // 提取 LoginViewModel
-            Console.WriteLine($"帳號:{request.Email}");
-            Console.WriteLine($"密碼:{request.Password}");
+                                                 //Console.WriteLine($"帳號:{request.Email}");
+                                                 //Console.WriteLine($"密碼:{request.Password}");
 
+            // 首先檢查 ModelState 是否有效
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                Console.WriteLine("ModelState is not valid");
+                ModelState.AddModelError(string.Empty, "登入失敗，請檢查您的輸入資料");
+                return View("AccessDenied", model); // 返回登入頁面，顯示錯誤
             }
 
-            //if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
-            //{
-            //    ModelState.AddModelError(string.Empty, "帳號或密碼不可為空");
-            //    return View(request);
-            //}
+            // 檢查 Email 和 Password 是否為空
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
+            {
+                ModelState.AddModelError(string.Empty, "帳號或密碼不可為空");
+                Console.WriteLine("空空空空空空空空空空");
+                return View("AccessDenied", model); // 返回登入頁面並顯示錯誤訊息
+            }
 
-            //驗證帳號密碼
-            //var user = _context.Users.FirstOrDefault(x => x.Email == request.Email && x.Password == request.Password.ToSHA256());
-            //if (user == null)
-            //{
-            //    ModelState.AddModelError(string.Empty, "帳號或密碼錯誤");
-            //    return View(request);
-            //}
+            // 使用 AccountService 驗證用戶
+            var user = await _accountService.ValidateUserAsync(request.Email, request.Password);
+
+            // 驗證用戶是否存在
+            if (user == null)
+            {
+                // 如果用戶不存在或密碼不正確，添加錯誤訊息到 ModelState
+                ModelState.AddModelError(string.Empty, "無效的帳號或密碼");
+                Console.WriteLine("無效的帳號或密碼");
+                return View("AccessDenied", model); // 返回登入頁面，顯示錯誤訊息
+            }
 
             //取得使用者角色
             //var userRoles = _context.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
@@ -122,13 +131,11 @@ namespace Web.Controllers
             // 登入成功，設定 Cookie.
             var claims = new List<Claim>
             {
-            // 解析Cookie後 會存入 HttpContext.User.Identity.Name 屬性內
-            new Claim(ClaimTypes.Name, request.Email),
-
-            //以下角色為角色授權的範例使用，可以自行定義
-            //new Claim(ClaimTypes.Role, "Admin"),
-            //new Claim(ClaimTypes.Role, "Tutor")
-
+                // 儲存 Email 到 HttpContext.User.Identity.Name
+                new Claim(ClaimTypes.Name, request.Email),
+            
+                // 將會員的 MemberId 儲存到 NameIdentifier，方便後續提取
+                new Claim(ClaimTypes.NameIdentifier, user.MemberId.ToString()) // 修正 'user.Id' 為 'user.MemberId'
             };
 
             //加入角色

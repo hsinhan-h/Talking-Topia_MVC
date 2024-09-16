@@ -24,9 +24,10 @@ namespace Web.Controllers
         /// ShoppingCart頁面
         /// </summary>
         public async Task<IActionResult> Index([FromQuery] int memberId)
+        //public async Task<IActionResult> Index()
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
+            var user = HttpContext.User.Identity.Name;
+            //var memberId = await _memberService.GetMemberId(user);
             if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(AccountController.Account), "Home"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
@@ -39,11 +40,11 @@ namespace Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
+        //public async Task<IActionResult> AddToCart([FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
+            var user = HttpContext.User.Identity.Name;
+            //var memberId = await _memberService.GetMemberId(user);
             if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(AccountController.Account), "Home"); }
             if (!_courseService.IsCourse(courseId))
@@ -54,13 +55,13 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
 
-        public IActionResult Delete([FromForm] int memberId, [FromForm] int courseId)
+        public async Task<IActionResult> Delete([FromForm] int memberId, [FromForm] int courseId)
+        //public async Task<IActionResult> Delete([FromForm] int courseId)
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
+            var user = HttpContext.User.Identity.Name;
+            //var memberId = await _memberService.GetMemberId(user);
             _shoppingCartService.DeleteCartItem(memberId, courseId);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
-
     }
 }

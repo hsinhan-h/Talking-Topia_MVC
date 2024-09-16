@@ -38,6 +38,7 @@ namespace Web
             builder.Services.AddScoped<AccountService>();
             builder.Services.AddScoped<NationService>();
             builder.Services.AddScoped<CourseCategoryService>();
+            builder.Services.AddScoped<CloudinaryService>();
 
 
 
@@ -67,7 +68,8 @@ namespace Web
                             });
 
             builder.Services.AddAuthorization();
-
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
             var app = builder.Build();
 
 

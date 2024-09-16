@@ -1,4 +1,6 @@
-﻿namespace Web.Services
+﻿using System.Linq;
+
+namespace Web.Services
 {
     public class CourseService
     {
@@ -9,45 +11,12 @@
             _repository = repository;
         }
 
-        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null)
+        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null, string selectedBudget = null)
         {
-            IQueryable<CourseInfoViewModel> courseMainInfoQuery = (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join member in _repository.GetAll<Member>().AsNoTracking()
-                on course.TutorId equals member.MemberId
-                join subject in _repository.GetAll<CourseSubject>().AsNoTracking()
-                on course.SubjectId equals subject.SubjectId
-                join nation in _repository.GetAll<Nation>().AsNoTracking()
-                on member.NationId equals nation.NationId
-                
-                select new CourseInfoViewModel
-                {
-                    MemberId = member.MemberId,
-                    CourseId = course.CourseId,
-                    TutorHeadShotImage = member.HeadShotImage,
-                    NationName = nation.NationName,
-                    TutorFlagImage = nation.FlagImage,
-                    IsVerifiedTutor = member.IsVerifiedTutor,
-                    CourseTitle = course.Title,
-                    CourseSubTitle = course.SubTitle,
-                    TutorIntro = member.TutorIntro,
-                    TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
-                    FiftyMinUnitPrice = course.FiftyMinUnitPrice,
-                    CourseVideo = course.VideoUrl,
-                    CourseVideoThumbnail = course.ThumbnailUrl,
-                    SubjectName = subject.SubjectName
-                });
-
-            //國籍篩選
-            if (!string.IsNullOrEmpty(selectedSubject))
-            {
-                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.SubjectName == selectedSubject);
-            }
-
-            if (!string.IsNullOrEmpty(selectedNation))
-            {
-                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
-            }
+            //課程主資訊查詢&套用篩選
+            IQueryable<CourseInfoViewModel> courseMainInfoQuery = GetCourseMainInfoQuery();
+            courseMainInfoQuery = ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedBudget);
+            
 
             List<CourseInfoViewModel> courseMainInfo = await courseMainInfoQuery
                 .Skip((page - 1) * pageSize)
@@ -100,6 +69,81 @@
                 CourseInfoList = completeCoursesInfo
             };
         }
+
+        //處理篩選
+        private IQueryable<CourseInfoViewModel> ApplyCourseMainInfoQueryFilters(
+            IQueryable<CourseInfoViewModel> courseMainInfoQuery, 
+            string selectedSubject, 
+            string selectedNation, 
+            string selectedBudget)
+        {
+            if (!string.IsNullOrEmpty(selectedSubject))
+            {
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.SubjectName == selectedSubject);
+            }
+
+            if (!string.IsNullOrEmpty(selectedNation))
+            {
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
+            }
+
+            if (!string.IsNullOrEmpty(selectedBudget))
+            {
+                switch (selectedBudget)
+                {
+                    case "349以下":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 349);
+                        break;
+                    case "350-499":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 499 && c.TwentyFiveMinUnitPrice >= 350);
+                        break;
+                    case "500-799":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 799 && c.TwentyFiveMinUnitPrice >= 500);
+                        break;
+                    case "800-999":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 999 && c.TwentyFiveMinUnitPrice >= 800);
+                        break;
+                    case "1000以上":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice >= 1000);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return courseMainInfoQuery;
+        }
+
+        //主查詢
+        private IQueryable<CourseInfoViewModel> GetCourseMainInfoQuery()
+        {
+            return (
+                from course in _repository.GetAll<Course>().AsNoTracking()
+                join member in _repository.GetAll<Member>().AsNoTracking()
+                on course.TutorId equals member.MemberId
+                join subject in _repository.GetAll<CourseSubject>().AsNoTracking()
+                on course.SubjectId equals subject.SubjectId
+                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                on member.NationId equals nation.NationId
+
+                select new CourseInfoViewModel
+                {
+                    MemberId = member.MemberId,
+                    CourseId = course.CourseId,
+                    TutorHeadShotImage = member.HeadShotImage,
+                    NationName = nation.NationName,
+                    TutorFlagImage = nation.FlagImage,
+                    IsVerifiedTutor = member.IsVerifiedTutor,
+                    CourseTitle = course.Title,
+                    CourseSubTitle = course.SubTitle,
+                    TutorIntro = member.TutorIntro,
+                    TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
+                    FiftyMinUnitPrice = course.FiftyMinUnitPrice,
+                    CourseVideo = course.VideoUrl,
+                    CourseVideoThumbnail = course.ThumbnailUrl,
+                    SubjectName = subject.SubjectName
+                });
+        }
+
 
         // 課程圖片查詢 (by courseIds)
         private async Task<List<CourseInfoViewModel>> GetCourseImagesAsync(List<int> courseIds)
@@ -172,28 +216,10 @@
         }
 
 
-        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null)
+        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null, string budget=null)
         {
-            var courseQuery = (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join member in _repository.GetAll<Member>().AsNoTracking()
-                on course.TutorId equals member.MemberId
-                join subjectE in _repository.GetAll<CourseSubject>().AsNoTracking()
-                on course.SubjectId equals subjectE.SubjectId
-                join nationE in _repository.GetAll<Nation>().AsNoTracking()
-                on member.NationId equals nationE.NationId
-                select new { course, subjectE.SubjectName, nationE.NationName });
-
-            if (!string.IsNullOrEmpty(subject))
-            {
-                courseQuery = courseQuery.Where(c => c.SubjectName == subject);
-            }
-
-            if (!string.IsNullOrEmpty(nation))
-            {
-                courseQuery = courseQuery.Where(c => c.NationName == nation);
-            }
-
+            IQueryable<CourseInfoViewModel> courseQuery = GetCourseMainInfoQuery();
+            courseQuery = ApplyCourseMainInfoQueryFilters(courseQuery, subject, nation, budget);
 
             return await courseQuery.CountAsync();
         }

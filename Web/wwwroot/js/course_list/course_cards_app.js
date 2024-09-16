@@ -12,6 +12,7 @@ const courseCardsApp = Vue.createApp({
             loading: true,
             selectedSubject: null,
             selectedNation: null,
+            selectedBudget: null,
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
             bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array          
             courseCategories: [], //動態科目篩選選單資料
@@ -21,6 +22,9 @@ const courseCardsApp = Vue.createApp({
     mounted() {
         const params = new URLSearchParams(window.location.search);
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
+        this.selectedSubject = params.get('subject') || null;
+        this.selectedNation = params.get('nation') || null;       
+        this.selectedBudget = params.get('budget') || null;       
         this.fetchCourses();
         this.fetchCategories();
         this.fetchNations();
@@ -45,6 +49,9 @@ const courseCardsApp = Vue.createApp({
                 }
                 if (this.selectedNation) {
                     url += `&nation=${this.selectedNation}`;
+                }
+                if (this.selectedBudget) {
+                    url += `&budget=${this.selectedBudget}`;
                 }
 
                 const response = await fetch(url);
@@ -149,6 +156,9 @@ const courseCardsApp = Vue.createApp({
                 if (this.selectedNation) {
                     url += `?nation=${this.selectedNation}`;
                 }
+                if (this.selectedBudget) {
+                    url += `?budget=${this.selectedBudget}`;
+                }
                 const response = await fetch(url);
 
                 if (response.ok) {
@@ -187,6 +197,12 @@ const courseCardsApp = Vue.createApp({
                 queryParams.delete('nation');
             }
 
+            if (this.selectedBudget) {
+                queryParams.set('budget', this.selectedBudget);
+            } else {
+                queryParams.delete('budget');
+            }
+
             history.pushState(null, '', '?' + queryParams.toString());
         },
 
@@ -194,21 +210,26 @@ const courseCardsApp = Vue.createApp({
         //1. 課程種類
         filterBySubject(subject) {
             this.selectedSubject = subject;
-            this.page = 1;
-            this.fetchCourses();
-            this.fetchTotalCourseQty();
-            this.updateQueryString();
+            this.applyFilter();
         },
         //2. 國籍
         filterByNation(nation) {
             this.selectedNation = nation;
+            this.applyFilter();
+        },
+        //3. 時段
+        //4. 預算區間
+        filterByBudget(budget) {
+            this.selectedBudget = budget;
+            this.applyFilter();
+        },
+
+        applyFilter() {
             this.page = 1;
             this.fetchCourses();
             this.fetchTotalCourseQty();
             this.updateQueryString();
         }
-        
-
     }
 });
 
