@@ -18,7 +18,7 @@
 <section class="tutors mb-3" id="course-cards-app">
     <div class="lh-tutors-filter d-flex">
         <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-3">
-            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedSubject}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedSubject}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
                 {{ selectedSubject ? selectedSubject : '學習需求' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
@@ -36,7 +36,7 @@
             </ul> 
         </div>
         <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
-            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedNation}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedNation}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
                 {{ selectedNation ? selectedNation : '教師國籍' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
@@ -289,15 +289,15 @@
 
         </div>
         <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
-            <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                預算區間 <i class="bi bi-filter"></i>
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedBudget }]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
+                {{ selectedBudget ? 'NT$ ' + selectedBudget : '預算區間' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">NT$349 以下</button></li>
-                <li><button class="dropdown-item" type="button">NT$350 - NT$499</button></li>
-                <li><button class="dropdown-item" type="button">NT$500 - NT$799</button></li>
-                <li><button class="dropdown-item" type="button">NT$800 - NT$999</button></li>
-                <li><button class="dropdown-item" type="button">NT$1000以上</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('349以下')">NT$349以下</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('350-499')">NT$350 - NT$499</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('500-799')">NT$500 - NT$799</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('800-999')">NT$800 - NT$999</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('1000以上')">NT$1000以上</button></li>
             </ul>
         </div>
     </div>

@@ -28,4 +28,6 @@ public partial class CourseCategory
     public virtual ICollection<CourseSubject> CourseSubjects { get; set; } = new List<CourseSubject>();
 
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+
+    public virtual ICollection<ProfessionalLicense> ProfessionalLicenses { get; set; } = new List<ProfessionalLicense>();
 }

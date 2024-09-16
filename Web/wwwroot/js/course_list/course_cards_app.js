@@ -12,7 +12,7 @@ const courseCardsApp = Vue.createApp({
             loading: true,
             selectedSubject: null,
             selectedNation: null,
-            selectedBudgetRange: null,
+            selectedBudget: null,
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
             bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array          
             courseCategories: [], //動態科目篩選選單資料
@@ -24,6 +24,7 @@ const courseCardsApp = Vue.createApp({
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
         this.selectedSubject = params.get('subject') || null;
         this.selectedNation = params.get('nation') || null;       
+        this.selectedBudget = params.get('budget') || null;       
         this.fetchCourses();
         this.fetchCategories();
         this.fetchNations();
@@ -48,6 +49,9 @@ const courseCardsApp = Vue.createApp({
                 }
                 if (this.selectedNation) {
                     url += `&nation=${this.selectedNation}`;
+                }
+                if (this.selectedBudget) {
+                    url += `&budget=${this.selectedBudget}`;
                 }
 
                 const response = await fetch(url);
@@ -152,6 +156,9 @@ const courseCardsApp = Vue.createApp({
                 if (this.selectedNation) {
                     url += `?nation=${this.selectedNation}`;
                 }
+                if (this.selectedBudget) {
+                    url += `?budget=${this.selectedBudget}`;
+                }
                 const response = await fetch(url);
 
                 if (response.ok) {
@@ -190,6 +197,12 @@ const courseCardsApp = Vue.createApp({
                 queryParams.delete('nation');
             }
 
+            if (this.selectedBudget) {
+                queryParams.set('budget', this.selectedBudget);
+            } else {
+                queryParams.delete('budget');
+            }
+
             history.pushState(null, '', '?' + queryParams.toString());
         },
 
@@ -206,8 +219,8 @@ const courseCardsApp = Vue.createApp({
         },
         //3. 時段
         //4. 預算區間
-        filterByBudget(budgetRange) {
-            this.selectedBudgetRange = budgetRange;
+        filterByBudget(budget) {
+            this.selectedBudget = budget;
             this.applyFilter();
         },
 
