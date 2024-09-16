@@ -1,10 +1,12 @@
-﻿using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Enums;
+using ApplicationCore.Interfaces;
 using Infrastructure.ECpay;
 using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
 using Infrastructure.Service;
 using System.Collections.Generic;
 using System.Security.Policy;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace Web.Controllers.Api
 {
@@ -13,19 +15,31 @@ namespace Web.Controllers.Api
     public class PaymentController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ECpayService _ecpayService;
+        private readonly ECpayService _eCpayService;
+        private readonly IOrderService _orderService;
+        //private readonly IPaymentTransactionConfiguration _paymentTransactionConfiguration;
+        private int _orderId;
 
-        public PaymentController(IConfiguration configuration, ECpayService ecpayService)
+        public PaymentController(IConfiguration configuration, ECpayService eCpayService, IOrderService orderService)
         {
             _configuration = configuration;
-            _ecpayService = ecpayService;
+            _eCpayService = eCpayService;
+            _orderService = orderService;
+            //_paymentTransactionConfiguration = paymentTransactionConfiguration;
         }
+
+
 
         // POST api/payment
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult New()
+        public IActionResult New([FromForm] string orderId)
         {
+            //if (string.IsNullOrEmpty(orderId) || !int.TryParse(orderId, out _orderId))
+            //{
+            //    return BadRequest("OrderId 不存在或無效");
+            //}
+
             return RedirectToAction("checkout");
         }
 
@@ -45,47 +59,22 @@ namespace Web.Controllers.Api
 
             var transaction = new
             {
-                // todo: 調整參數及串接專案資料庫
                 No = "Ec" + DateTime.Now.ToString("yyyyMMddhhmmss"),
                 Description = "測試購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
-                Items = await _ecpayService.GetItemsToECStageDtoAsync(1)
-
-                //new List<Item>{
-                //    new Item{
-                //        CourseName = "手機",
-                //        UnitPrice = 14000,
-                //        Quantity = 2
-                //    },
-                //    new Item{
-                //        CourseName = "隨身碟",
-                //        UnitPrice = 900,
-                //        Quantity = 10
-                //    }
-                //}
-
+                Items = await _eCpayService.GetItemsToECStageDtoAsync(1)
             };
+
             IPayment payment = new PaymentConfiguration()
-                .Send.ToApi(
-                    url: service.Url)
-                .Send.ToMerchant(
-                    service.MerchantId)
-                .Send.UsingHash(
-                    key: service.HashKey,
-                    iv: service.HashIV)
-                .Return.ToServer(
-                    url: service.ServerUrl)
-                .Return.ToClient(
-                    url: service.ClientUrl)
-                .Transaction.New(
-                    no: transaction.No,
-                    description: transaction.Description,
-                    date: transaction.Date)
-                .Transaction.UseMethod(
-                    method: transaction.Method)
-                .Transaction.WithItems(
-                    items: transaction.Items)
+                .Send.ToApi(url: service.Url)
+                .Send.ToMerchant(service.MerchantId)
+                .Send.UsingHash(key: service.HashKey, iv: service.HashIV)
+                .Return.ToServer(url: service.ServerUrl)
+                .Return.ToClient(url: service.ClientUrl)
+                .Transaction.New(no: transaction.No, description: transaction.Description, date: transaction.Date)
+                .Transaction.UseMethod(method: transaction.Method)
+                .Transaction.WithItems(items: transaction.Items)
                 .Generate();
 
             return View(payment);
@@ -100,7 +89,9 @@ namespace Web.Controllers.Api
             // 務必判斷檢查碼是否正確。
             if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
 
-            // 處理後續訂單狀態的更動等等...。
+            //var orderStatus = EOrderStatus.Success;
+            //var transactionNo = _paymentTransactionConfiguration.SentTransactionNo();
+            //_orderService.UpdateOrderTransactionAndStatus(_orderId, orderStatus, transactionNo);
 
             return Ok("1|OK");
         }
