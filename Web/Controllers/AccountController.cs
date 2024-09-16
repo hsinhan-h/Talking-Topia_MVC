@@ -11,8 +11,6 @@ using Infrastructure.Data;
 using Microsoft.CodeAnalysis.Elfie.Extensions;
 using System.Security.Cryptography;
 using System.Text;
-using Web.Data;
-using TalkingTopiaContext = Infrastructure.Data.TalkingTopiaContext;
 
 namespace Web.Controllers
 {

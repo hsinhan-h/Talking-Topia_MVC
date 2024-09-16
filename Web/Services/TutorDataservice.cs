@@ -52,17 +52,22 @@ namespace Web.Services
                                                    WorkEndDate = wexp.WorkEndDate,
                                                    WorkName = wexp.WorkName
                                                }).ToList(),
-                                           License = (from memb in _repository.GetAll<Member>()
-                                                      join professionalLicense in _repository.GetAll<ProfessionalLicense>()
-                                                      on memb.MemberId equals professionalLicense.MemberId
-                                                      join courseCategory in _repository.GetAll<CourseCategory>()
-                                                      on professionalLicense.CourseCategoryId equals courseCategory.CourseCategoryId
-                                                      where professionalLicense.MemberId == memberId
-                                                      select new LicenseData
-                                                      {
-                                                          ProfessionalLicenseName = professionalLicense.ProfessionalLicenseName,
-                                                          ProfessionalLicenseUrl = professionalLicense.ProfessionalLicenseUrl
-                                                      }).ToList()
+                                           //License = (from category in _repository.GetAll<CourseCategory>()
+                                           //           join subject in _repository.GetAll<CourseSubject>()
+                                           //           on category.CourseCategoryId equals subject.CourseCategoryId
+                                           //           join prefersubject in _repository.GetAll<MemberPreference>()
+                                           //           on subject.SubjectId equals prefersubject.SubjecId
+                                           //           join memb in _repository.GetAll<Member>()
+                                           //           on prefersubject.MemberId equals memb.MemberId
+                                           //           join license in _repository.GetAll<ProfessionalLicense>()
+                                           //           on memb.MemberId equals license.MemberId
+                                           //           where prefersubject.MemberId == memberId
+                                           //             && category.CategorytName == categorytName//要修改關聯
+                                           //           select new LicenseData
+                                           //           {
+                                           //               ProfessionalLicenseName = license.ProfessionalLicenseName,
+                                           //               ProfessionalLicenseUrl = license.ProfessionalLicenseUrl
+                                           //           }).ToList()
                                        }).FirstOrDefaultAsync();
                 return tutorData;
             }
@@ -183,7 +188,7 @@ namespace Web.Services
 
 
         //Creat
-        public  TutorDataViewModel CreatTutorData()
+        public async Task<TutorDataViewModel> CreatTutorData()
         {
             return (new TutorDataViewModel());
 
