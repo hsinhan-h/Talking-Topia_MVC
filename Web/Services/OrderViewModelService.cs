@@ -12,7 +12,7 @@ namespace Web.Services
         private readonly IRepository<Member> _memberRepository;
         private readonly IRepository<Booking> _bookingRepository;
 
-        public OrderViewModelService(IOrderService orderService, IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Course> courseRepository, IRepository<Member> memberRepository, IRepository<Booking> bookingRepository)
+        public OrderViewModelService(IOrderService orderService, IRepository repository, IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Course> courseRepository, IRepository<Member> memberRepository, IRepository<Booking> bookingRepository)
         {
             _orderService = orderService;
             _orderRepository = orderRepository;

@@ -18,12 +18,12 @@ public partial class WorkExperience
     /// <summary>
     /// 工作起始日
     /// </summary>
-    public DateOnly WorkStartDate { get; set; }
+    public DateTime WorkStartDate { get; set; }
 
     /// <summary>
     /// 工作結束日
     /// </summary>
-    public DateOnly WorkEndDate { get; set; }
+    public DateTime WorkEndDate { get; set; }
 
     /// <summary>
     /// 工作經驗名稱

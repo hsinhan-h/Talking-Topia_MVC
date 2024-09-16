@@ -44,12 +44,12 @@ namespace Web.ViewModels
         /// 工作起始日期
         /// </summary>
         //[Required]
-        public DateOnly WorkStartDate { get; set; }
+        public DateTime WorkStartDate { get; set; }
         ///// <summary>
         ///// 工作結束日期
         ///// </summary>
         ////[Required]
-        public DateOnly WorkEndDate { get; set; }
+        public DateTime WorkEndDate { get; set; }
         ///// <summary>
         ///// 工作名稱
         ///// </summary>

@@ -23,7 +23,7 @@ public partial class Booking
     /// <summary>
     /// 預約上課時間
     /// </summary>
-    public int BookingTime { get; set; }
+    public short BookingTime { get; set; }
 
     /// <summary>
     /// 預約學生Id

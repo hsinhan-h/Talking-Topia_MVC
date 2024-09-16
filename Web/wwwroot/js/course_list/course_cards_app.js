@@ -178,7 +178,7 @@ const courseCardsApp = Vue.createApp({
             if (page > 0 && page <= this.totalPages) {
                 this.page = page;
                 this.fetchCourses();
-                this.updateQueryString();
+                //this.updateQueryString();
                 //history.pushState(null, '', `?page=${this.page}`);
             }
         },
@@ -229,6 +229,12 @@ const courseCardsApp = Vue.createApp({
             this.fetchCourses();
             this.fetchTotalCourseQty();
             this.updateQueryString();
+        },
+
+        //取消篩選
+        clearNationFilter() {
+            this.selectedNation = null;
+            this.applyFilter();
         }
     }
 });
