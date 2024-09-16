@@ -1,9 +1,4 @@
 ﻿using ApplicationCore.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System.Runtime.InteropServices;
-using Web.Data;
-using Web.ViewModels;
 
 namespace Web.Services
 {
