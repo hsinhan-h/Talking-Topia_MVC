@@ -194,21 +194,22 @@ const courseCardsApp = Vue.createApp({
         //1. 課程種類
         filterBySubject(subject) {
             this.selectedSubject = subject;
-            this.page = 1;
-            this.fetchCourses();
-            this.fetchTotalCourseQty();
-            this.updateQueryString();
+            this.applyFilter();
         },
         //2. 國籍
         filterByNation(nation) {
             this.selectedNation = nation;
+            this.applyFilter();
+        },
+        //3. 時段
+        //4. 預算區間
+
+        applyFilter() {
             this.page = 1;
             this.fetchCourses();
             this.fetchTotalCourseQty();
             this.updateQueryString();
         }
-        
-
     }
 });
 
