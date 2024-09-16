@@ -41,39 +41,8 @@ namespace Web.Services
                 });
 
             //篩選
-            if (!string.IsNullOrEmpty(selectedSubject))
-            {
-                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.SubjectName == selectedSubject);
-            }
-
-            if (!string.IsNullOrEmpty(selectedNation))
-            {
-                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
-            }
-
-            if (!string.IsNullOrEmpty(selectedBudget))
-            {
-                switch (selectedBudget)
-                {
-                    case "349以下":
-                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 349);
-                        break;
-                    case "350-499":
-                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 499 && c.TwentyFiveMinUnitPrice >= 350);
-                        break;
-                    case "500-799":
-                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 799 && c.TwentyFiveMinUnitPrice >= 500);
-                        break;
-                    case "800-999":
-                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 999 && c.TwentyFiveMinUnitPrice >= 800);
-                        break;
-                    case "1000以上":
-                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice >= 1000);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            courseMainInfoQuery = ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedBudget);
+            
 
             List<CourseInfoViewModel> courseMainInfo = await courseMainInfoQuery
                 .Skip((page - 1) * pageSize)
@@ -126,6 +95,50 @@ namespace Web.Services
                 CourseInfoList = completeCoursesInfo
             };
         }
+
+        //處理篩選
+        private static IQueryable<CourseInfoViewModel> ApplyCourseMainInfoQueryFilters(
+            IQueryable<CourseInfoViewModel> courseMainInfoQuery, 
+            string selectedSubject, 
+            string selectedNation, 
+            string selectedBudget)
+        {
+            if (!string.IsNullOrEmpty(selectedSubject))
+            {
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.SubjectName == selectedSubject);
+            }
+
+            if (!string.IsNullOrEmpty(selectedNation))
+            {
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
+            }
+
+            if (!string.IsNullOrEmpty(selectedBudget))
+            {
+                switch (selectedBudget)
+                {
+                    case "349以下":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 349);
+                        break;
+                    case "350-499":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 499 && c.TwentyFiveMinUnitPrice >= 350);
+                        break;
+                    case "500-799":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 799 && c.TwentyFiveMinUnitPrice >= 500);
+                        break;
+                    case "800-999":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice <= 999 && c.TwentyFiveMinUnitPrice >= 800);
+                        break;
+                    case "1000以上":
+                        courseMainInfoQuery = courseMainInfoQuery.Where(c => c.TwentyFiveMinUnitPrice >= 1000);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return courseMainInfoQuery;
+        }
+
 
         // 課程圖片查詢 (by courseIds)
         private async Task<List<CourseInfoViewModel>> GetCourseImagesAsync(List<int> courseIds)
