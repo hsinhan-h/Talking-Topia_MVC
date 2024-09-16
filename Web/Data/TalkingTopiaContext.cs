@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Web.Entities;
 
 namespace Web.Data;
 
@@ -65,7 +66,7 @@ public partial class TalkingTopiaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Database=TalkingTopia;Trusted_Connection=True;");
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TalkingTopia;Trusted_Connection=True;MultipleActiveResultSets=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -142,9 +143,11 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("CDate");
             entity.Property(e => e.CouponCode)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("折扣代碼");
             entity.Property(e => e.CouponName)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsFixedLength()
                 .HasComment("優惠折扣名稱");
@@ -173,17 +176,23 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("CDate");
             entity.Property(e => e.CoursesStatus).HasComment("課程審核狀態");
-            entity.Property(e => e.Description).HasComment("課程詳細描述");
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasComment("課程詳細描述");
             entity.Property(e => e.FiftyMinUnitPrice)
                 .HasComment("50分鐘價")
                 .HasColumnType("money");
             entity.Property(e => e.IsEnabled).HasComment("是否顯示");
             entity.Property(e => e.SubTitle)
+                .IsRequired()
                 .HasMaxLength(255)
                 .HasComment("課程副標題");
             entity.Property(e => e.SubjectId).HasComment("科目Id");
-            entity.Property(e => e.ThumbnailUrl).HasComment("影片封面");
+            entity.Property(e => e.ThumbnailUrl)
+                .IsRequired()
+                .HasComment("影片封面");
             entity.Property(e => e.Title)
+                .IsRequired()
                 .HasMaxLength(255)
                 .HasComment("課程標題");
             entity.Property(e => e.TutorId).HasComment("學生Id");
@@ -194,22 +203,14 @@ public partial class TalkingTopiaContext : DbContext
                 .HasComment("修改時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
-            entity.Property(e => e.VideoUrl).HasComment("影片路徑");
+            entity.Property(e => e.VideoUrl)
+                .IsRequired()
+                .HasComment("影片路徑");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Courses_CourseCategories");
-
-            entity.HasOne(d => d.Subject).WithMany(p => p.Courses)
-                .HasForeignKey(d => d.SubjectId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Courses_CourseSubjects");
-
-            entity.HasOne(d => d.Tutor).WithMany(p => p.Courses)
-                .HasForeignKey(d => d.TutorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Courses_Members");
         });
 
         modelBuilder.Entity<CourseCategory>(entity =>
@@ -218,6 +219,7 @@ public partial class TalkingTopiaContext : DbContext
 
             entity.Property(e => e.CourseCategoryId).HasComment("課程類別Id");
             entity.Property(e => e.CategorytName)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("課程類別名稱");
             entity.Property(e => e.Cdate)
@@ -240,6 +242,7 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("CDate");
             entity.Property(e => e.Hour)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("小時時段");
             entity.Property(e => e.Udate)
@@ -260,7 +263,9 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("CDate");
             entity.Property(e => e.CourseId).HasComment("課程Id");
-            entity.Property(e => e.ImageUrl).HasComment("圖片路徑");
+            entity.Property(e => e.ImageUrl)
+                .IsRequired()
+                .HasComment("圖片路徑");
             entity.Property(e => e.Udate)
                 .HasComment("更改時間")
                 .HasColumnType("datetime")
@@ -285,6 +290,7 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnName("CDate");
             entity.Property(e => e.CourseCategoryId).HasComment("課程類別Id");
             entity.Property(e => e.SubjectName)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("課程科目名稱");
             entity.Property(e => e.Udate)
@@ -311,6 +317,7 @@ public partial class TalkingTopiaContext : DbContext
                 .HasMaxLength(50)
                 .HasComment("科系名稱");
             entity.Property(e => e.SchoolName)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("學校名稱");
             entity.Property(e => e.StudyEndYear).HasComment("在學期間迄");
@@ -328,8 +335,6 @@ public partial class TalkingTopiaContext : DbContext
             entity.HasIndex(e => e.EducationId, "IX_Members_EducationId");
 
             entity.HasIndex(e => e.NationId, "IX_Members_NationId");
-
-            entity.HasIndex(e => e.UserId, "IX_Members_UserId");
 
             entity.Property(e => e.MemberId).HasComment("會員Id");
             entity.Property(e => e.Account).HasComment("帳號");
@@ -349,9 +354,11 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnName("CDate");
             entity.Property(e => e.EducationId).HasComment("最高學歷Id");
             entity.Property(e => e.Email)
+                .IsRequired()
                 .HasMaxLength(255)
                 .HasComment("電子郵件信箱");
             entity.Property(e => e.FirstName)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("名字");
             entity.Property(e => e.Gender).HasComment("性別");
@@ -359,6 +366,7 @@ public partial class TalkingTopiaContext : DbContext
             entity.Property(e => e.IsTutor).HasComment("是否為教師");
             entity.Property(e => e.IsVerifiedTutor).HasComment("優質會員");
             entity.Property(e => e.LastName)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("姓氏");
             entity.Property(e => e.NationId).HasComment("國籍Id");
@@ -366,12 +374,15 @@ public partial class TalkingTopiaContext : DbContext
                 .HasMaxLength(255)
                 .HasComment("母語");
             entity.Property(e => e.Nickname)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("綽號");
             entity.Property(e => e.Password)
+                .IsRequired()
                 .HasMaxLength(255)
                 .HasComment("密碼");
             entity.Property(e => e.Phone)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .IsFixedLength()
@@ -460,8 +471,11 @@ public partial class TalkingTopiaContext : DbContext
             entity.HasKey(e => e.NationId).HasName("PK__Nations__211B9BBEE3B01F5C");
 
             entity.Property(e => e.NationId).HasComment("國籍Id");
-            entity.Property(e => e.FlagImage).HasComment("國籍圖片路徑");
+            entity.Property(e => e.FlagImage)
+                .IsRequired()
+                .HasComment("國籍圖片路徑");
             entity.Property(e => e.NationName)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("國籍名稱");
         });
@@ -473,14 +487,18 @@ public partial class TalkingTopiaContext : DbContext
             entity.HasIndex(e => e.MemberId, "IX_Orders_MemberId");
 
             entity.Property(e => e.OrderId).HasComment("訂單Id");
+            entity.Property(e => e.Cdate)
+                .HasComment("建立時間")
+                .HasColumnType("datetime")
+                .HasColumnName("CDate");
             entity.Property(e => e.CouponPrice)
                 .HasComment("優惠金額")
                 .HasColumnType("money");
             entity.Property(e => e.InvoiceType).HasComment("發票類型");
             entity.Property(e => e.MemberId).HasComment("會員Id");
-            entity.Property(e => e.MerchantTradeNo).HasMaxLength(50);
             entity.Property(e => e.OrderStatusId).HasComment("訂單狀態");
             entity.Property(e => e.PaymentType)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("付款方式");
             entity.Property(e => e.SentVatemail)
@@ -501,6 +519,15 @@ public partial class TalkingTopiaContext : DbContext
                 .HasComment("更新時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
+            entity.Property(e => e.Vatnumber)
+                .HasMaxLength(8)
+                .HasComment("發票號碼")
+                .HasColumnName("VATNumber");
+
+            entity.HasOne(d => d.Member).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.MemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Orders__MemberId__4BAC3F29");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
@@ -561,17 +588,16 @@ public partial class TalkingTopiaContext : DbContext
                 .HasColumnName("CDate");
             entity.Property(e => e.MemberId).HasComment("會員Id");
             entity.Property(e => e.ProfessionalLicenseName)
+                .IsRequired()
                 .HasMaxLength(255)
                 .HasComment("證照名稱");
-            entity.Property(e => e.ProfessionalLicenseUrl).HasComment("證照路徑");
+            entity.Property(e => e.ProfessionalLicenseUrl)
+                .IsRequired()
+                .HasComment("證照路徑");
             entity.Property(e => e.Udate)
                 .HasComment("更新時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
-
-            entity.HasOne(d => d.CourseCategory).WithMany(p => p.ProfessionalLicenses)
-                .HasForeignKey(d => d.CourseCategoryId)
-                .HasConstraintName("FK_ProfessionalLicenses_CourseCategories");
 
             entity.HasOne(d => d.Member).WithMany(p => p.ProfessionalLicenses)
                 .HasForeignKey(d => d.MemberId)
@@ -738,12 +764,18 @@ public partial class TalkingTopiaContext : DbContext
                 .HasComment("修改時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
-            entity.Property(e => e.WorkEndDate).HasComment("工作結束日");
-            entity.Property(e => e.WorkExperienceFile).HasComment("工作經驗檔案路徑");
+            entity.Property(e => e.WorkEndDate)
+                .HasComment("工作結束日")
+                .HasColumnType("datetime");
+            entity.Property(e => e.WorkExperienceFile)
+                .IsRequired()
+                .HasComment("工作經驗檔案路徑");
             entity.Property(e => e.WorkName)
                 .HasMaxLength(50)
                 .HasComment("工作經驗名稱");
-            entity.Property(e => e.WorkStartDate).HasComment("工作起始日");
+            entity.Property(e => e.WorkStartDate)
+                .HasComment("工作起始日")
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.Member).WithMany(p => p.WorkExperiences)
                 .HasForeignKey(d => d.MemberId)

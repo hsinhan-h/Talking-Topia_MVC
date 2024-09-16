@@ -92,9 +92,5 @@ public partial class Course
 
     public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
 
-    public virtual CourseSubject Subject { get; set; }
-
-    public virtual Member Tutor { get; set; }
-
     public virtual ICollection<WatchList> WatchLists { get; set; } = new List<WatchList>();
 }

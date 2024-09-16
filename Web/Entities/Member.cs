@@ -126,13 +126,13 @@ public partial class Member
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
-    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
-
     public virtual Education Education { get; set; }
 
     public virtual ICollection<MemberPreference> MemberPreferences { get; set; } = new List<MemberPreference>();
 
     public virtual Nation Nation { get; set; }
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual ICollection<ProfessionalLicense> ProfessionalLicenses { get; set; } = new List<ProfessionalLicense>();
 

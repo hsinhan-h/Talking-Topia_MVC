@@ -19,12 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\ShoppingCartBooking.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\tutor_recommend_carousel_slider.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Entities\" />
     <Folder Include="wwwroot\image\flag_imgs\" />
     <Folder Include="wwwroot\image\mainpage_imgs\" />
   </ItemGroup>
