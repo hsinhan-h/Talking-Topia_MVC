@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ApplicationCore.Services
 {
@@ -15,16 +16,24 @@ namespace ApplicationCore.Services
 
         private readonly ITransaction _transaction;
         private readonly IRepository<Order> _orderRepository;
+        private readonly IRepository<Member> _memberRepository;
         private readonly IRepository<OrderDetail> _orderDetailRepository;
         private readonly IRepository<ShoppingCart> _shoppingCartRepository;
-        private readonly IShoppingCartService _shoppingCartService;
-        public OrderService(ITransaction transaction, IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<ShoppingCart> shoppingCartRepository, IShoppingCartService shoppingCartService)
+        private readonly IRepository<Course> _courseRepository;
+        private readonly IRepository<CourseSubject> _courseSubjectRepository;
+        private readonly IRepository<CourseCategory> _courseCategoryRepository;
+        private int _orderId;
+
+        public OrderService(ITransaction transaction, IRepository<Order> orderRepository, IRepository<Member> memberRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository, IRepository<CourseSubject> courseSubjectRepository, IRepository<CourseCategory> courseCategoryRepository)
         {
             _transaction = transaction;
             _orderRepository = orderRepository;
+            _memberRepository = memberRepository;
             _orderDetailRepository = orderDetailRepository;
             _shoppingCartRepository = shoppingCartRepository;
-            _shoppingCartService = shoppingCartService;
+            _courseRepository = courseRepository;
+            _courseSubjectRepository = courseSubjectRepository;
+            _courseCategoryRepository = courseCategoryRepository;
         }
 
         public async Task<GetAllOrderResultDto> GetAllOrder(int memberId)
@@ -65,42 +74,62 @@ namespace ApplicationCore.Services
         /// <param name="taxIdNumber"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<bool> CreateOrderAsync(int memberId, string paymentType, string taxIdNumber)
+        public async Task<int> CreateOrderAsync(int memberId, string paymentType, string taxIdNumber)
         {
-            Console.WriteLine($"memberId: {memberId}, paymentType: {paymentType}, taxIdNumber: {taxIdNumber}");
             using var transaction = _transaction.BeginTransActionAsync();
             {
                 try
                 {
-                    if (!_shoppingCartService.HasCartItem(memberId))
-                    {
-                        throw new InvalidOperationException("購物車為空，無法生成訂單。");
-                    }
+                    // 把購物車品項全撈出來，並計算總額
                     var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
                     var totalPrice = shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
+                    var member = await _memberRepository.GetByIdAsync(memberId);
 
                     // 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
-                    var orders = new Order
+                    var orders = new Order()
                     {
                         MemberId = memberId,
                         PaymentType = paymentType,
                         TotalPrice = totalPrice,
                         TransactionDate = DateTime.Now,
+                        CouponPrice = 0,
                         TaxIdNumber = taxIdNumber,
                         InvoiceType = taxIdNumber == null ? (short)EInvoiceType.NormalInvoice : (short)EInvoiceType.GUIInvoice,
-                        // VATNumber要等綠界交易完成回來才會有紀錄
-                        // SentVATEmail預設為Member的Email?
+                        VATNumber = "",
+                        SentVatemail = member.Email,
                         OrderStatusId = (short)EOrderStatus.Outstanding,
                         Cdate = DateTime.Now,
                     };
-                    var result = await _orderRepository.AddAsync(orders);
-                    if (await _orderRepository.FirstOrDefaultAsync(x => x.OrderId == result.OrderId) != null)
+
+                    var orderResult = await _orderRepository.AddAsync(orders);
+
+                    foreach (var item in shoppingCartItem)
                     {
-                        return true;
+                        var course = await _courseRepository.GetByIdAsync(item.CourseId);
+                        var subject = await _courseSubjectRepository.GetByIdAsync(course.SubjectId);
+                        var category = await _courseCategoryRepository.GetByIdAsync(subject.CourseCategoryId);
+                        var orderDetails = new OrderDetail()
+                        {
+                            OrderId = orderResult.OrderId,
+                            CourseId = item.CourseId,
+                            UnitPrice = item.UnitPrice,
+                            Quantity = item.Quantity,
+                            //DiscountPrice = item.
+                            TotalPrice = item.TotalPrice,
+                            CourseType = item.CourseType,
+                            CourseTitle = course.Title,
+                            CourseSubject = subject.SubjectName,
+                            CourseCategory = category.CategorytName,
+                        };
+                        var orderDetailResult = await _orderDetailRepository.AddAsync(orderDetails);
+                    }
+                    if (await _orderRepository.FirstOrDefaultAsync(x => x.OrderId == orderResult.OrderId) == null)
+                    {
+                        throw new Exception("Order could not be created");
                     }
                     else
                     {
-                        return false;
+                        return orderResult.OrderId;
                     }
                 }
                 catch (Exception ex)
@@ -110,22 +139,34 @@ namespace ApplicationCore.Services
             }
         }
 
-        public async Task<bool> UpdateOrderAsync(int orderId, EOrderStatus orderStatus)
+        //public async void CreateBookingAsync()
+        //{
+
+        //}
+
+        public async void UpdateOrderTransactionAndStatus(int orderId, EOrderStatus orderStatus, string transactionNo)
         {
             using var transaction = _transaction.BeginTransActionAsync();
             {
                 try
                 {
                     var order = await _orderRepository.GetByIdAsync(orderId);
-                    
+
                     if (orderStatus == EOrderStatus.Success)
                     {
+
                         order.OrderStatusId = (short)EOrderStatus.Success;
+                        //order.TransactionNo = transactionNo;
                         await _orderRepository.UpdateAsync(order);
-                        return true;
+                        //if ()
+                        //{ 
+                        //    await CreateBookingAsync();
+                        //}
                     }
-                    else if (orderStatus == EOrderStatus.Failed) { return false; }
-                    else { return false; }
+                    else if (orderStatus == EOrderStatus.Failed)
+                    {
+                        throw new Exception("Order Status is Failed");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -134,6 +175,11 @@ namespace ApplicationCore.Services
             }
         }
 
+        //public void DeliverId(int orderId)
+        //{
+        //    _orderId = orderId;
+        //}
+
         public TimeSpan ConvertSmallintToTime(short timeValue)
         {
             int hours = timeValue / 100;
@@ -141,5 +187,7 @@ namespace ApplicationCore.Services
 
             return new TimeSpan(hours, minutes, 0);
         }
+
+
     }
 }
