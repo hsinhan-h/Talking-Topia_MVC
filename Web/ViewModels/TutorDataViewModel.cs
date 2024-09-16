@@ -68,8 +68,8 @@ namespace Web.ViewModels
     }
     public class WorkExp
     {
-        public DateTime WorkStartDate { get; set; }
-        public DateTime WorkEndDate { get; set; }
+        public DateOnly WorkStartDate { get; set; }
+        public DateOnly WorkEndDate { get; set; }
         public string WorkName { get; set; }
     }
     public class CategoryData

@@ -45,9 +45,6 @@ public partial class Order
     /// </summary>
     public short InvoiceType { get; set; }
 
-    /// <summary>
-    /// 發票號碼
-    /// </summary>
     public string Vatnumber { get; set; }
 
     /// <summary>
@@ -61,16 +58,11 @@ public partial class Order
     public short OrderStatusId { get; set; }
 
     /// <summary>
-    /// 建立時間
-    /// </summary>
-    public DateTime Cdate { get; set; }
-
-    /// <summary>
     /// 更新時間
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual Member Member { get; set; }
+    public string MerchantTradeNo { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

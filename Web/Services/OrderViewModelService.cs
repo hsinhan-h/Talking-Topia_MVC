@@ -23,7 +23,7 @@ namespace Web.Services
         {
             var result = await (from item in (from lo in _repository.GetAll<Order>()
                                               where lo.MemberId == memberId
-                                              orderby lo.Cdate descending
+                                              //orderby lo.Cdate descending
                                               select lo).Take(1)
                                 join od in _repository.GetAll<OrderDetail>() on item.OrderId equals od.OrderId
                                 join course in _repository.GetAll<Course>() on od.CourseId equals course.CourseId

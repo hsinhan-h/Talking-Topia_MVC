@@ -35,5 +35,9 @@ public partial class ProfessionalLicense
     /// </summary>
     public DateTime? Udate { get; set; }
 
+    public int? CourseCategoryId { get; set; }
+
+    public virtual CourseCategory CourseCategory { get; set; }
+
     public virtual Member Member { get; set; }
 }
