@@ -38,6 +38,7 @@ namespace Web
             builder.Services.AddScoped<AccountService>();
             builder.Services.AddScoped<NationService>();
             builder.Services.AddScoped<CourseCategoryService>();
+            builder.Services.AddScoped<CloudinaryService>();
 
 
 
