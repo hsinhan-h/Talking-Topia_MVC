@@ -12,6 +12,7 @@ const courseCardsApp = Vue.createApp({
             loading: true,
             selectedSubject: null,
             selectedNation: null,
+            selectedBudgetRange: null,
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
             bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array          
             courseCategories: [], //動態科目篩選選單資料
@@ -21,6 +22,8 @@ const courseCardsApp = Vue.createApp({
     mounted() {
         const params = new URLSearchParams(window.location.search);
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
+        this.selectedSubject = params.get('subject') || null;
+        this.selectedNation = params.get('nation') || null;       
         this.fetchCourses();
         this.fetchCategories();
         this.fetchNations();
@@ -203,6 +206,10 @@ const courseCardsApp = Vue.createApp({
         },
         //3. 時段
         //4. 預算區間
+        filterByBudget(budgetRange) {
+            this.selectedBudgetRange = budgetRange;
+            this.applyFilter();
+        },
 
         applyFilter() {
             this.page = 1;
