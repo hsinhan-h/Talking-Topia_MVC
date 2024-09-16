@@ -157,7 +157,7 @@ const courseCardsApp = Vue.createApp({
                     url += `?nation=${this.selectedNation}`;
                 }
                 if (this.selectedBudget) {
-                    url += `?nation=${this.selectedBudget}`;
+                    url += `?budget=${this.selectedBudget}`;
                 }
                 const response = await fetch(url);
 
