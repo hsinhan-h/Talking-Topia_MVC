@@ -59,6 +59,32 @@ namespace Web.Services
                 Console.WriteLine($"註冊失敗，發生錯誤：{ex.Message}");
             }
         }
+
+
+        // 驗證使用者帳號和密碼
+        public async Task<Member> ValidateUserAsync(string email, string password)
+        {
+            var user = await _repository.GetAll<Member>().SingleOrDefaultAsync(m => m.Email == email);
+
+
+            if (user == null)
+            {
+                // 用戶不存在
+                return null;
+            }
+
+            // 使用 PasswordHasher 驗證密碼
+            var passwordHasher = new PasswordHasher<Member>();
+            var result = passwordHasher.VerifyHashedPassword(user, user.Password, password);
+
+            if (result == PasswordVerificationResult.Success)
+            {
+                return user;  // 驗證成功，返回使用者
+            }
+
+            // 密碼不匹配
+            return null;
+        }
     }
 
 }
