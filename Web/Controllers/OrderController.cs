@@ -29,6 +29,7 @@ namespace Web.Controllers
         public IActionResult Index()
         {
 
+
             return View();
         }
 
@@ -39,11 +40,15 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetData()
         {
-
-            var order = await _orderVMService.GetData(_orderId);
+            _orderId = 29;
+            var order = await _orderVMService.GetOrderResultViewModelAsync(_orderId);
             if (order == null) return BadRequest("找不到訂單!!!!!!!?");
+            var result = new OrderResultListViewModel
+            {
+                OrderResult = order,
+            };
 
-            return View(order);
+            return View(result);
         }
 
         /// <summary>

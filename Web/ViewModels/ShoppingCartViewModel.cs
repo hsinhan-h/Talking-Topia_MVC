@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Web.ViewModels
+﻿namespace Web.ViewModels
 {
     public class ShoppingCartViewModel
     {

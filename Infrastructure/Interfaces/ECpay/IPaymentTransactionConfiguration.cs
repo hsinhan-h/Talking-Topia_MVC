@@ -24,6 +24,5 @@ namespace Infrastructure.Interfaces.ECpay
         /// </summary>
         IPaymentConfiguration WithCustomFields(string field1 = null, string field2 = null, string field3 = null, string field4 = null);
 
-        public string SentTransactionNo();
     }
 }

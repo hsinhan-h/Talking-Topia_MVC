@@ -104,6 +104,10 @@
     margin: 0;
 }
 
+.course-time-filter .timeslot-checkbox .text {
+    font-size: 13px;
+}
+
 @media screen and (min-width: 768px) {
     .course-time-filter .dropdown-menu {
         width: 500px;

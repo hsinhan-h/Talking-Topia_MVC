@@ -17,14 +17,14 @@ namespace Web.Controllers.Api
         [HttpGet]
         public async Task<IActionResult> GetBookingTableAsync([FromQuery] int courseId)
         {
-            var courseInfoListVIewModel = await _courseService.GetBookingTableAsync(courseId);
+            var courseInfoListViewModel = await _courseService.GetBookingTableAsync(courseId);
 
-            if (courseInfoListVIewModel == null)
+            if (courseInfoListViewModel == null)
             {
                 return NotFound();
             }
 
-            return Ok(courseInfoListVIewModel);
+            return Ok(courseInfoListViewModel);
         }
 
     }

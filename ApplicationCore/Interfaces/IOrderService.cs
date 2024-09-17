@@ -16,7 +16,7 @@ namespace ApplicationCore.Interfaces
         public Task<int> CreateOrderAsync(int memberId, string paymentType, string taxIdNumber);
         //public void CreateBookingAsync();
         // Update，依rtnCode更新OrderStatus
-        public void UpdateOrderTransactionAndStatus(int orderId, EOrderStatus rtnCode, string transactionNo);
+        public void UpdateOrderTransactionAndStatus(int orderId, string merchantTradeNo, string tradeNo, EOrderStatus rtnCode);
         //public void DeliverId(int orderId);
         public TimeSpan ConvertSmallintToTime(short timeValue);
     }
