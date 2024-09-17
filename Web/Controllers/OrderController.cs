@@ -26,12 +26,9 @@ namespace Web.Controllers
         /// <summary>
         /// 交易成功導回頁
         /// </summary>
-        /// <param name="memberId"></param>
-        /// <returns></returns>
-        public IActionResult Index(int memberId)
+        public IActionResult Index()
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
+
             return View();
         }
 
@@ -40,12 +37,11 @@ namespace Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetData(int memberId)
+        public async Task<IActionResult> GetData()
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var memberId = await _memberService.GetMemberId(user);
+
             var order = await _orderVMService.GetData(_orderId);
-            if (order == null) return NotFound();
+            if (order == null) return BadRequest("找不到訂單!!!!!!!?");
 
             return View(order);
         }
@@ -55,7 +51,7 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="memberId"></param>
         /// <param name="paymentType"></param>
-        /// <param name="orderStatusId"></param>
+        /// <param name="taxIdNumber"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,7 +60,7 @@ namespace Web.Controllers
             //var user = HttpContext.User.Identity.Name;
             //var memberId = await _memberService.GetMemberId(user);
             if (!_memberService.IsMember(memberId))
-            { return RedirectToAction(nameof(AccountController.Account), "Home"); }
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (string.IsNullOrEmpty(paymentType))
             { return BadRequest("未選擇付款方式"); }
             if (string.IsNullOrEmpty(taxIdNumber))
@@ -74,7 +70,6 @@ namespace Web.Controllers
 
             if (_orderId > 0)
             {
-
                 // 使用 HttpClientHandler 來處理 Cookies，確保 AntiForgeryToken 和 Session 被維護
                 var handler = new HttpClientHandler
                 {
@@ -121,11 +116,6 @@ namespace Web.Controllers
                 // 如果訂單創建失敗，返回 BadRequest 錯誤訊息
                 return BadRequest("發送請求到 PaymentController.New 失敗。");
             }
-        }
-
-        public IActionResult OrderFailed()
-        {
-            return View();
         }
     }
 }

@@ -2,12 +2,7 @@
 using ApplicationCore.Entities;
 using ApplicationCore.Enums;
 using ApplicationCore.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
+
 
 namespace ApplicationCore.Services
 {
@@ -76,66 +71,68 @@ namespace ApplicationCore.Services
         /// <exception cref="Exception"></exception>
         public async Task<int> CreateOrderAsync(int memberId, string paymentType, string taxIdNumber)
         {
-            using var transaction = _transaction.BeginTransActionAsync();
+
+            try
             {
-                try
-                {
-                    // 把購物車品項全撈出來，並計算總額
-                    var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
-                    var totalPrice = shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
-                    var member = await _memberRepository.GetByIdAsync(memberId);
+                // 把購物車品項全撈出來，並計算總額
+                var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
+                var totalPrice = shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
+                var member = await _memberRepository.GetByIdAsync(memberId);
 
-                    // 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
-                    var orders = new Order()
+                // 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
+                var orders = new Order()
+                {
+                    MemberId = memberId,
+                    PaymentType = paymentType,
+                    TotalPrice = totalPrice,
+                    TransactionDate = DateTime.Now,
+                    CouponPrice = 0,
+                    TaxIdNumber = taxIdNumber,
+                    InvoiceType = taxIdNumber == null ? (short)EInvoiceType.NormalInvoice : (short)EInvoiceType.GUIInvoice,
+                    VATNumber = "",
+                    SentVatemail = member.Email,
+                    OrderStatusId = (short)EOrderStatus.Outstanding,
+                    Cdate = DateTime.Now,
+                };
+
+                var orderResult = await _orderRepository.AddAsync(orders);
+                //if (orderResult != null)
+                //{
+                //    throw new Exception("orderResult有建成功喔喔喔！！！！");
+                //}
+
+                foreach (var item in shoppingCartItem)
+                {
+                    var course = await _courseRepository.GetByIdAsync(item.CourseId);
+                    var subject = await _courseSubjectRepository.GetByIdAsync(course.SubjectId);
+                    var category = await _courseCategoryRepository.GetByIdAsync(subject.CourseCategoryId);
+                    var orderDetails = new OrderDetail()
                     {
-                        MemberId = memberId,
-                        PaymentType = paymentType,
-                        TotalPrice = totalPrice,
-                        TransactionDate = DateTime.Now,
-                        CouponPrice = 0,
-                        TaxIdNumber = taxIdNumber,
-                        InvoiceType = taxIdNumber == null ? (short)EInvoiceType.NormalInvoice : (short)EInvoiceType.GUIInvoice,
-                        VATNumber = "",
-                        SentVatemail = member.Email,
-                        OrderStatusId = (short)EOrderStatus.Outstanding,
-                        Cdate = DateTime.Now,
+                        OrderId = orderResult.OrderId,
+                        CourseId = item.CourseId,
+                        UnitPrice = item.UnitPrice,
+                        Quantity = item.Quantity,
+                        //DiscountPrice = item.
+                        TotalPrice = item.TotalPrice,
+                        CourseType = item.CourseType,
+                        CourseTitle = course.Title,
+                        CourseSubject = subject.SubjectName,
+                        CourseCategory = category.CategorytName,
                     };
-
-                    var orderResult = await _orderRepository.AddAsync(orders);
-
-                    foreach (var item in shoppingCartItem)
-                    {
-                        var course = await _courseRepository.GetByIdAsync(item.CourseId);
-                        var subject = await _courseSubjectRepository.GetByIdAsync(course.SubjectId);
-                        var category = await _courseCategoryRepository.GetByIdAsync(subject.CourseCategoryId);
-                        var orderDetails = new OrderDetail()
-                        {
-                            OrderId = orderResult.OrderId,
-                            CourseId = item.CourseId,
-                            UnitPrice = item.UnitPrice,
-                            Quantity = item.Quantity,
-                            //DiscountPrice = item.
-                            TotalPrice = item.TotalPrice,
-                            CourseType = item.CourseType,
-                            CourseTitle = course.Title,
-                            CourseSubject = subject.SubjectName,
-                            CourseCategory = category.CategorytName,
-                        };
-                        var orderDetailResult = await _orderDetailRepository.AddAsync(orderDetails);
-                    }
-                    if (await _orderRepository.FirstOrDefaultAsync(x => x.OrderId == orderResult.OrderId) == null)
-                    {
-                        throw new Exception("Order could not be created");
-                    }
-                    else
-                    {
-                        return orderResult.OrderId;
-                    }
+                    var orderDetailResult = await _orderDetailRepository.AddAsync(orderDetails);
                 }
-                catch (Exception ex)
+                if (await _orderRepository.FirstOrDefaultAsync(x => x.OrderId == orderResult.OrderId) == null)
                 {
-                    throw new Exception($"Unexpected error: {ex.Message}");
+                    throw new Exception("Order could not be created");
                 }
+                else
+                {
+                    return orderResult.OrderId;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Unexpected error: {ex.Message}");
             }
         }
 
