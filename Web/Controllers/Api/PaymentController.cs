@@ -1,12 +1,9 @@
-﻿using ApplicationCore.Enums;
-using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Interfaces;
+using Infrastructure.Configurations.ECpay;
 using Infrastructure.ECpay;
 using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
 using Infrastructure.Service;
-using System.Collections.Generic;
-using System.Security.Policy;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace Web.Controllers.Api
 {
@@ -35,10 +32,10 @@ namespace Web.Controllers.Api
         //[ValidateAntiForgeryToken]
         public IActionResult New([FromForm] string orderId)
         {
-            //if (string.IsNullOrEmpty(orderId) || !int.TryParse(orderId, out _orderId))
-            //{
-            //    return BadRequest("OrderId 不存在或無效");
-            //}
+            if (string.IsNullOrEmpty(orderId) || !int.TryParse(orderId, out _orderId))
+            {
+                return BadRequest("OrderId 不存在或無效");
+            }
 
             return RedirectToAction("checkout");
         }
@@ -89,9 +86,8 @@ namespace Web.Controllers.Api
             // 務必判斷檢查碼是否正確。
             if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
 
-            //var orderStatus = EOrderStatus.Success;
-            //var transactionNo = _paymentTransactionConfiguration.SentTransactionNo();
-            //_orderService.UpdateOrderTransactionAndStatus(_orderId, orderStatus, transactionNo);
+            var orderStatus = EOrderStatus.Success;
+            _orderService.UpdateOrderTransactionAndStatus(_orderId, orderStatus);
 
             return Ok("1|OK");
         }

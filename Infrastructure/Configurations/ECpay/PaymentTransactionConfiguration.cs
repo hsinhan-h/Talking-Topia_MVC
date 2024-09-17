@@ -35,7 +35,10 @@ namespace Infrastructure.Configurations.ECpay
                 TradeDesc = HttpUtility.UrlEncode(description),
                 MerchantTradeDate = date.Value.ToString("yyyy/MM/dd HH:mm:ss")
             };
+
+            // 用來抓交易訂單的欄位
             _transactionNo = _payment.MerchantTradeNo;
+
             if (remark != null)
                 _payment.Remark = remark;
 
