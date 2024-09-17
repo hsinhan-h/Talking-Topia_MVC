@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ApplicationCore.Interfaces;
+using System.ComponentModel;
 using Web.Services;
 
 namespace Web.Controllers
@@ -7,10 +8,12 @@ namespace Web.Controllers
     {
         private readonly BookingService _bookingService;
         private readonly CourseService _courseService;
-        public CourseController(BookingService bookingService, CourseService courseService)
+        private readonly ICourseService _icourseService;
+        public CourseController(BookingService bookingService, CourseService courseService, ICourseService icourseService)
         {
             _bookingService = bookingService;
             _courseService = courseService;
+            _icourseService = icourseService;
         }
 
         public IActionResult Index()
@@ -35,8 +38,27 @@ namespace Web.Controllers
             var model = await _courseService.GetCourseMainPage(courseId);
             return View(model);
         }
-    }
 
+        [HttpPost]
+        public IActionResult CreateCourseReview([FromForm] string NewReviewContent)
+        {
+
+           
+           
+            try 
+            {
+                var createReview = _icourseService.CreateReviews(2,2, NewReviewContent);
+                return RedirectToAction(nameof(CourseMainPage), new { courseId =2 });
+
+            }
+            catch (Exception ex)
+            {               
+                return Content("訂單建立失敗!");
+            }
+        }
+
+
+    }
 
     
 }

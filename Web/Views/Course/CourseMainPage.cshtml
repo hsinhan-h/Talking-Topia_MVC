@@ -1,5 +1,6 @@
 ﻿@model CourseMainPageViewModel
 
+
 @section topCSS
 {
     @*  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -121,17 +122,20 @@
                 </div>
             </div>
             <div class="lh-tutor-comment ">
-                <div class="course-comment-generator w-100">
-                    <h3 class="my-2">對課程的感想</h3>
-                    <div class="comment-rating-stars w-100 d-flex" id="app">
-                        <p class="rating-star-sign">留下你對此課程的評分:</p>
-                        <p-rating class="comment-rating-little-star my-1" v-model="rating"></p-rating>
+                <form asp-action="CreateCourseReview">
+                    <div class="course-comment-generator w-100">
+                        <h3 class="my-2">對課程的感想</h3>
+                        <div class="comment-rating-stars w-100 d-flex " id="app">
+                            <p class="rating-star-sign">留下你對此課程的評分:</p>
+                            <p-rating class="comment-rating-little-star my-1" v-model="rating"></p-rating>
+                        </div>
+                        <div class="comment-input-section my-3 d-flex form-group">
+                            <input asp-for="NewReviewContent" type="text comment-input-box w-100 my-3" class="form-control" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
+                            <input class="btn comment-submit-btn my-3" type="submit" value="送出">
+                        </div>
                     </div>
-                    <div class="comment-input-section my-3 d-flex">
-                        <input type="text comment-input-box w-100 my-3" class="form-control" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
-                        <input class="btn comment-submit-btn my-3" type="submit" value="送出">
-                    </div>
-                </div>
+                </form>
+                
                 <div class="tutor-rating d-flex align-content-center">
                     <p class="comment-count ">@Model.CourseReviews 筆韓文課程評價</p>
                     <div class="rating-star">
