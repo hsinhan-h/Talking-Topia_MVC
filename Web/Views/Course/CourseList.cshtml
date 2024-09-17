@@ -33,6 +33,9 @@
                         </li>
                     </ul>
                 </li>
+                <li v-if="selectedSubject">
+                    <button class="dropdown-item cancel-filter-btn" type="button" v-on:click="clearSubjectFilter"><i class="fa-solid fa-x"></i>  <strong>取消篩選</strong></button>
+                </li>
             </ul> 
         </div>
         <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
@@ -301,6 +304,9 @@
                 <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('500-799')">NT$500 - NT$799</button></li>
                 <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('800-999')">NT$800 - NT$999</button></li>
                 <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('1000以上')">NT$1000以上</button></li>
+                <li v-if="selectedBudget">
+                    <button class="dropdown-item cancel-filter-btn" type="button" v-on:click="clearBudgetFilter"><i class="fa-solid fa-x"></i>  <strong>取消篩選</strong></button>
+                </li>
             </ul>
         </div>
     </div>

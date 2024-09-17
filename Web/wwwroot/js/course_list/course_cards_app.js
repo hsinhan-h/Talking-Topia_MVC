@@ -232,8 +232,16 @@ const courseCardsApp = Vue.createApp({
         },
 
         //取消篩選
+        clearSubjectFilter() {
+            this.selectedSubject = null;
+            this.applyFilter();
+        },
         clearNationFilter() {
             this.selectedNation = null;
+            this.applyFilter();
+        },
+        clearBudgetFilter() {
+            this.selectedBudget = null;
             this.applyFilter();
         }
     }
