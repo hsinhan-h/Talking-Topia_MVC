@@ -38,7 +38,7 @@ public partial class ApplyList
     /// <summary>
     /// 拒絕原因
     /// </summary>
-    public string? RejectReason { get; set; }
+    public string RejectReason { get; set; }
 
-    public virtual Member Member { get; set; } = null!;
+    public virtual Member Member { get; set; }
 }

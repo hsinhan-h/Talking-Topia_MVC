@@ -19,7 +19,7 @@ namespace Web
             }
 
             // Add DbContext configuration
-            builder.Services.AddDbContext<Data.TalkingTopiaContext>(options =>
+            builder.Services.AddDbContext<Data.TalkingTopiaDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("TalkingTopiaDb")));
 
             //µù¥UIRepository

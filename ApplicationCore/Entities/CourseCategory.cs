@@ -13,7 +13,7 @@ public partial class CourseCategory
     /// <summary>
     /// 課程類別名稱
     /// </summary>
-    public string CategorytName { get; set; } = null!;
+    public string CategorytName { get; set; }
 
     /// <summary>
     /// 建立時間

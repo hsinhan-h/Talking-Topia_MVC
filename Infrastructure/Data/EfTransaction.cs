@@ -5,9 +5,9 @@ namespace Infrastructure.Data
 {
     public class EfTransaction : ITransaction
     {
-        protected readonly TalkingTopiaContext _dbContext;
+        protected readonly TalkingTopiaDbContext _dbContext;
         private IDbContextTransaction _transaction;
-        public EfTransaction(TalkingTopiaContext dbContext)
+        public EfTransaction(TalkingTopiaDbContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -74,8 +74,8 @@ namespace Web.Services
                 var workExperience = new WorkExperience
                 {
                     WorkExperienceFile = qVM.WorkExperienceFile,
-                    WorkStartDate = qVM.WorkStartDate,
-                    WorkEndDate = qVM.WorkEndDate,
+                    //WorkStartDate = qVM.WorkStartDate,
+                    //WorkEndDate = qVM.WorkEndDate,
                     WorkName = qVM.WorkName,
                     MemberId = member.MemberId,
                     Cdate = DateTime.Now,

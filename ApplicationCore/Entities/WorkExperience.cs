@@ -13,22 +13,22 @@ public partial class WorkExperience
     /// <summary>
     /// 工作經驗檔案路徑
     /// </summary>
-    public string WorkExperienceFile { get; set; } = null!;
+    public string WorkExperienceFile { get; set; }
 
     /// <summary>
     /// 工作起始日
     /// </summary>
-    public DateTime WorkStartDate { get; set; }
+    public DateOnly WorkStartDate { get; set; }
 
     /// <summary>
     /// 工作結束日
     /// </summary>
-    public DateTime WorkEndDate { get; set; }
+    public DateOnly WorkEndDate { get; set; }
 
     /// <summary>
     /// 工作經驗名稱
     /// </summary>
-    public string? WorkName { get; set; }
+    public string WorkName { get; set; }
 
     /// <summary>
     /// 會員Id
@@ -44,6 +44,4 @@ public partial class WorkExperience
     /// 修改時間
     /// </summary>
     public DateTime? Udate { get; set; }
-
-    public virtual Member Member { get; set; } = null!;
 }

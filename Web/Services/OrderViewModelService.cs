@@ -1,19 +1,20 @@
-﻿using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 using Humanizer;
 
 namespace Web.Services
-{   
+{
     public class OrderViewModelService
     {
         private readonly IRepository _repository;
         private readonly IOrderService _orderService;
-        private readonly IRepository<Order> _orderRepository;
-        private readonly IRepository<OrderDetail> _orderDetailRepository;
-        private readonly IRepository<Course> _courseRepository;
-        private readonly IRepository<Member> _memberRepository;
-        private readonly IRepository<Booking> _bookingRepository;
+        private readonly IRepository<Entities.Order> _orderRepository;
+        private readonly IRepository<Entities.OrderDetail> _orderDetailRepository;
+        private readonly IRepository<Entities.Course> _courseRepository;
+        private readonly IRepository<Entities.Member> _memberRepository;
+        private readonly IRepository<Entities.Booking> _bookingRepository;
 
-        public OrderViewModelService(IRepository repository, IOrderService orderService, IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Course> courseRepository, IRepository<Member> memberRepository, IRepository<Booking> bookingRepository)
+        public OrderViewModelService(IRepository repository, IOrderService orderService, IRepository<Entities.Order> orderRepository, IRepository<Entities.OrderDetail> orderDetailRepository, IRepository<Entities.Course> courseRepository, IRepository<Entities.Member> memberRepository, IRepository<Entities.Booking> bookingRepository)
         {
             _repository = repository;
             _orderService = orderService;
@@ -67,12 +68,12 @@ namespace Web.Services
         /// <returns></returns>
         public async Task<List<OrderResultViewModel>> GetOrderResultViewModelAsync(int orderId)
         {
-            var result = await (from item in _repository.GetAll<Order>()
+            var result = await (from item in _repository.GetAll<Entities.Order>()
                                 where item.OrderId == orderId
-                                join orderDetail in _repository.GetAll<OrderDetail>() on item.OrderId equals orderDetail.OrderId
-                                join course in _repository.GetAll<Course>() on orderDetail.CourseId equals course.CourseId
-                                join tutor in _repository.GetAll<Member>() on course.TutorId equals tutor.MemberId
-                                join booking in _repository.GetAll<Booking>() on course.CourseId equals booking.CourseId
+                                join orderDetail in _repository.GetAll<Entities.OrderDetail>() on item.OrderId equals orderDetail.OrderId
+                                join course in _repository.GetAll<Entities.Course>() on orderDetail.CourseId equals course.CourseId
+                                join tutor in _repository.GetAll<Entities.Member>() on course.TutorId equals tutor.MemberId
+                                join booking in _repository.GetAll<Entities.Booking>() on course.CourseId equals booking.CourseId
                                 select new OrderResultViewModel
                                 {
                                     CourseId = course.CourseId,
@@ -84,7 +85,7 @@ namespace Web.Services
                                     TaxIdNumber = item.TaxIdNumber,
                                     OrderDatetime = item.TransactionDate.ToString("yyyy-MM-dd hh-mm"),
                                     BookingDate = booking.BookingDate,
-                                    BookingTime = booking.BookingTime,
+                                    BookingTime = (short)booking.BookingTime,
                                 }).ToListAsync();
             return result;
         }
