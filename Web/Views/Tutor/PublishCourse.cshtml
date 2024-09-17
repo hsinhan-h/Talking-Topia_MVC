@@ -307,12 +307,21 @@
                             </div>
                             <div class="col-12 col-md-2">
                                 <div class="form-floating">
-                                    <input type="file"
+                                    @* <input type="file"
                                            class="form-control"
                                            id="floatingInput3"
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
-                                           value="" />
+                                           value="" /> *@
+                                    <input type="file" name="image" class="form-control" aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload" multiple v-on:change="handleFileUpload" />
+                                    <label for="floatingInput5">請上傳一張自介照片(必填)</label>
+                                </div>
+                                 <!-- 圖片預覽 -->
+                                <div v-if="imageUrl.length > 0">
+                                    <div v-for="(url, index) in imageUrl" :key="index">
+                                        <img :src="url" alt="Uploaded Image" style="width: 50px; height: 50px;">
+                                    </div>
                                     <label for="floatingInput3">請上傳一張自介照片(必填)</label>
                                 </div>
                             </div>
@@ -326,17 +335,29 @@
                                            value="" />
                                     <label for="floatingInput4">請上傳一支自介影片(必填)</label>
                                 </div>
+                                 <!-- 用來存圖片路徑的隱藏欄位 -->
+                                <input type="hidden" v-model="imagePath" />
                             </div>
                             <div class="col-12 col-md-4">
                                 <div class="form-floating mb-3">
-                                    <input type="file"
+                                    @* <input type="file"
                                            class="form-control"
                                            id="floatingInput5"
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
-                                           multiple />
+                                           multiple /> *@
+                                            <input type="file" name="image" class="form-control" aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload" multiple v-on:change="handleFileUploads" />
                                     <label for="floatingInput5">請上傳多張課程圖片(必填)</label>
                                 </div>
+                                 <!-- 圖片預覽 -->
+                                <div v-if="imageUrls.length > 0">
+                                    <div v-for="(url, index) in imageUrls" :key="index">
+                                        <img :src="url" alt="Uploaded Image" style="width: 50px; height: 50px;">
+                                    </div>
+                                </div>
+                                <!-- 用來存圖片路徑的隱藏欄位 -->
+                                <input type="hidden" v-model="imagePaths" />
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -346,7 +367,7 @@
                                            class="form-control"
                                            id="floatingInput5"
                                            placeholder=""
-                                           value="" />
+                                           v-model="txtTitle"/>
                                     <label for="floatingInput5">課程名稱(必填)</label>
                                 </div>
                             </div>
@@ -356,7 +377,7 @@
                                            class="form-control"
                                            id="floatingInput6"
                                            placeholder=""
-                                           value="" />
+                                           v-model="txtSubTitle"/>
                                     <label for="floatingInput6">課程簡述(必填)</label>
                                 </div>
                             </div>
@@ -396,7 +417,7 @@
                                            class="form-control"
                                            id="floatingInput8"
                                            placeholder=""
-                                           value="" />
+                                           v-model="txtTwentyFiveMinPriceNTD"/>
                                     <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
                                 </div>
                             </div>
@@ -406,7 +427,7 @@
                                            class="form-control"
                                            id="floatingInput9"
                                            placeholder=""
-                                           value="" />
+                                           v-model="txtFiftyMinPriceNTD"/>
                                     <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
                                 </div>
                             </div>
@@ -442,13 +463,29 @@
         data() {
             return {
                 bookingDetails: {},
-                courseCategory: '', //存檔的欄位
+
+                CourseCategoryId: '', //存檔的欄位
+                SubjectId: '',
+                VideoPath: '',
+                txtTitle: '',
+                txtSubTitle: '',
+                txtTwentyFiveMinPriceNTD: '',
+                txtFiftyMinPriceNTD: '',
+                CouresImagesList: [],
+
 
                 selectedCourseCategoryId: null, // 儲存下拉的 CourseCategoryId
-                subjects: [] // 儲存 API 回傳的科目列表
+                subjects: [], // 儲存 API 回傳的科目列表
+                files: [], // 用於保存上傳的文件
+                imageUrl: [], // 用於顯示圖片預覽
+                imageUrls: [], // 用於顯示圖片預覽
+                imagePath: [], // 用於保存後端返回的圖片路徑
+                imagePaths: [], // 用於保存後端返回的圖片路徑
+                textValue: "" // 表單中的其他欄位值
             };
         },
         methods: {
+            // 取單筆課程資料
             fetchBookingDetails(CourseId) {
                 axios.get(`/api/PublishCourseApi/${CourseId}`)
                     .then((response) => {
@@ -459,9 +496,18 @@
                         console.error("Error fetching booking details:", error);
                     });
             },
+            // 存檔
             submitData() {
                 axios.post('/api/PublishCourseApi/SaveToCouresData', {
-                    CourseCategory: this.Category ,
+                    CategoryId: this.selectedCourseCategoryId,
+                    SubjectId: this.subjectId,
+                    //ThumbnailUrl: this.imagePath,
+                    //VideoUrl: this.VideoPath,
+                    Title: this.txtTitle,
+                    SubTitle: this.txtSubTitle,
+                    TwentyFiveMinPriceNTD: this.txtTwentyFiveMinPriceNTD,
+                    FiftyMinPriceNTD: this.txtFiftyMinPriceNTD,
+                    CouresImagesList: this.imagePaths,
                 })
                 .then(response => {
                     console.log('資料成功傳送', response);
@@ -470,6 +516,7 @@
                     console.error('傳送失敗', error);
                 });
             },
+            // 下拉選單取課程科目
             fetchSubjects() {
                 if (this.selectedCourseCategoryId) {
                     axios.get(`/api/PublishCourseApi/GetSubjectsByCategoryId/${this.selectedCourseCategoryId}`)
@@ -480,7 +527,50 @@
                             console.error("There was an error fetching the subjects!", error);
                         });
                 }
-            }
+            },
+            //圖片上傳觸發
+            handleFileUpload(event) {
+                this.files = event.target.files; // 獲取選擇的文件
+                this.uploadImages(1); // 調用上傳圖片的方法
+                console.log(1);
+            },
+             //多圖片上傳觸發
+            handleFileUploads(event) {
+                this.files = event.target.files; // 獲取選擇的文件
+                this.uploadImages(2); // 調用上傳圖片的方法
+                console.log(2);
+            },
+            
+            //圖片上傳
+            uploadImages(OneOrMore) {
+                const formData = new FormData();
+                for (let i = 0; i < this.files.length; i++) {
+                    formData.append('images', this.files[i]);
+                }
+                axios.post('/api/CloudinaryApi/UploadImages', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(response => {
+                    // 獲取後端返回的圖片路徑，並顯示預覽
+                    if(OneOrMore==1)
+                    {
+                        console.log(1);
+                        this.imagePath = response.data;
+                        this.imageUrl = this.imagePath.map(path => `${path}`);
+                    }
+                    else
+                    {
+                        console.log(2);
+                        this.imagePaths = response.data;
+                        this.imageUrls = this.imagePaths.map(path => `${path}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Upload failed:', error);
+                });
+            },
         }
     }).mount('#app'); // mount 到 id 為 #app 的元素
 </script>

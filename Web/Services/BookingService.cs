@@ -217,17 +217,84 @@ namespace Web.Services
         /// 課程新增或修改
         /// </summary>
         /// <param name="AddOrUpdate"></param>
-        public void SaveCourse(CRUDStatus status, Course course, CourseImage courseImage)
+        public void SaveCourse(CRUDStatus status, CourseDataViewModel courseData, int memberId)
         {
             if (status == CRUDStatus.Create)
             {
+                var course = new Course
+                {
+                    CategoryId = int.Parse(courseData.CategoryId),
+                    SubjectId = int.Parse(courseData.SubjectId),
+                    TutorId = memberId,
+                    Title = courseData.Title,
+                    SubTitle = courseData.SubTitle,
+                    TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
+                    FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
+                    Description = courseData.Description,
+                    IsEnabled = courseData.IsEnabled,
+                    ThumbnailUrl = courseData.ThumbnailUrl[0],
+                    VideoUrl = courseData.VideoUrl[0],
+                    CoursesStatus = courseData.CoursesStatus,
+                    Cdate = DateTime.Now,
+                };
                 _repository.Create(course);
                 _repository.SaveChanges();
+
+                var courseId = course.CourseId;
+                foreach (var item in courseData.CouresImagesList)
+                {
+                    var courseImg = new CourseImage
+                    {
+                        CourseId = courseId,
+                        ImageUrl = item
+                    };
+                    _repository.Create(courseImg);
+                    _repository.SaveChanges();
+                }
+
             }
             else if (status == CRUDStatus.Update)
             {
+                var course = new Course
+                {
+                    CourseId = courseData.CourseId,
+                    CategoryId = int.Parse(courseData.CategoryId),
+                    SubjectId = int.Parse(courseData.SubjectId),
+                    TutorId = memberId,
+                    Title = courseData.Title,
+                    SubTitle = courseData.SubTitle,
+                    TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
+                    FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
+                    Description = courseData.Description,
+                    IsEnabled = courseData.IsEnabled,
+                    ThumbnailUrl = courseData.ThumbnailUrl[0],
+                    VideoUrl = courseData.VideoUrl[0],
+                    CoursesStatus = courseData.CoursesStatus,
+                    Udate = DateTime.Now,
+                };
                 _repository.Update(course);
                 _repository.SaveChanges();
+
+                var courseId = course.CourseId;
+
+                //先刪除圖檔
+                var couresImg = from Img in _repository.GetAll<CourseImage>()
+                                where Img.CourseId == courseId
+                                select Img;
+                _repository.Delete(couresImg);
+                _repository.SaveChanges();
+
+                //再存檔
+                foreach (var item in courseData.CouresImagesList)
+                {
+                    var courseImg = new CourseImage
+                    {
+                        CourseId = courseId,
+                        ImageUrl = item
+                    };
+                    _repository.Create(courseImg);
+                    _repository.SaveChanges();
+                }
             }
         }
         /// <summary>

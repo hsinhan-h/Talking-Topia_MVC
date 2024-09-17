@@ -32,18 +32,11 @@ namespace Web.Controllers.Api
         /// <returns></returns>
         [HttpPost("SaveToCouresData")]
         //public async Task<IActionResult> SaveToCoures()
-        public async Task<IActionResult> SaveToCoures([FromBody] CourseDetailDto Category)
+        public async Task<IActionResult> SaveToCoures([FromBody] CourseDataViewModel course)
         {
             int memberId = 3;
-            var course = new Course()
-            {
-
-            };
-            var courseImg = new CourseImage
-            {
-
-            };
-            _bookingService.SaveCourse(CRUDStatus.Create, course, courseImg);
+            
+            _bookingService.SaveCourse(CRUDStatus.Create, course, memberId);
 
 
             return Ok();
