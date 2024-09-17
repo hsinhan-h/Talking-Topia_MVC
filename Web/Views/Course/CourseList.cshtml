@@ -60,7 +60,7 @@
                 </template>
                 <template v-if="selectedWeekdays.length > 0 && selectedTimeslots.length > 0">, </template>
                 <template v-if="selectedTimeslots.length > 0">
-                    {{ selectedTimeslots[0] }}點 <span v-if="selectedTimeslots.length > 1">+ 1</span>
+                    {{ selectedTimeslots[0] }}點 <span v-if="selectedTimeslots.length > 1 || selectedWeekdays.length > 1">+ 1</span>
                 </template>
                 <template v-if="selectedWeekdays.length === 0 && selectedTimeslots.length === 0">
                     上課時間 <i class="bi bi-filter"></i>
