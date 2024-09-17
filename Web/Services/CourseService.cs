@@ -486,8 +486,8 @@ namespace Web.Services
                 }).ToList(),
                 ExperienceList = tutorExperiences.Select(e => new TutorExperience
                 {
-                    StartYear = e.WorkStartDate.Year,
-                    EndYear = e.WorkEndDate.Year,
+                    StartYear = e.WorkStartDate.Year.ToString(),
+                    EndYear = e.WorkEndDate.Year.ToString(),
                     WorkTitle = e.WorkName
                 }).ToList(),
                 EducationDegree = education.Select(w => new TutorEducationList
