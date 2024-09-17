@@ -53,22 +53,14 @@ namespace Web.Services
                                                    //WorkEndDate = wexp.WorkEndDate,
                                                    WorkName = wexp.WorkName
                                                }).ToList(),
-                                           //License = (from category in _repository.GetAll<CourseCategory>()
-                                           //           join subject in _repository.GetAll<CourseSubject>()
-                                           //           on category.CourseCategoryId equals subject.CourseCategoryId
-                                           //           join prefersubject in _repository.GetAll<MemberPreference>()
-                                           //           on subject.SubjectId equals prefersubject.SubjecId
-                                           //           join memb in _repository.GetAll<Member>()
-                                           //           on prefersubject.MemberId equals memb.MemberId
-                                           //           join license in _repository.GetAll<ProfessionalLicense>()
-                                           //           on memb.MemberId equals license.MemberId
-                                           //           where prefersubject.MemberId == memberId
-                                           //             && category.CategorytName == categorytName//要修改關聯
-                                           //           select new LicenseData
-                                           //           {
-                                           //               ProfessionalLicenseName = license.ProfessionalLicenseName,
-                                           //               ProfessionalLicenseUrl = license.ProfessionalLicenseUrl
-                                           //           }).ToList()
+                                           License = (from memb in _repository.GetAll<Member>()
+                                                      join license in _repository.GetAll<ProfessionalLicense>()
+                                                      on memb.MemberId equals license.MemberId
+                                                      where memb.MemberId == memberId
+                                                      select new LicenseData
+                                                      {
+                                                          ProfessionalLicenseName = license.ProfessionalLicenseName,
+                                                      }).ToList()
                                        }).FirstOrDefaultAsync();
                 return tutorData;
             }
@@ -123,10 +115,10 @@ namespace Web.Services
             }
             return tutorCourseData;
         }
-        
+
         public async Task<TutorDataViewModel> GetAllInformationAsync(int? memberId)
         {
-           
+
             var tutorData = await GetTutorDataAsync(memberId);
             if (tutorData == null)
             {
@@ -189,10 +181,58 @@ namespace Web.Services
 
 
         //Creat
-        public TutorDataViewModel CreatTutorData()
+        public async Task<TutorDataViewModel> CreateTutorData(TutorDataViewModel qVM)
+{
+    // 開始一個資料庫交易
+    await _repository.BeginTransActionAsync();
+    try
+    {
+        // 新增 Member 資料
+        var member = new Member
         {
-            return (new TutorDataViewModel());
+            NativeLanguage = qVM.NativeLanguage,
+            SpokenLanguage = qVM.SpokenLanguage,
+            BankAccount = qVM.BankAccount,
+            BankCode = qVM.BankCode,
+            Cdate = DateTime.Now,
+            Udate = null,
+            FirstName = "N/A",
+            LastName = "N/A",
+            Password = "N/A",
+            Email = "N/A",
+            Nickname = "N/A",
+            Phone = "N/A",
+            Gender = 0,
+            AccountType = 1,
+            IsTutor = true,
+            IsVerifiedTutor = false,
+        };
 
-        }
-    }   
+        // 使用 Repository 來新增資料
+        _repository.Create(member);
+        await _repository.SaveChangesAsync();
+
+        // 提交交易
+        await _repository.CommitAsync();
+
+        // 返回成功結果
+        return new TutorDataViewModel 
+        {
+            Success = true,
+            Message = "會員資料新增成功",
+
+        };
+    }
+    catch (Exception ex)
+    {
+        // 若發生錯誤則回滾交易
+        await _repository.RollbackAsync();
+        return new TutorDataViewModel
+        {
+            Success = false,
+            Message = $"資料處理發生錯誤: {ex.Message}"
+        };
+    }
+}
+    }
 }

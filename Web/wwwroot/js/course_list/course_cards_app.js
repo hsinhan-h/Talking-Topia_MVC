@@ -270,7 +270,20 @@ const courseCardsApp = Vue.createApp({
             this.selectedNation = null;
             this.applyFilter();
         },
+        clearWeekdayAndTimeslotFilter() {            
+            this.selectedWeekdays = [];
+            this.selectedTimeslots = [];
+            this.applyFilter();
+        },
         clearBudgetFilter() {
+            this.selectedBudget = null;
+            this.applyFilter();
+        },
+        clearAllFilter() {
+            this.selectedSubject = null;
+            this.selectedNation = null;
+            this.selectedWeekdays = [];
+            this.selectedTimeslots = [];
             this.selectedBudget = null;
             this.applyFilter();
         },
