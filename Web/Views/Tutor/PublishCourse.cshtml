@@ -1,6 +1,7 @@
 ﻿@model BookingListViewModel
 @{
     BookingListViewModel HistoryList = ViewData["HistoryList"] as BookingListViewModel;
+    CourseCategoryListViewModel CategoryList = ViewData["CourseCategoryList"] as CourseCategoryListViewModel;
 }
 <div class="container lh-backstage" id="app">
     <div class="row">
@@ -283,11 +284,14 @@
                         <div class="row mb-2">
                             <div class="col-12 col-md-2">
                                 <div class="form-floating mb-3">
-                                    <input type="text"
-                                           class="form-control"
-                                           id="floatingInput1"
-                                           placeholder=""
-                                           value="" />
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>請選擇</option>
+                                        @foreach (var item in CategoryList.CourseCategoryList)
+                                        {
+                                            <option value="@item.CourseCategoryId">@item.CategoryName</option>
+                                        }
+                                        <option value="1">One</option>
+                                    </select>
                                     <label for="floatingInput1">課程分類(必填)</label>
                                 </div>
                             </div>
@@ -412,7 +416,7 @@
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-secondary lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
+                            data-bs-dismiss="modal" v-on:click="submitData">
                         新增
                     </button>
                 </div>
@@ -432,33 +436,39 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        const { createApp } = Vue;
-        createApp({
-            delimiters: ['[[', ']]'], // 改成 [[ ]] 來替代 {{ }}
-            data() {
-                return {
-                    bookingDetails: {}
-                };
+    const { createApp } = Vue;
+    createApp({
+        delimiters: ['[[', ']]'], // 改成 [[ ]] 來替代 {{ }}
+        data() {
+            return {
+                bookingDetails: {},
+                courseCategory: ''
+            };
+        },
+        methods: {
+            fetchBookingDetails(CourseId) {
+                axios.get(`/api/PublishCourseApi/${CourseId}`)
+                    .then((response) => {
+                        this.bookingDetails = response.data.bookingList[0]; // 正確設置 this.bookingDetails
+                        console.log(this.bookingDetails);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching booking details:", error);
+                    });
             },
-            methods: {
-                fetchBookingDetails(CourseId) {
-                    axios.get(`/api/PublishCourseApi/${CourseId}`)
-                        .then((response) => {
-                            this.bookingDetails = response.data.bookingList[0]; // 正確設置 this.bookingDetails
-                            // console.log(response);
-                            // console.log(response.data.bookingList);
-                            // console.log(response.data.bookingList[0].courseId);
-
-                            // console.log(this.bookingDetails);
-                            // console.log(this.bookingDetails[0].courseId);
-                            console.log(this.bookingDetails)
-                        })
-                        .catch((error) => {
-                            console.error("Error fetching booking details:", error);
-                        });
-                }
+            submitData() {
+                axios.post('/api/PublishCourseApi/SaveToCouresData', {
+                    CourseCategory: this.Category ,
+                })
+                .then(response => {
+                    console.log('資料成功傳送', response);
+                })
+                .catch(error => {
+                    console.error('傳送失敗', error);
+                });
             }
-        }).mount('#app'); // mount 到 id 為 #app 的元素
-    </script>
+        }
+    }).mount('#app'); // mount 到 id 為 #app 的元素
+</script>
 
 }

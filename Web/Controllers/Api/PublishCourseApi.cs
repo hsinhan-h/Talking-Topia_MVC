@@ -25,11 +25,11 @@ namespace Web.Controllers.Api
             return Ok(booking);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SaveToCoures(int AddOrUpdate)
+        [HttpPost("SaveToCouresData")]
+        //public async Task<IActionResult> SaveToCoures()
+        public async Task<IActionResult> SaveToCoures([FromBody] CourseDetailDto Category)
         {
             int memberId = 3;
-
             var course = new Course()
             {
 
@@ -39,9 +39,15 @@ namespace Web.Controllers.Api
 
             };
             _bookingService.SaveCourse(CRUDStatus.Create, course, courseImg);
-            
+
 
             return Ok();
+        }
+
+        public class CourseDetailDto
+        {
+            public string CourseCategory { get; set; }
+            public string SubTitle { get; set; } // 添加與前端相匹配的屬性
         }
     }
 }

@@ -24,8 +24,22 @@
                     }).ToList()
                 }).ToListAsync();
             return courseCategoriesWithSubjects;
-        } 
+        }
 
+        public async Task<CourseCategoryListViewModel> GetCourseCategoryListAsync()
+        {
+            var courseCategory = 
+                (from category in _repository.GetAll<CourseCategory>()
+                 select new CourseCategoryVM
+                 {
+                     CourseCategoryId = category.CourseCategoryId,
+                     CategoryName = category.CategorytName,
+                 });
 
+            return new CourseCategoryListViewModel
+            {
+                CourseCategoryList =await courseCategory.ToListAsync(),
+            };
+        }
     }
 }
