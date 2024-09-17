@@ -11,11 +11,11 @@ namespace Web.Services
             _repository = repository;
         }
 
-        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null, string selectedBudget = null)
+        public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(int page, int pageSize, string selectedSubject = null, string selectedNation = null, string selectedWeekdays = null, string selectedTimeslots = null, string selectedBudget = null)
         {
             //課程主資訊查詢&套用篩選
             IQueryable<CourseInfoViewModel> courseMainInfoQuery = GetCourseMainInfoQuery();
-            courseMainInfoQuery = ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedBudget);
+            courseMainInfoQuery = await ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedWeekdays, selectedTimeslots, selectedBudget);
             
 
             List<CourseInfoViewModel> courseMainInfo = await courseMainInfoQuery
@@ -71,10 +71,12 @@ namespace Web.Services
         }
 
         //處理篩選
-        private IQueryable<CourseInfoViewModel> ApplyCourseMainInfoQueryFilters(
+        private async Task<IQueryable<CourseInfoViewModel>> ApplyCourseMainInfoQueryFilters(
             IQueryable<CourseInfoViewModel> courseMainInfoQuery, 
             string selectedSubject, 
             string selectedNation, 
+            string selectedWeekdays,
+            string selectedTimeslots,
             string selectedBudget)
         {
             if (!string.IsNullOrEmpty(selectedSubject))
@@ -85,6 +87,20 @@ namespace Web.Services
             if (!string.IsNullOrEmpty(selectedNation))
             {
                 courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
+            }
+
+            if (!string.IsNullOrEmpty(selectedWeekdays)) 
+            {
+                List<string> weekdayList = selectedWeekdays.Split(',').ToList();
+                List<int> memberIds = courseMainInfoQuery.Select(c => c.MemberId).ToList();
+                var availableTimeSlotsInfo = await GetAvailableTimeSlotsAsync(memberIds);
+
+                foreach (string weekDay in weekdayList) 
+                {
+                    availableTimeSlotsInfo = availableTimeSlotsInfo.Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekDay))).ToList();
+                }
+                var filteredMemberIds = availableTimeSlotsInfo.Select(ts => ts.MemberId).ToList();
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => filteredMemberIds.Contains(c.MemberId));
             }
 
             if (!string.IsNullOrEmpty(selectedBudget))
@@ -216,10 +232,10 @@ namespace Web.Services
         }
 
 
-        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null, string budget=null)
+        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null, string weekdays=null, string timeslots=null, string budget=null)
         {
             IQueryable<CourseInfoViewModel> courseQuery = GetCourseMainInfoQuery();
-            courseQuery = ApplyCourseMainInfoQueryFilters(courseQuery, subject, nation, budget);
+            courseQuery = await ApplyCourseMainInfoQueryFilters(courseQuery, subject, nation, weekdays, timeslots, budget);
 
             return await courseQuery.CountAsync();
         }

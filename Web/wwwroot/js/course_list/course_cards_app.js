@@ -12,6 +12,8 @@ const courseCardsApp = Vue.createApp({
             loading: true,
             selectedSubject: null,
             selectedNation: null,
+            selectedWeekdays: [],
+            selectedTimeslots: [],
             selectedBudget: null,
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
             bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array          
@@ -49,6 +51,12 @@ const courseCardsApp = Vue.createApp({
                 }
                 if (this.selectedNation) {
                     url += `&nation=${this.selectedNation}`;
+                }
+                if (this.selectedWeekdays.length > 0) {
+                    url += `&weekdays=${this.selectedWeekdays.join(',')}`;
+                }
+                if (this.selectedTimeslots.length > 0) {
+                    url += `&timeslots=${this.selectedTimeslots.join(',')}`;
                 }
                 if (this.selectedBudget) {
                     url += `&budget=${this.selectedBudget}`;
@@ -156,6 +164,12 @@ const courseCardsApp = Vue.createApp({
                 if (this.selectedNation) {
                     url += `?nation=${this.selectedNation}`;
                 }
+                if (this.selectedWeekdays.length > 0) {
+                    url += `?weekdays=${this.selectedWeekdays.join(',')}`;
+                }
+                if (this.selectedTimeslots.length > 0) {
+                    url += `?timeslots=${this.selectedTimeslots.join(',')}`;
+                }
                 if (this.selectedBudget) {
                     url += `?budget=${this.selectedBudget}`;
                 }
@@ -163,7 +177,6 @@ const courseCardsApp = Vue.createApp({
 
                 if (response.ok) {
                     const totalCourseQty = await response.json();
-                    console.log(totalCourseQty);
                     this.totalPages = Math.ceil(totalCourseQty / this.pageSize);
                 }
             } catch (e) {
@@ -197,6 +210,12 @@ const courseCardsApp = Vue.createApp({
                 queryParams.delete('nation');
             }
 
+            if (this.selectedWeekdays && this.selectedWeekdays.length > 0) {
+                queryParams.set('weekdays', this.selectedWeekdays.join(','));
+            } else {
+                queryParams.delete('weekdays');
+            }
+
             if (this.selectedBudget) {
                 queryParams.set('budget', this.selectedBudget);
             } else {
@@ -218,6 +237,14 @@ const courseCardsApp = Vue.createApp({
             this.applyFilter();
         },
         //3. 時段
+        filterByWeekday() {
+            //v-model已綁定, 不用再push到selectedWeekdays
+            this.applyFilter();
+        },
+        filterByTimeslot(timeslot) {
+
+        },
+
         //4. 預算區間
         filterByBudget(budget) {
             this.selectedBudget = budget;

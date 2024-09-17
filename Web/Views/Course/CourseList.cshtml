@@ -65,36 +65,36 @@
                         <div class="col-12 weekday-checkbox-wrapper d-flex">
                             <div class="col-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="monday" id="monday"
-                                           name="weekday">
+                                    <input class="form-check-input" type="checkbox" value="1" id="monday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekday">
                                     <label class="form-check-label" for="monday">
                                         週一
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="tuesday" id="tuesday"
-                                           name="weekday">
+                                    <input class="form-check-input" type="checkbox" value="2" id="tuesday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekday">
                                     <label class="form-check-label" for="tuesday">
                                         週二
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="wednesday" id="wednesday"
-                                           name="weekday">
+                                    <input class="form-check-input" type="checkbox" value="3" id="wednesday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekday">
                                     <label class="form-check-label" for="wednesday">
                                         週三
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="thursday" id="thursday"
-                                           name="weekday">
+                                    <input class="form-check-input" type="checkbox" value="4" id="thursday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekday">
                                     <label class="form-check-label" for="thursday">
                                         週四
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="friday" id="friday"
-                                           name="weekday">
+                                    <input class="form-check-input" type="checkbox" value="5" id="friday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekday">
                                     <label class="form-check-label" for="friday">
                                         週五
                                     </label>
@@ -102,15 +102,15 @@
                             </div>
                             <div class="col-6">                          
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="saturday" id="saturday"
-                                           name="weekday">
+                                    <input class="form-check-input" type="checkbox" value="6" id="saturday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekday">
                                     <label class="form-check-label" for="saturday">
                                         週六
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="sunday" id="sunday"
-                                           name="weekday">
+                                    <input class="form-check-input" type="checkbox" value="0" id="sunday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekday">
                                     <label class="form-check-label" for="sunday">
                                         週日
                                     </label>
