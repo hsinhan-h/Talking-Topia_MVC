@@ -25,6 +25,11 @@ namespace Web.Controllers.Api
             return Ok(booking);
         }
 
+        /// <summary>
+        /// 課程儲存
+        /// </summary>
+        /// <param name="Category"></param>
+        /// <returns></returns>
         [HttpPost("SaveToCouresData")]
         //public async Task<IActionResult> SaveToCoures()
         public async Task<IActionResult> SaveToCoures([FromBody] CourseDetailDto Category)
@@ -43,11 +48,23 @@ namespace Web.Controllers.Api
 
             return Ok();
         }
-
+        //暫時
         public class CourseDetailDto
         {
             public string CourseCategory { get; set; }
             public string SubTitle { get; set; } // 添加與前端相匹配的屬性
+        }
+
+        [HttpGet("GetSubjectsByCategoryId/{courseCategoryId}")]
+        public IActionResult GetSubjectsByCategoryId(int courseCategoryId)
+        {
+            var subjects = _bookingService.GetSubjectsByCategoryId(courseCategoryId);
+            if (subjects == null || !subjects.Any())
+            {
+                return NotFound("找不到課程科目");
+            }
+
+            return Ok(subjects);
         }
     }
 }

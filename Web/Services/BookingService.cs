@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using Web.Entities;
 using Web.Repository;
@@ -228,6 +229,21 @@ namespace Web.Services
                 _repository.Update(course);
                 _repository.SaveChanges();
             }
+        }
+        /// <summary>
+        /// 取得課程科目
+        /// </summary>
+        /// <param name="courseCategoryId"></param>
+        /// <returns></returns>
+        public IEnumerable<CourseSubject> GetSubjectsByCategoryId(int courseCategoryId)
+        {
+            return _repository.GetAll<CourseSubject>()
+                .Where(s => s.CourseCategoryId == courseCategoryId)
+                .Select(s => new CourseSubject
+                {
+                    SubjectId = s.SubjectId,
+                    SubjectName = s.SubjectName
+                }).ToList();
         }
     }
 }

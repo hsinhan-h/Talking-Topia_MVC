@@ -284,7 +284,8 @@
                         <div class="row mb-2">
                             <div class="col-12 col-md-2">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" aria-label="Default select example">
+                                    <select class="form-select" aria-label="Default select example" 
+                                    v-model="selectedCourseCategoryId" v-on:change="fetchSubjects">
                                         <option selected>請選擇</option>
                                         @foreach (var item in CategoryList.CourseCategoryList)
                                         {
@@ -297,11 +298,10 @@
                             </div>
                             <div class="col-12 col-md-2">
                                 <div class="form-floating mb-3">
-                                    <input type="text"
-                                           class="form-control"
-                                           id="floatingInput2"
-                                           placeholder=""
-                                           value="" />
+                                    <!-- 動態顯示科目的下拉選單 -->
+                                    <select class="form-select" aria-label="Subjects select">
+                                        <option v-for="subject in subjects" :value="subject.subjectId">[[ subject.subjectName ]]</option>
+                                    </select>
                                     <label for="floatingInput2">課程科目(必填)</label>
                                 </div>
                             </div>
@@ -442,7 +442,10 @@
         data() {
             return {
                 bookingDetails: {},
-                courseCategory: ''
+                courseCategory: '', //存檔的欄位
+
+                selectedCourseCategoryId: null, // 儲存下拉的 CourseCategoryId
+                subjects: [] // 儲存 API 回傳的科目列表
             };
         },
         methods: {
@@ -466,6 +469,17 @@
                 .catch(error => {
                     console.error('傳送失敗', error);
                 });
+            },
+            fetchSubjects() {
+                if (this.selectedCourseCategoryId) {
+                    axios.get(`/api/PublishCourseApi/GetSubjectsByCategoryId/${this.selectedCourseCategoryId}`)
+                        .then(response => {
+                            this.subjects = response.data; // 將 API 回傳的科目列表賦值給 subjects
+                        })
+                        .catch(error => {
+                            console.error("There was an error fetching the subjects!", error);
+                        });
+                }
             }
         }
     }).mount('#app'); // mount 到 id 為 #app 的元素
