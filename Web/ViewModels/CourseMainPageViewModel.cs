@@ -73,8 +73,8 @@ namespace Web.ViewModels
 
     public class TutorExperience 
     {
-        public int StartYear { get; set; }
-        public int EndYear { get; set; }
+        public string StartYear { get; set; }
+        public string EndYear { get; set; }
         public string WorkTitle { get; set; }
     }
     public class TutorProfessionList

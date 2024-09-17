@@ -50,12 +50,17 @@ namespace Web.ViewModels
         /// 證照
         /// </summary>
         public List<LicenseData> License { get; set; } = new List<LicenseData>();
+
+
         public CourseStatus Coursestatus { get; set; }
 
         public bool HasCourses
         {
             get { return Course != null && Course.Any(); }
         }
+
+        public bool Success { get; set; } 
+        public string Message { get; set; } 
     }
 
 
@@ -68,8 +73,8 @@ namespace Web.ViewModels
     }
     public class WorkExp
     {
-        public DateTime WorkStartDate { get; set; }
-        public DateTime WorkEndDate { get; set; }
+        public DateOnly WorkStartDate { get; set; }
+        public DateOnly WorkEndDate { get; set; }
         public string WorkName { get; set; }
     }
     public class CategoryData
