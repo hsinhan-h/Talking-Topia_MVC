@@ -67,7 +67,12 @@
                 </template>              
             </button>
             <ul class="dropdown-menu px-3 py-2 px-md-4 py-md-3">
-                <li class="col-12">選擇時間段</li>             
+                <li class="col-12 d-flex justify-content-between">
+                    <span>選擇時間段</span>
+                    <span v-if="selectedWeekdays.length > 0 || selectedTimeslots.length > 0">
+                        <button class="dropdown-item cancel-filter-btn" type="button" v-on:click="clearWeekdayAndTimeslotFilter"><strong>取消篩選</strong>   <i class="fa-solid fa-x"></i></button>
+                    </span>
+                </li>               
                 <li class="checkbox-wrapper col-12 d-flex">                       
                     <div class="mt-2 col-6 weekday-checkbox">
                         <div class="fw-bolder col-12">星期</div>
