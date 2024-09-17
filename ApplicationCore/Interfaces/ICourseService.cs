@@ -9,5 +9,8 @@ namespace ApplicationCore.Interfaces
     public interface ICourseService
     {
         public bool IsCourse(int courseId);
+
+        public int CreateReviews(int studentId, int courseId, string reviewContent);
+
     }
 }

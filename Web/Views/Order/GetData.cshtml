@@ -1,4 +1,4 @@
-﻿@model ShoppingCartInfoListViewModel
+﻿@model OrderResultListViewModel
 
 @section topCSS {
     <link rel="stylesheet" href="~/css/ShoppingCartInfo.css" />
@@ -14,7 +14,7 @@
 
     <!-- 訂單資訊 -->
     <h3>訂單資訊</h3>
-    @foreach (var item in Model.ShoppingCartInfoList)
+    @foreach (var item in Model.OrderResult)
     {
         var itemId = item.CourseId;
 

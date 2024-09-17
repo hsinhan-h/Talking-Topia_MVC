@@ -17,10 +17,10 @@ namespace Web.Services
         public async Task<TutorDataViewModel> GetTutorDataAsync(int? memberId)
         {
 
-            var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
+            var istutor = await (from member in _repository.GetAll<Member>()
                                          where member.MemberId == memberId
-                                         select member.IsVerifiedTutor).FirstOrDefaultAsync();
-            if (isVerifiedTutor)
+                                         select member.IsTutor).FirstOrDefaultAsync();
+            if (istutor)
             {
                 var tutorData = await (from member in _repository.GetAll<Member>()
                                        join tutortimslot in _repository.GetAll<TutorTimeSlot>()
@@ -75,16 +75,16 @@ namespace Web.Services
         }
         public async Task<TutorDataViewModel> GetTutorCourseDataAsync(int? memberId)
         {
-            var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
-                                         where member.MemberId == memberId
-                                         select member.IsVerifiedTutor).FirstOrDefaultAsync();
+            var istutor = await (from member in _repository.GetAll<Member>()
+                                 where member.MemberId == memberId
+                                 select member.IsTutor).FirstOrDefaultAsync();
 
             var tutorCourseData = new TutorDataViewModel
             {
                 Course = new List<CategoryData>()
             };
 
-            if (isVerifiedTutor)
+            if (istutor)
             {
                 tutorCourseData.Course = await (from member in _repository.GetAll<Member>()
                                                 join memberPreference in _repository.GetAll<MemberPreference>()
@@ -105,15 +105,15 @@ namespace Web.Services
         }
         public async Task<TutorDataViewModel> GetCoursestatusAsync(int? memberId)
         {
-            var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
-                                         where member.MemberId == memberId
-                                         select member.IsVerifiedTutor).FirstOrDefaultAsync();
+            var istutor = await (from member in _repository.GetAll<Member>()
+                                 where member.MemberId == memberId
+                                 select member.IsTutor).FirstOrDefaultAsync();
             var tutorCourseData = new TutorDataViewModel();
-            if (!isVerifiedTutor)
+            if (!istutor)
             {
                 return tutorCourseData;
             }
-            if (isVerifiedTutor)
+            if (istutor)
             {
                 tutorCourseData.Coursestatus = await (from member in _repository.GetAll<Member>()
                                                       join applylist in _repository.GetAll<ApplyList>()
@@ -158,14 +158,14 @@ namespace Web.Services
         //取得可預約時段的方法
         public async Task<TutorDataViewModel> GetTutorReserveTimeAsync(int? memberId)
         {
-            var isVerifiedTutor = await (from member in _repository.GetAll<Member>()
-                                         where member.MemberId == memberId
-                                         select member.IsVerifiedTutor).FirstOrDefaultAsync();
+            var istutor = await (from member in _repository.GetAll<Member>()
+                                 where member.MemberId == memberId
+                                 select member.IsTutor).FirstOrDefaultAsync();
             var tutortime = new TutorDataViewModel
             {
                 AvailableReservation = new List<AvailReservation>()
             };
-            if (!isVerifiedTutor)
+            if (!istutor)
             {
                 return tutortime;
             }
@@ -188,7 +188,7 @@ namespace Web.Services
 
 
         //Creat
-        public async Task<TutorDataViewModel> CreatTutorData()
+        public TutorDataViewModel CreatTutorData()
         {
             return (new TutorDataViewModel());
 
