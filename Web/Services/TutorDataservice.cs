@@ -53,8 +53,8 @@ namespace Web.Services
                                                    //WorkEndDate = wexp.WorkEndDate,
                                                    WorkName = wexp.WorkName
                                                }).ToList(),
-                                           License = (from memb in _repository.GetAll<Member>()
-                                                      join license in _repository.GetAll<ProfessionalLicense>()
+                                           License = (from memb in _repository.GetAll<Entities.Member>()
+                                                      join license in _repository.GetAll<Entities.ProfessionalLicense>()
                                                       on memb.MemberId equals license.MemberId
                                                       where memb.MemberId == memberId
                                                       select new LicenseData
@@ -188,7 +188,7 @@ namespace Web.Services
     try
     {
         // 新增 Member 資料
-        var member = new Member
+        var member = new Entities.Member
         {
             NativeLanguage = qVM.NativeLanguage,
             SpokenLanguage = qVM.SpokenLanguage,
@@ -218,8 +218,8 @@ namespace Web.Services
         // 返回成功結果
         return new TutorDataViewModel 
         {
-            Success = true,
-            Message = "會員資料新增成功",
+            //Success = true,
+            //Message = "會員資料新增成功",
 
         };
     }
@@ -229,8 +229,8 @@ namespace Web.Services
         await _repository.RollbackAsync();
         return new TutorDataViewModel
         {
-            Success = false,
-            Message = $"資料處理發生錯誤: {ex.Message}"
+            //Success = false,
+            //Message = $"資料處理發生錯誤: {ex.Message}"
         };
     }
 }
