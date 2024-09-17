@@ -25,7 +25,7 @@ const courseCardsApp = Vue.createApp({
         const params = new URLSearchParams(window.location.search);
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
         this.selectedSubject = params.get('subject') || null;
-        this.selectedNation = params.get('nation') || null;       
+        this.selectedNation = params.get('nation') || null;
         this.selectedBudget = params.get('budget') || null;       
         this.fetchCourses();
         this.fetchCategories();
@@ -216,6 +216,12 @@ const courseCardsApp = Vue.createApp({
                 queryParams.delete('weekdays');
             }
 
+            if (this.selectedTimeslots && this.selectedTimeslots.length > 0) {
+                queryParams.set('timeslots', this.selectedTimeslots.join(','));
+            } else {
+                queryParams.delete('timeslots');
+            }
+
             if (this.selectedBudget) {
                 queryParams.set('budget', this.selectedBudget);
             } else {
@@ -237,12 +243,9 @@ const courseCardsApp = Vue.createApp({
             this.applyFilter();
         },
         //3. 時段
-        filterByWeekday() {
+        filterByWeekdayAndTimeSlot() {
             //v-model已綁定, 不用再push到selectedWeekdays
             this.applyFilter();
-        },
-        filterByTimeslot(timeslot) {
-
         },
 
         //4. 預算區間
