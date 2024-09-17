@@ -50,14 +50,20 @@
                                 <option value="4">50分鐘</option>
                             </select>
                         </td>
+                        @{
+                            var one = 1;
+                            var five = 5;
+                            var ten = 10;
+                            var twenty = 20;
+                        }
                         <td data-label="堂數">
                             <select class="form-select" aria-label="Default select example">
                                 <option value="1" selected>@item.CourseQuantity x NT @item.UnitPrice.ToString("#,###")/堂</option>
                                 <option value="2">====================</option>
-                                <option value="3">1 x NT @item.UnitPrice.ToString("#,###")/堂</option>
-                                <option value="4">5 x NT @item.UnitPrice.ToString("#,###")/堂</option>
-                                <option value="5">10 x NT @item.UnitPrice.ToString("#,###")/堂</option>
-                                <option value="6">20 x NT @item.UnitPrice.ToString("#,###")/堂</option>
+                                <option value="3">@one x NT @item.UnitPrice.ToString("#,###")/堂</option>
+                                <option value="4">@five x NT @item.UnitPrice.ToString("#,###")/堂</option>
+                                <option value="5">@ten x NT @item.UnitPrice.ToString("#,###")/堂</option>
+                                <option value="6">@twenty x NT @item.UnitPrice.ToString("#,###")/堂</option>
                             </select>
                         </td>
                         <td data-label="小計">

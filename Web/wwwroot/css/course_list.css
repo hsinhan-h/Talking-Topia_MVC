@@ -23,6 +23,16 @@
     color: #fff;
 }
 
+.cancel-filter-btn, .cancel-filter-btn:hover {
+    color: var(--highlight-color);
+}
+
+.cancel-filter-btn:focus {
+    background-color: var(--highlight-color);
+    color: #fff;
+}
+
+
 @media screen and (max-width: 767px) {
     .lh-tutors-filter .dropdown-toggle {
         font-size: 14px;
@@ -62,10 +72,10 @@
     box-shadow: none;
 }
 
-    .lh-tutors-filter .dropdown-menu button:focus {
-        background-color: var(--theme-color);
-        color: #fff;
-    }
+.lh-tutors-filter .dropdown-menu button:not(.cancel-filter-btn):focus {
+    background-color: var(--theme-color);
+    color: #fff;
+}
 
 .form-check-input:checked {
     background-color: var(--theme-color);

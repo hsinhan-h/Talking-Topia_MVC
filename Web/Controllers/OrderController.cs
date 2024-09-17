@@ -1,9 +1,6 @@
 ﻿using ApplicationCore.Interfaces;
-using Infrastructure.Service;
 using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Web.Controllers.Api;
 
 namespace Web.Controllers
 {
@@ -14,32 +11,24 @@ namespace Web.Controllers
         private readonly IAntiforgery _antiforgery;
         private readonly IOrderService _orderService;
         private readonly IMemberService _memberService;
-        private readonly IShoppingCartService _shoppingCartService;
         private readonly OrderViewModelService _orderVMService;
-        private readonly ECpayService _paymentResultService;
-        private readonly ShoppingCartViewModelService _shoppingCartVMService;
+        private int _orderId;
 
-        public OrderController(ILogger<OrderController> logger, IAntiforgery antiforgery, IOrderService orderService, IMemberService memberService, IShoppingCartService shoppingCartService, OrderViewModelService orderVMService, ECpayService paymentResultService, ShoppingCartViewModelService shoppingCartVMService)
+        public OrderController(ILogger<OrderController> logger, IAntiforgery antiforgery, IOrderService orderService, IMemberService memberService, OrderViewModelService orderVMService)
         {
             _logger = logger;
             _antiforgery = antiforgery;
             _orderService = orderService;
             _memberService = memberService;
-            _shoppingCartService = shoppingCartService;
             _orderVMService = orderVMService;
-            _paymentResultService = paymentResultService;
-            _shoppingCartVMService = shoppingCartVMService;
         }
 
         /// <summary>
         /// 交易成功導回頁
         /// </summary>
-        /// <param name="memberId"></param>
-        /// <returns></returns>
-        public IActionResult Index(int memberId)
+        public IActionResult Index()
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
+
             return View();
         }
 
@@ -48,16 +37,11 @@ namespace Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetData(int rtnCode, int orderId = 20)
+        public async Task<IActionResult> GetData()
         {
-            var orderStatus = _paymentResultService.ValidatePaymentResult(rtnCode);
-            var result = await _orderService.UpdateOrderAsync(orderId, orderStatus);
-            //var order = await _orderService.GetAllOrder(orderId);
-            var order = await _orderVMService.GetData(orderId);
-            if (order == null)
-            {
-                return NotFound();
-            }
+
+            var order = await _orderVMService.GetData(_orderId);
+            if (order == null) return BadRequest("找不到訂單!!!!!!!?");
 
             return View(order);
         }
@@ -67,26 +51,25 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="memberId"></param>
         /// <param name="paymentType"></param>
-        /// <param name="orderStatusId"></param>
+        /// <param name="taxIdNumber"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitToOrder(int memberId, string paymentType, string taxIdNumber)
         {
             //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
-            if (memberId < 0)
-            { return BadRequest("缺少必要的參數"); }
+            //var memberId = await _memberService.GetMemberId(user);
+            if (!_memberService.IsMember(memberId))
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (string.IsNullOrEmpty(paymentType))
             { return BadRequest("未選擇付款方式"); }
             if (string.IsNullOrEmpty(taxIdNumber))
             { taxIdNumber = ""; }
 
-            bool isOrderCreated = await _orderService.CreateOrderAsync(memberId, paymentType, taxIdNumber);
-            if (isOrderCreated)
-            {
-                //return RedirectToAction(nameof(PaymentController.New), "Payment");
+            _orderId = await _orderService.CreateOrderAsync(memberId, paymentType, taxIdNumber);
 
+            if (_orderId > 0)
+            {
                 // 使用 HttpClientHandler 來處理 Cookies，確保 AntiForgeryToken 和 Session 被維護
                 var handler = new HttpClientHandler
                 {
@@ -105,7 +88,8 @@ namespace Web.Controllers
                     // 構建 POST 請求的表單資料，包括防偽驗證令牌
                     var values = new Dictionary<string, string>
                     {
-                        { "__RequestVerificationToken", tokens.RequestToken }  // 添加防偽驗證令牌
+                        { "__RequestVerificationToken", tokens.RequestToken },  // 添加防偽驗證令牌
+                         { "OrderId", _orderId.ToString() }
                     };
 
                     // 將表單資料編碼成 x-www-form-urlencoded 格式
@@ -131,14 +115,7 @@ namespace Web.Controllers
             {
                 // 如果訂單創建失敗，返回 BadRequest 錯誤訊息
                 return BadRequest("發送請求到 PaymentController.New 失敗。");
-                // todo: 可以帶訊息替換View內的訊息嗎？還是需要再做失敗頁面?
-                //return RedirectToAction(nameof(OrderFailed), new { MemberId = memberId });
             }
-        }
-
-        public IActionResult OrderFailed()
-        {
-            return View();
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using ApplicationCore.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using System.Runtime.InteropServices;
-using Web.Entities;
 
 namespace Web.Controllers
 {
@@ -29,7 +26,7 @@ namespace Web.Controllers
             var user = HttpContext.User.Identity.Name;
             //var memberId = await _memberService.GetMemberId(user);
             if (!_memberService.IsMember(memberId))
-            { return RedirectToAction(nameof(AccountController.Account), "Home"); }
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
             var result = new ShoppingCartListViewModel
             {
@@ -46,7 +43,7 @@ namespace Web.Controllers
             var user = HttpContext.User.Identity.Name;
             //var memberId = await _memberService.GetMemberId(user);
             if (!_memberService.IsMember(memberId))
-            { return RedirectToAction(nameof(AccountController.Account), "Home"); }
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (!_courseService.IsCourse(courseId))
             { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }
             if (!_shoppingCartService.HasCartItem(memberId, courseId))

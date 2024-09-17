@@ -13,6 +13,7 @@ namespace Infrastructure.Configurations.ECpay
         private IPayment _payment;
         private Random random = new Random();
         #endregion
+        private string _transactionNo;
 
         #region CTOR
         public PaymentTransactionConfiguration(PaymentConfiguration configuration, Action<IPayment> setPayment)
@@ -34,6 +35,7 @@ namespace Infrastructure.Configurations.ECpay
                 TradeDesc = HttpUtility.UrlEncode(description),
                 MerchantTradeDate = date.Value.ToString("yyyy/MM/dd HH:mm:ss")
             };
+            _transactionNo = _payment.MerchantTradeNo;
             if (remark != null)
                 _payment.Remark = remark;
 
@@ -96,6 +98,11 @@ namespace Infrastructure.Configurations.ECpay
             if (url != null) _payment.ItemURL = url;
 
             return _configuration;
+        }
+
+        public string SentTransactionNo()
+        {
+            return _transactionNo;
         }
 
         #region Private Methods
