@@ -26,13 +26,14 @@ namespace ApplicationCore.Services
             return _courseRepository.Any(c => c.CourseId == courseId);
         }
 
-        public int CreateReviews(int studentId, int courseId, string NewReviewContent)
+        public int CreateReviews(int studentId, int courseId,byte NewReviewRating, string NewReviewContent)
         {
             try
             {                
                 var reviewEntity = new Review()
                 {
                     StudentId = studentId,
+                    Rating = NewReviewRating,
                     CourseId = courseId,
                     CommentText = NewReviewContent,
                     Cdate = DateTime.Now
