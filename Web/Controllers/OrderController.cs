@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 using Microsoft.AspNetCore.Antiforgery;
 using System.Net;
 
@@ -11,6 +12,7 @@ namespace Web.Controllers
         private readonly IAntiforgery _antiforgery;
         private readonly IOrderService _orderService;
         private readonly IMemberService _memberService;
+        private readonly IShoppingCartService _shoppingCartService;
         private readonly OrderViewModelService _orderVMService;
         private int _orderId;
 
@@ -40,11 +42,15 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetData()
         {
-
+            _orderId = 29;
             var order = await _orderVMService.GetOrderResultViewModelAsync(_orderId);
             if (order == null) return BadRequest("找不到訂單!!!!!!!?");
+            var result = new OrderResultListViewModel
+            {
+                OrderResult = order,
+            };
 
-            return View(order);
+            return View(result);
         }
 
         /// <summary>
@@ -56,7 +62,7 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitToOrder(int memberId, string paymentType, string taxIdNumber)
+        public async Task<IActionResult> SubmitToOrder(int memberId, string paymentType, string taxIdNumber, List<CartItemUpdateViewModel> Items)
         {
             //var user = HttpContext.User.Identity.Name;
             //var memberId = await _memberService.GetMemberId(user);
@@ -64,8 +70,19 @@ namespace Web.Controllers
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (string.IsNullOrEmpty(paymentType))
             { return BadRequest("未選擇付款方式"); }
-            if (string.IsNullOrEmpty(taxIdNumber))
-            { taxIdNumber = ""; }
+
+            taxIdNumber ??= string.Empty;
+
+            //if (string.IsNullOrEmpty(taxIdNumber))
+            //{ taxIdNumber = ""; }
+
+            foreach (var item in Items)
+            {
+                
+                _shoppingCartService.UpdateItem(memberId, item.CourseId, item.CourseQuantity, item.CourseLength, item.SubtotalNTD);
+            }
+
+
 
             _orderId = await _orderService.CreateOrderAsync(memberId, paymentType, taxIdNumber);
 

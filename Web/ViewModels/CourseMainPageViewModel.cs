@@ -64,6 +64,7 @@ namespace Web.ViewModels
         public int NewReviewRating  { get; set; }
         public int NewReviewStudentId { get; set; }
         public int NewReviewCourseId { get; set; }
+
         [Required(ErrorMessage = "請輸入評論內容")]
         [StringLength(500, ErrorMessage = "評論內容不可超過500個字")]
         [Display(Name = "評論內容")]

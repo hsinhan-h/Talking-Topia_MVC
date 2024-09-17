@@ -19,12 +19,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.ShoppingCartList)
+                @for (var i = 0; i < Model.ShoppingCartList.Count; i++)
                 {
+                    var item = Model.ShoppingCartList[i];
                     <tr>
                         <td data-label="商品">
                             <a href="#" class="d-flex align-items-center lh-backstage-shoppingcart-course-name">
-                                <img src="https://picsum.photos/50/50/?random=10" align="middle"
+                                <img src="@item.HeadShotImage" align="middle"
                                      class="teacher-img-img" style="width: 50px;" /><p class="flex-grow-1 m-0" id="productInfo">@item.CourseTitle</p>
                             </a>
                             <form asp-controller="ShoppingCart" asp-action="Delete" method="post">
@@ -43,11 +44,9 @@
                         <td data-label="科目">@item.CourseSubject</td>
                         <td data-label="類別">@item.CourseCategory</td>
                         <td data-label="時間">
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="1" selected>@item.CourseLength</option>
-                                <option value="2">====================</option>
-                                <option value="3">25分鐘</option>
-                                <option value="4">50分鐘</option>
+                            <select id="timeSelect-@i" class="form-select" aria-label="Default select example" onchange="updateSubtotalByTime(@item.TFUnitPrice, @item.FTUnitPrice, @i)">
+                                <option value="25">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
+                                <option value="50">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option>
                             </select>
                         </td>
                         @{
@@ -57,18 +56,18 @@
                             var twenty = 20;
                         }
                         <td data-label="堂數">
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="1" selected>@item.CourseQuantity x NT @item.UnitPrice.ToString("#,###")/堂</option>
-                                <option value="2">====================</option>
-                                <option value="3">@one x NT @item.UnitPrice.ToString("#,###")/堂</option>
-                                <option value="4">@five x NT @item.UnitPrice.ToString("#,###")/堂</option>
-                                <option value="5">@ten x NT @item.UnitPrice.ToString("#,###")/堂</option>
-                                <option value="6">@twenty x NT @item.UnitPrice.ToString("#,###")/堂</option>
+                            <select id="lh-sc-quantitySelect-@i" class="form-select" aria-label="Default select example" onchange="updateSubtotalByTime(@item.TFUnitPrice, @item.FTUnitPrice, @i)">
+                                <option value="1" selected>@item.CourseQuantity 堂</option>
+                                <option value="0">====================</option>
+                                <option value="1">@one 堂</option>
+                                <option value="5">@five 堂</option>
+                                <option value="10">@ten 堂</option>
+                                <option value="20">@twenty 堂</option>
                             </select>
                         </td>
                         <td data-label="小計">
-                            <span class="price discount">NT$@item.SubtotalNTD.ToString("#,###")</span><br>
-                            <p class="discount-info">省NT$200</p>
+                            <span id="subtotal-@i" class="price discount">NT$ @((@item.SubtotalNTD * @item.Discount).ToString("#,###"))</span><br>
+                            <p id="discount-info-@i" class="discount-info">省NT$ @((@item.SubtotalNTD * (1 - @item.Discount)).ToString("#,###")) </p>
                         </td>
                         <td class="del" data-label="刪除">
                             <form asp-controller="ShoppingCart" asp-action="Delete" method="post">
@@ -185,19 +184,21 @@
                     @{
                         decimal total = 0;
                     }
-                    @foreach (var item in Model.ShoppingCartList)
+                    @for (var i = 0; i < Model.ShoppingCartList.Count; i++)
                     {
+                        var item = Model.ShoppingCartList[i];
+
                         <div class="card-teacher">
                             <div class="card-teacher-info">
                                 <p class="card-title teacher-info">
                                     🔥@item.FullName💼@item.CourseTitle🎯
                                 </p>
                                 <p class="card-text teacher-classroom">
-                                    課程內容: @item.CourseSubject | @item.CourseLength 分鐘 | @item.CourseQuantity 堂
+                                    課程內容: <span id="details-time-@i">  @item.CourseSubject | @item.CourseLength </span> | <span id="details-quantity-@i">@item.CourseQuantity 堂</span>
                                 </p>
                             </div>
                             <div class="card-teacher-price">
-                                <p>NT$@item.SubtotalNTD.ToString("#,###")</p>
+                                <p id="details-subtotal-@i">NT$@item.SubtotalNTD.ToString("#,###")</p>
                             </div>
                         </div>
                         total += @item.SubtotalNTD;
@@ -208,7 +209,7 @@
                             <p class="">總價：</p>
                         </div>
                         <div class="total-price">
-                            <p>NT$@total.ToString("#,###")</p>
+                            <p id="total-amount">NT$@total.ToString("#,###")</p>
                         </div>
                     </div>
                     <div class="shop-hori-line"></div>
@@ -238,16 +239,3 @@
 @section endJS {
     <script src="~/js/shoppingcart.js"></script>
 }
-
-@*
-    <div class="remark">
-    <p>
-    100% 滿意保證：當您不滿意教師時，能免費轉為 TalkingTopia
-    幣更換教師，如因教師品質問題造成體驗不佳可全額退款總金額包含服務費。
-    </p>
-    </div>
-
-    使用submit導轉至綠界API介接網址(測試環境) https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5
-    Content Type ：application/x-www-form-urlencoded
-    HTTP Method ：POST
-    *@

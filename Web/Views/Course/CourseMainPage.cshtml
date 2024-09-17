@@ -127,11 +127,11 @@
                         <h3 class="my-2">對課程的感想</h3>
                         <div class="comment-rating-stars w-100 d-flex " id="app">
                             <p class="rating-star-sign">留下你對此課程的評分:</p>
-                            <p-rating class="comment-rating-little-star my-1" v-model="rating"></p-rating>
+                            <p-rating class="comment-rating-little-star my-1" name="rating" v-model="rating"></p-rating>
                         </div>
                         <div class="comment-input-section my-3 d-flex form-group">
                             <input asp-for="NewReviewContent" type="text comment-input-box w-100 my-3" class="form-control" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
-                            <input class="btn comment-submit-btn my-3" type="submit" value="送出">
+                            <input class="btn comment-submit-btn my-3" type="submit" value="送出" v-on:click="submitRating">
                         </div>
                     </div>
                 </form>

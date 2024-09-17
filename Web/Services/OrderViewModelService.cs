@@ -2,7 +2,7 @@
 using Humanizer;
 
 namespace Web.Services
-{
+{   
     public class OrderViewModelService
     {
         private readonly IRepository _repository;

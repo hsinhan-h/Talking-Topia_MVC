@@ -4,7 +4,30 @@ const app = createApp({
         return {
             rating: null
         }
+    },
+    methods: {
+        submitRating() {
+            // 構建 FormData 並提交 rating 資料
+            let formData = new FormData();
+            formData.append('Rating', this.rating);
+            
+
+            // 使用 fetch 提交資料到後端控制器
+            fetch('/Course/CreateCourseReview', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('成功:', data);
+                    // 在這裡可以處理提交成功後的邏輯
+                })
+                .catch(error => {
+                    console.error('錯誤:', error);
+                });
+        }
     }
+
 })
 
 app.use(PrimeVue.Config);

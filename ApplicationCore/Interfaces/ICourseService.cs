@@ -10,7 +10,7 @@ namespace ApplicationCore.Interfaces
     {
         public bool IsCourse(int courseId);
 
-        public int CreateReviews(int studentId, int courseId, string reviewContent);
+        public int CreateReviews(int studentId, int courseId, byte NewReviewRating, string NewReviewContent);
 
     }
 }
