@@ -40,20 +40,20 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCourseReview([FromForm] string NewReviewContent)
+        public IActionResult CreateCourseReview([FromForm]byte rating, [FromForm] string NewReviewContent)
         {
-
-           
            
             try 
             {
-                var createReview = _icourseService.CreateReviews(2,2, NewReviewContent);
+                var createReview = _icourseService.CreateReviews(2,2, rating, NewReviewContent);
                 return RedirectToAction(nameof(CourseMainPage), new { courseId =2 });
+               
 
             }
             catch (Exception ex)
             {               
                 return Content("訂單建立失敗!");
+               
             }
         }
 
