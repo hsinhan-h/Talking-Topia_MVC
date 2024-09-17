@@ -29,6 +29,7 @@ namespace Web.Controllers
         public IActionResult Index()
         {
 
+
             return View();
         }
 
@@ -40,7 +41,7 @@ namespace Web.Controllers
         public async Task<IActionResult> GetData()
         {
 
-            var order = await _orderVMService.GetData(_orderId);
+            var order = await _orderVMService.GetOrderResultViewModelAsync(_orderId);
             if (order == null) return BadRequest("找不到訂單!!!!!!!?");
 
             return View(order);
