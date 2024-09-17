@@ -279,6 +279,14 @@ const courseCardsApp = Vue.createApp({
             this.selectedBudget = null;
             this.applyFilter();
         },
+        clearAllFilter() {
+            this.selectedSubject = null;
+            this.selectedNation = null;
+            this.selectedWeekdays = [];
+            this.selectedTimeslots = [];
+            this.selectedBudget = null;
+            this.applyFilter();
+        },
 
         getWeekdayName(weekdayNumber) {
             const weekdayMapping = {
