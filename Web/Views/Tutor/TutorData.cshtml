@@ -1,8 +1,7 @@
 ﻿@model TutorDataViewModel
 
-<h1>歡迎, 會員</h1>
 
-<p>會員ID: <span id="memberIdDisplay"></span></p>
+<p style="display: none;">會員ID: <span id="memberIdDisplay"></span></p>
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
@@ -33,7 +32,8 @@
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-floating mb-3">
-                                                <input type="text"
+                                                <input asp-for="NativeLanguage"
+                                                        type="text"
                                                        class="form-control"
                                                        id="floatingInput5"
                                                        placeholder=""
@@ -43,7 +43,8 @@
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="form-floating mb-3">
-                                                <input type="text"
+                                                <input asp-for="SpokenLanguage"
+                                                       type="text"
                                                        class="form-control"
                                                        id="floatingInput6"
                                                        placeholder=""
@@ -91,6 +92,16 @@
                                             <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
                                         }
                                     </ul>
+
+                                    <h4>證照資訊</h4>
+                                    <div>
+                                        <button class="btn lh-backstage-submit-btn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#lh-backstage-tutor-application-audit">
+                                            證照資訊
+                                        </button>
+                                    </div>
+                                    
                                     <h4>可接受預約時段</h4>
                                     <div class=" d-flex flex-wrap col-10" id="reservation-list">
                                         
@@ -112,11 +123,6 @@
                                                 <div class="card-body">
                                                     <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
                                                     <p class="card-text">申請狀態：<span>@Model.Coursestatus</span></p>
-                                                    <button class="btn lh-backstage-submit-btn"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#lh-backstage-tutor-application-audit">
-                                                        證照資訊
-                                                    </button>
                                                     @*  要return回履歷 <a href="/TalkingTopia/Tutor/TutorResume.html?memberId=@Model.MemberId"
                                                                         class="btn lh-backstage-submit-btn">編輯家教資料 *@
                                                     <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
@@ -131,39 +137,12 @@
                                             <div class="card-body">
                                                 <p class="card-text">申請科目：<span></span></p>
                                                 <p class="card-text">申請狀態：<span></span></p>
-                                                <button class="btn lh-backstage-submit-btn"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#lh-backstage-tutor-application-audit">
-                                                    證照資訊
-                                                </button>
                                                 <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
                                                     編輯家教資料
                                                 </a>
                                             </div>
-                                        }
-
-                                           
+                                        } 
                                     </div>
-                                    @* <div class="card col-12 col-md-3 me-2 p-2">
-                                    <img src="~/image/backstage/subjects.png"
-                                    class="card-img-top w-100" />
-                                    <div class="card-body">
-                                    <p class="card-text">申請科目：<span>國文</span></p>
-                                    <p class="card-text">
-                                    申請狀態：<span>未審核</span>
-                                    </p>
-                                    <button class="btn lh-backstage-submit-btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#lh-backstage-tutor-application-audit">
-                                    證照資訊
-                                    </button>
-                                    <a href="/TalkingTopia/Apply_teacher/myResume.html"
-                                    class="btn lh-backstage-submit-btn">
-                                    編輯家教資料
-                                    </a>
-                                    </div>
-                                    </div> *@
-
                                 </div>
                                @*  apply status 為true 預設0*@
                                 <div class="d-flex justify-content-end">
@@ -197,14 +176,12 @@
                 <div class="modal-body">
                     <section class="lh-backstage-lh-backstage-tutor-data">
                         @*當lisence關聯修好後再測試*@
-                        @* <ul>
+                        <ul>
                             @foreach (var lisence in Model.License)
                             {
                                 <li>證照名稱：@lisence.ProfessionalLicenseName</li>
-                                <input id="prolicense" class="form-control my-1" type="file" placeholder="輸入..." value=""/>
-                                <lable for="prolicense">證照檔案：@lisence.ProfessionalLicenseUrl</lable>
                             }
-                        </ul> *@
+                        </ul>
                     </section>
                 </div>
                 <div class="modal-footer">
