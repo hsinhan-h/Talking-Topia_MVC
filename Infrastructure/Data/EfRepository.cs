@@ -12,10 +12,10 @@ namespace Infrastructure.Data
 {
     public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly TalkingTopiaContext _dbContext;
+        protected readonly TalkingTopiaDbContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public EfRepository(TalkingTopiaContext dbContext)
+        public EfRepository(TalkingTopiaDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = dbContext.Set<TEntity>();

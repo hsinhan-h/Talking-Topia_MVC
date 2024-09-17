@@ -13,12 +13,12 @@ public partial class Coupon
     /// <summary>
     /// 優惠折扣名稱
     /// </summary>
-    public string CouponName { get; set; } = null!;
+    public string CouponName { get; set; }
 
     /// <summary>
     /// 折扣代碼
     /// </summary>
-    public string CouponCode { get; set; } = null!;
+    public string CouponCode { get; set; }
 
     /// <summary>
     /// 折扣方式

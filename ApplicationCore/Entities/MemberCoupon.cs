@@ -30,7 +30,7 @@ public partial class MemberCoupon
     /// </summary>
     public DateTime Cdate { get; set; }
 
-    public virtual Coupon Coupon { get; set; } = null!;
+    public virtual Coupon Coupon { get; set; }
 
-    public virtual Member Member { get; set; } = null!;
+    public virtual Member Member { get; set; }
 }

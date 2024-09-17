@@ -18,7 +18,7 @@ public partial class Order
     /// <summary>
     /// 付款方式
     /// </summary>
-    public string PaymentType { get; set; } = null!;
+    public string PaymentType { get; set; }
 
     /// <summary>
     /// 總金額
@@ -38,7 +38,7 @@ public partial class Order
     /// <summary>
     /// 統一編號
     /// </summary>
-    public string? TaxIdNumber { get; set; }
+    public string TaxIdNumber { get; set; }
 
     /// <summary>
     /// 發票類型
@@ -48,12 +48,12 @@ public partial class Order
     /// <summary>
     /// 發票號碼
     /// </summary>
-    public string? VATNumber { get; set; }
+    public string Vatnumber { get; set; }
 
     /// <summary>
     /// 寄送Mail
     /// </summary>
-    public string? SentVatemail { get; set; }
+    public string SentVatemail { get; set; }
 
     /// <summary>
     /// 訂單狀態
@@ -61,16 +61,15 @@ public partial class Order
     public short OrderStatusId { get; set; }
 
     /// <summary>
-    /// 建立時間
-    /// </summary>
-    public DateTime Cdate { get; set; }
-
-    /// <summary>
     /// 更新時間
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual Member Member { get; set; } = null!;
+    public string MerchantTradeNo { get; set; }
+
+    public string TradeNo { get; set; }
+
+    public virtual Member Member { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

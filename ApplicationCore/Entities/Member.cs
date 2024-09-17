@@ -13,7 +13,7 @@ public partial class Member
     /// <summary>
     /// 會員頭像
     /// </summary>
-    public string? HeadShotImage { get; set; }
+    public string HeadShotImage { get; set; }
 
     /// <summary>
     /// 國籍Id
@@ -28,32 +28,32 @@ public partial class Member
     /// <summary>
     /// 名字
     /// </summary>
-    public string FirstName { get; set; } = null!;
+    public string FirstName { get; set; }
 
     /// <summary>
     /// 姓氏
     /// </summary>
-    public string LastName { get; set; } = null!;
+    public string LastName { get; set; }
 
     /// <summary>
     /// 密碼
     /// </summary>
-    public string Password { get; set; } = null!;
+    public string Password { get; set; }
 
     /// <summary>
     /// 電子郵件信箱
     /// </summary>
-    public string Email { get; set; } = null!;
+    public string Email { get; set; }
 
     /// <summary>
     /// 綽號
     /// </summary>
-    public string Nickname { get; set; } = null!;
+    public string Nickname { get; set; }
 
     /// <summary>
     /// 電話
     /// </summary>
-    public string Phone { get; set; } = null!;
+    public string Phone { get; set; }
 
     /// <summary>
     /// 生日
@@ -68,22 +68,22 @@ public partial class Member
     /// <summary>
     /// 母語
     /// </summary>
-    public string? NativeLanguage { get; set; }
+    public string NativeLanguage { get; set; }
 
     /// <summary>
     /// 會的語言
     /// </summary>
-    public string? SpokenLanguage { get; set; }
+    public string SpokenLanguage { get; set; }
 
     /// <summary>
     /// 銀行代碼
     /// </summary>
-    public string? BankCode { get; set; }
+    public string BankCode { get; set; }
 
     /// <summary>
     /// 帳戶名稱
     /// </summary>
-    public string? BankAccount { get; set; }
+    public string BankAccount { get; set; }
 
     /// <summary>
     /// 最高學歷Id
@@ -93,12 +93,12 @@ public partial class Member
     /// <summary>
     /// 教師自介
     /// </summary>
-    public string? TutorIntro { get; set; }
+    public string TutorIntro { get; set; }
 
     /// <summary>
     /// 帳號
     /// </summary>
-    public string? Account { get; set; }
+    public string Account { get; set; }
 
     /// <summary>
     /// 帳號類型
@@ -120,15 +120,19 @@ public partial class Member
     /// </summary>
     public bool IsTutor { get; set; }
 
+    public int? UserId { get; set; }
+
     public virtual ICollection<ApplyList> ApplyLists { get; set; } = new List<ApplyList>();
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
-    public virtual Education? Education { get; set; }
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+
+    public virtual Education Education { get; set; }
 
     public virtual ICollection<MemberPreference> MemberPreferences { get; set; } = new List<MemberPreference>();
 
-    public virtual Nation? Nation { get; set; }
+    public virtual Nation Nation { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
@@ -140,7 +144,7 @@ public partial class Member
 
     public virtual ICollection<TutorTimeSlot> TutorTimeSlots { get; set; } = new List<TutorTimeSlot>();
 
-    public virtual WatchList? WatchList { get; set; }
+    public virtual User User { get; set; }
 
-    public virtual ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
+    public virtual WatchList WatchList { get; set; }
 }
