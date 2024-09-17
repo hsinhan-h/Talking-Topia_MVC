@@ -181,57 +181,59 @@ namespace Web.Services
 
         //Creat
         public async Task<TutorDataViewModel> CreateTutorData(TutorDataViewModel qVM)
-{
-    // 開始一個資料庫交易
-    await _repository.BeginTransActionAsync();
-    try
-    {
-        // 新增 Member 資料
-        var member = new Member
         {
-            NativeLanguage = qVM.NativeLanguage,
-            SpokenLanguage = qVM.SpokenLanguage,
-            BankAccount = qVM.BankAccount,
-            BankCode = qVM.BankCode,
-            Cdate = DateTime.Now,
-            Udate = null,
-            FirstName = "N/A",
-            LastName = "N/A",
-            Password = "N/A",
-            Email = "N/A",
-            Nickname = "N/A",
-            Phone = "N/A",
-            Gender = 0,
-            AccountType = 1,
-            IsTutor = true,
-            IsVerifiedTutor = false,
-        };
+            // 開始一個資料庫交易
+            await _repository.BeginTransActionAsync();
+            try
+            {
+                // 新增 Member 資料
+                var member = new Member
+                {
+                    NativeLanguage = qVM.NativeLanguage,
+                    SpokenLanguage = qVM.SpokenLanguage,
+                    BankAccount = qVM.BankAccount,
+                    BankCode = qVM.BankCode,
+                    Cdate = DateTime.Now,
+                    Udate = null,
+                    FirstName = "N/A",
+                    LastName = "N/A",
+                    Password = "N/A",
+                    Email = "N/A",
+                    Nickname = "N/A",
+                    Phone = "N/A",
+                    Gender = 0,
+                    AccountType = 1,
+                    IsTutor = true,
+                    IsVerifiedTutor = false,
+                };
 
-        // 使用 Repository 來新增資料
-        _repository.Create(member);
-        await _repository.SaveChangesAsync();
+                // 使用 Repository 來新增資料
+                _repository.Create(member);
+                await _repository.SaveChangesAsync();
 
-        // 提交交易
-        await _repository.CommitAsync();
+                // 提交交易
+                await _repository.CommitAsync();
 
-        // 返回成功結果
-        return new TutorDataViewModel 
-        {
-            Success = true,
-            Message = "會員資料新增成功",
+                // 返回成功結果
+                return new TutorDataViewModel
+                {
+                    Success = true,
+                    Message = "會員資料新增成功",
 
-        };
-    }
-    catch (Exception ex)
-    {
-        // 若發生錯誤則回滾交易
-        await _repository.RollbackAsync();
-        return new TutorDataViewModel
-        {
-            Success = false,
-            Message = $"資料處理發生錯誤: {ex.Message}"
-        };
-    }
-}
+                };
+            }
+            catch (Exception ex)
+            {
+                await _repository.RollbackAsync();
+
+                // 這裡捕捉並返回內部異常的詳細訊息
+                var innerException = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return new TutorDataViewModel
+                {
+                    Success = false,
+                    Message = $"資料處理發生錯誤: {innerException}"
+                };
+            }
+        }
     }
 }
