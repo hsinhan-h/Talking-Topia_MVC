@@ -1,10 +1,6 @@
-﻿using ApplicationCore.Enums;
-using ApplicationCore.Interfaces;
-using Infrastructure.Service;
+﻿using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Web.Controllers.Api;
 
 namespace Web.Controllers
 {
