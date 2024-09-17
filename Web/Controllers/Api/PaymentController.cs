@@ -87,7 +87,7 @@ namespace Web.Controllers.Api
             if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
 
             var orderStatus = EOrderStatus.Success;
-            _orderService.UpdateOrderTransactionAndStatus(_orderId, orderStatus);
+            _orderService.UpdateOrderTransactionAndStatus(_orderId, result.MerchantTradeNo, result.TradeNo ,orderStatus);
 
             return Ok("1|OK");
         }
