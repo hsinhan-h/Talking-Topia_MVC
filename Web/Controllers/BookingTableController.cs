@@ -27,8 +27,10 @@ namespace Web.Controllers
             // todo: 剩餘堂數 > 0, 允許預約
             // 寫入booking資料表, 導向預約成功頁面
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            int parsedMemberId = int.Parse(memberIdClaim.Value);
-            var memberId = await _memberService.GetMemberId(parsedMemberId);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
 
             int remainSessions = await _bookingService.GetRemainCourseQtyAsync(memberId, courseId);
             if (remainSessions > 0)
@@ -41,7 +43,7 @@ namespace Web.Controllers
             else
             {
                 //decimal price = _courseService.GetCourse25MinUnitPrice(courseId);
-                await _shoppingCartService.CreateShoppingCartAsync(1, courseId, 25, memberId, bookingDate, bookingTime);
+                await _shoppingCartService.CreateShoppingCartAsync(memberId, courseId, 25, memberId, bookingDate, bookingTime);
                 return RedirectToAction("Index", "ShoppingCart");
             }
 

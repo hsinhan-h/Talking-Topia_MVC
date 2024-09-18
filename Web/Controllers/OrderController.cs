@@ -66,8 +66,11 @@ namespace Web.Controllers
         public async Task<IActionResult> SubmitToOrder(string paymentType, string taxIdNumber, List<CartItemUpdateViewModel> Items)
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            int parsedMemberId = int.Parse(memberIdClaim.Value);
-            var memberId = await _memberService.GetMemberId(parsedMemberId);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
+
             if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (string.IsNullOrEmpty(paymentType))
