@@ -40,13 +40,13 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCourseReview([FromForm]byte rating, [FromForm] string NewReviewContent)
+        public IActionResult CreateCourseReview([FromForm] int MemberId, [FromForm] int CourseId,[FromForm]byte rating, [FromForm] string NewReviewContent)
         {
            
             try 
             {
-                var createReview = _icourseService.CreateReviews(2,2, rating, NewReviewContent);
-                return RedirectToAction(nameof(CourseMainPage), new { courseId =2 });
+                var createReview = _icourseService.CreateReviews(MemberId,CourseId, rating, NewReviewContent);
+                return RedirectToAction(nameof(CourseMainPage), new { courseId =CourseId });
                
 
             }

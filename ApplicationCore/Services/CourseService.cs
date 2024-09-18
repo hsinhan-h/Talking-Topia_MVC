@@ -51,6 +51,13 @@ namespace ApplicationCore.Services
             }
 
         }
-    
+
+        public int GetReviewRatingApiService(int courseId) 
+        {
+            var reviewList = _reviewRepository.List();
+            int reviewratinvalue = (int)reviewList.Where(r=>r.CourseId == courseId).Average(r => r.Rating);
+            return reviewratinvalue;
+        }
+
     }
 }
