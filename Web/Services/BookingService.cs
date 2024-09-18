@@ -23,6 +23,7 @@ namespace Web.Services
         /// <param name="MemberId"></param>
         /// <returns></returns>
         public async Task<BookingListViewModel> GetPublishCourseList(int MemberId)
+
         {
             // 將 courseImg 實體化為 List<CouresImagesViewModel>
             var courseImg = await (from img in _repository.GetAll<Web.Entities.CourseImage>()
@@ -36,16 +37,17 @@ namespace Web.Services
                                    }).ToListAsync();  // 確保 courseImg 是 List<CouresImagesViewModel>
 
             var bookingValue = from course in _repository.GetAll<Web.Entities.Course>()
+                               where course.TutorId == MemberId
                                join category in _repository.GetAll<Web.Entities.CourseCategory>() on course.CategoryId equals category.CourseCategoryId
                                join subject in _repository.GetAll<Web.Entities.CourseSubject>() on course.SubjectId equals subject.SubjectId
                                //join image in _repository.GetAll<CourseImage>() on course.CourseId equals image.CourseId
                                join member in _repository.GetAll<Web.Entities.Member>() on course.TutorId equals member.MemberId
                                //join booking in _repository.GetAll<Booking>() on course.CourseId equals booking.CourseId
-                               where member.MemberId == MemberId
+                               //where member.MemberId == MemberId
                                select new BookingViewModel
                                {
-                                   UpdateDatetime = DateTime.Now,
-                                   CourseTitle = course.Title,  //這不確定是哪個欄位
+                                   UpdateDatetime = course.Cdate,
+                                   CourseTitle = course.Title + course.CourseId.ToString(),  //這不確定是哪個欄位
                                    Category = category.CategorytName,
                                    CourseSubject = subject.SubjectName,
                                    Thumbnail = course.ThumbnailUrl,
@@ -55,9 +57,9 @@ namespace Web.Services
                                    CouresImagesList = courseImg, // 直接指派 List
 
                                    CourseId = course.CourseId,
-                                   Title = course.Title,
+                                   Title = course.Title+course.CourseId.ToString(),
                                    SubTitle = course.SubTitle,
-                                   TutorIntro = member.TutorIntro,
+                                   //TutorIntro = member.TutorIntro,
                                    Description = course.Description,
                                    TrialPriceNTD = 0,
                                    TwentyFiveMinPriceNTD = course.TwentyFiveMinUnitPrice,

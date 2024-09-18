@@ -40,7 +40,6 @@
                                         <td>更新日期</td>
                                         <td>課程名稱</td>
                                         <td>課程內容</td>
-                                        @*  <td>體驗價</td> *@
                                         <td>25分鐘</td>
                                         <td>50分鐘</td>
                                         <td>編輯</td>
@@ -53,9 +52,8 @@
                                             <td>@item.UpdateDatetime</td>
                                             <td>@item.Title</td>
                                             <td>@item.SubTitle</td>
-                                            <td>@item.TrialPriceNTD.ToString("#,###")</td>
-                                            <td>@item.TwentyFiveMinPriceNTD.ToString("#,###")</td>
-                                            <td>@item.FiftyMinPriceNTD.ToString("#,###")</td>
+                                            <td>NTD$ @item.TwentyFiveMinPriceNTD.ToString("#,###")</td>
+                                            <td>NTD$ @item.FiftyMinPriceNTD.ToString("#,###")</td>
                                             <td>
                                                 <button class="btn lh-backstage-submit-btn"
                                                         data-bs-toggle="modal"
@@ -90,7 +88,7 @@
                                             <td>@item.BookingDate.ToShortDateString()</td>
                                             <td>@item.Title</td>
                                             <td>@item.SubTitle</td>
-                                            <td>NTD$ @item.CourseLength</td>
+                                            <td>@item.CourseLength</td>
                                             <td>@item.MemberName</td>
                                         </tr>
                                     }
