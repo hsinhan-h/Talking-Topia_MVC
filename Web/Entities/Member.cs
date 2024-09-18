@@ -120,9 +120,13 @@ public partial class Member
     /// </summary>
     public bool IsTutor { get; set; }
 
+    public int? UserId { get; set; }
+
     public virtual ICollection<ApplyList> ApplyLists { get; set; } = new List<ApplyList>();
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
     public virtual Education Education { get; set; }
 
@@ -140,7 +144,7 @@ public partial class Member
 
     public virtual ICollection<TutorTimeSlot> TutorTimeSlots { get; set; } = new List<TutorTimeSlot>();
 
-    public virtual WatchList WatchList { get; set; }
+    public virtual User User { get; set; }
 
-    public virtual ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
+    public virtual WatchList WatchList { get; set; }
 }

@@ -2,10 +2,8 @@
 {
     public class AccountViewModel
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
-        public string FirstName { get; set; }
-
+        public LoginViewModel LoginViewModel { get; set; }
+        public RegisterViewModel RegisterViewModel { get; set; }
+        public bool IsAuthenticated { get; internal set; }
     }
 }

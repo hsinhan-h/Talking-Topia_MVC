@@ -11,7 +11,7 @@ using Web.Data;
 
 namespace Web.Migrations
 {
-    [DbContext(typeof(TalkingTopiaContext))]
+    [DbContext(typeof(TalkingTopiaDbContext))]
     [Migration("20240911165230_initialDB")]
     partial class initialDB
     {

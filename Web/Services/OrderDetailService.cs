@@ -1,4 +1,5 @@
-﻿using Web.Entities;
+﻿using ApplicationCore.Entities;
+using Web.Entities;
 using Web.ViewModels;
 
 namespace Web.Services
@@ -13,15 +14,15 @@ namespace Web.Services
         }
         public bool HasMemberData(int memberId)
         {
-            return _repository.GetAll<Member>().Any(x => x.MemberId == memberId);
+            return _repository.GetAll<Entities.Member>().Any(x => x.MemberId == memberId);
         }
         public bool HasOrderData(int memberId)
         {
-            return _repository.GetAll<Order>().Any(x =>x.MemberId == memberId);
+            return _repository.GetAll<Entities.Order>().Any(x =>x.MemberId == memberId);
         }
         public decimal GetUnitPrice(int courseId, int courseLength)
         {
-            var price = _repository.GetAll<Course>()
+            var price = _repository.GetAll<Entities.Course>()
                        .Where(x => x.CourseId == courseId)
                        .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
                        .FirstOrDefault();
@@ -33,10 +34,10 @@ namespace Web.Services
         public async Task<MemberOrderViewModel> GetOrderData(int memberId)
         {
           
-            var orders = from Order in _repository.GetAll<Order>()
+            var orders = from Order in _repository.GetAll<Entities.Order>()
                          where Order.MemberId == memberId 
-                         join OrderDetail in _repository.GetAll<OrderDetail>() on Order.OrderId equals OrderDetail.OrderId
-                         join member in _repository.GetAll<Member>() on Order.MemberId equals member.MemberId
+                         join OrderDetail in _repository.GetAll<Entities.OrderDetail>() on Order.OrderId equals OrderDetail.OrderId
+                         join member in _repository.GetAll<Entities.Member>() on Order.MemberId equals member.MemberId
                          
                          select new MemberOrderVM
                          {

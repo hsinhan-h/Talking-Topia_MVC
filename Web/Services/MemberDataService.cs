@@ -3,50 +3,105 @@ using NuGet.Protocol.Core.Types;
 using Web.Entities;
 using Web.Repository;
 using Web.ViewModels;
+using Infrastructure.Data;
+using ApplicationCore.Entities;
 
 namespace Web.Services
 {
     public class MemberDataService
     {
         private readonly IRepository _repository;
+        private readonly TalkingTopiaDbContext _context;
+        private readonly ILogger<MemberDataService> _logger;
 
-        public MemberDataService(IRepository repository)
+        public MemberDataService(IRepository repository, TalkingTopiaDbContext context, ILogger<MemberDataService> logger)
         {
             _repository = repository;
+            _context = context;
+            _logger = logger;
+
         }
 
+
+
+        //public async Task<MemberProfileViewModel> GetMemberData(int memberId)
+        //{
+
+
+        //    // 使用 MemberId 查詢會員資料
+        //    var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
+
+        //    if (member == null)
+        //    {
+        //        throw new Exception("找不到會員資料");
+        //    }
+
+        //    var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
+        //                                   join cs in _repository.GetAll<CourseSubject>()
+        //                                       on mp.SubjecId equals cs.SubjectId
+        //                                   join cc in _repository.GetAll<CourseCategory>()
+        //                                       on cs.CourseCategoryId equals cc.CourseCategoryId
+        //                                   where mp.MemberId == member.MemberId
+        //                                   select new CourseListViewModel
+        //                                   {
+        //                                       CategoryName = cc.CategorytName,
+        //                                       SubjectName = cs.SubjectName
+        //                                   }).ToListAsync();
+
+        //    // 將查詢結果轉換成 ViewModel
+        //    var memberProfile = new MemberProfileViewModel
+        //    {
+        //        ImageUrl = member.HeadShotImage,
+        //        Nickname = member.Nickname,
+        //        //Birthday = member.Birthday ?? DateTime.Now,
+        //        Birthday = (DateTime)(member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null),
+
+        //        //Birthday = member.Birthday.HasValue ? member.Birthday.Value : DateTime.MinValue,
+        //        Gender = ((Gender)member.Gender).ToString(),  // 將枚舉轉換為字符串
+        //        Account = member.Account,
+        //        FirstName = member.FirstName,
+        //        LastName = member.LastName,
+        //        Email = member.Email,
+        //        Phone = member.Phone,
+        //        CoursePrefer = coursePrefer
+        //    };
+
+        //    return memberProfile;
+        //}
         public async Task<MemberProfileViewModel> GetMemberData(int memberId)
         {
-            // 使用 MemberId 查詢會員資料
-            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
+            _logger.LogInformation($"開始查詢會員資料，會員ID: {memberId}");
+
+            var member = await _repository.GetAll<Web.Entities.Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
 
             if (member == null)
             {
-                throw new Exception("找不到會員資料");
+                _logger.LogWarning($"找不到會員資料，會員ID: {memberId}");
+                throw new Exception($"找不到會員資料，會員ID: {memberId}");
             }
 
-            var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
-                                           join cs in _repository.GetAll<CourseSubject>()
-                                               on mp.SubjecId equals cs.SubjectId
-                                           join cc in _repository.GetAll<CourseCategory>()
-                                               on cs.CourseCategoryId equals cc.CourseCategoryId
-                                           where mp.MemberId == member.MemberId
-                                           select new CourseListViewModel
-                                           {
-                                               CategoryName = cc.CategorytName,
-                                               SubjectName = cs.SubjectName
-                                           }).ToListAsync();
+            _logger.LogInformation($"成功查詢會員資料，會員ID: {memberId}");
 
-            // 將查詢結果轉換成 ViewModel
+            // 查詢會員的課程偏好
+            var coursePrefer = await (from mp in _repository.GetAll<Web.Entities.MemberPreference>()
+                                      join cs in _repository.GetAll<Web.Entities.CourseSubject>()
+                                          on mp.SubjecId equals cs.SubjectId
+                                      join cc in _repository.GetAll<Web.Entities.CourseCategory>()
+                                          on cs.CourseCategoryId equals cc.CourseCategoryId
+                                      where mp.MemberId == member.MemberId
+                                      select new CourseListViewModel
+                                      {
+                                          CategoryName = cc.CategorytName,
+                                          SubjectName = cs.SubjectName
+                                      }).ToListAsync();
+
+            // 轉換為 MemberProfileViewModel，處理可能為 null 的欄位
             var memberProfile = new MemberProfileViewModel
             {
-                ImageUrl = member.HeadShotImage,
-                Nickname = member.Nickname,
-                //Birthday = member.Birthday ?? DateTime.Now,
-                Birthday = (DateTime)(member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null),
-
-                //Birthday = member.Birthday.HasValue ? member.Birthday.Value : DateTime.MinValue,
-                Gender = ((Gender)member.Gender).ToString(),  // 將枚舉轉換為字符串
+                ImageUrl = member.HeadShotImage ?? string.Empty, // 如果圖片為 null，使用空字串代替
+                Nickname = member.Nickname ?? "未設定", // 處理暱稱為 null 的情況
+                Birthday = member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null, // 若無生日資料，設為 null
+                Gender = ((Gender)member.Gender).ToString(), // 將性別枚舉轉為字符串
                 Account = member.Account,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
@@ -55,17 +110,22 @@ namespace Web.Services
                 CoursePrefer = coursePrefer
             };
 
+            _logger.LogInformation($"成功查詢會員資料，MemberId: {memberId}");
+
             return memberProfile;
         }
 
-        public async Task UpdateMemberData(MemberProfileViewModel updatedData)
+
+
+
+        public async Task UpdateMemberData(MemberProfileViewModel updatedData, int memberId)
         {
             if (updatedData == null)
             {
                 throw new ArgumentNullException(nameof(updatedData), "更新資料不能為空");
             }
 
-            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.Account == updatedData.Account);
+            var member = await _repository.GetAll<Web.Entities.Member>().FirstOrDefaultAsync(m => m.Account == updatedData.Account);
 
             if (member == null)
             {
@@ -105,6 +165,55 @@ namespace Web.Services
                 throw new Exception("更新會員資料時發生錯誤", ex);
             }
         }
+
+        public async Task<CourseMainPageViewModel> GetWatchList(int memberId)
+        {
+            var watchCardInfo = (from watch in _repository.GetAll<Web.Entities.WatchList>().AsNoTracking()
+                                 join course in _repository.GetAll<Web.Entities.Course>().AsNoTracking()
+                                 on watch.CourseId equals course.CourseId
+                                 join member in _repository.GetAll<Web.Entities.Member>().AsNoTracking()
+                                 on course.TutorId equals member.MemberId
+                                 join nation in _repository.GetAll<Web.Entities.Nation>().AsNoTracking()
+                                 on member.NationId equals nation.NationId
+                                 where watch.FollowerId == memberId
+                                 select new TutorRecomCardList
+                                 {
+                                     CourseId = course.CourseId,
+                                     TutorHeadShot = member.HeadShotImage,
+                                     NationFlagImg = nation.FlagImage,
+                                     CourseTitle = course.Title,
+                                     CourseSubTitle = course.SubTitle,
+                                     TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
+                                     FiftyminPrice = (int)course.FiftyMinUnitPrice,
+                                     Description = course.Description,
+                                 }).ToList();
+             
+            var recomCardReview = (
+               from course in _repository.GetAll<Web.Entities.Course>().AsNoTracking()
+               join review in _repository.GetAll<Web.Entities.Review>().AsNoTracking()
+               on course.CourseId equals review.CourseId
+               group review by course.CourseId into Review
+               select new TutorRecomCardList
+               {
+                   CourseId = Review.Key,
+                   Rating = Review.Any() ? Math.Round(Review.Average(cr => cr.Rating), 2) : 0,
+               }).ToList();
+
+            foreach (var card in watchCardInfo)
+            {
+                var review = recomCardReview.FirstOrDefault(r => r.CourseId == card.CourseId);
+
+                card.Rating = review?.Rating ?? 0;
+            }
+            var watchlist = new CourseMainPageViewModel
+            {
+                MemberId = memberId,
+                TutorReconmmendCard = watchCardInfo
+            };
+            return watchlist;
+        }
+
+
 
     }
 

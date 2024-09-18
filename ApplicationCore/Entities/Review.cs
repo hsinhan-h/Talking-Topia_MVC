@@ -28,7 +28,7 @@ public partial class Review
     /// <summary>
     /// 評論內容
     /// </summary>
-    public string? CommentText { get; set; }
+    public string CommentText { get; set; }
 
     /// <summary>
     /// 評論日期
@@ -40,7 +40,7 @@ public partial class Review
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual Course Course { get; set; } = null!;
+    public virtual Course Course { get; set; }
 
-    public virtual Member Student { get; set; } = null!;
+    public virtual Member Student { get; set; }
 }

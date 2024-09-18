@@ -1,4 +1,20 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
+    const submitBtn = document.querySelector('.submitButton'); 
+    submitBtn.addEventListener('click', function () {
+        document.querySelector('.tutorDataForm').submit();
+    });
+
+
+
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberId = urlParams.get('memberId'); // 獲取 `memberId` 參數
+
+    if (memberId) {
+        document.getElementById('memberIdDisplay').innerText = memberId;
+    }// 顯示會員ID
+
     const weekdays = [
         "monday",
         "tuesday",
@@ -117,7 +133,7 @@
     });
 
     // 使用 fetch 請求 API
-    const memberId = 35; //前端的參數丟到後端
+   /* const memberId = 35;*/ //測試用：前端的參數丟到後端
     if (memberId !== null) {
         const apiUrl = `/api/GetTutorReserveApi/GetTutorReserveTimeJson?memberId=${memberId}`;
 
@@ -152,13 +168,13 @@
 
                     const groupedReservations = {}; // 用來按 weekday 分組
 
-                    // 將 reservation 根據 weekday 分組
+                    // 將 reservation(JSON) 根據 weekday (KEY) 分組
                     reservations.forEach(reservation => {
-                        const day = reservation.weekday;
+                        const day = reservation.weekday;//Json中的key
                         if (!groupedReservations[day]) {
                             groupedReservations[day] = []; // 如果還沒有這個 weekday，則新建一個陣列
                         }
-                        groupedReservations[day].push(reservation); // 將 reservation 加入對應的 weekday
+                        groupedReservations[day].push(reservation); // 將 reservation 加入對應的 weekday 的object
                     });
 
                     // 生成每個 weekday 的卡片區塊
@@ -182,9 +198,9 @@
                             listItem.classList.add("list-group-item");
 
                             const startTime = reservation.coursehours.split(":")[0]; // 取得開始小時部分
-                            const endTime = (parseInt(startTime) + 2).toString().padStart(2, "0"); // 假設每個時段兩小時，計算結束時間
+                            
 
-                            listItem.textContent = `${getWeeking(day)} ${startTime}點至${endTime}點`;
+                            listItem.textContent = `${getWeeking(day)} ${startTime}:00點`;
                             timeList.appendChild(listItem);
                         });
 
@@ -194,7 +210,7 @@
                     });
                 }
 
-                
+                //以下是fetch後渲染checkbox用
 
 
                 // 要確認資料庫的星期幾順序

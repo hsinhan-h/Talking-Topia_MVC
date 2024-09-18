@@ -30,7 +30,7 @@ public partial class MemberPreference
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual Member Member { get; set; } = null!;
+    public virtual Member Member { get; set; }
 
-    public virtual CourseSubject Subjec { get; set; } = null!;
+    public virtual CourseSubject Subjec { get; set; }
 }

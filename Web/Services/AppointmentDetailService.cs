@@ -1,4 +1,4 @@
-﻿using Infrastructure.ECpay;
+﻿using ApplicationCore.Entities;
 
 namespace Web.Services
 {
@@ -13,7 +13,7 @@ namespace Web.Services
        
         public decimal GetUnitPrice(int courseId, int courseLength)
         {
-            var price = _repository.GetAll<Course>()
+            var price = _repository.GetAll<Entities.Course>()
                        .Where(x => x.CourseId == courseId)
                        .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
                        .FirstOrDefault();
@@ -25,7 +25,7 @@ namespace Web.Services
         public async Task<AppointmentDetailsViewModel> GetAppointmentData(int memberId)
         {
 
-            var orders = from Order in _repository.GetAll<Order>()
+            var orders = from Order in _repository.GetAll<Entities.Order>()
                          where Order.MemberId == memberId
                          join OrderDetail in _repository.GetAll<OrderDetail>() on Order.OrderId equals OrderDetail.OrderId
                          join member in _repository.GetAll<Member>() on Order.MemberId equals member.MemberId                  

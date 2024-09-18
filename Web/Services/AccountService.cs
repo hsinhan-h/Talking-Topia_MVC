@@ -1,5 +1,11 @@
-﻿using Microsoft.CodeAnalysis.Scripting;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
+using Web.Exceptions;
+using Web.Entities;
+using ApplicationCore.Entities;
+
+
 
 namespace Web.Services
 {
@@ -7,45 +13,78 @@ namespace Web.Services
     {
         private readonly IRepository _repository;
 
+
+        // 使用依賴注入注入 IRepository 和 ILogger
         public AccountService(IRepository repository)
         {
             _repository = repository;
         }
 
-        public Member GetUserById(int memberId)
+        public async Task RegisterUserAsync(AccountViewModel model)
         {
-            return _repository.FirstOrDefault<Member>(m => m.MemberId == memberId);
+            try
+            {
+                var existingMember = await _repository.GetAll<Web.Entities.Member>()
+                    .SingleOrDefaultAsync(m => m.Email == model.RegisterViewModel.Email);
+
+                if (existingMember != null)
+                {
+                    throw new UserAlreadyExistsException("該電子郵件已被註冊");
+                }
+
+                var newMember = new Web.Entities.Member
+                {
+                    Email = model.RegisterViewModel.Email,
+                    Password = model.RegisterViewModel.Password,
+                    FirstName = model.RegisterViewModel.FirstName,
+                    LastName = "N/A",
+                    Birthday = null,
+                    Nickname = "N/A",
+                    Phone = "0912345678",
+                    Cdate = DateTime.Now,
+                    Udate = DateTime.Now,
+                    IsTutor = false,
+                    IsVerifiedTutor = false
+                };
+
+                var passwordHasher = new PasswordHasher<Web.Entities.Member>();
+                newMember.Password = passwordHasher.HashPassword(newMember, model.RegisterViewModel.Password);
+
+                _repository.Create(newMember);
+                await _repository.SaveChangesAsync();
+
+                Console.WriteLine("會員註冊成功");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"註冊失敗，發生錯誤：{ex.Message}");
+            }
         }
 
-        public void RegisterUser(AccountViewModel model)
+
+        // 驗證使用者帳號和密碼
+        public async Task<Web.Entities.Member> ValidateUserAsync(string email, string password)
         {
-            // 檢查是否已經有相同的 Email
-            if (_repository.FirstOrDefault<Member>(m => m.Email == model.Email) != null)
+            var user = await _repository.GetAll<Web.Entities.Member>().SingleOrDefaultAsync(m => m.Email == email);
+
+
+            if (user == null)
             {
-                throw new Exception("Email 已經被註冊");
+                // 用戶不存在
+                return null;
             }
 
-            // 創建新的 Member 物件
-            var member = new Member
-            {
-                Email = model.Email,
-                FirstName = model.FirstName,
-                Password = BCrypt.Net.BCrypt.HashPassword(model.Password),
-            };
+            // 使用 PasswordHasher 驗證密碼
+            var passwordHasher = new PasswordHasher<Web.Entities.Member>();
+            var result = passwordHasher.VerifyHashedPassword(user, user.Password, password);
 
-            _repository.Create(member);
-            _repository.SaveChanges();
-        }
-
-        public bool ValidateMember(string email, string password)
-        {
-            // 從儲存庫中查找使用者
-            var member = _repository.FirstOrDefault<Member>(m => m.Email == email);
-            if (member != null && BCrypt.Net.BCrypt.Verify(password, member.Password))
+            if (result == PasswordVerificationResult.Success)
             {
-                return true;
+                return user;  // 驗證成功，返回使用者
             }
-            return false;
+
+            // 密碼不匹配
+            return null;
         }
     }
 

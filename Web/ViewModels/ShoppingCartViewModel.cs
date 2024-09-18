@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Web.ViewModels
+﻿namespace Web.ViewModels
 {
     public class ShoppingCartViewModel
     {
@@ -52,7 +50,19 @@ namespace Web.ViewModels
         /// <summary>
         /// 單價
         /// </summary>
-        public decimal UnitPrice { get; set; }
+        public int UnitPrice { get; set; }
+
+        /// <summary>
+        /// 25分鐘單價
+        /// </summary>
+        public int TFUnitPrice { get; set; }
+
+        /// <summary>
+        /// 50分鐘單價
+        /// </summary>
+        public int FTUnitPrice { get; set; }
+
+        public decimal Discount { get; set; }
 
         /// <summary>
         /// 小計
@@ -73,6 +83,14 @@ namespace Web.ViewModels
     {
         public int MemberId { get; set; }
         public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
+    }
+
+    public class CartItemUpdateViewModel
+    {
+        public int CourseId { get; set; }
+        public int CourseQuantity { get; set; }
+        public int CourseLength { get; set; }
+        public decimal SubtotalNTD { get; set; }
     }
 
 }

@@ -7,6 +7,7 @@ namespace Web.ViewModels
         
         public int CourseId { get; set; }
         public int TutorId { get; set; }
+        public int CategoryId { get; set; }
         public int MemberId { get; set; }
         [Display(Name = "教師頭像")]
         public string TutorHeadShotImage { get; set; }
@@ -58,26 +59,29 @@ namespace Web.ViewModels
         public List<ReviewViewModel> ReviewCardList { get; set; }
         [Display(Name = "關注狀態")]
         public bool FollowingStatus { get; set; }
+        public List<TutorRecomCardList> TutorReconmmendCard { get; set; }
         
+        public int NewReviewRating  { get; set; }
+        public int NewReviewStudentId { get; set; }
+        public int NewReviewCourseId { get; set; }
+
+        [Required(ErrorMessage = "請輸入評論內容")]
+        [StringLength(500, ErrorMessage = "評論內容不可超過500個字")]
+        [Display(Name = "評論內容")]
+        public string NewReviewContent { get; set; }
     }
 
     public class TutorExperience 
     {
-        public int StartYear { get; set; }
-        public int EndYear { get; set; }
+        public string StartYear { get; set; }
+        public string EndYear { get; set; }
         public string WorkTitle { get; set; }
     }
     public class TutorProfessionList
     { 
         public string ProfessionName { get; set; }
     }
-    //public class TimeSlot
-    //{
-    //    public DateTime Date { get; set; }
-    //    public int Weekday { get; set; }
-    //    public int StartHour { get; set; }
-    //    public string StartHourText { get; set; }  //string表示的時間格式
-    //}
+    
 
     public class ReviewViewModel
     {
@@ -92,8 +96,6 @@ namespace Web.ViewModels
         public int StudyEndYear { get; set; }
         public string SchoolAndDepartment { get; set; }
     }
-
-
     
     public class BaseDiscountPice
     {
@@ -109,5 +111,18 @@ namespace Web.ViewModels
     {
         public int CourseCount { get; set; }
         public decimal Discount { get; set; }
+    }
+
+    public class TutorRecomCardList
+    {
+        public int CourseId { get; set; }
+        public string TutorHeadShot { get; set; }
+        public string NationFlagImg { get; set; }
+        public string CourseTitle { get; set; }
+        public string CourseSubTitle { get; set; }
+        public int TwentyFiveMinPrice { get; set; }
+        public int FiftyminPrice { get; set; }
+        public double Rating { get; set; }
+        public string Description { get; set; }
     }
 }

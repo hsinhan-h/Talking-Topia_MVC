@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Dtos
 {
-    public class GetAllShoppingCartResult
+    public class GetAllShoppingCartResultDto
     {
         public List<GetAllShoppingCartItem> GetShoppingCartItems { get; set; }
     }
@@ -20,6 +20,6 @@ namespace ApplicationCore.Dtos
         public int MemberId { get; set; }
         public short CourseType { get; set; }
         public DateTime? BookingDate { get; set; }
-        public DateTime? BookingTime { get; set; }
+        //public short BookingTime { get; set; }
     }
 }

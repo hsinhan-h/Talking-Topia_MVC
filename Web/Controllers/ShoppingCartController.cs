@@ -1,7 +1,5 @@
 ﻿using ApplicationCore.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using System.Runtime.InteropServices;
-using Web.Entities;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -9,49 +7,67 @@ namespace Web.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService _shoppingCartService;
+        private readonly IMemberService _memberService;
+        private readonly ICourseService _courseService;
         private readonly ShoppingCartViewModelService _shoppingCartViewModelService;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService, ShoppingCartViewModelService shoppingCartViewModelService)
+        public ShoppingCartController(IShoppingCartService shoppingCartService, IMemberService memberService, ICourseService courseService, ShoppingCartViewModelService shoppingCartViewModelService)
         {
             _shoppingCartService = shoppingCartService;
+            _memberService = memberService;
+            _courseService = courseService;
             _shoppingCartViewModelService = shoppingCartViewModelService;
         }
-
         /// <summary>
         /// ShoppingCart頁面
         /// </summary>
-        public async Task<IActionResult> Index([FromQuery] int memberId)
+        public async Task<IActionResult> Index()
         {
-            if (!_shoppingCartService.IsMember(memberId))
-            { return RedirectToAction(nameof(HomeController.Account), "Home"); }
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
+
+            if (!_memberService.IsMember(memberId))
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
-            var result = new ShoppingCartListViewModel
+            var scVM = new ShoppingCartListViewModel
             {
                 MemberId = memberId,
                 ShoppingCartList = cartData
             };
-            return View(result);
+            return View(scVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
+        //public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
+        public async Task<IActionResult> AddToCart([FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
-            if (!_shoppingCartService.IsMember(memberId))
-            { return RedirectToAction(nameof(HomeController.Account), "Home"); }
-            if (!_shoppingCartService.IsCourse(courseId))
+
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
+
+            if (!_memberService.IsMember(memberId))
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            if (!_courseService.IsCourse(courseId))
             { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }
             if (!_shoppingCartService.HasCartItem(memberId, courseId))
-            { memberId = await _shoppingCartService.CreateShoppingCartAsync(memberId, courseId, courseLength, quantity); }
+            { await _shoppingCartService.CreateShoppingCartAsync(memberId, courseId, courseLength, quantity); }
             await _shoppingCartService.GetAllShoppingCartAsync(memberId);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
 
-        public IActionResult Delete([FromForm] int memberId, [FromForm] int courseId)
+        public async Task<IActionResult> Delete([FromForm] int memberId, [FromForm] int courseId)
+        //public async Task<IActionResult> Delete([FromForm] int courseId)
         {
+            var user = HttpContext.User.Identity.Name;
+            //var memberId = await _memberService.GetMemberId(user);
             _shoppingCartService.DeleteCartItem(memberId, courseId);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
-
     }
 }
