@@ -1,6 +1,6 @@
 ﻿@model TutorRecomCardList
 
-<div href="" class="lh-tutor-card py-3 px-4 position-relative">
+<div class="lh-tutor-card py-3 px-4 position-relative TRMC" data-courseid="@Model.CourseId">
     <div class="lh-tutor-card__header mx-auto d-flex flex-column align-items-center  mx-auto">
         <div class="lh-tutor-images__head position-relative mt-1 mb-2">
             <img class="tutor-headshot rounded-circle"
@@ -19,8 +19,8 @@
     </div>
     <div class="lh-tutor-card__body">
         <div class="tutor-title-and-ranking d-flex justify-between align-items-center">
-            <a class=" tutor-description-title col-8" href="#">
-                @Model.CourseTitle;
+            <a class=" tutor-description-title col-8" @* href="@Url.Action("CourseMainPage", "Course", new { courseId = Model.CourseId })" *@>
+                @Model.CourseTitle
             </a>
             <div class="tutor-ranking col-4 d-flex justify-content-end">
                 <i class="bi bi-star-fill pe-1"></i><span>@Model.Rating</span>
@@ -48,3 +48,4 @@
         </div>
     </div>
 </div>
+
