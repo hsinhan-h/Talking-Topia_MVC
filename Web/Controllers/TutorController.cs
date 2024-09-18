@@ -38,14 +38,15 @@ namespace Web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Indexpost()
+        public async Task<IActionResult> IndexpostAsync()
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (memberIdClaim == null || !int.TryParse(memberIdClaim.Value, out int memberId))
-            {
-                return  BadRequest("找不到會員");
-            }
-            if (!_memberService.IsMember(memberId))
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             return RedirectToAction(nameof(TutorResume));
         }
