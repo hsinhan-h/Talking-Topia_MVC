@@ -105,16 +105,17 @@
                                         證照資訊
                                     </button>
                                 </div>
-
                                 <h4>可接受預約時段</h4>
                                 <div class=" d-flex flex-wrap col-10" id="reservation-list">
-                                <button type="button"
+                                
+                                </div>
+                                <div class=" d-flex flex-wrap col-10">
+                                    <button type="button"
                                         class="btn lh-backstage-submit-btn"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editTimeSlotModal">
-                                    編輯教師可預約時段
+                                    編輯教師可預約時段</button>
                                 </div>
-                                </button>
                             </div>
 
                             <div class="lh-backstage-member-card-list d-flex">
@@ -150,7 +151,8 @@
                             </div>
                             @*  apply status 為true 預設0*@
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn lh-backstage-submit-btn submitButton">@(Model.TutorId == 0 ? "儲存" : "編輯")</button>
+                                <button type="button" class="btn lh-backstage-submit-btn  @(Model.TutorId == 0 ? "d-none" : "d-block")">編輯</button>
+                                <button type="button" class="btn lh-backstage-submit-btn submitButton @(Model.TutorId == 0 ? "d-block" : "d-none")">儲存</button>
                             </div>
 
                         </section>
