@@ -1,20 +1,21 @@
-﻿using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 
 namespace Web.Services
 {
     public class ShoppingCartViewModelService
     {
         private readonly IRepository _repository;
-        private readonly IRepository<Course> _courseRepository;
-        private readonly IRepository<Member> _memberRepository;
-        private readonly IRepository<ShoppingCart> _shoppingCartRepository;
-        private readonly IRepository<CourseSubject> _courseSubjectRepository;
-        private readonly IRepository<CourseCategory> _courseCategoryRepository;
-        private readonly IRepository<MemberCoupon> _memberCouponRepository;
-        private readonly IRepository<Coupon> _couponRepository;
-        private List<Coupon> _coupon;
+        private readonly IRepository<Entities.Course> _courseRepository;
+        private readonly IRepository<Entities.Member> _memberRepository;
+        private readonly IRepository<Entities.ShoppingCart> _shoppingCartRepository;
+        private readonly IRepository<Entities.CourseSubject> _courseSubjectRepository;
+        private readonly IRepository<Entities.CourseCategory> _courseCategoryRepository;
+        private readonly IRepository<Entities.MemberCoupon> _memberCouponRepository;
+        private readonly IRepository<Entities.Coupon> _couponRepository;
+        private List<Entities.Coupon> _coupon;
 
-        public ShoppingCartViewModelService(IRepository repository, IRepository<Course> courseRepository, IRepository<Member> memberRepository, IRepository<ShoppingCart> shoppingCartRepository, IRepository<CourseSubject> courseSubjectRepository, IRepository<CourseCategory> courseCategoryRepository, IRepository<MemberCoupon> memberCouponRepository, IRepository<Coupon> couponRepository)
+        public ShoppingCartViewModelService(IRepository repository, IRepository<Entities.Course> courseRepository, IRepository<Entities.Member> memberRepository, IRepository<Entities.ShoppingCart> shoppingCartRepository, IRepository<Entities.CourseSubject> courseSubjectRepository, IRepository<Entities.CourseCategory> courseCategoryRepository, IRepository<Entities.MemberCoupon> memberCouponRepository, IRepository<Entities.Coupon> couponRepository)
         {
             _repository = repository;
             _courseRepository = courseRepository;
@@ -41,16 +42,16 @@ namespace Web.Services
                                       { 20, 0.85m }
                                   };
 
-            var result = await (from item in _repository.GetAll<ShoppingCart>()
+            var result = await (from item in _repository.GetAll<Entities.ShoppingCart>()
                                 where item.MemberId == memberId
-                                join course in _repository.GetAll<Course>() on item.CourseId equals course.CourseId
-                                join member in _repository.GetAll<Member>() on item.MemberId equals member.MemberId
-                                join tutor in _repository.GetAll<Member>() on course.TutorId equals tutor.MemberId
-                                join subject in _repository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
-                                join category in _repository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
-                                join memberCoupon in _repository.GetAll<MemberCoupon>() on member.MemberId equals memberCoupon.MemberId into mcGroup
+                                join course in _repository.GetAll<Entities.Course>() on item.CourseId equals course.CourseId
+                                join member in _repository.GetAll<Entities.Member>() on item.MemberId equals member.MemberId
+                                join tutor in _repository.GetAll<Entities.Member>() on course.TutorId equals tutor.MemberId
+                                join subject in _repository.GetAll<Entities.CourseSubject>() on course.SubjectId equals subject.SubjectId
+                                join category in _repository.GetAll<Entities.CourseCategory>() on course.CategoryId equals category.CourseCategoryId
+                                join memberCoupon in _repository.GetAll<Entities.MemberCoupon>() on member.MemberId equals memberCoupon.MemberId into mcGroup
                                 from mc in mcGroup.DefaultIfEmpty()
-                                join coupon in _repository.GetAll<Coupon>() on mc.CouponId equals coupon.CouponId into cGroup
+                                join coupon in _repository.GetAll<Entities.Coupon>() on mc.CouponId equals coupon.CouponId into cGroup
                                 from co in cGroup.DefaultIfEmpty()
                                 select new ShoppingCartViewModel
                                 {

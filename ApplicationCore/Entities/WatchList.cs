@@ -20,7 +20,7 @@ public partial class WatchList
     /// </summary>
     public int? CourseId { get; set; }
 
-    public virtual Course? Course { get; set; }
+    public virtual Course Course { get; set; }
 
-    public virtual Member WatchListNavigation { get; set; } = null!;
+    public virtual Member WatchListNavigation { get; set; }
 }

@@ -13,7 +13,7 @@ public partial class CourseHour
     /// <summary>
     /// 小時時段
     /// </summary>
-    public string Hour { get; set; } = null!;
+    public string Hour { get; set; }
 
     /// <summary>
     /// 建立時間

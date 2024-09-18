@@ -18,7 +18,7 @@ public partial class CourseImage
     /// <summary>
     /// 圖片路徑
     /// </summary>
-    public string ImageUrl { get; set; } = null!;
+    public string ImageUrl { get; set; }
 
     /// <summary>
     /// 建立時間
@@ -30,5 +30,5 @@ public partial class CourseImage
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual Course Course { get; set; } = null!;
+    public virtual Course Course { get; set; }
 }

@@ -32,5 +32,7 @@ public partial class CourseSubject
 
     public virtual CourseCategory CourseCategory { get; set; }
 
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+
     public virtual ICollection<MemberPreference> MemberPreferences { get; set; } = new List<MemberPreference>();
 }

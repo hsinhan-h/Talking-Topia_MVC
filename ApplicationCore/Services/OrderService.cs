@@ -2,7 +2,7 @@
 using ApplicationCore.Entities;
 using ApplicationCore.Enums;
 using ApplicationCore.Interfaces;
-using System.Runtime.CompilerServices;
+
 
 
 namespace ApplicationCore.Services
@@ -52,7 +52,7 @@ namespace ApplicationCore.Services
                     CouponPrice = order.CouponPrice,
                     TaxIdNumber = order.TaxIdNumber,
                     InvoiceType = order.InvoiceType,
-                    VATNumber = order.VATNumber,
+                    VATNumber = order.Vatnumber,
                     SentVatemail = order.SentVatemail,
                     OrderStatusId = order.OrderStatusId,
                 }
@@ -93,10 +93,9 @@ namespace ApplicationCore.Services
                     CouponPrice = 0,
                     TaxIdNumber = taxIdNumber,
                     InvoiceType = taxIdNumber == null ? (short)EInvoiceType.NormalInvoice : (short)EInvoiceType.GUIInvoice,
-                    VATNumber = "",
+                    Vatnumber = "",
                     SentVatemail = member.Email,
                     OrderStatusId = (short)EOrderStatus.Outstanding,
-                    Cdate = DateTime.Now,
                 };
 
                 var orderResult = await _orderRepository.AddAsync(orders);

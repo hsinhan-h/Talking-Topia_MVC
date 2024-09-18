@@ -12,7 +12,7 @@ using Microsoft.CodeAnalysis.Elfie.Extensions;
 using System.Security.Cryptography;
 using System.Text;
 using Web.Data;
-using TalkingTopiaContext = Infrastructure.Data.TalkingTopiaContext;
+using TalkingTopiaContext = Infrastructure.Data.TalkingTopiaDbContext;
 
 
 namespace Web.Controllers

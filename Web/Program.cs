@@ -4,6 +4,8 @@ using Web.Configurations;
 using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 
 namespace Web
 {
@@ -19,7 +21,7 @@ namespace Web
             }
 
             // Add DbContext configuration
-            builder.Services.AddDbContext<Data.TalkingTopiaContext>(options =>
+            builder.Services.AddDbContext<Data.TalkingTopiaDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("TalkingTopiaDb")));
 
             //µù¥UIRepository
@@ -30,7 +32,7 @@ namespace Web
 
 
             //builder.Services.AddScoped<IHostedService,BackgroundTaskService>();
-            builder.Services.AddScoped<BookingService>();
+            builder.Services.AddScoped<Services.BookingService>();
             builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<MemberDataService>();
             builder.Services.AddScoped<ResumeDataService>();
@@ -39,6 +41,7 @@ namespace Web
             builder.Services.AddScoped<NationService>();
             builder.Services.AddScoped<CourseCategoryService>();
             builder.Services.AddScoped<CloudinaryService>();
+            
 
 
 

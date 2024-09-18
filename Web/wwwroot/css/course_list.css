@@ -28,8 +28,9 @@
 }
 
 .cancel-filter-btn:focus {
-    background-color: var(--highlight-color);
-    color: #fff;
+    background-color: #fff;
+    transform: translate(1px, 1px);
+    color: var(--highlight-color);
 }
 
 

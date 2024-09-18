@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using Web.Entities;
@@ -26,8 +27,8 @@ namespace Web.Services
         public async Task<BookingListViewModel> GetPublishCourseList(int MemberId)
         {
             // 將 courseImg 實體化為 List<CouresImagesViewModel>
-            var courseImg = await (from img in _repository.GetAll<CourseImage>()
-                                   join course in _repository.GetAll<Course>() on img.CourseId equals course.CourseId
+            var courseImg = await (from img in _repository.GetAll<Web.Entities.CourseImage>()
+                                   join course in _repository.GetAll<Web.Entities.Course>() on img.CourseId equals course.CourseId
                                    where course.TutorId == MemberId
                                    select new CouresImagesVM
                                    {
@@ -36,11 +37,11 @@ namespace Web.Services
                                        ImageUrl = img.ImageUrl
                                    }).ToListAsync();  // 確保 courseImg 是 List<CouresImagesViewModel>
 
-            var bookingValue = from course in _repository.GetAll<Course>()
-                               join category in _repository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
-                               join subject in _repository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
+            var bookingValue = from course in _repository.GetAll<Web.Entities.Course>()
+                               join category in _repository.GetAll<Web.Entities.CourseCategory>() on course.CategoryId equals category.CourseCategoryId
+                               join subject in _repository.GetAll<Web.Entities.CourseSubject>() on course.SubjectId equals subject.SubjectId
                                //join image in _repository.GetAll<CourseImage>() on course.CourseId equals image.CourseId
-                               join member in _repository.GetAll<Member>() on course.TutorId equals member.MemberId
+                               join member in _repository.GetAll<Web.Entities.Member>() on course.TutorId equals member.MemberId
                                //join booking in _repository.GetAll<Booking>() on course.CourseId equals booking.CourseId
                                where member.MemberId == MemberId
                                select new BookingViewModel
@@ -83,12 +84,12 @@ namespace Web.Services
         /// <returns></returns>
         public async Task<BookingListViewModel> GetPublishCourseHistoryList(int MemberId)
         {
-            var bookingValue = from course in _repository.GetAll<Course>()
-                               join category in _repository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
-                               join subject in _repository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
+            var bookingValue = from course in _repository.GetAll<Web.Entities.Course>()
+                               join category in _repository.GetAll<Web.Entities.CourseCategory>() on course.CategoryId equals category.CourseCategoryId
+                               join subject in _repository.GetAll<Web.Entities.CourseSubject>() on course.SubjectId equals subject.SubjectId
                                //join image in _repository.GetAll<CourseImage>() on course.CourseId equals image.CourseId
-                               join member in _repository.GetAll<Member>() on course.TutorId equals member.MemberId
-                               join booking in _repository.GetAll<Booking>() on course.CourseId equals booking.CourseId
+                               join member in _repository.GetAll<Web.Entities.Member>() on course.TutorId equals member.MemberId
+                               join booking in _repository.GetAll<Web.Entities.Booking>() on course.CourseId equals booking.CourseId
                                where member.MemberId == MemberId
                                && booking.BookingDate < DateTime.Now.AddDays(1)
                                select new BookingViewModel
@@ -128,8 +129,8 @@ namespace Web.Services
         public async Task<BookingListViewModel> GetPublishCourse(int MemberId, int CourseId)
         {
             // 將 courseImg 實體化為 List<CouresImagesViewModel>
-            var courseImg = (from img in _repository.GetAll<CourseImage>()
-                             join course in _repository.GetAll<Course>() on img.CourseId equals course.CourseId
+            var courseImg = (from img in _repository.GetAll<Web.Entities.CourseImage>()
+                             join course in _repository.GetAll<Web.Entities.Course>() on img.CourseId equals course.CourseId
                              where course.TutorId == MemberId && course.CourseId == CourseId
                              select new CouresImagesVM
                              {
@@ -138,11 +139,11 @@ namespace Web.Services
                                  ImageUrl = img.ImageUrl
                              });  // 確保 courseImg 是 List<CouresImagesViewModel>
 
-            var bookingValue = from course in _repository.GetAll<Course>()
-                               join category in _repository.GetAll<CourseCategory>() on course.CategoryId equals category.CourseCategoryId
-                               join subject in _repository.GetAll<CourseSubject>() on course.SubjectId equals subject.SubjectId
+            var bookingValue = from course in _repository.GetAll<Web.Entities.Course>()
+                               join category in _repository.GetAll<Web.Entities.CourseCategory>() on course.CategoryId equals category.CourseCategoryId
+                               join subject in _repository.GetAll<Web.Entities.CourseSubject>() on course.SubjectId equals subject.SubjectId
                                //join image in _repository.GetAll<CourseImage>() on course.CourseId equals image.CourseId
-                               join member in _repository.GetAll<Member>() on course.TutorId equals member.MemberId
+                               join member in _repository.GetAll<Web.Entities.Member>() on course.TutorId equals member.MemberId
                                //join booking in _repository.GetAll<Booking>() on course.CourseId equals booking.CourseId
                                where member.MemberId == MemberId && course.CourseId == CourseId
                                select new BookingViewModel
@@ -184,15 +185,15 @@ namespace Web.Services
         {
             //已購買課程數
             int purchasedQty = (
-                from order in _repository.GetAll<Order>()
-                join orderDetail in _repository.GetAll<OrderDetail>()
+                from order in _repository.GetAll<Web.Entities.Order>()
+                join orderDetail in _repository.GetAll<Web.Entities.OrderDetail>()
                 on order.OrderId equals orderDetail.OrderId
                 where order.MemberId == memberId && orderDetail.CourseId == courseId
                 select (int)orderDetail.Quantity
                 ).Sum();
 
             //已預約(使用)課程數
-            int bookedQty = _repository.GetAll<Booking>()
+            int bookedQty = _repository.GetAll<Web.Entities.Booking>()
                 .Where(bk => bk.CourseId == courseId && bk.StudentId == memberId)
                 .Count();
 
@@ -201,7 +202,7 @@ namespace Web.Services
 
         public void CreateBookingData(int courseId, DateTime bookingDate, short bookingTime, int studentId)
         {
-            var booking = new Booking
+            var booking = new Web.Entities.Booking
             {
                 CourseId = courseId,
                 BookingDate = bookingDate,

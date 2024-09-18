@@ -13,7 +13,7 @@ public partial class Education
     /// <summary>
     /// 學校名稱
     /// </summary>
-    public string SchoolName { get; set; } = null!;
+    public string SchoolName { get; set; }
 
     /// <summary>
     /// 在學期間起
@@ -28,7 +28,7 @@ public partial class Education
     /// <summary>
     /// 科系名稱
     /// </summary>
-    public string? DepartmentName { get; set; }
+    public string DepartmentName { get; set; }
 
     /// <summary>
     /// 建立時間

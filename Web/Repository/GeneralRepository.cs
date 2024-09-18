@@ -5,8 +5,8 @@ namespace Web.Repository
 {
     public class GeneralRepository : IRepository
     {
-        private readonly TalkingTopiaContext _context;
-        public GeneralRepository(TalkingTopiaContext context)
+        private readonly TalkingTopiaDbContext _context;
+        public GeneralRepository(TalkingTopiaDbContext context)
         {
             _context = context;
         }
