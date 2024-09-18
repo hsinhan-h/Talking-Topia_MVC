@@ -67,5 +67,18 @@
         /// 交易時間
         /// </summary>
         public DateTime TransactionDate { get; set; }
+        /// <summary>
+        /// 課程副標題
+        /// </summary>
+        public string Subtitle { get; set; }
+        /// <summary>
+        /// 預約上課日期
+        /// </summary>
+        public DateTime BookingDate { get; set; }
+
+        /// <summary>
+        /// 預約上課時間
+        /// </summary>
+        public short BookingTime { get; set; }
     }
 }
