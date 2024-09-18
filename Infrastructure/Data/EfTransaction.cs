@@ -1,19 +1,13 @@
 ﻿using ApplicationCore.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
     public class EfTransaction : ITransaction
     {
-        protected readonly TalkingTopiaContext _dbContext;
+        protected readonly TalkingTopiaDbContext _dbContext;
         private IDbContextTransaction _transaction;
-        public EfTransaction(TalkingTopiaContext dbContext)
+        public EfTransaction(TalkingTopiaDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -27,11 +21,13 @@ namespace Infrastructure.Data
         }
         public void Commit()
         {
+            if (_transaction == null) throw new InvalidOperationException("Transaction has not been started.");
             _transaction.Commit();
             _transaction.Dispose();
         }
         public async Task CommitAsync()
         {
+            if (_transaction == null) throw new InvalidOperationException("Transaction has not been started.");
             await _transaction.CommitAsync();
             _transaction.Dispose();
         }

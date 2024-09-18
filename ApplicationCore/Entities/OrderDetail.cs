@@ -48,19 +48,19 @@ public partial class OrderDetail
     /// <summary>
     /// 課程名稱
     /// </summary>
-    public string? CourseTitle { get; set; }
+    public string CourseTitle { get; set; }
 
     /// <summary>
     /// 課程類別
     /// </summary>
-    public string? CourseCategory { get; set; }
+    public string CourseCategory { get; set; }
 
     /// <summary>
     /// 課程主題
     /// </summary>
-    public string? CourseSubject { get; set; }
+    public string CourseSubject { get; set; }
 
-    public virtual Course Course { get; set; } = null!;
+    public virtual Course Course { get; set; }
 
-    public virtual Order Order { get; set; } = null!;
+    public virtual Order Order { get; set; }
 }

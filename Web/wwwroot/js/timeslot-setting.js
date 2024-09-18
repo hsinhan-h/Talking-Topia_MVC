@@ -1,4 +1,13 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
+    const submitBtn = document.querySelector('.submitButton'); 
+    submitBtn.addEventListener('click', function () {
+        document.querySelector('.tutorDataForm').submit();
+    });
+
+
+
+
+
     const urlParams = new URLSearchParams(window.location.search);
     const memberId = urlParams.get('memberId'); // 獲取 `memberId` 參數
 
@@ -189,9 +198,9 @@
                             listItem.classList.add("list-group-item");
 
                             const startTime = reservation.coursehours.split(":")[0]; // 取得開始小時部分
-                            const endTime = (parseInt(startTime) + 1).toString().padStart(2, "0"); // 假設每個時段一小時，這裡是計算結束時間
+                            
 
-                            listItem.textContent = `${getWeeking(day)} ${startTime}點至${endTime}點`;
+                            listItem.textContent = `${getWeeking(day)} ${startTime}:00點`;
                             timeList.appendChild(listItem);
                         });
 

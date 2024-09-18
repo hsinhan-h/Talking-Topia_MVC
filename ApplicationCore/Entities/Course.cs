@@ -28,12 +28,12 @@ public partial class Course
     /// <summary>
     /// 課程標題
     /// </summary>
-    public string Title { get; set; } = null!;
+    public string Title { get; set; }
 
     /// <summary>
     /// 課程副標題
     /// </summary>
-    public string SubTitle { get; set; } = null!;
+    public string SubTitle { get; set; }
 
     /// <summary>
     /// 25分鐘價
@@ -48,7 +48,7 @@ public partial class Course
     /// <summary>
     /// 課程詳細描述
     /// </summary>
-    public string Description { get; set; } = null!;
+    public string Description { get; set; }
 
     /// <summary>
     /// 是否顯示
@@ -58,12 +58,12 @@ public partial class Course
     /// <summary>
     /// 影片封面
     /// </summary>
-    public string ThumbnailUrl { get; set; } = null!;
+    public string ThumbnailUrl { get; set; }
 
     /// <summary>
     /// 影片路徑
     /// </summary>
-    public string VideoUrl { get; set; } = null!;
+    public string VideoUrl { get; set; }
 
     /// <summary>
     /// 課程審核狀態
@@ -82,7 +82,7 @@ public partial class Course
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
-    public virtual CourseCategory Category { get; set; } = null!;
+    public virtual CourseCategory Category { get; set; }
 
     public virtual ICollection<CourseImage> CourseImages { get; set; } = new List<CourseImage>();
 
@@ -91,6 +91,10 @@ public partial class Course
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
+
+    public virtual CourseSubject Subject { get; set; }
+
+    public virtual Member Tutor { get; set; }
 
     public virtual ICollection<WatchList> WatchLists { get; set; } = new List<WatchList>();
 }

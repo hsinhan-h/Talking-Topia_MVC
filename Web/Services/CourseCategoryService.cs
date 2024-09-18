@@ -1,4 +1,6 @@
-﻿namespace Web.Services
+﻿//using ApplicationCore.Entities;
+
+namespace Web.Services
 {
     public class CourseCategoryService
     {
@@ -12,8 +14,8 @@
         public async Task<List<CourseCategoryViewModel>> GetCourseCategoriesWithSubjectsAsync()
         {
             var courseCategoriesWithSubjects = await (
-                from category in _repository.GetAll<CourseCategory>()
-                join subject in _repository.GetAll<CourseSubject>()
+                from category in _repository.GetAll<Entities.CourseCategory>()
+                join subject in _repository.GetAll<Entities.CourseSubject>()
                 on category.CourseCategoryId equals subject.CourseCategoryId into subjectGroup
                 select new CourseCategoryViewModel
                 {
@@ -24,8 +26,22 @@
                     }).ToList()
                 }).ToListAsync();
             return courseCategoriesWithSubjects;
-        } 
+        }
 
+        public async Task<CourseCategoryListViewModel> GetCourseCategoryListAsync()
+        {
+            var courseCategory = 
+                (from category in _repository.GetAll<CourseCategory>()
+                 select new CourseCategoryVM
+                 {
+                     CourseCategoryId = category.CourseCategoryId,
+                     CategoryName = category.CategorytName,
+                 });
 
+            return new CourseCategoryListViewModel
+            {
+                CourseCategoryList =await courseCategory.ToListAsync(),
+            };
+        }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using ApplicationCore.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using System.Runtime.InteropServices;
-using Web.Entities;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -23,44 +21,53 @@ namespace Web.Controllers
         /// <summary>
         /// ShoppingCart頁面
         /// </summary>
-        public async Task<IActionResult> Index([FromQuery] int memberId)
+        public async Task<IActionResult> Index()
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
+
             if (!_memberService.IsMember(memberId))
-            { return RedirectToAction(nameof(AccountController.Account), "Home"); }
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
-            var result = new ShoppingCartListViewModel
+            var scVM = new ShoppingCartListViewModel
             {
                 MemberId = memberId,
                 ShoppingCartList = cartData
             };
-            return View(result);
+            return View(scVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
+        //public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
+        public async Task<IActionResult> AddToCart([FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
+
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
+
             if (!_memberService.IsMember(memberId))
-            { return RedirectToAction(nameof(AccountController.Account), "Home"); }
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (!_courseService.IsCourse(courseId))
             { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }
             if (!_shoppingCartService.HasCartItem(memberId, courseId))
-            { memberId = await _shoppingCartService.CreateShoppingCartAsync(memberId, courseId, courseLength, quantity); }
+            { await _shoppingCartService.CreateShoppingCartAsync(memberId, courseId, courseLength, quantity); }
             await _shoppingCartService.GetAllShoppingCartAsync(memberId);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
 
-        public IActionResult Delete([FromForm] int memberId, [FromForm] int courseId)
+        public async Task<IActionResult> Delete([FromForm] int memberId, [FromForm] int courseId)
+        //public async Task<IActionResult> Delete([FromForm] int courseId)
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var member = _memberService.GetMemberId(user);
+            var user = HttpContext.User.Identity.Name;
+            //var memberId = await _memberService.GetMemberId(user);
             _shoppingCartService.DeleteCartItem(memberId, courseId);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
-
     }
 }

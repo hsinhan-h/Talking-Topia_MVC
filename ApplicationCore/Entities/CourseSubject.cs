@@ -13,7 +13,7 @@ public partial class CourseSubject
     /// <summary>
     /// 課程科目名稱
     /// </summary>
-    public string SubjectName { get; set; } = null!;
+    public string SubjectName { get; set; }
 
     /// <summary>
     /// 課程類別Id
@@ -30,7 +30,9 @@ public partial class CourseSubject
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual CourseCategory CourseCategory { get; set; } = null!;
+    public virtual CourseCategory CourseCategory { get; set; }
+
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
     public virtual ICollection<MemberPreference> MemberPreferences { get; set; } = new List<MemberPreference>();
 }

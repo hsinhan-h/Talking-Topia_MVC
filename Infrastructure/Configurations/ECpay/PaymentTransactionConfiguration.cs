@@ -34,6 +34,7 @@ namespace Infrastructure.Configurations.ECpay
                 TradeDesc = HttpUtility.UrlEncode(description),
                 MerchantTradeDate = date.Value.ToString("yyyy/MM/dd HH:mm:ss")
             };
+
             if (remark != null)
                 _payment.Remark = remark;
 

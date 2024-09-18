@@ -36,8 +36,7 @@ export async function generateBookingTable(weekStart, courseId) {
     tutorSlots = fetchedData.availableTimeSlots;
     bookedSlots = fetchedData.bookedTimeSlots;
     tutorHeadShot = fetchedData.tutorHeadShotImage;
-    courseTitle = fetchedData.courseTitle
-    console.log(tutorSlots);
+    courseTitle = fetchedData.courseTitle;
 
 
     bookingTableBody.innerHTML = "";

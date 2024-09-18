@@ -58,11 +58,9 @@ public partial class ShoppingCart
     /// <summary>
     /// 預約時間
     /// </summary>
-    public DateTime? BookingTime { get; set; }
+    public int? BookingTime { get; set; }
 
-    public virtual Course Course { get; set; } = null!;
+    public virtual Course Course { get; set; }
 
-    public virtual Member Member { get; set; } = null!;
-
-    public virtual ICollection<ShoppingCartBooking> ShoppingCartBookings { get; set; } = new List<ShoppingCartBooking>();
+    public virtual Member Member { get; set; }
 }

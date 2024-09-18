@@ -60,12 +60,21 @@ namespace Web.ViewModels
         [Display(Name = "關注狀態")]
         public bool FollowingStatus { get; set; }
         public List<TutorRecomCardList> TutorReconmmendCard { get; set; }
+        
+        public int NewReviewRating  { get; set; }
+        public int NewReviewStudentId { get; set; }
+        public int NewReviewCourseId { get; set; }
+
+        [Required(ErrorMessage = "請輸入評論內容")]
+        [StringLength(500, ErrorMessage = "評論內容不可超過500個字")]
+        [Display(Name = "評論內容")]
+        public string NewReviewContent { get; set; }
     }
 
     public class TutorExperience 
     {
-        public int StartYear { get; set; }
-        public int EndYear { get; set; }
+        public string StartYear { get; set; }
+        public string EndYear { get; set; }
         public string WorkTitle { get; set; }
     }
     public class TutorProfessionList

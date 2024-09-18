@@ -8,8 +8,9 @@ namespace ApplicationCore.Entities
 {
     public class Role
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+    public int Id { get; set; }
+
+    public string Name { get; set; }
         public RoleType RoleType { get; set; }
         public ICollection<UserRole> UserRole { get; set; }
     }

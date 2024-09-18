@@ -13,7 +13,7 @@ public partial class ProfessionalLicense
     /// <summary>
     /// 證照名稱
     /// </summary>
-    public string ProfessionalLicenseName { get; set; } = null!;
+    public string ProfessionalLicenseName { get; set; }
 
     /// <summary>
     /// 會員Id
@@ -23,7 +23,7 @@ public partial class ProfessionalLicense
     /// <summary>
     /// 證照路徑
     /// </summary>
-    public string ProfessionalLicenseUrl { get; set; } = null!;
+    public string ProfessionalLicenseUrl { get; set; }
 
     /// <summary>
     /// 建立時間
@@ -35,5 +35,5 @@ public partial class ProfessionalLicense
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual Member Member { get; set; } = null!;
+    public virtual Member Member { get; set; }
 }

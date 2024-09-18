@@ -4,16 +4,17 @@ using Web.Entities;
 using Web.Repository;
 using Web.ViewModels;
 using Infrastructure.Data;
+using ApplicationCore.Entities;
 
 namespace Web.Services
 {
     public class MemberDataService
     {
         private readonly IRepository _repository;
-        private readonly TalkingTopiaContext _context;
+        private readonly TalkingTopiaDbContext _context;
         private readonly ILogger<MemberDataService> _logger;
 
-        public MemberDataService(IRepository repository, TalkingTopiaContext context, ILogger<MemberDataService> logger)
+        public MemberDataService(IRepository repository, TalkingTopiaDbContext context, ILogger<MemberDataService> logger)
         {
             _repository = repository;
             _context = context;
@@ -27,7 +28,7 @@ namespace Web.Services
         {
             _logger.LogInformation($"開始查詢會員資料，會員ID: {memberId}");
 
-            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
+            var member = await _repository.GetAll<Web.Entities.Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
 
             if (member == null)
             {
@@ -38,10 +39,10 @@ namespace Web.Services
             _logger.LogInformation($"成功查詢會員資料，會員ID: {memberId}");
 
             // 查詢會員的課程偏好
-            var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
-                                      join cs in _repository.GetAll<CourseSubject>()
+            var coursePrefer = await (from mp in _repository.GetAll<Web.Entities.MemberPreference>()
+                                      join cs in _repository.GetAll<Web.Entities.CourseSubject>()
                                           on mp.SubjecId equals cs.SubjectId
-                                      join cc in _repository.GetAll<CourseCategory>()
+                                      join cc in _repository.GetAll<Web.Entities.CourseCategory>()
                                           on cs.CourseCategoryId equals cc.CourseCategoryId
                                       where mp.MemberId == member.MemberId
                                       select new CourseListViewModel
@@ -163,12 +164,12 @@ namespace Web.Services
 
         public async Task<CourseMainPageViewModel> GetWatchList(int memberId)
         {
-            var watchCardInfo = (from watch in _repository.GetAll<WatchList>().AsNoTracking()
-                                 join course in _repository.GetAll<Course>().AsNoTracking()
+            var watchCardInfo = (from watch in _repository.GetAll<Web.Entities.WatchList>().AsNoTracking()
+                                 join course in _repository.GetAll<Web.Entities.Course>().AsNoTracking()
                                  on watch.CourseId equals course.CourseId
-                                 join member in _repository.GetAll<Member>().AsNoTracking()
+                                 join member in _repository.GetAll<Web.Entities.Member>().AsNoTracking()
                                  on course.TutorId equals member.MemberId
-                                 join nation in _repository.GetAll<Nation>().AsNoTracking()
+                                 join nation in _repository.GetAll<Web.Entities.Nation>().AsNoTracking()
                                  on member.NationId equals nation.NationId
                                  where watch.FollowerId == memberId
                                  select new TutorRecomCardList
@@ -184,8 +185,8 @@ namespace Web.Services
                                  }).ToList();
              
             var recomCardReview = (
-               from course in _repository.GetAll<Course>().AsNoTracking()
-               join review in _repository.GetAll<Review>().AsNoTracking()
+               from course in _repository.GetAll<Web.Entities.Course>().AsNoTracking()
+               join review in _repository.GetAll<Web.Entities.Review>().AsNoTracking()
                on course.CourseId equals review.CourseId
                group review by course.CourseId into Review
                select new TutorRecomCardList

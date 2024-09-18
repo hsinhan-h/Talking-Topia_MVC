@@ -1,4 +1,4 @@
-﻿@model ShoppingCartInfoListViewModel
+﻿@model OrderResultListViewModel
 
 @section topCSS {
     <link rel="stylesheet" href="~/css/ShoppingCartInfo.css" />
@@ -12,9 +12,7 @@
     </p>
     <p>若待付款訂單中包含"未付款之體驗課"，需先取消或支付該筆訂單方可成功購買</p>
 
-    <!-- 訂單資訊 -->
-    <h3>訂單資訊</h3>
-    @foreach (var item in Model.ShoppingCartInfoList)
+    @foreach (var item in Model.OrderResult)
     {
         var itemId = item.CourseId;
 
@@ -84,11 +82,10 @@
         </div>
     }
     <div class="btn-goback">
-        <form asp-controller="Order" asp-action="GetData" asp-route-orderId="20" asp-route-rtnCode="2">
+        <form asp-controller="ShoppingCart" asp-action="Index" asp-route-memberId="1">
             @Html.AntiForgeryToken()
 
-            <input class="sc-input" type="hidden" name="orderId" value="20" />
-            <input class="sc-input" type="hidden" name="rtnCode" value="2" />
+            <input class="sc-input" type="hidden" name="memberId" value="1" />
             <br>
             <button class="return-order_btn text-white" type="button">返回購物車</button>
         </form>

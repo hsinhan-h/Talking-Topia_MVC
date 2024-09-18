@@ -35,7 +35,7 @@ public partial class TutorTimeSlot
     /// </summary>
     public DateTime? Udate { get; set; }
 
-    public virtual CourseHour CourseHour { get; set; } = null!;
+    public virtual CourseHour CourseHour { get; set; }
 
-    public virtual Member Tutor { get; set; } = null!;
+    public virtual Member Tutor { get; set; }
 }

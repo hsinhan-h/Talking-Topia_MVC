@@ -2,11 +2,6 @@
 using ApplicationCore.Entities;
 using ApplicationCore.Enums;
 using ApplicationCore.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
@@ -153,5 +148,18 @@ namespace ApplicationCore.Services
             }
         }
 
+        public async void UpdateItem(int memberId, int courseId, int quantity, int courseLength, decimal subTotal)
+        {
+            var shoppingCartItem = await _shoppingCartRepository.FirstOrDefaultAsync(s => s.MemberId == memberId && s.CourseId == courseId);
+            if (shoppingCartItem != null)
+            {
+                shoppingCartItem.Quantity = (short)quantity;
+                shoppingCartItem.CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice; // 更新時間
+                shoppingCartItem.TotalPrice = subTotal;
+                shoppingCartItem.Udate = DateTime.Now;
+
+                await _shoppingCartRepository.UpdateAsync(shoppingCartItem);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ApplicationCore.Interfaces;
+using System.ComponentModel;
 using Web.Services;
 
 namespace Web.Controllers
@@ -7,10 +8,12 @@ namespace Web.Controllers
     {
         private readonly BookingService _bookingService;
         private readonly CourseService _courseService;
-        public CourseController(BookingService bookingService, CourseService courseService)
+        private readonly ICourseService _icourseService;
+        public CourseController(BookingService bookingService, CourseService courseService, ICourseService icourseService)
         {
             _bookingService = bookingService;
             _courseService = courseService;
+            _icourseService = icourseService;
         }
 
         public IActionResult Index()
@@ -18,12 +21,12 @@ namespace Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CourseList(int page = 1)
+        public IActionResult CourseList()
         {
-            int pageSize = 6;
-            int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
-            int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
-            ViewData["TotalPages"] = totalPages;
+            //int pageSize = 6;
+            //int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
+            //int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
+            //ViewData["TotalPages"] = totalPages;
             //var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
             return View();
         }
@@ -35,8 +38,27 @@ namespace Web.Controllers
             var model = await _courseService.GetCourseMainPage(courseId);
             return View(model);
         }
-    }
 
+        [HttpPost]
+        public IActionResult CreateCourseReview([FromForm] int MemberId, [FromForm] int CourseId,[FromForm]byte rating, [FromForm] string NewReviewContent)
+        {
+           
+            try 
+            {
+                var createReview = _icourseService.CreateReviews(MemberId,CourseId, rating, NewReviewContent);
+                return RedirectToAction(nameof(CourseMainPage), new { courseId =CourseId });
+               
+
+            }
+            catch (Exception ex)
+            {               
+                return Content("訂單建立失敗!");
+               
+            }
+        }
+
+
+    }
 
     
 }

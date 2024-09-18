@@ -21,10 +21,10 @@ namespace ApplicationCore.Services
         {
             return _memberRepository.Any(m => m.MemberId == memberId);
         }
-        public async Task<int> GetMemberId(string userAccount)
+        public async Task<bool> GetMemberId(int memberId)
         {
-            var result = await _memberRepository.FirstOrDefaultAsync(x => x.Email == userAccount);
-            return result.MemberId;
+            var result = await _memberRepository.AnyAsync(x => x.MemberId == memberId);            
+            return result;
         }
     }
 }

@@ -42,4 +42,110 @@
             event.preventDefault(); // 阻止表單提交
         }
     });
+
 });
+
+function updateSubtotalByTime(priceFor25Minutes, priceFor50Minutes, index) {
+
+    var selectedTime = parseInt(document.getElementById("timeSelect-" + index).value);
+    var quantity = parseInt(document.getElementById("lh-sc-quantitySelect-" + index).value);
+
+    if (isNaN(selectedTime) || isNaN(quantity) || quantity <= 0) {
+        document.getElementById("subtotal-" + index).innerText = "NT$0";
+        document.getElementById("discount-info-" + index).innerText = "省NT$0";
+        return;
+    }
+
+    var selectedPrice = (selectedTime === 50) ? priceFor50Minutes : priceFor25Minutes;
+    var subtotal = quantity * selectedPrice;
+
+    //var originalPrice = quantity * priceFor25Minutes;
+    //var discount = originalPrice - subtotal;
+    
+    document.getElementById("subtotal-" + index).innerText = "NT$" + subtotal.toLocaleString();
+    document.getElementById("discount-info-" + index).innerText = "省NT$" + discount.toLocaleString();
+
+    updateCartItem(courseId, selectedTime, quantity, subtotal);
+
+    updateShoppingDetails(index, selectedTime, quantity, subtotal);
+    updateTotalAmount();
+}
+
+
+function updateShoppingDetails(index, time, quantity, subtotal) {
+    document.getElementById("details-time-" + index).innerText = time + " 分鐘";
+    document.getElementById("details-quantity-" + index).innerText = quantity + " 堂";
+    document.getElementById("details-subtotal-" + index).innerText = "NT$" + subtotal.toLocaleString();
+}
+
+function updateTotalAmount() {
+    var subtotals = document.querySelectorAll("[id^='subtotal-']");
+    var total = 0;
+
+    subtotals.forEach(function (element) {
+        var subtotal = parseInt(element.innerText.replace(/[^\d]/g, ''));
+        total += isNaN(subtotal) ? 0 : subtotal;
+    });
+
+    document.getElementById("total-amount").innerText = "NT$" + total.toLocaleString();
+}
+
+submitBtn.addEventListener('submit', function (event) {
+    if (taxIdCheckbox.checked) {
+        taxIdNumberInput.value = taxIdInput.value;
+    } else {
+        taxIdNumberInput.value = '';
+    }
+
+    var quantities = document.querySelectorAll("[id^='lh-sc-quantitySelect-']");
+    var times = document.querySelectorAll("[id^='timeSelect-']");
+
+    quantities.forEach(function (quantity, index) {
+        var hiddenQuantityInput = document.createElement("input");
+        hiddenQuantityInput.type = "hidden";
+        hiddenQuantityInput.name = "Items[" + index + "].Quantity";
+        hiddenQuantityInput.value = quantity.value;
+        submitBtn.appendChild(hiddenQuantityInput);
+    });
+
+    times.forEach(function (time, index) {
+        // 更新隱藏欄位的時間
+        var hiddenTimeInput = document.createElement("input");
+        hiddenTimeInput.type = "hidden";
+        hiddenTimeInput.name = "Items[" + index + "].Time";
+        hiddenTimeInput.value = time.value;
+        submitBtn.appendChild(hiddenTimeInput);
+    });
+
+    if (!selectedPayment) {
+        alert("請選擇一個付款方式");
+        event.preventDefault();
+    }
+});
+
+function updateCartItem(courseId, selectedTime, quantity, subtotal) {
+    var cartItemUpdate = {
+        CourseId: courseId,
+        CourseQuantity: quantity,
+        CourseLength: selectedTime,
+        SubtotalNTD: subtotal
+    };
+
+    $.ajax({
+        url: '/ShoppingCart/UpdateCartItem',
+        type: 'POST',
+        data: JSON.stringify(cartItemUpdate),
+        contentType: 'application/json',
+        success: function (response) {
+            console.log("Cart item updated successfully:", response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error updating cart item:", error);
+        }
+    });
+}
+
+
+
+
+

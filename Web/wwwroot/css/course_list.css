@@ -18,8 +18,23 @@
     font-size: 15px;
 }
 
-@media screen and (max-width: 767px) {
+.dropdown-selected {
+    background-color: var(--theme-color);
+    color: #fff;
+}
 
+.cancel-filter-btn, .cancel-filter-btn:hover {
+    color: var(--highlight-color);
+}
+
+.cancel-filter-btn:focus {
+    background-color: #fff;
+    transform: translate(1px, 1px);
+    color: var(--highlight-color);
+}
+
+
+@media screen and (max-width: 767px) {
     .lh-tutors-filter .dropdown-toggle {
         font-size: 14px;
     }
@@ -58,10 +73,10 @@
     box-shadow: none;
 }
 
-    .lh-tutors-filter .dropdown-menu button:focus {
-        background-color: var(--theme-color);
-        color: #fff;
-    }
+.lh-tutors-filter .dropdown-menu button:not(.cancel-filter-btn):focus {
+    background-color: var(--theme-color);
+    color: #fff;
+}
 
 .form-check-input:checked {
     background-color: var(--theme-color);
@@ -88,6 +103,10 @@
 
 .course-time-filter .timeslot-checkbox .form-check {
     margin: 0;
+}
+
+.course-time-filter .timeslot-checkbox .text {
+    font-size: 13px;
 }
 
 @media screen and (min-width: 768px) {

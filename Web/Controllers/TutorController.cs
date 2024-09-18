@@ -15,12 +15,14 @@ namespace Web.Controllers
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
         private readonly AppointmentDetailService _appointmentDetailService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService)
+        private readonly CourseCategoryService _courseCategoryService;
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService, CourseCategoryService courseCategoryService)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
             _appointmentDetailService = appointmentDetailService;
+            _courseCategoryService = courseCategoryService;
         }
        
         public IActionResult Index()
@@ -28,17 +30,32 @@ namespace Web.Controllers
             return View();
         }
 
-        
+
         //Tutor Data Read and update
+        [HttpGet]
         public async Task<IActionResult> TutorData(int? memberId)
         {
 
             // Edit: 根據ID取得現有會員資料
             var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
-
             return View(tutorData);
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> TutorData(TutorDataViewModel qVM)
+        {
+            // 呼叫服務層的 CreateTutorData 方法
+            var result = await _tutorDataService.CreateTutorData(qVM);
+
+            // 檢查操作是否成功，並設置 ViewData 來顯示訊息
+            ViewData["Header"] = result.Success ? "會員資料新增" : "錯誤訊息";
+            ViewData["Message"] = result.Message;
+
+            // 返回訊息視圖
+            return View("ShowMessage");
+        }
+
 
         [HttpGet]
         public IActionResult TutorResume()
@@ -69,6 +86,7 @@ namespace Web.Controllers
             MemberId = 3;
             var model = await _bookingService.GetPublishCourseList(MemberId);
             ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(MemberId);
+            ViewData["CourseCategoryList"] =  await _courseCategoryService.GetCourseCategoryListAsync();
 
             return View(model);
         }
