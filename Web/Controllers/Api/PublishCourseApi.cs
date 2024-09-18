@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers.Api
 {
@@ -8,15 +10,23 @@ namespace Web.Controllers.Api
     public class PublishCourseApi : ControllerBase
     {
         private readonly BookingService _bookingService;
-        public PublishCourseApi(BookingService bookingService)
+        private readonly IMemberService _memberService;
+        public PublishCourseApi(BookingService bookingService, IMemberService memberService)
         {
             _bookingService = bookingService;
+            _memberService = memberService;
         }
 
         [HttpGet("{CourseId}")]
         public async Task<IActionResult> GetBookingDetails(int CourseId)
         {
-            int memberId = 3;
+            //int memberId = 3;
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
             var booking = await _bookingService.GetPublishCourse(memberId, CourseId);
             if (booking == null)
             {
@@ -33,13 +43,13 @@ namespace Web.Controllers.Api
         [HttpPost("SaveToCouresData")]
         public async Task<IActionResult> SaveToCoures([FromBody] CourseDataViewModel course)
         {
-            int memberId = 3;
+            //int memberId = 3;
 
-            //var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            //if(memberIdClaim == null) {return BadRequest("請重新登入");}
-            //memberId = int.Parse(memberIdClaim.Value);
-            //var result = await _memberService.GetMemberId(memberId);
-            //if(!result) { return BadRequest("找不到會員"); }
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null) { return BadRequest("請重新登入"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            if (!result) { return BadRequest("找不到會員"); }
 
             if (string.IsNullOrWhiteSpace(course.CategoryId))
             {
