@@ -414,7 +414,6 @@ public partial class TalkingTopiaDbContext : DbContext
                 .HasForeignKey(d => d.NationId)
                 .HasConstraintName("FK__Members__NationI__48CFD27E");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Members).HasForeignKey(d => d.UserId);
         });
 
         modelBuilder.Entity<MemberCoupon>(entity =>

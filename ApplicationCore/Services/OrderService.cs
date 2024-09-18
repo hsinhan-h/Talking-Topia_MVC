@@ -22,17 +22,21 @@ namespace ApplicationCore.Services
         private int _orderId;
         private List<ShoppingCart> _shoppingCartItem;
 
-        public OrderService(ITransaction transaction, IRepository<Order> orderRepository, IRepository<Member> memberRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository, IRepository<Booking> bookingRepository, IRepository<CourseSubject> courseSubjectRepository, IRepository<CourseCategory> courseCategoryRepository)
+        public OrderService(ITransaction transaction, IRepository<Order> orderRepository,
+                            IRepository<Member> memberRepository, IRepository<OrderDetail> orderDetailRepository,
+                            IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository,
+                            IRepository<Booking> bookingRepository, IRepository<CourseSubject> courseSubjectRepository,
+                            IRepository<CourseCategory> courseCategoryRepository)
         {
-            _transaction = transaction;
-            _orderRepository = orderRepository;
-            _memberRepository = memberRepository;
-            _orderDetailRepository = orderDetailRepository;
-            _shoppingCartRepository = shoppingCartRepository;
-            _courseRepository = courseRepository;
-            _bookingRepository = bookingRepository;
-            _courseSubjectRepository = courseSubjectRepository;
-            _courseCategoryRepository = courseCategoryRepository;
+            _transaction = transaction ?? throw new ArgumentNullException(nameof(transaction));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _memberRepository = memberRepository ?? throw new ArgumentNullException(nameof(memberRepository));
+            _orderDetailRepository = orderDetailRepository ?? throw new ArgumentNullException(nameof(orderDetailRepository));
+            _shoppingCartRepository = shoppingCartRepository ?? throw new ArgumentNullException(nameof(shoppingCartRepository));
+            _courseRepository = courseRepository ?? throw new ArgumentNullException(nameof(courseRepository));
+            _bookingRepository = bookingRepository ?? throw new ArgumentNullException(nameof(bookingRepository));
+            _courseSubjectRepository = courseSubjectRepository ?? throw new ArgumentNullException(nameof(courseSubjectRepository));
+            _courseCategoryRepository = courseCategoryRepository ?? throw new ArgumentNullException(nameof(courseCategoryRepository));
         }
 
         public async Task<GetAllOrderResultDto> GetAllOrder(int memberId)
@@ -81,8 +85,11 @@ namespace ApplicationCore.Services
                 // 把購物車品項全撈出來，並計算總額
                 _shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
                 var totalPrice = _shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
-                var member = await _memberRepository.GetByIdAsync(memberId);
-
+                var member = await _memberRepository.FirstOrDefaultAsync(m => m.MemberId ==  memberId);
+                if (memberId == null || memberId <= 0)
+                {
+                    throw new ArgumentException("MemberId 不存在");
+                }
                 // 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
                 var orders = new Order()
                 {

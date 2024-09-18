@@ -25,12 +25,12 @@ namespace Web.Controllers
         public async Task<IActionResult> Index()
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             int memberId = int.Parse(memberIdClaim.Value);
             var result = await _memberService.GetMemberId(memberId);
 
-            if (!result) { return BadRequest("找不到會員"); }
-
-            if (!_memberService.IsMember(memberId))
+            if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
             var scVM = new ShoppingCartListViewModel
@@ -42,7 +42,6 @@ namespace Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         public async Task<IActionResult> AddToCart([FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
 
@@ -52,9 +51,7 @@ namespace Web.Controllers
             int memberId = int.Parse(memberIdClaim.Value);
             var result = await _memberService.GetMemberId(memberId);
 
-            if (!result) { return BadRequest("找不到會員"); }
-
-            if (!_memberService.IsMember(memberId))
+            if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (!_courseService.IsCourse(courseId))
             { return RedirectToAction(nameof(HomeController.Index), "Home", new { memberId }); }

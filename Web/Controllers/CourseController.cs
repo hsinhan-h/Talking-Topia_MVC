@@ -1,6 +1,9 @@
 ﻿using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 using System.ComponentModel;
+using System.Security.Claims;
 using Web.Services;
+using BookingService = Web.Services.BookingService;
 
 namespace Web.Controllers
 {
@@ -9,11 +12,13 @@ namespace Web.Controllers
         private readonly BookingService _bookingService;
         private readonly CourseService _courseService;
         private readonly ICourseService _icourseService;
-        public CourseController(BookingService bookingService, CourseService courseService, ICourseService icourseService)
+        private readonly IMemberService _memberService;
+        public CourseController(BookingService bookingService, CourseService courseService, ICourseService icourseService, IMemberService memberService)
         {
             _bookingService = bookingService;
             _courseService = courseService;
             _icourseService = icourseService;
+            _memberService = memberService;
         }
 
         public IActionResult Index()
@@ -40,12 +45,17 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCourseReview([FromForm] int MemberId, [FromForm] int CourseId,[FromForm]byte rating, [FromForm] string NewReviewContent)
+        public async Task<IActionResult> CreateCourseReview([FromForm] int CourseId,[FromForm]byte rating, [FromForm] string NewReviewContent)
         {
-           
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
             try 
             {
-                var createReview = _icourseService.CreateReviews(MemberId,CourseId, rating, NewReviewContent);
+                var createReview = _icourseService.CreateReviews(memberId,CourseId, rating, NewReviewContent);
                 return RedirectToAction(nameof(CourseMainPage), new { courseId =CourseId });
                
 

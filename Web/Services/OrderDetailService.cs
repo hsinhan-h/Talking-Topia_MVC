@@ -46,7 +46,7 @@ namespace Web.Services
                              TrackingNumber = "",              // 訂單編號
                              FullName = member.FirstName + " " + member.LastName, // 教師名稱
                              CourseTitle = OrderDetail.CourseTitle,        // 課程名稱
-                             CourseLength = "",                 // 購買時長
+                             CourseLength = OrderDetail.CourseType == 1 ? "25分鐘" : "50分鐘", // 購買時長
                              Quantity = OrderDetail.Quantity,  // 購買堂數
                              TotalPrice = OrderDetail.TotalPrice, // 總價
                              TaxIdNumber = Order.TaxIdNumber,  // 統一編號

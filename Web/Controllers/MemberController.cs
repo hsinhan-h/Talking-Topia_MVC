@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data;
+﻿using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Web.Entities;
@@ -9,21 +10,41 @@ namespace Web.Controllers
     public class MemberController : Controller
     {
         private readonly MemberDataService _memberDataService;
-        private readonly OrderDetailService _orderDetailService;      
+        private readonly OrderDetailService _orderDetailService;   
+        private readonly IMemberService _memberService;
+        private readonly MemberAppointmentService _memberAppointmentService;
 
-        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice)
+        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService)
         {
-            _memberDataService = memberDataService;
-            _orderDetailService = orderdetailservice;           
+            _memberDataService = memberDataService;            
+            _memberService = memberService;
+            _orderDetailService = orderdetailservice;
+            _memberAppointmentService = memberappointmentService;
         }
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
         /// 調整為學員課程預約明細
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var memberId = 15; // 測試使用 MemberId
+            var viewModel = await _memberAppointmentService.GetAppointmentData(memberId);
+
+            // 確保 viewModel 被正確初始化
+            if (viewModel == null)
+            {
+                viewModel = new MemberAppointmentViewModel
+                {
+                    MemberAppointmentList = new List<MemberAppointmentVM>() // 初始化為空列表
+                };
+            }
+            else if (viewModel.MemberAppointmentList == null)
+            {
+                viewModel.MemberAppointmentList = new List<MemberAppointmentVM>(); // 確保列表不為 null
+            }
+
+            return View(viewModel); // 將正確初始化的 viewModel 傳遞到視圖
         }
         public async Task<IActionResult> MemberData(int memberId)
         {
@@ -51,6 +72,7 @@ namespace Web.Controllers
             // 從資料庫中查詢會員資料
             var summaryData = await _memberDataService.GetMemberData(parsedMemberId);
 
+
             // 如果沒有找到會員資料
             if (summaryData == null)
             {
@@ -59,23 +81,7 @@ namespace Web.Controllers
 
             return View(summaryData);
         }
-        [HttpPost]
-        public async Task<IActionResult> UpdateMemberData(MemberProfileViewModel memberProfile, int memberId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _memberDataService.UpdateMemberData(memberProfile, memberId);
-                    return RedirectToAction("MemberData", new { memberId });
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-            }
-            return View(memberProfile);
-        }
+
 
         public async Task<IActionResult> MemberTransaction()
         {
@@ -87,9 +93,12 @@ namespace Web.Controllers
             var Orderdetail = await _orderDetailService.GetOrderData(1);
             return View(Orderdetail);
         }
-        public async Task <IActionResult> WatchList(int memberId)
+        public async Task <IActionResult> WatchList()
         {
-           
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            
+            int memberId = int.Parse(memberIdClaim.Value);
+
             var watchlist = await _memberDataService.GetWatchList(memberId);
             return View(watchlist);
         }
@@ -97,5 +106,36 @@ namespace Web.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveProfile([FromBody] MemberProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // 從 Claims 中獲取會員 ID
+                    var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (memberIdClaim == null)
+                    {
+                        return Json(new { success = false, message = "無法取得會員ID，請重新登入" });
+                    }
+
+                    int memberId = int.Parse(memberIdClaim.Value);
+
+                    // 使用 Service 層更新會員資料
+                    await _memberDataService.UpdateMemberData(model, memberId);
+
+                    return Json(new { success = true, message = "儲存成功" });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = $"儲存失敗: {ex.Message}" });
+                }
+            }
+
+            return Json(new { success = false, message = "資料驗證失敗" });
+        }
+
     }
 }
