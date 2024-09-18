@@ -1,6 +1,4 @@
-﻿import { forEach } from "../lib/font-awesome/js/v4-shims";
-
-const { createApp, ref } = Vue ;
+﻿const { createApp, ref } = Vue ;
 const courseId = document.getElementById('app').dataset.courseId;
 const app = createApp({
     data() {
