@@ -1,5 +1,5 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
+﻿//using ApplicationCore.Entities;
+//using ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using Web.Entities;
@@ -11,10 +11,8 @@ namespace Web.Services
     public class BookingService
     {
         private readonly IRepository _repository;
-        private readonly IRepository<ApplicationCore.Entities.CourseCategory> _courseCategoryRepository;
-        public BookingService(IRepository repository
-            , IRepository<ApplicationCore.Entities.CourseCategory> courseCategoryRepository
-            )
+        //private readonly IRepository<ApplicationCore.Entities.CourseCategory> _courseCategoryRepository;
+        public BookingService(IRepository repository)
         {
             _repository = repository;
             //_courseCategoryRepository = courseCategoryRepository;
