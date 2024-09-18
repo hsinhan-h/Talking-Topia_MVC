@@ -109,9 +109,9 @@
                             教師系統
                         </a>
                         <ul class="dropdown-menu tutor-dropdown-menu" aria-labelledby="tutorSystemDropdown">
-                            <li><a class="dropdown-item tutor-dropdown-item" href="/TeacherSystem/CourseReservation">課程被預約明細</a></li>
-                            <li><a class="dropdown-item tutor-dropdown-item" href="/TeacherSystem/TeacherProfile">教師資料</a></li>
-                            <li><a class="dropdown-item tutor-dropdown-item" href="/TeacherSystem/UploadCourse">上架課程</a></li>
+                            <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="AppointmentDetails">課程被預約明細</a></li>
+                            <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="TutorData">教師資料</a></li>
+                            <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="PublishCourse">上架課程</a></li>
                         </ul>
                     </li>
                     <!--教師系統子選單結束-->
@@ -137,9 +137,9 @@
                             <img src="https://fakeimg.pl/20x20/200" alt="">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end member-dropdown-menu" aria-labelledby="memberMenu">
-                            <li><a class="dropdown-item member-dropdown-item" href="/Member/MemberData">會員資料</a></li>
-                            <li><a class="dropdown-item member-dropdown-item" href="/Member/CourseReservation">課程預約明細</a></li>
-                            <li><a class="dropdown-item member-dropdown-item" href="/Member/OrderHistory">歷史訂單</a></li>
+                            <li><a class="dropdown-item member-dropdown-item" asp-controller="Member" asp-action="MemberData">會員資料</a></li>
+                            <li><a class="dropdown-item member-dropdown-item" asp-controller="Member" asp-action="Index">課程預約明細</a></li>
+                            <li><a class="dropdown-item member-dropdown-item" asp-controller="Member" asp-action="MemberTransaction">交易明細</a></li>
                         </ul>
                     </li>
                     <!--會員系統子選單結束-->
