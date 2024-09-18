@@ -3,6 +3,9 @@ using Web.Entities;
 using Web.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ApplicationCore.Entities;
+using System.Security.Claims;
+using ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -10,21 +13,23 @@ namespace Web.Controllers
 {
     public class TutorController : Controller
     {
-       
+
         private readonly ResumeDataService _resumeDataService;
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
         private readonly AppointmentDetailService _appointmentDetailService;
         private readonly CourseCategoryService _courseCategoryService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService, CourseCategoryService courseCategoryService)
+        private readonly IMemberService _memberService;
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService, CourseCategoryService courseCategoryService, IMemberService memberService)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
             _appointmentDetailService = appointmentDetailService;
             _courseCategoryService = courseCategoryService;
+            _memberService = memberService;
         }
-       
+
         public IActionResult Index()
         {
             return View();
@@ -81,11 +86,18 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PublishCourse(int MemberId)
+        public async Task<IActionResult> PublishCourse()
         {
-            MemberId = 3;
-            var model = await _bookingService.GetPublishCourseList(MemberId);
-            ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(MemberId);
+            //int memberId = 3;
+
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            var model = await _bookingService.GetPublishCourseList(memberId);
+            ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(memberId);
             ViewData["CourseCategoryList"] = await _courseCategoryService.GetCourseCategoryListAsync();
 
             return View(model);
