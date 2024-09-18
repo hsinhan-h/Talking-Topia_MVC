@@ -44,15 +44,22 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetData()
         {
-            //_orderId = 29;
-            var order = await _orderVMService.GetOrderResultViewModelAsync(_orderId);
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            if (!result)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+
+            var order = await _orderVMService.GetOrderResultViewModelAsync(memberId);
             if (order == null) return BadRequest("找不到訂單!!!!!!!?");
-            var result = new OrderResultListViewModel
+            var orderResult = new OrderResultListViewModel
             {
                 OrderResult = order,
             };
 
-            return View(result);
+            return View(orderResult);
         }
 
         /// <summary>

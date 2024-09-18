@@ -26,7 +26,7 @@ namespace Web.Services
         }
 
         /// <summary>
-        /// ApplicationCore版
+        /// ApplicationCore版(還沒改成MemberId版)
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
@@ -66,28 +66,35 @@ namespace Web.Services
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public async Task<List<OrderResultViewModel>> GetOrderResultViewModelAsync(int orderId)
+        public async Task<List<OrderResultViewModel>> GetOrderResultViewModelAsync(int memberId)
         {
-            var result = await (from item in _repository.GetAll<Entities.Order>()
-                                where item.OrderId == orderId
-                                join orderDetail in _repository.GetAll<Entities.OrderDetail>() on item.OrderId equals orderDetail.OrderId
-                                join course in _repository.GetAll<Entities.Course>() on orderDetail.CourseId equals course.CourseId
-                                join tutor in _repository.GetAll<Entities.Member>() on course.TutorId equals tutor.MemberId
-                                join booking in _repository.GetAll<Entities.Booking>() on course.CourseId equals booking.CourseId
-                                select new OrderResultViewModel
-                                {
-                                    CourseId = course.CourseId,
-                                    //TrackingNumber = item.MerchantTradeNo,
-                                    FullName = tutor.FirstName + " " + tutor.LastName,
-                                    CourseTitle = course.Title,
-                                    CourseQuantity = orderDetail.Quantity,
-                                    SubtotalNTD = orderDetail.TotalPrice,
-                                    TaxIdNumber = item.TaxIdNumber,
-                                    OrderDatetime = item.TransactionDate.ToString("yyyy-MM-dd hh-mm"),
-                                    BookingDate = booking.BookingDate,
-                                    BookingTime = (short)booking.BookingTime,
-                                }).ToListAsync();
-            return result;
+            var latestOrder = await (from item in _repository.GetAll<Entities.Order>()
+                                     where item.MemberId == memberId
+                                     orderby item.TransactionDate descending
+                                     select item).FirstOrDefaultAsync();
+            if (latestOrder != null)
+            {
+                var result = await (from orderDetail in _repository.GetAll<Entities.OrderDetail>()
+                                    where orderDetail.OrderId == latestOrder.OrderId
+                                    join course in _repository.GetAll<Entities.Course>() on orderDetail.CourseId equals course.CourseId
+                                    join tutor in _repository.GetAll<Entities.Member>() on course.TutorId equals tutor.MemberId
+                                    join booking in _repository.GetAll<Entities.Booking>() on course.CourseId equals booking.CourseId
+                                    select new OrderResultViewModel
+                                    {
+                                        CourseId = course.CourseId,
+                                        //TrackingNumber = item.MerchantTradeNo,
+                                        FullName = tutor.FirstName + " " + tutor.LastName,
+                                        CourseTitle = course.Title,
+                                        CourseQuantity = orderDetail.Quantity,
+                                        SubtotalNTD = orderDetail.TotalPrice,
+                                        TaxIdNumber = latestOrder.TaxIdNumber,
+                                        OrderDatetime = latestOrder.TransactionDate.ToString("yyyy-MM-dd hh-mm"),
+                                        BookingDate = booking.BookingDate,
+                                        BookingTime = (short)booking.BookingTime,
+                                    }).ToListAsync();
+                return result;
+            }
+            return null;
         }
     }
 }
