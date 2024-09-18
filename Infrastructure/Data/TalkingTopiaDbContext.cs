@@ -414,7 +414,6 @@ public partial class TalkingTopiaDbContext : DbContext
                 .HasForeignKey(d => d.NationId)
                 .HasConstraintName("FK__Members__NationI__48CFD27E");
 
-            entity.HasOne(d => d.User).WithOne(p => p.Member).HasForeignKey<Member>(d => d.UserId);
         });
 
         modelBuilder.Entity<MemberCoupon>(entity =>
@@ -729,9 +728,9 @@ public partial class TalkingTopiaDbContext : DbContext
 
             entity.HasIndex(e => e.UserId, "IX_UserRoles_UserId");
 
-            entity.HasOne(d => d.Role).WithMany(p => p.UserRole).HasForeignKey(d => d.RoleId);
+            entity.HasOne(d => d.Role).WithMany(p => p.UserRoles).HasForeignKey(d => d.RoleId);
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserRole).HasForeignKey(d => d.UserId);
+            entity.HasOne(d => d.User).WithMany(p => p.UserRoles).HasForeignKey(d => d.UserId);
         });
 
         modelBuilder.Entity<WatchList>(entity =>

@@ -85,10 +85,8 @@ function saveProfileData() {
         Birthday: document.getElementById('floatingInput2').value,
         Email: document.getElementById('floatingInput10').value,
         Phone: document.getElementById('floatingInput11').value,
-        CoursePrefer: collectCoursePreferences()
+        CoursePrefer: collectCoursePreferences() // 確保這裡是正確收集的資料
     };
-
-    
 
     $.ajax({
         type: "POST",
@@ -99,20 +97,16 @@ function saveProfileData() {
         success: function (response) {
             if (response.success) {
                 alert('儲存成功！');
-                // 禁用所有輸入欄位和選框
-                toggleEditMode();
             } else {
+                // 顯示具體的錯誤訊息，包括例外訊息
                 alert('儲存失敗，請重試。錯誤原因: ' + response.message + '\n' + (response.exception || ''));
             }
-        },
+        }
+        ,
         error: function (xhr, status, error) {
             alert('儲存過程中出現錯誤，請稍後再試。錯誤訊息: ' + xhr.responseText);
         }
     });
-    // 顯示「編輯」按鈕，隱藏「儲存」和「取消」按鈕
-    document.querySelector('input[data-action="save"]').parentElement.classList.add('d-none');
-    document.querySelector('input[data-action="cancel"]').parentElement.classList.add('d-none');
-    document.querySelector('input[data-action="edit"]').parentElement.classList.remove('d-none');
 }
 
 function collectCoursePreferences() {
@@ -125,31 +119,33 @@ function collectCoursePreferences() {
 
 
 function toggleEditMode() {
+    // 取得所有需要編輯的文字輸入欄位
     const inputs = document.querySelectorAll('#app input.form-control');
+
+    // 取得所有的 checkbox 元素
     const checkboxes = document.querySelectorAll('#app input[type="checkbox"]');
 
+    // 切換每個文字輸入欄位的 disabled 屬性
     inputs.forEach(input => {
         input.disabled = !input.disabled;
     });
+
+    // 切換每個 checkbox 的 disabled 屬性
     checkboxes.forEach(checkbox => {
         checkbox.disabled = !checkbox.disabled;
     });
 
-    const editButton = document.querySelector('input[data-action="edit"]');
-    const saveButton = document.querySelector('input[data-action="save"]');
-    const cancelButton = document.querySelector('input[data-action="cancel"]');
-
-    if (editButton.classList.contains('d-none')) {
-        saveButton.parentElement.classList.add('d-none');
-        cancelButton.parentElement.classList.add('d-none');
-        editButton.parentElement.classList.remove('d-none');
+    // 切換編輯按鈕的顯示文字
+    const editButton = document.querySelector('input[value="編輯"]');
+    if (editButton.value === "編輯") {
+        editButton.value = "取消";
     } else {
-        editButton.parentElement.classList.add('d-none');
-        saveButton.parentElement.classList.remove('d-none');
-        cancelButton.parentElement.classList.remove('d-none');
+        editButton.value = "編輯";
     }
+
+    // 顯示/隱藏儲存按鈕
+    const saveButton = document.querySelector('input[value="儲存"]');
+    saveButton.parentElement.classList.toggle('d-none');
 }
-
-
 
 

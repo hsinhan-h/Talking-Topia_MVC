@@ -79,7 +79,7 @@
                                 <input type="text"
                                        class="form-control"
                                        id="floatingInput3"
-                                       value="@Model.Gender" 
+                                       value="@Model.Gender"
                                        placeholder=""
                                        disabled />
                                 <label for="floatingInput3">性別</label>
@@ -91,7 +91,7 @@
                             <div class="form-floating mb-3">
                                 <input type="date" class="form-control" id="floatingInput2"
                                        value="@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("yyyy-MM-dd") : "")"
-                                       min="1753-01-01"  
+                                       min="1753-01-01"
                                        disabled />
 
                                 <label for="floatingInput2">生日</label>
@@ -103,7 +103,7 @@
                                        class="form-control"
                                        id="floatingInput10"
                                        value="@Model.Email"
-                                       placeholder="name@example.com" 
+                                       placeholder="name@example.com"
                                        disabled />
                                 <label for="floatingInput10">電子信箱</label>
                             </div>
@@ -344,23 +344,14 @@
                         <div class="col-2 d-none">
                             <input class="btn btn-info col-12 lh-backstage-submit-btn"
                                    type="button"
-                                   data-action="save"
-                                   onclick="saveProfileData()"
-                                   value="儲存" />
-                        </div>
-                        <div class="col-2 d-none">
-                            <input class="btn btn-secondary col-12 lh-backstage-submit-btn"
-                                   type="button"
-                                   data-action="cancel"
-                                   onclick="toggleEditMode()"
-                                   value="取消" />
+                                   value="儲存"
+                                   onclick="saveProfileData()" />
                         </div>
                         <div class="col-2">
                             <input class="btn btn-info col-12 lh-backstage-submit-btn"
                                    type="button"
-                                   data-action="edit"
-                                   onclick="toggleEditMode()"
-                                   value="編輯" />
+                                   value="編輯"
+                                   onclick="toggleEditMode()" />
                         </div>
                     </div>
                 </form>

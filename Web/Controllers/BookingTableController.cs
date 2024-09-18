@@ -27,6 +27,8 @@ namespace Web.Controllers
             // todo: 剩餘堂數 > 0, 允許預約
             // 寫入booking資料表, 導向預約成功頁面
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             int memberId = int.Parse(memberIdClaim.Value);
             var result = await _memberService.GetMemberId(memberId);
 

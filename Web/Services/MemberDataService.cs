@@ -4,23 +4,20 @@ using Web.Entities;
 using Web.Repository;
 using Web.ViewModels;
 using Infrastructure.Data;
-using ApplicationCore.Entities;
-using MemberPreference = Web.Entities.MemberPreference;
-using CourseSubject = Web.Entities.CourseSubject;
-using Member = Web.Entities.Member;
+using Web.Data;
 
 namespace Web.Services
 {
     public class MemberDataService
     {
         private readonly IRepository _repository;
-        private readonly TalkingTopiaDbContext _context;
+        
         private readonly ILogger<MemberDataService> _logger;
 
-        public MemberDataService(IRepository repository, TalkingTopiaDbContext context, ILogger<MemberDataService> logger)
+        public MemberDataService(IRepository repository,  ILogger<MemberDataService> logger)
         {
             _repository = repository;
-            _context = context;
+            
             _logger = logger;
 
         }
@@ -31,7 +28,7 @@ namespace Web.Services
         {
             _logger.LogInformation($"開始查詢會員資料，會員ID: {memberId}");
 
-            var member = await _repository.GetAll<Web.Entities.Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
+            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
 
             if (member == null)
             {
@@ -42,10 +39,10 @@ namespace Web.Services
             _logger.LogInformation($"成功查詢會員資料，會員ID: {memberId}");
 
             // 查詢會員的課程偏好
-            var coursePrefer = await (from mp in _repository.GetAll<Web.Entities.MemberPreference>()
-                                      join cs in _repository.GetAll<Web.Entities.CourseSubject>()
+            var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
+                                      join cs in _repository.GetAll<CourseSubject>()
                                           on mp.SubjecId equals cs.SubjectId
-                                      join cc in _repository.GetAll<Web.Entities.CourseCategory>()
+                                      join cc in _repository.GetAll<CourseCategory>()
                                           on cs.CourseCategoryId equals cc.CourseCategoryId
                                       where mp.MemberId == member.MemberId
                                       select new CourseListViewModel
@@ -57,10 +54,10 @@ namespace Web.Services
             // 轉換為 MemberProfileViewModel，處理可能為 null 的欄位
             var memberProfile = new MemberProfileViewModel
             {
-                ImageUrl = member.HeadShotImage ?? string.Empty, // 若圖片為 null，使用空字串代替
+                ImageUrl = member.HeadShotImage ?? string.Empty, // 如果圖片為 null，使用空字串代替
                 Nickname = member.Nickname ?? "未設定", // 處理暱稱為 null 的情況
                 Birthday = member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null, // 若無生日資料，設為 null
-                Gender = ((Gender)member.Gender).ToString(), // 將性別枚舉轉為字符串, 須修正
+                Gender = ((Gender)member.Gender).ToString(), // 將性別枚舉轉為字符串
                 Account = member.Account,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
@@ -106,26 +103,25 @@ namespace Web.Services
             member.Phone = updatedData.Phone ?? member.Phone;
             member.Birthday = updatedData.Birthday;
 
-
-            // 更新課程偏好
+            // 先將所有的課程主題加載到內存中，避免每次查找都查詢數據庫
             var allCourseSubjects = await _repository.GetAll<CourseSubject>().ToListAsync();
 
-            // 當前的偏好
+            // 取得當前的課程偏好
             var existingPreferences = member.MemberPreferences.ToList();
 
-            // 移除不再存在的偏好
+            // 找出需要移除的偏好（即存在於當前的偏好，但不在更新資料中）
             var preferencesToRemove = existingPreferences
                 .Where(p => !updatedData.CoursePrefer.Any(up => allCourseSubjects
                     .Any(cs => cs.SubjectId == p.SubjecId && cs.SubjectName == up.SubjectName)))
                 .ToList();
 
-            // 移除偏好，但不清空整個集合
+            // 逐項移除，而不是清空整個集合
             foreach (var preference in preferencesToRemove)
             {
-                _repository.Delete(preference);
+                _repository.Delete(preference); // 使用 _repository 來逐項刪除
             }
 
-            // 新增新的偏好
+            // 新增偏好
             foreach (var course in updatedData.CoursePrefer)
             {
                 var existingPreference = existingPreferences
@@ -167,12 +163,12 @@ namespace Web.Services
 
         public async Task<CourseMainPageViewModel> GetWatchList(int memberId)
         {
-            var watchCardInfo = (from watch in _repository.GetAll<Web.Entities.WatchList>().AsNoTracking()
-                                 join course in _repository.GetAll<Web.Entities.Course>().AsNoTracking()
+            var watchCardInfo = (from watch in _repository.GetAll<WatchList>().AsNoTracking()
+                                 join course in _repository.GetAll<Course>().AsNoTracking()
                                  on watch.CourseId equals course.CourseId
-                                 join member in _repository.GetAll<Web.Entities.Member>().AsNoTracking()
+                                 join member in _repository.GetAll<Member>().AsNoTracking()
                                  on course.TutorId equals member.MemberId
-                                 join nation in _repository.GetAll<Web.Entities.Nation>().AsNoTracking()
+                                 join nation in _repository.GetAll<Nation>().AsNoTracking()
                                  on member.NationId equals nation.NationId
                                  where watch.FollowerId == memberId
                                  select new TutorRecomCardList
@@ -186,10 +182,10 @@ namespace Web.Services
                                      FiftyminPrice = (int)course.FiftyMinUnitPrice,
                                      Description = course.Description,
                                  }).ToList();
-             
+
             var recomCardReview = (
-               from course in _repository.GetAll<Web.Entities.Course>().AsNoTracking()
-               join review in _repository.GetAll<Web.Entities.Review>().AsNoTracking()
+               from course in _repository.GetAll<Course>().AsNoTracking()
+               join review in _repository.GetAll<Review>().AsNoTracking()
                on course.CourseId equals review.CourseId
                group review by course.CourseId into Review
                select new TutorRecomCardList
@@ -219,58 +215,58 @@ namespace Web.Services
     // 更新會員資料
 }
 public enum Gender
-    {
-        Male = 1,
-        Female = 2,
-        Other = 3
-    }
+{
+    Male = 1,
+    Female = 2,
+    Other = 3
+}
 
 
-    //public async Task<MemberProfileViewModel> GetMemberData(string account)
-    //{
-    //    // 兩筆假資料
+//public async Task<MemberProfileViewModel> GetMemberData(string account)
+//{
+//    // 兩筆假資料
 
-    //    var memberData = new MemberProfileViewModel
-    //    {
-    //        ImageUrl = "https://example.com/image.jpg",
-    //        Nickname = "Sunny",
-    //        Birthday = new DateTime(1990, 5, 12),
-    //        Gender = "Female",
-    //        Account = "sunny123",
-    //        FirstName = "Anna",
-    //        LastName = "Wang",
-    //        Email = "anna.wang@example.com",
-    //        Phone = "0987654321",
-    //        CousePrefer = new List<CouseListViewModel>
-    //            {
-    //                new CouseListViewModel { CategorytName = "Language", SubjectName = "English" },
-    //                new CouseListViewModel { CategorytName = "Language", SubjectName = "Japanese" }
-    //            },
-    //    };
+//    var memberData = new MemberProfileViewModel
+//    {
+//        ImageUrl = "https://example.com/image.jpg",
+//        Nickname = "Sunny",
+//        Birthday = new DateTime(1990, 5, 12),
+//        Gender = "Female",
+//        Account = "sunny123",
+//        FirstName = "Anna",
+//        LastName = "Wang",
+//        Email = "anna.wang@example.com",
+//        Phone = "0987654321",
+//        CousePrefer = new List<CouseListViewModel>
+//            {
+//                new CouseListViewModel { CategorytName = "Language", SubjectName = "English" },
+//                new CouseListViewModel { CategorytName = "Language", SubjectName = "Japanese" }
+//            },
+//    };
 
-    //    if (memberData == null)
-    //    {
-    //        throw new Exception("會員資料未找到");
-    //    }
+//    if (memberData == null)
+//    {
+//        throw new Exception("會員資料未找到");
+//    }
 
-    //    // 將找到的會員資料填寫到 ViewModel 中
-    //    var result = new MemberProfileViewModel
-    //    {
-    //        ImageUrl = memberData.ImageUrl,
-    //        Nickname = memberData.Nickname,
-    //        Birthday = memberData.Birthday,
-    //        Gender = memberData.Gender,
-    //        Account = memberData.Account,
-    //        FirstName = memberData.FirstName,
-    //        LastName = memberData.LastName,
-    //        Email = memberData.Email,
-    //        Phone = memberData.Phone,
-    //        CousePrefer = memberData.CousePrefer,
+//    // 將找到的會員資料填寫到 ViewModel 中
+//    var result = new MemberProfileViewModel
+//    {
+//        ImageUrl = memberData.ImageUrl,
+//        Nickname = memberData.Nickname,
+//        Birthday = memberData.Birthday,
+//        Gender = memberData.Gender,
+//        Account = memberData.Account,
+//        FirstName = memberData.FirstName,
+//        LastName = memberData.LastName,
+//        Email = memberData.Email,
+//        Phone = memberData.Phone,
+//        CousePrefer = memberData.CousePrefer,
 
-    //    };
+//    };
 
-    //    return result;
-    //}
+//    return result;
+//}
 
 
 

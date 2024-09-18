@@ -47,8 +47,8 @@
 
 function updateSubtotalByTime(priceFor25Minutes, priceFor50Minutes, index) {
 
-    var selectedTime = parseInt(document.getElementById("timeSelect-" + index).value);
-    var quantity = parseInt(document.getElementById("lh-sc-quantitySelect-" + index).value);
+    const selectedTime = parseInt(document.getElementById("timeSelect-" + index).value);
+    const quantity = parseInt(document.getElementById("lh-sc-quantitySelect-" + index).value);
 
     if (isNaN(selectedTime) || isNaN(quantity) || quantity <= 0) {
         document.getElementById("subtotal-" + index).innerText = "NT$0";
@@ -56,8 +56,8 @@ function updateSubtotalByTime(priceFor25Minutes, priceFor50Minutes, index) {
         return;
     }
 
-    var selectedPrice = (selectedTime === 50) ? priceFor50Minutes : priceFor25Minutes;
-    var subtotal = quantity * selectedPrice;
+    let selectedPrice = (selectedTime === 50) ? priceFor50Minutes : priceFor25Minutes;
+    let subtotal = quantity * selectedPrice;
 
     //var originalPrice = quantity * priceFor25Minutes;
     //var discount = originalPrice - subtotal;
@@ -79,11 +79,11 @@ function updateShoppingDetails(index, time, quantity, subtotal) {
 }
 
 function updateTotalAmount() {
-    var subtotals = document.querySelectorAll("[id^='subtotal-']");
-    var total = 0;
+    const subtotals = document.querySelectorAll("[id^='subtotal-']");
+    let total = 0;
 
     subtotals.forEach(function (element) {
-        var subtotal = parseInt(element.innerText.replace(/[^\d]/g, ''));
+        let subtotal = parseInt(element.innerText.replace(/[^\d]/g, ''));
         total += isNaN(subtotal) ? 0 : subtotal;
     });
 
@@ -97,11 +97,11 @@ submitBtn.addEventListener('submit', function (event) {
         taxIdNumberInput.value = '';
     }
 
-    var quantities = document.querySelectorAll("[id^='lh-sc-quantitySelect-']");
-    var times = document.querySelectorAll("[id^='timeSelect-']");
+    const quantities = document.querySelectorAll("[id^='lh-sc-quantitySelect-']");
+    let times = document.querySelectorAll("[id^='timeSelect-']");
 
     quantities.forEach(function (quantity, index) {
-        var hiddenQuantityInput = document.createElement("input");
+        const hiddenQuantityInput = document.createElement("input");
         hiddenQuantityInput.type = "hidden";
         hiddenQuantityInput.name = "Items[" + index + "].Quantity";
         hiddenQuantityInput.value = quantity.value;
@@ -110,7 +110,7 @@ submitBtn.addEventListener('submit', function (event) {
 
     times.forEach(function (time, index) {
         // 更新隱藏欄位的時間
-        var hiddenTimeInput = document.createElement("input");
+        const hiddenTimeInput = document.createElement("input");
         hiddenTimeInput.type = "hidden";
         hiddenTimeInput.name = "Items[" + index + "].Time";
         hiddenTimeInput.value = time.value;
@@ -124,7 +124,7 @@ submitBtn.addEventListener('submit', function (event) {
 });
 
 function updateCartItem(courseId, selectedTime, quantity, subtotal) {
-    var cartItemUpdate = {
+    let cartItemUpdate = {
         CourseId: courseId,
         CourseQuantity: quantity,
         CourseLength: selectedTime,
