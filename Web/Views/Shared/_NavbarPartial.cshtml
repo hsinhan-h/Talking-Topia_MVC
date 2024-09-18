@@ -28,12 +28,69 @@
                     <a class="nav-link" href="/Course/CourseList">推薦課程</a>
                 </li>
                 <li class="nav-item dropdown">
-@*                     <a class="nav-link dropdown-toggle" href="#" id="courseMenu" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" href="#" id="courseMenu" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         選擇課程
-                    </a> *@
+                    </a>
                     <div class="dropdown-menu mega-menu p-3" aria-labelledby="courseMenu">
-                        <!-- 保持原有選單內容 -->
+                        <div class="row">
+                            <!-- 第一欄 -->
+                            <div class="col-4 first-column">
+                                <ul class="list-unstyled">
+                                    <li><a href="#" data-target="language-learning">語言學習</a></li>
+                                    <li><a href="#" data-target="programming-language">程式設計</a></li>
+                                    <li><a href="#" data-target="academic">升學科目</a></li>
+                                </ul>
+                            </div>
+                            <!-- 第二欄(動態顯示的內容) -->
+                            <div class="col-4 second-column">
+                                <div class="sub-menu language-learning">
+                                    <ul class="list-unstyled">
+                                        <li class="dropdown-menu-item"><a href="#">英文</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">日文</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">中文</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">德文</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">法文</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">西班牙文</a></li>
+                                    </ul>
+                                </div>
+                                <div class="sub-menu programming-language">
+                                    <ul class="list-unstyled">
+                                        <li class="dropdown-menu-item"><a href="#">HTML/CSS</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">JavaScript</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">C#</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">SQL</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">Python</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">Java</a></li>
+                                    </ul>
+                                </div>
+                                <div class="sub-menu academic">
+                                    <ul class="list-unstyled">
+                                        <li class="dropdown-menu-item"><a href="#">數學</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">物理</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">化學</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">歷史</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">地理</a></li>
+                                        <li class="dropdown-menu-item"><a href="#">生物</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 第三欄 (固定顯示內容) -->
+                            <div class="col-4 third-column">
+                                <div class="rating">
+                                    <span>5.0 ★</span>
+                                    <span>(1,758,545 評價)</span>
+                                </div>
+                                <button class="btn btn-primary btn-block my-3">找英文家教</button>
+                                <ul class="list-unstyled">
+                                    <li><a href="#">更多資訊</a></li>
+                                    <li><a href="#">英文課程內容</a></li>
+                                    <li><a href="#">英文教師新資料</a></li>
+                                    <li><a href="#">英文學生學習故事</a></li>
+                                    <li><a href="#">英文學生評價內容</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -44,8 +101,20 @@
                 {
                     <!-- 登入後的選單 -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/TeacherSystem">教師系統</a>
+                        <a class="nav-link" href="/Tutor/Index">成為教師</a>
                     </li>
+                    <!--教師系統子選單開始-->
+                    <li class="nav-item dropdown tutor-dropdown">
+                        <a class="nav-link dropdown-toggle tutor-link" href="#" id="tutorSystemDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            教師系統
+                        </a>
+                        <ul class="dropdown-menu tutor-dropdown-menu" aria-labelledby="tutorSystemDropdown">
+                            <li><a class="dropdown-item tutor-dropdown-item" href="/TeacherSystem/CourseReservation">課程被預約明細</a></li>
+                            <li><a class="dropdown-item tutor-dropdown-item" href="/TeacherSystem/TeacherProfile">教師資料</a></li>
+                            <li><a class="dropdown-item tutor-dropdown-item" href="/TeacherSystem/UploadCourse">上架課程</a></li>
+                        </ul>
+                    </li>
+                    <!--教師系統子選單結束-->
                     <li class="nav-item">
                         <a class="nav-link" href="/WatchList">關注列表</a>
                     </li>
@@ -62,11 +131,18 @@
                             <i class="fa-regular fa-comments"></i>
                         </a>
                     </li>
-                    <li class="nav-item user-item">
-                        <a class="nav-link" href="/Member/MemberData">
+                    <!--會員系統子選單開始-->
+                    <li class="nav-item dropdown user-item member-dropdown">
+                        <a class="nav-link dropdown-toggle member-link" href="#" id="memberMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://fakeimg.pl/20x20/200" alt="">
                         </a>
+                        <ul class="dropdown-menu dropdown-menu-end member-dropdown-menu" aria-labelledby="memberMenu">
+                            <li><a class="dropdown-item member-dropdown-item" href="/Member/MemberData">會員資料</a></li>
+                            <li><a class="dropdown-item member-dropdown-item" href="/Member/CourseReservation">課程預約明細</a></li>
+                            <li><a class="dropdown-item member-dropdown-item" href="/Member/OrderHistory">歷史訂單</a></li>
+                        </ul>
                     </li>
+                    <!--會員系統子選單結束-->
                     <li class="nav-item">
                         <span class="nav-link">@User.Identity.Name</span> <!-- 顯示使用者名稱 -->
                     </li>
