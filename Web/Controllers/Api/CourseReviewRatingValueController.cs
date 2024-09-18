@@ -8,16 +8,18 @@ namespace Web.Controllers.Api
     [ApiController]
     public class CourseReviewRatingValueController : ControllerBase
     {
-        private readonly ApplicationCore.Services.CourseService _courseService;
+        private readonly CourseService _courseService;
 
-        public CourseReviewRatingValueController(ApplicationCore.Services.CourseService courseService)
+        public CourseReviewRatingValueController(CourseService courseService)
         {
             _courseService = courseService;
         }
         [HttpGet]
-        public IActionResult CourseReviewApi(int courseId)
+        public ActionResult<int> CourseReviewApi([FromQuery]int courseId)
         {
-            var review = _courseService.GetReviewRatingApiService(courseId);
+            var review = _courseService.GetCourseRating(courseId);
+            
+
             return Ok(review);
         }
     }

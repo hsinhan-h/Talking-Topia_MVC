@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public class CourseService : ICourseService
+    public class AppCourseService : ICourseService
     {
         private readonly IRepository<Course> _courseRepository;
         private readonly IRepository<Review> _reviewRepository;
 
        
 
-        public CourseService(IRepository<Course> courseRepository, IRepository<Review> reviewRepository)
+        public AppCourseService(IRepository<Course> courseRepository, IRepository<Review> reviewRepository)
         {
             _courseRepository = courseRepository;
             _reviewRepository = reviewRepository;
@@ -54,9 +54,16 @@ namespace ApplicationCore.Services
 
         public int GetReviewRatingApiService(int courseId) 
         {
-            var reviewList = _reviewRepository.List();
-            int reviewratinvalue = (int)reviewList.Where(r=>r.CourseId == courseId).Average(r => r.Rating);
-            return reviewratinvalue;
+            var reviewRatings = _reviewRepository.List()
+                          .Where(r => r.CourseId == courseId)
+                          .Select(r => (int)r.Rating);
+
+            if (!reviewRatings.Any())
+            {
+                return 0; 
+            }
+
+            return (int)Math.Round(reviewRatings.Average());
         }
 
     }
