@@ -13,6 +13,7 @@ namespace Web.Configurations
             services.AddScoped<AppointmentDetailService>();
             services.AddScoped<OrderDetailService>();
             services.AddScoped<OrderViewModelService>();
+            services.AddScoped<MemberAppointmentService>();
             return services;
         }
     }

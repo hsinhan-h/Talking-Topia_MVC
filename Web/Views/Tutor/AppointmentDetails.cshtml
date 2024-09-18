@@ -28,12 +28,12 @@
                                     @foreach (var order in Model.AppointmentDetailsList)
                                     {
                                         <tr>
-                                            <td>@order.OrderDatetime</td>
-                                            <td>@order.TransactionDate</td>
+                                            <td>@order.BookingDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@order.BookingDate.ToString("T")</td>
                                             <td>@order.CourseTitle</td>
-                                            <td>@order.CourseTitle</td>
+                                            <td>@order.Subtitle</td>
                                             <td>@order.CourseLength</td>
-                                            <td>@order.MemberId</td>
+                                            <td>@order.FullName</td>
                                         </tr>
                                     }
                                 }
