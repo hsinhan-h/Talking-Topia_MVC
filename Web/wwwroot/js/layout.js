@@ -19,6 +19,8 @@ function moveUserItem() {
 }
 
 
+
+
 //選擇課程選單
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -76,62 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-//登入註冊判斷
-document.getElementById('registerForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // 防止表單提交
-
-    // 取得欄位
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const confirmPassword = document.getElementById('confirmPassword').value.trim();
-
-    // 取得錯誤訊息元素
-    const nameError = document.getElementById('nameError');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-    const confirmPasswordError = document.getElementById('confirmPasswordError');
-
-    let isValid = true;
-
-    // 檢查名字是否為空
-    if (name === '') {
-        nameError.style.display = 'block';
-        isValid = false;
-    } else {
-        nameError.style.display = 'none';
-    }
-
-    // 檢查信箱是否為空
-    if (email === '') {
-        emailError.style.display = 'block';
-        isValid = false;
-    } else {
-        emailError.style.display = 'none';
-    }
-
-    // 檢查密碼是否為空
-    if (password === '') {
-        passwordError.style.display = 'block';
-        isValid = false;
-    } else {
-        passwordError.style.display = 'none';
-    }
-
-    // 檢查確認密碼是否為空
-    if (confirmPassword === '') {
-        confirmPasswordError.style.display = 'block';
-        isValid = false;
-    } else {
-        confirmPasswordError.style.display = 'none';
-    }
-
-    // 如果所有欄位都有效，執行下一步操作（例如表單提交或其他邏輯）
-    if (isValid) {
-        // 可以在此處執行註冊的邏輯
-        alert('表單已成功提交！');
-    }
-});
 
 
 

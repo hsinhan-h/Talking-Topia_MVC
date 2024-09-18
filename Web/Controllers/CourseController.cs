@@ -1,4 +1,9 @@
-﻿using Web.Services;
+﻿using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
+using System.ComponentModel;
+using System.Security.Claims;
+using Web.Services;
+using BookingService = Web.Services.BookingService;
 
 namespace Web.Controllers
 {
@@ -6,10 +11,14 @@ namespace Web.Controllers
     {
         private readonly BookingService _bookingService;
         private readonly CourseService _courseService;
-        public CourseController()
+        private readonly ICourseService _icourseService;
+        private readonly IMemberService _memberService;
+        public CourseController(BookingService bookingService, CourseService courseService, ICourseService icourseService, IMemberService memberService)
         {
-            _bookingService = new BookingService();
-            _courseService = new CourseService();
+            _bookingService = bookingService;
+            _courseService = courseService;
+            _icourseService = icourseService;
+            _memberService = memberService;
         }
 
         public IActionResult Index()
@@ -17,25 +26,49 @@ namespace Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CourseList()
+        public IActionResult CourseList()
         {
-            var model = await _courseService.GetCourseCardsList();
+            //int pageSize = 6;
+            //int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
+            //int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
+            //ViewData["TotalPages"] = totalPages;
+            //var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
+            return View();
+        }
+
+
+        public async Task<IActionResult> CourseMainPage([FromQuery, DefaultValue(1)] int courseId)
+        {
+            ViewData["CourseId"] = courseId;
+            var model = await _courseService.GetCourseMainPage(courseId);
             return View(model);
         }
 
-        public IActionResult WatchList()
+        [HttpPost]
+        public async Task<IActionResult> CreateCourseReview([FromForm] int CourseId,[FromForm]byte rating, [FromForm] string NewReviewContent)
         {
-            return View();
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            try 
+            {
+                var createReview = _icourseService.CreateReviews(memberId,CourseId, rating, NewReviewContent);
+                return RedirectToAction(nameof(CourseMainPage), new { courseId =CourseId });
+               
+
+            }
+            catch (Exception ex)
+            {               
+                return Content("訂單建立失敗!");
+               
+            }
         }
-        public async Task<IActionResult> PublishCourse()
-        {
-            var model = await _bookingService.GetBookingList();
-            return View(model);
-        }
-        public async Task<IActionResult> CourseMainPage()
-        {
-            var model = await _courseService.GetCourseMainPage();
-            return View(model);
-        }
+
+
     }
+
+    
 }

@@ -1,0 +1,590 @@
+﻿@model BookingListViewModel
+@{
+    BookingListViewModel HistoryList = ViewData["HistoryList"] as BookingListViewModel;
+    CourseCategoryListViewModel CategoryList = ViewData["CourseCategoryList"] as CourseCategoryListViewModel;
+}
+<div class="container lh-backstage" id="app">
+    <div class="row">
+        <div class="col-12 lh-backstage-main-section">
+            <div class="lh-backstage-tutor-section position-relative w-100 mb-5"
+                 id="lh-backstage-tutor-section">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item lh-backstage-nav-item">
+                        <a class="nav-link active"
+                           aria-current="page"
+                           data-bs-toggle="tab"
+                           href="#lh-backstage-course-detail">
+                            課程明細
+                        </a>
+                    </li>
+                    <li class="nav-item lh-backstage-nav-item">
+                        <a class="nav-link"
+                           data-bs-toggle="tab"
+                           href="#lh-backstage-history-course">歷史課程</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="container tab-pane fade show active"
+                         id="lh-backstage-course-detail">
+                        <div class="lh-backstage-transaction-table position-relative">
+                            <button class="btn lh-backstage-submit-btn mt-3 li-backstage-publish-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#lh-backstage-tutor-data-add">
+                                上架課程
+                            </button>
+                            <br />
+                            <table class="lh-backstage-transaction-detail col-12 mt-5"
+                                   border="1">
+                                <thead>
+                                    <tr>
+                                        <td>更新日期</td>
+                                        <td>課程名稱</td>
+                                        <td>課程內容</td>
+                                        <td>25分鐘</td>
+                                        <td>50分鐘</td>
+                                        <td>編輯</td>
+                                    </tr>
+                                </thead>
+                                <tbody border="1">
+                                    @foreach (var item in Model.BookingList)
+                                    {
+                                        <tr>
+                                            <td>@item.UpdateDatetime</td>
+                                            <td>@item.Title</td>
+                                            <td>@item.SubTitle</td>
+                                            <td>NTD$ @item.TwentyFiveMinPriceNTD.ToString("#,###")</td>
+                                            <td>NTD$ @item.FiftyMinPriceNTD.ToString("#,###")</td>
+                                            <td>
+                                                <button class="btn lh-backstage-submit-btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#lh-backstage-tutor-data-edit" v-on:click="fetchBookingDetails(@item.CourseId)">
+                                                    編輯
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="container tab-pane fade"
+                         id="lh-backstage-history-course">
+                        <div class="lh-backstage-transaction-table">
+                            <table class="lh-backstage-transaction-detail col-12 mt-5"
+                                   border="1">
+                                <thead>
+                                    <tr>
+                                        <td>上課時間</td>
+                                        <td>課程名稱</td>
+                                        <td>課程內容</td>
+                                        <td>上課時長</td>
+                                        <td>學員名稱</td>
+                                    </tr>
+                                </thead>
+                                <tbody border="1">
+                                    @foreach (var item in HistoryList.BookingList)
+                                    {
+                                        <tr>
+                                            <td>@item.BookingDate.ToShortDateString()</td>
+                                            <td>@item.Title</td>
+                                            <td>@item.SubTitle</td>
+                                            <td>@item.CourseLength</td>
+                                            <td>@item.MemberName</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- screen modal for 課程明細-->
+    <div class="modal fade"
+         id="lh-backstage-tutor-data-edit"
+         tabindex="-1"
+         aria-labelledby=""
+         aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content container">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
+                        課程明細
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <section class="lh-backstage-lh-backstage-real-data">
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput1"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.category ]]" />
+                                    <label for="floatingInput1">課程分類(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput2"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.courseSubject ]]" />
+                                    <label for="floatingInput2">課程科目(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput3"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           value="" />
+                                    <label for="floatingInput3">請上傳一張自介照片(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput4"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           value="" />
+                                    <label for="floatingInput4">請上傳一支自介影片(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload"
+                                           multiple />
+                                    <label for="floatingInput5">請上傳多張課程圖片(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.title ]]" />
+                                    <label for="floatingInput5">課程名稱(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput6"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.subTitle ]]" />
+                                    <label for="floatingInput6">課程簡述(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <div id="editor1" class="col-12">
+                                        <p style="color: #999"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <div id="editor2" class="col-12">
+                                        <p style="color: #999" value="123"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <!--<div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput7"
+                                           placeholder=""
+                                           value="" />
+                                    <label for="floatingInput7">金額(台幣/體驗價/堂)(必填)</label>
+                                </div>
+                            </div>-->
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput8"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.twentyFiveMinPriceNTD ]]" />
+                                    <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput9"
+                                           placeholder=""
+                                           :value="[[ bookingDetails.fiftyMinPriceNTD ]]" />
+                                    <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary lh-backstage-submit-btn"
+                            data-bs-dismiss="modal">
+                        儲存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- screen modal for 新增課程明細-->
+    <div class="modal fade"
+         id="lh-backstage-tutor-data-add"
+         tabindex="-1"
+         aria-labelledby=""
+         aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content container">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
+                        新增課程明細
+                    </h1>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <section class="lh-backstage-lh-backstage-real-data">
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" aria-label="Default select example"
+                                            v-model="selectedCourseCategoryId" v-on:change="fetchSubjects">
+                                        <option selected>請選擇</option>
+                                        @foreach (var item in CategoryList.CourseCategoryList)
+                                        {
+                                            <option value="@item.CourseCategoryId">@item.CategoryName</option>
+                                        }
+                                        <option value="1">One</option>
+                                    </select>
+                                    <label for="floatingInput1">課程分類(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating mb-3">
+                                    <!-- 動態顯示科目的下拉選單 -->
+                                    <select class="form-select" aria-label="Subjects select" v-model="subjectId">
+                                        <option v-for="subject in subjects"
+                                                :key="subject.subjectId"
+                                                :value="subject.subjectId">
+                                            [[ subject.subjectName ]]
+                                        </option>
+                                    </select>
+                                    <label for="floatingInput2">課程科目(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating">
+                                    @* <input type="file"
+                                    class="form-control"
+                                    id="floatingInput3"
+                                    aria-describedby="inputGroupFileAddon04"
+                                    aria-label="Upload"
+                                    value="" /> *@
+                                    <input type="file" name="image" class="form-control" aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload" multiple v-on:change="handleFileUpload" />
+                                    <label for="floatingInput5">請上傳一張自介照片(必填)</label>
+                                </div>
+                                <!-- 圖片預覽 -->
+                                <div v-if="imageUrl.length > 0">
+                                    <div v-for="(url, index) in imageUrl" :key="index">
+                                        <img :src="url" alt="Uploaded Image" style="width: 50px; height: 50px;">
+                                    </div>
+                                </div>
+                                <!-- 用來存圖片路徑的隱藏欄位 -->
+                                <input type="hidden" v-model="imagePath" />
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-floating">
+                                    @* <input type="file"
+                                    class="form-control"
+                                    id="floatingInput4"
+                                    aria-describedby="inputGroupFileAddon04"
+                                    aria-label="Upload"
+                                    value="" /> *@
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           placeholder=""
+                                           v-model="txtVideoPath" />
+                                    <label for="floatingInput4">請上傳一支自介影片(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    @* <input type="file"
+                                    class="form-control"
+                                    id="floatingInput5"
+                                    aria-describedby="inputGroupFileAddon04"
+                                    aria-label="Upload"
+                                    multiple /> *@
+                                    <input type="file" name="image" class="form-control" aria-describedby="inputGroupFileAddon04"
+                                           aria-label="Upload" multiple v-on:change="handleFileUploads" />
+                                    <label for="floatingInput5">請上傳多張課程圖片(必填)</label>
+                                </div>
+                                <!-- 圖片預覽 -->
+                                <div v-if="imageUrls.length > 0">
+                                    <div v-for="(url, index) in imageUrls" :key="index">
+                                        <img :src="url" alt="Uploaded Image" style="width: 50px; height: 50px;">
+                                    </div>
+                                </div>
+                                <!-- 用來存圖片路徑的隱藏欄位 -->
+                                <input type="hidden" v-model="imagePaths" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           placeholder=""
+                                           v-model="txtTitle" />
+                                    <label for="floatingInput5">課程名稱(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput6"
+                                           placeholder=""
+                                           v-model="txtSubTitle" />
+                                    <label for="floatingInput6">課程簡述(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <div id="editor3" class="col-12">
+                                        <p style="color: #999"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <div id="editor4" class="col-12">
+                                        <p style="color: #999"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <!-- <div class="col-12 col-md-4">
+                                 <div class="form-floating mb-3">
+                                     <input type="text"
+                                            class="form-control"
+                                            id="floatingInput7"
+                                            placeholder=""
+                                            value="" />
+                                     <label for="floatingInput7">金額(台幣/體驗價/堂)(必填)</label>
+                                 </div>
+                             </div> -->
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput8"
+                                           placeholder=""
+                                           v-model="txtTwentyFiveMinPriceNTD" />
+                                    <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput9"
+                                           placeholder=""
+                                           v-model="txtFiftyMinPriceNTD" />
+                                    <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary lh-backstage-submit-btn"
+                            data-bs-dismiss="modal" v-on:click="submitData">
+                        新增
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section topCSS {
+    <link href="~/lib/Quill/css/quill.snow.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/backstage.css" />
+}
+@section endJS {
+    <script src="~/lib/Quill/JS/quill.js"></script>
+    <script src="~/js/editor.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            delimiters: ['[[', ']]'], // 改成 [[ ]] 來替代 {{ }}
+            data() {
+                return {
+                    bookingDetails: {},
+
+                    CourseCategoryId: '', //存檔的欄位
+                    SubjectId: '',
+                    txtVideoPath: '',
+                    txtTitle: '',
+                    txtSubTitle: '',
+                    txtTwentyFiveMinPriceNTD: '',
+                    txtFiftyMinPriceNTD: '',
+                    CouresImagesList: [],
+
+
+                    selectedCourseCategoryId: null, // 儲存下拉的 CourseCategoryId
+                    subjects: [], // 儲存 API 回傳的科目列表
+                    files: [], // 用於保存上傳的文件
+                    imageUrl: [], // 用於顯示圖片預覽
+                    imageUrls: [], // 用於顯示圖片預覽
+                    imagePath: [], // 用於保存後端返回的圖片路徑
+                    imagePaths: [], // 用於保存後端返回的圖片路徑
+                    textValue: "" // 表單中的其他欄位值
+                };
+            },
+            methods: {
+                // 取單筆課程資料
+                fetchBookingDetails(CourseId) {
+                    axios.get(`/api/PublishCourseApi/${CourseId}`)
+                        .then((response) => {
+                            this.bookingDetails = response.data.bookingList[0]; // 正確設置 this.bookingDetails
+                            console.log(this.bookingDetails);
+                        })
+                        .catch((error) => {
+                            console.error("Error fetching booking details:", error);
+                        });
+                },
+                // 存檔
+                submitData() {
+
+                    axios.post('/api/PublishCourseApi/SaveToCouresData', {
+                        CategoryId: this.selectedCourseCategoryId,
+                        SubjectId: this.subjectId,
+                        ThumbnailUrl: this.imagePath,
+                        VideoUrl: this.txtVideoPath,
+                        Title: this.txtTitle,
+                        SubTitle: this.txtSubTitle,
+                        TwentyFiveMinPriceNTD: this.txtTwentyFiveMinPriceNTD,
+                        FiftyMinPriceNTD: this.txtFiftyMinPriceNTD,
+                        CouresImagesList: this.imagePaths,
+                    })
+                        .then(response => {
+                            console.log('資料成功傳送', response);
+                            alert('存檔成功：' + response.data);
+                            window.location.reload();  // 完成後重整頁面
+                        })
+                        .catch(error => {
+                            console.error('傳送失敗', error);
+                            if (error.response && error.response.status === 400) {
+                                alert('錯誤：' + error.response.data);
+                            } else {
+                                alert('發生錯誤，請稍後再試。');
+                            }
+                        });
+                },
+                // 下拉選單取課程科目
+                fetchSubjects() {
+                    if (this.selectedCourseCategoryId) {
+                        axios.get(`/api/PublishCourseApi/GetSubjectsByCategoryId/${this.selectedCourseCategoryId}`)
+                            .then(response => {
+                                this.subjects = response.data; // 將 API 回傳的科目列表賦值給 subjects
+                            })
+                            .catch(error => {
+                                console.error("There was an error fetching the subjects!", error);
+                            });
+                    }
+                },
+                //圖片上傳觸發
+                handleFileUpload(event) {
+                    this.files = event.target.files; // 獲取選擇的文件
+                    this.uploadImages(1); // 調用上傳圖片的方法
+                    console.log(1);
+                },
+                //多圖片上傳觸發
+                handleFileUploads(event) {
+                    this.files = event.target.files; // 獲取選擇的文件
+                    this.uploadImages(2); // 調用上傳圖片的方法
+                    console.log(2);
+                },
+
+                //圖片上傳
+                uploadImages(OneOrMore) {
+                    const formData = new FormData();
+                    for (let i = 0; i < this.files.length; i++) {
+                        formData.append('images', this.files[i]);
+                    }
+                    axios.post('/api/CloudinaryApi/UploadImages', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                        .then(response => {
+                            // 獲取後端返回的圖片路徑，並顯示預覽
+                            if (OneOrMore == 1) {
+                                console.log(1);
+                                this.imagePath = response.data;
+                                this.imageUrl = this.imagePath.map(path => `${path}`);
+                            }
+                            else if (OneOrMore == 2) {
+                                console.log(2);
+                                this.imagePaths = response.data;
+                                this.imageUrls = this.imagePaths.map(path => `${path}`);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Upload failed:', error);
+                        });
+                },
+            }
+        }).mount('#app'); // mount 到 id 為 #app 的元素
+    </script>
+
+}

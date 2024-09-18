@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Upload Image";
+}
+
+<h2>Upload Cloudinary Image Sample Code</h2>
+
+<form asp-action="Upload" asp-controller="Cloudinary" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" name="image" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+@if (ViewBag.ImageUrl != null)
+{
+    <div>
+        <h3>Uploaded Image</h3>
+        URL：@ViewBag.ImageUrl
+        <br />
+        <img src="@ViewBag.ImageUrl" alt="Uploaded Image" />
+    </div>
+}

@@ -1,15 +1,31 @@
+using Microsoft.AspNetCore.Authorization;
+using Web.Services;
+
 namespace Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly CourseService _courseService;
+        private readonly MemberDataService _memberDataService;
+        private readonly IRepository _repository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, CourseService courseService, MemberDataService memberDataService, IRepository repository)
         {
             _logger = logger;
+            _courseService = courseService;
+            _memberDataService = memberDataService;
+            _repository = repository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            var course = await _courseService.GetCourseList();
+            return View(course);
+        }
+
+        [Authorize]
+        public IActionResult Privacy()
         {
             return View();
         }
@@ -17,8 +33,9 @@ namespace Web.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new Models.ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         public IActionResult Questions()
         {
             return View();

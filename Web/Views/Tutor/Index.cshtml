@@ -1,0 +1,918 @@
+﻿@section topCSS
+{
+    <link href="~/css/layout.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/normalize.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/apply_teacher.css" rel="stylesheet" asp-append-version="true" />
+}
+
+
+<main>
+    <div class="container-fluid">
+        <div class="row position-relative">
+            <div class="col-12 px-0">
+                <img src="~/image/apply_teacher/hero-2022-10-24.webp" class="w-100">
+            </div>
+            <div class="col-12 d-md-none">
+                <div class="d-flex flex-column title_text_none">
+                    <p class="fw-bold text-white">為您打造更輕鬆的教學方式</p>
+                    <p class="text-white ">在家就能週入破萬</p>
+                </div>
+            </div>
+            <div class="title_tp d-md-flex position-absolute top-50 start-50 translate-middle d-none d-md-block">
+                <div class="col-md-6">
+                    <div class="d-flex flex-column tilte_tp_text">
+                        <p class="fs-4 text-white my-0">為您打造更輕鬆的教學方式</p>
+                        <p class="fw-bold fs-1 text-white">在家就能週入破萬</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white title_text mx-auto  ">
+                        <p class="fs-3 fw-bold p-3">看看您可以賺多少錢</p>
+                        <div class="px-3 pb-2">
+                            <select class="form-select mt-2">
+                                <option selected>語言學習</option>
+                                <option value="1">程式設計</option>
+                                <option value="2">升學科目</option>
+                            </select>
+                            <select class="form-select mt-2">
+                                <option selected>40小時/星期</option>
+                                <option value="1">30小時/星期</option>
+                                <option value="2">20小時/星期</option>
+                            </select>
+                        </div>
+                        <div class="number_wrap px-3">
+                            <p class="d-block m-0 ">
+                                每月潛在收入
+                                <i class="fa-solid fa-circle-question"></i>
+                            </p>
+                            <p class="word-break fs-3 d-inline fw-bold">NT$76156</p>
+                            <p class="text-black-50 d-inline">/每月</p>
+                        </div>
+                        <form asp-controller="Tutor" asp-action="Indexpost" method="post">
+                            <div class="apply_btn d-grid gap-2 col-12 col-md-10 px-2 mt-4">
+                                <button type="submit" class="btn btn-danger text-white fs-4 mb-3">
+                                    立即申請
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="bg-white title_text mx-auto d-md-none">
+                    <p class="fs-3 fw-bold p-3">看看您可以賺多少錢</p>
+                    <div class="px-3 pb-2">
+                        <select class="form-select mt-2">
+                            <option selected>語言學習</option>
+                            <option value="1">程式設計</option>
+                            <option value="2">升學科目</option>
+                        </select>
+                        <select class="form-select mt-2">
+                            <option selected>40小時/星期</option>
+                            <option value="1">30小時/星期</option>
+                            <option value="2">20小時/星期</option>
+                        </select>
+                    </div>
+                    <div class="number_wrap px-3">
+                        <p class="d-block m-0 ">
+                            每月潛在收入
+                            <i class="fa-solid fa-circle-question"></i>
+                        </p>
+                        <p class="word-break fs-3 d-inline fw-bold">NT$76156</p>
+                        <p class="text-black-50 d-inline">/每月</p>
+                    </div>
+                    <div class="apply_btn d-grid gap-2 col-12 col-md-10 px-2 mt-4 ">
+                        <button type="button" class="btn btn-danger text-white fs-4 mb-3"
+                                id="immediately_apply_btn">
+                            立即申請
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <768px會消失 -->
+        <div class="online_talk_rowarea row  justify-content-center d-none d-md-flex mt-5">
+            <div class="col-md-3 border border-secondary-subtle shadow mx-3 online_talk">
+                <div class="d-flex flex-column h-100 justify-content-between ">
+                    <div class="text-start">
+                        <p class="fw-bold fs-5 pt-2 bgc">【語言老師】- New!</p>
+                        <p class="fw-bold"> NT$98 - NT$3,276 / 時薪</p>
+                        <p class="text-body-secondary">有英文考試、英文教學、曾是英文教師、私人教師經驗佳。</p>
+                    </div>
+                    <div class="d-grid gap-2 mx-auto mb-2 col-8 mt-auto">
+                        <button class="teacher_btn text-white" type="button">應徵職缺</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 border border-secondary-subtle shadow d-flex mx-3 online_talk">
+                <div class="d-flex flex-column justify-content-between ">
+                    <div class="text-start ">
+                        <p class="bgc fw-bold fs-5 pt-2">【程式設計老師】- New!</p>
+                        <p class="fw-bold"> NT$98 - NT$3,276 / 時薪</p>
+                        <p class="text-body-secondary">
+                            有英文會話考試、英文會話教學、曾是英文會話教師、私人教師、業界講師經驗佳。
+                        </p>
+                    </div>
+                    <div class="d-grid gap-2 mx-auto mb-2 col-8 mt-auto">
+                        <button class="teacher_btn text-white " type="button">應徵職缺</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 border border-secondary-subtle shadow d-flex mx-3 online_talk">
+                <div class="d-flex flex-column justify-content-between ">
+                    <div class="opening_text text-start ">
+                        <p class="bgc fw-bold  fs-5 pt-2">【升學科目老師】- New!</p>
+                        <p class="fw-bold"> NT$98 - NT$3,276 / 時薪</p>
+                        <p class="text-body-secondary">
+                            有英文會話考試、英文會話教學、曾是英文會話教師、私人教師、業界講師經驗佳。
+                        </p>
+                    </div>
+                    <div class="d-grid gap-2 mx-auto mb-2 col-8 mt-auto">
+                        <button class="teacher_btn text-white" type="button">應徵職缺</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- >768px會消失 -->
+        <div class="row mt-3 ">
+            <div id="carouselExampleIndicators"
+                 class="online_apply_teacher carousel carousel slide col-10 mx-auto border border-secondary-subtle shadow d-md-none">
+                <div class="carousel-indicators d-flex flex-row">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="d-flex flex-column h-100 justify-content-between">
+                            <div class="mx-auto mt-3 d-flex flex-column justify-content-center align-items-center">
+                                <p class="fw-bold bgc">【線上英文老師】- New!</p>
+                                <p class="fw-bold"> NT$98 - NT$3,276 / 時薪</p>
+                                <div class="px-5 silde_text_hidden">
+                                    <p class="text-body-secondary px-3">有英文考試、英文教學、曾是英文教師、私人教師經驗佳。</p>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 col-6 mx-auto mt-auto">
+                                <button class="teacher_btn text-white mb-3" type="button">應徵職缺</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex flex-column h-100 justify-content-between">
+                            <div class="mx-auto mt-3 d-flex flex-column justify-content-center align-items-center">
+                                <p class="fw-bold bgc">【線上英文會話老師】- New!</p>
+                                <p class="fw-bold"> NT$98 - NT$3,276 / 時薪</p>
+                                <div class="px-5 silde_text_hidden">
+                                    <p class="text-body-secondary px-3 ">
+                                        有英文會話考試、英文會話教學、曾是英文會話教師、私人教師、業界講師經驗佳。
+                                    </p>
+                                </div>
+
+                            </div>
+                            <div class="d-grid gap-2 col-6 mx-auto mt-auto">
+                                <button class="teacher_btn text-white  mb-3" type="button">應徵職缺</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex flex-column h-100 justify-content-between">
+                            <div class="mx-auto mt-3 d-flex flex-column justify-content-center align-items-center">
+                                <p class="fw-bold bgc">【線上兒童美語 (4-11)老師】- New!</p>
+                                <p class="fw-bold"> NT$98 - NT$2,830 / 時薪</p>
+                                <div class="px-5 silde_text_hidden">
+                                    <p class="text-body-secondary mx-auto px-3  mb-3">
+                                        有兒童美語 (4-11)考試、兒童美語 (4-11)教學、曾是兒童美語
+                                        (4-11)教師、私人教師、業界講師經驗佳。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 col-6 mx-auto mt-auto">
+                                <button class="teacher_btn text-white mb-3" type="button">應徵職缺</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class=" carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                    <i class=" xxx fa-solid fa-angle-left fa-2xl" style="color:  rgb(2, 202, 185);" aria-hidden="true"></i>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class=" carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                    <i class="fa-solid fa-angle-right fa-2xl" style="color:  rgb(2, 202, 185);" aria-hidden="true"></i>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <div class="col-12">
+                <div>
+                    <h2 class="text-center">線上一對一英文老師</h2>
+                    <h3 class="text-center">帶給你更多更自由的教學選擇</h3>
+                </div>
+            </div>
+        </div>
+        <div class="advertise">
+            <div class="row mb-4 mx-auto">
+                <div class="col-12 col-md-7 d-flex flex-column justify-content-center">
+                    <div class="ad_text w-100">
+                        <p>1. 自訂理想 薪資價位</p>
+                        <p>課程種類分為兩種，25分鐘的體驗課與50分鐘的正式課，教師可根據自己的教學經驗設定應得的上課酬勞</p>
+                        <p class="text-danger">月收入Top10教師鐘點費：NT$1,101 - NT$4,324 / 小時</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 ">
+                    <img src="~/image/apply_teacher/feature-price.webp" class="adj_img" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="advertise">
+            <div class="row mb-4 mx-auto">
+                <div class="col-12 col-md-7 d-flex flex-column justify-content-center">
+                    <div class="ad_text w-100">
+                        <p>2. 自由安排 授課時間</p>
+                        <p>沒有最低授課時數限制，星期一到星期日皆可自由開放時段，教師只要打開有空的時間，學生即可一個接一個主動來預約</p>
+                        <p class="text-danger">月收入Top10教師鐘點費：NT$1,101 - NT$4,324 / 小時</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 ">
+                    <img src="~/image/apply_teacher/feature-schedule.webp" class="adj_img" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="advertise">
+            <div class="row mb-4 mx-auto">
+                <div class="col-12 col-md-7 d-flex flex-column justify-content-center">
+                    <div class="ad_text w-100">
+                        <p>3. 在家工作 兼顧生活</p>
+                        <p>教師只要準備一副耳麥與視訊鏡頭，隨時隨地都能上課不受任何地區限制，打開電腦即可賺取額外收入</p>
+                        <p class="text-danger">Top10 教師薪水：NT$211,531 - NT$539,492 / 月</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 ">
+                    <img src="~/image/apply_teacher/feature-soho.webp" class="adj_img" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="row mx-auto ">
+            <div class="col-12 mt-5">
+                <h2 class="text-center">我們正在尋找</h2>
+                <p class="text-center">如果您有以下特質歡迎加入我們</p>
+            </div>
+        </div>
+        <div class="row d-none d-md-block">
+            <div class="col-12 d-flex justify-content-center align-items-center mt-3 mx-auto">
+                <div class="d-flex justify-content-center align-items-center slogan_icon mx-4">
+                    <i class="fa-solid fa-user-plus fa-2xl "></i>
+                </div>
+                <div class="slogan ps-2 border-start border-3 border-danger ">
+                    <p class="fs-5 my-0">1. 有 英文相關背景</p>
+                    <p class="fs-6 my-0">英文相關科系學生、英文系海外留學、英文相關領域專業</p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center slogan_icon mx-4">
+                    <i class="fa-solid fa-chalkboard-user fa-2xl"></i>
+                </div>
+                <div class="slogan ps-2 border-start border-3 border-danger ">
+                    <p class="fs-5 my-0">2. 有 英文教學經驗</p>
+                    <p class="fs-6 my-0">曾經有一對一私人輔導經驗、補習班授課、講師等相關經驗佳</p>
+                </div>
+            </div>
+            <div class="col-12 d-flex justify-content-center align-items-center mt-3 ">
+                <div class="d-flex justify-content-center align-items-center slogan_icon mx-4">
+                    <i class="fa-solid fa-user-tie fa-2xl"></i>
+                </div>
+                <div class="slogan ps-2 border-start border-3 border-danger ">
+                    <p class="fs-5 my-0">3. 希望 當自己的老闆</p>
+                    <p class="fs-6 my-0">由自己來決定自己的上課收入、工作時間</p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center slogan_icon mx-4">
+                    <i class="fa-solid fa-child-reaching fa-2xl"></i>
+                </div>
+                <div class="slogan ps-2 border-start border-3 border-danger ">
+                    <p class="fs-5 my-0">4. 想要 提升自我價值</p>
+                    <p class="fs-6 my-0">發揮你的英文教學實力，透過教學傳遞你的知識</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2 d-md-none">
+            <div class="col-3 d-flex justify-content-center align-items-center">
+                <div>
+                    <i class="fa-solid fa-user-plus fa-2xl "></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="ps-2 border-start border-3 border-danger mb-2">
+                    <p class="fs-5 my-0">1. 有 英文相關背景</p>
+                    <p class="fs-6 my-0">英文相關科系學生、英文系海外留學、英文相關領域專業</p>
+                </div>
+            </div>
+            <div class="col-3 d-flex justify-content-center align-items-center">
+                <div>
+                    <i class="fa-solid fa-chalkboard-user fa-2xl"></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="ps-2 border-start border-3 border-danger mb-2 ">
+                    <p class="fs-5 my-0">2. 有 英文教學經驗</p>
+                    <p class="fs-6 my-0">曾經有一對一私人輔導經驗、補習班授課、講師等相關經驗佳</p>
+                </div>
+            </div>
+            <div class="col-3 d-flex justify-content-center align-items-center">
+                <div>
+                    <i class="fa-solid fa-user-tie fa-2xl"></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="ps-2 border-start border-3 border-danger mb-2">
+                    <p class="fs-5 my-0">3. 希望 當自己的老闆</p>
+                    <p class="fs-6 my-0">由自己來決定自己的上課收入、工作時間</p>
+                </div>
+            </div>
+            <div class="col-3 d-flex justify-content-center align-items-center">
+                <div class="">
+                    <i class="fa-solid fa-child-reaching fa-2xl"></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="ps-2 border-start border-3 border-danger mb-2">
+                    <p class="fs-5 my-0">4. 想要 提升自我價值</p>
+                    <p class="fs-6 my-0">發揮你的英文教學實力，透過教學傳遞你的知識</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="text-center">英文老師職缺</h2>
+                <p class="text-center">目前招募超過 120 種語言、學科線上教師老師</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center mt-2">
+                <div class="d-flex flex-wrap justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary shadow mx-2 text-nowrap mb-2">英文</button>
+                    <button type="button" class="btn btn-outline-secondary shadow mx-2 text-nowrap mb-2">中文</button>
+                    <button type="button" class="btn btn-outline-secondary shadow mx-2 text-nowrap mb-2">日文</button>
+                    <button type="button" class="btn btn-outline-secondary shadow mx-2 text-nowrap mb-2">台語</button>
+                    <button type="button"
+                            class="btn btn-outline-secondary shadow mx-2 text-nowrap mb-2 d-none d-md-block">
+                        客家
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-secondary shadow mx-2 text-nowrap mb-2 d-none d-md-block">
+                        葡萄牙
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-secondary shadow mx-2 text-nowrap mb-2 d-none d-md-block">
+                        西班牙
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-secondary shadow mx-2 text-nowrap mb-2 d-none d-md-block">
+                        韓文
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- vue動態生成 -->
+        <div class="row mt-5">
+            <div class="col-12 col-md-8 mx-auto">
+                <ul class="mx-0 list-unstyled ">
+                    <li class="border border-secondary-subtle shadow mt-3 p-3 d-md-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <p class="fw-bold d-none">8/04</p>
+                            <div>
+                                <p class=" fw-bold fs-5 mx-0 bgc">【線上日文老師】- New!</p>
+                                <p class="fw-bold"> 自訂時薪範圍：NT$98 - NT$3,276 / 時</p>
+                                <p class="text-body-secondary">有日文考試、日文教學、曾是日文教師、私人教師經驗佳。</p>
+                            </div>
+                        </div>
+                        <div>
+
+                            <div class="d-md-flex d-none flex-column justify-content-center m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+
+                            <div class="d-md-none d-flex flex-row justify-content-between m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="border border-secondary-subtle shadow mt-3 p-3 d-md-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <p class="fw-bold d-none">8/04</p>
+                            <div>
+                                <p class="fw-bold fs-5 mx-0 bgc">【線上旅遊日文老師】- New!</p>
+                                <p class="fw-bold"> 自訂時薪範圍：NT$98 - NT$3,276 / 時</p>
+                                <p class="text-body-secondary">有旅遊日文考試、旅遊日文教學、曾是旅遊日文教師、私人教師、業界講師經驗佳。</p>
+                            </div>
+                        </div>
+                        <div>
+
+                            <div class="d-md-flex d-none flex-column justify-content-center m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+
+                            <div class="d-md-none d-flex flex-row justify-content-between m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="border border-secondary-subtle shadow mt-3 p-3 d-md-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <p class="fw-bold d-none">8/04</p>
+                            <div>
+                                <p class="fw-bold fs-5 mx-0 bgc">【線上初階日文老師】- New!</p>
+                                <p class="fw-bold"> 自訂時薪範圍：NT$98 - NT$3,276 / 時</p>
+                                <p class="text-body-secondary">有初階日文考試、初階日文教學、曾是初階日文教師、私人教師、業界講師經驗佳。</p>
+                            </div>
+                        </div>
+                        <div>
+
+                            <div class="d-md-flex d-none flex-column justify-content-center m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+
+                            <div class="d-md-none d-flex flex-row justify-content-between m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="border border-secondary-subtle shadow mt-3 p-3 d-md-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <p class="fw-bold d-none">8/04</p>
+                            <div>
+                                <p class="fw-bold fs-5 mx-0 bgc">JLPT日文檢定老師</p>
+                                <p class="fw-bold"> 自訂時薪範圍：NT$98 - NT$3,276 / 時</p>
+                                <p class="text-body-secondary">日檢N2以上、日檢教學、曾是日檢教師、私人教師、業界講師經驗佳。</p>
+                            </div>
+                        </div>
+                        <div>
+
+                            <div class="d-md-flex d-none flex-column justify-content-center m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+
+                            <div class="d-md-none d-flex flex-row justify-content-between m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="border border-secondary-subtle shadow mt-3 p-3 d-md-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <p class="fw-bold d-none">8/04</p>
+                            <div>
+                                <p class="fw-bold fs-5 mx-0 bgc">【線上幼兒日文 (3-5)老師】- New!</p>
+                                <p class="fw-bold"> 自訂時薪範圍：NT$98 - NT$3,276 / 時</p>
+                                <p class="text-body-secondary">
+                                    有幼兒日文 (3-5)考試、幼兒日文 (3-5)教學、曾是幼兒日文
+                                    (3-5)教師、私人教師、業界講師經驗佳。
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+
+                            <div class="d-md-flex d-none flex-column justify-content-center m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+
+                            <div class="d-md-none d-flex flex-row justify-content-between m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="border border-secondary-subtle shadow mt-3 p-3 d-md-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <p class="fw-bold d-none">8/04</p>
+                            <div>
+                                <p class="fw-bold fs-5 mx-0 bgc">【線上五十音 基礎日文老師】- New!</p>
+                                <p class="fw-bold"> 自訂時薪範圍：NT$98 - NT$3,276 / 時</p>
+                                <p class="text-body-secondary">有五十音 基礎日文考試、五十音 基礎日文教學、曾是五十音 基礎日文教師、私人教師、業界講師經驗佳。</p>
+                            </div>
+                        </div>
+                        <div>
+
+                            <div class="d-md-flex d-none flex-column justify-content-center m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+
+                            <div class="d-md-none d-flex flex-row justify-content-between m-2">
+                                <button class="btn btn-outline-secondary m-2" type="button">應徵職缺</button>
+                                <p class="m-2 text-nowrap">多於200個人應徵</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="text-center">如何在平台上教課</h2>
+            </div>
+        </div>
+        <!-- >768使用這個且排版reverse-->
+        <div class="d-none d-md-block">
+            <div class="row mt-3 d-flex flex-row-reverse">
+                <div class="col-6 d-flex flex-row justify-content-start">
+                    <div class="col-2 d-flex flex-wrap flex-row align-content-center justify-content-start px-3 pb-3 ">
+                        <div class="circle rounded-circle bgr text-danger fw-bold fs-5 text-center align-content-center ">
+                            1
+                        </div>
+                    </div>
+                    <div class="col-10 d-flex flex-wrap flex-column justify-content-center align-content-start">
+                        <h3 class="fs-5">平台媒合學生給教師</h3>
+                        <p class="fs-6">當教師收到媒合通知時即可主動聯繫學生</p>
+                    </div>
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <img src="~/image/apply_teacher/step-1-zh-TW.webp" class="w-75" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- <768 才出現 -->
+        <div class="row mt-3 d-md-none">
+            <div class="col-4 d-flex flex-wrap flex-row align-content-center justify-content-center p-0 ">
+                <div class="circle rounded-circle bgr text-danger fw-bold fs-5 text-center align-content-center">
+                    1
+                </div>
+            </div>
+            <div class="col-8 p-0">
+                <h3 class="fs-5">平台媒合學生給教師</h3>
+                <p class="fs-6">當教師收到媒合通知時即可主動聯繫學生</p>
+            </div>
+            <div class="col-12 mx-auto">
+                <img src="~/image/apply_teacher/step-1-zh-TW.webp" class="w-100" alt="">
+            </div>
+        </div>
+        <!-- >768使用這個 -->
+        <div class="d-none d-md-block">
+            <div class="row mt-3">
+                <div class="col-6 d-flex flex-row justify-content-end">
+                    <div class="order-1 col-2 d-flex flex-wrap flex-row align-content-center justify-content-end px-3 pb-3 ">
+                        <div class="circle rounded-circle bgr text-danger fw-bold fs-5 text-center align-content-center ">
+                            2
+                        </div>
+                    </div>
+                    <div class="col-10 d-flex flex-wrap flex-column justify-content-center align-content-end">
+                        <h3 class="fs-5 text-end">與學生課前溝通</h3>
+                        <p class="fs-6">教師可事先跟學生透過訊息溝通學生程度、學習需求並準備教材</p>
+                    </div>
+                </div>
+                <div class="col-6 mx-auto ">
+                    <img src="~/image/apply_teacher/step-2-zh-TW.webp" class="w-75" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- <768 才出現 -->
+        <div class="row mt-3 d-md-none">
+            <div class="col-4 d-flex flex-wrap flex-row align-content-center justify-content-center p-0 ">
+                <div class="circle rounded-circle bgr text-danger fw-bold fs-5 text-center align-content-center">
+                    2
+                </div>
+            </div>
+            <div class="col-8 p-0">
+                <h3 class="fs-5">與學生課前溝通</h3>
+                <p class="fs-6">教師可事先跟學生透過訊息溝通學生程度、學習需求並準備教材</p>
+            </div>
+            <div class="col-12 mx-auto">
+                <img src="~/image/apply_teacher/step-2-zh-TW.webp" class="w-100" alt="">
+            </div>
+        </div>
+        <!-- >768使用這個 -->
+        <div class="d-none d-md-block">
+            <div class="row mt-3 d-flex flex-row-reverse">
+                <div class="col-6 d-flex flex-row justify-content-start">
+                    <div class="col-2 d-flex flex-wrap flex-row align-content-center justify-content-start px-3 pb-3 ">
+                        <div class="circle rounded-circle bgr text-danger fw-bold fs-5 text-center align-content-center ">
+                            3
+                        </div>
+                    </div>
+                    <div class="col-10 d-flex flex-wrap flex-column justify-content-center align-content-start">
+                        <h3 class="fs-5">開始視訊上課</h3>
+                        <p class="fs-6">透過 ZOOM 在電腦上面進行一對一視訊教學</p>
+                    </div>
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <img src="~/image/apply_teacher/step-3.webp" class="w-75" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- <768 才出現 -->
+        <div class="row mt-3 d-md-none">
+            <div class="col-4 d-flex flex-wrap flex-row align-content-center justify-content-center p-0 ">
+                <div class="circle rounded-circle bgr text-danger fw-bold fs-5 text-center align-content-center">
+                    3
+                </div>
+            </div>
+            <div class="col-8 p-0">
+                <h3 class="fs-5">開始視訊上課</h3>
+                <p class="fs-6">透過 ZOOM 在電腦上面進行一對一視訊教學</p>
+            </div>
+            <div class="col-12 mx-auto">
+                <img src="~/image/apply_teacher/step-3.webp" class="w-100" alt="">
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="text-center mx-auto">學生上課需求</h2>
+                <p class="text-center fs-5 mx-auto">學生會主動填寫上課需求，由平台媒合適當的教師</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 mx-auto">
+            <ul class="mx-0 list-unstyled ">
+                <li class="border border-secondary-subtle shadow mt-3 p-3 d-flex ">
+                    <div class="col-md-10 ">
+                        <p class="fw-bold fs-6 bgc">尋找基礎英文老師</p>
+                        <p class="fs-6">
+                            因生活中沒有特別需要使用英語，英語能力很弱，但在國小需要推動雙語教學，讓我感到很焦慮向學生解釋教材，並有效傳遞教學內容。通過指導學生學習，幫助他們達到學習目標。關注個別學生的能力和要求。
+                        </p>
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
+                            <p class="fs-5 fw-bold text-body-secondary mb-0">NT$524-NT$655</p>
+                            <p class="fs-6">/每小時</p>
+                        </div>
+                        <button type="button" class="teacher_btn">基礎</button>
+                    </div>
+
+                    <div class="col-md-2 my-0 d-flex flex-column align-items-xl-end align-items-md-start">
+                        <p class="fs-6 fw-bold text-body-secondary mb-0 d-none d-md-block ">NT$524-NT$655</p>
+                        <p class="fs-6 d-none d-md-block ">/每小時</p>
+                    </div>
+                </li>
+                <li class="border border-secondary-subtle shadow mt-3 p-3 d-flex ">
+                    <div class="col-md-10 ">
+                        <p class="fw-bold fs-6 bgc">尋找口說英文老師</p>
+                        <p class="fs-6">
+                            希望可以加強口說流暢度在進行英文課程之前，先和學生討論學習目標。使用多元化的教學方法，確保學生的積極參與課堂。策劃一對一英文課程內容、準備教材、進行課堂。
+                        </p>
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
+                            <p class="fs-5 fw-bold text-body-secondary mb-0">NT$688-NT$819</p>
+                            <p class="fs-6">/每小時</p>
+                        </div>
+                        <button type="button" class="teacher_btn">口說</button>
+                    </div>
+
+                    <div class="col-md-2 my-0 d-flex flex-column align-items-xl-end align-items-md-start">
+                        <p class="fs-6 fw-bold text-body-secondary mb-0 d-none d-md-block ">NT$688-NT$819</p>
+                        <p class="fs-6 d-none d-md-block ">/每小時</p>
+                    </div>
+                </li>
+                <li class="border border-secondary-subtle shadow mt-3 p-3 d-flex ">
+                    <div class="col-md-10 ">
+                        <p class="fw-bold fs-6 bgc">尋找旅遊英文老師</p>
+                        <p class="fs-6">
+                            口語練習協助學生規劃英文課程，以達至預期的目標。擬定一份能夠最有效地提高學生英文的知識和水平的學習時間表。在學習過程中，鼓勵學生並作出指導。
+                        </p>
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
+                            <p class="fs-5 fw-bold text-body-secondary mb-0">NT$524 - NT$655</p>
+                            <p class="fs-6">/每小時</p>
+                        </div>
+                        <button type="button" class="teacher_btn">旅遊</button>
+                    </div>
+
+                    <div class="col-md-2 my-0 d-flex flex-column align-items-xl-end align-items-md-start">
+                        <p class="fs-6 fw-bold text-body-secondary mb-0 d-none d-md-block ">NT$524 - NT$655</p>
+                        <p class="fs-6 d-none d-md-block ">/每小時</p>
+                    </div>
+                </li>
+                <li class="border border-secondary-subtle shadow mt-3 p-3 d-flex ">
+                    <div class="col-md-10 ">
+                        <p class="fw-bold fs-6 bgc">尋找會話英文老師</p>
+                        <p class="fs-6">
+                            必須自信和樂於助人，協助學生學習英文。與學生分享英文知識和專業知識計劃上課時間表，並為學生設計個性化的英文的課程。
+                        </p>
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
+                            <p class="fs-5 fw-bold text-body-secondary mb-0">NT$360-NT$491</p>
+                            <p class="fs-6">/每小時</p>
+                        </div>
+                        <button type="button" class="teacher_btn">會話</button>
+                    </div>
+
+                    <div class="col-md-2 my-0 d-flex flex-column align-items-xl-end align-items-md-start">
+                        <p class="fs-6 fw-bold text-body-secondary mb-0 d-none d-md-block ">NT$360-NT$491</p>
+                        <p class="fs-6 d-none d-md-block ">/每小時</p>
+                    </div>
+                </li>
+                <li class="border border-secondary-subtle shadow mt-3 p-3 d-flex ">
+                    <div class="col-md-10 ">
+                        <p class="fw-bold fs-6 bgc">尋找基礎英文老師</p>
+                        <p class="fs-6">
+                            計劃上課時間表，並為學生設計個性化的英文的課程。協助學生學習英文。通過指導學生學習，幫助他們達到學習目標。
+                        </p>
+                        <div class="my-0 d-flex align-items-baseline d-md-none">
+                            <p class="fs-5 fw-bold text-body-secondary mb-0">NT$360-NT$491</p>
+                            <p class="fs-6">/每小時</p>
+                        </div>
+                        <button type="button" class="teacher_btn">初階</button>
+                    </div>
+
+                    <div class="col-md-2 my-0 d-flex flex-column align-items-xl-end align-items-md-start">
+                        <p class="fs-6 fw-bold text-body-secondary mb-0 d-none d-md-block ">NT$360-NT$491</p>
+                        <p class="fs-6 d-none d-md-block ">/每小時</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="recommendation_area ">
+            <div class="recommendation row mt-3 d-flex">
+                <div class="col-12 col-md-7 d-flex flex-column justify-content-center">
+                    <div class="recommendation_text w-100">
+                        <p>1. 智能派單</p>
+                        <p>教師除了能夠免費在平台上刊登履歷，平台還會根據學生需求配對通知適合的教師，教師不再只是被動式的等待學生上門，你也可以主動地為自己獲取到源源不絕的學生</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 ">
+                    <img src="~/image/apply_teacher/recommendation.webp" class="adj_img" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="recommendation_area ">
+            <div class="row mt-3 d-flex">
+                <div class="col-12 col-md-7 d-flex flex-column justify-content-center">
+                    <div class="recommendation_text w-100">
+                        <p>2. 招生授課培訓影片</p>
+                        <p>教師成功上線後即可獲得一系列完整招生工具教學影片，協助老師加速了解平台工具操作、獨家收單秘訣、與學生溝通技巧以及提升上課體驗率等各種全方位技能</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 ">
+                    <img src="~/image/apply_teacher//training.webp" class="adj_img" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="recommendation_area">
+            <div class="recommendation row mt-3 d-flex">
+                <div class="col-12 col-md-7 d-flex flex-column justify-content-center">
+                    <div class="recommendation_text w-100">
+                        <p>3. 免費師徒制教師團隊</p>
+                        <p>TalkingTopia致力於打造一個友善、知識共享的教學平台，剛上線的新手教師可以選擇想要加入的教師團隊，透過團隊導師一對一全程輔導協助你遇到的問題並幫您達成理想目標</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 ">
+                    <img src="~/image/apply_teacher/mentors.webp" class="adj_img" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <p class="text-center fs-2">TalkingTopia優秀教師見證</p>
+                <p class="text-center fs-3">發掘教學的無限可能</p>
+            </div>
+        </div>
+        <div class="row yt_card_row mt-3 mb-5 mx-auto">
+            <partial name="_VideoPartial" />
+            @* <div class="yt_card col-12 col-md-4 ">
+            <div class="yt_video_card">
+            <iframe width="100%" height="250" src="https://www.youtube.com/embed/ZavL9y4Adrk?si=AiYZAD9GEgq1gp9G"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+            <div class="yt_video_card_title">Allen</div>
+            <div class="yt_video_card_title_subtitle">ERP產業主管</div>
+            <div class="yt_video_card_title_content">
+            物品頓時共享所需不夠常見仍然涉及轉載結婚，革命再度成立，變化生命一張滑鼠當時時代成員一陣好看人物他們的首先，尤其是市政府圖文老婆，和你精靈創新成本激烈，總結雲林傢俱總算天氣江湖轎車老師推坑王你在很好在此的話關西，說到都有顯得，西方另一動作突然創建現在強化，思。
+            </div>
+            </div>
+            </div>
+            <div class="yt_card col-12 col-md-4 d-none d-md-block">
+            <div class="yt_video_card">
+            <iframe width="100%" height="250" src="https://www.youtube.com/embed/ZavL9y4Adrk?si=AiYZAD9GEgq1gp9G"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+            <div class="yt_video_card_title">Allen</div>
+            <div class="yt_video_card_title_subtitle">ERP產業主管</div>
+            <div class="yt_video_card_title_content">
+            物品頓時共享所需不夠常見仍然涉及轉載結婚，革命再度成立，變化生命一張滑鼠當時時代成員一陣好看人物他們的首先，尤其是市政府圖文老婆，和你精靈創新成本激烈，總結雲林傢俱總算天氣江湖轎車老師推坑王你在很好在此的話關西，說到都有顯得，西方另一動作突然創建現在強化，思。
+            </div>
+            </div>
+            </div>
+            <div class="yt_card col-12 col-md-4 d-none d-md-block">
+            <div class="yt_video_card">
+            <iframe width="100%" height="250" src="https://www.youtube.com/embed/ZavL9y4Adrk?si=AiYZAD9GEgq1gp9G"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+            <div class="yt_video_card_title">Allen</div>
+            <div class="yt_video_card_title_subtitle">ERP產業主管</div>
+            <div class="yt_video_card_title_content">
+            物品頓時共享所需不夠常見仍然涉及轉載結婚，革命再度成立，變化生命一張滑鼠當時時代成員一陣好看人物他們的首先，尤其是市政府圖文老婆，和你精靈創新成本激烈，總結雲林傢俱總算天氣江湖轎車老師推坑王你在很好在此的話關西，說到都有顯得，西方另一動作突然創建現在強化，思。
+            </div>
+            </div>
+            </div> *@
+        </div>
+        <div class="row AI_row_area mx-auto">
+            <div class="col-12 AI_pic ">
+                <img src="~/image/apply_teacher/en-m.webp" class=" w-100">
+            </div>
+            <div class="AI_teacher_text_ct w-75">
+                <div class="AI_teacher_text d-flex flex-wrap flex-column align-items-start ">
+                    <p class="fw-bold m-0 text-white">AI 推薦教師</p>
+                    <p class="text-white">留下需求，30 秒內推薦適合您的教師！</p>
+                    <button type="button" class="btn btn-light p-1 my-0">為我推薦教師</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <p class="text-center fs-3">各國英文教師即時平均課費</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-4 offset-md-4">
+                <div class="col-12  border-top border-secondary-subtle">
+                    <ul class="list-unstyled ">
+                        <li class="row py-2 border-bottom border-secondary-subtle">
+                            <div class="col-2 my-auto">
+                                <img src="~/image/apply_teacher/tw.svg" alt="">
+                            </div>
+                            <div class="col-10  d-flex justify-content-between ">
+                                <p class="my-auto">台灣</p>
+                                <p class="text-end my-auto">NT$513 - NT$855 / 小時</p>
+                            </div>
+                        </li>
+                        <li class="row py-2 border-bottom border-secondary-subtle">
+                            <div class="col-2 my-auto">
+                                <img src="~/image/apply_teacher/us.svg" alt="">
+                            </div>
+                            <div class="col-10  d-flex justify-content-between">
+                                <p class="my-auto">美國</p>
+                                <p class="text-end my-auto">NT$470 - NT$783 / 小時</p>
+                            </div>
+                        </li>
+                        <li class="row py-2 border-bottom border-secondary-subtle">
+                            <div class="col-2 my-auto">
+                                <img src="~/image/apply_teacher/ph.svg" alt="">
+                            </div>
+                            <div class="col-10  d-flex justify-content-between">
+                                <p class="my-auto">菲律賓</p>
+                                <p class="text-end my-auto">NT$261 - NT$436 / 小時</p>
+                            </div>
+                        </li>
+                        <li class="row py-2 border-bottom border-secondary-subtle">
+                            <div class="col-2 my-auto">
+                                <img src="~/image/apply_teacher/gb.svg" alt="">
+                            </div>
+                            <div class="col-10  d-flex justify-content-between">
+                                <p class="my-auto">英國</p>
+                                <p class="text-end my-auto">NT$558 - NT$929 / 小時</p>
+                            </div>
+                        </li>
+                        <li class="row py-2 border-bottom border-secondary-subtle">
+                            <div class="col-2 my-auto">
+                                <img src="~/image/apply_teacher/za.svg" alt="">
+                            </div>
+                            <div class="col-10  d-flex justify-content-between">
+                                <p class="my-auto">南非</p>
+                                <p class="text-end my-auto">NT$370 - NT$617 / 小時</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 mt-5">
+                <h2 class="text-center">申請英文教師常見問題</h2>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-8 offset-md-2">
+                <p class="text-danger fw-bold">Q1：成為教師有什麼條件？ 可以兼職做嗎？</p>
+                <p>只要擁有英文教學經驗，就可以申請成為TalkingTopia教師，平時可以自主選擇工作時間，即使有正式的工作，也可以利用空閒時間，透過平台招收學生、上課，賺取額外收入。</p>
+                <p class="text-danger fw-bold">Q2：上課需要自備教材嗎？</p>
+                <p>教師需要自備教材上課，因為每個學生的程度和學習要求都不一樣，而有效的教學方式是提供客製化的教材，所以TalkingTopia暫時沒有提供統一的教材。</p>
+                <p class="text-danger fw-bold">Q3：上課費用如何訂定？</p>
+                <p>教師可自行評估過去教學經驗與備課時間成本來定價，一般來說25分鐘的體驗課平均定價為$6-10美元，50分鐘的正式課為$15-28美元。</p>
+                <p class="text-danger fw-bold">Q4：平台的上堂請假制度是怎樣？</p>
+                <p>學生最快可預約24 小時之後的課程，教師或學生如要取消預約，必須於12小時前提出，學生即可重新預約課程</p>
+                <p class="text-danger fw-bold">Q5：如何收取款項？</p>
+                <p>完成一堂課會被視為一筆交易，每月 2 號結算教師上一個月的教學收入，老師可自行選擇用Paypal、Transferwise或是Payoneer收款</p>
+                <p class="text-danger fw-bold">Q6：平台抽成費用？</p>
+                <p>
+                    為了維護平台的運作並持續獲取更多學生資源，TalkingTopia會根據您的課程收入收取平台服務費。服務費是採取累退制度，以鼓勵全職老師在 TalkingTopia
+                    教學，當您的課程收入愈高，平台收取的服務費會隨之下降，最低不會收取任何服務費，詳請可查看『計算教學實領收入』
+                </p>
+                <p class="text-danger fw-bold">Q7：如果還有任何問題該找誰？</p>
+                <p>
+                    可以在TalkingTopia
+                    頁尾的部分選擇『常見問題』，在常見問題裡面使用關鍵字搜尋，可以解答你大部分的疑惑。但如果依然有無法解決的問題，可以使用網站『右下角紅色圈圈』的按鈕，發送訊息聯繫我們。
+                </p>
+            </div>
+        </div>
+    </div>
+</main>

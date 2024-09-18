@@ -1,4 +1,4 @@
-﻿@model CourseInfoListViewModel
+﻿@* @model CourseInfoListViewModel *@
 
 @section topCSS
 {
@@ -7,307 +7,162 @@
     <link rel="stylesheet" href="~/css/course_list.css" />
     <link rel="stylesheet" href="~/css/tutor_intro_medias_slider.css">
     <link rel="stylesheet" href="~/css/booking_table_modal.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 }
 
-<partial name="_BannerPartial" />
-<section class="tutors mb-3">
+<partial name="_BannerPartial"  />
+<section class="tutors mb-3" id="course-cards-app">
     <div class="lh-tutors-filter d-flex">
         <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-3">
-            <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside">
-                學習需求 <i class="bi bi-filter"></i>
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedSubject}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
+                {{ selectedSubject ? selectedSubject : '學習需求' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
-                <li class="dropend nested-dropdown">
+                <li class="dropend nested-dropdown" v-for="courseCategory in courseCategories" :key="courseCategory.categoryName">
                     <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
-                            data-bs-auto-close="true" type="button">
-                        語言學習
+                            data-bs-auto-close="outside" type="button">
+                        {{ courseCategory.categoryName }}
                     </button>
                     <ul class="dropdown-menu">
-                        <li><button class="dropdown-item" type="button">英文</button></li>
-                        <li><button class="dropdown-item" type="button">日文</button></li>
-                        <li><button class="dropdown-item" type="button">中文</button></li>
-                        <li><button class="dropdown-item" type="button">德文</button></li>
-                        <li><button class="dropdown-item" type="button">法文</button></li>
-                        <li><button class="dropdown-item" type="button">西班牙文</button></li>
+                        <li v-for="subject in courseCategory.subjects" :key="subject.subjectName">
+                            <button class="dropdown-item" type="button" v-on:click="filterBySubject(subject.subjectName)">{{ subject.subjectName }}</button>
+                        </li>
                     </ul>
                 </li>
-                <li class="dropend nested-dropdown">
-                    <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
-                            data-bs-auto-close="true" type="button">
-                        程式設計
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><button class="dropdown-item" type="button">HTML/CSS</button></li>
-                        <li><button class="dropdown-item" type="button">JavaScript</button></li>
-                        <li><button class="dropdown-item" type="button">C#</button></li>
-                        <li><button class="dropdown-item" type="button">SQL</button></li>
-                        <li><button class="dropdown-item" type="button">Python</button></li>
-                        <li><button class="dropdown-item" type="button">Java</button></li>
-                    </ul>
+                <li v-if="selectedSubject">
+                    <button class="dropdown-item" type="button" v-on:click="clearSubjectFilter"><strong>所有類別</strong></button>
                 </li>
-                <li class="dropend nested-dropdown">
-                    <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
-                            data-bs-auto-close="true" type="button">
-                        升學科目
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><button class="dropdown-item" type="button">數學</button></li>
-                        <li><button class="dropdown-item" type="button">物理</button></li>
-                        <li><button class="dropdown-item" type="button">化學</button></li>
-                        <li><button class="dropdown-item" type="button">歷史</button></li>
-                        <li><button class="dropdown-item" type="button">地理</button></li>
-                        <li><button class="dropdown-item" type="button">生物</button></li>
-                    </ul>
-                </li>
-            </ul>
+            </ul> 
         </div>
         <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
-            <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                教師國籍 <i class="bi bi-filter"></i>
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedNation}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
+                {{ selectedNation ? selectedNation : '教師國籍' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">台灣</button></li>
-                <li><button class="dropdown-item" type="button">美國</button></li>
-                <li><button class="dropdown-item" type="button">英國</button></li>
-                <li><button class="dropdown-item" type="button">法國</button></li>
-                <li><button class="dropdown-item" type="button">德國</button></li>
+                <li v-for="nation in nations" :key="nation">
+                    <button class="dropdown-item" type="button" v-on:click="filterByNation(nation)">
+                        {{ nation }}
+                    </button>
+                </li>
+                <li v-if="selectedNation">
+                    <button class="dropdown-item" type="button" v-on:click="clearNationFilter"><strong>所有國籍</strong></button>
+                </li>
             </ul>
         </div>
         <div class="btn-group course-time-filter me-1 mx-sm-2 mt-4 mb-3">
-            <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                上課時間 <i class="bi bi-filter"></i>
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedWeekdays.length > 0 || selectedTimeslots.length > 0}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                <template v-if="selectedWeekdays.length > 0">
+                    {{ getWeekdayName(selectedWeekdays[0]) }} <span v-if="selectedWeekdays.length > 1 && selectedTimeslots.length === 0"> + 1</span>
+                </template>
+                <template v-if="selectedWeekdays.length > 0 && selectedTimeslots.length > 0">, </template>
+                <template v-if="selectedTimeslots.length > 0">
+                    {{ selectedTimeslots[0] }}點 <span v-if="selectedTimeslots.length > 1 || selectedWeekdays.length > 1">+ 1</span>
+                </template>
+                <template v-if="selectedWeekdays.length === 0 && selectedTimeslots.length === 0">
+                    上課時間 <i class="bi bi-filter"></i>
+                </template>              
             </button>
             <ul class="dropdown-menu px-3 py-2 px-md-4 py-md-3">
-                <li class="col-12">選擇時間段</li>
-                <li class="checkbox-wrapper col-12 d-flex">
-                    <div class="mt-2 col-3 weekday-checkbox">
-                        <span class="fw-bolder">星期</span>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="monday" id="monday"
-                                   name="weekday">
-                            <label class="form-check-label" for="monday">
-                                週一
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="tuesday" id="tuesday"
-                                   name="weekday">
-                            <label class="form-check-label" for="tuesday">
-                                週二
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="wednesday" id="wednesday"
-                                   name="weekday">
-                            <label class="form-check-label" for="wednesday">
-                                週三
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="thursday" id="thursday"
-                                   name="weekday">
-                            <label class="form-check-label" for="thursday">
-                                週四
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="friday" id="friday"
-                                   name="weekday">
-                            <label class="form-check-label" for="friday">
-                                週五
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="saturday" id="saturday"
-                                   name="weekday">
-                            <label class="form-check-label" for="saturday">
-                                週六
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="sunday" id="sunday"
-                                   name="weekday">
-                            <label class="form-check-label" for="sunday">
-                                週日
-                            </label>
-                        </div>
+                <li class="col-12 d-flex justify-content-between">
+                    <span><i class="bi bi-alarm me-2"></i>  選擇時間段 </span>
+                    <span v-if="selectedWeekdays.length > 0 || selectedTimeslots.length > 0">
+                        <button class="dropdown-item" type="button" v-on:click="clearWeekdayAndTimeslotFilter"><strong>所有時間段</strong> </button>
+                    </span>
+                </li>               
+                <li class="checkbox-wrapper col-12 d-flex">                       
+                    <div class="mt-2 col-6 weekday-checkbox">
+                        <div class="fw-bolder col-12">星期</div>
+                        <div class="col-12 weekday-checkbox-wrapper d-flex">
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="1" id="monday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekdayAndTimeSlot">
+                                    <label class="form-check-label" for="monday">
+                                        週一
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="2" id="tuesday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekdayAndTimeSlot">
+                                    <label class="form-check-label" for="tuesday">
+                                        週二
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="3" id="wednesday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekdayAndTimeSlot">
+                                    <label class="form-check-label" for="wednesday">
+                                        週三
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="4" id="thursday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekdayAndTimeSlot">
+                                    <label class="form-check-label" for="thursday">
+                                        週四
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="5" id="friday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekdayAndTimeSlot">
+                                    <label class="form-check-label" for="friday">
+                                        週五
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-6">                          
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="6" id="saturday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekdayAndTimeSlot">
+                                    <label class="form-check-label" for="saturday">
+                                        週六
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="0" id="sunday"
+                                           name="weekday" v-model="selectedWeekdays" v-on:change="filterByWeekdayAndTimeSlot">
+                                    <label class="form-check-label" for="sunday">
+                                        週日
+                                    </label>
+                                </div>
+                            </div>
+                        </div>             
                     </div>
-                    <div class="mt-2 ps-3 col-4 timeslot-checkbox col-9">
-                        <span class="fw-bolder">時段</span>
-                        <div class="d-flex flex-wrap">
-                            <div class="mt-1 col-12">am</div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="zero-oclock" id="zero-oclock"
-                                       name="time">
-                                <label class="form-check-label" for="zero-oclock">
-                                    00:00
+                    <div class="mt-2 ps-4 col-6 timeslot-checkbox col-6">
+                        <div class="fw-bolder col-6">時段</div>
+                        <div class="d-flex flex-wrap data-flex">
+                            <div class="mt-2 col-12 text">上午</div>
+                            <div class="form-check col-12">
+                                <input class="form-check-input" type="checkbox" name="time" value="6-12" id="morning" v-model="selectedTimeslots" v-on:change="filterByWeekdayAndTimeSlot">
+                                <label class="form-check-label" for="morning">
+                                    06:00 - 12:00
                                 </label>
                             </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="one-oclock" id="one-oclock"
-                                       name="time">
-                                <label class="form-check-label" for="one-oclock">
-                                    01:00
+                            <div class="mt-1 col-12 text">下午</div>
+                            <div class="form-check col-12">
+                                <input class="form-check-input" type="checkbox" name="time" value="12-18" id="afternoon" v-model="selectedTimeslots" v-on:change="filterByWeekdayAndTimeSlot">
+                                <label class="form-check-label" for="afternoon">
+                                    12:00 - 18:00
+                                </label>
+                            </div>        
+                            <div class="mt-1 col-12 text">傍晚</div>
+                            <div class="form-check col-12">
+                                <input class="form-check-input" type="checkbox" name="time" value="18-24" id="night" v-model="selectedTimeslots" v-on:change="filterByWeekdayAndTimeSlot">
+                                <label class="form-check-label" for="night">
+                                    18:00 - 24:00
                                 </label>
                             </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="two-oclock" id="two-oclock"
-                                       name="time">
-                                <label class="form-check-label" for="two-oclock">
-                                    02:00
+                            <div class="mt-1 col-12 text">深夜</div>
+                            <div class="form-check col-12">
+                                <input class="form-check-input" type="checkbox" name="time" value="0-6" id="midnight" v-model="selectedTimeslots" v-on:change="filterByWeekdayAndTimeSlot">
+                                <label class="form-check-label" for="midnight">
+                                    00:00 - 06:00
                                 </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="three-oclock"
-                                       id="three-oclock" name="time">
-                                <label class="form-check-label" for="three-oclock">
-                                    03:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="four-oclock" id="four-oclock"
-                                       name="time">
-                                <label class="form-check-label" for="four-oclock">
-                                    04:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="five-oclock" id="five-oclock"
-                                       name="time">
-                                <label class="form-check-label" for="five-oclock">
-                                    05:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="six-oclock" id="six-oclock"
-                                       name="time">
-                                <label class="form-check-label" for="six-oclock">
-                                    06:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="seven-oclock"
-                                       id="seven-oclock" name="time">
-                                <label class="form-check-label" for="seven-oclock">
-                                    07:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="eight-oclock"
-                                       id="eight-oclock" name="time">
-                                <label class="form-check-label" for="eight-oclock">
-                                    08:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="nine-oclock" id="nine-oclock"
-                                       name="time">
-                                <label class="form-check-label" for="nine-oclock">
-                                    09:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="ten-oclock" id="ten-oclock"
-                                       name="time">
-                                <label class="form-check-label" for="ten-oclock">
-                                    10:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="eleven-oclock"
-                                       id="eleven-oclock" name="time">
-                                <label class="form-check-label" for="eleven-oclock">
-                                    11:00
-                                </label>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-wrap">
-                            <div class="col-12">pm</div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="twelve-oclock"
-                                       id="twelve-oclock" name="time">
-                                <label class="form-check-label" for="twelve-oclock">
-                                    12:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="thirteen-oclock"
-                                       id="thirteen-oclock" name="time">
-                                <label class="form-check-label" for="thirteen-oclock">
-                                    13:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="fourteen-oclock"
-                                       id="fourteen-oclock" name="time">
-                                <label class="form-check-label" for="fourteen-oclock">
-                                    14:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="fifteen-oclock"
-                                       id="fifteen-oclock" name="time">
-                                <label class="form-check-label" for="fifteen-oclock">
-                                    15:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="sixteen-oclock"
-                                       id="sixteen-oclock" name="time">
-                                <label class="form-check-label" for="sixteen-oclock">
-                                    16:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="seventeen-oclock"
-                                       id="seventeen-oclock" name="time">
-                                <label class="form-check-label" for="seventeen-oclock">
-                                    17:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="eighteen-oclock"
-                                       id="eighteen-oclock" name="time">
-                                <label class="form-check-label" for="eighteen-oclock">
-                                    18:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="nineteen-oclock"
-                                       id="nineteen-oclock" name="time">
-                                <label class="form-check-label" for="nineteen-oclock">
-                                    19:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="twenty-oclock"
-                                       id="twenty-oclock" name="time">
-                                <label class="form-check-label" for="twenty-oclock">
-                                    20:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="twenty-one-oclock"
-                                       id="twenty-one-oclock" name="time">
-                                <label class="form-check-label" for="twenty-one-oclock">
-                                    21:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="twenty-two-oclock"
-                                       id="twenty-two-oclock" name="time">
-                                <label class="form-check-label" for="twenty-two-oclock">
-                                    22:00
-                                </label>
-                            </div>
-                            <div class="form-check col-4">
-                                <input class="form-check-input" type="checkbox" value="twenty-three-oclock"
-                                       id="twenty-three-oclock" name="time">
-                                <label class="form-check-label" for="twenty-three-oclock">
-                                    23:00
-                                </label>
-                            </div>
+                            </div>                           
                         </div>
                     </div>
                 </li>
@@ -316,188 +171,169 @@
 
         </div>
         <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
-            <button class="btn dropdown-toggle px-1 px-sm-3 py-2" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                預算區間 <i class="bi bi-filter"></i>
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedBudget }]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
+                {{ selectedBudget ? 'NT$ ' + selectedBudget : '預算區間' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">NT$349 以下</button></li>
-                <li><button class="dropdown-item" type="button">NT$350 - NT$499</button></li>
-                <li><button class="dropdown-item" type="button">NT$500 - NT$799</button></li>
-                <li><button class="dropdown-item" type="button">NT$800 - NT$999</button></li>
-                <li><button class="dropdown-item" type="button">NT$1000以上</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('349以下')">NT$349以下</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('350-499')">NT$350 - NT$499</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('500-799')">NT$500 - NT$799</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('800-999')">NT$800 - NT$999</button></li>
+                <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('1000以上')">NT$1000以上</button></li>
+                <li v-if="selectedBudget">
+                    <button class="dropdown-item" type="button" v-on:click="clearBudgetFilter"><strong>所有預算區間</strong></button>
+                </li>
             </ul>
+        </div>
+        <div v-cloak class="btn-group me-1 mx-sm-2 mt-4 mb-3" v-if="selectedSubject || selectedNation || selectedWeekdays.length > 0 || selectedTimeslots.length > 0 || selectedBudget">
+            <button class="dropdown-item cancel-filter-btn ms-md-2" type="button" v-on:click="clearAllFilter"><i class="bi bi-x-circle-fill"></i>  <strong>清除篩選</strong></button>
         </div>
     </div>
     <div class="lh-tutors-order">
         <span class="fw-bold ms-2 ms-md-4">目前排序</span>
-        <a href="" class="recommend">即時推薦</a>
+        <a href="" class="recommend" v-on:click="clearAllFilter">即時推薦</a>
         <a href="">優質教師優先</a>
         <a href="">低價優先</a>
         <a href="">多評價數優先</a>
     </div>
-    <div class="lh-tutor-cards">
-        @foreach (var courseCard in Model.CourseInfoList)
-        {
-            <div class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
-                <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
-                    <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
-                        <div class="lh-tutor-images__head position-relative">
-                            <img class="tutor-headshot rounded-circle"
-                                 src="@Url.Content(@courseCard.TutorHeadShotImage)" />
-                                <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
-                                     src="@Url.Content(@courseCard.TutorFlagImage)" />
-                        </div>
-                        <div class="lh-tutor-follow mt-2">+關注</div>
+    <div v-if="loading"></div>
+    <div v-else class="lh-tutor-cards">
+        <div v-for="(courseCard, index) in courses" :key="courseCard.courseId" class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
+            <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
+                <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
+                    <div class="lh-tutor-images__head position-relative">
+                        <img class="tutor-headshot rounded-circle"
+                             :src="courseCard.tutorHeadShotImage" />
+                        <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
+                             :src="courseCard.tutorFlagImage.replace('~', '')" />
                     </div>
-                    <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
-                        <div class="tutor-description-title-wrapper d-flex justify-content-between">
-                            <a class="tutor-description-title" href="#">
-                                @courseCard.CourseTitle
-                            </a>
-                            @if (@courseCard.IsVerifiedTutor == true)
-                            {
-                                <span class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
-                                      data-bs-placement="bottom" title="僅有8.5%的優質教師"
-                                      data-bs-custom-class="custom-tooltip">
-                                    <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
-                                </span>
-                            }                           
-                        </div> 
-                        <div class="tutor-subtitle my-1">@courseCard.CourseSubTitle</div>
-                        <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                            <div class="fifty-min-course-pricing">
-                                NT$@FormatPrice(@courseCard.FiftyMinPriceNTD) <span class="text">/ 50分鐘</span>
-                            </div>
-                            <div class="trail-course-pricing">NT$@FormatPrice(@courseCard.TrialPriceNTD) <span class="text">/ 體驗課</span></div>
-                        </div>
-                        <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                            <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>@courseCard.CourseRatings</span></div>
-                            <div>・</div>
-                            <div class="tutor-total-reviews"><span class="pe-1">@courseCard.CourseReviews</span>個評論</div>
-                        </div>
-                        <p class="tutor-intro-text mb-2">
-                            @courseCard.TutorIntro
-                        </p>
-                        <a href="#" class="tutor-viewmore d-none d-md-block mb-md-1">瀏覽更多</a>
-                    </div>
-                    <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
-                        <div class="course-pricing d-flex">
-                            <div class="trail-course-pricing col-6">
-                                NT$@FormatPrice(@courseCard.TrialPriceNTD) <div class="text">體驗課</div>
-                            </div>
-                            <div class="fifty-min-course-pricing col-6">
-                                NT$@FormatPrice(@courseCard.FiftyMinPriceNTD) <div class="text">50分鐘</div>
-                            </div>
-                        </div>
-                        <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" data-bs-toggle="modal"
-                                data-bs-target="#bookingTableModal"
-                                data-tutor-headshot="@courseCard.TutorHeadShotImage"
-                                data-course-title="@courseCard.CourseTitle">
-                            預約體驗
-                        </button>
-                        <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
-                                data-bs-toggle="modal" data-bs-target="#contactTutorModal">
-                            聯繫老師
-                        </button>
-                    </div>
+                    <div class="lh-tutor-follow mt-2">+關注</div>
                 </div>
-                <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                    <p class="tutor-intro-text">
-                        @courseCard.TutorIntro
-                    </p>
-                </div>
-                <div class="lh-tutor-card__book d-flex justify-content-center">
-                    <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
-                            data-bs-target="#bookingTableModal" 
-                            data-tutor-headshot="@courseCard.TutorHeadShotImage"
-                            data-course-title="@courseCard.CourseTitle">
-                        預約立即體驗
-                    </button>
-                </div>
-                <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
-                    <div class="tutor-intro-media-container col-12 mx-auto">
-                        if (@courseCard.CourseVideo != null)
-                        {
-                        <a href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
-                           data-bs-video="@Url.Content(@courseCard.CourseVideo)">
-                            <img src="@Url.Content(@courseCard.CourseVideoThumbnail)" alt="">
+                <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
+                    <div class="tutor-description-title-wrapper d-flex justify-content-between">
+                        <a class="tutor-description-title" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer" v-cloak>
+                            {{ courseCard.courseTitle }}
                         </a>
-                        }
-                        if (@courseCard.CourseImages.Count > 0)
-                        {
-                        @foreach (var image in @courseCard.CourseImages)
-                        {
-                            <img src=@Url.Content(image.ImageUrl) alt="">
-                        }
-                        }
-                        
+
+                        <span v-if="courseCard.isVerifiedTutor" class="tutor-badge ms-1 badge-tooltip" data-bs-toggle="tooltip"
+                              data-bs-placement="bottom" title="僅有8.5%的優質教師"
+                              data-bs-custom-class="custom-tooltip">
+                            <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
+                        </span>
                     </div>
-                    <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
-                    <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
-                    <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
-                    <div class="tutor-timeslot-table col-11 mx-auto">
-                        <div class="row">
-                            <div class="weekday col-3 p-0"></div>
-                            <div class="weekday col p-0">週日</div>
-                            <div class="weekday col p-0">週一</div>
-                            <div class="weekday col p-0">週二</div>
-                            <div class="weekday col p-0">週三</div>
-                            <div class="weekday col p-0">週四</div>
-                            <div class="weekday col p-0">週五</div>
-                            <div class="weekday col p-0">週六</div>
+                    <div class="tutor-subtitle my-1" v-cloak>{{ courseCard.courseSubTitle }}</div>
+                    <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
+                        <div class="fifty-min-course-pricing" v-cloak>
+                            NT${{ formatPrice(courseCard.fiftyMinUnitPrice) }} <span class="text">/ 50分鐘</span>
                         </div>
-                        <div class="row">
-                            <div class="timeslot col-3 p-0">
-                                上午 <div class="time">06:00-12:00</div>
-                            </div>
-                            @for (var weekday = 0; weekday < 7; weekday++)
-                            {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 6, 12, weekday)"></div>                          
-                            }
+                        <div class="trail-course-pricing" v-cloak>NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <span class="text">/ 25分鐘</span></div>
+                    </div>
+                    <div class="tutor-received-feedback d-flex gap-1 my-md-2">
+                        <div class="tutor-ranking" v-cloak><i class="bi bi-star-fill pe-1"></i><span>{{ courseCard.courseRatings }}</span></div>
+                        <div>・</div>
+                        <div class="tutor-total-reviews" v-cloak><span class="pe-1">{{ courseCard.courseReviews }}</span>個評論</div>
+                    </div>
+                    <p class="tutor-intro-text mb-2" v-cloak>
+                        {{ courseCard.tutorIntro }}
+                    </p>
+                    <a class="tutor-viewmore d-none d-md-inline" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer">瀏覽更多</a>
+                </div>
+                <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
+                    <div class="course-pricing d-flex">
+                        <div class="trail-course-pricing col-6" v-cloak>
+                            NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <div class="text">25分鐘</div>
                         </div>
-                        <div class="row">
-                            <div class="timeslot col-3 p-0">
-                                下午 <div class="time">12:00-18:00</div>
-                            </div>
-                            @for (var weekday = 0; weekday < 7; weekday++)
-                            {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 12, 18, weekday)"></div>
-                            }
-                        </div>
-                        <div class="row">
-                            <div class="timeslot col-3 p-0">
-                                傍晚 <div class="time">18:00-24:00</div>
-                            </div>
-                            @for (var weekday = 0; weekday < 7; weekday++)
-                            {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 18, 24, weekday)"></div>
-                            }
-                        </div>
-                        <div class="row">
-                            <div class="timeslot col-3 p-0">
-                                深夜 <div class="time">00:00-06:00</div>
-                            </div>
-                            @for (var weekday = 0; weekday < 7; weekday++)
-                            {
-                                <div class="col p-0 @AddBookingStatusClass(@courseCard.AvailableTimeSlots, @courseCard.BookedTimeSlots, 0, 6, weekday)"></div>
-                            }
+                        <div class="fifty-min-course-pricing col-6" v-cloak>
+                            NT${{ formatPrice(courseCard.fiftyMinUnitPrice) }} <div class="text">50分鐘</div>
                         </div>
                     </div>
-                    <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
-                        <div class="d-flex align-items-center">
-                            <span class="color-block occupied me-1"></span>時段內已有預約
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <span class="color-block available me-1"></span>尚有可預約時段
-                        </div>
-                    </div>
-                    <button type="button" class="view-more-btn btn mt-3 p-2 w-100">
-                        瀏覽更多
+                    <button type="button" class="lh-tutor-card__book-btn mx-auto my-1 col-11" v-on:click="openBookingTable(courseCard.courseId)">
+                        預約課程
+                    </button>
+                    @* <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11"
+                            data-bs-toggle="modal" data-bs-target="#contactTutorModal">
+                        聯繫老師
+                    </button> *@
+                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11">
+                        聯繫老師
                     </button>
                 </div>
             </div>
-        }
+            <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
+                <p class="tutor-intro-text" v-cloak>
+                    {{ courseCard.tutorIntro }}
+                </p>
+            </div>
+            <div class="lh-tutor-card__book d-flex justify-content-center">
+                <button type="button" class="lh-tutor-card__book-btn m-1 p-2 w-100 d-md-none" data-bs-toggle="modal"
+                        data-bs-target="#bookingTableModal"
+                        v-on:click="openBookingTable(courseCard.courseId)">
+                    預約立即體驗
+                </button>
+            </div>
+            <div class="lh-tutor-card-floating-popup px-2 py-3 position-absolute d-none">
+                <div class="tutor-intro-media-container col-12 mx-auto">
+                    <a v-if="courseCard.courseVideo" href="#" class="btn btn-default p-0" data-bs-toggle="modal" data-bs-target="#videoModal"
+                       :data-bs-video="courseCard.courseVideo">
+                        <img :src="courseCard.courseVideoThumbnail" alt="">
+                    </a>
+                    <img v-if="courseCard.courseImages.length > 0" v-for="(image, index) in courseCard.courseImages" :key="index" :src="image.imageUrl" alt="">
+                </div>
+                <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
+                <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
+                <p class="mt-2 mb-1">*日期以 台北 GMT +8:00 顯示</p>
+                <div class="tutor-timeslot-table col-11 mx-auto">
+                    <div class="row">
+                        <div class="weekday col-3 p-0"></div>
+                        <div class="weekday col p-0">週日</div>
+                        <div class="weekday col p-0">週一</div>
+                        <div class="weekday col p-0">週二</div>
+                        <div class="weekday col p-0">週三</div>
+                        <div class="weekday col p-0">週四</div>
+                        <div class="weekday col p-0">週五</div>
+                        <div class="weekday col p-0">週六</div>
+                    </div>
+                    <div class="row">
+                        <div class="timeslot col-3 p-0">
+                            上午 <div class="time">06:00-12:00</div>
+                        </div>
+                        <div v-for="weekday in 7" :key="weekday" :class="['col p-0', addBookingStatusClass(6, 12, weekday - 1, index)]"></div>
+                    </div>
+                    <div class="row">
+                        <div class="timeslot col-3 p-0">
+                            下午 <div class="time">12:00-18:00</div>
+                        </div>
+                        <div v-for="weekday in 7" :key="weekday" :class="['col p-0', addBookingStatusClass(12, 18, weekday - 1, index)]"></div>
+                    </div>
+                    <div class="row">
+                        <div class="timeslot col-3 p-0">
+                            傍晚 <div class="time">18:00-24:00</div>
+                        </div>
+                        <div v-for="weekday in 7" :key="weekday" :class="['col p-0', addBookingStatusClass(18, 24, weekday - 1, index)]"></div>
+                    </div>
+                    <div class="row">
+                        <div class="timeslot col-3 p-0">
+                            深夜 <div class="time">00:00-06:00</div>
+                        </div>
+                        <div v-for="weekday in 7" :key="weekday" :class="['col p-0', addBookingStatusClass(0, 6, weekday - 1, index)]"></div>
+                    </div>
+                </div>
+                <div class="time-slot-table-rule mt-2 d-flex justify-content-end gap-3 pe-1">
+                    <div class="d-flex align-items-center">
+                        <span class="color-block occupied me-1"></span>時段內已有預約
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="color-block available me-1"></span>尚有可預約時段
+                    </div>
+                </div>
+                <button type="button" class="view-more-btn btn mt-3 p-2 w-100" v-on:click="goToCourseMainPage(courseCard.courseId)">
+                    瀏覽更多
+                </button>
+            </div>
+
+        </div>
     </div>
+    
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -511,28 +347,17 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <partial name="_BookingTablePartial" />
-            </div>
-        </div>
-    </div>
+
     <div class="modal fade" id="contactTutorModal" tabindex="-1" aria-labelledby="contactTutorModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-title d-flex gap-4">
-                        <img class="tutor-headshot" src="~/image/tutor_headshot_imgs/tutor_head_001.jpg"
+                        <img class="tutor-headshot" src=""
                              alt="">
                         <div class="d-flex flex-column">
                             <h4 class="tutor-description-title">
-                                Feds🥇顶级雅思| 批判性思维 |
-                                面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                                面试教练🥇Feds🥇顶级雅思| 批判性思维 |
-                                面试教练🥇
                             </h4>
                             <p>傳送訊息給tutorxxx@talkingtopia.com</p>
                             <p class="d-block text-dark">教師將會在有空的時間回覆您訊息</p>
@@ -569,44 +394,35 @@
                     <button type="button" class="btn cancel-btn" data-bs-dismiss="modal">取消</button>
                     <button type="button" class="btn send-btn">傳送訊息</button>
                 </div>
-
-
             </div>
         </div>
     </div>
 
     <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center">
-        <button type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
-        <div class="page-text mx-3 mx-md-4">1</div>
-        <button type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
+        <button v-on:click="goToPage(page - 1)" type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
+        <div class="page-text mx-3 mx-md-4"> {{ page }} </div>
+        <button v-on:click="goToPage(page + 1)" type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
     </div>
-</section>
 
+    @* <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center" total-pages="@ViewData["TotalPages"]">
+        <button type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
+        <div class="page-text mx-3 mx-md-4"></div>
+        <button type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
+    </div> *@
+</section>
+<div class="modal fade" id="bookingTableModal" tabindex="-1" aria-labelledby="bookingTableModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <partial name="_BookingTablePartial" />
+        </div>
+    </div>
+</div>
 
 @section endJS
 {
-    <script src="~/js/course_list.js"></script>
-    <script src="~/js/nested_dropdown.js"></script>
-    <script src="~/js/booking_table_modal.js"></script>
-}
-
-@functions {
-    private string FormatPrice(decimal price)
-    {
-        return String.Format($"{price:n0}");
-    }
-
-    private string AddBookingStatusClass(List<TimeSlotViewModel> availableSlots, List<TimeSlotViewModel> bookedSlots,
-        int startHour, int endHour, int weekday)
-    {
-        var isAvailable = availableSlots
-            .Where(ts => ts.Weekday == weekday && ts.StartHour >= startHour && ts.StartHour < endHour)
-            .Any();
-
-        var isOccupied = bookedSlots
-            .Where(bs => (int)bs.Date.DayOfWeek == weekday && bs.StartHour >= startHour && bs.StartHour < endHour)
-            .Any();
-
-        return isAvailable ? (isOccupied ? "occupied" : "available") : "";
-    }
+    <script src="~/js/course_list/course_list_pagination.js"></script>
+    <script src="~/js/course_list/course_list_nested_dropdown.js"></script>
+    <script src="~/lib/myvue/vue.global.prod.js" asp-append-version="true"></script>
+    <script type="module" src="~/js/course_list/course_cards_app.js"></script>
 }

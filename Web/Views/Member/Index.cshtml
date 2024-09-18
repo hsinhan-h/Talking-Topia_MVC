@@ -1,0 +1,58 @@
+﻿@model MemberAppointmentViewModel
+<div class="container lh-backstage" id="app">
+    <div class="row">
+        <div class="col-12 lh-backstage-main-section">
+            <div class="lh-backstage-homepage-section mb-5"
+                 id="lh-backstage-homepage-section">
+                <h3 class="lh-backstage-homepage-title my-5">
+                    歡迎回來 <span>Chiaki</span>！這是你的課程預約概況！
+                </h3>
+                <div class="lh-backstage-divider"></div>
+                <div class="col-12">
+                    <div class="lh-backstage-appointmentdetails- table">
+                        <table class="lh-backstage-appointmentdetails-detail col-12 mt-5"
+                               border="1">
+                            <thead>
+                                <tr>
+                                    <td>預約日期</td>
+                                    <td>預約時間</td>
+                                    <td>課程名稱</td>
+                                    <td>課程內容</td>
+                                    <td>預約時長</td>
+                                    <td>教師名稱</td>
+                                </tr>
+                            </thead>
+                            <tbody border="1">
+                                @if (Model.MemberAppointmentList != null && Model.MemberAppointmentList.Any())
+                                {
+                                    @foreach (var order in Model.MemberAppointmentList)
+                                    {
+                                <tr>
+                                    <td>@order.BookingDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@order.BookingDate.ToString("T")</td>>
+                                    <td>@order.CourseTitle</td>
+                                    <td>@order.Subtitle</td>
+                                    <td>@order.CourseLength</td>
+                                    <td>@order.FullName</td>
+                                </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">沒有預約資料</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section topCSS {
+
+    <link rel="stylesheet" href="~/css/backstage.css" />
+
+}

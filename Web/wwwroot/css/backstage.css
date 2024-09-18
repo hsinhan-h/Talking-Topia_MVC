@@ -1,5 +1,24 @@
 .lh-backstage {
 	min-height: 500px;
+	margin-top:50px;
+}
+
+#reservation-list {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.day-block {
+	flex: 1 1 auto;
+	min-width: 200px; /* 設置最小寬度 */
+	padding: 10px;
+	border: 1px solid #ddd;
+	margin: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.select-form {
+	height: calc(3.5rem + 2px);
 }
 
 a {
@@ -15,6 +34,10 @@ a {
 	width: 100%;
 	vertical-align: top;
 	border-radius: 50%;
+	cursor: pointer;
+}
+#lh-profile-fileInput {
+	display: none;
 }
 
 section {
@@ -110,11 +133,6 @@ input {
 	box-shadow: var(--button-hover-shadow);
 }
 
-.li-backstage-publish-btn {
-	position: absolute;
-	top: -40%;
-}
-
 .lh-backstage-nav-bar {
 	z-index: 5;
 	background-color: #fff;
@@ -144,12 +162,15 @@ input {
 	display: flex;
 }
 
-.lh-backstage-transaction-detail {
+.lh-backstage-transaction-detail,
+.lh-backstage-appointmentdetails-detail {
 	text-align: center;
 }
 
 #editor1,
-#editor2 {
+#editor2,
+#editor3,
+#editor4 {
 	min-height: 100px;
 	max-height: 200px;
 	overflow-y: auto;
@@ -162,12 +183,14 @@ input {
 		display: none;
 	}
 
-	.lh-backstage-transaction-table {
+	.lh-backstage-transaction-table,
+	.lh-backstage-appointmentdetails-table{
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
 	}
 
-	.lh-backstage-transaction-detail {
+	.lh-backstage-transaction-detail,
+	.lh-backstage-appointmentdetails-detail {
 		table-layout: fixed;
 		word-wrap: break-word;
 		min-width: 600px;
@@ -220,6 +243,10 @@ input {
 		height: 30%;
 		margin-top: 1em;
 		padding: 10px;
+	}
+	.li-backstage-publish-btn {
+		position: absolute;
+		/*top: 25%;*/
 	}
 }
 /* filters */

@@ -1,0 +1,92 @@
+﻿<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/Home/Index">
+            <img src="@Url.Content("~/image/logo_imgs/TalkingTopia logo_final.png")" alt="Logo" width="125"
+                 class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- 將搜尋欄位移出collapse -->
+        <ul class="navbar-nav mx-1">
+            <li class="nav-item search-course">
+                <form class="d-flex" action="#" method="post">
+                    <div class="input-container">
+                        <input id="keyword" name="keyword" class="form-control" type="search" placeholder="搜尋課程" aria-label="Search">
+                        <button class="btn" type="submit">Search</button>
+                    </div>
+                </form>
+            </li>
+        </ul>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- 左側導覽連結 -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Course/CourseList">推薦課程</a>
+                </li>
+                <li class="nav-item dropdown">
+@*                     <a class="nav-link dropdown-toggle" href="#" id="courseMenu" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        選擇課程
+                    </a> *@
+                    <div class="dropdown-menu mega-menu p-3" aria-labelledby="courseMenu">
+                        <!-- 保持原有選單內容 -->
+                    </div>
+                </li>
+            </ul>
+
+            <!-- 右側登入狀態顯示 -->
+            <ul class="navbar-nav ms-auto">
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <!-- 登入後的選單 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/TeacherSystem">教師系統</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/WatchList">關注列表</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/Logout">登出</a>
+                    </li>
+                    <li class="nav-item shopping-bag">
+                        <a class="nav-link" asp-controller="ShoppingCart" asp-action="Index">
+                            <img src="https://fakeimg.pl/20x20/200" alt="">購物車
+                        </a>
+                    </li>
+                    <li class="nav-item message-item">
+                        <a class="nav-link" href="">
+                            <i class="fa-regular fa-comments"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item user-item">
+                        <a class="nav-link" href="/Member/MemberData">
+                            <img src="https://fakeimg.pl/20x20/200" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link">@User.Identity.Name</span> <!-- 顯示使用者名稱 -->
+                    </li>
+                }
+                else
+                {
+                    <!-- 登入前的選單 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Tutor/Index">成為教師</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Account/Account">登入/註冊</a>
+                    </li>
+                    <li class="nav-item message-item">
+                        <a class="nav-link" href="">
+                            <i class="fa-regular fa-comments"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

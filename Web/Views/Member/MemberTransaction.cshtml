@@ -1,19 +1,17 @@
-@model OrderManagementListViewModel
+ï»¿@model MemberOrderViewModel
 
-<partial name="_BannerPartial" />
-
-<div class="container lh-backstage mt-5" id="app">
+<div class="container lh-backstage" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
             <div class="lh-backstage-transaction-section mb-5"
                  id="lh-backstage-transaction-section">
                 <ul>
-                    <h3>¥æ©ö¬ö¿ı</h3>
+                    <h3>äº¤æ˜“ç´€éŒ„</h3>
                     <li>
-                        ­Y¦]¬°±Ğ®v©Î¾Ç¥Í­Ó¤H¦]¯À¾É­PµLªkÄ~Äò¤W½Ò¡A¤wÁÊ¶R½Òµ{±N°h¦Ü­ì®ø¶O¤§«H¥Î¥d¡A½ĞÁpÃ´«ÈªA¡C
+                        è‹¥å› ç‚ºæ•™å¸«æˆ–å­¸ç”Ÿå€‹äººå› ç´ å°è‡´ç„¡æ³•ç¹¼çºŒä¸Šèª²ï¼Œå·²è³¼è²·èª²ç¨‹å°‡é€€è‡³åŸæ¶ˆè²»ä¹‹ä¿¡ç”¨å¡ï¼Œè«‹è¯ç¹«å®¢æœã€‚
                     </li>
                     <li>
-                        ­Y«İ¥I´Ú­q³æ¤¤¥]§t"¥¼¥I´Ú¤§ÅéÅç½Ò"¡A»İ¥ı¨ú®ø©Î¤ä¥I¸Óµ§­q³æ¤è¥i¦¨¥\ÁÊ¶R¡C
+                        è‹¥å¾…ä»˜æ¬¾è¨‚å–®ä¸­åŒ…å«"æœªä»˜æ¬¾ä¹‹é«”é©—èª²"ï¼Œéœ€å…ˆå–æ¶ˆæˆ–æ”¯ä»˜è©²ç­†è¨‚å–®æ–¹å¯æˆåŠŸè³¼è²·ã€‚
                     </li>
                 </ul>
                 <ul class="nav nav-tabs">
@@ -22,18 +20,18 @@
                            aria-current="page"
                            data-bs-toggle="tab"
                            href="#lh-backstage-transaction-finished-page">
-                            ¤w§¹¦¨­q³æ
+                            å·²å®Œæˆè¨‚å–®
                         </a>
                     </li>
                     <li class="nav-item lh-backstage-nav-item">
                         <a class="nav-link"
                            data-bs-toggle="tab"
-                           href="#lh-backstage-transaction-pending-payment-page">«İ¥I´Ú­q³æ</a>
+                           href="#lh-backstage-transaction-pending-payment-page">å¾…ä»˜æ¬¾è¨‚å–®</a>
                     </li>
                     <li class="nav-item lh-backstage-nav-item">
                         <a class="nav-link"
                            data-bs-toggle="tab"
-                           href="#lh-backstage-transaction-cancelled-page">¤w¨ú®ø­q³æ</a>
+                           href="#lh-backstage-transaction-cancelled-page">å·²å–æ¶ˆè¨‚å–®</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -44,27 +42,27 @@
                                    border="1">
                                 <thead>
                                     <tr>
-                                        <td>­q³æ½s¸¹</td>
-                                        <td>¥æ©ö®É¶¡</td>
-                                        <td>±Ğ®v¦WºÙ</td>
-                                        <td>½Òµ{¤º®e</td>
-                                        <td>ÁÊ¶R®Éªø</td>
-                                        <td>ÁÊ¶R°ó¼Æ</td>
-                                        <td>ª÷ÃB(¥x¹ô)</td>
-                                        <td>²Î¤@½s¸¹</td>
+                                        <td>è¨‚å–®ç·¨è™Ÿ</td>
+                                        <td>äº¤æ˜“æ™‚é–“</td>
+                                        <td>æ•™å¸«åç¨±</td>
+                                        <td>èª²ç¨‹å…§å®¹</td>
+                                        <td>è³¼è²·æ™‚é•·</td>
+                                        <td>è³¼è²·å ‚æ•¸</td>
+                                        <td>é‡‘é¡(å°å¹£)</td>
+                                        <td>çµ±ä¸€ç·¨è™Ÿ</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    @foreach (var order in Model.OrderManagementList)
+                                    @foreach (var order in Model.MemberOderList)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
                                             <td>@order.OrderDatetime</td>
                                             <td>@order.FullName</td>
                                             <td>@order.CourseTitle</td>
-                                            <td>@order.CourseLength ¤ÀÄÁ</td>
-                                            <td>@order.CourseQuantity °ó</td>
-                                            <td>NT$@order.SubtotalNTD</td>
+                                            <td>@order.CourseLength åˆ†é˜</td>
+                                            <td>@order.Quantity å ‚</td>
+                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
                                             <td>@order.TaxIdNumber</td>
                                         </tr>
                                     }
@@ -79,27 +77,27 @@
                                    border="1">
                                 <thead>
                                     <tr>
-                                        <td>­q³æ½s¸¹</td>
-                                        <td>¥æ©ö®É¶¡</td>
-                                        <td>±Ğ®v¦WºÙ</td>
-                                        <td>½Òµ{¤º®e</td>
-                                        <td>ÁÊ¶R®Éªø</td>
-                                        <td>ÁÊ¶R°ó¼Æ</td>
-                                        <td>ª÷ÃB(¥x¹ô)</td>
-                                        <td>²Î¤@½s¸¹</td>
+                                        <td>è¨‚å–®ç·¨è™Ÿ</td>
+                                        <td>äº¤æ˜“æ™‚é–“</td>
+                                        <td>æ•™å¸«åç¨±</td>
+                                        <td>èª²ç¨‹å…§å®¹</td>
+                                        <td>è³¼è²·æ™‚é•·</td>
+                                        <td>è³¼è²·å ‚æ•¸</td>
+                                        <td>é‡‘é¡(å°å¹£)</td>
+                                        <td>çµ±ä¸€ç·¨è™Ÿ</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    @foreach (var order in Model.OrderManagementList)
+                                    @foreach (var order in Model.MemberOderList)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
                                             <td>@order.OrderDatetime</td>
                                             <td>@order.FullName</td>
                                             <td>@order.CourseTitle</td>
-                                            <td>@order.CourseLength ¤ÀÄÁ</td>
-                                            <td>@order.CourseQuantity °ó</td>
-                                            <td>NT$@order.SubtotalNTD</td>
+                                            <td>@order.CourseLength åˆ†é˜</td>
+                                            <td>@order.Quantity å ‚</td>
+                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
                                             <td>@order.TaxIdNumber</td>
                                         </tr>
                                     }
@@ -114,26 +112,26 @@
                                    border="1">
                                 <thead>
                                     <tr>
-                                        <td>­q³æ½s¸¹</td>
-                                        <td>¥æ©ö®É¶¡</td>
-                                        <td>±Ğ®v¦WºÙ</td>
-                                        <td>½Òµ{¤º®e</td>
-                                        <td>ÁÊ¶R®Éªø</td>
-                                        <td>ÁÊ¶R°ó¼Æ</td>
-                                        <td>ª÷ÃB(¥x¹ô)</td>
+                                        <td>è¨‚å–®ç·¨è™Ÿ</td>
+                                        <td>äº¤æ˜“æ™‚é–“</td>
+                                        <td>æ•™å¸«åç¨±</td>
+                                        <td>èª²ç¨‹å…§å®¹</td>
+                                        <td>è³¼è²·æ™‚é•·</td>
+                                        <td>è³¼è²·å ‚æ•¸</td>
+                                        <td>é‡‘é¡(å°å¹£)</td>
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    @foreach (var order in Model.OrderManagementList)
+                                    @foreach (var order in Model.MemberOderList)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
                                             <td>@order.OrderDatetime</td>
                                             <td>@order.FullName</td>
                                             <td>@order.CourseTitle</td>
-                                            <td>@order.CourseLength ¤ÀÄÁ</td>
-                                            <td>@order.CourseQuantity °ó</td>
-                                            <td>NT$@order.SubtotalNTD</td>
+                                            <td>@order.CourseLength</td>
+                                            <td>@order.Quantity å ‚</td>
+                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
                                             <td>@order.TaxIdNumber</td>
                                         </tr>
                                     }
@@ -145,7 +143,7 @@
             </div>
         </div>
     </div>
-    <!-- screen modal for ½Òµ{©ú²Ó-->
+    <!-- screen modal for èª²ç¨‹æ˜ç´°-->
     <div class="modal fade"
          id="lh-backstage-tutor-data-edit"
          tabindex="-1"
@@ -155,7 +153,7 @@
             <div class="modal-content container">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        ½Òµ{©ú²Ó
+                        èª²ç¨‹æ˜ç´°
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -171,18 +169,18 @@
                                            class="form-control"
                                            id="floatingInput"
                                            placeholder=""
-                                           value="°äÄê¼L±Ğ¾Ç" />
-                                    <label for="floatingInput">½Òµ{¦WºÙ</label>
+                                           value="å”¬çˆ›å˜´æ•™å­¸" />
+                                    <label for="floatingInput">èª²ç¨‹åç¨±</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-floating mb-3">
                                     <input type="text"
                                            class="form-control"
-                                           id="floatingInput"
+                                          @*  id="floatingInput" *@
                                            placeholder=""
-                                           value="±Ğ§A¦¨¬°°êµe¤j®v" />
-                                    <label for="floatingInput">½Òµ{¤º®e</label>
+                                           value="æ•™ä½ æˆç‚ºåœ‹ç•«å¤§å¸«" />
+                                    <label for="floatingInput">èª²ç¨‹å…§å®¹</label>
                                 </div>
                             </div>
                         </div>
@@ -190,9 +188,9 @@
                             <div class="col-12 col-md-6">
                                 <select class="form-select lh-backstage-select"
                                         aria-label="Default select example">
-                                    <option selected>¿ï¾Ü®Éªø(¤ÀÄÁ¡ş°ó)</option>
-                                    <option value="1">25¤ÀÄÁ</option>
-                                    <option value="2">50¤ÀÄÁ</option>
+                                    <option selected>é¸æ“‡æ™‚é•·(åˆ†é˜ï¼å ‚)</option>
+                                    <option value="1">25åˆ†é˜</option>
+                                    <option value="2">50åˆ†é˜</option>
                                 </select>
                             </div>
                             <div class="col-12 col-md-6 lh-backstage-course-time-filter">
@@ -200,13 +198,13 @@
                                     <button class="btn dropdown-toggle px-3 py-2 lh-backstage-submit-btn"
                                             type="button"
                                             data-bs-toggle="dropdown">
-                                        ¿ï¾Ü
+                                        é¸æ“‡
                                     </button>
                                     <ul class="dropdown-menu px-3 py-2 px-md-4 py-md-3">
-                                        <div class="col-12">¿ï¾Ü®É¶¡¬q</div>
+                                        <div class="col-12">é¸æ“‡æ™‚é–“æ®µ</div>
                                         <div class="checkbox-wrapper col-12 d-flex">
                                             <div class="mt-2 col-3 weekday-checkbox">
-                                                <span class="fw-bolder">¬P´Á</span>
+                                                <span class="fw-bolder">æ˜ŸæœŸ</span>
                                                 <div class="form-check">
                                                     <input class="form-check-input"
                                                            type="checkbox"
@@ -214,7 +212,7 @@
                                                            id="monday"
                                                            name="weekday" />
                                                     <label class="form-check-label" for="monday">
-                                                        ¶g¤@
+                                                        é€±ä¸€
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
@@ -224,7 +222,7 @@
                                                            id="tuesday"
                                                            name="weekday" />
                                                     <label class="form-check-label" for="tuesday">
-                                                        ¶g¤G
+                                                        é€±äºŒ
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
@@ -234,7 +232,7 @@
                                                            id="wednesday"
                                                            name="weekday" />
                                                     <label class="form-check-label" for="wednesday">
-                                                        ¶g¤T
+                                                        é€±ä¸‰
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
@@ -244,7 +242,7 @@
                                                            id="thursday"
                                                            name="weekday" />
                                                     <label class="form-check-label" for="thursday">
-                                                        ¶g¥|
+                                                        é€±å››
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
@@ -254,7 +252,7 @@
                                                            id="friday"
                                                            name="weekday" />
                                                     <label class="form-check-label" for="friday">
-                                                        ¶g¤­
+                                                        é€±äº”
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
@@ -264,7 +262,7 @@
                                                            id="saturday"
                                                            name="weekday" />
                                                     <label class="form-check-label" for="saturday">
-                                                        ¶g¤»
+                                                        é€±å…­
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
@@ -274,12 +272,12 @@
                                                            id="sunday"
                                                            name="weekday" />
                                                     <label class="form-check-label" for="sunday">
-                                                        ¶g¤é
+                                                        é€±æ—¥
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="mt-2 ps-3 col-4 timeslot-checkbox col-9">
-                                                <span class="fw-bolder">®É¬q</span>
+                                                <span class="fw-bolder">æ™‚æ®µ</span>
                                                 <div class="d-flex flex-wrap">
                                                     <div class="mt-1 col-12">am</div>
                                                     <div class="form-check col-4">
@@ -561,10 +559,10 @@
                                 <div class="form-floating mb-3">
                                     <input type="text"
                                            class="form-control"
-                                           id="floatingInput"
+                                         @*   id="floatingInput" *@
                                            placeholder=""
                                            value="9999" />
-                                    <label for="floatingInput">ª÷ÃB(¥x¹ô/°ó)</label>
+                                    <label for="floatingInput">é‡‘é¡(å°å¹£/å ‚)</label>
                                 </div>
                             </div>
                         </div>
@@ -574,7 +572,7 @@
                     <button type="button"
                             class="btn btn-secondary lh-backstage-submit-btn"
                             data-bs-dismiss="modal">
-                        Àx¦s
+                        å„²å­˜
                     </button>
                 </div>
             </div>
@@ -584,6 +582,6 @@
 
 @section topCSS {
 
-    <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
+    <link rel="stylesheet" href="~/css/backstage.css" />
 
 }

@@ -1,0 +1,94 @@
+﻿@model OrderResultListViewModel
+
+@section topCSS {
+    <link rel="stylesheet" href="~/css/ShoppingCartInfo.css" />
+}
+
+
+<div class="container" id="con-cartinfo">
+    <h2>交易紀錄</h2>
+    <p>
+        若因為教師或學生個人因素導致無法繼續上課，已購買課程將退至原消費之信用卡，請聯繫客服。
+    </p>
+    <p>若待付款訂單中包含"未付款之體驗課"，需先取消或支付該筆訂單方可成功購買</p>
+
+    @foreach (var item in Model.OrderResult)
+    {
+        var itemId = item.CourseId;
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#@item.CourseId" aria-expanded="false" aria-controls="orderId-1">
+                        訂單編號 #@item.TrackingNumber
+                    </button>
+                </h2>
+                <div id="@item.CourseId" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div class="order-info">
+                            <h5>訂單資料</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-success-order table-transaction">
+                                    <thead>
+                                        <tr>
+                                            <td>交易時間</td>
+                                            <td>教師名稱</td>
+                                            <td>課程內容</td>
+                                            <td>堂數</td>
+                                            <td>金額</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>@item.OrderDatetime</td>
+                                            <td>@item.FullName</td>
+                                            <td>@item.CourseTitle</td>
+                                            <td>@item.CourseQuantity</td>
+                                            <td>@item.SubtotalNTD</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="reserve-info">
+                            <h5>預約資訊</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-success-order">
+                                    <thead>
+                                        <tr>
+                                            <td>教師名稱</td>
+                                            <td>課程內容</td>
+                                            <td>預約日期</td>
+                                            <td>預約時間</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>@item.FullName</td>
+                                            <td>@item.CourseTitle</td>
+                                            <td>@item.BookingDate</td>
+                                            <td>@item.BookingTime </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Accordion Items -->
+        </div>
+    }
+    <div class="btn-goback">
+        <form asp-controller="ShoppingCart" asp-action="Index" asp-route-memberId="1">
+            @Html.AntiForgeryToken()
+
+            <input class="sc-input" type="hidden" name="memberId" value="1" />
+            <br>
+            <button class="return-order_btn text-white" type="button">返回購物車</button>
+        </form>
+    </div>
+
+</div>

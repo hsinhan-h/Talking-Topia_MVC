@@ -1,4 +1,6 @@
-﻿@section topCSS
+﻿@using Web.ViewModels
+@model CourseInfoListViewModel
+@section topCSS
 {
     <link href="~/css/layout.css" rel="stylesheet" />
     <link href="~/css/normalize.css" rel="stylesheet" />
@@ -12,61 +14,24 @@
             <!-- courseTopicTab -->
             <div class="col-12">
                 <div class="lh-layout-tabs-wrapper mt-5">
-                    <span class="lh-tab-arrow lh-tab-arrow-left">&lt;</span>
                     <div class="lh-layout-tabs">
                         <span class="lh-layout-tab active">語言學習</span>
+                        <span class="lh-layout-tab">程式語言</span>
                         <span class="lh-layout-tab">升學補習</span>
-                        <span class="lh-layout-tab">專業科目</span>
-                        <span class="lh-layout-tab">音樂課程</span>
-                        <span class="lh-layout-tab">運動課程</span>
-                        <span class="lh-layout-tab">生活品味</span>
                     </div>
-                    <span class="lh-tab-arrow lh-tab-arrow-right">&gt;</span>
-                </div>
+               </div>
             </div>
             <!-- 卡片內容 -->
-            <div class="col-12 col-md-2 lh-layout-course-card">
-                <img src="https://fakeimg.pl/300x300/02c5b4">
-                <div class="lh-layout-course-info">
-                    <p>法文家教</p>
-                    <span>NT$365/堂</span>
+            @foreach (var item in Model.CourseInfoList)
+            {
+                <div class="col-12 col-md-2 lh-layout-course-card">
+                    <img src="@item.TutorHeadShotImage">
+                    <div class="lh-layout-course-info">
+                        <p>@item.SubjectName</p>
+                        <span>NT$ @item.TwentyFiveMinUnitPrice/堂</span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-2 lh-layout-course-card">
-                <img src="https://fakeimg.pl/300x300/02c5b4">
-                <div class="lh-layout-course-info">
-                    <p>法文家教</p>
-                    <span>NT$365/堂</span>
-                </div>
-            </div>
-            <div class="col-12 col-md-2 lh-layout-course-card">
-                <img src="https://fakeimg.pl/300x300/02c5b4">
-                <div class="lh-layout-course-info">
-                    <p>法文家教</p>
-                    <span>NT$365/堂</span>
-                </div>
-            </div>
-            <div class="col-12 col-md-2 lh-layout-course-card">
-                <img src="https://fakeimg.pl/300x300/02c5b4">
-                <div class="lh-layout-course-info">
-                    <p>法文家教</p>
-                    <span>NT$365/堂</span>
-                </div>
-            </div>
-            <div class="col-12 col-md-2 lh-layout-course-card">
-                <img src="https://fakeimg.pl/300x300/02c5b4">
-                <div class="lh-layout-course-info">
-                    <p>法文家教</p>
-                    <span>NT$365/堂</span>
-                </div>
-            </div>
-            <div class="col-12 col-md-2 lh-layout-course-card">
-                <img src="https://fakeimg.pl/300x300/02c5b4">
-                <div class="lh-layout-course-info">
-                    <p>法文家教</p>
-                    <span>NT$365/堂</span>
-                </div>
-            </div>
+            }
             <!-- hotCourse -->
             <div class="lh-layout-hot-course-container mt-5">
                 <div class="lh-layout-hot-course-title col-12 col-md-12 text-center mb-5">
@@ -161,7 +126,7 @@
                 </div>
             </div>
             <div class="lh-layout-four-reason-button text-center">
-                <a href="/Tutors/course_list.html" class="btn btn-four-reason">開始挑選教師吧！</a>
+                <a asp-controller="Course" asp-action="CourseList" class="btn btn-four-reason">開始挑選教師吧！</a>
             </div>
 
             <!-- Suitable -->

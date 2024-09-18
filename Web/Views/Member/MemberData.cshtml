@@ -1,726 +1,453 @@
-@model Web.ViewModels.MemberProfileViewModel
-<partial name="_BannerPartial" />
-<div class="container lh-backstage mt-5" id="app">
+Ôªø@model MemberProfileViewModel
+
+<div class="container lh-backstage" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
             <div class="lh-backstage-member-section mb-5">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item lh-backstage-nav-item">
-                        <a class="nav-link active"
-                           aria-current="page"
-                           data-bs-toggle="tab"
-                           href="#lh-backstage-member-page">
-                            ∑|≠˚∏ÍÆ∆
-                        </a>
-                    </li>
-                    <li class="nav-item lh-backstage-nav-item">
-                        <a class="nav-link"
-                           data-bs-toggle="tab"
-                           href="#lh-backstage-tutor-page">Æa±–∏ÍÆ∆</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="container tab-pane fade show active"
-                         id="lh-backstage-member-page">
-                        <div class="lh-backstage-member-page mb-5">
-                            <section class="lh-backstage-virtual-data">
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <h3>∞Ú•ª∏ÍÆ∆</h3>
-                                        <div class="pic lh-backstage-user-photo-member-data">
-                                            <img class="lh-backstage-img"
-                                                 src="https://picsum.photos/100/100/?random=16" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput1"
-                                                   placeholder="" />
-                                            <label for="floatingInput1">º ∫Ÿ</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="date"
-                                                   class="form-control"
-                                                   id="floatingInput2"
-                                                   placeholder="yyyy-MM-dd" />
-                                            <label for="floatingInput2">•Õ§È</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput3"
-                                                   placeholder="" />
-                                            <label for="floatingInput3">© ßO</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput4"
-                                                   placeholder="" />
-                                            <label for="floatingInput4">∞Íƒy</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput5"
-                                                   placeholder="" />
-                                            <label for="floatingInput5">•¿ªy</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput6"
-                                                   placeholder="" />
-                                            <label for="floatingInput6">∑|ª°™∫ªy®•</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            <section class="lh-backstage-lh-backstage-real-data">
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <h3>ØuπÍ∏ÍÆ∆</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput7"
-                                                   placeholder="" />
-                                            <label for="floatingInput7">±b∏π</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <button class="btn lh-backstage-submit-btn mt-2"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                            ≠◊ßÔ±KΩX
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput8"
-                                                   placeholder="" />
-                                            <label for="floatingInput8">¶W¶r</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput9"
-                                                   placeholder="" />
-                                            <label for="floatingInput9">©m§Û</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="email"
-                                                   class="form-control"
-                                                   id="floatingInput10"
-                                                   placeholder="name@example.com" />
-                                            <label for="floatingInput10">πq§l´HΩc</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="tel"
-                                                   class="form-control"
-                                                   id="floatingInput11"
-                                                   placeholder="" />
-                                            <label for="floatingInput11">πq∏‹</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput12"
-                                                   placeholder="" />
-                                            <label for="floatingInput12">¶aß}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput13"
-                                                   placeholder="" />
-                                            <label for="floatingInput13">ª»¶Ê•N∏π</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="floatingInput14"
-                                                   placeholder="" />
-                                            <label for="floatingInput14">ª»¶Ê±b§·</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            <section class="lh-backstage-preferences">
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <h3>Ω“µ{∞æ¶n</h3>
-                                    </div>
-                                </div>
-                                <div class="row my-3 p-3">
-                                    <h4>ªy®•</h4>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            §§§Â
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckDefault" />
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            ≠^§Â
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            §È§Â
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            ™k§Â
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            ºw§Â
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            ¶ËØZ§˙§Â
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="lh-backstage-divider"></div>
-                                <div class="row my-3 p-3">
-                                    <h4>µ{¶°≥]≠p</h4>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            HTML/CSS
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Java Script
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckDefault" />
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            C#
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            SQL
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Python
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Java
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="lh-backstage-divider"></div>
-                                <div class="row my-3 p-3">
-                                    <h4>§…æ«¨Ï•ÿ</h4>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckDefault" />
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            º∆æ«
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            ™´≤z
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            §∆æ«
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            •Õ™´
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            ¶a≤z
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 form-check lh-backstage-preference">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               value=""
-                                               id="flexCheckChecked" />
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            æ˙•v
-                                        </label>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="row">
-                            <div class="col-11"></div>
-                            <div class="col-1">
-                                <input class="btn btn-info col-12 lh-backstage-submit-btn"
-                                       type="submit"
-                                       value="ΩsøË"
-                                       data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal" />
-                            </div>
-                            <div class="col-1 d-none">
-                                <input class="btn btn-info col-12 lh-backstage-submit-btn"
-                                       type="submit"
-                                       value="¿x¶s"
-                                       data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container tab-pane fade" id="lh-backstage-tutor-page">
-                        <div class="lh-backstage-tutor-page mb-5">
-                            <section class="lh-backstage-lh-backstage-tutor-data">
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <h3>Æa±–∏ÍÆ∆</h3>
-                                    </div>
-                                    <div class="lh-baclstage-member-data-list mt-3">
-                                        <h4>æ«æ˙</h4>
-                                        <ul>
-                                            <li></li>
-                                        </ul>
-                                        <h4>∏gæ˙</h4>
-                                        <ul>
-                                            <li></li>
-                                        </ul>
-                                        <h4>•i±µ®¸πw¨˘Æ…¨q</h4>
-                                        <ul v-if="slots.length > 0">
-                                            <li v-for="slot in slots" :key="slot.id">
-                                                <p>
-                                                    <span>¨P¥¡§G</span><span>13</span>¬I¶‹<span>15</span>¬I
-                                                </p>
-                                            </li>
-                                        </ul>
-                                        <button type="button"
-                                                class="btn lh-backstage-submit-btn"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#editTimeSlotModal">
-                                            ΩsøË±–Æv•iπw¨˘Æ…¨q
-                                        </button>
-                                    </div>
-                                    <div class="lh-backstage-member-card-list d-flex">
-                                        <div class="card col-12 col-md-3 me-2 p-2">
-                                            <img src="~/image/backstage/programming.png"
-                                                 class="card-img-top w-100" />
-                                            <div class="card-body">
-                                                <p class="card-text">•”Ω–¨Ï•ÿ°G<span>C#</span></p>
-                                                <p class="card-text">
-                                                    •”Ω–™¨∫A°G<span>§wºfÆ÷</span>
-                                                </p>
-                                                <button class="btn lh-backstage-submit-btn"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#lh-backstage-tutor-application-audit">
-                                                    √“∑”∏Í∞T
-                                                </button>
-                                                <a href="/TalkingTopia/Apply_teacher/myResume.html"
-                                                   class="btn lh-backstage-submit-btn">
-                                                    ΩsøËÆa±–∏ÍÆ∆
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="card col-12 col-md-3 me-2 p-2">
-                                            <img src="~/image/backstage/subjects.png"
-                                                 class="card-img-top w-100" />
-                                            <div class="card-body">
-                                                <p class="card-text">•”Ω–¨Ï•ÿ°G<span>∞Í§Â</span></p>
-                                                <p class="card-text">
-                                                    •”Ω–™¨∫A°G<span>•ººfÆ÷</span>
-                                                </p>
-                                                <button class="btn lh-backstage-submit-btn"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#lh-backstage-tutor-application-audit">
-                                                    √“∑”∏Í∞T
-                                                </button>
-                                                <a href="/TalkingTopia/Apply_teacher/myResume.html"
-                                                   class="btn lh-backstage-submit-btn">
-                                                    ΩsøËÆa±–∏ÍÆ∆
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal ≤ƒ§@®B-->
-    <div class="modal fade"
-         id="exampleModal"
-         tabindex="-1"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        ∂i∂•≈Á√“°G≤ƒ§@®B
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="recipient-name1" class="col-form-label">Ω–øÈ§J∑|≠˚πq§l´HΩc</label>
-                            <input type="email" class="form-control" id="recipient-name1" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        ®˙Æ¯
-                    </button>
-                    <button type="button" class="btn lh-backstage-submit-btn">
-                        ∞e•X
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal ≤ƒ§G®B-->
-    <div class="modal fade"
-         id="exampleModal"
-         tabindex="-1"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        ∂i∂•≈Á√“°G≤ƒ§G®B
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="recipient-name2" class="col-form-label">Ω–øÈ§J≈Á√“ΩX</label>
-                            <input type="tel" class="form-control" id="recipient-name2" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        ®˙Æ¯
-                    </button>
-                    <button type="button" class="btn lh-backstage-submit-btn">
-                        ∞e•X
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal ≤ƒ§T®B-->
-    <div class="modal fade"
-         id="exampleModal"
-         tabindex="-1"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                        ∂i∂•≈Á√“°G≤ƒ§T®B
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="recipient-name3" class="col-form-label">Ω–øÈ§J±˝≥]©w™∫∑s±KΩX</label>
-                            <input type="tel" class="form-control" id="recipient-name3" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="recipient-name4" class="col-form-label">Ω–¶AøÈ§J§@¶∏∑s±KΩX</label>
-                            <input type="tel" class="form-control" id="recipient-name4" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        ®˙Æ¯
-                    </button>
-                    <button type="button" class="btn lh-backstage-submit-btn">
-                        ∞e•X
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- screen modal for Æa±–•”Ω–ºfÆ÷-->
-    <div class="modal fade"
-         id="lh-backstage-tutor-application-audit"
-         tabindex="-1"
-         aria-labelledby=""
-         aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content container">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        √“∑”∏Í∞T
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <section class="lh-backstage-lh-backstage-tutor-data">
-                        <ul>
-                            <li>•iµL≠≠ºW•Õ™∫√“∑”</li>
-                        </ul>
-                    </section>
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-secondary lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        ΩTª{
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal Æ…¨q-->
-    <div class="modal fade"
-         id="editTimeSlotModal"
-         tabindex="-1"
-         aria-labelledby="editModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">
-                        ΩsøË±–Æv•iπw¨˘Æ…¨q
-                    </h5>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- ¨P¥¡∞œ∂Ù -->
-                    <div class="row" id="timeslot-row">
+                <section class="lh-backstage-lh-backstage-real-data">
+                    <div class="row mb-2">
                         <div class="col-12">
-                            <div class="weekday-checkbox">
-                                <span class="fw-bolder mb-3 d-inline-block">Ω–øÔæ‹•iπw¨˘¨P¥¡</span>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="monday"
-                                           id="monday"
-                                           name="weekday" />
-                                    <label class="form-check-label" for="monday">¨P¥¡§@</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="tuesday"
-                                           id="tuesday"
-                                           name="weekday" />
-                                    <label class="form-check-label" for="tuesday">¨P¥¡§G</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="wednesday"
-                                           id="wednesday"
-                                           name="weekday" />
-                                    <label class="form-check-label" for="wednesday">¨P¥¡§T</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="thursday"
-                                           id="thursday"
-                                           name="weekday" />
-                                    <label class="form-check-label" for="thursday">¨P¥¡•|</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="friday"
-                                           id="friday"
-                                           name="weekday" />
-                                    <label class="form-check-label" for="friday">¨P¥¡§≠</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="saturday"
-                                           id="saturday"
-                                           name="weekday" />
-                                    <label class="form-check-label" for="saturday">¨P¥¡§ª</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           value="sunday"
-                                           id="sunday"
-                                           name="weekday" />
-                                    <label class="form-check-label" for="sunday">¨P¥¡§È</label>
-                                </div>
+                            <h3>Âü∫Êú¨Ë≥áÊñô</h3>
+                            <div class="pic lh-backstage-user-photo-member-data">
+                                <img class="lh-backstage-img"
+                                     src="https://picsum.photos/100/100/?random=16"
+                                     id="lh-profileimage"
+                                     alt="ÈªûÊìäÊõ¥ÊèõÂúñÁâá" />
+                                <input type="file" id="lh-profile-fileInput" accept="image/*">
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput7"
+                                       value="@Model.Account"
+                                       placeholder=""
+                                       disabled />
+                                <label for="floatingInput7">Â∏≥Ëôü</label>
+                            </div>
+                        </div>
+                        <!-- ‰øÆÊîπÂØÜÁ¢ºÊåâÈàï -->
+                        <div class="col-12 col-md-6">
+                            <button class="btn lh-backstage-submit-btn mt-2"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#step1Modal">
+                                ‰øÆÊîπÂØÜÁ¢º
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput8"
+                                       value="@Model.LastName"
+                                       placeholder=""
+                                       disabled />
+                                <label for="floatingInput8">ÂêçÂ≠ó</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput9"
+                                       value="@Model.FirstName"
+                                       placeholder=""
+                                       disabled />
+                                <label for="floatingInput9">ÂßìÊ∞è</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput1"
+                                       value="@Model.Nickname"
+                                       placeholder=""
+                                       disabled />
+                                <label for="floatingInput1">Êö±Á®±</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       id="floatingInput3"
+                                       value="@Model.Gender"
+                                       placeholder=""
+                                       disabled />
+                                <label for="floatingInput3">ÊÄßÂà•</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="floatingInput2"
+                                       value="@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("yyyy-MM-dd") : "")"
+                                       min="1753-01-01"
+                                       disabled />
+
+                                <label for="floatingInput2">ÁîüÊó•</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="email"
+                                       class="form-control"
+                                       id="floatingInput10"
+                                       value="@Model.Email"
+                                       placeholder="name@example.com"
+                                       disabled />
+                                <label for="floatingInput10">ÈõªÂ≠ê‰ø°ÁÆ±</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="tel"
+                                       class="form-control"
+                                       id="floatingInput11"
+                                       value="@Model.Phone"
+                                       placeholder=""
+                                       disabled />
+                                <label for="floatingInput11">ÈõªË©±</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="lh-backstage-preferences">
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <h3>Ë™≤Á®ãÂÅèÂ•Ω</h3>
+                        </div>
+                    </div>
+                    <div class="row my-3 p-3">
+                        <h4>Ë™ûË®Ä</h4>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="‰∏≠Êñá"
+                                   id="flexCheckChinese"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "‰∏≠Êñá") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckChinese">
+                                ‰∏≠Êñá
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Ëã±Êñá"
+                                   id="flexCheckEnglish"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Ëã±Êñá") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckEnglish">
+                                Ëã±Êñá
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Êó•Êñá"
+                                   id="flexCheckJapanese"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Êó•Êñá") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckJapanese">
+                                Êó•Êñá
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Ê≥ïÊñá"
+                                   id="flexCheckFrench"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Ê≥ïÊñá") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckFrench">
+                                Ê≥ïÊñá
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Âæ∑Êñá"
+                                   id="flexCheckGerman"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Âæ∑Êñá") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckGerman">
+                                Âæ∑Êñá
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Ë•øÁè≠ÁâôÊñá"
+                                   id="flexCheckSpanish"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Ë•øÁè≠ÁâôÊñá") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckSpanish">
+                                Ë•øÁè≠ÁâôÊñá
+                            </label>
+                        </div>
+                    </div>
+                    <div class="lh-backstage-divider"></div>
+                    <div class="row my-3 p-3">
+                        <h4>Á®ãÂºèË®≠Ë®à</h4>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="HTML/CSS"
+                                   id="flexCheckHtmlCss"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Á®ãÂºèË®≠Ë®à") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckHtmlCss">
+                                HTML/CSS
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Java Script"
+                                   id="flexCheckJavaScript"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Java Script") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckJavaScript">
+                                Java Script
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="C#"
+                                   id="flexCheckCSharp"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "C#") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckCSharp">
+                                C#
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="SQL"
+                                   id="flexCheckSQL"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "SQL") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckSQL">
+                                SQL
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Python"
+                                   id="flexCheckPython"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Python") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckPython">
+                                Python
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Java"
+                                   id="flexCheckJava"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Java") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckJava">
+                                Java
+                            </label>
+                        </div>
+                    </div>
+                    <div class="lh-backstage-divider"></div>
+                    <div class="row my-3 p-3">
+                        <h4>ÂçáÂ≠∏ÁßëÁõÆ</h4>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Êï∏Â≠∏"
+                                   id="flexCheckMath"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Êï∏Â≠∏") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckMath">
+                                Êï∏Â≠∏
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Áâ©ÁêÜ"
+                                   id="flexCheckPhysics"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Áâ©ÁêÜ") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckPhysics">
+                                Áâ©ÁêÜ
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="ÂåñÂ≠∏"
+                                   id="flexCheckChemistry"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "ÂåñÂ≠∏") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckChemistry">
+                                ÂåñÂ≠∏
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="ÁîüÁâ©"
+                                   id="flexCheckBiology"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "ÁîüÁâ©") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckBiology">
+                                ÁîüÁâ©
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Âú∞ÁêÜ"
+                                   id="flexCheckGeography"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Âú∞ÁêÜ") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckGeography">
+                                Âú∞ÁêÜ
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3 form-check lh-backstage-preference">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value="Ê≠∑Âè≤"
+                                   id="flexCheckHistory"
+                            @(Model.CoursePrefer.Any(p => p.SubjectName == "Ê≠∑Âè≤") ? "checked" : "")
+                                   disabled />
+                            <label class="form-check-label" for="flexCheckHistory">
+                                Ê≠∑Âè≤
+                            </label>
+                        </div>
+                    </div>
+
+                </section>
+                <form id="memberDataForm" action="#" method="post">
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-2 d-none">
+                            <input class="btn btn-info col-12 lh-backstage-submit-btn"
+                                   type="button"
+                                   value="ÂÑ≤Â≠ò"
+                                   onclick="saveProfileData()" />
+                        </div>
+                        <div class="col-2">
+                            <input class="btn btn-info col-12 lh-backstage-submit-btn"
+                                   type="button"
+                                   value="Á∑®ËºØ"
+                                   onclick="toggleEditMode()" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal Á¨¨‰∏ÄÊ≠• -->
+    <div class="modal fade" id="step1Modal" tabindex="-1" aria-labelledby="step1Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="step1Label">ÈÄ≤ÈöéÈ©óË≠âÔºöÁ¨¨‰∏ÄÊ≠•</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="step1Form">
+                        <div class="mb-3">
+                            <label for="emailInput" class="col-form-label">Ë´ãËº∏ÂÖ•ÊúÉÂì°ÈõªÂ≠ê‰ø°ÁÆ±</label>
+                            <input type="email" class="form-control" id="emailInput" required />
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
-                        √ˆ≥¨
-                    </button>
-                    <button type="button"
-                            class="btn lh-backstage-submit-btn">
-                        ¿x¶s
-                    </button>
+                    <button type="button" class="btn lh-backstage-submit-btn" data-bs-dismiss="modal">ÂèñÊ∂à</button>
+                    <button type="button" class="btn lh-backstage-submit-btn" onclick="goToStep2()">ÈÄÅÂá∫</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- modal Á¨¨‰∫åÊ≠• -->
+    <div class="modal fade" id="step2Modal" tabindex="-1" aria-labelledby="step2Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="step2Label">ÈÄ≤ÈöéÈ©óË≠âÔºöÁ¨¨‰∫åÊ≠•</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="step2Form">
+                        <div class="mb-3">
+                            <label for="verificationCodeInput" class="col-form-label">Ë´ãËº∏ÂÖ•È©óË≠âÁ¢º</label>
+                            <input type="tel" class="form-control" id="verificationCodeInput" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn lh-backstage-submit-btn" data-bs-dismiss="modal">ÂèñÊ∂à</button>
+                    <button type="button" class="btn lh-backstage-submit-btn" onclick="goToStep3()">ÈÄÅÂá∫</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal Á¨¨‰∏âÊ≠• -->
+    <div class="modal fade" id="step3Modal" tabindex="-1" aria-labelledby="step3Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="step3Label">ÈÄ≤ÈöéÈ©óË≠âÔºöÁ¨¨‰∏âÊ≠•</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="step3Form">
+                        <div class="mb-3">
+                            <label for="currentPasswordInput" class="col-form-label">Ë´ãËº∏ÂÖ•ÁõÆÂâçÂØÜÁ¢º</label>
+                            <input type="password" class="form-control" id="currentPasswordInput" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="newPasswordInput" class="col-form-label">Ë´ãËº∏ÂÖ•Ê¨≤Ë®≠ÂÆöÁöÑÊñ∞ÂØÜÁ¢º</label>
+                            <input type="password" class="form-control" id="newPasswordInput" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPasswordInput" class="col-form-label">Ë´ãÂÜçËº∏ÂÖ•‰∏ÄÊ¨°Êñ∞ÂØÜÁ¢º</label>
+                            <input type="password" class="form-control" id="confirmPasswordInput" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn lh-backstage-submit-btn" data-bs-dismiss="modal">ÂèñÊ∂à</button>
+                    <button type="button" class="btn lh-backstage-submit-btn" onclick="submitPasswordChange()">ÈÄÅÂá∫</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
 @section topCSS {
-    <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
+    <link rel="stylesheet" href="~/css/backstage.css" />
 }
 @section endJS {
-    <link rel="stylesheet" href="~/js/backstage.js" />
+    <script src="~/js/change-profile-img.js"></script>
+    <script src="~/js/memberdata.js"></script>
 }

@@ -46,53 +46,51 @@
     border-radius: 5px;
 }
 
-    .shopping-bag .nav-link {
-        color: #ffffff;
-    }
+.shopping-bag .nav-link {
+    color: #ffffff;
+}
 
 .nav-item label a:hover,
 .lh-backstage-nav-item a:hover {
     color: var(--theme-color-light);
 }
 
-.search-teacher {
+.search-course {
     list-style: none;
 }
+.search-course .input-container {
+    position: relative;
+    width: 210px; /* 輸入框的固定寬度 */
+    display: flex;
+    align-items: center; /* 將內容垂直居中 */
+}
 
+.search-course .form-control {
+    flex-grow: 1; /* 使輸入框撐滿剩餘空間 */
+    border: 1px solid var(--theme-color);
+    border-radius: 20px;
+    padding-right: 45px; /* 為按鈕留出空間 */
+    background-color: #f8f9fa;
+}
 
-    .search-teacher .input-container {
-        position: relative;
-        width: 210px; /* 确定输入框的宽度 */
-    }
-
-    .search-teacher .form-control {
-        width: 100%;
-        border: 1px solid var(--theme-color);
-        border-radius: 20px;
-        /* padding-right: 45px; */
-        background-color: #f8f9fa;
-    }
-
-    .search-teacher .input-container::after {
-        content: '\f002';
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
+    .search-course .btn-search {
         position: absolute;
-        right: 15px;
+        right: 10px;
         top: 50%;
         transform: translateY(-50%);
-        color: #484848;
-        pointer-events: none;
+        background: none;
+        border: none; /* 移除邊框 */
+        outline: none; /* 移除按鈕的外框 */
+        box-shadow: none; /* 移除任何陰影效果 */
+        padding: 0;
+        cursor: pointer;
     }
 
-    .search-teacher .form-control:focus {
-        border-color: var(--highlight-color);
-        box-shadow: var(--button-hover-shadow);
-        background-color: #fff;
-    }
+       
+
 
 @media screen and (max-width: 767px) {
-    .navbar .search-teacher {
+    .navbar .search-course {
         display: block;
         position: absolute;
         left: 58%;
@@ -101,6 +99,7 @@
         width: 140px;
         z-index: 1;
     }
+
 
     .navbar-brand {
         margin-right: auto;
@@ -119,43 +118,43 @@
     position: relative;
 }
 
-    .mega-menu .col-4 {
-        padding: 10px;
-    }
+.mega-menu .col-4 {
+    padding: 10px;
+}
 
-    .mega-menu a {
-        display: block;
-        padding: 5px 0;
-        color: #333;
-        text-decoration: none;
-    }
+.mega-menu a {
+    display: block;
+    padding: 5px 0;
+    color: #333;
+    text-decoration: none;
+}
 
-        .mega-menu a:hover {
-            color: #00c8c8;
-        }
+.mega-menu a:hover {
+    color: #00c8c8;
+}
 
-    /* 隱藏所有第二欄的子選單 */
-    .mega-menu .second-column .sub-menu {
-        display: none;
-    }
+/* 隱藏所有第二欄的子選單 */
+.mega-menu .second-column .sub-menu {
+    display: none;
+}
 
-    .mega-menu .second-column {
-        max-height: 300px; /* 固定高度，依需求調整 */
-        overflow-y: auto; /* 當內容超過高度時，啟用垂直捲軸 */
-        padding-right: 15px; /* 讓內容不要被捲軸擋住 */
-    }
+.mega-menu .second-column {
+    max-height: 300px; /* 固定高度，依需求調整 */
+    overflow-y: auto; /* 當內容超過高度時，啟用垂直捲軸 */
+    padding-right: 15px; /* 讓內容不要被捲軸擋住 */
+}
 
-    /* 可選，讓第一欄的高度也與第二欄一致 */
-    .mega-menu .first-column {
-        max-height: 300px;
-        overflow-y: auto;
-    }
+/* 可選，讓第一欄的高度也與第二欄一致 */
+.mega-menu .first-column {
+    max-height: 300px;
+    overflow-y: auto;
+}
 
-    /* 當 hover 到第一欄的時候顯示第二欄和第三欄 */
-    .mega-menu:hover .second-column,
-    .mega-menu:hover .third-column {
-        display: block;
-    }
+/* 當 hover 到第一欄的時候顯示第二欄和第三欄 */
+.mega-menu:hover .second-column,
+.mega-menu:hover .third-column {
+    display: block;
+}
 
 /* 根據 hover 的第一欄顯示對應的第二欄選單 */
 .first-column a[data-target="hot-subjects"]:hover ~ .second-column .hot-subjects {
@@ -192,40 +191,40 @@
     padding-left: 20px;
 }
 
-    .register-form h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+.register-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    .register-form form input {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+.register-form form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
-    .register-form button {
-        width: 100%;
-        padding: 10px;
-        background-color: #d3d3d3;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #d3d3d3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-    .register-form p {
-        font-size: 12px;
-        color: #999;
-        text-align: center;
-    }
+.register-form p {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+}
 
-    .register-form a {
-        color: #0066cc;
-        text-decoration: none;
-    }
+.register-form a {
+    color: #0066cc;
+    text-decoration: none;
+}
 
 
 
@@ -239,6 +238,8 @@
 .banner-image img {
     object-fit: cover;
     display: block;
+    width: 100%;
+    height: 500px;
 }
 
 .titles {
@@ -332,7 +333,7 @@
     /* 確保li項目與h5對齊 */
 }
 
-    .lh-layout-footer-link ul li a {
+.lh-layout-footer-link ul li a {
         text-decoration: none;
         color: #fff;
     }
