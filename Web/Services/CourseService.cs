@@ -465,7 +465,7 @@ namespace Web.Services
             {
                 CourseId = courseMainInfo.CourseId,
                 TutorId = courseMainInfo.TutorId,
-                //MemberId = 1,  這邊先註解掉，但評論的新增功能會壞掉，因為memberId會帶不進去
+                MemberId = 1,  //這邊先註解掉，但評論的新增功能會壞掉，因為memberId會帶不進去
                 TutorHeadShotImage = courseMainInfo.TutorHeadShotImage,
                 TutorFlagImage = courseMainInfo.TutorFlagImage,
                 IsVerifiedTutor = courseMainInfo.IsVerifiedTutor,
