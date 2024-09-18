@@ -1,10 +1,10 @@
 ﻿namespace Web.ViewModels
 {
-    public class AppointmentDetailsViewModel
+    public class MemberAppointmentViewModel
     {
-        public List<AppointmentDetailVM> AppointmentDetailsList { get; set; }
+        public List<MemberAppointmentVM> MemberAppointmentList { get; set; }
     }
-    public class AppointmentDetailVM
+    public class MemberAppointmentVM
     {
         /// <summary>
         /// 會員Id
