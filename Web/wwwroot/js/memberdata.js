@@ -109,7 +109,7 @@ function saveProfileData() {
             alert('儲存過程中出現錯誤，請稍後再試。錯誤訊息: ' + xhr.responseText);
         }
     });
-    // 隱藏「儲存」和「取消」按鈕，顯示「編輯」按鈕
+    // 顯示「編輯」按鈕，隱藏「儲存」和「取消」按鈕
     document.querySelector('input[data-action="save"]').parentElement.classList.add('d-none');
     document.querySelector('input[data-action="cancel"]').parentElement.classList.add('d-none');
     document.querySelector('input[data-action="edit"]').parentElement.classList.remove('d-none');
