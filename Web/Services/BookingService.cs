@@ -217,84 +217,93 @@ namespace Web.Services
         /// 課程新增或修改
         /// </summary>
         /// <param name="AddOrUpdate"></param>
-        public void SaveCourse(CRUDStatus status, CourseDataViewModel courseData, int memberId)
+        public async Task SaveCourse(CRUDStatus status, CourseDataViewModel courseData, int memberId)
         {
-            if (status == CRUDStatus.Create)
+            try
             {
-                var course = new Course
+                if (status == CRUDStatus.Create)
                 {
-                    CategoryId = int.Parse(courseData.CategoryId),
-                    SubjectId = int.Parse(courseData.SubjectId),
-                    TutorId = memberId,
-                    Title = courseData.Title,
-                    SubTitle = courseData.SubTitle,
-                    TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
-                    FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
-                    Description = courseData.Description,
-                    IsEnabled = courseData.IsEnabled,
-                    ThumbnailUrl = courseData.ThumbnailUrl[0],
-                    VideoUrl = courseData.VideoUrl[0],
-                    CoursesStatus = courseData.CoursesStatus,
-                    Cdate = DateTime.Now,
-                };
-                _repository.Create(course);
-                _repository.SaveChanges();
-
-                var courseId = course.CourseId;
-                foreach (var item in courseData.CouresImagesList)
-                {
-                    var courseImg = new CourseImage
+                    var course = new Course
                     {
-                        CourseId = courseId,
-                        ImageUrl = item
+                        CategoryId = int.Parse(courseData.CategoryId),
+                        SubjectId = courseData.SubjectId,
+                        TutorId = memberId,
+                        Title = courseData.Title,
+                        SubTitle = courseData.SubTitle,
+                        TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
+                        FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
+                        Description = courseData.Description,
+                        IsEnabled = courseData.IsEnabled,
+                        ThumbnailUrl = courseData.ThumbnailUrl[0],
+                        VideoUrl = courseData.VideoUrl,
+                        CoursesStatus = courseData.CoursesStatus,
+                        Cdate = DateTime.Now,
                     };
-                    _repository.Create(courseImg);
-                    _repository.SaveChanges();
-                }
+                    _repository.Create(course);
+                    await _repository.SaveChangesAsync();
 
+                    var courseId = course.CourseId;
+                    foreach (var item in courseData.CouresImagesList)
+                    {
+                        var courseImg = new CourseImage
+                        {
+                            CourseId = courseId,
+                            ImageUrl = item,
+                            Cdate = DateTime.Now,
+                        };
+                        _repository.Create(courseImg);
+                        await _repository.SaveChangesAsync();
+                    }
+
+                }
+                else if (status == CRUDStatus.Update)
+                {
+                    var course = new Course
+                    {
+                        CourseId = courseData.CourseId,
+                        CategoryId = int.Parse(courseData.CategoryId),
+                        SubjectId = courseData.SubjectId,
+                        TutorId = memberId,
+                        Title = courseData.Title,
+                        SubTitle = courseData.SubTitle,
+                        TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
+                        FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
+                        Description = courseData.Description,
+                        IsEnabled = courseData.IsEnabled,
+                        ThumbnailUrl = courseData.ThumbnailUrl[0],
+                        VideoUrl = courseData.VideoUrl,
+                        CoursesStatus = courseData.CoursesStatus,
+                        Udate = DateTime.Now,
+                    };
+                    _repository.Update(course);
+                    await _repository.SaveChangesAsync();
+
+                    var courseId = course.CourseId;
+
+                    //先刪除圖檔
+                    var couresImg = from Img in _repository.GetAll<CourseImage>()
+                                    where Img.CourseId == courseId
+                                    select Img;
+                    _repository.Delete(couresImg);
+                    await _repository.SaveChangesAsync();
+
+                    //再存檔
+                    foreach (var item in courseData.CouresImagesList)
+                    {
+                        var courseImg = new CourseImage
+                        {
+                            CourseId = courseId,
+                            ImageUrl = item,
+                            Cdate = DateTime.Now,
+                        };
+                        _repository.Create(courseImg);
+                        await _repository.SaveChangesAsync();
+                    }
+                }
             }
-            else if (status == CRUDStatus.Update)
+            catch (Exception ex)
             {
-                var course = new Course
-                {
-                    CourseId = courseData.CourseId,
-                    CategoryId = int.Parse(courseData.CategoryId),
-                    SubjectId = int.Parse(courseData.SubjectId),
-                    TutorId = memberId,
-                    Title = courseData.Title,
-                    SubTitle = courseData.SubTitle,
-                    TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
-                    FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
-                    Description = courseData.Description,
-                    IsEnabled = courseData.IsEnabled,
-                    ThumbnailUrl = courseData.ThumbnailUrl[0],
-                    VideoUrl = courseData.VideoUrl[0],
-                    CoursesStatus = courseData.CoursesStatus,
-                    Udate = DateTime.Now,
-                };
-                _repository.Update(course);
-                _repository.SaveChanges();
-
-                var courseId = course.CourseId;
-
-                //先刪除圖檔
-                var couresImg = from Img in _repository.GetAll<CourseImage>()
-                                where Img.CourseId == courseId
-                                select Img;
-                _repository.Delete(couresImg);
-                _repository.SaveChanges();
-
-                //再存檔
-                foreach (var item in courseData.CouresImagesList)
-                {
-                    var courseImg = new CourseImage
-                    {
-                        CourseId = courseId,
-                        ImageUrl = item
-                    };
-                    _repository.Create(courseImg);
-                    _repository.SaveChanges();
-                }
+                string Msg = ex.Message;
             }
         }
         /// <summary>

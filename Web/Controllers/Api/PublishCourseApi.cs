@@ -31,23 +31,49 @@ namespace Web.Controllers.Api
         /// <param name="Category"></param>
         /// <returns></returns>
         [HttpPost("SaveToCouresData")]
-        //public async Task<IActionResult> SaveToCoures()
         public async Task<IActionResult> SaveToCoures([FromBody] CourseDataViewModel course)
         {
             int memberId = 3;
-            
-            _bookingService.SaveCourse(CRUDStatus.Create, course, memberId);
 
+            if (string.IsNullOrWhiteSpace(course.CategoryId))
+            {
+                return BadRequest("課程分類為必填欄位");
+            }
+            if (course.SubjectId == 0)
+            {
+                return BadRequest("課程科目為必填欄位");
+            }
+            if (course.ThumbnailUrl == null)
+            {
+                return BadRequest("自介照片為必上傳欄位");
+            }
+            if (string.IsNullOrWhiteSpace(course.VideoUrl))
+            {
+                return BadRequest("自介影片為必填欄位");
+            }
+            if (course.CouresImagesList == null)
+            {
+                return BadRequest("課程圖片為必上傳欄位");
+            }
+            if (string.IsNullOrWhiteSpace(course.Title))
+            {
+                return BadRequest("課程名稱為必填欄位");
+            }
+            if (string.IsNullOrWhiteSpace(course.SubTitle))
+            {
+                return BadRequest("課程簡述為必填欄位");
+            }
 
-            return Ok();
+            await _bookingService.SaveCourse(CRUDStatus.Create, course, memberId);
+
+            return Ok("新增成功");
         }
-        //暫時
-        public class CourseDetailDto
-        {
-            public string CourseCategory { get; set; }
-            public string SubTitle { get; set; } // 添加與前端相匹配的屬性
-        }
 
+        /// <summary>
+        /// 取課程科目列表資料
+        /// </summary>
+        /// <param name="courseCategoryId"></param>
+        /// <returns></returns>
         [HttpGet("GetSubjectsByCategoryId/{courseCategoryId}")]
         public IActionResult GetSubjectsByCategoryId(int courseCategoryId)
         {
