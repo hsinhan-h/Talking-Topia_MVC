@@ -1,4 +1,13 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
+    const submitBtn = document.querySelector('.submitButton'); 
+    submitBtn.addEventListener('click', function () {
+        document.querySelector('.tutorDataForm').submit();
+    });
+
+
+
+
+
     const urlParams = new URLSearchParams(window.location.search);
     const memberId = urlParams.get('memberId'); // 獲取 `memberId` 參數
 

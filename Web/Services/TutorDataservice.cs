@@ -15,13 +15,24 @@ namespace Web.Services
         }
 
         //Read 
-        public async Task<TutorDataViewModel> GetTutorDataAsync(int? memberId)
+        private async Task<bool> Isteacher(int? memberId)
         {
+            if (memberId == null)
+            {
+                return false; 
+            }
 
             var istutor = await (from member in _repository.GetAll<Entities.Member>()
-                                         where member.MemberId == memberId
-                                         select member.IsTutor).FirstOrDefaultAsync();
-            if (istutor)
+                                 where member.MemberId == memberId
+                                 select member.IsTutor).FirstOrDefaultAsync();
+
+            return istutor;
+
+        }
+        private async Task<TutorDataViewModel> GetTutorDataAsync(int? memberId)
+        {
+
+            if (await Isteacher(memberId))
             {
                 var tutorData = await (from member in _repository.GetAll<Entities.Member>()
                                        join tutortimslot in _repository.GetAll<Entities.TutorTimeSlot>()
@@ -66,18 +77,14 @@ namespace Web.Services
             }
             return null;
         }
-        public async Task<TutorDataViewModel> GetTutorCourseDataAsync(int? memberId)
+        private async Task<TutorDataViewModel> GetTutorCourseDataAsync(int? memberId)
         {
-            var istutor = await (from member in _repository.GetAll<Entities.Member>()
-                                 where member.MemberId == memberId
-                                 select member.IsTutor).FirstOrDefaultAsync();
-
             var tutorCourseData = new TutorDataViewModel
             {
                 Course = new List<CategoryData>()
             };
 
-            if (istutor)
+            if (await Isteacher(memberId))
             {
                 tutorCourseData.Course = await (from member in _repository.GetAll<Entities.Member>()
                                                 join memberPreference in _repository.GetAll<Entities.MemberPreference>()
@@ -96,23 +103,20 @@ namespace Web.Services
 
             return tutorCourseData;
         }
-        public async Task<TutorDataViewModel> GetCoursestatusAsync(int? memberId)
+        private async Task<TutorDataViewModel> GetCoursestatusAsync(int? memberId)
         {
-            var istutor = await (from member in _repository.GetAll<Entities.Member>()
-                                 where member.MemberId == memberId
-                                 select member.IsTutor).FirstOrDefaultAsync();
             var tutorCourseData = new TutorDataViewModel();
-            if (!istutor)
-            {
-                return tutorCourseData;
-            }
-            if (istutor)
+
+            if (await Isteacher(memberId))
             {
                 tutorCourseData.Coursestatus = await (from member in _repository.GetAll<Entities.Member>()
                                                       join applylist in _repository.GetAll<Entities.ApplyList>()
                                                           on member.MemberId equals applylist.MemberId
-                                                      select applylist.ApplyStatus ? CourseStatus.已審核 : CourseStatus.未審核).FirstOrDefaultAsync();
+                                                      where member.MemberId == memberId
+                                                      select applylist.ApplyStatus ? CourseStatus.已審核 : CourseStatus.未審核)
+                                                       .FirstOrDefaultAsync();
             }
+
             return tutorCourseData;
         }
 
@@ -151,14 +155,11 @@ namespace Web.Services
         //取得可預約時段的方法
         public async Task<TutorDataViewModel> GetTutorReserveTimeAsync(int? memberId)
         {
-            var istutor = await (from member in _repository.GetAll<Entities.Member>()
-                                 where member.MemberId == memberId
-                                 select member.IsTutor).FirstOrDefaultAsync();
             var tutortime = new TutorDataViewModel
             {
                 AvailableReservation = new List<AvailReservation>()
             };
-            if (!istutor)
+            if (!await Isteacher(memberId))
             {
                 return tutortime;
             }
@@ -181,58 +182,64 @@ namespace Web.Services
 
 
         //Creat
+
+        //public async Task<TutorDataViewModel> CreatTutorData()
+        //{
+        //    return (new TutorDataViewModel());
+
+        //}
         public async Task<TutorDataViewModel> CreateTutorData(TutorDataViewModel qVM)
-{
-    // 開始一個資料庫交易
-    await _repository.BeginTransActionAsync();
-    try
-    {
-        // 新增 Member 資料
-        var member = new Entities.Member
         {
-            NativeLanguage = qVM.NativeLanguage,
-            SpokenLanguage = qVM.SpokenLanguage,
-            BankAccount = qVM.BankAccount,
-            BankCode = qVM.BankCode,
-            Cdate = DateTime.Now,
-            Udate = null,
-            FirstName = "N/A",
-            LastName = "N/A",
-            Password = "N/A",
-            Email = "N/A",
-            Nickname = "N/A",
-            Phone = "N/A",
-            Gender = 0,
-            AccountType = 1,
-            IsTutor = true,
-            IsVerifiedTutor = false,
-        };
+            // 開始一個資料庫交易
+            await _repository.BeginTransActionAsync();
+            try
+            {
+                // 新增 Member 資料
+                var member = new Entities.Member
+                {
+                    NativeLanguage = qVM.NativeLanguage,
+                    SpokenLanguage = qVM.SpokenLanguage,
+                    BankAccount = qVM.BankAccount,
+                    BankCode = qVM.BankCode,
+                    Cdate = DateTime.Now,
+                    Udate = null,
+                    FirstName = "N/A",
+                    LastName = "N/A",
+                    Password = "N/A",
+                    Email = "N/A",
+                    Nickname = "N/A",
+                    Phone = "N/A",
+                    Gender = 0,
+                    AccountType = 1,
+                    IsTutor = true,
+                    IsVerifiedTutor = false,
+                };
 
-        // 使用 Repository 來新增資料
-        _repository.Create(member);
-        await _repository.SaveChangesAsync();
+                // 使用 Repository 來新增資料
+                _repository.Create(member);
+                await _repository.SaveChangesAsync();
 
-        // 提交交易
-        await _repository.CommitAsync();
+                // 提交交易
+                await _repository.CommitAsync();
 
-        // 返回成功結果
-        return new TutorDataViewModel 
-        {
-            //Success = true,
-            //Message = "會員資料新增成功",
+                // 返回成功結果
+                return new TutorDataViewModel
+                {
+                    Success = true,
+                    Message = "會員資料新增成功",
 
-        };
-    }
-    catch (Exception ex)
-    {
-        // 若發生錯誤則回滾交易
-        await _repository.RollbackAsync();
-        return new TutorDataViewModel
-        {
-            //Success = false,
-            //Message = $"資料處理發生錯誤: {ex.Message}"
-        };
-    }
-}
+                };
+            }
+            catch (Exception ex)
+            {
+                // 若發生錯誤則回滾交易
+                await _repository.RollbackAsync();
+                return new TutorDataViewModel
+                {
+                    Success = false,
+                    Message = $"資料處理發生錯誤: {ex.Message}"
+                };
+            }
+        }
     }
 }

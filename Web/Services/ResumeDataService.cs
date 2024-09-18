@@ -36,8 +36,9 @@ namespace Web.Services
         //        TutorResumeList = await resumeValues.ToListAsync(),
         //    };
         //}
-        public async Task<(bool Success, string Message)> AddResumeAsync(TutorResumeViewModel qVM)
+        public async Task<TutorResumeViewModel> AddResumeAsync(TutorResumeViewModel qVM)
         {
+            await _repository.BeginTransActionAsync();
             try
             {
                 var member = new Member
@@ -57,7 +58,6 @@ namespace Web.Services
                     IsTutor = true
                 };
                 _repository.Create(member);
-                await _repository.SaveChangesAsync(); 
 
                 var education = new Education
                 {
@@ -69,20 +69,18 @@ namespace Web.Services
                     Udate = null
                 };
                 _repository.Create(education);
-                await _repository.SaveChangesAsync(); 
 
                 var workExperience = new WorkExperience
                 {
                     WorkExperienceFile = qVM.WorkExperienceFile,
-                    //WorkStartDate = qVM.WorkStartDate,
-                    //WorkEndDate = qVM.WorkEndDate,
+                    WorkStartDate = qVM.WorkStartDate,
+                    WorkEndDate = qVM.WorkEndDate,
                     WorkName = qVM.WorkName,
                     MemberId = member.MemberId,
                     Cdate = DateTime.Now,
                     Udate = null
                 };
                 _repository.Create(workExperience);
-                await _repository.SaveChangesAsync();
 
                 var coursecategory = new CourseCategory
                 {
@@ -92,44 +90,47 @@ namespace Web.Services
 
                 };
                 _repository.Create(coursecategory);
-                await _repository.SaveChangesAsync();
-
-                //foreach (var licenseName in qVM.ProfessionalLicenseName)
-                //{
-                //    var professionalLicense = new ProfessionalLicense
-                //    {
-                //        ProfessionalLicenseName = licenseName,
-                //        Cdate = DateTime.Now
-                //    };
-                //    _repository.Create(professionalLicense);
-                //}
-                //foreach (var licenseurl in qVM.ProfessionalLicenseUrl)
-                //{
-                //    var professionalLicenseurl = new ProfessionalLicense
-                //    {
-                //        ProfessionalLicenseName = licenseurl
-                //    };
-                //    _repository.Create(professionalLicenseurl);
-                //}
-                //await _repository.SaveChangesAsync();
 
                 var courseSubject = new CourseSubject
                 {
                     SubjectName = qVM.SelectedSubcategory,
-                    CourseCategoryId= coursecategory.CourseCategoryId,
+                    CourseCategoryId = coursecategory.CourseCategoryId,
                     Cdate = DateTime.Now,
                     Udate = null
 
                 };
                 _repository.Create(courseSubject);
-                await _repository.SaveChangesAsync();
 
-                return (true, "新增資料成功");
+                for (int i = 0; i < qVM.ProfessionalLicenseName.Count; i++)
+                {
+                    var professionalLicense = new ProfessionalLicense
+                    {
+                        ProfessionalLicenseName = qVM.ProfessionalLicenseName[i],
+                        ProfessionalLicenseUrl = qVM.ProfessionalLicenseUrl[i], 
+                        MemberId = member.MemberId,
+                        Cdate = DateTime.Now
+                    };
+                    _repository.Create(professionalLicense);
+                }
+                await _repository.SaveChangesAsync();
+                await _repository.CommitAsync();
+
+                return new TutorResumeViewModel
+                {
+                    Success = true,
+                    Message = "會員履歷新增成功",
+
+                };
             }
-            catch (DbUpdateException ex)
+            catch (Exception ex)
             {
-                var innerException = ex.InnerException?.Message ?? "無其他詳細錯誤訊息";
-                return (false, $"錯誤訊息: {ex.Message}. 內部錯誤訊息: {innerException}");
+                // 若發生錯誤則回滾交易
+                await _repository.RollbackAsync();
+                return new TutorResumeViewModel
+                {
+                    Success = false,
+                    Message = $"資料處理發生錯誤: {ex.Message}"
+                };
             }
         }
 
