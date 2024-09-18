@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         thirdColumn.style.display = 'none';
     });
 
-    // 讓第二、第三欄不會在滑鼠移到其他地方時消失
+     //讓第二、第三欄不會在滑鼠移到其他地方時消失
     secondColumn.addEventListener('mouseenter', function () {
         secondColumn.style.display = 'block';
         thirdColumn.style.display = 'block';
