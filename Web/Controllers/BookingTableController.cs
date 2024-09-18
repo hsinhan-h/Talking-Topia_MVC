@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Web.Entities;
 
 namespace Web.Controllers
@@ -25,8 +26,10 @@ namespace Web.Controllers
 
             // todo: 剩餘堂數 > 0, 允許預約
             // 寫入booking資料表, 導向預約成功頁面
-            string user = HttpContext.User.Identity.Name;
-            int memberId = await _memberService.GetMemberId(user);
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int parsedMemberId = int.Parse(memberIdClaim.Value);
+            var memberId = await _memberService.GetMemberId(parsedMemberId);
+
             int remainSessions = await _bookingService.GetRemainCourseQtyAsync(memberId, courseId);
             if (remainSessions > 0)
             {

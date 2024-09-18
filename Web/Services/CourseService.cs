@@ -465,7 +465,7 @@ namespace Web.Services
             {
                 CourseId = courseMainInfo.CourseId,
                 TutorId = courseMainInfo.TutorId,
-                MemberId = 1,
+                //MemberId = 1,  這邊先註解掉，但評論的新增功能會壞掉，因為memberId會帶不進去
                 TutorHeadShotImage = courseMainInfo.TutorHeadShotImage,
                 TutorFlagImage = courseMainInfo.TutorFlagImage,
                 IsVerifiedTutor = courseMainInfo.IsVerifiedTutor,
@@ -487,8 +487,8 @@ namespace Web.Services
                 }).ToList(),
                 ExperienceList = tutorExperiences.Select(e => new TutorExperience
                 {
-                    //StartYear = e.WorkStartDate.Year.ToString(),
-                    //EndYear = e.WorkEndDate.Year.ToString(),
+                    StartYear = e.WorkStartDate.Year.ToString(),
+                    EndYear = e.WorkEndDate.Year.ToString(),
                     WorkTitle = e.WorkName
                 }).ToList(),
                 EducationDegree = education.Select(w => new TutorEducationList
@@ -656,6 +656,8 @@ namespace Web.Services
             
             return recomCardList;
         }
+
+        
     }
 }
 

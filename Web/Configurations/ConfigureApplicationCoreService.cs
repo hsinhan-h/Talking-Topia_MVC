@@ -14,8 +14,9 @@ namespace Web.Configurations
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<ICourseService, ApplicationCore.Services.CourseService>();
+            services.AddScoped<ICourseService, AppCourseService>();
             services.AddScoped<ECpayService>();
+            services.AddScoped<ICourseService, AppCourseService>();
 
             return services;
         }
