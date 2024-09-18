@@ -223,7 +223,7 @@
     <form id="shopping-cart-submit-btn" method="post" asp-controller="Order" asp-action="SubmitToOrder">
         @Html.AntiForgeryToken()
         @* <input class="sc-input" type="hidden" name="memberId" value="@Model.MemberId" /> *@
-        <input class="sc-input" type="hidden" name="memberId" value="1" />
+        @* <input class="sc-input" type="hidden" name="memberId" value="1" /> *@
         <input class="sc-input" type="hidden" name="paymentType" value="" />
         <input class="sc-input" type="hidden" name="taxIdNumber" value="" />
 
