@@ -44,7 +44,6 @@
                              TaxIdNumber = Order.TaxIdNumber,  // 統一編號
                              OrderDatetime = Order.TransactionDate.ToString("yyyy-MM-dd"), // 格式化交易時間
                              BookingDate = booking.BookingDate,//預約上課日期
-                             BookingTime =booking.BookingTime,//預約上課時間
 
                          };
 
