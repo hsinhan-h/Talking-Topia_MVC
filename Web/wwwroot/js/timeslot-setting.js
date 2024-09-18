@@ -59,7 +59,7 @@
             input.className = "form-check-input";
             input.type = "checkbox";
             input.value = period.value;
-            input.id = `${day}-${period.value}`;
+            input.id = `${day}-${period.value}`;//foreach,weekdays的變數。period是foreach timePeriods的變數 
             input.name = `${day}-period`;
 
             const label = document.createElement("label");
@@ -74,7 +74,7 @@
             // 勾選或取消勾選對應的時段
             input.addEventListener("change", function () {
                 const checkboxes = timeslotDiv.querySelectorAll(
-                    'input[name="' + day + '-time"]'
+                    'input[name="' + day + '-time"]' //找屬性 舉例name="monday-time"
                 );
                 checkboxes.forEach((checkbox) => {
                     const hour = parseInt(checkbox.value.split(":")[0], 10);
@@ -132,8 +132,6 @@
        
     });
 
-    // 使用 fetch 請求 API
-   /* const memberId = 35;*/ //測試用：前端的參數丟到後端
     if (memberId !== null) {
         const apiUrl = `/api/GetTutorReserveApi/GetTutorReserveTimeJson?memberId=${memberId}`;
 
