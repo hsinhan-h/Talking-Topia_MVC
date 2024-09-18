@@ -45,7 +45,7 @@ namespace Web.Controllers
             else
             {
                 //decimal price = _courseService.GetCourse25MinUnitPrice(courseId);
-                await _shoppingCartService.CreateShoppingCartAsync(memberId, courseId, 25, memberId, bookingDate, bookingTime);
+                await _shoppingCartService.CreateShoppingCartAsync(memberId, courseId, 25, 1, bookingDate, bookingTime);
                 return RedirectToAction("Index", "ShoppingCart");
             }
 

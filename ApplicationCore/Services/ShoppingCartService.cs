@@ -116,7 +116,7 @@ namespace ApplicationCore.Services
                     CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice,
                     Cdate = DateTime.Now,
                     BookingDate = bookingDate,
-                    //BookingTime = bookingTime,
+                    BookingTime = bookingTime,
                 };
                 var shoppingCart = await _shoppingCartRepository.AddAsync(shoppingCartEntity);
                 if (shoppingCart is null)
