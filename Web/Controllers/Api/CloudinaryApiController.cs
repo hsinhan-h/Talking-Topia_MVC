@@ -30,5 +30,23 @@ namespace Web.Controllers.Api
             }
             return Ok();
         }
+
+        [HttpPost("UploadImages")]
+        public async Task<IActionResult> UploadImages(List<IFormFile> images)
+        {
+            if (images == null || !images.Any())
+            {
+                return BadRequest("沒有圖片");
+            }
+
+            var imagePaths = new List<string>();
+            foreach (var image in images)
+            {
+                var imageUrl = await _cloudinaryService.UploadImageAsync(image);
+                imagePaths.Add(imageUrl); // 保存圖片路徑
+            }
+
+            return Ok(imagePaths); // 回傳圖片的檔案名
+        }
     }
 }

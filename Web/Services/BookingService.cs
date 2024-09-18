@@ -1,5 +1,6 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
+﻿//using ApplicationCore.Entities;
+//using ApplicationCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using Web.Entities;
 using Web.Repository;
@@ -10,10 +11,8 @@ namespace Web.Services
     public class BookingService
     {
         private readonly IRepository _repository;
-        private readonly IRepository<ApplicationCore.Entities.CourseCategory> _courseCategoryRepository;
-        public BookingService(IRepository repository
-            , IRepository<ApplicationCore.Entities.CourseCategory> courseCategoryRepository
-            )
+        //private readonly IRepository<ApplicationCore.Entities.CourseCategory> _courseCategoryRepository;
+        public BookingService(IRepository repository)
         {
             _repository = repository;
             //_courseCategoryRepository = courseCategoryRepository;
@@ -24,6 +23,7 @@ namespace Web.Services
         /// <param name="MemberId"></param>
         /// <returns></returns>
         public async Task<BookingListViewModel> GetPublishCourseList(int MemberId)
+
         {
             // 將 courseImg 實體化為 List<CouresImagesViewModel>
             var courseImg = await (from img in _repository.GetAll<Web.Entities.CourseImage>()
@@ -37,16 +37,17 @@ namespace Web.Services
                                    }).ToListAsync();  // 確保 courseImg 是 List<CouresImagesViewModel>
 
             var bookingValue = from course in _repository.GetAll<Web.Entities.Course>()
+                               where course.TutorId == MemberId
                                join category in _repository.GetAll<Web.Entities.CourseCategory>() on course.CategoryId equals category.CourseCategoryId
                                join subject in _repository.GetAll<Web.Entities.CourseSubject>() on course.SubjectId equals subject.SubjectId
                                //join image in _repository.GetAll<CourseImage>() on course.CourseId equals image.CourseId
                                join member in _repository.GetAll<Web.Entities.Member>() on course.TutorId equals member.MemberId
                                //join booking in _repository.GetAll<Booking>() on course.CourseId equals booking.CourseId
-                               where member.MemberId == MemberId
+                               //where member.MemberId == MemberId
                                select new BookingViewModel
                                {
-                                   UpdateDatetime = DateTime.Now,
-                                   CourseTitle = course.Title,  //這不確定是哪個欄位
+                                   UpdateDatetime = course.Cdate,
+                                   CourseTitle = course.Title + course.CourseId.ToString(),  //這不確定是哪個欄位
                                    Category = category.CategorytName,
                                    CourseSubject = subject.SubjectName,
                                    Thumbnail = course.ThumbnailUrl,
@@ -56,9 +57,9 @@ namespace Web.Services
                                    CouresImagesList = courseImg, // 直接指派 List
 
                                    CourseId = course.CourseId,
-                                   Title = course.Title,
+                                   Title = course.Title+course.CourseId.ToString(),
                                    SubTitle = course.SubTitle,
-                                   TutorIntro = member.TutorIntro,
+                                   //TutorIntro = member.TutorIntro,
                                    Description = course.Description,
                                    TrialPriceNTD = 0,
                                    TwentyFiveMinPriceNTD = course.TwentyFiveMinUnitPrice,
@@ -217,18 +218,109 @@ namespace Web.Services
         /// 課程新增或修改
         /// </summary>
         /// <param name="AddOrUpdate"></param>
-        public void SaveCourse(CRUDStatus status, Web.Entities.Course course, Web.Entities.CourseImage courseImage)
+        public async Task SaveCourse(CRUDStatus status, CourseDataViewModel courseData, int memberId)
         {
-            if (status == CRUDStatus.Create)
+            try
             {
-                _repository.Create(course);
-                _repository.SaveChanges();
+                if (status == CRUDStatus.Create)
+                {
+                    var course = new Course
+                    {
+                        CategoryId = int.Parse(courseData.CategoryId),
+                        SubjectId = courseData.SubjectId,
+                        TutorId = memberId,
+                        Title = courseData.Title,
+                        SubTitle = courseData.SubTitle,
+                        TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
+                        FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
+                        Description = courseData.Description,
+                        IsEnabled = courseData.IsEnabled,
+                        ThumbnailUrl = courseData.ThumbnailUrl[0],
+                        VideoUrl = courseData.VideoUrl,
+                        CoursesStatus = courseData.CoursesStatus,
+                        Cdate = DateTime.Now,
+                    };
+                    _repository.Create(course);
+                    await _repository.SaveChangesAsync();
+
+                    var courseId = course.CourseId;
+                    foreach (var item in courseData.CouresImagesList)
+                    {
+                        var courseImg = new CourseImage
+                        {
+                            CourseId = courseId,
+                            ImageUrl = item,
+                            Cdate = DateTime.Now,
+                        };
+                        _repository.Create(courseImg);
+                        await _repository.SaveChangesAsync();
+                    }
+
+                }
+                else if (status == CRUDStatus.Update)
+                {
+                    var course = new Course
+                    {
+                        CourseId = courseData.CourseId,
+                        CategoryId = int.Parse(courseData.CategoryId),
+                        SubjectId = courseData.SubjectId,
+                        TutorId = memberId,
+                        Title = courseData.Title,
+                        SubTitle = courseData.SubTitle,
+                        TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
+                        FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
+                        Description = courseData.Description,
+                        IsEnabled = courseData.IsEnabled,
+                        ThumbnailUrl = courseData.ThumbnailUrl[0],
+                        VideoUrl = courseData.VideoUrl,
+                        CoursesStatus = courseData.CoursesStatus,
+                        Udate = DateTime.Now,
+                    };
+                    _repository.Update(course);
+                    await _repository.SaveChangesAsync();
+
+                    var courseId = course.CourseId;
+
+                    //先刪除圖檔
+                    var couresImg = from Img in _repository.GetAll<CourseImage>()
+                                    where Img.CourseId == courseId
+                                    select Img;
+                    _repository.Delete(couresImg);
+                    await _repository.SaveChangesAsync();
+
+                    //再存檔
+                    foreach (var item in courseData.CouresImagesList)
+                    {
+                        var courseImg = new CourseImage
+                        {
+                            CourseId = courseId,
+                            ImageUrl = item,
+                            Cdate = DateTime.Now,
+                        };
+                        _repository.Create(courseImg);
+                        await _repository.SaveChangesAsync();
+                    }
+                }
             }
-            else if (status == CRUDStatus.Update)
+            catch (Exception ex)
             {
-                _repository.Update(course);
-                _repository.SaveChanges();
+                string Msg = ex.Message;
             }
+        }
+        /// <summary>
+        /// 取得課程科目
+        /// </summary>
+        /// <param name="courseCategoryId"></param>
+        /// <returns></returns>
+        public IEnumerable<CourseSubject> GetSubjectsByCategoryId(int courseCategoryId)
+        {
+            return _repository.GetAll<CourseSubject>()
+                .Where(s => s.CourseCategoryId == courseCategoryId)
+                .Select(s => new CourseSubject
+                {
+                    SubjectId = s.SubjectId,
+                    SubjectName = s.SubjectName
+                }).ToList();
         }
     }
 }
