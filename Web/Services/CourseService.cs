@@ -197,6 +197,7 @@ namespace Web.Services
         {
             return (
                 from course in _repository.GetAll<Entities.Course>().AsNoTracking()
+                where course.CoursesStatus == 1
                 join member in _repository.GetAll<Entities.Member>().AsNoTracking()
                 on course.TutorId equals member.MemberId
                 join subject in _repository.GetAll<Entities.CourseSubject>().AsNoTracking()
