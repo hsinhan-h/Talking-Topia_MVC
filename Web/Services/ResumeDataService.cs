@@ -87,17 +87,18 @@ namespace Web.Services
                     CategorytName = qVM.SelectedCategory,
                     Cdate = DateTime.Now,
                     Udate = null
-
                 };
                 _repository.Create(coursecategory);
+
+                // 確保 CourseCategory 已保存並生成 CourseCategoryId
+                await _repository.SaveChangesAsync();
 
                 var courseSubject = new CourseSubject
                 {
                     SubjectName = qVM.SelectedSubcategory,
-                    CourseCategoryId = coursecategory.CourseCategoryId,
+                    CourseCategoryId = coursecategory.CourseCategoryId,  // 此時已經有正確的 CourseCategoryId
                     Cdate = DateTime.Now,
                     Udate = null
-
                 };
                 _repository.Create(courseSubject);
 
@@ -106,12 +107,13 @@ namespace Web.Services
                     var professionalLicense = new ProfessionalLicense
                     {
                         ProfessionalLicenseName = qVM.ProfessionalLicenseName[i],
-                        ProfessionalLicenseUrl = qVM.ProfessionalLicenseUrl[i], 
+                        ProfessionalLicenseUrl = qVM.ProfessionalLicenseUrl[i],
                         MemberId = member.MemberId,
                         Cdate = DateTime.Now
                     };
                     _repository.Create(professionalLicense);
                 }
+
                 await _repository.SaveChangesAsync();
                 await _repository.CommitAsync();
 
@@ -119,7 +121,6 @@ namespace Web.Services
                 {
                     Success = true,
                     Message = "會員履歷新增成功",
-
                 };
             }
             catch (Exception ex)
@@ -139,6 +140,7 @@ namespace Web.Services
                 };
             }
         }
+
 
     }
 
