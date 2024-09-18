@@ -23,50 +23,6 @@ namespace Web.Services
 
 
 
-        //public async Task<MemberProfileViewModel> GetMemberData(int memberId)
-        //{
-
-
-        //    // 使用 MemberId 查詢會員資料
-        //    var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.MemberId == memberId);
-
-        //    if (member == null)
-        //    {
-        //        throw new Exception("找不到會員資料");
-        //    }
-
-        //    var coursePrefer = await (from mp in _repository.GetAll<MemberPreference>()
-        //                                   join cs in _repository.GetAll<CourseSubject>()
-        //                                       on mp.SubjecId equals cs.SubjectId
-        //                                   join cc in _repository.GetAll<CourseCategory>()
-        //                                       on cs.CourseCategoryId equals cc.CourseCategoryId
-        //                                   where mp.MemberId == member.MemberId
-        //                                   select new CourseListViewModel
-        //                                   {
-        //                                       CategoryName = cc.CategorytName,
-        //                                       SubjectName = cs.SubjectName
-        //                                   }).ToListAsync();
-
-        //    // 將查詢結果轉換成 ViewModel
-        //    var memberProfile = new MemberProfileViewModel
-        //    {
-        //        ImageUrl = member.HeadShotImage,
-        //        Nickname = member.Nickname,
-        //        //Birthday = member.Birthday ?? DateTime.Now,
-        //        Birthday = (DateTime)(member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null),
-
-        //        //Birthday = member.Birthday.HasValue ? member.Birthday.Value : DateTime.MinValue,
-        //        Gender = ((Gender)member.Gender).ToString(),  // 將枚舉轉換為字符串
-        //        Account = member.Account,
-        //        FirstName = member.FirstName,
-        //        LastName = member.LastName,
-        //        Email = member.Email,
-        //        Phone = member.Phone,
-        //        CoursePrefer = coursePrefer
-        //    };
-
-        //    return memberProfile;
-        //}
         public async Task<MemberProfileViewModel> GetMemberData(int memberId)
         {
             _logger.LogInformation($"開始查詢會員資料，會員ID: {memberId}");
@@ -115,8 +71,6 @@ namespace Web.Services
         }
 
 
-
-
         public async Task UpdateMemberData(MemberProfileViewModel updatedData, int memberId)
         {
             if (updatedData == null)
@@ -124,46 +78,88 @@ namespace Web.Services
                 throw new ArgumentNullException(nameof(updatedData), "更新資料不能為空");
             }
 
-            var member = await _repository.GetAll<Member>().FirstOrDefaultAsync(m => m.Account == updatedData.Account);
+            // 查找對應的會員
+            var member = await _repository.GetAll<Member>()
+                                          .Include(m => m.MemberPreferences)  // 加載會員的課程偏好
+                                          .FirstOrDefaultAsync(m => m.MemberId == memberId);
 
             if (member == null)
             {
                 throw new Exception("會員資料未找到");
             }
 
-            // 更新會員的屬性，根據需要檢查欄位是否有效
-            member.FirstName = string.IsNullOrWhiteSpace(updatedData.FirstName) ? member.FirstName : updatedData.FirstName;
-            member.LastName = string.IsNullOrWhiteSpace(updatedData.LastName) ? member.LastName : updatedData.LastName;
-            member.Nickname = string.IsNullOrWhiteSpace(updatedData.Nickname) ? member.Nickname : updatedData.Nickname;
-
-            // 確保 Gender 值有效
-            if (Enum.TryParse(typeof(Gender), updatedData.Gender, out var genderValue))
+            // 檢查生日是否為 null 並且在有效範圍內
+            if (updatedData.Birthday.HasValue && updatedData.Birthday.Value < new DateTime(1753, 1, 1))
             {
-                member.Gender = (short)genderValue;
+                throw new Exception("生日日期無效，應在 1753-01-01 之後");
             }
 
-            // 檢查生日是否有效
-            if (updatedData.Birthday != DateTime.MinValue)
+            // 更新基本資料
+            member.FirstName = updatedData.FirstName ?? member.FirstName;
+            member.LastName = updatedData.LastName ?? member.LastName;
+            member.Nickname = updatedData.Nickname ?? member.Nickname;
+            member.Email = updatedData.Email ?? member.Email;
+            member.Phone = updatedData.Phone ?? member.Phone;
+            member.Birthday = updatedData.Birthday;
+
+
+            // 更新課程偏好
+            var allCourseSubjects = await _repository.GetAll<CourseSubject>().ToListAsync();
+
+            // 當前的偏好
+            var existingPreferences = member.MemberPreferences.ToList();
+
+            // 移除不再存在的偏好
+            var preferencesToRemove = existingPreferences
+                .Where(p => !updatedData.CoursePrefer.Any(up => allCourseSubjects
+                    .Any(cs => cs.SubjectId == p.SubjecId && cs.SubjectName == up.SubjectName)))
+                .ToList();
+
+            // 移除偏好，但不清空整個集合
+            foreach (var preference in preferencesToRemove)
             {
-                member.Birthday = updatedData.Birthday;
+                _repository.Delete(preference);
             }
 
-            // 更新其他欄位
-            member.Email = string.IsNullOrWhiteSpace(updatedData.Email) ? member.Email : updatedData.Email;
-            member.Phone = string.IsNullOrWhiteSpace(updatedData.Phone) ? member.Phone : updatedData.Phone;
+            // 新增新的偏好
+            foreach (var course in updatedData.CoursePrefer)
+            {
+                var existingPreference = existingPreferences
+                    .FirstOrDefault(p => allCourseSubjects
+                        .Any(cs => cs.SubjectId == p.SubjecId && cs.SubjectName == course.SubjectName));
+
+                if (existingPreference == null)
+                {
+                    var subject = allCourseSubjects.FirstOrDefault(cs => cs.SubjectName == course.SubjectName);
+
+                    if (subject != null)
+                    {
+                        member.MemberPreferences.Add(new MemberPreference
+                        {
+                            MemberId = memberId,
+                            SubjecId = subject.SubjectId,
+                            Cdate = DateTime.Now,
+                            Udate = DateTime.Now,
+                        });
+                    }
+                }
+            }
 
             try
             {
-                // 保存更新到資料庫
+                // 儲存變更到資料庫
                 _repository.Update(member);
                 await _repository.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {
-                // 錯誤處理: 資料庫更新失敗
                 throw new Exception("更新會員資料時發生錯誤", ex);
             }
         }
+
+
+
+
 
         public async Task<CourseMainPageViewModel> GetWatchList(int memberId)
         {

@@ -2,19 +2,22 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Web.Entities;
-using Web.Services;
 
 namespace Web.Controllers
 {
     public class MemberController : Controller
     {
         private readonly MemberDataService _memberDataService;
-        private readonly OrderDetailService _orderDetailService;      
+        private readonly OrderDetailService _orderDetailService;
+        private readonly IRepository _repository;
 
-        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice)
+
+        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice, IRepository repository)
         {
             _memberDataService = memberDataService;
-            _orderDetailService = orderdetailservice;           
+            _orderDetailService = orderdetailservice;
+            _repository = repository;
+
         }
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
@@ -51,6 +54,7 @@ namespace Web.Controllers
             // 從資料庫中查詢會員資料
             var summaryData = await _memberDataService.GetMemberData(parsedMemberId);
 
+
             // 如果沒有找到會員資料
             if (summaryData == null)
             {
@@ -60,23 +64,6 @@ namespace Web.Controllers
             return View(summaryData);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateMemberData(MemberProfileViewModel memberProfile, int memberId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _memberDataService.UpdateMemberData(memberProfile, memberId);
-                    return RedirectToAction("MemberData", new { memberId });
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-            }
-            return View(memberProfile);
-        }
-
         public async Task<IActionResult> MemberTransaction()
         {
 
@@ -97,5 +84,37 @@ namespace Web.Controllers
         {
             return View();
         }
+        // 接收 AJAX 發送的資料來更新會員資料
+        [HttpPost]
+        [HttpPost]
+        public async Task<IActionResult> SaveProfile([FromBody] MemberProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // 從 Claims 中獲取會員 ID
+                    var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (memberIdClaim == null)
+                    {
+                        return Json(new { success = false, message = "無法取得會員ID，請重新登入" });
+                    }
+
+                    int memberId = int.Parse(memberIdClaim.Value);
+
+                    // 使用 Service 層更新會員資料
+                    await _memberDataService.UpdateMemberData(model, memberId);
+
+                    return Json(new { success = true, message = "儲存成功" });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = $"儲存失敗: {ex.Message}" });
+                }
+            }
+
+            return Json(new { success = false, message = "資料驗證失敗" });
+        }
+
     }
 }
