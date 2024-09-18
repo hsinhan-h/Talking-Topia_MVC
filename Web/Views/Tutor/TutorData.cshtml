@@ -1,6 +1,6 @@
 ﻿@model TutorDataViewModel
 
-<form asp-action="TutorData" method="post">
+
 <p style="display: none;">會員ID: <span id="memberIdDisplay"></span></p>
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
@@ -10,12 +10,13 @@
                     <div class="lh-backstage-tutor-page mb-5">
                         <section class="lh-backstage-lh-backstage-tutor-data">
                             <div class="row mb-2">
-                                <div class="col-12">
-                                    <h3>家教資料</h3>
-                                    <div class="row">
-                                        <div class="col-12 col-md-4">
-                                            <div>
-                                                <select asp-for="NationID" asp-items="@(new SelectList(new List<SelectListItem>
+                                <form asp-action="TutorData" method="post" class="tutorDataForm">
+                                    <div class="col-12">
+                                        <h3>家教資料</h3>
+                                        <div class="row">
+                                            <div class="col-12 col-md-4">
+                                                <div>
+                                                    <select asp-for="NationID" asp-items="@(new SelectList(new List<SelectListItem>
                                                 {
                                                     new SelectListItem { Value = "1", Text = "台灣" },
                                                     new SelectListItem { Value = "2", Text = "日本" },
@@ -27,131 +28,131 @@
                                                     new SelectListItem { Value = "8", Text = "印度" },
                                                     new SelectListItem { Value = "9", Text = "其他" }
                                                 }, "Value", "Text"))" class="form-select select-form" aria-label="Default select example">
-                                                </select>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <input asp-for="NativeLanguage"
+                                                           type="text"
+                                                           class="form-control"
+                                                           id="floatingInput5"
+                                                           placeholder=""
+                                                           value="@Model.NativeLanguage" />
+                                                    <label for="floatingInput5">母語</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <input asp-for="SpokenLanguage"
+                                                           type="text"
+                                                           class="form-control"
+                                                           id="floatingInput6"
+                                                           placeholder=""
+                                                           value="@Model.SpokenLanguage" />
+                                                    <label for="floatingInput6">會說的語言</label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-floating mb-3">
-                                                <input asp-for="NativeLanguage"
-                                                        type="text"
-                                                       class="form-control"
-                                                       id="floatingInput5"
-                                                       placeholder=""
-                                                       value="@Model.NativeLanguage" />
-                                                <label for="floatingInput5">母語</label>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input asp-for="BankAccount"
+                                                           type="text"
+                                                           class="form-control"
+                                                           id="floatingInput13"
+                                                           value="@Model.BankCode"
+                                                           placeholder="" />
+                                                    <label for="floatingInput13">銀行代號</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-md-4">
-                                            <div class="form-floating mb-3">
-                                                <input asp-for="SpokenLanguage"
-                                                       type="text"
-                                                       class="form-control"
-                                                       id="floatingInput6"
-                                                       placeholder=""
-                                                       value="@Model.SpokenLanguage" />
-                                                <label for="floatingInput6">會說的語言</label>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input asp-for="BankCode"
+                                                           type="text"
+                                                           class="form-control"
+                                                           id="floatingInput14"
+                                                           value=" @Model.BankAccount"
+                                                           placeholder="" />
+                                                    <label for="floatingInput14">銀行帳戶</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-floating mb-3">
-                                                <input asp-for="BankAccount"
-                                                       type="text"
-                                                       class="form-control"
-                                                       id="floatingInput13"
-                                                       value="@Model.BankCode"
-                                                       placeholder="" />
-                                                <label for="floatingInput13">銀行代號</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-floating mb-3">
-                                                <input asp-for="BankCode"
-                                                       type="text"
-                                                       class="form-control"
-                                                       id="floatingInput14"
-                                                       value=" @Model.BankAccount"
-                                                       placeholder="" />
-                                                <label for="floatingInput14">銀行帳戶</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="lh-baclstage-member-data-list mt-3">
-                                    <h4>學歷</h4>
-                                    <ul>
-                                        @foreach (var edu in Model.EducationalBackground)
-                                        {
-                                            <li>@edu.SchoolName - @edu.StudyStartYear 至 @edu.StudyEndYear</li>
-                                        }
-                                    </ul>
-                                    <h4>經歷</h4>
-                                    <ul>
-                                        @foreach (var work in Model.WorkBackground)
-                                        {
-                                            <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
-                                        }
-                                    </ul>
-
-                                    <h4>證照資訊</h4>
-                                    <div>
-                                        <button class="btn lh-backstage-submit-btn"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#lh-backstage-tutor-application-audit">
-                                            證照資訊
-                                        </button>
+                                    <div class="lh-baclstage-member-data-list mt-3">
+                                        <h4>學歷</h4>
+                                        <ul>
+                                            @foreach (var edu in Model.EducationalBackground)
+                                            {
+                                                <li>@edu.SchoolName - @edu.StudyStartYear 至 @edu.StudyEndYear</li>
+                                            }
+                                        </ul>
+                                        <h4>經歷</h4>
+                                        <ul>
+                                            @foreach (var work in Model.WorkBackground)
+                                            {
+                                                <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
+                                            }
+                                        </ul>
                                     </div>
-                                    
-                                    <h4>可接受預約時段</h4>
-                                    <div class=" d-flex flex-wrap col-10" id="reservation-list">
-                                        
-                                    </div>
-                                    <button type="button"
-                                            class="btn lh-backstage-submit-btn"
+                                </form>
+                                <h4>證照資訊</h4>
+                                <div>
+                                    <button class="btn lh-backstage-submit-btn"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#editTimeSlotModal">
-                                        編輯教師可預約時段
+                                            data-bs-target="#lh-backstage-tutor-application-audit">
+                                        證照資訊
                                     </button>
                                 </div>
-                                <div class="lh-backstage-member-card-list d-flex">
-                                    <div class="card col-12 col-md-3 me-2 p-2">
-                                        @if (Model.HasCourses)
+
+                                <h4>可接受預約時段</h4>
+                                <div class=" d-flex flex-wrap col-10" id="reservation-list">
+                                <button type="button"
+                                        class="btn lh-backstage-submit-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editTimeSlotModal">
+                                    編輯教師可預約時段
+                                </div>
+                                </button>
+                            </div>
+
+                            <div class="lh-backstage-member-card-list d-flex">
+                                <div class="card col-12 col-md-3 me-2 p-2">
+                                    @if (Model.HasCourses)
+                                    {
+                                        @foreach (var course in Model.Course)
                                         {
-                                            @foreach (var course in Model.Course)
-                                            {
-                                                <div class="fs-2 ps-3">@course.CategoryName</div>
-                                                <div class="card-body">
-                                                    <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
-                                                    <p class="card-text">申請狀態：<span>@Model.Coursestatus</span></p>
-                                                    @*  要return回履歷 <a href="/TalkingTopia/Tutor/TutorResume.html?memberId=@Model.MemberId"
-                                                                        class="btn lh-backstage-submit-btn">編輯家教資料 *@
-                                                    <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
-                                                        編輯家教資料
-                                                    </a>
-                                                </div>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <div class="fs-2 ps-3"></div>
+                                            <div class="fs-2 ps-3">@course.CategoryName</div>
                                             <div class="card-body">
-                                                <p class="card-text">申請科目：<span></span></p>
-                                                <p class="card-text">申請狀態：<span></span></p>
+                                                <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
+                                                <p class="card-text">申請狀態：<span>@Model.Coursestatus</span></p>
+                                                @*  要return回履歷 <a href="/TalkingTopia/Tutor/TutorResume.html?memberId=@Model.MemberId"
+                                        class="btn lh-backstage-submit-btn">編輯家教資料 *@
                                                 <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
                                                     編輯家教資料
                                                 </a>
                                             </div>
-                                        } 
-                                    </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="fs-2 ps-3"></div>
+                                        <div class="card-body">
+                                            <p class="card-text">申請科目：<span></span></p>
+                                            <p class="card-text">申請狀態：<span></span></p>
+                                            <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
+                                                編輯家教資料
+                                            </a>
+                                        </div>
+                                    }
                                 </div>
-                               @*  apply status 為true 預設0*@
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn lh-backstage-submit-btn">@(Model.TutorId == 0 ? "儲存" : "編輯")</button>
-                                </div>
-                                
-                                
+                            </div>
+                            @*  apply status 為true 預設0*@
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn lh-backstage-submit-btn submitButton">@(Model.TutorId == 0 ? "儲存" : "編輯")</button>
+                            </div>
+
                         </section>
                     </div>
                 </div>
@@ -264,8 +265,8 @@
                             data-bs-dismiss="modal">
                         關閉
                     </button>
-                        <button type="submit"
-                            class="btn lh-backstage-submit-btn">
+                    <button type="button"
+                            class="btn lh-backstage-submit-btn ">
                         儲存
                     </button>
                 </div>
@@ -273,7 +274,7 @@
         </div>
     </div>
 </div>
-</form>
+
 @section topCSS {
     <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
 }
