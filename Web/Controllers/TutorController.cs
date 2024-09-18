@@ -88,7 +88,7 @@ namespace Web.Controllers
             {
                 var result = await _resumeDataService.AddResumeAsync(qVM);
 
-                ViewData["Header"] = result.Success ? "履歷已新增" : "錯誤訊息";
+                ViewData["Header"] = result.Success ? "履歷已新增" : "履歷新增失敗請聯絡客服人員";
                 ViewData["Message"] = result.Message;
 
                 return View("ShowMessage");

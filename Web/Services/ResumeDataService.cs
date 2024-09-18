@@ -89,14 +89,12 @@ namespace Web.Services
                     Udate = null
                 };
                 _repository.Create(coursecategory);
-
-                // 確保 CourseCategory 已保存並生成 CourseCategoryId
                 await _repository.SaveChangesAsync();
 
                 var courseSubject = new CourseSubject
                 {
                     SubjectName = qVM.SelectedSubcategory,
-                    CourseCategoryId = coursecategory.CourseCategoryId,  // 此時已經有正確的 CourseCategoryId
+                    CourseCategoryId = coursecategory.CourseCategoryId, 
                     Cdate = DateTime.Now,
                     Udate = null
                 };
