@@ -2,6 +2,7 @@
 using ApplicationCore.Services;
 using Microsoft.AspNetCore.Antiforgery;
 using System.Net;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -62,10 +63,11 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitToOrder(int memberId, string paymentType, string taxIdNumber, List<CartItemUpdateViewModel> Items)
+        public async Task<IActionResult> SubmitToOrder(string paymentType, string taxIdNumber, List<CartItemUpdateViewModel> Items)
         {
-            //var user = HttpContext.User.Identity.Name;
-            //var memberId = await _memberService.GetMemberId(user);
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int parsedMemberId = int.Parse(memberIdClaim.Value);
+            var memberId = await _memberService.GetMemberId(parsedMemberId);
             if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (string.IsNullOrEmpty(paymentType))

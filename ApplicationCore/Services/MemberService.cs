@@ -21,9 +21,9 @@ namespace ApplicationCore.Services
         {
             return _memberRepository.Any(m => m.MemberId == memberId);
         }
-        public async Task<int> GetMemberId(string userAccount)
+        public async Task<int> GetMemberId(int memberId)
         {
-            var result = await _memberRepository.FirstOrDefaultAsync(x => x.Email == userAccount);
+            var result = await _memberRepository.FirstOrDefaultAsync(x => x.MemberId == memberId);
             return result.MemberId;
         }
     }

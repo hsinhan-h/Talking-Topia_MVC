@@ -1,4 +1,6 @@
 ﻿using ApplicationCore.Interfaces;
+using System.Security.Claims;
+using Web.Services;
 
 namespace Web.Controllers
 {
@@ -20,11 +22,14 @@ namespace Web.Controllers
         /// <summary>
         /// ShoppingCart頁面
         /// </summary>
-        public async Task<IActionResult> Index([FromQuery] int memberId)
-        //public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
-            var user = HttpContext.User.Identity.Name;
-            //var memberId = await _memberService.GetMemberId(user);
+            //var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            //var temp = memberIdClaim.Subject.Claims;
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int parsedMemberId = int.Parse(memberIdClaim.Value);
+            var memberId = await _memberService.GetMemberId(parsedMemberId);
+
             if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
@@ -37,11 +42,14 @@ namespace Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
-        //public async Task<IActionResult> AddToCart([FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
+        //public async Task<IActionResult> AddToCart([FromForm] int memberId, [FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
+        public async Task<IActionResult> AddToCart([FromForm] int courseId, [FromForm] int courseLength, [FromForm] int quantity)
         {
-            var user = HttpContext.User.Identity.Name;
-            //var memberId = await _memberService.GetMemberId(user);
+            
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int parsedMemberId = int.Parse(memberIdClaim.Value);
+            var memberId = await _memberService.GetMemberId(parsedMemberId);
+
             if (!_memberService.IsMember(memberId))
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (!_courseService.IsCourse(courseId))
