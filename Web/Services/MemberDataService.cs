@@ -5,6 +5,9 @@ using Web.Repository;
 using Web.ViewModels;
 using Infrastructure.Data;
 using ApplicationCore.Entities;
+using MemberPreference = Web.Entities.MemberPreference;
+using CourseSubject = Web.Entities.CourseSubject;
+using Member = Web.Entities.Member;
 
 namespace Web.Services
 {
