@@ -1,4 +1,6 @@
-﻿namespace Web.Services
+﻿using ApplicationCore.Entities;
+
+namespace Web.Services
 {
     public class NationService
     {
@@ -9,15 +11,15 @@
             _repository = repository;
         }
 
-        public async Task<List<Nation>> GetNationsAsync()
+        public async Task<List<Web.Entities.Nation>> GetNationsAsync()
         {
-            var nations = await _repository.GetAll<Nation>().ToListAsync();
+            var nations = await _repository.GetAll<Web.Entities.Nation>().ToListAsync();
             return nations;
         }
 
         public async Task<List<string>> GetNationNamesAsync()
         {
-            var nationNames = await _repository.GetAll<Nation>()
+            var nationNames = await _repository.GetAll<Web.Entities.Nation>()
                 .Select(n => n.NationName)
                 .ToListAsync();
             return nationNames;

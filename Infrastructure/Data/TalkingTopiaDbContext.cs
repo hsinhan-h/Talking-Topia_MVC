@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
-using Web.Entities;
 
-namespace Web.Data;
+namespace Infrastructure.Data;
 
-public partial class TalkingTopiaContext : DbContext
+public partial class TalkingTopiaDbContext : DbContext
 {
-    public TalkingTopiaContext()
+    public TalkingTopiaDbContext()
     {
     }
 
-    public TalkingTopiaContext(DbContextOptions<TalkingTopiaContext> options)
+    public TalkingTopiaDbContext(DbContextOptions<TalkingTopiaDbContext> options)
         : base(options)
     {
     }
@@ -66,10 +64,12 @@ public partial class TalkingTopiaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TalkingTopia;Trusted_Connection=True;MultipleActiveResultSets=true");
+        => optionsBuilder.UseSqlServer("Server=tcp:bs-2024-summer-03.database.windows.net,1433;Initial Catalog=TalkingTopiaDb;Persist Security Info=False;User ID=bs;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.UseCollation("Chinese_Taiwan_Stroke_CI_AS");
+
         modelBuilder.Entity<ApplyList>(entity =>
         {
             entity.HasKey(e => e.ApplyId).HasName("PK__ApplyLis__F0687F91F95B14E5");
@@ -211,6 +211,16 @@ public partial class TalkingTopiaContext : DbContext
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Courses_CourseCategories");
+
+            entity.HasOne(d => d.Subject).WithMany(p => p.Courses)
+                .HasForeignKey(d => d.SubjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Courses_CourseSubjects");
+
+            entity.HasOne(d => d.Tutor).WithMany(p => p.Courses)
+                .HasForeignKey(d => d.TutorId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Courses_Tutors");
         });
 
         modelBuilder.Entity<CourseCategory>(entity =>
@@ -487,15 +497,12 @@ public partial class TalkingTopiaContext : DbContext
             entity.HasIndex(e => e.MemberId, "IX_Orders_MemberId");
 
             entity.Property(e => e.OrderId).HasComment("訂單Id");
-            entity.Property(e => e.Cdate)
-                .HasComment("建立時間")
-                .HasColumnType("datetime")
-                .HasColumnName("CDate");
             entity.Property(e => e.CouponPrice)
                 .HasComment("優惠金額")
                 .HasColumnType("money");
             entity.Property(e => e.InvoiceType).HasComment("發票類型");
             entity.Property(e => e.MemberId).HasComment("會員Id");
+            entity.Property(e => e.MerchantTradeNo).HasMaxLength(50);
             entity.Property(e => e.OrderStatusId).HasComment("訂單狀態");
             entity.Property(e => e.PaymentType)
                 .IsRequired()
@@ -512,6 +519,7 @@ public partial class TalkingTopiaContext : DbContext
             entity.Property(e => e.TotalPrice)
                 .HasComment("總金額")
                 .HasColumnType("money");
+            entity.Property(e => e.TradeNo).HasMaxLength(50);
             entity.Property(e => e.TransactionDate)
                 .HasComment("交易日期")
                 .HasColumnType("datetime");
@@ -650,9 +658,7 @@ public partial class TalkingTopiaContext : DbContext
             entity.Property(e => e.BookingDate)
                 .HasComment("預約日期")
                 .HasColumnType("datetime");
-            entity.Property(e => e.BookingTime)
-                .HasComment("預約時間")
-                .HasColumnType("datetime");
+            entity.Property(e => e.BookingTime).HasComment("預約時間");
             entity.Property(e => e.Cdate)
                 .HasComment("建立時間")
                 .HasColumnType("datetime")
@@ -752,8 +758,6 @@ public partial class TalkingTopiaContext : DbContext
         {
             entity.HasKey(e => e.WorkExperienceId).HasName("PK__WorkExpe__55A2B889201583D4");
 
-            entity.HasIndex(e => e.MemberId, "IX_WorkExperiences_MemberId");
-
             entity.Property(e => e.WorkExperienceId).HasComment("工作經驗Id");
             entity.Property(e => e.Cdate)
                 .HasComment("建立時間")
@@ -764,23 +768,14 @@ public partial class TalkingTopiaContext : DbContext
                 .HasComment("修改時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
-            entity.Property(e => e.WorkEndDate)
-                .HasComment("工作結束日")
-                .HasColumnType("datetime");
+            entity.Property(e => e.WorkEndDate).HasComment("工作結束日");
             entity.Property(e => e.WorkExperienceFile)
                 .IsRequired()
                 .HasComment("工作經驗檔案路徑");
             entity.Property(e => e.WorkName)
                 .HasMaxLength(50)
                 .HasComment("工作經驗名稱");
-            entity.Property(e => e.WorkStartDate)
-                .HasComment("工作起始日")
-                .HasColumnType("datetime");
-
-            entity.HasOne(d => d.Member).WithMany(p => p.WorkExperiences)
-                .HasForeignKey(d => d.MemberId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__WorkExper__Membe__4AB81AF0");
+            entity.Property(e => e.WorkStartDate).HasComment("工作起始日");
         });
 
         OnModelCreatingPartial(modelBuilder);

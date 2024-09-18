@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using ApplicationCore.Entities;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 
 namespace Web.Services
@@ -211,12 +212,12 @@ namespace Web.Services
         private IQueryable<CourseInfoViewModel> GetCourseMainInfoQuery()
         {
             return (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join member in _repository.GetAll<Member>().AsNoTracking()
+                from course in _repository.GetAll<Entities.Course>().AsNoTracking()
+                join member in _repository.GetAll<Entities.Member>().AsNoTracking()
                 on course.TutorId equals member.MemberId
-                join subject in _repository.GetAll<CourseSubject>().AsNoTracking()
+                join subject in _repository.GetAll<Entities.CourseSubject>().AsNoTracking()
                 on course.SubjectId equals subject.SubjectId
-                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                join nation in _repository.GetAll<Entities.Nation>().AsNoTracking()
                 on member.NationId equals nation.NationId
 
                 select new CourseInfoViewModel
@@ -243,7 +244,7 @@ namespace Web.Services
         private async Task<List<CourseInfoViewModel>> GetCourseImagesAsync(List<int> courseIds)
         {
             return await (
-                from courseImage in _repository.GetAll<CourseImage>().AsNoTracking()
+                from courseImage in _repository.GetAll<Entities.CourseImage>().AsNoTracking()
                 where courseIds.Contains(courseImage.CourseId)
                 group courseImage by courseImage.CourseId into gpImage
                 select new CourseInfoViewModel
@@ -260,7 +261,7 @@ namespace Web.Services
         private async Task<List<CourseInfoViewModel>> GetCourseRatingsAndReviewsAsync(List<int> courseIds)
         {
             return await (
-                from review in _repository.GetAll<Review>().AsNoTracking()
+                from review in _repository.GetAll<Entities.Review>().AsNoTracking()
                 where courseIds.Contains(review.CourseId)
                 group review by review.CourseId into gpReview
                 select new CourseInfoViewModel
@@ -276,7 +277,7 @@ namespace Web.Services
         private async Task<List<CourseInfoViewModel>> GetBookedTimeSlotsAsync(List<int> courseIds)
         {
             return await (
-                from booking in _repository.GetAll<Booking>().AsNoTracking()
+                from booking in _repository.GetAll<Entities.Booking>().AsNoTracking()
                 where courseIds.Contains(booking.CourseId)
                 group booking by booking.CourseId into gpBooking
                 select new CourseInfoViewModel
@@ -294,7 +295,7 @@ namespace Web.Services
         private async Task<List<CourseInfoViewModel>> GetAvailableTimeSlotsAsync(List<int> memberIds)
         {
             return await(
-                from tutorTimeSlot in _repository.GetAll<TutorTimeSlot>().AsNoTracking()
+                from tutorTimeSlot in _repository.GetAll<Entities.TutorTimeSlot>().AsNoTracking()
                 where memberIds.Contains(tutorTimeSlot.TutorId)
                 group tutorTimeSlot by tutorTimeSlot.TutorId into gpMember
                 select new CourseInfoViewModel
@@ -321,7 +322,7 @@ namespace Web.Services
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
         {
             var courseInfo = await _repository
-                .GetAll<Course>()
+                .GetAll<Entities.Course>()
                 .AsNoTracking()
                 .Where(course => course.CourseId == courseId)
                 .Select(course => new CourseInfoViewModel
@@ -329,14 +330,14 @@ namespace Web.Services
                     CourseId = course.CourseId,
                     MemberId = course.TutorId,
                     TutorHeadShotImage = _repository
-                        .GetAll<Member>()
+                        .GetAll<Entities.Member>()
                         .AsNoTracking()
                         .Where(m => m.MemberId == course.TutorId)
                         .Select(m => m.HeadShotImage)
                         .FirstOrDefault(),
                     CourseTitle = course.Title,
                     AvailableTimeSlots = _repository
-                        .GetAll<TutorTimeSlot>()
+                        .GetAll<Entities.TutorTimeSlot>()
                         .AsNoTracking()
                         .Where(ts => ts.TutorId == course.TutorId)
                         .Select(ts => new TimeSlotViewModel
@@ -345,7 +346,7 @@ namespace Web.Services
                             StartHour = ts.CourseHourId
                         }).ToList(),
                     BookedTimeSlots = _repository
-                        .GetAll<Booking>()
+                        .GetAll<Entities.Booking>()
                         .AsNoTracking()
                         .Where(bk => bk.CourseId == course.CourseId)
                         .Select(bk => new TimeSlotViewModel
@@ -361,7 +362,7 @@ namespace Web.Services
 
         public decimal GetCourse25MinUnitPrice(int courseId)
         {
-            return _repository.GetAll<Course>().AsNoTracking()
+            return _repository.GetAll<Entities.Course>().AsNoTracking()
                 .Where(c => c.CourseId == courseId)
                 .Select(c => c.TwentyFiveMinUnitPrice)
                 .FirstOrDefault();
@@ -371,10 +372,10 @@ namespace Web.Services
         {
             // 查詢課程、會員和國籍資料
             var courseMainInfo = await (
-                from course in _repository.GetAll<Course>().AsNoTracking()
-                join member in _repository.GetAll<Member>().AsNoTracking()
+                from course in _repository.GetAll<Entities.Course>().AsNoTracking()
+                join member in _repository.GetAll<Entities.Member>().AsNoTracking()
                 on course.TutorId equals member.MemberId
-                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                join nation in _repository.GetAll<Entities.Nation>().AsNoTracking()
                 on member.NationId equals nation.NationId
                 where course.CourseId == courseId
                 select new CourseMainPageViewModel
@@ -402,11 +403,11 @@ namespace Web.Services
                 return null; // 如果找不到對應的課程資料，返回 null
 
            //最高學歷的查詢
-            var education = await _repository.GetAll<Education>()
+            var education = await _repository.GetAll<Entities.Education>()
                                 .Where(w => w.EducationId == courseMainInfo.EducationId)
                                 .AsNoTracking().ToListAsync();
             //專業證照的查詢
-            var professional = await _repository.GetAll<ProfessionalLicense>()
+            var professional = await _repository.GetAll<Entities.ProfessionalLicense>()
                                 .Where(p=>p.MemberId == courseMainInfo.TutorId)
                                 .AsNoTracking().ToListAsync();
             var professionallist = professional.Any() ?
@@ -424,7 +425,7 @@ namespace Web.Services
                                     }.ToList();
 
             // 查詢該課程的評論
-            var reviews = await _repository.GetAll<Review>()
+            var reviews = await _repository.GetAll<Entities.Review>()
                                 .Where(r => r.CourseId == courseId)
                                 .AsNoTracking()
                                 .ToListAsync();
@@ -449,7 +450,7 @@ namespace Web.Services
 
 
             // 查詢教師的工作經驗
-            var tutorExperiences = await _repository.GetAll<WorkExperience>()
+            var tutorExperiences = await _repository.GetAll<Entities.WorkExperience>()
                                 .Where(w => w.MemberId == courseMainInfo.TutorId)
                                 .AsNoTracking()
                                 .ToListAsync();
@@ -486,8 +487,8 @@ namespace Web.Services
                 }).ToList(),
                 ExperienceList = tutorExperiences.Select(e => new TutorExperience
                 {
-                    StartYear = e.WorkStartDate.Year.ToString(),
-                    EndYear = e.WorkEndDate.Year.ToString(),
+                    //StartYear = e.WorkStartDate.Year.ToString(),
+                    //EndYear = e.WorkEndDate.Year.ToString(),
                     WorkTitle = e.WorkName
                 }).ToList(),
                 EducationDegree = education.Select(w => new TutorEducationList
@@ -608,7 +609,7 @@ namespace Web.Services
 
         public double GetCourseRating(int courseId)
         {
-            var courseRatings = _repository.GetAll<Review>()
+            var courseRatings = _repository.GetAll<Entities.Review>()
                 .Where(review => review.CourseId == courseId)
                 .Select(review => (double)review.Rating);
             return courseRatings.Any() ? courseRatings.Average() : 0;
@@ -616,10 +617,10 @@ namespace Web.Services
 
         public List<TutorRecomCardList> GetTutorRecommendCard(int categoryId)
         {            
-            var recomCardList = (from course in _repository.GetAll<Course>().AsNoTracking()
-                                join member in _repository.GetAll<Member>().AsNoTracking()
+            var recomCardList = (from course in _repository.GetAll<Entities.Course>().AsNoTracking()
+                                join member in _repository.GetAll<Entities.Member>().AsNoTracking()
                                 on course.TutorId equals member.MemberId
-                                join nation in _repository.GetAll<Nation>().AsNoTracking()
+                                join nation in _repository.GetAll<Entities.Nation>().AsNoTracking()
                                 on member.NationId equals nation.NationId
                                 where course.CategoryId == categoryId
                                 select new TutorRecomCardList
@@ -636,8 +637,8 @@ namespace Web.Services
 
 
             var recomCardReview =  (
-               from course in _repository.GetAll<Course>().AsNoTracking()
-               join review in _repository.GetAll<Review>().AsNoTracking()
+               from course in _repository.GetAll<Entities.Course>().AsNoTracking()
+               join review in _repository.GetAll<Entities.Review>().AsNoTracking()
                on course.CourseId equals review.CourseId
                group review by course.CourseId into Review
                select new TutorRecomCardList

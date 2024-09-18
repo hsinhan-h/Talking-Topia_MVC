@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Web.Exceptions;
 using Web.Entities;
+using ApplicationCore.Entities;
 
 
 
@@ -23,7 +24,7 @@ namespace Web.Services
         {
             try
             {
-                var existingMember = await _repository.GetAll<Member>()
+                var existingMember = await _repository.GetAll<Web.Entities.Member>()
                     .SingleOrDefaultAsync(m => m.Email == model.RegisterViewModel.Email);
 
                 if (existingMember != null)
@@ -31,7 +32,7 @@ namespace Web.Services
                     throw new UserAlreadyExistsException("該電子郵件已被註冊");
                 }
 
-                var newMember = new Member
+                var newMember = new Web.Entities.Member
                 {
                     Email = model.RegisterViewModel.Email,
                     Password = model.RegisterViewModel.Password,
@@ -46,7 +47,7 @@ namespace Web.Services
                     IsVerifiedTutor = false
                 };
 
-                var passwordHasher = new PasswordHasher<Member>();
+                var passwordHasher = new PasswordHasher<Web.Entities.Member>();
                 newMember.Password = passwordHasher.HashPassword(newMember, model.RegisterViewModel.Password);
 
                 _repository.Create(newMember);
@@ -62,9 +63,9 @@ namespace Web.Services
 
 
         // 驗證使用者帳號和密碼
-        public async Task<Member> ValidateUserAsync(string email, string password)
+        public async Task<Web.Entities.Member> ValidateUserAsync(string email, string password)
         {
-            var user = await _repository.GetAll<Member>().SingleOrDefaultAsync(m => m.Email == email);
+            var user = await _repository.GetAll<Web.Entities.Member>().SingleOrDefaultAsync(m => m.Email == email);
 
 
             if (user == null)
@@ -74,7 +75,7 @@ namespace Web.Services
             }
 
             // 使用 PasswordHasher 驗證密碼
-            var passwordHasher = new PasswordHasher<Member>();
+            var passwordHasher = new PasswordHasher<Web.Entities.Member>();
             var result = passwordHasher.VerifyHashedPassword(user, user.Password, password);
 
             if (result == PasswordVerificationResult.Success)

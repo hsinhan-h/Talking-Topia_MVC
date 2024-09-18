@@ -42,7 +42,7 @@ namespace Web.Services
             {
                 var member = new Member
                 {
-                    IsVerifiedTutor = true,
+                    IsVerifiedTutor = false,
                     HeadShotImage = qVM.HeadShotImage,
                     Cdate = DateTime.Now,
                     Udate = null,
@@ -74,8 +74,8 @@ namespace Web.Services
                 var workExperience = new WorkExperience
                 {
                     WorkExperienceFile = qVM.WorkExperienceFile,
-                    WorkStartDate = qVM.WorkStartDate,
-                    WorkEndDate = qVM.WorkEndDate,
+                    //WorkStartDate = qVM.WorkStartDate,
+                    //WorkEndDate = qVM.WorkEndDate,
                     WorkName = qVM.WorkName,
                     MemberId = member.MemberId,
                     Cdate = DateTime.Now,

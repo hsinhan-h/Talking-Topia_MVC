@@ -34,7 +34,7 @@
                     </ul>
                 </li>
                 <li v-if="selectedSubject">
-                    <button class="dropdown-item cancel-filter-btn" type="button" v-on:click="clearSubjectFilter"><i class="fa-solid fa-x"></i>  <strong>取消篩選</strong></button>
+                    <button class="dropdown-item" type="button" v-on:click="clearSubjectFilter"><strong>所有類別</strong></button>
                 </li>
             </ul> 
         </div>
@@ -49,7 +49,7 @@
                     </button>
                 </li>
                 <li v-if="selectedNation">
-                    <button class="dropdown-item cancel-filter-btn" type="button" v-on:click="clearNationFilter"><i class="fa-solid fa-x"></i>  <strong>取消篩選</strong></button>
+                    <button class="dropdown-item" type="button" v-on:click="clearNationFilter"><strong>所有國籍</strong></button>
                 </li>
             </ul>
         </div>
@@ -67,7 +67,12 @@
                 </template>              
             </button>
             <ul class="dropdown-menu px-3 py-2 px-md-4 py-md-3">
-                <li class="col-12">選擇時間段</li>             
+                <li class="col-12 d-flex justify-content-between">
+                    <span><i class="bi bi-alarm me-2"></i>  選擇時間段 </span>
+                    <span v-if="selectedWeekdays.length > 0 || selectedTimeslots.length > 0">
+                        <button class="dropdown-item" type="button" v-on:click="clearWeekdayAndTimeslotFilter"><strong>所有時間段</strong> </button>
+                    </span>
+                </li>               
                 <li class="checkbox-wrapper col-12 d-flex">                       
                     <div class="mt-2 col-6 weekday-checkbox">
                         <div class="fw-bolder col-12">星期</div>
@@ -176,14 +181,17 @@
                 <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('800-999')">NT$800 - NT$999</button></li>
                 <li><button class="dropdown-item" type="button" v-on:click="filterByBudget('1000以上')">NT$1000以上</button></li>
                 <li v-if="selectedBudget">
-                    <button class="dropdown-item cancel-filter-btn" type="button" v-on:click="clearBudgetFilter"><i class="fa-solid fa-x"></i>  <strong>取消篩選</strong></button>
+                    <button class="dropdown-item" type="button" v-on:click="clearBudgetFilter"><strong>所有預算區間</strong></button>
                 </li>
             </ul>
+        </div>
+        <div v-cloak class="btn-group me-1 mx-sm-2 mt-4 mb-3" v-if="selectedSubject || selectedNation || selectedWeekdays.length > 0 || selectedTimeslots.length > 0 || selectedBudget">
+            <button class="dropdown-item cancel-filter-btn ms-md-2" type="button" v-on:click="clearAllFilter"><i class="bi bi-x-circle-fill"></i>  <strong>清除篩選</strong></button>
         </div>
     </div>
     <div class="lh-tutors-order">
         <span class="fw-bold ms-2 ms-md-4">目前排序</span>
-        <a href="" class="recommend">即時推薦</a>
+        <a href="" class="recommend" v-on:click="clearAllFilter">即時推薦</a>
         <a href="">優質教師優先</a>
         <a href="">低價優先</a>
         <a href="">多評價數優先</a>

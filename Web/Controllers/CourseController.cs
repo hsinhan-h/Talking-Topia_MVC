@@ -21,12 +21,12 @@ namespace Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CourseList(int page = 1)
+        public IActionResult CourseList()
         {
-            int pageSize = 6;
-            int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
-            int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
-            ViewData["TotalPages"] = totalPages;
+            //int pageSize = 6;
+            //int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
+            //int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
+            //ViewData["TotalPages"] = totalPages;
             //var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
             return View();
         }
