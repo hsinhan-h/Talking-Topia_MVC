@@ -53,10 +53,10 @@ namespace Web.Services
             // 轉換為 MemberProfileViewModel，處理可能為 null 的欄位
             var memberProfile = new MemberProfileViewModel
             {
-                ImageUrl = member.HeadShotImage ?? string.Empty, // 如果圖片為 null，使用空字串代替
+                ImageUrl = member.HeadShotImage ?? string.Empty, // 若圖片為 null，使用空字串代替
                 Nickname = member.Nickname ?? "未設定", // 處理暱稱為 null 的情況
                 Birthday = member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null, // 若無生日資料，設為 null
-                Gender = ((Gender)member.Gender).ToString(), // 將性別枚舉轉為字符串
+                Gender = ((Gender)member.Gender).ToString(), // 將性別枚舉轉為字符串, 須修正
                 Account = member.Account,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
