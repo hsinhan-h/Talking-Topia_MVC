@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
                     <p class="my-1">請提供大頭貼</p>
-                    <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入..." asp-for="HeadShotImage">
+                    <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入..." name="HeadShotImage">
                 </div>
                 <div class="col-12 mt-4">
                     <p class="my-1 bgc fs-4">【學校名稱】</p>
@@ -42,22 +42,15 @@
                 <div class="col-12 mt-2">
                     <p class="my-1 bgc fs-4">【就學期間】</p>
                     <div class="input-group my-1">
-                        <input type="number" placeholder="開始年份" class="form-control" min="1940" value="" asp-for="StudyStartYear">
-                        <input type="number" placeholder="結束年份" class="form-control" min="1940" value="" asp-for="StudyEndYear">
+                        <input type="number" placeholder="開始年份" class="form-control" min="1940" value="" name="StudyStartYear">
+                        <input type="number" placeholder="結束年份" class="form-control" min="1940" value="" name="StudyEndYear">
                     </div>
                 </div>
                 <div class="col-12 mt-2 mb-3">
                     <p class="my-1 bgc fs-4">【科系名稱】</p>
-                    <input class="form-control my-1" type="text" placeholder="輸入..." value="" asp-for ="DepartmentName">
+                    <input class="form-control my-1" type="text" placeholder="輸入..." value="" name="DepartmentName">
                 </div>
             </div>
-            @* <div class="row mt-3 ">
-            <div class="my-3 d-flex flex-row justify-content-end">
-            <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
-            <button type="submit" class="btn resume_border resume_btn m-2">下一步</button>
-            </div>
-            </div> *@
-
             <div class="row mt-5 resume_border p-3 m-2">
                 <div class="d-flex flex-row justify-content-between">
                     <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
@@ -68,7 +61,7 @@
                 <div class="col-12 ">
                     <p class="my-1 bgc fs-4">【證照 (一)】</p>
                     <div class="my-1 d-flex flex-column">
-                        <input class="form-control my-1" type="text" placeholder="輸入..." asp-for="ProfessionalLicenseName">
+                        <input class="form-control my-1" type="text" placeholder="輸入..." name="ProfessionalLicenseName">
                         <input class="my-2" type="file" placeholder="輸入..." name="ProfessionalLicenseUrl">
                     </div>
                 </div>
@@ -93,7 +86,7 @@
                         <input class="my-2" type="file" placeholder="輸入...">
                     </div>
                 </div>
-                <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense" 
+                <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
                      aria-expanded="false">
                     <div class="col-12 d-flex flex-row align-items-center justify-content-center">
                         <i class=" fa-solid fa-ellipsis "></i>
@@ -108,7 +101,7 @@
                         </div>
                         <div class="form-group">
                             <label class="my-1 bgc fs-4" for="category">【科目類別】</label>
-                            <select v-model="SelectedCategory" class="form-select" asp-for="SelectedCategory">
+                            <select v-model="selectedCategory" class="form-select" name="selectedCategory">
                                 <option value="">請選擇...</option>
                                 <option v-for="(item, index) in categories" :value="item.name" :key="item.id">
                                     {{ item.name }}
@@ -151,21 +144,6 @@
                         </div>
                     </div>
                 </div>
-                @* <div class="col-12 mb-2 collapse" id="collapsework">
-                <div class="col-12">
-                <p class="my-1 bgc fs-4">【工作名稱】</p>
-                <input class="form-control my-2" type="text" placeholder="輸入...">
-                <input class="form-control my-2" type="file" placeholder="輸入...">
-                </div>
-                <p class="my-1 bgc fs-4">【年資】</p>
-                <div class="input-group my-2">
-                <!-- 開始日期 -->
-                <input type="date" placeholder="開始年份" class="form-control" min="1940-01-01" max="2099-12-31">
-
-                <!-- 結束日期 -->
-                <input type="date" placeholder="結束年份" class="form-control" min="1940-01-01" max="2099-12-31">
-                </div>
-                </div> *@
                 <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
                     <div class="col-12 d-flex flex-row align-items-center justify-content-center">
                         <i class=" fa-solid fa-ellipsis "></i>

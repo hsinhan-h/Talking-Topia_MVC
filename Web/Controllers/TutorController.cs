@@ -3,6 +3,8 @@ using Web.Entities;
 using Web.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
+using System.Security.Claims;
 
 
 
@@ -15,17 +17,34 @@ namespace Web.Controllers
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
         private readonly AppointmentDetailService _appointmentDetailService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService)
+        private readonly IMemberService _memberService;
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService, IMemberService memberService)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
             _appointmentDetailService = appointmentDetailService;
+            _memberService =  memberService;
         }
-       
+
+
+
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Indexpost()
+        {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null || !int.TryParse(memberIdClaim.Value, out int memberId))
+            {
+                return  BadRequest("找不到會員");
+            }
+            if (!_memberService.IsMember(memberId))
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            return RedirectToAction(nameof(TutorResume));
         }
 
 

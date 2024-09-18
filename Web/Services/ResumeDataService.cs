@@ -124,12 +124,18 @@ namespace Web.Services
             }
             catch (Exception ex)
             {
-                // 若發生錯誤則回滾交易
+                // 詳細記錄例外的完整錯誤訊息
                 await _repository.RollbackAsync();
+                var errorMessage = $"資料處理發生錯誤: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $" | 內層錯誤: {ex.InnerException.Message}";
+                }
+
                 return new TutorResumeViewModel
                 {
                     Success = false,
-                    Message = $"資料處理發生錯誤: {ex.Message}"
+                    Message = errorMessage
                 };
             }
         }
