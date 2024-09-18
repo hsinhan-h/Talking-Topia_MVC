@@ -85,7 +85,8 @@ namespace Web.ViewModels
 
     public class ReviewViewModel
     {
-        public int ReviewerId { get; set; }
+        public double CommentRating { get; set; }
+        public string ReviewerName { get; set; }
         public string ReviewDate { get; set; }
         public string ReviewContent { get; set; }
     }

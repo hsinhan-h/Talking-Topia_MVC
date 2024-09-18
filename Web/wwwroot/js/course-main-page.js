@@ -6,7 +6,6 @@ const app = createApp({
             rating: null,
             fetchedRating: null ,
             courseId: courseId      // 從 DOM 中取得的課程 ID
-
         }
     },
     methods: {

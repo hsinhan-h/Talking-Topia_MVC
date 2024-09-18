@@ -130,7 +130,6 @@
                             <p-rating class="comment-rating-little-star my-1" name="rating" v-model="rating"></p-rating>
                         </div>
                         <div class="comment-input-section my-3 d-flex form-group">
-                            <input asp-for="MemberId" type="hidden" />
                             <input asp-for="CourseId" type="hidden" />
                             <input asp-for="NewReviewContent" type="text comment-input-box w-100 my-3" class="form-control" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
                             <input class="btn comment-submit-btn my-3" type="submit" value="送出" v-on:click="submitRating">
@@ -154,7 +153,7 @@
                 </svg>
                 </div>
                 <div class="comment-info d-flex flex-column">
-                <p class="user-name">@review.ReviewerId</p>
+                <p class="user-name">@review.ReviewerName</p>
                 <p class="comment-date">@review.ReviewDate</p>
                 </div>
                 </div>
@@ -562,7 +561,7 @@
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content " id="course-comment-modal">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">~CourseName</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">@Model.CourseTitle</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body course-comment-modal-body d-flex">
@@ -702,7 +701,7 @@
                                     </svg>
                                 </div>
                                 <div class="comment-info d-flex flex-column">
-                                    <p class="user-name">@review.ReviewerId</p>
+                                    <p class="user-name">@review.ReviewerName</p>
                                     <p class="comment-date">@review.ReviewDate</p>
                                 </div>
                             </div>

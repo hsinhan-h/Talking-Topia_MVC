@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data;
+﻿using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Web.Entities;
@@ -9,12 +10,14 @@ namespace Web.Controllers
     public class MemberController : Controller
     {
         private readonly MemberDataService _memberDataService;
-        private readonly OrderDetailService _orderDetailService;      
+        private readonly OrderDetailService _orderDetailService;   
+        private readonly IMemberService _memberService;
 
-        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice)
+        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice,IMemberService memberService)
         {
             _memberDataService = memberDataService;
-            _orderDetailService = orderdetailservice;           
+            _orderDetailService = orderdetailservice;    
+            _memberService = memberService;
         }
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
@@ -87,9 +90,12 @@ namespace Web.Controllers
             var Orderdetail = await _orderDetailService.GetOrderData(1);
             return View(Orderdetail);
         }
-        public async Task <IActionResult> WatchList(int memberId)
+        public async Task <IActionResult> WatchList()
         {
-           
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            
+            int memberId = int.Parse(memberIdClaim.Value);
+
             var watchlist = await _memberDataService.GetWatchList(memberId);
             return View(watchlist);
         }

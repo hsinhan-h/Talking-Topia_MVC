@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
+using Web.Entities;
 
 namespace Web.Services
 {
@@ -425,30 +426,30 @@ namespace Web.Services
                                     }.ToList();
 
             // 查詢該課程的評論
-            var reviews = await _repository.GetAll<Entities.Review>()
-                                .Where(r => r.CourseId == courseId)
-                                .AsNoTracking()
-                                .ToListAsync();
-
-            // 若評論為空或 null，添加預設評論
-            var reviewCardList = reviews.Any()
-                ? reviews.Select(r => new ReviewViewModel
+            var reviews = await (
+                from comment in _repository.GetAll<Entities.Review>()
+                join member in _repository.GetAll<Entities.Member>().AsNoTracking()
+                on comment.StudentId equals member.MemberId
+                where comment.CourseId == courseId
+                select new ReviewViewModel
                 {
-                    ReviewerId = r.StudentId,
-                    ReviewDate = r.Cdate.ToString("yyyy/MM/dd"),
-                    ReviewContent = r.CommentText
-                }).ToList()
-                : new List<ReviewViewModel>
-                    {
-                        new ReviewViewModel
-                        {
-                            ReviewerId = 0, // 可以選擇合適的預設 ID 或者用戶名
-                            ReviewDate = DateTime.Now.ToString("yyyy/MM/dd"),
-                            ReviewContent = "目前並無評論"
-                        }
-                    }.ToList();
+                    ReviewerName = member.FirstName + " " + member.LastName,
+                    CommentRating =comment.Rating,
+                    ReviewDate = comment.Cdate.ToString("yyyy/MM/dd"),
+                    ReviewContent = comment.CommentText
+                }).ToListAsync();
 
-
+            if (reviews.Count==0)
+            {
+                reviews = new List<ReviewViewModel>
+                {
+                   new ReviewViewModel
+                   {
+                        ReviewContent="目前沒有評論"
+                   }
+                };
+            };
+            
             // 查詢教師的工作經驗
             var tutorExperiences = await _repository.GetAll<Entities.WorkExperience>()
                                 .Where(w => w.MemberId == courseMainInfo.TutorId)
@@ -458,14 +459,13 @@ namespace Web.Services
             var recomCard = GetTutorRecommendCard(courseMainInfo.CategoryId);
 
             // 計算課程評分
-            var averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
+            var averageRating = reviews.Any() ? reviews.Average(r => r.CommentRating) : 0;
 
             // 準備 CourseMainPageViewModel
             var courseMainPageViewModel = new CourseMainPageViewModel
             {
                 CourseId = courseMainInfo.CourseId,
                 TutorId = courseMainInfo.TutorId,
-                MemberId = 1,  //這邊先註解掉，但評論的新增功能會壞掉，因為memberId會帶不進去
                 TutorHeadShotImage = courseMainInfo.TutorHeadShotImage,
                 TutorFlagImage = courseMainInfo.TutorFlagImage,
                 IsVerifiedTutor = courseMainInfo.IsVerifiedTutor,
@@ -481,9 +481,9 @@ namespace Web.Services
                 FinishedCoursesTotal = 3056, // 假設值，需從其他表查詢
                 ReviewCardList = reviews.Select(r => new ReviewViewModel
                 {
-                    ReviewerId = r.StudentId,
-                    ReviewDate = r.Cdate.ToString("yyyy/MM/dd"),
-                    ReviewContent = r.CommentText
+                    ReviewerName = r.ReviewerName,
+                    ReviewDate = r.ReviewDate,
+                    ReviewContent = r.ReviewContent,
                 }).ToList(),
                 ExperienceList = tutorExperiences.Select(e => new TutorExperience
                 {
