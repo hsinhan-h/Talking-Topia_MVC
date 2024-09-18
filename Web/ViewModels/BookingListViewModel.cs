@@ -19,7 +19,7 @@ namespace Web.ViewModels
         /// <summary>
         /// 更新日期
         /// </summary>
-        public DateTime UpdateDatetime { get; set; }
+        public DateTime? UpdateDatetime { get; set; }
         /// <summary>
         /// 課程名稱
         /// </summary>

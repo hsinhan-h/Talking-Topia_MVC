@@ -15,12 +15,14 @@ namespace Web.Controllers
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
         private readonly AppointmentDetailService _appointmentDetailService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService)
+        private readonly CourseCategoryService _courseCategoryService;
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService, CourseCategoryService courseCategoryService)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
             _appointmentDetailService = appointmentDetailService;
+            _courseCategoryService = courseCategoryService;
         }
        
         public IActionResult Index()
@@ -84,6 +86,7 @@ namespace Web.Controllers
             MemberId = 3;
             var model = await _bookingService.GetPublishCourseList(MemberId);
             ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(MemberId);
+            ViewData["CourseCategoryList"] = await _courseCategoryService.GetCourseCategoryListAsync();
 
             return View(model);
         }
