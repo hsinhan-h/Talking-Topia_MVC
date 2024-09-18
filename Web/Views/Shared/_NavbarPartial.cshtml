@@ -109,17 +109,17 @@
                             教師系統
                         </a>
                         <ul class="dropdown-menu tutor-dropdown-menu" aria-labelledby="tutorSystemDropdown">
-                            <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="AppointmentDetails">課程被預約明細</a></li>
+                            <li><a class="dropdown-item tutor-dropdown-item" href="#">課程被預約明細</a></li>
                             <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="TutorData">教師資料</a></li>
                             <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="PublishCourse">上架課程</a></li>
                         </ul>
                     </li>
                     <!--教師系統子選單結束-->
                     <li class="nav-item">
-                        <a class="nav-link" href="/WatchList">關注列表</a>
+                        <a class="nav-link" asp-controller="Member" asp-action="WatchList">關注列表</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Account/Logout">登出</a>
+                        <a class="nav-link" asp-controller="Account" asp-action="Logout">登出</a>
                     </li>
                     <li class="nav-item shopping-bag">
                         <a class="nav-link" asp-controller="ShoppingCart" asp-action="Index">
