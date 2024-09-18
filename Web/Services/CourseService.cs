@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Entities;
+using CloudinaryDotNet.Actions;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using Web.Entities;
@@ -82,16 +83,19 @@ namespace Web.Services
             string selectedTimeslots,
             string selectedBudget)
         {
+            //科目篩選
             if (!string.IsNullOrEmpty(selectedSubject))
             {
                 courseMainInfoQuery = courseMainInfoQuery.Where(c => c.SubjectName == selectedSubject);
             }
 
+            //國籍篩選
             if (!string.IsNullOrEmpty(selectedNation))
             {
                 courseMainInfoQuery = courseMainInfoQuery.Where(c => c.NationName == selectedNation);
             }
 
+            //時段篩選
             if (!string.IsNullOrEmpty(selectedWeekdays) || !string.IsNullOrEmpty(selectedTimeslots))
             {
                 List<string> weekdayList = !string.IsNullOrEmpty(selectedWeekdays) ? selectedWeekdays.Split(',').ToList() : new List<string>();
@@ -100,6 +104,32 @@ namespace Web.Services
                 var availableTimeSlotsInfo = await GetAvailableTimeSlotsAsync(memberIds);
                 List<int> filteredMemberIds = new List<int>();
 
+                //時間&星期共用篩選方法 (返回篩選後的MemberId集合)
+                Func<string, string, IEnumerable<int>> FilterByTimeSlotAndWeekday = (string weekday, string timeslot) =>
+                {
+                    switch (timeslot)
+                    {
+                        case "6-12":
+                            return availableTimeSlotsInfo
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekday) && slot.StartHour >= 6 && slot.StartHour < 12))
+                                .Select(ts => ts.MemberId);
+                        case "12-18":
+                            return availableTimeSlotsInfo
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekday) && slot.StartHour >= 12 && slot.StartHour < 18))
+                                .Select(ts => ts.MemberId);
+                        case "18-24":
+                            return availableTimeSlotsInfo
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekday) && slot.StartHour >= 18 && slot.StartHour < 24))
+                                .Select(ts => ts.MemberId);
+                        case "0-6":
+                            return availableTimeSlotsInfo
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekday) && slot.StartHour >= 0 && slot.StartHour < 6))
+                                .Select(ts => ts.MemberId);
+                        default:
+                            return Enumerable.Empty<int>();
+                    }
+                };
+                
                 //如果只選星期, 篩選星期
                 if (string.IsNullOrEmpty(selectedTimeslots))
                 {
@@ -109,8 +139,6 @@ namespace Web.Services
                             .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekDay)))
                             .Select(ts => ts.MemberId).ToList());
                     }
-                    filteredMemberIds = filteredMemberIds.Distinct().ToList();
-                    courseMainInfoQuery = courseMainInfoQuery.Where(c => filteredMemberIds.Contains(c.MemberId));
                 }
 
                 //如果只選時間段, 篩選時間段
@@ -118,32 +146,8 @@ namespace Web.Services
                 {
                     foreach (string timeSlot in timeSlotList)
                     {
-                        switch (timeSlot)
-                        {
-                            case "6-12":
-                                filteredMemberIds.AddRange(availableTimeSlotsInfo
-                                    .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.StartHour >= 6 && slot.StartHour < 12))
-                                    .Select(ts => ts.MemberId).ToList());
-                                break;
-                            case "12-18":
-                                filteredMemberIds.AddRange(availableTimeSlotsInfo
-                                    .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.StartHour >= 12 && slot.StartHour < 18))
-                                    .Select(ts => ts.MemberId).ToList());
-                                break;
-                            case "18-24":
-                                filteredMemberIds.AddRange(availableTimeSlotsInfo
-                                    .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.StartHour >= 18 && slot.StartHour < 24))
-                                    .Select(ts => ts.MemberId).ToList());
-                                break;
-                            case "0-6":
-                                filteredMemberIds.AddRange(availableTimeSlotsInfo
-                                    .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.StartHour >= 0 && slot.StartHour < 6))
-                                    .Select(ts => ts.MemberId).ToList());
-                                break;
-                        }
+                        filteredMemberIds.AddRange(FilterByTimeSlotAndWeekday(null, timeSlot));
                     }
-                    filteredMemberIds = filteredMemberIds.Distinct().ToList();
-                    courseMainInfoQuery = courseMainInfoQuery.Where(c => filteredMemberIds.Contains(c.MemberId));
                 }
 
                 //如果時間和日期同時選擇, 需判斷教師時間段符合對應星期&時間
@@ -153,36 +157,15 @@ namespace Web.Services
                     {
                         foreach (string timeSlot in timeSlotList)
                         {
-                            switch (timeSlot)
-                            {
-                                case "6-12":
-                                    filteredMemberIds.AddRange(availableTimeSlotsInfo
-                                        .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekDay) && slot.StartHour >= 6 && slot.StartHour < 12))
-                                        .Select(ts => ts.MemberId).ToList());
-                                    break;
-                                case "12-18":
-                                    filteredMemberIds.AddRange(availableTimeSlotsInfo
-                                        .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekDay) && slot.StartHour >= 12 && slot.StartHour < 18))
-                                        .Select(ts => ts.MemberId).ToList());
-                                    break;
-                                case "18-24":
-                                    filteredMemberIds.AddRange(availableTimeSlotsInfo
-                                        .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekDay) && slot.StartHour >= 18 && slot.StartHour < 24))
-                                        .Select(ts => ts.MemberId).ToList());
-                                    break;
-                                case "0-6":
-                                    filteredMemberIds.AddRange(availableTimeSlotsInfo
-                                        .Where(ts => ts.AvailableTimeSlots.Any(slot => slot.Weekday == int.Parse(weekDay) && slot.StartHour >= 0 && slot.StartHour < 6))
-                                        .Select(ts => ts.MemberId).ToList());
-                                    break;
-                            }
+                            filteredMemberIds.AddRange(FilterByTimeSlotAndWeekday(weekDay, timeSlot));
                         }
-                    }
-                    filteredMemberIds = filteredMemberIds.Distinct().ToList();
-                    courseMainInfoQuery = courseMainInfoQuery.Where(c => filteredMemberIds.Contains(c.MemberId));
+                    }                  
                 }
+                filteredMemberIds = filteredMemberIds.Distinct().ToList();
+                courseMainInfoQuery = courseMainInfoQuery.Where(c => filteredMemberIds.Contains(c.MemberId));
             }
 
+            //預算篩選
             if (!string.IsNullOrEmpty(selectedBudget))
             {
                 switch (selectedBudget)
