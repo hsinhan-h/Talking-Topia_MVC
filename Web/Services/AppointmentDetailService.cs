@@ -1,4 +1,8 @@
 ﻿using ApplicationCore.Entities;
+using Booking = Web.Entities.Booking;
+using Course = Web.Entities.Course;
+using Member = Web.Entities.Member;
+using OrderDetail = Web.Entities.OrderDetail;
 
 namespace Web.Services
 {
@@ -46,7 +50,6 @@ namespace Web.Services
                              OrderDatetime = Order.TransactionDate.ToString("yyyy-MM-dd"), // 格式化交易時間
                              Subtitle = course.SubTitle,//課程副標題
                              BookingDate= booking.BookingDate,//預約上課日期
-                             BookingTime = booking.BookingTime,//預約上課時間
                          };
 
             // 返回包含訂單資訊的 ViewModel
