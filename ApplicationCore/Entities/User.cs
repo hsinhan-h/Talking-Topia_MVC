@@ -15,9 +15,9 @@ namespace ApplicationCore.Entities
     public string Email { get; set; }
 
     public string Password { get; set; }
-        public ICollection<UserRole> UserRole { get; set; }
+    public ICollection<UserRole> UserRole { get; set; }
 
         // 一對一關聯，User 對應一個 Member
-        public virtual Member Member { get; set; }
+    public virtual Member Member { get; set; }
     }
 }
