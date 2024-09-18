@@ -1,0 +1,84 @@
+﻿@model BookingListViewModel
+
+@{
+    ViewData["Title"] = "Booking List";
+}
+
+<div id="app">
+   @*  <div v-for="b in bookingDetails">
+        {{b.courseId}}
+    </div> *@
+    @foreach (var booking in Model.BookingList)
+    {
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal" v-on:click="fetchBookingDetails(@booking.CourseId)">
+            查看詳情
+        </button>
+    }
+
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @* <h5 class="modal-title" id="bookingModalLabel">[[ bookingDetails.CourseTitle ]]</h5> *@
+                    <h5 class="modal-title" id="bookingModalLabel">{{ bookingDetails.CourseTitle }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>CourseId:</strong> {{ bookingDetails.courseId }}</p>
+                    <p><strong>課程分類:</strong> {{ bookingDetails.category }}</p>
+                    <p><strong>課程科目:</strong> {{ bookingDetails.CourseSubject }}</p>
+                    <p><strong>上課時間:</strong> {{ bookingDetails.BookingDate }}</p>
+                    <p><strong>教師自介:</strong> {{ bookingDetails.TutorIntro }}</p>
+                    <p><strong>課程介紹:</strong> {{ bookingDetails.Description }}</p>
+                    @* <p><strong>CourseId:</strong> [[ bookingDetails.CourseId ]]</p>
+                    <p><strong>課程分類:</strong> [[ bookingDetails.Category ]]</p>
+                    <p><strong>課程科目:</strong> [[ bookingDetails.CourseSubject ]]</p>
+                    <p><strong>上課時間:</strong> [[ bookingDetails.BookingDate ]]</p>
+                    <p><strong>教師自介:</strong> [[ bookingDetails.TutorIntro ]]</p>
+                    <p><strong>課程介紹:</strong> [[ bookingDetails.Description ]]</p> *@
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section endJS {
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            // delimiters: ['[[', ']]'], // 改成 [[ ]] 來替代 {{ }}
+            data() {
+                return {
+                    bookingDetails: {}
+                };
+            },
+            methods: {
+                fetchBookingDetails(CourseId) {
+                    axios.get(`/api/PublishCourseApi/${CourseId}`)
+                        .then((response) => {
+                            this.bookingDetails = response.data.bookingList[0]; // 正確設置 this.bookingDetails
+                            // console.log(response);
+                            // console.log(response.data.bookingList);
+                            // console.log(response.data.bookingList[0].courseId);
+
+                            // console.log(this.bookingDetails);
+                            // console.log(this.bookingDetails[0].courseId);
+                            console.log(this.bookingDetails)
+                        })
+                        .catch((error) => {
+                            console.error("Error fetching booking details:", error);
+                        });
+                }
+            }
+        }).mount('#app'); // mount 到 id 為 #app 的元素
+    </script>
+
+
+}
