@@ -17,10 +17,6 @@ namespace ApplicationCore.Services
             _memberRepository = memberRepository;
         }
 
-        public bool IsMember(int memberId)
-        {
-            return _memberRepository.Any(m => m.MemberId == memberId);
-        }
         public async Task<bool> GetMemberId(int memberId)
         {
             var result = await _memberRepository.AnyAsync(x => x.MemberId == memberId);            

@@ -8,7 +8,6 @@ namespace ApplicationCore.Interfaces
 {
     public interface IMemberService
     {
-        public bool IsMember(int memberId);
         public Task<bool> GetMemberId(int memberId);
     }
 }
