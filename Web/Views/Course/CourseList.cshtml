@@ -185,13 +185,13 @@
                 </li>
             </ul>
         </div>
-        <div class="btn-group me-1 mx-sm-2 mt-4 mb-3" v-if="selectedSubject || selectedNation || selectedWeekdays.length > 0 || selectedTimeslots.length > 0 || selectedBudget">
+        <div v-cloak class="btn-group me-1 mx-sm-2 mt-4 mb-3" v-if="selectedSubject || selectedNation || selectedWeekdays.length > 0 || selectedTimeslots.length > 0 || selectedBudget">
             <button class="dropdown-item cancel-filter-btn ms-md-2" type="button" v-on:click="clearAllFilter"><i class="bi bi-x-circle-fill"></i>  <strong>清除篩選</strong></button>
         </div>
     </div>
     <div class="lh-tutors-order">
         <span class="fw-bold ms-2 ms-md-4">目前排序</span>
-        <a href="" class="recommend">即時推薦</a>
+        <a href="" class="recommend" v-on:click="clearAllFilter">即時推薦</a>
         <a href="">優質教師優先</a>
         <a href="">低價優先</a>
         <a href="">多評價數優先</a>

@@ -465,7 +465,6 @@ namespace Web.Services
             {
                 CourseId = courseMainInfo.CourseId,
                 TutorId = courseMainInfo.TutorId,
-                MemberId = 1,
                 TutorHeadShotImage = courseMainInfo.TutorHeadShotImage,
                 TutorFlagImage = courseMainInfo.TutorFlagImage,
                 IsVerifiedTutor = courseMainInfo.IsVerifiedTutor,
@@ -487,8 +486,8 @@ namespace Web.Services
                 }).ToList(),
                 ExperienceList = tutorExperiences.Select(e => new TutorExperience
                 {
-                    //StartYear = e.WorkStartDate.Year.ToString(),
-                    //EndYear = e.WorkEndDate.Year.ToString(),
+                    StartYear = e.WorkStartDate.Year.ToString(),
+                    EndYear = e.WorkEndDate.Year.ToString(),
                     WorkTitle = e.WorkName
                 }).ToList(),
                 EducationDegree = education.Select(w => new TutorEducationList

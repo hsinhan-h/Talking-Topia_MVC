@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Controllers.Api
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]   
     public class PublishCourseApi : ControllerBase
     {
         private readonly BookingService _bookingService;
