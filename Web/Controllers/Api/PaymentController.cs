@@ -1,9 +1,11 @@
 ﻿using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 using Infrastructure.Configurations.ECpay;
 using Infrastructure.ECpay;
 using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
 using Infrastructure.Service;
+using System.Security.Claims;
 
 namespace Web.Controllers.Api
 {
@@ -14,18 +16,16 @@ namespace Web.Controllers.Api
         private readonly IConfiguration _configuration;
         private readonly ECpayService _eCpayService;
         private readonly IOrderService _orderService;
-        //private readonly IPaymentTransactionConfiguration _paymentTransactionConfiguration;
+        private readonly IMemberService _memberService;
         private int _orderId;
 
-        public PaymentController(IConfiguration configuration, ECpayService eCpayService, IOrderService orderService)
+        public PaymentController(IConfiguration configuration, ECpayService eCpayService, IOrderService orderService, IMemberService memberService)
         {
             _configuration = configuration;
             _eCpayService = eCpayService;
             _orderService = orderService;
-            //_paymentTransactionConfiguration = paymentTransactionConfiguration;
+            _memberService = memberService;
         }
-
-
 
         // POST api/payment
         [HttpPost]
@@ -54,13 +54,22 @@ namespace Web.Controllers.Api
                 ClientUrl = _configuration["ECpay:Service:ClientUrl"]
             };
 
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+
             var transaction = new
             {
                 No = "Ec" + DateTime.Now.ToString("yyyyMMddhhmmss"),
                 Description = "測試購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
-                Items = await _eCpayService.GetItemsToECStageDtoAsync(1)
+                Items = await _eCpayService.GetItemsToECStageDtoAsync(memberId)
             };
 
             IPayment payment = new PaymentConfiguration()
@@ -87,7 +96,7 @@ namespace Web.Controllers.Api
             if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
 
             var orderStatus = EOrderStatus.Success;
-            _orderService.UpdateOrderTransactionAndStatus(_orderId, result.MerchantTradeNo, result.TradeNo ,orderStatus);
+            _orderService.UpdateOrderTransactionAndStatus(_orderId, result.MerchantTradeNo, result.TradeNo, orderStatus);
 
             return Ok("1|OK");
         }
