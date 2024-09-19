@@ -61,24 +61,19 @@ namespace Web.Controllers
             {
                 return RedirectToAction(nameof(AccountController.Account), "Account");
             }
-
-            // 如果 memberId 是空的，從 Claim 取出，然後重定向以帶上 memberId
             if (!memberId.HasValue)
             {
                 int parsedMemberId = int.Parse(memberIdClaim.Value);
                 return RedirectToAction("TutorData", new { memberId = parsedMemberId });
             }
-
-            // 確認服務能取得該 memberId
             var result = await _memberService.GetMemberId(memberId.Value);
             if (!result)
             {
                 return RedirectToAction(nameof(AccountController.Account), "Account");
             }
-
-            // 獲取 TutorData 資料
             var tutorData = await _tutorDataService.GetAllInformationAsync(memberId.Value);
 
+            ViewData["MemberId"] = memberId;
             return View(tutorData);
         }
 
@@ -115,7 +110,7 @@ namespace Web.Controllers
                 ViewData["Header"] = result.Success ? "履歷已新增" : "履歷新增失敗請聯絡客服人員";
                 ViewData["Message"] = result.Message;
 
-                return View("ShowMessage");
+                return View("_ShowMessage");
             }
 
             return View(qVM);
