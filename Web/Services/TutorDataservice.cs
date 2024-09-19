@@ -19,7 +19,7 @@ namespace Web.Services
         {
             if (memberId == null)
             {
-                return false; 
+                return false;
             }
 
             var istutor = await (from member in _repository.GetAll<Entities.Member>()
@@ -34,45 +34,58 @@ namespace Web.Services
 
             if (await Isteacher(memberId))
             {
-                var tutorData = await (from member in _repository.GetAll<Entities.Member>()
-                                       join tutortimslot in _repository.GetAll<Entities.TutorTimeSlot>()
-                                       on member.MemberId equals tutortimslot.TutorId
-                                       join nation in _repository.GetAll<Entities.Nation>()
-                                       on member.NationId equals nation.NationId
-                                       where member.MemberId == memberId
-                                       select new TutorDataViewModel
-                                       {
-                                           TutorId = tutortimslot.TutorId,
-                                           NationID = nation.NationId,
-                                           NativeLanguage = member.NativeLanguage,
-                                           SpokenLanguage = member.SpokenLanguage,
-                                           BankAccount = member.BankAccount,
-                                           BankCode = member.BankCode,
-                                           EducationalBackground = _repository.GetAll<Entities.Education>()
-                                               .Where(edu => edu.EducationId == member.EducationId)
-                                               .Select(edu => new Educational
-                                               {
-                                                   SchoolName = edu.SchoolName,
-                                                   StudyStartYear = edu.StudyStartYear,
-                                                   StudyEndYear = edu.StudyEndYear
-                                               }).ToList(),
-                                           WorkBackground = _repository.GetAll<Entities.WorkExperience>()
-                                               .Where(wexp => wexp.MemberId == memberId)
-                                               .Select(wexp => new WorkExp
-                                               {
-                                                   //WorkStartDate = wexp.WorkStartDate,
-                                                   //WorkEndDate = wexp.WorkEndDate,
-                                                   WorkName = wexp.WorkName
-                                               }).ToList(),
-                                           License = (from memb in _repository.GetAll<Entities.Member>()
-                                                      join license in _repository.GetAll<Entities.ProfessionalLicense>()
-                                                      on memb.MemberId equals license.MemberId
-                                                      where memb.MemberId == memberId
-                                                      select new LicenseData
-                                                      {
-                                                          ProfessionalLicenseName = license.ProfessionalLicenseName,
-                                                      }).ToList()
-                                       }).FirstOrDefaultAsync();
+                var member = await _repository.GetAll<Entities.Member>()
+                            .Where(m => m.MemberId == memberId)
+                            .FirstOrDefaultAsync();
+
+                var tutorTimeSlot = await _repository.GetAll<Entities.TutorTimeSlot>()
+                    .Where(t => t.TutorId == memberId)
+                    .FirstOrDefaultAsync();
+
+                var nation = await _repository.GetAll<Entities.Nation>()
+                    .Where(n => n.NationId == member.NationId)
+                    .FirstOrDefaultAsync();
+
+                var education = await _repository.GetAll<Entities.Education>()
+                    .Where(edu => edu.EducationId == member.EducationId)
+                    .Select(edu => new Educational
+                    {
+                        SchoolName = edu.SchoolName,
+                        StudyStartYear = edu.StudyStartYear,
+                        StudyEndYear = edu.StudyEndYear
+                    }).ToListAsync();
+
+                var workExperience = await _repository.GetAll<Entities.WorkExperience>()
+                    .Where(wexp => wexp.MemberId == memberId)
+                    .Select(wexp => new WorkExp
+                    {
+                        WorkName = wexp.WorkName
+                    }).ToListAsync();
+
+                var license = await (from memb in _repository.GetAll<Entities.Member>()
+                                     join proLi in _repository.GetAll<Entities.ProfessionalLicense>()
+                                     on memb.MemberId equals proLi.MemberId into licenseGroup
+                                     from proLi in licenseGroup.DefaultIfEmpty()
+                                     where memb.MemberId == memberId
+                                     select new LicenseData
+                                     {
+                                         ProfessionalLicenseName = proLi.ProfessionalLicenseName ?? "Default License"
+                                     }).ToListAsync();
+
+                // 最後手動組合 ViewModel
+                var tutorData = new TutorDataViewModel
+                {
+                    TutorId = tutorTimeSlot?.TutorId ?? 0,
+                    NationID = nation?.NationId ?? 0,
+                    NativeLanguage = member.NativeLanguage,
+                    SpokenLanguage = member.SpokenLanguage,
+                    BankAccount = member.BankAccount,
+                    BankCode = member.BankCode,
+                    EducationalBackground = education,
+                    WorkBackground = workExperience,
+                    License = license
+                };
+
                 return tutorData;
             }
             return null;
@@ -86,19 +99,45 @@ namespace Web.Services
 
             if (await Isteacher(memberId))
             {
-                tutorCourseData.Course = await (from member in _repository.GetAll<Entities.Member>()
-                                                join memberPreference in _repository.GetAll<Entities.MemberPreference>()
-                                                    on member.MemberId equals memberPreference.MemberId
-                                                join courseSubject in _repository.GetAll<Entities.CourseSubject>()
-                                                    on memberPreference.SubjecId equals courseSubject.SubjectId
-                                                join courseCategory in _repository.GetAll<Entities.CourseCategory>()
-                                                    on courseSubject.CourseCategoryId equals courseCategory.CourseCategoryId
-                                                where member.MemberId == memberId
-                                                select new CategoryData
-                                                {
-                                                    CategoryName = courseCategory.CategorytName,
-                                                    SubjectName = courseSubject.SubjectName,
-                                                }).ToListAsync();
+                var member = await _repository.GetAll<Entities.Member>()
+                    .Where(m => m.MemberId == memberId)
+                    .FirstOrDefaultAsync();
+
+                if (member == null)
+                {
+                    return null;
+                }
+                var memberPreferences = await _repository.GetAll<Entities.MemberPreference>()
+                    .Where(mp => mp.MemberId == member.MemberId)
+                    .ToListAsync();
+                var categoryDataList = new List<CategoryData>();
+
+                if (memberPreferences != null && memberPreferences.Any())
+                {
+                    foreach (var preference in memberPreferences)
+                    {
+                        var courseSubject = await _repository.GetAll<Entities.CourseSubject>()
+                            .Where(cs => cs.SubjectId == preference.SubjecId)
+                            .FirstOrDefaultAsync();
+
+                        if (courseSubject != null)
+                        {
+                            var courseCategory = await _repository.GetAll<Entities.CourseCategory>()
+                                .Where(cc => cc.CourseCategoryId == courseSubject.CourseCategoryId)
+                                .FirstOrDefaultAsync();
+
+                            if (courseCategory != null)
+                            {
+                                categoryDataList.Add(new CategoryData
+                                {
+                                    CategoryName = courseCategory.CategorytName,
+                                    SubjectName = courseSubject.SubjectName
+                                });
+                            }
+                        }
+                    }
+                }
+                tutorCourseData.Course = categoryDataList;
             }
 
             return tutorCourseData;
@@ -109,12 +148,27 @@ namespace Web.Services
 
             if (await Isteacher(memberId))
             {
-                tutorCourseData.Coursestatus = await (from member in _repository.GetAll<Entities.Member>()
-                                                      join applylist in _repository.GetAll<Entities.ApplyList>()
-                                                          on member.MemberId equals applylist.MemberId
-                                                      where member.MemberId == memberId
-                                                      select applylist.ApplyStatus ? CourseStatus.已審核 : CourseStatus.未審核)
-                                                       .FirstOrDefaultAsync();
+                var member = await _repository.GetAll<Entities.Member>()
+                    .Where(m => m.MemberId == memberId)
+                    .FirstOrDefaultAsync();
+
+                if (member == null)
+                {
+                    return new TutorDataViewModel();
+                }
+
+                var applyList = await _repository.GetAll<Entities.ApplyList>()
+                    .Where(a => a.MemberId == memberId)
+                    .FirstOrDefaultAsync();
+
+                if (applyList != null && applyList.ApplyStatus)
+                {
+                    tutorCourseData.Coursestatus = CourseStatus.已審核;
+                }
+                else
+                {
+                    tutorCourseData.Coursestatus = CourseStatus.未審核;
+                }
             }
 
             return tutorCourseData;

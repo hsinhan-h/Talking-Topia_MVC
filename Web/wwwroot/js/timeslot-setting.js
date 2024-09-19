@@ -4,7 +4,7 @@
         document.querySelector('.tutorDataForm').submit();
     });
 
-
+    const selectedTimes = {};
 
 
 

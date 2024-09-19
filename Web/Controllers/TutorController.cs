@@ -56,12 +56,32 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> TutorData(int? memberId)
         {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
 
-            // Edit: 根據ID取得現有會員資料
-            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
+            // 如果 memberId 是空的，從 Claim 取出，然後重定向以帶上 memberId
+            if (!memberId.HasValue)
+            {
+                int parsedMemberId = int.Parse(memberIdClaim.Value);
+                return RedirectToAction("TutorData", new { memberId = parsedMemberId });
+            }
+
+            // 確認服務能取得該 memberId
+            var result = await _memberService.GetMemberId(memberId.Value);
+            if (!result)
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
+
+            // 獲取 TutorData 資料
+            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId.Value);
+
             return View(tutorData);
-
         }
+
 
         [HttpPost]
         public async Task<IActionResult> TutorData(TutorDataViewModel qVM)
@@ -74,7 +94,7 @@ namespace Web.Controllers
             ViewData["Message"] = result.Message;
 
             // 返回訊息視圖
-            return View("ShowMessage");
+            return View("_ShowMessage");
         }
 
 
