@@ -14,6 +14,7 @@ namespace Web.Controllers
         private readonly IMemberService _memberService;
         private readonly MemberAppointmentService _memberAppointmentService;
 
+
         public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService)
         {
             _memberDataService = memberDataService;            
@@ -28,7 +29,12 @@ namespace Web.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var memberId = 15; // 測試使用 MemberId
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
+
             var viewModel = await _memberAppointmentService.GetAppointmentData(memberId);
 
             // 確保 viewModel 被正確初始化
