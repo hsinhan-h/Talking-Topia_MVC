@@ -7,13 +7,13 @@ namespace Web.Data;
 
 public partial class TalkingTopiaDbContext : DbContext
 {
-    public TalkingTopiaDbContext()
-    {
-    }
+    private readonly IConfiguration _configuration;
 
-    public TalkingTopiaDbContext(DbContextOptions<TalkingTopiaDbContext> options)
+
+    public TalkingTopiaDbContext(DbContextOptions<TalkingTopiaDbContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
     public virtual DbSet<Entities.ApplyList> ApplyLists { get; set; }
