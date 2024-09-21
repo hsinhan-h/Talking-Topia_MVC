@@ -2,10 +2,12 @@
 
 @{
     var memberId = ViewData["MemberID"];
+    var message = ViewData["Message"]?.ToString();
+    var header = ViewData["Header"]?.ToString();
 }
 
 
-
+@* <p>@memberId</p> *@
 <p style="display: none;">會員ID: <span id="memberIdDisplay"></span></p>
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
@@ -112,14 +114,14 @@
                                 </div>
                                 <h4>可接受預約時段</h4>
                                 <div class=" d-flex flex-wrap col-10" id="reservation-list">
-                                
                                 </div>
                                 <div class=" d-flex flex-wrap col-10">
                                     <button type="button"
-                                        class="btn lh-backstage-submit-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editTimeSlotModal">
-                                    編輯教師可預約時段</button>
+                                            class="btn lh-backstage-submit-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editTimeSlotModal">
+                                        編輯教師可預約時段
+                                    </button>
                                 </div>
                             </div>
 
@@ -145,7 +147,7 @@
                                         <div class="card-body">
                                             <p class="card-text">申請科目：<span></span></p>
                                             <p class="card-text">申請狀態：<span></span></p>
-                                            <a asp-controller="Tutor" asp-action="TutorResume" asp-route-memberId="@memberId"  class="btn lh-backstage-submit-btn">
+                                            <a asp-controller="Tutor" asp-action="TutorResume" asp-route-memberId="@memberId" class="btn lh-backstage-submit-btn">
                                                 編輯家教資料
                                             </a>
                                         </div>
@@ -221,48 +223,50 @@
                 </div>
                 <div class="modal-body">
                     <!-- 星期區塊 -->
-                    <div class="row" id="timeslot-row">
-                        <div class="col-12">
-                            <div class="weekday-checkbox">
-                                <span class="fw-bolder mb-3 d-inline-block">請選擇可預約星期</span>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-1" name="weekday" value="1">
-                                    <label class="form-check-label" for="monday">星期一</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-2" name="weekday" value="2">
-                                    <label class="form-check-label" for="tuesday">星期二</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-3" name="weekday" value="3">
-                                    <label class="form-check-label" for="wednesday">星期三</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-4" name="weekday" value="4">
-                                    <label class="form-check-label" for="thursday">星期四</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-5" name="weekday" value="5">
-                                    <label class="form-check-label" for="friday">星期五</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-6" name="weekday" value="6">
-                                    <label class="form-check-label" for="saturday">星期六</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-0" name="weekday" value="0">
-                                    <label class="form-check-label" for="sunday">星期日</label>
+                    <form asp-action="TutorTimeData" method="post" class="tutorDataTimeForm">
+                        <div class="row" id="timeslot-row">
+                            <div class="col-12">
+                                <div class="weekday-checkbox">
+                                    <span class="fw-bolder mb-3 d-inline-block">請選擇可預約星期</span>
+                                    <div class="form-check">
+                                        <input class="form-check-input Weekday"
+                                               type="checkbox" id="weekday-1" name="Weekdays[]" value="1">
+                                        <label class="form-check-label" for="monday">星期一</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input Weekday"
+                                               type="checkbox" id="weekday-2" name="Weekdays[]" value="2">
+                                        <label class="form-check-label" for="tuesday">星期二</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input Weekday"
+                                               type="checkbox" id="weekday-3" name="Weekdays[]" value="3">
+                                        <label class="form-check-label" for="wednesday">星期三</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input Weekday"
+                                               type="checkbox" id="weekday-4" name="Weekdays[]" value="4">
+                                        <label class="form-check-label" for="thursday">星期四</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input Weekday"
+                                               type="checkbox" id="weekday-5" name="Weekdays[]" value="5">
+                                        <label class="form-check-label" for="friday">星期五</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input Weekday"
+                                               type="checkbox" id="weekday-6" name="Weekdays[]" value="6">
+                                        <label class="form-check-label" for="saturday">星期六</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input Weekday"
+                                               type="checkbox" id="weekday-0" name="Weekday[]" value="0">
+                                        <label class="form-check-label" for="sunday">星期日</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button"
@@ -271,11 +275,24 @@
                         關閉
                     </button>
                     <button type="button"
-                            class="btn lh-backstage-submit-btn ">
+                            class="btn lh-backstage-submit-btn submitTimeButton">
                         儲存
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-delay="5000" style="position: absolute; top: 0; right: 0;"
+         data-message="@message" data-header="@header">
+        <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="...">
+            <strong class="me-auto">@header</strong>
+            <small>just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            @message
         </div>
     </div>
 </div>
