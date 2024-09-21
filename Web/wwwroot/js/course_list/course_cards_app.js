@@ -159,19 +159,22 @@ const courseCardsApp = Vue.createApp({
             try {
                 let url = `/api/CourseListApi/GetTotalCourseQty`;
                 if (this.selectedSubject) {
-                    url += `?subject=${this.selectedSubject}`;
+                    url += `?subject=${this.selectedSubject}&`;
                 }
                 if (this.selectedNation) {
-                    url += `?nation=${this.selectedNation}`;
+                    url += `?nation=${this.selectedNation}&`;
                 }
                 if (this.selectedWeekdays.length > 0) {
-                    url += `?weekdays=${this.selectedWeekdays.join(',')}`;
+                    url += `?weekdays=${this.selectedWeekdays.join(',')}&`;
                 }
                 if (this.selectedTimeslots.length > 0) {
-                    url += `?timeslots=${this.selectedTimeslots.join(',')}`;
+                    url += `?timeslots=${this.selectedTimeslots.join(',')}&`;
                 }
                 if (this.selectedBudget) {
-                    url += `?budget=${this.selectedBudget}`;
+                    url += `?budget=${this.selectedBudget}&`;
+                }
+                if (url.endsWith('&')) {
+                    url = url.slice(0, -1);
                 }
                 const response = await fetch(url);
 
@@ -244,7 +247,7 @@ const courseCardsApp = Vue.createApp({
         },
         //3. 時段
         filterByWeekdayAndTimeSlot() {
-            //v-model已綁定, 不用再push到selectedWeekdays
+            //v-model已綁定, 不用再push到selectedWeekdays和selectedTimeslots
             this.applyFilter();
         },
 
