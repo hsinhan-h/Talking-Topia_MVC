@@ -56,12 +56,27 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> TutorData(int? memberId)
         {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
+            if (!memberId.HasValue)
+            {
+                int parsedMemberId = int.Parse(memberIdClaim.Value);
+                return RedirectToAction("TutorData", new { memberId = parsedMemberId });
+            }
+            var result = await _memberService.GetMemberId(memberId.Value);
+            if (!result)
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
+            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId.Value);
 
-            // Edit: 根據ID取得現有會員資料
-            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
+            ViewData["MemberId"] = memberId;
             return View(tutorData);
-
         }
+
 
         [HttpPost]
         public async Task<IActionResult> TutorData(TutorDataViewModel qVM)
@@ -74,7 +89,7 @@ namespace Web.Controllers
             ViewData["Message"] = result.Message;
 
             // 返回訊息視圖
-            return View("ShowMessage");
+            return View("_ShowMessage");
         }
 
 
@@ -95,7 +110,7 @@ namespace Web.Controllers
                 ViewData["Header"] = result.Success ? "履歷已新增" : "履歷新增失敗請聯絡客服人員";
                 ViewData["Message"] = result.Message;
 
-                return View("ShowMessage");
+                return View("_ShowMessage");
             }
 
             return View(qVM);

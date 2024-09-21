@@ -1,5 +1,10 @@
 ﻿@model TutorDataViewModel
 
+@{
+    var memberId = ViewData["MemberID"];
+}
+
+
 
 <p style="display: none;">會員ID: <span id="memberIdDisplay"></span></p>
 <div class="container lh-backstage mt-5" id="app">
@@ -128,9 +133,7 @@
                                             <div class="card-body">
                                                 <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
                                                 <p class="card-text">申請狀態：<span>@Model.Coursestatus</span></p>
-                                                @*  要return回履歷 <a href="/TalkingTopia/Tutor/TutorResume.html?memberId=@Model.MemberId"
-                                        class="btn lh-backstage-submit-btn">編輯家教資料 *@
-                                                <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
+                                                <a asp-controller="Tutor" asp-action="TutorResume" asp-route-memberId="@memberId" class="btn lh-backstage-submit-btn">
                                                     編輯家教資料
                                                 </a>
                                             </div>
@@ -142,7 +145,7 @@
                                         <div class="card-body">
                                             <p class="card-text">申請科目：<span></span></p>
                                             <p class="card-text">申請狀態：<span></span></p>
-                                            <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
+                                            <a asp-controller="Tutor" asp-action="TutorResume" asp-route-memberId="@memberId"  class="btn lh-backstage-submit-btn">
                                                 編輯家教資料
                                             </a>
                                         </div>

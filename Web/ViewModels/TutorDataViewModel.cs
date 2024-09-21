@@ -86,7 +86,7 @@ namespace Web.ViewModels
 
     public class AvailReservation
     {
-        public int Weekday { get; set; }
+        public int? Weekday { get; set; }
         public string Coursehours { get; set; }
     }
 
