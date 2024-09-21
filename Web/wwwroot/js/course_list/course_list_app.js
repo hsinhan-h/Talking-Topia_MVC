@@ -1,5 +1,7 @@
 ﻿import { generateBookingTable } from '/js/booking_table/booking_table_modal.js';
-import { initHoverPopup, initTooltips, autoPlayYouTubeModal } from '/js/course_list/course_list_slick.js';
+import { initHoverPopup } from '/js/course_list/course_list_hoverPopup.js';
+import { autoPlayYouTubeModal } from '/js/course_list/course_list_youtubeModal.js';
+import { initTooltips } from '/js/utilities/tooltips.js';
 
 const courseCardsApp = Vue.createApp({
     data() {
@@ -70,10 +72,8 @@ const courseCardsApp = Vue.createApp({
                     this.availableSlots = [];
                     this.bookedSlots = [];
                     if (this.courses.length > 0) {
-                        this.courses.forEach(c => {
-                            this.availableSlots.push(c.availableTimeSlots);
-                            this.bookedSlots.push(c.bookedTimeSlots);
-                        });                      
+                        this.availableSlots = this.courses.map(course => course.availableTimeSlots);
+                        this.bookedSlots = this.courses.map(course => course.bookedTimeSlots);                     
                     }
                 } else {
                     throw new Error(`Error: ${response.status} ${response.statusText}`);
