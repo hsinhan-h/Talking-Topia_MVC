@@ -21,6 +21,8 @@ namespace Web.Services
             IQueryable<CourseInfoViewModel> courseMainInfoQuery = GetCourseMainInfoQuery();
             courseMainInfoQuery = await ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedWeekdays, selectedTimeslots, selectedBudget);
             
+            //取得課程總數
+            int totalCourseQty = await courseMainInfoQuery.CountAsync();
 
             List<CourseInfoViewModel> courseMainInfo = await courseMainInfoQuery
                 .Skip((page - 1) * pageSize)
@@ -70,7 +72,8 @@ namespace Web.Services
 
             return new CourseInfoListViewModel
             {
-                CourseInfoList = completeCoursesInfo
+                CourseInfoList = completeCoursesInfo,
+                TotalCourseQty = totalCourseQty
             };
         }
 
@@ -293,15 +296,6 @@ namespace Web.Services
                     }).ToList()
                 }).ToListAsync();
 
-        }
-
-
-        public async Task<int> GetTotalCourseQtyAsync(string subject = null, string nation=null, string weekdays=null, string timeslots=null, string budget=null)
-        {
-            IQueryable<CourseInfoViewModel> courseQuery = GetCourseMainInfoQuery();
-            courseQuery = await ApplyCourseMainInfoQueryFilters(courseQuery, subject, nation, weekdays, timeslots, budget);
-
-            return await courseQuery.CountAsync();
         }
 
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)

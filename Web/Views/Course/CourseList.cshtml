@@ -191,10 +191,10 @@
     </div>
     <div class="lh-tutors-order">
         <span class="fw-bold ms-2 ms-md-4">目前排序</span>
-        <a href="" class="recommend" v-on:click="clearAllFilter">即時推薦</a>
-        <a href="">優質教師優先</a>
-        <a href="">低價優先</a>
-        <a href="">多評價數優先</a>
+        <a href="" v-on:click="clearAllFilter">即時推薦</a>
+        <a href="" v-on:click="orderedByVerifiedTutor">優質教師優先</a>
+        <a href="" v-on:click="orderedByPrice">低價優先</a>
+        <a href="" v-on:click="orderedByReviews">多評價數優先</a>
     </div>
     <div v-if="loading"></div>
     <div v-else class="lh-tutor-cards" v-cloak>
@@ -421,7 +421,6 @@
 
 @section endJS
 {
-    <script src="~/js/course_list/course_list_pagination.js"></script>
     <script src="~/js/course_list/course_list_nested_dropdown.js"></script>
     <script src="~/lib/myvue/vue.global.prod.js" asp-append-version="true"></script>
     <script type="module" src="~/js/course_list/course_list_app.js"></script>

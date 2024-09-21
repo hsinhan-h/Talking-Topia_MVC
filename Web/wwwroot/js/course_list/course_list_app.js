@@ -2,6 +2,7 @@
 import { initHoverPopup } from '/js/course_list/course_list_hoverPopup.js';
 import { autoPlayYouTubeModal } from '/js/course_list/course_list_youtubeModal.js';
 import { initTooltips } from '/js/utilities/tooltips.js';
+import { getWeekdayName } from '/js/utilities/weekday_mapping.js';
 
 const courseCardsApp = Vue.createApp({
     data() {
@@ -32,7 +33,7 @@ const courseCardsApp = Vue.createApp({
         this.fetchCourses();
         this.fetchCategories();
         this.fetchNations();
-        this.fetchTotalCourseQty();
+        //this.fetchTotalCourseQty();
         
     },
     updated() {
@@ -69,6 +70,7 @@ const courseCardsApp = Vue.createApp({
                     const courseData = await response.json();
                     console.log(courseData);
                     this.courses = courseData.courseInfoList;
+                    this.totalPages = Math.ceil(courseData.totalCourseQty / this.pageSize);
                     this.availableSlots = [];
                     this.bookedSlots = [];
                     if (this.courses.length > 0) {
@@ -154,41 +156,6 @@ const courseCardsApp = Vue.createApp({
             }
         },
         
-
-        async fetchTotalCourseQty() {
-            try {
-                let url = `/api/CourseListApi/GetTotalCourseQty`;
-                if (this.selectedSubject) {
-                    url += `?subject=${this.selectedSubject}&`;
-                }
-                if (this.selectedNation) {
-                    url += `?nation=${this.selectedNation}&`;
-                }
-                if (this.selectedWeekdays.length > 0) {
-                    url += `?weekdays=${this.selectedWeekdays.join(',')}&`;
-                }
-                if (this.selectedTimeslots.length > 0) {
-                    url += `?timeslots=${this.selectedTimeslots.join(',')}&`;
-                }
-                if (this.selectedBudget) {
-                    url += `?budget=${this.selectedBudget}&`;
-                }
-                if (url.endsWith('&')) {
-                    url = url.slice(0, -1);
-                }
-                const response = await fetch(url);
-
-                if (response.ok) {
-                    const totalCourseQty = await response.json();
-                    this.totalPages = Math.ceil(totalCourseQty / this.pageSize);
-                }
-            } catch (e) {
-                this.error = e;
-            } finally {
-
-                this.loading = false;
-            }
-        },
         //換頁 不刷新頁面
         goToPage(page) {
             if (page > 0 && page <= this.totalPages) {
@@ -234,6 +201,8 @@ const courseCardsApp = Vue.createApp({
             history.pushState(null, '', '?' + queryParams.toString());
         },
 
+        getWeekdayName,
+
         //篩選
         //1. 課程種類
         filterBySubject(subject) {
@@ -260,7 +229,7 @@ const courseCardsApp = Vue.createApp({
         applyFilter() {
             this.page = 1;
             this.fetchCourses();
-            this.fetchTotalCourseQty();
+            //this.fetchTotalCourseQty();
             this.updateQueryString();
         },
 
@@ -282,27 +251,23 @@ const courseCardsApp = Vue.createApp({
             this.selectedBudget = null;
             this.applyFilter();
         },
-        clearAllFilter() {
+        clearAllFilter(e) {
+            e.preventDefault();
             this.selectedSubject = null;
             this.selectedNation = null;
             this.selectedWeekdays = [];
             this.selectedTimeslots = [];
             this.selectedBudget = null;
             this.applyFilter();
-        },
-
-        getWeekdayName(weekdayNumber) {
-            const weekdayMapping = {
-                1: '星期一',
-                2: '星期二',
-                3: '星期三',
-                4: '星期四',
-                5: '星期五',
-                6: '星期六',
-                0: '星期日'
-            };
-            return weekdayMapping[weekdayNumber];
         }
+
+        //排序
+        //1.優質教師優先
+
+        //2. 低價優先
+
+        //3. 多評價數優先
+
     }
 });
 

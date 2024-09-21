@@ -25,12 +25,5 @@
             return Ok(courses);
         }
 
-        [HttpGet("GetTotalCourseQty")]
-        public async Task<IActionResult> GetTotalCourseQty([FromQuery] string subject = null, [FromQuery] string nation = null, [FromQuery] string weekdays = null, [FromQuery] string timeslots = null, [FromQuery] string budget = null)
-        {
-            var courseQty = await _courseService.GetTotalCourseQtyAsync(subject, nation, weekdays, timeslots, budget);
-            return Ok(courseQty);
-        }
-
     }
 }
