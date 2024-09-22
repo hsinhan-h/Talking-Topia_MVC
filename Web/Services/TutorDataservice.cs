@@ -351,5 +351,33 @@ namespace Web.Services
             }
             return qVM;
         }
-    }   
+
+        public async Task<TutorDataViewModel> DeleteTimeSlotsForMember(int memberId)
+        {
+            var tutortime = new TutorDataViewModel
+            {
+                AvailableReservation = new List<AvailReservation>()
+            };
+            var timeSlots = await (from tutorTimeSloot in _repository.GetAll<Entities.TutorTimeSlot>()
+                                   where tutorTimeSloot.TutorId == memberId
+                                   select tutorTimeSloot).ToListAsync();
+            tutortime.AvailableReservation = (from tutorTimeSloot in timeSlots
+                                                    join coursehour in _repository.GetAll<Entities.CourseHour>()
+                                                    on tutorTimeSloot.CourseHourId equals coursehour.CourseHourId
+                                                    select new AvailReservation
+                                                    {
+                                                        Weekday = tutorTimeSloot.Weekday,
+                                                        Coursehours = coursehour.Hour,
+                                                    }).ToList();
+
+            foreach (var timeSlot in timeSlots)
+            {
+                _repository.Delete(timeSlot);
+            }
+            await _repository.SaveChangesAsync();
+
+            return tutortime; 
+        }
+    }
+    
 }
