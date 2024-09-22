@@ -132,11 +132,33 @@
     }
 }
 
+.no-courses-found p {
+    font-size: 15px;
+}
+
+.no-courses-found .fa-solid {
+    color: var(--theme-color);
+}
+
+.no-courses-found img {
+    width: 100vw;
+    max-width: 800px;
+    filter: grayscale(60%);
+    opacity: 0.8;
+    margin-bottom: 8vh;
+}
+
+@media screen and (min-width: 768px) {
+    .no-courses-found p {
+        font-size: 16px;
+    }
+}
+
 /* order */
 .lh-tutors-order > * {
     text-decoration: none;
     font-size: 13px;
-    margin-right: 8px;    
+    margin-right: 8px;
 }
 
 .lh-tutors-order > *:not(.sort-option-selected) {
