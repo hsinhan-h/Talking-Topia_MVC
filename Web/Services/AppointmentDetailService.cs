@@ -16,16 +16,7 @@ namespace Web.Services
         {
             _repository = repository;
         }
-       
-        public decimal GetUnitPrice(int courseId, int courseLength)
-        {
-            var price = _repository.GetAll<Entities.Course>()
-                       .Where(x => x.CourseId == courseId)
-                       .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
-                       .FirstOrDefault();
 
-            return price;
-        }
         //Logic 
 
         public async Task<AppointmentDetailsViewModel> GetAppointmentData(int memberId)
