@@ -13,7 +13,7 @@ const courseCardsApp = Vue.createApp({
             totalPages: 0,
             error: null,
             loading: true,
-            noCouesesFound: false,
+            noCoursesFound: false,
             selectedSubject: null,
             selectedNation: null,
             selectedWeekdays: [],
@@ -32,7 +32,7 @@ const courseCardsApp = Vue.createApp({
         this.selectedSubject = params.get('subject') || null;
         this.selectedNation = params.get('nation') || null;
         this.selectedBudget = params.get('budget') || null;       
-        this.fetchCourses();
+        this.fetchCoursesDebounced();
         this.fetchCategories();
         this.fetchNations();        
     },
@@ -45,10 +45,13 @@ const courseCardsApp = Vue.createApp({
         });
     },
     methods: {
+        fetchCoursesDebounced: _.debounce(function () {
+            this.fetchCourses();
+        }, 300), //延遲300ms觸發fetch
+
         async fetchCourses() {
             this.loading = true;
-            this.noCouesesFound = false;
-            const startTime = Date.now(); 
+            this.noCoursesFound = false;
             try {
                 let url = `/api/CourseListApi?page=${this.page}`;
                 if (this.selectedSubject) {
@@ -82,7 +85,7 @@ const courseCardsApp = Vue.createApp({
                         this.availableSlots = this.courses.map(course => course.availableTimeSlots);
                         this.bookedSlots = this.courses.map(course => course.bookedTimeSlots);
                     } else {
-                        this.noCouesesFound = true;
+                        this.noCoursesFound = true;
                     }
                 } else {
                     throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -90,16 +93,7 @@ const courseCardsApp = Vue.createApp({
             } catch (e) {
                 this.error = e;
             } finally {
-                //this.loading = false;
-                const endTime = Date.now();
-                const elaspsedTime = endTime - startTime;
-                if (elaspsedTime < 300) {
-                    setTimeout(() => {
-                        this.loading = false;
-                    }, 300 - elaspsedTime); // 加載時間 < 300時, 延遲到300
-                } else {
-                    this.loading = false;
-                }             
+                this.loading = false;     
             }
         },
         goToCourseMainPage(courseId) {
@@ -118,18 +112,15 @@ const courseCardsApp = Vue.createApp({
         },
         addBookingStatusClass(startHour, endHour, weekday, index) {
             const isAvailable = this.availableSlots[index].some(slot => slot.weekday === weekday && slot.startHour >= startHour && slot.startHour < endHour);
+
+            const today = new Date();
+            const currentDayOfWeek = today.getDay();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - currentDayOfWeek);
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
             const isOccupied = this.bookedSlots[index].some(slot => {
-                const today = new Date();
-                const currentDayOfWeek = today.getDay();
-
-                const startOfWeek = new Date(today);
-                startOfWeek.setDate(today.getDate() - currentDayOfWeek);
-
-                const endOfWeek = new Date(startOfWeek);
-                endOfWeek.setDate(startOfWeek.getDate() + 6);
-
                 const bookedDate = new Date(slot.date);
-
                 return bookedDate >= startOfWeek && bookedDate <= endOfWeek &&
                     bookedDate.getDay() === weekday && slot.startHour >= startHour && slot.startHour < endHour;
             });
