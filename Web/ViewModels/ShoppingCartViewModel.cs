@@ -40,12 +40,17 @@
         /// <summary>
         /// 分鐘數
         /// </summary>
-        public string CourseLength { get; set; }
+        public int CourseLength { get; set; }
 
         /// <summary>
         /// 堂數
         /// </summary>
         public int CourseQuantity { get; set; }
+
+        /// <summary>
+        /// 堂數選項
+        /// </summary>
+        public List<int> CourseQunatityOptions { get; set; }
 
         /// <summary>
         /// 單價
@@ -85,7 +90,7 @@
         public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
     }
 
-    public class CartItemUpdateViewModel
+    public class CartItemUpdateDto
     {
         public int CourseId { get; set; }
         public int CourseQuantity { get; set; }
