@@ -20,15 +20,6 @@ namespace Web.Services
         {
             return _repository.GetAll<Entities.Order>().Any(x =>x.MemberId == memberId);
         }
-        public decimal GetUnitPrice(int courseId, int courseLength)
-        {
-            var price = _repository.GetAll<Entities.Course>()
-                       .Where(x => x.CourseId == courseId)
-                       .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
-                       .FirstOrDefault();
-
-            return price;
-        }
         //Logic 
 
         public async Task<MemberOrderViewModel> GetOrderData(int memberId)

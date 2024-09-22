@@ -27,6 +27,7 @@ namespace ApplicationCore.Services
             decimal price = _courseRepository.List(c => c.CourseId == courseId)
                                              .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
                                              .FirstOrDefault();
+            if (price < 1) return 0;
             return price;
         }
         public async Task<GetAllShoppingCartResultDto> GetAllShoppingCartAsync(int memberId)
@@ -57,7 +58,7 @@ namespace ApplicationCore.Services
             return result;
         }
         /// <summary>
-        /// 無預約時段，單純將課程加入購物車
+        /// 無預約時段
         /// </summary>
         /// <param name="memberId"></param>
         /// <param name="courseId"></param>
@@ -97,6 +98,19 @@ namespace ApplicationCore.Services
                 throw new Exception($"Unexpected error: {ex.Message}");
             }
         }
+
+        /// <summary>
+        ///  有預約時段
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="courseId"></param>
+        /// <param name="courseLength"></param>
+        /// <param name="quantity"></param>
+        /// <param name="bookingDate"></param>
+        /// <param name="bookingTime"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="Exception"></exception>
         public async Task<int> CreateShoppingCartAsync(int memberId, int courseId, int courseLength, int quantity, DateTime bookingDate, short bookingTime)
         {
             try
