@@ -197,7 +197,10 @@
         <a href="" :class="{'sort-option-selected': selectedSortOption == 'reviewsCount' }" v-on:click="sortByReviewsCount">多評價數優先</a>
         <a href="" :class="{'sort-option-selected': selectedSortOption == 'rating' }" v-on:click="sortByRating">評分高優先</a>
     </div>
-    <div v-if="loading"></div>
+    <div v-if="loading" class="course-spinner mt-2">
+        <img src="~/image/spinner_imgs/block_spinner-1.gif" />
+        <span>加載課程資料中...</span>
+    </div>
     <div v-else class="lh-tutor-cards" v-cloak>
         <div v-for="(courseCard, index) in courses" :key="courseCard.courseId" class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
             <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
