@@ -19,8 +19,6 @@ namespace ApplicationCore.Services
         private readonly IRepository<Booking> _bookingRepository;
         private readonly IRepository<CourseSubject> _courseSubjectRepository;
         private readonly IRepository<CourseCategory> _courseCategoryRepository;
-        private int _orderId;
-        private List<ShoppingCart> _shoppingCartItem;
 
         public OrderService(ITransaction transaction, IRepository<Order> orderRepository,
                             IRepository<Member> memberRepository, IRepository<OrderDetail> orderDetailRepository,
@@ -39,35 +37,6 @@ namespace ApplicationCore.Services
             _courseCategoryRepository = courseCategoryRepository ?? throw new ArgumentNullException(nameof(courseCategoryRepository));
         }
 
-        public async Task<GetAllOrderResultDto> GetAllOrder(int memberId)
-        {
-            var orders = await _orderRepository.ListAsync(item => item.MemberId == memberId);
-            var getOrderItem = new List<GetOrderItem>();
-            foreach (var order in orders)
-            {
-                getOrderItem.Add
-                (new GetOrderItem
-                {
-                    OrderId = order.OrderId,
-                    MemberId = order.MemberId,
-                    PaymentType = order.PaymentType,
-                    TotalPrice = order.TotalPrice,
-                    TransactionDate = order.TransactionDate,
-                    CouponPrice = order.CouponPrice,
-                    TaxIdNumber = order.TaxIdNumber,
-                    InvoiceType = order.InvoiceType,
-                    VATNumber = order.Vatnumber,
-                    SentVatemail = order.SentVatemail,
-                    OrderStatusId = order.OrderStatusId,
-                }
-                );
-            }
-            var result = new GetAllOrderResultDto
-            {
-                GetOrderItems = getOrderItem,
-            };
-            return result;
-        }
 
         /// <summary>
         /// 建單並串至綠界(callback後會再呼叫Update刷新OrderStatusId)
@@ -82,14 +51,10 @@ namespace ApplicationCore.Services
 
             try
             {
-                // 把購物車品項全撈出來，並計算總額
-                _shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
-                var totalPrice = _shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
+                var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
+                var totalPrice = shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
                 var member = await _memberRepository.FirstOrDefaultAsync(m => m.MemberId ==  memberId);
-                if (memberId == null || memberId <= 0)
-                {
-                    throw new ArgumentException("MemberId 不存在");
-                }
+
                 // 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
                 var orders = new Order()
                 {
@@ -107,7 +72,7 @@ namespace ApplicationCore.Services
 
                 var orderResult = await _orderRepository.AddAsync(orders);
 
-                foreach (var item in _shoppingCartItem)
+                foreach (var item in shoppingCartItem)
                 {
                     var course = await _courseRepository.GetByIdAsync(item.CourseId);
                     var subject = await _courseSubjectRepository.GetByIdAsync(course.SubjectId);
@@ -147,15 +112,16 @@ namespace ApplicationCore.Services
             try
             {
                 var order = await _orderRepository.GetByIdAsync(orderId);
-
+                var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == order.MemberId);
+                
                 if (orderStatus == EOrderStatus.Success)
                 {
                     order.OrderStatusId = (short)EOrderStatus.Success;
                     order.Udate = DateTime.Now;
-                    //oreder.MerchantTradeNo = merchantTradeNo;
-                    //order.TradeNo = tradeNo;
+                    order.MerchantTradeNo = merchantTradeNo;
+                    order.TradeNo = tradeNo;
                     await _orderRepository.UpdateAsync(order);
-                    foreach (var item in _shoppingCartItem)
+                    foreach (var item in shoppingCartItem)
                     {
                         if (item.BookingDate.HasValue && item.BookingTime.HasValue)
                         {
@@ -163,10 +129,11 @@ namespace ApplicationCore.Services
                             {
                                 CourseId = item.CourseId,
                                 BookingDate = item.BookingDate.Value,
-                                //BookingTime =  (short)item.BookingTime,
+                                BookingTime =  (short)item.BookingTime,
                                 StudentId = item.MemberId,
+                                Cdate = DateTime.Now,
                             };
-                            await _bookingRepository.UpdateAsync(booking);
+                            await _bookingRepository.AddAsync(booking);
                         }
                         await _shoppingCartRepository.DeleteAsync(item);
                     }
@@ -182,6 +149,13 @@ namespace ApplicationCore.Services
             }
         }
 
+        public int GetLatestOrder(int memberId)
+        {
+            var memberOrders = _orderRepository.List(o => o.MemberId == memberId);
+            var latestOrder = memberOrders.OrderByDescending(o => o.TransactionDate).FirstOrDefault();
+            return latestOrder == null ? 0 : latestOrder.OrderId;
+        }
+
         public TimeSpan ConvertSmallintToTime(short timeValue)
         {
             int hours = timeValue / 100;
@@ -189,7 +163,5 @@ namespace ApplicationCore.Services
 
             return new TimeSpan(hours, minutes, 0);
         }
-
-
     }
 }
