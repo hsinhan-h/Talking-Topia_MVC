@@ -170,10 +170,13 @@ namespace Web.Services
                                  on course.TutorId equals member.MemberId
                                  join nation in _repository.GetAll<Nation>().AsNoTracking()
                                  on member.NationId equals nation.NationId
+                                 join category in _repository.GetAll<CourseCategory>().AsNoTracking()
+                                 on course.CategoryId equals category.CourseCategoryId
                                  where watch.FollowerId == memberId
                                  select new TutorRecomCardList
                                  {
                                      CourseId = course.CourseId,
+                                     CategoryId = category.CategorytName,
                                      TutorHeadShot = member.HeadShotImage,
                                      NationFlagImg = nation.FlagImage,
                                      CourseTitle = course.Title,
