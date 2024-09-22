@@ -7,6 +7,7 @@ namespace Web.ViewModels
 {
     public class TutorDataViewModel
     {
+        public int MemberId { get; set; }
         public int TutorId { get; set; }    
         /// <summary>
         /// 國籍
@@ -31,6 +32,8 @@ namespace Web.ViewModels
         /// <summary>
         /// 學歷
         /// </summary>
+        public List<int> Weekdays { get; set; }
+        public List<int> CouseHoursId { get; set; }
         public List<Educational> EducationalBackground { get; set; } = new List<Educational>();
         /// <summary>
         /// 經歷

@@ -18,5 +18,7 @@ namespace Web.Repository
         Task BeginTransActionAsync();
         Task CommitAsync();
         Task RollbackAsync();
+        Task<Member> GetMemberByIdAsync(int memberId);
+        Task<TutorTimeSlot> GetTutorTimeSlotAsync(int tutorId, int courseHourId, int weekday);
     }
 }

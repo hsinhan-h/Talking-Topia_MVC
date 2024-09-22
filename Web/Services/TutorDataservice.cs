@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Web.Entities;
 using Web.Services;
@@ -55,7 +56,7 @@ namespace Web.Services
                         StudyEndYear = edu.StudyEndYear
                     }).ToListAsync();
 
-                var workExperience = await _repository.GetAll<Entities.WorkExperience>()
+                var workExperience = await _repository.GetAll<Entities.WorkExperience>()  //還要新增年資
                     .Where(wexp => wexp.MemberId == memberId)
                     .Select(wexp => new WorkExp
                     {
@@ -235,42 +236,48 @@ namespace Web.Services
         }
 
 
-        //Creat
-
-        //public async Task<TutorDataViewModel> CreatTutorData()
-        //{
-        //    return (new TutorDataViewModel());
-
-        //}
-        public async Task<TutorDataViewModel> CreateTutorData(TutorDataViewModel qVM)
+        public async Task<TutorDataViewModel> CreateTutorData(TutorDataViewModel qVM, int memberId)
         {
             // 開始一個資料庫交易
             await _repository.BeginTransActionAsync();
             try
             {
-                // 新增 Member 資料
-                var member = new Entities.Member
+                var existingMember = await _repository.GetMemberByIdAsync(memberId);
+                if (existingMember == null)
                 {
-                    NativeLanguage = qVM.NativeLanguage,
-                    SpokenLanguage = qVM.SpokenLanguage,
-                    BankAccount = qVM.BankAccount,
-                    BankCode = qVM.BankCode,
-                    Cdate = DateTime.Now,
-                    Udate = null,
-                    FirstName = "N/A",
-                    LastName = "N/A",
-                    Password = "N/A",
-                    Email = "N/A",
-                    Nickname = "N/A",
-                    Phone = "N/A",
-                    Gender = 0,
-                    AccountType = 1,
-                    IsTutor = true,
-                    IsVerifiedTutor = false,
-                };
+                    return new TutorDataViewModel
+                    {
+                        Success = false,
+                        Message = "找不到該會員，請檢查會員資料。",
+                    };
+                }
+
+                existingMember.NativeLanguage = qVM.NativeLanguage ?? existingMember.NativeLanguage;
+                existingMember.SpokenLanguage = qVM.SpokenLanguage ?? existingMember.SpokenLanguage;
+                existingMember.BankAccount = qVM.BankAccount ?? existingMember.BankAccount;
+                existingMember.BankCode = qVM.BankCode ?? existingMember.BankCode;
+                existingMember.Udate = DateTime.Now;
+                existingMember.NationId = qVM.NationID;
+                existingMember.FirstName = existingMember.FirstName ?? "N/A";
+                existingMember.LastName = existingMember.LastName ?? "N/A";
+                existingMember.Password = existingMember.Password ?? "N/A";
+                existingMember.Email = existingMember.Email ?? "N/A";
+                existingMember.Nickname = existingMember.Nickname ?? "N/A";
+                existingMember.Phone = existingMember.Phone ?? "N/A";
+                existingMember.Gender = (short)(existingMember.Gender != 0 ? existingMember.Gender : 0);
+                if (existingMember.AccountType != 0 && (existingMember.AccountType == 1 || existingMember.AccountType == 2))
+                {
+                    existingMember.AccountType = existingMember.AccountType;
+                }
+                else
+                {
+                    existingMember.AccountType = 0;
+                }
+                existingMember.IsTutor = (existingMember.IsTutor == true || existingMember.IsTutor);
+                existingMember.IsVerifiedTutor = (existingMember.IsVerifiedTutor != false && existingMember.IsVerifiedTutor);
 
                 // 使用 Repository 來新增資料
-                _repository.Create(member);
+                _repository.Update(existingMember);
                 await _repository.SaveChangesAsync();
 
                 // 提交交易
@@ -295,5 +302,69 @@ namespace Web.Services
                 };
             }
         }
-    }
+
+        public async Task<TutorDataViewModel> CreateTutorTimeData(TutorDataViewModel qVM, int memberId)
+        {
+            // 開始一個資料庫交易
+            await _repository.BeginTransActionAsync();
+            try
+            {
+                // 確認會員是否存在
+                var existingMember = await _repository.GetMemberByIdAsync(memberId);
+                if (existingMember == null)
+                {
+                    qVM.Success = false;
+                    qVM.Message = "找不到該會員，請檢查會員資料。";
+                }
+
+                // 檢查是否有選擇的 Weekdays 和 CourseHoursId
+                if (qVM.Weekdays == null || qVM.Weekdays.Count == 0 || qVM.CouseHoursId == null || qVM.CouseHoursId.Count == 0)
+                {
+                    qVM.Success = false;
+                    qVM.Message = "請選擇星期和時段。";
+                }
+
+                // 將 CourseHoursId 和 Weekdays 結合處理，對每個星期新增對應的時段
+                foreach (var weekday in qVM.Weekdays)
+                {
+                    foreach (var courseHourId in qVM.CouseHoursId)
+                    {
+                        // 檢查是否已經有相同的 TutorId、CourseHourId 和 Weekday 組合
+                        var existingSlot = await _repository.GetTutorTimeSlotAsync(memberId, courseHourId, weekday);
+                        if (existingSlot == null) // 如果沒有找到相同的記錄，則新增
+                        {
+                            var courseHour = new Entities.TutorTimeSlot
+                            {
+                                TutorId = memberId,
+                                CourseHourId = courseHourId,  // 對應的時段 ID
+                                Weekday = weekday,            // 對應的星期
+                                Cdate = DateTime.Now,
+                                Udate = null,
+                            };
+                            _repository.Create(courseHour);
+                        }
+                    }
+                }
+
+                // 保存所有變更並提交交易
+                await _repository.SaveChangesAsync();
+                await _repository.CommitAsync();
+
+                qVM.Success = true;
+                qVM.Message = "會員資料新增成功";
+            }
+            catch (Exception ex)
+            {
+                // 發生錯誤，回滾交易
+                await _repository.RollbackAsync();
+                qVM.Success = false;
+                qVM.Message = $"資料處理發生錯誤: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    qVM.Message += $" | 內層錯誤: {ex.InnerException.Message}";
+                }
+            }
+            return qVM;
+        }
+    }   
 }

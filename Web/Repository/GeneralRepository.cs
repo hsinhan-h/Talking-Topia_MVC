@@ -76,5 +76,19 @@ namespace Web.Repository
             return _context.Set<T>().FirstOrDefault(predicate);
 
         }
+
+        public async Task<Member> GetMemberByIdAsync(int memberId)
+        {
+            return await _context.Members
+            .FirstOrDefaultAsync(m => m.MemberId == memberId);
+        }
+
+        public async Task<TutorTimeSlot> GetTutorTimeSlotAsync(int tutorId, int courseHourId, int weekday)
+        {
+            return await _context.TutorTimeSlots
+                                 .FirstOrDefaultAsync(x => x.TutorId == tutorId
+                                                        && x.CourseHourId == courseHourId
+                                                        && x.Weekday == weekday);
+        }
     }
 }
