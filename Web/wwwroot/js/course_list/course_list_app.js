@@ -18,6 +18,7 @@ const courseCardsApp = Vue.createApp({
             selectedWeekdays: [],
             selectedTimeslots: [],
             selectedBudget: null,
+            selectedSortOption: 'default',
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
             bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array          
             courseCategories: [], //動態科目篩選選單資料
@@ -32,9 +33,7 @@ const courseCardsApp = Vue.createApp({
         this.selectedBudget = params.get('budget') || null;       
         this.fetchCourses();
         this.fetchCategories();
-        this.fetchNations();
-        //this.fetchTotalCourseQty();
-        
+        this.fetchNations();        
     },
     updated() {
         //DOM 已更新完後, 重新呼叫slick function & tooltips & modals
@@ -63,6 +62,9 @@ const courseCardsApp = Vue.createApp({
                 }
                 if (this.selectedBudget) {
                     url += `&budget=${this.selectedBudget}`;
+                }
+                if (this.selectedSortOption && this.selectedSortOption !== 'default') {
+                    url += `&sortOption=${this.selectedSortOption}`;
                 }
 
                 const response = await fetch(url);
@@ -198,6 +200,12 @@ const courseCardsApp = Vue.createApp({
                 queryParams.delete('budget');
             }
 
+            if (this.selectedSortOption) {
+                queryParams.set('sortOption', this.selectedSortOption);
+            } else {
+                queryParams.delete('sortOption');
+            }
+
             history.pushState(null, '', '?' + queryParams.toString());
         },
 
@@ -259,14 +267,30 @@ const courseCardsApp = Vue.createApp({
             this.selectedTimeslots = [];
             this.selectedBudget = null;
             this.applyFilter();
-        }
+        },
 
         //排序
         //1.優質教師優先
+        sortByVerifiedTutor(e) {
+            e.preventDefault();
+            this.selectedSortrOption = "verifiedTutor";
+            this.applyFilter();
+        },
 
         //2. 低價優先
+        sortByPriceAscend(e) {
+            e.preventDefault();
+            this.selectedSortOption = "priceAscend";
+            console.log(this.selectedSortOption);
+            this.applyFilter();
+        },
 
         //3. 多評價數優先
+        sortByReviewsCount(e) {
+            e.preventDefault();
+            this.selectedSortOption = "reviewsCount";
+            this.applyFilter();
+        }
 
     }
 });

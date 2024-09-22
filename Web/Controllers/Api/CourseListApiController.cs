@@ -11,13 +11,21 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCourses([FromQuery] int page, [FromQuery] string subject = null, [FromQuery] string nation = null, [FromQuery] string weekdays = null, [FromQuery] string timeslots = null, [FromQuery] string budget = null)
+        public async Task<IActionResult> GetCourses(
+            [FromQuery] int page, 
+            [FromQuery] string subject = null, 
+            [FromQuery] string nation = null, 
+            [FromQuery] string weekdays = null, 
+            [FromQuery] string timeslots = null, 
+            [FromQuery] string budget = null,
+            [FromQuery] string sortOption = null
+            )
         {
             if (page <= 0)
             {
                 return BadRequest();
             }
-            var courses = await _courseService.GetCourseCardsListAsync(page, 6, subject, nation, weekdays, timeslots, budget);
+            var courses = await _courseService.GetCourseCardsListAsync(page, 6, subject, nation, weekdays, timeslots, budget, sortOption);
             if (courses == null)
             {
                 return NotFound();
