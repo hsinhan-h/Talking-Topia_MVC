@@ -259,25 +259,31 @@ const courseCardsApp = Vue.createApp({
             this.selectedBudget = null;
             this.applyFilter();
         },
-        clearAllFilter(e) {
-            e.preventDefault();
+        clearAllFilter() {
             this.selectedSubject = null;
             this.selectedNation = null;
             this.selectedWeekdays = [];
             this.selectedTimeslots = [];
-            this.selectedBudget = null;
+            this.selectedBudget = null;           
             this.applyFilter();
         },
 
         //排序
-        //1.優質教師優先
-        sortByVerifiedTutor(e) {
+        //1. 即時推薦
+        sortByDefault(e) {
             e.preventDefault();
-            this.selectedSortrOption = "verifiedTutor";
+            this.selectedSortOption = "default";
             this.applyFilter();
         },
 
-        //2. 低價優先
+        //2.優質教師優先
+        sortByVerifiedTutor(e) {
+            e.preventDefault();
+            this.selectedSortOption = "verifiedTutor";
+            this.applyFilter();
+        },
+
+        //3. 低價優先
         sortByPriceAscend(e) {
             e.preventDefault();
             this.selectedSortOption = "priceAscend";
@@ -285,7 +291,7 @@ const courseCardsApp = Vue.createApp({
             this.applyFilter();
         },
 
-        //3. 多評價數優先
+        //4. 多評價數優先
         sortByReviewsCount(e) {
             e.preventDefault();
             this.selectedSortOption = "reviewsCount";
