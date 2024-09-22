@@ -13,6 +13,7 @@ const courseCardsApp = Vue.createApp({
             totalPages: 0,
             error: null,
             loading: true,
+            noCouesesFound: false,
             selectedSubject: null,
             selectedNation: null,
             selectedWeekdays: [],
@@ -46,6 +47,8 @@ const courseCardsApp = Vue.createApp({
     methods: {
         async fetchCourses() {
             this.loading = true;
+            this.noCouesesFound = false;
+            const startTime = Date.now(); 
             try {
                 let url = `/api/CourseListApi?page=${this.page}`;
                 if (this.selectedSubject) {
@@ -77,7 +80,9 @@ const courseCardsApp = Vue.createApp({
                     this.bookedSlots = [];
                     if (this.courses.length > 0) {
                         this.availableSlots = this.courses.map(course => course.availableTimeSlots);
-                        this.bookedSlots = this.courses.map(course => course.bookedTimeSlots);                     
+                        this.bookedSlots = this.courses.map(course => course.bookedTimeSlots);
+                    } else {
+                        this.noCouesesFound = true;
                     }
                 } else {
                     throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -85,7 +90,16 @@ const courseCardsApp = Vue.createApp({
             } catch (e) {
                 this.error = e;
             } finally {
-                this.loading = false;
+                //this.loading = false;
+                const endTime = Date.now();
+                const elaspsedTime = endTime - startTime;
+                if (elaspsedTime < 300) {
+                    setTimeout(() => {
+                        this.loading = false;
+                    }, 300 - elaspsedTime); // 加載時間 < 300時, 延遲到300
+                } else {
+                    this.loading = false;
+                }             
             }
         },
         goToCourseMainPage(courseId) {
@@ -296,8 +310,14 @@ const courseCardsApp = Vue.createApp({
             e.preventDefault();
             this.selectedSortOption = "reviewsCount";
             this.applyFilter();
-        }
+        },
 
+        //5. 評分高優先
+        sortByRating(e) {
+            e.preventDefault();
+            this.selectedSortOption = "rating";
+            this.applyFilter();
+        }
     }
 });
 
