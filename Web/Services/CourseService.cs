@@ -216,6 +216,9 @@ namespace Web.Services
                     case "reviewsCount":
                         courseMainInfoQuery = courseMainInfoQuery.OrderByDescending(c => c.CourseReviews);
                         break;
+                    case "rating":
+                        courseMainInfoQuery = courseMainInfoQuery.OrderByDescending(c => c.CourseRatings);
+                        break;
                     default:
                         courseMainInfoQuery = courseMainInfoQuery.OrderBy(c => c.CourseId);
                         break;

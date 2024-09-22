@@ -119,13 +119,23 @@
 .lh-tutors-order > * {
     text-decoration: none;
     font-size: 13px;
-    margin-right: 8px;
+    margin-right: 8px;    
+}
+
+.lh-tutors-order > *:not(.sort-option-selected) {
     color: #555;
 }
 
 .lh-tutors-order > a:hover {
     color: var(--theme-color);
     font-weight: 600;
+}
+
+.sort-option-selected {
+    font-weight: 900;
+    color: var(--theme-color);
+    padding-bottom: 2px;
+    border-bottom: 1.5px solid var(--theme-color);
 }
 
 

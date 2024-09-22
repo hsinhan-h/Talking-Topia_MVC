@@ -296,8 +296,14 @@ const courseCardsApp = Vue.createApp({
             e.preventDefault();
             this.selectedSortOption = "reviewsCount";
             this.applyFilter();
-        }
+        },
 
+        //5. 評分高優先
+        sortByRating(e) {
+            e.preventDefault();
+            this.selectedSortOption = "rating";
+            this.applyFilter();
+        }
     }
 });
 

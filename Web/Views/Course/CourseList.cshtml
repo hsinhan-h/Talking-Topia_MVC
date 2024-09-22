@@ -191,10 +191,11 @@
     </div>
     <div class="lh-tutors-order">
         <span class="fw-bold ms-2 ms-md-4">目前排序</span>
-        <a href="" v-on:click="sortByDefault">即時推薦</a>
-        <a href="" v-on:click="sortByVerifiedTutor">優質教師優先</a>
-        <a href="" v-on:click="sortByPriceAscend">低價優先</a>
-        <a href="" v-on:click="sortByReviewsCount">多評價數優先</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'default' }" v-on:click="sortByDefault">即時推薦</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'verifiedTutor' }" v-on:click="sortByVerifiedTutor">優質教師優先</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'priceAscend' }" v-on:click="sortByPriceAscend">低價優先</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'reviewsCount' }" v-on:click="sortByReviewsCount">多評價數優先</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'rating' }" v-on:click="sortByRating">評分高優先</a>
     </div>
     <div v-if="loading"></div>
     <div v-else class="lh-tutor-cards" v-cloak>
