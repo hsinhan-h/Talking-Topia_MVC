@@ -16,8 +16,8 @@
 
 <partial name="_BannerPartial"  />
 <section class="tutors mb-3" id="course-cards-app">
-    <div class="lh-tutors-filter d-flex" v-cloak>
-        <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-3">
+    <div class="lh-tutors-filter d-flex flex-wrap flex-md-nowrap" v-cloak>
+        <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-1 mb-md-3">
             <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedSubject}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                 {{ selectedSubject ? selectedSubject : '學習需求' }} <i class="bi bi-filter"></i>
             </button>
@@ -38,7 +38,7 @@
                 </li>
             </ul> 
         </div>
-        <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
+        <div class="btn-group me-1 mx-sm-2 mt-4 mb-0 mb-1 mb-md-3">
             <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedNation}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                 {{ selectedNation ? selectedNation : '教師國籍' }} <i class="bi bi-filter"></i>
             </button>
@@ -53,7 +53,7 @@
                 </li>
             </ul>
         </div>
-        <div class="btn-group course-time-filter me-1 mx-sm-2 mt-4 mb-3">
+        <div class="btn-group course-time-filter me-1 mx-sm-2 mt-4 mb-1 mb-md-3">
             <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedWeekdays.length > 0 || selectedTimeslots.length > 0}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                 <template v-if="selectedWeekdays.length > 0">
                     {{ getWeekdayName(selectedWeekdays[0]) }} <span v-if="selectedWeekdays.length > 1 && selectedTimeslots.length === 0"> + 1</span>
@@ -170,7 +170,7 @@
 
 
         </div>
-        <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
+        <div class="btn-group me-1 mx-sm-2 mt-4 mb-1 mb-md-3">
             <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedBudget }]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                 {{ selectedBudget ? 'NT$ ' + selectedBudget : '預算區間' }} <i class="bi bi-filter"></i>
             </button>
@@ -185,7 +185,7 @@
                 </li>
             </ul>
         </div>
-        <div class="btn-group me-1 mx-sm-2 mt-4 mb-3" v-if="selectedSubject || selectedNation || selectedWeekdays.length > 0 || selectedTimeslots.length > 0 || selectedBudget">
+        <div class="btn-group me-1 mx-sm-2 mt-1 mt-md-4 mb-1 mb-md-3" v-if="selectedSubject || selectedNation || selectedWeekdays.length > 0 || selectedTimeslots.length > 0 || selectedBudget">
             <button class="dropdown-item cancel-filter-btn ms-md-2" type="button" v-on:click="clearAllFilter"><i class="bi bi-x-circle-fill"></i>  <strong>清除篩選</strong></button>
         </div>
     </div>

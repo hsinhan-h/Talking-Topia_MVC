@@ -25,6 +25,7 @@
 
 .cancel-filter-btn, .cancel-filter-btn:hover {
     color: var(--highlight-color);
+    font-size: 15px;
 }
 
 .cancel-filter-btn:focus {
@@ -42,6 +43,10 @@
     .lh-tutors-filter {
         gap: 1%;
         justify-content: center;
+    }
+
+    .cancel-filter-btn {
+        font-size: 13px;
     }
 }
 
