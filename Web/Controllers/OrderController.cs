@@ -69,7 +69,7 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitToOrder(string paymentType, string taxIdNumber, List<CartItemUpdateViewModel> Items)
+        public async Task<IActionResult> SubmitToOrder(string paymentType, string taxIdNumber, List<CartItemUpdateDto> Items)
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
