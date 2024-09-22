@@ -57,9 +57,12 @@
     font-size: 13px;
     font-weight: 600;
     color: var(--theme-color);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 
-.tutor-title-and-ranking {
+.tutor-title-and-ranking, .tutor-subtitle {
     overflow: hidden;
 }
 

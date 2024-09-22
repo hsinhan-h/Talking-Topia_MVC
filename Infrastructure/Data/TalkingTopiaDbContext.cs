@@ -1,17 +1,17 @@
 ﻿using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Data;
 
 public partial class TalkingTopiaDbContext : DbContext
 {
-    public TalkingTopiaDbContext()
-    {
-    }
+    private readonly IConfiguration _configuration;
 
-    public TalkingTopiaDbContext(DbContextOptions<TalkingTopiaDbContext> options)
+    public TalkingTopiaDbContext(DbContextOptions<TalkingTopiaDbContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
     public virtual DbSet<ApplyList> ApplyLists { get; set; }

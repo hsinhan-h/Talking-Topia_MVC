@@ -57,7 +57,7 @@ namespace Web.Services
                 ImageUrl = member.HeadShotImage ?? string.Empty, // 如果圖片為 null，使用空字串代替
                 Nickname = member.Nickname ?? "未設定", // 處理暱稱為 null 的情況
                 Birthday = member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null, // 若無生日資料，設為 null
-                Gender = ((Gender)member.Gender).ToString(), // 將性別枚舉轉為字符串
+                Gender = member.Gender == 1 ? "男" : "女",
                 Account = member.Account,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
@@ -96,12 +96,20 @@ namespace Web.Services
             }
 
             // 更新基本資料
+            member.Account = updatedData.Account ?? member.Account;
             member.FirstName = updatedData.FirstName ?? member.FirstName;
             member.LastName = updatedData.LastName ?? member.LastName;
             member.Nickname = updatedData.Nickname ?? member.Nickname;
             member.Email = updatedData.Email ?? member.Email;
             member.Phone = updatedData.Phone ?? member.Phone;
             member.Birthday = updatedData.Birthday;
+
+            // 處理性別的更新（將 "男" 或 "女" 轉換為 1 或 2）
+            if (!string.IsNullOrEmpty(updatedData.Gender))
+            {
+                member.Gender = (short)(updatedData.Gender == "男" ? 1 : 2);
+            }
+
 
             // 先將所有的課程主題加載到內存中，避免每次查找都查詢數據庫
             var allCourseSubjects = await _repository.GetAll<CourseSubject>().ToListAsync();
