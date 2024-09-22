@@ -284,78 +284,63 @@ namespace Web.Services
                 await _repository.CommitAsync();
 
                 // 返回成功結果
-                return new TutorDataViewModel
-                {
-                    Success = true,
-                    Message = "會員資料新增成功",
-
-                };
-            }
-            catch (Exception ex)
-            {
-                // 若發生錯誤則回滾交易
-                await _repository.RollbackAsync();
-                return new TutorDataViewModel
-                {
-                    Success = false,
-                    Message = $"資料處理發生錯誤: {ex.Message}"
-                };
-            }
-        }
-
-        public async Task<TutorDataViewModel> CreateTutorTimeData(TutorDataViewModel qVM, int memberId)
-        {
-            // 開始一個資料庫交易
-            await _repository.BeginTransActionAsync();
-            try
-            {
-                // 確認會員是否存在
-                var existingMember = await _repository.GetMemberByIdAsync(memberId);
-                if (existingMember == null)
-                {
-                    qVM.Success = false;
-                    qVM.Message = "找不到該會員，請檢查會員資料。";
-                }
-
-                // 檢查是否有選擇的 Weekdays 和 CourseHoursId
-                if (qVM.Weekdays == null || qVM.Weekdays.Count == 0 || qVM.CouseHoursId == null || qVM.CouseHoursId.Count == 0)
-                {
-                    qVM.Success = false;
-                    qVM.Message = "請選擇星期和時段。";
-                }
-
-                // 將 CourseHoursId 和 Weekdays 結合處理，對每個星期新增對應的時段
-                foreach (var weekday in qVM.Weekdays)
-                {
-                    foreach (var courseHourId in qVM.CouseHoursId)
-                    {
-                        // 檢查是否已經有相同的 TutorId、CourseHourId 和 Weekday 組合
-                        var existingSlot = await _repository.GetTutorTimeSlotAsync(memberId, courseHourId, weekday);
-                        if (existingSlot == null) // 如果沒有找到相同的記錄，則新增
-                        {
-                            var courseHour = new Entities.TutorTimeSlot
-                            {
-                                TutorId = memberId,
-                                CourseHourId = courseHourId,  // 對應的時段 ID
-                                Weekday = weekday,            // 對應的星期
-                                Cdate = DateTime.Now,
-                                Udate = null,
-                            };
-                            _repository.Create(courseHour);
-                        }
-                    }
-                }
-
-                // 保存所有變更並提交交易
-                await _repository.SaveChangesAsync();
-                await _repository.CommitAsync();
-
                 qVM.Success = true;
                 qVM.Message = "會員資料新增成功";
             }
             catch (Exception ex)
             {
                 // 發生錯誤，回滾交易
+                await _repository.RollbackAsync();
+                qVM.Success = false;
+                qVM.Message = $"資料處理發生錯誤: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    qVM.Message += $" | 內層錯誤: {ex.InnerException.Message}";
+                }
+            }
+            return qVM;
+        }
+
+        public async Task<TutorDataViewModel> CreateTutorTimeData(TutorDataViewModel qVM, int memberId)
+        {
+            await _repository.BeginTransActionAsync();
+            try
+            {
+                var existingMember = await _repository.GetMemberByIdAsync(memberId);
+                if (existingMember == null)
+                {
+                    qVM.Success = false;
+                    qVM.Message = "找不到該會員，請檢查會員資料。";
+                    return qVM;
+                }
+
+                foreach (var schedule in qVM.Schedule.Values)
+                {
+                    var weekday = schedule.Weekday;
+                    foreach (var courseHourId in schedule.CouseHoursId)
+                    {
+                        var existingSlot = await _repository.GetTutorTimeSlotAsync(memberId, courseHourId, weekday);
+                        if (existingSlot == null)
+                        {
+                            var courseHour = new Entities.TutorTimeSlot
+                            {
+                                TutorId = memberId,
+                                CourseHourId = courseHourId,
+                                Weekday = weekday,
+                                Cdate = DateTime.Now
+                            };
+                            _repository.Create(courseHour);
+                        }
+                    }
+                }
+
+                await _repository.SaveChangesAsync();
+                await _repository.CommitAsync();
+                qVM.Success = true;
+                qVM.Message = "會員資料新增成功";
+            }
+            catch (Exception ex)
+            {
                 await _repository.RollbackAsync();
                 qVM.Success = false;
                 qVM.Message = $"資料處理發生錯誤: {ex.Message}";

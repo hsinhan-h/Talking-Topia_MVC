@@ -32,8 +32,6 @@ namespace Web.Controllers
         /// </summary>
         public IActionResult Index()
         {
-
-
             return View();
         }
 
@@ -54,12 +52,12 @@ namespace Web.Controllers
 
             var order = await _orderVMService.GetOrderResultViewModelAsync(memberId);
             if (order == null) return BadRequest("找不到訂單!!!!!!!?");
-            var orderResult = new OrderResultListViewModel
+            var oVM = new OrderResultListViewModel
             {
                 OrderResult = order,
             };
 
-            return View(orderResult);
+            return View(oVM);
         }
 
         /// <summary>
@@ -77,8 +75,8 @@ namespace Web.Controllers
             if (memberIdClaim == null)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             int memberId = int.Parse(memberIdClaim.Value);
-            var result = await _memberService.GetMemberId(memberId);
 
+            var result = await _memberService.GetMemberId(memberId);
             if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             if (string.IsNullOrEmpty(paymentType))
@@ -88,7 +86,6 @@ namespace Web.Controllers
 
             foreach (var item in Items)
             {
-                
                 _shoppingCartService.UpdateItem(memberId, item.CourseId, item.CourseQuantity, item.CourseLength, item.SubtotalNTD);
             }
 
@@ -115,7 +112,8 @@ namespace Web.Controllers
                     var values = new Dictionary<string, string>
                     {
                         { "__RequestVerificationToken", tokens.RequestToken },  // 添加防偽驗證令牌
-                         { "OrderId", _orderId.ToString() }
+                        { "OrderId", _orderId.ToString() },
+                        { "MemberId",memberId.ToString()}
                     };
 
                     // 將表單資料編碼成 x-www-form-urlencoded 格式

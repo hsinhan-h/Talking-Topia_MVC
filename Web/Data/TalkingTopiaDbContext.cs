@@ -8,8 +8,6 @@ namespace Web.Data;
 public partial class TalkingTopiaDbContext : DbContext
 {
     private readonly IConfiguration _configuration;
-
-
     public TalkingTopiaDbContext(DbContextOptions<TalkingTopiaDbContext> options, IConfiguration configuration)
         : base(options)
     {

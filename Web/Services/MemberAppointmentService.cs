@@ -9,15 +9,6 @@
             _repository = repository;
         }
 
-        public decimal GetUnitPrice(int courseId, int courseLength)
-        {
-            var price = _repository.GetAll<Course>()
-                       .Where(x => x.CourseId == courseId)
-                       .Select(x => courseLength == 25 ? x.TwentyFiveMinUnitPrice : x.FiftyMinUnitPrice)
-                       .FirstOrDefault();
-
-            return price;
-        }
         //Logic 
 
         public async Task<MemberAppointmentViewModel> GetAppointmentData(int memberId)

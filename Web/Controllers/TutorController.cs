@@ -88,20 +88,21 @@ namespace Web.Controllers
             // 呼叫服務層的 CreateTutorData 方法
             var result = await _tutorDataService.CreateTutorData(qVM, memberId);
 
-            // 檢查操作是否成功
             if (result.Success)
             {
+                // 成功後，重新提取會員完整資料
+                var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
+
                 ViewData["Header"] = "會員資料新增";
                 ViewData["Message"] = "會員資料新增成功";
+                return View("TutorData", tutorData); // 使用完整資料重新渲染 TutorData 頁面
             }
             else
             {
                 ViewData["Header"] = "錯誤訊息";
                 ViewData["Message"] = result.Message;
+                return View("_ShowMessage");
             }
-
-            // 返回訊息視圖
-            return View("_ShowMessage");
         }
 
         [HttpPost]
