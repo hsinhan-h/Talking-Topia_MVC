@@ -79,7 +79,7 @@
         // 創建上午、下午、傍晚、深夜的選擇框
         const timePeriods = [
             { label: "上午", value: "morning", range: [6, 12] },
-            { label: "下午", value: "afternoon", range: [12, 18] },
+            { label: "中午", value: "afternoon", range: [12, 18] },
             { label: "傍晚", value: "evening", range: [18, 24] },
             { label: "深夜", value: "lateNight", range: [0, 6] },
         ];
@@ -107,8 +107,8 @@
             input.addEventListener("change", function () {
                 const checkboxes = timeslotDiv.querySelectorAll(`input.${day}-time`);
                 checkboxes.forEach((checkbox) => {
-                    const hour = parseInt(checkbox.value.split(":")[0], 10);
-                    if (hour >= period.range[0] && hour < period.range[1]) {
+                    const hour = parseInt(checkbox.value, 10); 
+                    if ((hour - 1) >= period.range[0] && (hour - 1) < period.range[1]) {
                         checkbox.checked = this.checked;
                     }
                 });
@@ -129,7 +129,7 @@
             input.className = `form-check-input ${day}-time`;
             input.type = "checkbox";
 
-            const adjustedValue = hour.toString(); // 1 對應 0:00, 2 對應 1:00 ...
+            const adjustedValue = (hour+1).toString(); // 1 對應 0:00, 2 對應 1:00 ...
             input.value = adjustedValue.toString(); // 設定 value 從 1 到 24
 
             input.id = checkboxId;
