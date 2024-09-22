@@ -13,3 +13,17 @@ tutorCards.forEach(function (card) {
         console.log(`跳轉到課程ID: ${courseId}`);
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    new Vue({
+        el: '#app',
+        data: {
+            activeTab: 'english',  // 預設為 "英文" tab
+        },
+        methods: {
+            setActiveTab(tab) {
+                this.activeTab = tab;  // 切換當前選中的 tab
+            }
+        }
+    });
+});

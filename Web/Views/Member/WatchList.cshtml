@@ -8,11 +8,10 @@
                  id="lh-backstage-watchlist-section">
                 <ul class="nav nav-tabs">
                     <li class="nav-item lh-backstage-nav-item">
-                        <a class="nav-link active"
-                           aria-current="page"
-                           data-bs-toggle="tab"
-                           href="#lh-backstage-watchlist-item">
-                            英文
+                        <a class="nav-link"
+                           :class="{ active: activeTab === 'english' }"
+                        @@click.prevent="setActiveTab('english')">
+                            語言學習
                         </a>
                     </li>
                     <li class="nav-item lh-backstage-nav-item">
@@ -33,14 +32,14 @@
                             <div class="tutor-recommend-carousel">
                                 @foreach (var card in Model.TutorReconmmendCard)
                                 {
-                                    <div v-show="activeTab === '@card.Subject'">
+                                    <div v-show="activeTab === '@card.CategoryName'">
                                         <partial name="_TutorRecommendPartial" model="card" />
                                     </div>
                                 }
                             </div>
                         </div>
                     </div>
-                    <div class="container tab-pane fade"
+                    @* <div class="container tab-pane fade"
                          id="lh-backstage-watchlist-item-2">
                         <div class="tutor-recommend-carousel-wrapper w-100 my-2 position-relative">
                             <div class="tutor-recommend-carousel">
@@ -50,7 +49,7 @@
                                 }
                             </div>
                         </div>
-                    </div>
+                    </div> *@
                 </div>
             </div>
         </div>
@@ -63,5 +62,21 @@
 }
 @section endJS {
     <script src="~/js/tutor_recommend_carousel_layout.js" asp-append-version="true"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="~/js/WatchList.js" asp-append-version="true"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                activeTab: 'english',  // 預設為 "英文" tab
+            },
+            methods: {
+                setActiveTab(tab) {
+                    this.activeTab = tab;  // 切換當前選中的 tab
+                }
+            }
+        });
+
+    </script>
 }

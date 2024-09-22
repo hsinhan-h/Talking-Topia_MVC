@@ -184,7 +184,7 @@ namespace Web.Services
                                  select new TutorRecomCardList
                                  {
                                      CourseId = course.CourseId,
-                                     CategoryId = category.CategorytName,
+                                     CategoryName = category.CategorytName,
                                      TutorHeadShot = member.HeadShotImage,
                                      NationFlagImg = nation.FlagImage,
                                      CourseTitle = course.Title,
