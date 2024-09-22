@@ -147,17 +147,28 @@ namespace Web.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> TutorResume(TutorResumeViewModel qVM)
         {
-            if (ModelState.IsValid)
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            // 呼叫服務層的 CreateTutorData 方法
+            var result = await _resumeDataService.AddResumeAsync(qVM, memberId);
+            // 檢查操作是否成功
+            if (result.Success)
             {
-                var result = await _resumeDataService.AddResumeAsync(qVM);
+                // 成功後，重新提取會員完整資料
+                var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
 
-                ViewData["Header"] = result.Success ? "履歷已新增" : "履歷新增失敗請聯絡客服人員";
+                ViewData["Header"] = "會員資料新增";
+                ViewData["Message"] = "會員資料新增成功";
+                return View("TutorData", tutorData); // 使用完整資料重新渲染 TutorData 頁面
+            }
+            else
+            {
+                ViewData["Header"] = "錯誤訊息";
                 ViewData["Message"] = result.Message;
-
                 return View("_ShowMessage");
             }
-
-            return View(qVM);
         }
 
         [HttpGet]
@@ -180,12 +191,6 @@ namespace Web.Controllers
         public IActionResult RecommendedTutorAI()
         {
             return View();
-        }
-
-        public IActionResult GotoResume()
-        {
-
-            return RedirectToAction("TutorResume");
         }
 
 
