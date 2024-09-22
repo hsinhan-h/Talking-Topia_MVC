@@ -6,6 +6,7 @@ namespace Web.ViewModels
     public class CourseInfoListViewModel
     {
         public List<CourseInfoViewModel> CourseInfoList{ get; set; }
+        public int TotalCourseQty { get; set; }
     }
 
 

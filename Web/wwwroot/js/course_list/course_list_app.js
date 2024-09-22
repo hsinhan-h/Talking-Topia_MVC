@@ -1,5 +1,8 @@
 ﻿import { generateBookingTable } from '/js/booking_table/booking_table_modal.js';
-import { initHoverPopup, initTooltips, autoPlayYouTubeModal } from '/js/course_list/course_list_slick.js';
+import { initHoverPopup } from '/js/course_list/course_list_hoverPopup.js';
+import { autoPlayYouTubeModal } from '/js/course_list/course_list_youtubeModal.js';
+import { initTooltips } from '/js/utilities/tooltips.js';
+import { getWeekdayName } from '/js/utilities/weekday_mapping.js';
 
 const courseCardsApp = Vue.createApp({
     data() {
@@ -10,11 +13,13 @@ const courseCardsApp = Vue.createApp({
             totalPages: 0,
             error: null,
             loading: true,
+            noCouesesFound: false,
             selectedSubject: null,
             selectedNation: null,
             selectedWeekdays: [],
             selectedTimeslots: [],
             selectedBudget: null,
+            selectedSortOption: 'default',
             availableSlots: [], //二維陣列, 元素為各課程的教師時段Array
             bookedSlots: [], //二維陣列, 元素為各課程的被預約時段Array          
             courseCategories: [], //動態科目篩選選單資料
@@ -29,9 +34,7 @@ const courseCardsApp = Vue.createApp({
         this.selectedBudget = params.get('budget') || null;       
         this.fetchCourses();
         this.fetchCategories();
-        this.fetchNations();
-        this.fetchTotalCourseQty();
-        
+        this.fetchNations();        
     },
     updated() {
         //DOM 已更新完後, 重新呼叫slick function & tooltips & modals
@@ -44,6 +47,8 @@ const courseCardsApp = Vue.createApp({
     methods: {
         async fetchCourses() {
             this.loading = true;
+            this.noCouesesFound = false;
+            const startTime = Date.now(); 
             try {
                 let url = `/api/CourseListApi?page=${this.page}`;
                 if (this.selectedSubject) {
@@ -61,19 +66,23 @@ const courseCardsApp = Vue.createApp({
                 if (this.selectedBudget) {
                     url += `&budget=${this.selectedBudget}`;
                 }
+                if (this.selectedSortOption && this.selectedSortOption !== 'default') {
+                    url += `&sortOption=${this.selectedSortOption}`;
+                }
 
                 const response = await fetch(url);
                 if (response.ok) {
                     const courseData = await response.json();
                     console.log(courseData);
                     this.courses = courseData.courseInfoList;
+                    this.totalPages = Math.ceil(courseData.totalCourseQty / this.pageSize);
                     this.availableSlots = [];
                     this.bookedSlots = [];
                     if (this.courses.length > 0) {
-                        this.courses.forEach(c => {
-                            this.availableSlots.push(c.availableTimeSlots);
-                            this.bookedSlots.push(c.bookedTimeSlots);
-                        });                      
+                        this.availableSlots = this.courses.map(course => course.availableTimeSlots);
+                        this.bookedSlots = this.courses.map(course => course.bookedTimeSlots);
+                    } else {
+                        this.noCouesesFound = true;
                     }
                 } else {
                     throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -81,7 +90,16 @@ const courseCardsApp = Vue.createApp({
             } catch (e) {
                 this.error = e;
             } finally {
-                this.loading = false;
+                //this.loading = false;
+                const endTime = Date.now();
+                const elaspsedTime = endTime - startTime;
+                if (elaspsedTime < 300) {
+                    setTimeout(() => {
+                        this.loading = false;
+                    }, 300 - elaspsedTime); // 加載時間 < 300時, 延遲到300
+                } else {
+                    this.loading = false;
+                }             
             }
         },
         goToCourseMainPage(courseId) {
@@ -154,41 +172,6 @@ const courseCardsApp = Vue.createApp({
             }
         },
         
-
-        async fetchTotalCourseQty() {
-            try {
-                let url = `/api/CourseListApi/GetTotalCourseQty`;
-                if (this.selectedSubject) {
-                    url += `?subject=${this.selectedSubject}&`;
-                }
-                if (this.selectedNation) {
-                    url += `?nation=${this.selectedNation}&`;
-                }
-                if (this.selectedWeekdays.length > 0) {
-                    url += `?weekdays=${this.selectedWeekdays.join(',')}&`;
-                }
-                if (this.selectedTimeslots.length > 0) {
-                    url += `?timeslots=${this.selectedTimeslots.join(',')}&`;
-                }
-                if (this.selectedBudget) {
-                    url += `?budget=${this.selectedBudget}&`;
-                }
-                if (url.endsWith('&')) {
-                    url = url.slice(0, -1);
-                }
-                const response = await fetch(url);
-
-                if (response.ok) {
-                    const totalCourseQty = await response.json();
-                    this.totalPages = Math.ceil(totalCourseQty / this.pageSize);
-                }
-            } catch (e) {
-                this.error = e;
-            } finally {
-
-                this.loading = false;
-            }
-        },
         //換頁 不刷新頁面
         goToPage(page) {
             if (page > 0 && page <= this.totalPages) {
@@ -231,8 +214,16 @@ const courseCardsApp = Vue.createApp({
                 queryParams.delete('budget');
             }
 
+            if (this.selectedSortOption) {
+                queryParams.set('sortOption', this.selectedSortOption);
+            } else {
+                queryParams.delete('sortOption');
+            }
+
             history.pushState(null, '', '?' + queryParams.toString());
         },
+
+        getWeekdayName,
 
         //篩選
         //1. 課程種類
@@ -260,7 +251,7 @@ const courseCardsApp = Vue.createApp({
         applyFilter() {
             this.page = 1;
             this.fetchCourses();
-            this.fetchTotalCourseQty();
+            //this.fetchTotalCourseQty();
             this.updateQueryString();
         },
 
@@ -287,21 +278,45 @@ const courseCardsApp = Vue.createApp({
             this.selectedNation = null;
             this.selectedWeekdays = [];
             this.selectedTimeslots = [];
-            this.selectedBudget = null;
+            this.selectedBudget = null;           
             this.applyFilter();
         },
 
-        getWeekdayName(weekdayNumber) {
-            const weekdayMapping = {
-                1: '星期一',
-                2: '星期二',
-                3: '星期三',
-                4: '星期四',
-                5: '星期五',
-                6: '星期六',
-                0: '星期日'
-            };
-            return weekdayMapping[weekdayNumber];
+        //排序
+        //1. 即時推薦
+        sortByDefault(e) {
+            e.preventDefault();
+            this.selectedSortOption = "default";
+            this.applyFilter();
+        },
+
+        //2.優質教師優先
+        sortByVerifiedTutor(e) {
+            e.preventDefault();
+            this.selectedSortOption = "verifiedTutor";
+            this.applyFilter();
+        },
+
+        //3. 低價優先
+        sortByPriceAscend(e) {
+            e.preventDefault();
+            this.selectedSortOption = "priceAscend";
+            console.log(this.selectedSortOption);
+            this.applyFilter();
+        },
+
+        //4. 多評價數優先
+        sortByReviewsCount(e) {
+            e.preventDefault();
+            this.selectedSortOption = "reviewsCount";
+            this.applyFilter();
+        },
+
+        //5. 評分高優先
+        sortByRating(e) {
+            e.preventDefault();
+            this.selectedSortOption = "rating";
+            this.applyFilter();
         }
     }
 });
