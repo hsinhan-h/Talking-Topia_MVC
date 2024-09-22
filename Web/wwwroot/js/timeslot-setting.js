@@ -45,7 +45,7 @@
         dayCheckbox.className = "form-check";
         const input = document.createElement("input");
         input.type = "checkbox";
-        input.className = "form-check-input Weekday"; // 確保這個類名已設置
+        input.className = "form-check-input Weekday"; 
         input.id = `checkbox-${day}`;
         input.value = day;
 
@@ -116,6 +116,8 @@
         });
 
         // 創建具體時間選項
+        const dayIndex = getDayIndex(day); // 這裡的 getDayIndex 是你用來決定 day 的索引（例如星期一是 1）
+
         for (let hour = 0; hour < 24; hour++) {
             const timeValue = hour.toString().padStart(2, "0") + ":00";
             const checkboxId = `${day}-${hour}`;
@@ -127,11 +129,12 @@
             input.className = `form-check-input ${day}-time`;
             input.type = "checkbox";
 
-            const adjustedValue = hour + 1; // 1 對應 0:00, 2 對應 1:00 ...
+            const adjustedValue = hour.toString(); // 1 對應 0:00, 2 對應 1:00 ...
             input.value = adjustedValue.toString(); // 設定 value 從 1 到 24
 
             input.id = checkboxId;
-            input.name = `CouseHoursId[]`;
+            // 使用 dayIndex 來構造正確的 name 屬性
+            input.name = `Schedule[${dayIndex}].CouseHoursId[]`; // 這裡設置 name 為類似 Schedule[1].CouseHoursId[]
 
             const label = document.createElement("label");
             label.className = "form-check-label";
@@ -141,6 +144,20 @@
             formCheck.appendChild(input);
             formCheck.appendChild(label);
             timeslotWrapper.appendChild(formCheck);
+        }
+
+        // 輔助函數，用來將 day 轉換為 dayIndex，例如 'monday' 對應 1
+        function getDayIndex(day) {
+            const daysMap = {
+                'monday': 1,
+                'tuesday': 2,
+                'wednesday': 3,
+                'thursday': 4,
+                'friday': 5,
+                'saturday': 6,
+                'sunday': 0
+            };
+            return daysMap[day.toLowerCase()];
         }
 
         timeslotDiv.appendChild(timeslotWrapper);

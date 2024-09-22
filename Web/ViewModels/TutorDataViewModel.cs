@@ -8,7 +8,7 @@ namespace Web.ViewModels
     public class TutorDataViewModel
     {
         public int MemberId { get; set; }
-        public int TutorId { get; set; }    
+        public int TutorId { get; set; }
         /// <summary>
         /// 國籍
         /// </summary>
@@ -32,8 +32,9 @@ namespace Web.ViewModels
         /// <summary>
         /// 學歷
         /// </summary>
-        public List<int> Weekdays { get; set; }
-        public List<int> CouseHoursId { get; set; }
+        /// {
+        public Dictionary<int, WeekdaySchedule> Schedule { get; set; }
+
         public List<Educational> EducationalBackground { get; set; } = new List<Educational>();
         /// <summary>
         /// 經歷
@@ -62,12 +63,16 @@ namespace Web.ViewModels
             get { return Course != null && Course.Any(); }
         }
 
-        public bool Success { get; set; } 
+        public bool Success { get; set; }
         public string Message { get; set; }
 
     }
 
-
+    public class WeekdaySchedule
+    {
+        public int Weekday { get; set; } // 對應的星期
+        public List<int> CouseHoursId { get; set; } = new List<int>();
+    }
 
     public class Educational
     {
@@ -93,9 +98,9 @@ namespace Web.ViewModels
         public string Coursehours { get; set; }
     }
 
-    public class LicenseData 
+    public class LicenseData
     {
-        public  string ProfessionalLicenseName { get; set; }
-        public string  ProfessionalLicenseUrl { get; set; }
+        public string ProfessionalLicenseName { get; set; }
+        public string ProfessionalLicenseUrl { get; set; }
     }
 }
