@@ -48,12 +48,12 @@
         /// <summary>
         /// 預約日期
         /// </summary>
-        public DateTime BookingDate { get; set; }
+        public string BookingDate { get; set; }
 
         /// <summary>
         /// 預約時段
         /// </summary>
-        public short BookingTime { get; set; }
+        public string BookingTime { get; set; }
     }
     public class OrderResultListViewModel
     {

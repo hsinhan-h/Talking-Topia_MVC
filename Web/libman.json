@@ -26,9 +26,12 @@
       "destination": "wwwroot/lib/popper.js/"
     },
     {
-      "provider": "cdnjs",
       "library": "vue@3.5.4",
       "destination": "wwwroot/lib/myvue/"
+    },
+    {
+      "library": "lodash.js@4.17.21",
+      "destination": "wwwroot/lodash.js/"
     }
   ]
 }

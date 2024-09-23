@@ -18,6 +18,7 @@ namespace Web.Controllers.Api
         private readonly IOrderService _orderService;
         private readonly IMemberService _memberService;
         private int _orderId;
+        private int _memberId;
 
         public PaymentController(IConfiguration configuration, ECpayService eCpayService, IOrderService orderService, IMemberService memberService)
         {
@@ -30,11 +31,16 @@ namespace Web.Controllers.Api
         // POST api/payment
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult New([FromForm] string orderId)
+        public IActionResult New([FromForm] string orderId, [FromForm] string memberId)
         {
             if (string.IsNullOrEmpty(orderId) || !int.TryParse(orderId, out _orderId))
             {
                 return BadRequest("OrderId 不存在或無效");
+            }
+
+            if (string.IsNullOrEmpty(memberId) || !int.TryParse(memberId, out _memberId))
+            {
+                return BadRequest("memberId 不存在或無效");
             }
 
             return RedirectToAction("checkout");
@@ -91,11 +97,15 @@ namespace Web.Controllers.Api
         {
             var hashKey = _configuration["ECpay:Service:HashKey"];
             var hashIV = _configuration["ECpay:Service:HashIV"];
-
+            EOrderStatus orderStatus;
             // 務必判斷檢查碼是否正確。
-            if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
-
-            var orderStatus = EOrderStatus.Success;
+            if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV))
+            {
+                orderStatus = EOrderStatus.Failed;
+                return BadRequest();
+            }
+            orderStatus = EOrderStatus.Success;
+            _orderId = _orderService.GetLatestOrder(_memberId);
             _orderService.UpdateOrderTransactionAndStatus(_orderId, result.MerchantTradeNo, result.TradeNo, orderStatus);
 
             return Ok("1|OK");

@@ -56,27 +56,86 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> TutorData(int? memberId)
         {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
+            if (!memberId.HasValue)
+            {
+                int parsedMemberId = int.Parse(memberIdClaim.Value);
+                return RedirectToAction("TutorData", new { memberId = parsedMemberId });
+            }
+            var result = await _memberService.GetMemberId(memberId.Value);
+            if (!result)
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
+            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId.Value);
 
-            // Edit: 根據ID取得現有會員資料
-            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
+            ViewData["MemberId"] = memberId;
             return View(tutorData);
-
         }
+
 
         [HttpPost]
         public async Task<IActionResult> TutorData(TutorDataViewModel qVM)
         {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
             // 呼叫服務層的 CreateTutorData 方法
-            var result = await _tutorDataService.CreateTutorData(qVM);
+            var result = await _tutorDataService.CreateTutorData(qVM, memberId);
 
-            // 檢查操作是否成功，並設置 ViewData 來顯示訊息
-            ViewData["Header"] = result.Success ? "會員資料新增" : "錯誤訊息";
-            ViewData["Message"] = result.Message;
+            if (result.Success)
+            {
+                // 成功後，重新提取會員完整資料
+                var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
 
-            // 返回訊息視圖
-            return View("ShowMessage");
+                ViewData["Header"] = "會員資料新增";
+                ViewData["Message"] = "會員資料新增成功";
+                return View("TutorData", tutorData); // 使用完整資料重新渲染 TutorData 頁面
+            }
+            else
+            {
+                ViewData["Header"] = "錯誤訊息";
+                ViewData["Message"] = result.Message;
+                return View("_ShowMessage");
+            }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> TutorTimeData(TutorDataViewModel qVM)
+        {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
+
+            int memberId = int.Parse(memberIdClaim.Value);
+
+            // 呼叫服務層的 CreateTutorTimeData 方法
+            var resultTime = await _tutorDataService.CreateTutorTimeData(qVM, memberId);
+
+            // 檢查操作是否成功
+            if (resultTime.Success)
+            {
+                // 成功後，重新提取會員完整資料
+                var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
+
+                ViewData["Header"] = "會員資料新增";
+                ViewData["Message"] = "會員資料新增成功";
+                return View("TutorData", tutorData); // 使用完整資料重新渲染 TutorData 頁面
+            }
+            else
+            {
+                ViewData["Header"] = "錯誤訊息";
+                ViewData["Message"] = resultTime.Message;
+                return View("_ShowMessage");
+            }
+        }
 
         [HttpGet]
         public IActionResult TutorResume()
@@ -88,17 +147,28 @@ namespace Web.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> TutorResume(TutorResumeViewModel qVM)
         {
-            if (ModelState.IsValid)
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            // 呼叫服務層的 CreateTutorData 方法
+            var result = await _resumeDataService.AddResumeAsync(qVM, memberId);
+            // 檢查操作是否成功
+            if (result.Success)
             {
-                var result = await _resumeDataService.AddResumeAsync(qVM);
+                // 成功後，重新提取會員完整資料
+                var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
 
-                ViewData["Header"] = result.Success ? "履歷已新增" : "履歷新增失敗請聯絡客服人員";
-                ViewData["Message"] = result.Message;
-
-                return View("ShowMessage");
+                ViewData["Header"] = "會員資料新增";
+                ViewData["Message"] = "會員資料新增成功";
+                return View("TutorData", tutorData); // 使用完整資料重新渲染 TutorData 頁面
             }
-
-            return View(qVM);
+            else
+            {
+                ViewData["Header"] = "錯誤訊息";
+                ViewData["Message"] = result.Message;
+                return View("_ShowMessage");
+            }
         }
 
         [HttpGet]
@@ -121,12 +191,6 @@ namespace Web.Controllers
         public IActionResult RecommendedTutorAI()
         {
             return View();
-        }
-
-        public IActionResult GotoResume()
-        {
-
-            return RedirectToAction("TutorResume");
         }
 
 

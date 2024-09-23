@@ -111,6 +111,12 @@ export async function generateBookingTable(weekStart, courseId) {
     });
 }
 
+//非模組化環境使用時, 將function掛載到window上
+if (typeof window !== "undefined") {
+    window.generateBookingTable = generateBookingTable;
+}
+
+
 //產生00:00 ~ 23:00 的時間段陣列
 function generateTimeSlots() {
     const times = [];
@@ -154,18 +160,20 @@ nextWeekBtn.addEventListener("click", () => {
     generateBookingTable(bookingDateStart, globCourseId);
 });
 
-//提交預約表單
+//提交預約表單 並存入local storage (for購物車使用)
 addToCartBtn.addEventListener("click", function () {
     document.getElementById("formCourseId").value = globCourseId;
     document.getElementById("formBookingDate").value = selectedBookingDate.toLocaleDateString('zh-TW');
     document.getElementById("formBookingTime").value = parseInt(selectedBookingTime.split(':')[0]) + 1;
     document.getElementById("addToCartForm").submit();
+    localStorage.setItem("CourseId", globCourseId);
+    localStorage.setItem("BookingDate", selectedBookingDate.toLocaleDateString('zh-TW'));
+    localStorage.setItem("BookingTime", parseInt(selectedBookingTime.split(':')[0]) + 1);
 })
 
 //fetch BookingTable API
 async function fetchBookingTableData(courseId) {
     const url = `/api/BookingTableApi?courseId=${courseId}`;
-    console.log(url);
     try {
         const response = await fetch(url);
 
@@ -186,3 +194,5 @@ async function fetchBookingTableData(courseId) {
         console.error('Fetching BookingTableData時發生錯誤:', error);
     }
 }
+
+

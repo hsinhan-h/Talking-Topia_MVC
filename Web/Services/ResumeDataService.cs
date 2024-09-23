@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
@@ -36,30 +37,45 @@ namespace Web.Services
         //        TutorResumeList = await resumeValues.ToListAsync(),
         //    };
         //}
-        public async Task<TutorResumeViewModel> AddResumeAsync(TutorResumeViewModel qVM)
+        public async Task<TutorResumeViewModel> AddResumeAsync(TutorResumeViewModel qVM, int memberId)
         {
             await _repository.BeginTransActionAsync();
             try
             {
-                var member = new Member
+                // 檢查會員是否存在
+                var existingMember = await _repository.GetMemberByIdAsync(memberId);
+                if (existingMember == null)
                 {
+                    return new TutorResumeViewModel
+                    {
+                        Success = false,
+                        Message = "找不到該會員，請檢查會員資料。",
+                    };
+                }
+
+                // 使用已存在的會員資料
+                var member = new Entities.Member
+                {
+                    MemberId = memberId,
                     IsVerifiedTutor = false,
                     HeadShotImage = qVM.HeadShotImage,
                     Cdate = DateTime.Now,
                     Udate = null,
-                    FirstName = "N/A",
-                    LastName = "N/A",
-                    Password = "N/A",
-                    Email = "N/A",
-                    Nickname = "N/A",
-                    Phone = "N/A",
-                    Gender = 0,
+                    // 使用資料庫中的值來取代硬編碼的 "N/A"
+                    FirstName = existingMember.FirstName ?? "N/A", // 若資料庫沒有 FirstName，則使用 "N/A"
+                    LastName = existingMember.LastName ?? "N/A",
+                    Password = existingMember.Password ?? "N/A",
+                    Email = existingMember.Email ?? "N/A",
+                    Nickname = existingMember.Nickname ?? "N/A",
+                    Phone = existingMember.Phone ?? "N/A",
+                    Gender = existingMember.Gender,
                     AccountType = 1,
-                    IsTutor = true
+                    IsTutor = false
                 };
-                _repository.Create(member);
+                _repository.Update(member); 
 
-                var education = new Education
+                // 創建教育經歷
+                var education = new Entities.Education
                 {
                     SchoolName = qVM.SchoolName,
                     StudyStartYear = qVM.StudyStartYear,
@@ -70,7 +86,8 @@ namespace Web.Services
                 };
                 _repository.Create(education);
 
-                var workExperience = new WorkExperience
+                // 創建工作經驗
+                var workExperience = new Entities.WorkExperience
                 {
                     WorkExperienceFile = qVM.WorkExperienceFile,
                     WorkStartDate = qVM.WorkStartDate,
@@ -82,7 +99,8 @@ namespace Web.Services
                 };
                 _repository.Create(workExperience);
 
-                var coursecategory = new CourseCategory
+                // 創建課程類別
+                var coursecategory = new Entities.CourseCategory
                 {
                     CategorytName = qVM.SelectedCategory,
                     Cdate = DateTime.Now,
@@ -91,18 +109,20 @@ namespace Web.Services
                 _repository.Create(coursecategory);
                 await _repository.SaveChangesAsync();
 
-                var courseSubject = new CourseSubject
+                // 創建課程主題
+                var courseSubject = new Entities.CourseSubject
                 {
                     SubjectName = qVM.SelectedSubcategory,
-                    CourseCategoryId = coursecategory.CourseCategoryId, 
+                    CourseCategoryId = coursecategory.CourseCategoryId,
                     Cdate = DateTime.Now,
                     Udate = null
                 };
                 _repository.Create(courseSubject);
 
+                // 創建專業執照
                 for (int i = 0; i < qVM.ProfessionalLicenseName.Count; i++)
                 {
-                    var professionalLicense = new ProfessionalLicense
+                    var professionalLicense = new Entities.ProfessionalLicense
                     {
                         ProfessionalLicenseName = qVM.ProfessionalLicenseName[i],
                         ProfessionalLicenseUrl = qVM.ProfessionalLicenseUrl[i],
@@ -123,7 +143,7 @@ namespace Web.Services
             }
             catch (Exception ex)
             {
-                // 詳細記錄例外的完整錯誤訊息
+                // 發生錯誤時回滾並返回錯誤訊息
                 await _repository.RollbackAsync();
                 var errorMessage = $"資料處理發生錯誤: {ex.Message}";
                 if (ex.InnerException != null)
