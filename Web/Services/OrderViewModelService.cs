@@ -38,7 +38,7 @@ namespace Web.Services
             {
                 var course = await _courseRepository.GetByIdAsync(item.CourseId);
                 var tutor = await _memberRepository.GetByIdAsync(course.TutorId);
-                var bookings = await _bookingRepository.ListAsync(b => b.CourseId == course.CourseId);
+                var bookings = await _bookingRepository.ListAsync(b => b.CourseId == course.CourseId && b.StudentId == memberId);
                 ApplicationCore.Entities.Booking booking = null;
                 if (bookings.Count != 0)
                 {
@@ -58,7 +58,6 @@ namespace Web.Services
                     BookingTime = (booking != null) ? BookingTimeConvert(booking.BookingTime) : "無",
                 };
                 result.Add(orderResult);
-
             }
 
             if (result.Count == 0) return null;
