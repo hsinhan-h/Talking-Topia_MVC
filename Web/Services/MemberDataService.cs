@@ -184,7 +184,7 @@ namespace Web.Services
                                  select new TutorRecomCardList
                                  {
                                      CourseId = course.CourseId,
-                                     CategoryName = category.CategorytName,
+                                     CategoryId = category.CourseCategoryId,
                                      TutorHeadShot = member.HeadShotImage,
                                      NationFlagImg = nation.FlagImage,
                                      CourseTitle = course.Title,
@@ -211,15 +211,18 @@ namespace Web.Services
 
                 card.Rating = review?.Rating ?? 0;
             }
+            var language = watchCardInfo.Where(w=>w.CategoryId == 1).ToList();
+            var prgramming = watchCardInfo.Where(w=>w.CategoryId == 2).ToList();
+            var school = watchCardInfo.Where(w => w.CategoryId == 3).ToList();
             var watchlist = new CourseMainPageViewModel
             {
                 MemberId = memberId,
-                TutorReconmmendCard = watchCardInfo
+                LanguageWatchList = language,
+                CodingWatchList = prgramming,
+                SchoolWatchList = school,
             };
             return watchlist;
         }
-
-
 
     }
 
