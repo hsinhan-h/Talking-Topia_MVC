@@ -1,19 +1,34 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    const submitBtn = document.querySelector('.submitButton'); 
+    const submitBtn = document.querySelector('.submitButton');
+
     submitBtn.addEventListener('click', function () {
         document.querySelector('.tutorDataForm').submit();
     });
 
+    const submitTimeBtn = document.querySelector('.submitTimeButton');
+    submitTimeBtn.addEventListener('click', function () {
+        document.querySelector('.tutorDataTimeForm').submit();
+    });
 
-
-
-
+    //取網址列
     const urlParams = new URLSearchParams(window.location.search);
     const memberId = urlParams.get('memberId'); // 獲取 `memberId` 參數
 
+
+
+    var toastElement = document.getElementById('toast');
+    var message = toastElement.getAttribute('data-message');
+    var header = toastElement.getAttribute('data-header');
+
+    // 檢查是否有 message，如果有則顯示 Toast
+    if (message && message.trim() !== "") {
+        var toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    }
+
     if (memberId) {
         document.getElementById('memberIdDisplay').innerText = memberId;
-    }// 顯示會員ID
+    }
 
     const weekdays = [
         "monday",
@@ -26,12 +41,32 @@
     ];
     const timeslotRow = document.getElementById("timeslot-row");
 
+    // 創建日選擇框（假設你希望這些選擇框出現在你的 HTML 中的某處）
+    weekdays.forEach((day, index) => {
+        const dayCheckbox = document.createElement("div");
+        dayCheckbox.className = "form-check";
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.className = "form-check-input Weekday";
+        input.id = `checkbox-${day}`;
+        input.value = day;
+
+        const label = document.createElement("label");
+        label.className = "form-check-label";
+        label.htmlFor = input.id;
+        label.textContent = `${day.charAt(0).toUpperCase() + day.slice(1)}`;
+
+        dayCheckbox.appendChild(input);
+        dayCheckbox.appendChild(label);
+        document.body.appendChild(dayCheckbox); // 將日選擇框附加到 body 或適當的容器中
+    });
+
     weekdays.forEach((day) => {
-        // 創建一個隱藏的時段選項區塊
+        // 創建隱藏的時段區塊
         const timeslotDiv = document.createElement("div");
         timeslotDiv.className = "col-12 col-md-6 mt-3 weekday-timeslot";
         timeslotDiv.id = `timeslot-${day}`;
-        timeslotDiv.style.display = "none"; // 初始狀態為隱藏
+        timeslotDiv.style.display = "none"; // 初始隱藏
 
         // 添加標題
         const title = document.createElement("span");
@@ -43,10 +78,10 @@
         const timeslotWrapper = document.createElement("div");
         timeslotWrapper.className = "d-flex flex-wrap mt-2";
 
-        // 創建上午、下午、傍晚、凌晨的 checkbox
+        // 創建上午、下午、傍晚、深夜的選擇框
         const timePeriods = [
             { label: "上午", value: "morning", range: [6, 12] },
-            { label: "下午", value: "afternoon", range: [12, 18] },
+            { label: "中午", value: "afternoon", range: [12, 18] },
             { label: "傍晚", value: "evening", range: [18, 24] },
             { label: "深夜", value: "lateNight", range: [0, 6] },
         ];
@@ -56,14 +91,13 @@
             formCheck.className = "form-check col-3 mb-3";
 
             const input = document.createElement("input");
-            input.className = "form-check-input";
+            input.className = `form-check-input ${day}-period`;
             input.type = "checkbox";
             input.value = period.value;
-            input.id = `${day}-${period.value}`;//foreach,weekdays的變數。period是foreach timePeriods的變數 
-            input.name = `${day}-period`;
+            input.id = `${day}-${period.value}`;
 
             const label = document.createElement("label");
-            label.className = "form-check-label fw-bold"; // 加粗字體
+            label.className = "form-check-label fw-bold";
             label.htmlFor = input.id;
             label.textContent = period.label;
 
@@ -71,14 +105,12 @@
             formCheck.appendChild(label);
             timeslotWrapper.appendChild(formCheck);
 
-            // 勾選或取消勾選對應的時段
+            // 根據選擇框狀態勾選或取消勾選對應的時段
             input.addEventListener("change", function () {
-                const checkboxes = timeslotDiv.querySelectorAll(
-                    'input[name="' + day + '-time"]' //找屬性 舉例name="monday-time"
-                );
+                const checkboxes = timeslotDiv.querySelectorAll(`input.${day}-time`);
                 checkboxes.forEach((checkbox) => {
-                    const hour = parseInt(checkbox.value.split(":")[0], 10);
-                    if (hour >= period.range[0] && hour < period.range[1]) {
+                    const hour = parseInt(checkbox.value, 10);
+                    if ((hour - 1) >= period.range[0] && (hour - 1) < period.range[1]) {
                         checkbox.checked = this.checked;
                     }
                 });
@@ -86,6 +118,8 @@
         });
 
         // 創建具體時間選項
+        const dayIndex = getDayIndex(day); // 這裡的 getDayIndex 是你用來決定 day 的索引（例如星期一是 1）
+
         for (let hour = 0; hour < 24; hour++) {
             const timeValue = hour.toString().padStart(2, "0") + ":00";
             const checkboxId = `${day}-${hour}`;
@@ -94,43 +128,55 @@
             formCheck.className = "form-check col-3";
 
             const input = document.createElement("input");
-            input.className = "form-check-input";
+            input.className = `form-check-input ${day}-time`;
             input.type = "checkbox";
-            input.value = timeValue;
+
+            const adjustedValue = (hour + 1).toString(); // 1 對應 0:00, 2 對應 1:00 ...
+            input.value = adjustedValue.toString(); // 設定 value 從 1 到 24
+
             input.id = checkboxId;
-            input.name = `${day}-time`;
+            // 使用 dayIndex 來構造正確的 name 屬性
+            input.name = `Schedule[${dayIndex}].CouseHoursId[]`; // 這裡設置 name 為類似 Schedule[1].CouseHoursId[]
 
             const label = document.createElement("label");
             label.className = "form-check-label";
             label.htmlFor = checkboxId;
-            label.textContent = timeValue;
+            label.textContent = timeValue; // 時間顯示為 00:00, 01:00 等
 
             formCheck.appendChild(input);
             formCheck.appendChild(label);
             timeslotWrapper.appendChild(formCheck);
         }
 
+        // 輔助函數，用來將 day 轉換為 dayIndex，例如 'monday' 對應 1
+        function getDayIndex(day) {
+            const daysMap = {
+                'monday': 1,
+                'tuesday': 2,
+                'wednesday': 3,
+                'thursday': 4,
+                'friday': 5,
+                'saturday': 6,
+                'sunday': 0
+            };
+            return daysMap[day.toLowerCase()];
+        }
+
         timeslotDiv.appendChild(timeslotWrapper);
         timeslotRow.appendChild(timeslotDiv);
-        
-        
-        const dayCheckboxes = document.querySelectorAll('input[name="weekday"]');
 
-        // 為每個 checkbox 添加 change 事件
+        // 選擇日選擇框
+        const dayCheckboxes = document.querySelectorAll('input[class="form-check-input Weekday"]');
+
+        // 為每個日選擇框添加變更事件
         dayCheckboxes.forEach((checkbox, index) => {
             checkbox.addEventListener("change", function () {
-                // 根據 index 對應到每一天的 timeslotDiv
                 const timeslotDiv = document.getElementById(`timeslot-${weekdays[index]}`);
-
-                if (this.checked) {
-                    timeslotDiv.style.display = "block"; // 顯示
-                } else {
-                    timeslotDiv.style.display = "none"; // 隱藏
-                }
+                timeslotDiv.style.display = this.checked ? "block" : "none"; // 根據選擇框狀態顯示或隱藏
             });
         });
-       
     });
+
 
     if (memberId !== null) {
         const apiUrl = `/api/GetTutorReserveApi/GetTutorReserveTimeJson?memberId=${memberId}`;
@@ -145,7 +191,14 @@
                     throw new Error('error');
                 }
 
-                if (data) { updateReservationList(data.availableReservation) }
+                if (data.availableReservation.length > 0) {
+                    updateReservationList(data.availableReservation);
+
+                    // 禁用全局 checkbox
+                    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                        checkbox.disabled = true;
+                    });
+                }
 
                 function getWeeking(dayNumber) {
                     const weekdayMapping = {
@@ -196,7 +249,7 @@
                             listItem.classList.add("list-group-item");
 
                             const startTime = reservation.coursehours.split(":")[0]; // 取得開始小時部分
-                            
+
 
                             listItem.textContent = `${getWeeking(day)} ${startTime}:00點`;
                             timeList.appendChild(listItem);
@@ -241,6 +294,7 @@
                         const weekdayCheckbox = document.getElementById(`weekday-${reservation.weekday}`);
                         if (weekdayCheckbox) {
                             weekdayCheckbox.checked = true;
+                            weekdayCheckbox.disabled = true; // 禁止編輯
                             selectedWeekdays.add(reservation.weekday); // 防止重複勾選
                         }
                     }
@@ -252,6 +306,7 @@
                         const timeCheckbox = document.getElementById(`${weekday}-${parseInt(reservation.coursehours.split(":")[0])}`);
                         if (timeCheckbox) {
                             timeCheckbox.checked = true;
+                            timeCheckbox.disabled = true; // 禁止編輯
                         }
 
                         // 處理時段的勾選 (上午、下午、傍晚、深夜)
@@ -262,6 +317,7 @@
                                 const periodCheckbox = document.getElementById(`${weekday}-${period}`);
                                 if (periodCheckbox) {
                                     periodCheckbox.checked = true;
+                                    periodCheckbox.disabled = true; // 禁止編輯
                                 }
                             }
                         });
@@ -272,6 +328,9 @@
                 console.error('Error fetching data:', error);
                 alert('無法獲取資料，請稍後再試');// 暫時設計沒抓到資料的處理
             });
+       
+
+
 
         // 事件監聽器，用來控制時段選項的顯示和隱藏
         const weekdayInputs = document.querySelectorAll('input[name="weekday"]');
@@ -292,5 +351,36 @@
                 }
             });
         });
+
     }
+    function deleteReservation(memberId) {
+        const apiUrlreserveTime = `/api/UpdateTutorReserveTime/UpdateTutorReserveTime?memberId=${memberId}`;
+
+        fetch(apiUrlreserveTime, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('請重新選擇時段');
+                } else {
+                    alert('更新失敗，請重試！');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+                alert('更新過程中發生錯誤！');
+            });
+    }
+
+    // 點擊事件內調用函數
+    document.getElementById("edit-button").addEventListener("click", function () {
+        const memberId = urlParams.get('memberId'); // 獲取 `memberId` 參數
+        deleteReservation(memberId); // 調用函數
+        const enablecheckbox = document.querySelectorAll('input[type="checkbox"]');
+        enablecheckbox.forEach(checkbox => { checkbox.disabled = false })// 解除禁用
+    });
 });

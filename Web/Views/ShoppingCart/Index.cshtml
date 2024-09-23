@@ -1,7 +1,8 @@
 ﻿@model ShoppingCartListViewModel
 
 
-<div class="container">
+<div class="container" id="app">
+    <shopping-cart :items='@Html.Raw(Json.Serialize(Model.ShoppingCartList))'></shopping-cart>
     <div class="container-title">
         <h2>購物車</h2>
     </div>
@@ -22,7 +23,7 @@
                 @for (var i = 0; i < Model.ShoppingCartList.Count; i++)
                 {
                     var item = Model.ShoppingCartList[i];
-                    <tr>
+                    <tr v-for="(item, index) in cartItems" :key="item.CourseId">
                         <td data-label="商品">
                             <a href="#" class="d-flex align-items-center lh-backstage-shoppingcart-course-name">
                                 <img src="@item.HeadShotImage" align="middle"
@@ -30,10 +31,8 @@
                             </a>
                             <form asp-controller="ShoppingCart" asp-action="Delete" method="post">
                                 @Html.AntiForgeryToken() <!-- CSRF 保護 -->
-
                                 <input type="hidden" name="memberId" value="@Model.MemberId" />
                                 <input type="hidden" name="courseId" value="@item.CourseId" />
-
                                 <button type="submit" style="background: none; border: none;">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                         <path d="M170.5 51.6L151.5 80l145 0-19-28.4c-1.5-2.2-4-3.6-6.7-3.6l-93.7 0c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80 368 80l48 0 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-8 0 0 304c0 44.2-35.8 80-80 80l-224 0c-44.2 0-80-35.8-80-80l0-304-8 0c-13.3 0-24-10.7-24-24S10.7 80 24 80l8 0 48 0 13.8 0 36.7-55.1C140.9 9.4 158.4 0 177.1 0l93.7 0c18.7 0 36.2 9.4 46.6 24.9zM80 128l0 304c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-304L80 128zm80 64l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
@@ -44,38 +43,27 @@
                         <td data-label="科目">@item.CourseSubject</td>
                         <td data-label="類別">@item.CourseCategory</td>
                         <td data-label="時間">
-                            <select id="timeSelect-@i" class="form-select" aria-label="Default select example" onchange="updateSubtotalByTime(@item.TFUnitPrice, @item.FTUnitPrice, @i)">
-                                <option value="25">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
-                                <option value="50">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option>
+                            <select class="form-select" id="timeSelect-@i" v-model="item.SelectedTime" @@change="updateSubtotal(index)">
+                                <option v-for="(price, time) in item.TimeOptions" :key="time" :value="time">{{ time }}分鐘 - NT${{ price.toLocaleString() }}</option>
+                                @*  <option value="25">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
+                            <option value="50">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option> *@
                             </select>
                         </td>
-                        @{
-                            var one = 1;
-                            var five = 5;
-                            var ten = 10;
-                            var twenty = 20;
-                        }
                         <td data-label="堂數">
-                            <select id="lh-sc-quantitySelect-@i" class="form-select" aria-label="Default select example" onchange="updateSubtotalByTime(@item.TFUnitPrice, @item.FTUnitPrice, @i)">
-                                <option value="1" selected>@item.CourseQuantity 堂</option>
-                                <option value="0">====================</option>
-                                <option value="1">@one 堂</option>
-                                <option value="5">@five 堂</option>
-                                <option value="10">@ten 堂</option>
-                                <option value="20">@twenty 堂</option>
+                            <select class="form-select" id="lh-sc-quantitySelect-@i" v-model="item.SelectedQuantity" @@change="updateSubtotal(index)">
+                                <option v-for="quantity in item.QuantityOptions" :key="quantity" :value="quantity">{{ quantity }}</option>
                             </select>
                         </td>
                         <td data-label="小計">
-                            <span id="subtotal-@i" class="price discount">NT$ @((@item.SubtotalNTD * @item.Discount).ToString("#,###"))</span><br>
-                            <p id="discount-info-@i" class="discount-info">省NT$ @((@item.SubtotalNTD * (1 - @item.Discount)).ToString("#,###")) </p>
+                            <p id="subtotal-{{ index }}" class="price discount">NT$ {{ item.SubtotalNTD.toLocaleString() }}</p>
+                            <p class="discount-info">省 NT$ {{ item.Discount.toLocaleString() }}</p>
                         </td>
                         <td class="del" data-label="刪除">
                             <form asp-controller="ShoppingCart" asp-action="Delete" method="post">
-                                @Html.AntiForgeryToken() <!-- CSRF 保護 -->
+                                @Html.AntiForgeryToken()
 
                                 <input type="hidden" name="memberId" value="@Model.MemberId" />
                                 <input type="hidden" name="courseId" value="@item.CourseId" />
-
                                 <button type="submit" style="background: none; border: none;">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                         <path d="M170.5 51.6L151.5 80l145 0-19-28.4c-1.5-2.2-4-3.6-6.7-3.6l-93.7 0c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80 368 80l48 0 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-8 0 0 304c0 44.2-35.8 80-80 80l-224 0c-44.2 0-80-35.8-80-80l0-304-8 0c-13.3 0-24-10.7-24-24S10.7 80 24 80l8 0 48 0 13.8 0 36.7-55.1C140.9 9.4 158.4 0 177.1 0l93.7 0c18.7 0 36.2 9.4 46.6 24.9zM80 128l0 304c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-304L80 128zm80 64l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
@@ -88,61 +76,30 @@
             </tbody>
         </table>
     </div>
-    <div class="coupon-list">
-        <div class="coupon-title">
-            <h3>選擇優惠券</h3>
-        </div>
-        <div class="coupon">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                @foreach (var item in Model.ShoppingCartList)
-                {
-                    <option value="@item.CourseId">@item.Coupon 折價100塊</option>
-                    @* <option value="2">整張單據95折</option> *@
-                }
-            </select>
-        </div>
+    @*     <div class="coupon-list">
+    <div class="coupon-title">
+    <h3>選擇優惠券</h3>
     </div>
+    <div class="coupon">
+    <select class="form-select" aria-label="Default select example">
+    <option selected>請選擇Coupon券</option>
+    <option value="0">當前沒有適用的Coupon券</option>
+    @foreach (var item in Model.ShoppingCartList)
+    {
+    <option value="@item.CourseId">@item.Coupon 折價100塊</option>
+    }
+    </select>
+    </div>
+    </div> *@
     <div class="payment-list">
-        <div class="payment-title">
+        <div class="coupon-title">
             <h3>選擇付款方式</h3>
         </div>
         <div class="payment row-payment">
             <div class="card card-payment col-md-4 col-12" data-payment="creditcard">
                 <div class="card-body">
                     <h5 class="card-title">信用卡付款</h5>
-                    <p class="card-text">Visa, Mastercard, JCB</p>
-                </div>
-            </div>
-            <!--<div class="card card-payment col-md-2 col-12">
-                <div class="card-body">
-                    <h5 class="card-title">分3期0利率</h5>
-                    <p class="card-text">信用卡付款</p>
-                </div>
-            </div>
-            <div class="card card-payment col-md-2 col-12">
-                <div class="card-body">
-                    <p class="card-text">滿1500台幣</p>
-                    <h5 class="card-title">分6期0利率</h5>
-                    <p class="card-text">信用卡付款</p>
-                </div>
-            </div>
-             <div class="card card-payment col-md-2 col-12">
-                <div class="card-body">
-                    <img src="https://picsum.photos/100/30/?random=11" />
-                    <p class="card-text">適用台灣</p>
-                </div>
-            </div> -->
-            <div class="card card-payment col-md-4 col-12" data-payment="store">
-                <div class="card-body">
-                    <h5 class="card-title">超商繳款</h5>
-                    <p class="card-text">適用台灣</p>
-                </div>
-            </div>
-            <div class="card card-payment col-md-4 col-12" data-payment="atm">
-                <div class="card-body">
-                    <h5 class="card-title">ATM轉帳</h5>
-                    <p class="card-text">適用台灣</p>
+                    <p class="card-text">Visa, Mastercard</p>
                 </div>
             </div>
         </div>
@@ -153,89 +110,109 @@
         </div>
         <div class="container invoice">
             <div class="form-check">
-                <input class="form-check-input lh-shopping-cart-tax-id" type="checkbox" value="" id="flexCheckDefault" />
-                <label class="form-check-label" for="flexCheckDefault">
-                    <p>需開立統一編號發票（未填寫統編將自動開立二聯式發票）</p>
-                </label>
+                <input class="form-check-input lh-shopping-cart-tax-id" type="checkbox" v-model="isTaxIdChecked" id="taxIdCheckBox" />
+                <label class="form-check-label" for="taxIdCheckBox">需開立統一編號發票（未填寫統編將自動開立二聯式發票）</label>
             </div>
-            <!-- d-none -->
             <div class="container invoice-input">
                 <form class="row g-3">
-                    <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">統一編號</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="請輸入統一編號共8碼" />
+                    <div class="col-md-6" v-if="isTaxIdChecked">
+                        <label for="taxIdInput" class="form-label">統一編號</label>
+                        <input type="text" class="form-control" id="taxIdInput" v-model="taxIdInput" placeholder="請輸入統一編號共8碼" />
                     </div>
                     <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label">發票寄送信箱</label>
-                        <input type="password" class="form-control" id="inputPassword4"
-                               placeholder="統編電子發票會寄送到這個信箱" />
+                        <label for="invoiceEmailInput" class="form-label">發票寄送信箱</label>
+                        <input type="email" class="form-control" id="invoiceEmailInput" placeholder="統編電子發票會寄送到這個信箱" />
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="shop-list">
-        <div class="shop-title">
-            <h3>購物明細</h3>
-        </div>
-        <div class="shop-content">
-            <div class="card">
-                <div class="card-body">
-                    @{
-                        decimal total = 0;
-                    }
-                    @for (var i = 0; i < Model.ShoppingCartList.Count; i++)
-                    {
-                        var item = Model.ShoppingCartList[i];
+    <div>
+        <form id="shopping-cart-submit-btn" method="post" asp-controller="Order" asp-action="SubmitToOrder">
+            @Html.AntiForgeryToken()
+            <input class="sc-input" type="hidden" name="paymentType" value="CreditCard" />
+            <input class="sc-input" type="hidden" name="taxIdNumber" :value="taxIdNumber" />
+            <input class="sc-input" type="hidden" name="totalAmount" :value="totalAmount" />
 
-                        <div class="card-teacher">
-                            <div class="card-teacher-info">
-                                <p class="card-title teacher-info">
-                                    🔥@item.FullName💼@item.CourseTitle🎯
-                                </p>
-                                <p class="card-text teacher-classroom">
-                                    課程內容: <span id="details-time-@i">  @item.CourseSubject | @item.CourseLength </span> | <span id="details-quantity-@i">@item.CourseQuantity 堂</span>
-                                </p>
-                            </div>
-                            <div class="card-teacher-price">
-                                <p id="details-subtotal-@i">NT$@item.SubtotalNTD.ToString("#,###")</p>
-                            </div>
-                        </div>
-                        total += @item.SubtotalNTD;
-                    }
-                    <div class="shop-hori-line"></div>
-                    <div class="card-total-price">
-                        <div class="total-price-text">
-                            <p class="">總價：</p>
-                        </div>
-                        <div class="total-price">
-                            <p id="total-amount">NT$@total.ToString("#,###")</p>
-                        </div>
-                    </div>
-                    <div class="shop-hori-line"></div>
-                    <div class="shop-deadline pt-3">
-                        <p>預約截止日2024/11/06</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <button type="submit" class="return-order_btn text-white">確認並支付</button>
+            <br>
+            <br>
+        </form>
     </div>
-    <form id="shopping-cart-submit-btn" method="post" asp-controller="Order" asp-action="SubmitToOrder">
-        @Html.AntiForgeryToken()
-        @* <input class="sc-input" type="hidden" name="memberId" value="@Model.MemberId" /> *@
-        @* <input class="sc-input" type="hidden" name="memberId" value="1" /> *@
-        <input class="sc-input" type="hidden" name="paymentType" value="" />
-        <input class="sc-input" type="hidden" name="taxIdNumber" value="" />
-
-        <button type="submit" class="return-order_btn text-white">確認並支付</button>
-        <br>
-        <br>
-    </form>
 </div>
 
 @section topCSS {
     <link rel="stylesheet" href="~/css/ShoppingCartCheck.css" />
 }
 @section endJS {
-    <script src="~/js/shoppingcart.js"></script>
+    <script src="~/lib/myvue/vue.global.js"></script>
+    <script lang="ts" setup>
+            import { ref, computed, watch } from 'vue';
+
+    const props = defineProps<{
+      items: ShoppingCartItemViewModel[],
+      initialTaxId: string,
+    }>();
+
+    const cartItems = ref([...props.items]);
+
+    const totalAmount = computed(() => {
+      return cartItems.value.reduce((acc, item) => acc + item.SubtotalNTD, 0);
+    });
+
+    let debounceTimeout: NodeJS.Timeout | null = null;
+    const debounce = (fn: Function, delay = 500) => {
+      return (...args: any[]) => {
+        if (debounceTimeout) {
+          clearTimeout(debounceTimeout);
+        }
+        debounceTimeout = setTimeout(() => fn(...args), delay);
+      };
+    };
+
+    const updateSubtotal = (itemIndex: number) => {
+      const item = cartItems.value[itemIndex];
+      const unitPrice = item.TimeOptions[item.SelectedTime];
+      const quantity = item.SelectedQuantity;
+      let discount = 0;
+
+      if (quantity === 5) {
+        discount = 0.05;
+      } else if (quantity === 10) {
+        discount = 0.1;
+      } else if (quantity === 20) {
+        discount = 0.15;
+      }
+
+      const totalBeforeDiscount = unitPrice * quantity;
+      const discountAmount = totalBeforeDiscount * discount;
+      item.Discount = discountAmount;
+      item.SubtotalNTD = totalBeforeDiscount - discountAmount;
+
+      debouncePostUpdate(item.CourseId, item.SubtotalNTD, item.SelectedQuantity, item.SelectedTime);
+    };
+
+    const debouncePostUpdate = debounce((courseId: number, subtotal: number, quantity: number, time: string) => {
+      fetch('/ShoppingCart/UpdateCartItem', {
+        method: 'POST',
+        body: JSON.stringify({
+          courseId,
+          subtotal,
+          quantity,
+          time,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(response => console.log('購物車更新成功', response));
+    });
+
+    const taxIdNumber = ref(props.initialTaxId || '');
+    const taxIdInput = ref('');
+    const isTaxIdChecked = ref(false);
+
+    watch([isTaxIdChecked, taxIdInput], () => {
+      taxIdNumber.value = isTaxIdChecked.value ? taxIdInput.value : '';
+    });
+</script>
 }
