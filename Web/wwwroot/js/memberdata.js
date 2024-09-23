@@ -76,16 +76,18 @@ function submitPasswordChange() {
 function saveProfileData() {
     event.preventDefault();
 
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+
     const profileData = {
         Account: document.getElementById('floatingInput7').value,
         LastName: document.getElementById('floatingInput8').value,
         FirstName: document.getElementById('floatingInput9').value,
         Nickname: document.getElementById('floatingInput1').value,
-        Gender: document.getElementById('floatingInput3').value,
+        Gender: gender.toString(),  // 將性別值轉換為字串 "1" 或 "2"
         Birthday: document.getElementById('floatingInput2').value,
         Email: document.getElementById('floatingInput10').value,
         Phone: document.getElementById('floatingInput11').value,
-        CoursePrefer: collectCoursePreferences() // 確保這裡是正確收集的資料
+        CoursePrefer: collectCoursePreferences()
     };
 
     $.ajax({
@@ -97,18 +99,41 @@ function saveProfileData() {
         success: function (response) {
             if (response.success) {
                 alert('儲存成功！');
+
+                // 切換按鈕顯示狀態
+                const editButton = document.getElementById('edit-button');
+                const saveButton = document.getElementById('save-button');
+                const cancelButton = document.getElementById('cancel-button');
+
+                editButton.classList.remove('d-none');
+                saveButton.classList.add('d-none');
+                cancelButton.classList.add('d-none');
+
+                // 禁用所有表單元素
+                const inputs = document.querySelectorAll('#app input.form-control');
+                const checkboxes = document.querySelectorAll('#app input[type="checkbox"]');
+                const radioButtons = document.querySelectorAll('#app input[type="radio"]');
+
+                inputs.forEach(input => {
+                    input.disabled = true;
+                });
+
+                checkboxes.forEach(checkbox => {
+                    checkbox.disabled = true;
+                });
+
+                radioButtons.forEach(radio => {
+                    radio.disabled = true;
+                });
             } else {
-                // 顯示具體的錯誤訊息，包括例外訊息
                 alert('儲存失敗，請重試。錯誤原因: ' + response.message + '\n' + (response.exception || ''));
             }
-        }
-        ,
+        },
         error: function (xhr, status, error) {
             alert('儲存過程中出現錯誤，請稍後再試。錯誤訊息: ' + xhr.responseText);
         }
     });
 }
-
 function collectCoursePreferences() {
     const selectedCourses = [];
     document.querySelectorAll('input[type="checkbox"]:checked').forEach(input => {
@@ -116,14 +141,15 @@ function collectCoursePreferences() {
     });
     return selectedCourses;
 }
-
-
 function toggleEditMode() {
     // 取得所有需要編輯的文字輸入欄位
     const inputs = document.querySelectorAll('#app input.form-control');
 
     // 取得所有的 checkbox 元素
     const checkboxes = document.querySelectorAll('#app input[type="checkbox"]');
+
+    // 取得所有的 radio button 元素
+    const radioButtons = document.querySelectorAll('#app input[type="radio"]');
 
     // 切換每個文字輸入欄位的 disabled 屬性
     inputs.forEach(input => {
@@ -135,17 +161,25 @@ function toggleEditMode() {
         checkbox.disabled = !checkbox.disabled;
     });
 
-    // 切換編輯按鈕的顯示文字
-    const editButton = document.querySelector('input[value="編輯"]');
-    if (editButton.value === "編輯") {
-        editButton.value = "取消";
+    // 切換每個 radio button 的 disabled 屬性
+    radioButtons.forEach(radio => {
+        radio.disabled = !radio.disabled;
+    });
+
+    // 取得按鈕
+    const editButton = document.getElementById('edit-button');
+    const saveButton = document.getElementById('save-button');
+    const cancelButton = document.getElementById('cancel-button');
+
+    // 切換按鈕的顯示狀態
+    if (editButton.classList.contains('d-none')) {
+        editButton.classList.remove('d-none');
+        saveButton.classList.add('d-none');
+        cancelButton.classList.add('d-none');
     } else {
-        editButton.value = "編輯";
+        editButton.classList.add('d-none');
+        saveButton.classList.remove('d-none');
+        cancelButton.classList.remove('d-none');
     }
-
-    // 顯示/隱藏儲存按鈕
-    const saveButton = document.querySelector('input[value="儲存"]');
-    saveButton.parentElement.classList.toggle('d-none');
 }
-
 
