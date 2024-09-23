@@ -16,6 +16,11 @@
         public int CourseId { get; set; }
 
         /// <summary>
+        /// BookingID
+        /// </summary>
+        public int BookingId { get; set; }
+
+        /// <summary>
         /// 訂單編號
         /// </summary>
         public string TrackingNumber { get; set; }
@@ -79,6 +84,6 @@
         /// <summary>
         /// 預約上課時間
         /// </summary>
-        public short BookingTime { get; set; }
+        public int BookingTime { get; set; }
     }
 }
