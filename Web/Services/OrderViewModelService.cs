@@ -55,7 +55,7 @@ namespace Web.Services
                     TaxIdNumber = latestOrder.TaxIdNumber,
                     OrderDatetime = latestOrder.TransactionDate.ToString("yyyy-MM-dd hh-mm"),
                     BookingDate = (booking != null) ? booking.BookingDate.ToString("yyyy-MM-dd") : "無",
-                    BookingTime = (booking != null) ? booking.BookingTime.ToString("hh-mm") : "無",
+                    BookingTime = (booking != null) ? BookingTimeConvert(booking.BookingTime) : "無",
                 };
                 result.Add(orderResult);
 
@@ -65,6 +65,15 @@ namespace Web.Services
             else
             {
                 return result;
+            }
+        }
+        public string BookingTimeConvert(int bookingtime)
+        {
+            if (bookingtime < 0) return null;
+            else
+            {
+                string bookingtimeResult = bookingtime + ":00";
+                return bookingtimeResult;
             }
         }
     }

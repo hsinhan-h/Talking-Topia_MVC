@@ -1,8 +1,10 @@
 ﻿@model ShoppingCartListViewModel
 
+@{
+    int total = 0;
+}
 
 <div class="container" id="app">
-    <shopping-cart :items='@Html.Raw(Json.Serialize(Model.ShoppingCartList))'></shopping-cart>
     <div class="container-title">
         <h2>購物車</h2>
     </div>
@@ -20,10 +22,10 @@
                 </tr>
             </thead>
             <tbody>
-                @for (var i = 0; i < Model.ShoppingCartList.Count; i++)
+                @for (int i = 0; i < Model.ShoppingCartList.Count; i++)
                 {
                     var item = Model.ShoppingCartList[i];
-                    <tr v-for="(item, index) in cartItems" :key="item.CourseId">
+                    <tr>
                         <td data-label="商品">
                             <a href="#" class="d-flex align-items-center lh-backstage-shoppingcart-course-name">
                                 <img src="@item.HeadShotImage" align="middle"
@@ -31,7 +33,6 @@
                             </a>
                             <form asp-controller="ShoppingCart" asp-action="Delete" method="post">
                                 @Html.AntiForgeryToken() <!-- CSRF 保護 -->
-                                <input type="hidden" name="memberId" value="@Model.MemberId" />
                                 <input type="hidden" name="courseId" value="@item.CourseId" />
                                 <button type="submit" style="background: none; border: none;">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -43,26 +44,27 @@
                         <td data-label="科目">@item.CourseSubject</td>
                         <td data-label="類別">@item.CourseCategory</td>
                         <td data-label="時間">
-                            <select class="form-select" id="timeSelect-@i" v-model="item.SelectedTime" @@change="updateSubtotal(index)">
-                                <option v-for="(price, time) in item.TimeOptions" :key="time" :value="time">{{ time }}分鐘 - NT${{ price.toLocaleString() }}</option>
-                                @*  <option value="25">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
-                            <option value="50">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option> *@
+                            <select class="form-select" id="timeSelect">
+
+                                <option value="25">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
+                                <option value="50">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option>
                             </select>
                         </td>
                         <td data-label="堂數">
-                            <select class="form-select" id="lh-sc-quantitySelect-@i" v-model="item.SelectedQuantity" @@change="updateSubtotal(index)">
-                                <option v-for="quantity in item.QuantityOptions" :key="quantity" :value="quantity">{{ quantity }}</option>
+                            <select class="form-select" id="lh-sc-quantitySelect">
+                                @foreach (var option in item.CourseQunatityOptions)
+                                {
+                                    <option id="lh-sc-quantity-@option" value="@option">@option 堂</option>
+                                }
                             </select>
                         </td>
                         <td data-label="小計">
-                            <p id="subtotal-{{ index }}" class="price discount">NT$ {{ item.SubtotalNTD.toLocaleString() }}</p>
-                            <p class="discount-info">省 NT$ {{ item.Discount.toLocaleString() }}</p>
+                            <p id="subtotal" class="price discount">NT$ @item.SubtotalNTD.ToString("#,###")</p>
+                            <p class="discount-info">省 NT$ @item.Discount</p>
                         </td>
                         <td class="del" data-label="刪除">
                             <form asp-controller="ShoppingCart" asp-action="Delete" method="post">
                                 @Html.AntiForgeryToken()
-
-                                <input type="hidden" name="memberId" value="@Model.MemberId" />
                                 <input type="hidden" name="courseId" value="@item.CourseId" />
                                 <button type="submit" style="background: none; border: none;">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -72,6 +74,7 @@
                             </form>
                         </td>
                     </tr>
+                    total += @item.SubtotalNTD;
                 }
             </tbody>
         </table>
@@ -110,15 +113,16 @@
         </div>
         <div class="container invoice">
             <div class="form-check">
-                <input class="form-check-input lh-shopping-cart-tax-id" type="checkbox" v-model="isTaxIdChecked" id="taxIdCheckBox" />
+                <input class="form-check-input lh-shopping-cart-tax-id" type="checkbox" id="taxIdCheckBox" />
                 <label class="form-check-label" for="taxIdCheckBox">需開立統一編號發票（未填寫統編將自動開立二聯式發票）</label>
             </div>
             <div class="container invoice-input">
                 <form class="row g-3">
-                    <div class="col-md-6" v-if="isTaxIdChecked">
+                    <div class="col-md-6">
                         <label for="taxIdInput" class="form-label">統一編號</label>
-                        <input type="text" class="form-control" id="taxIdInput" v-model="taxIdInput" placeholder="請輸入統一編號共8碼" />
+                        <input type="text" class="form-control" id="taxIdInput" placeholder="請輸入統一編號共8碼" />
                     </div>
+                    <input type="hidden" name="taxIdNumber" value="taxIdNumber" />
                     <div class="col-md-6">
                         <label for="invoiceEmailInput" class="form-label">發票寄送信箱</label>
                         <input type="email" class="form-control" id="invoiceEmailInput" placeholder="統編電子發票會寄送到這個信箱" />
@@ -127,12 +131,21 @@
             </div>
         </div>
     </div>
+    <div class="total-price">
+        <div class="total-price-title">
+            <h3>總金額</h3>
+        </div>
+        <div class="container total-price">
+            <p>NT$ @total</p>
+            <input type="hidden" name="totalAmount" value="@total" />
+        </div>
+    </div>
     <div>
         <form id="shopping-cart-submit-btn" method="post" asp-controller="Order" asp-action="SubmitToOrder">
             @Html.AntiForgeryToken()
             <input class="sc-input" type="hidden" name="paymentType" value="CreditCard" />
-            <input class="sc-input" type="hidden" name="taxIdNumber" :value="taxIdNumber" />
-            <input class="sc-input" type="hidden" name="totalAmount" :value="totalAmount" />
+            <input class="sc-input" type="hidden" name="taxIdNumber" value="" />
+            <input class="sc-input" type="hidden" name="totalAmount" value="@total" />
 
             <button type="submit" class="return-order_btn text-white">確認並支付</button>
             <br>
@@ -145,74 +158,5 @@
     <link rel="stylesheet" href="~/css/ShoppingCartCheck.css" />
 }
 @section endJS {
-    <script src="~/lib/myvue/vue.global.js"></script>
-    <script lang="ts" setup>
-            import { ref, computed, watch } from 'vue';
-
-    const props = defineProps<{
-      items: ShoppingCartItemViewModel[],
-      initialTaxId: string,
-    }>();
-
-    const cartItems = ref([...props.items]);
-
-    const totalAmount = computed(() => {
-      return cartItems.value.reduce((acc, item) => acc + item.SubtotalNTD, 0);
-    });
-
-    let debounceTimeout: NodeJS.Timeout | null = null;
-    const debounce = (fn: Function, delay = 500) => {
-      return (...args: any[]) => {
-        if (debounceTimeout) {
-          clearTimeout(debounceTimeout);
-        }
-        debounceTimeout = setTimeout(() => fn(...args), delay);
-      };
-    };
-
-    const updateSubtotal = (itemIndex: number) => {
-      const item = cartItems.value[itemIndex];
-      const unitPrice = item.TimeOptions[item.SelectedTime];
-      const quantity = item.SelectedQuantity;
-      let discount = 0;
-
-      if (quantity === 5) {
-        discount = 0.05;
-      } else if (quantity === 10) {
-        discount = 0.1;
-      } else if (quantity === 20) {
-        discount = 0.15;
-      }
-
-      const totalBeforeDiscount = unitPrice * quantity;
-      const discountAmount = totalBeforeDiscount * discount;
-      item.Discount = discountAmount;
-      item.SubtotalNTD = totalBeforeDiscount - discountAmount;
-
-      debouncePostUpdate(item.CourseId, item.SubtotalNTD, item.SelectedQuantity, item.SelectedTime);
-    };
-
-    const debouncePostUpdate = debounce((courseId: number, subtotal: number, quantity: number, time: string) => {
-      fetch('/ShoppingCart/UpdateCartItem', {
-        method: 'POST',
-        body: JSON.stringify({
-          courseId,
-          subtotal,
-          quantity,
-          time,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then(response => console.log('購物車更新成功', response));
-    });
-
-    const taxIdNumber = ref(props.initialTaxId || '');
-    const taxIdInput = ref('');
-    const isTaxIdChecked = ref(false);
-
-    watch([isTaxIdChecked, taxIdInput], () => {
-      taxIdNumber.value = isTaxIdChecked.value ? taxIdInput.value : '';
-    });
-</script>
+    <script src="~/js/shoppingcart.js"></script>
 }

@@ -92,7 +92,7 @@ function updateCartItem(courseId, selectedTime, quantity, subtotal) {
         SubtotalNTD: subtotal
     };
 
-    fetch('/ShoppingCart/UpdateCartItem', {
+    fetch('/ShoppingCart/Updat', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

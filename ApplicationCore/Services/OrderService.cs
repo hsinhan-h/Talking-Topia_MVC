@@ -44,7 +44,8 @@ namespace ApplicationCore.Services
         /// <param name="memberId"></param>
         /// <param name="paymentType"></param>
         /// <param name="taxIdNumber"></param>
-        /// <returns></returns>
+        /// <returns></returns>+		shoppingCartItem	null	System.Collections.Generic.List<ApplicationCore.Entities.ShoppingCart>
+
         /// <exception cref="Exception"></exception>
         public async Task<int> CreateOrderAsync(int memberId, string paymentType, string taxIdNumber)
         {
@@ -53,7 +54,7 @@ namespace ApplicationCore.Services
             {
                 var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
                 var totalPrice = shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
-                var member = await _memberRepository.FirstOrDefaultAsync(m => m.MemberId ==  memberId);
+                var member = await _memberRepository.FirstOrDefaultAsync(m => m.MemberId == memberId);
 
                 // 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
                 var orders = new Order()
@@ -68,6 +69,8 @@ namespace ApplicationCore.Services
                     Vatnumber = "",
                     SentVatemail = member.Email,
                     OrderStatusId = (short)EOrderStatus.Outstanding,
+                    MerchantTradeNo = "",
+                    TradeNo = "",
                 };
 
                 var orderResult = await _orderRepository.AddAsync(orders);
@@ -113,7 +116,7 @@ namespace ApplicationCore.Services
             {
                 var order = await _orderRepository.GetByIdAsync(orderId);
                 var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == order.MemberId);
-                
+
                 if (orderStatus == EOrderStatus.Success)
                 {
                     order.OrderStatusId = (short)EOrderStatus.Success;
@@ -129,7 +132,7 @@ namespace ApplicationCore.Services
                             {
                                 CourseId = item.CourseId,
                                 BookingDate = item.BookingDate.Value,
-                                BookingTime =  (short)item.BookingTime,
+                                BookingTime = (short)item.BookingTime,
                                 StudentId = item.MemberId,
                                 Cdate = DateTime.Now,
                             };
