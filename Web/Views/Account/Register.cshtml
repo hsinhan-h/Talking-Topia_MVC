@@ -15,10 +15,20 @@
         <div class="register-container">
             <h2>註冊</h2>
             <form asp-controller="Account" asp-action="Register" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div> <!-- 新增這一行 -->
+
                 <input asp-for="RegisterViewModel.FirstName" class="form-control" placeholder="名字" />
-                <input asp-for="RegisterViewModel.Email" class="form-control" placeholder="電子郵件" />
+                <span asp-validation-for="RegisterViewModel.FirstName" class="text-danger"></span>
+
+                <input asp-for="RegisterViewModel.Email" class="form-control" placeholder="信箱" />
+                <span asp-validation-for="RegisterViewModel.Email" class="text-danger"></span>
+
                 <input asp-for="RegisterViewModel.Password" class="form-control" placeholder="密碼" />
+                <span asp-validation-for="RegisterViewModel.Password" class="text-danger"></span>
+
                 <input asp-for="RegisterViewModel.ConfirmPassword" class="form-control" placeholder="確認密碼" />
+                <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="text-danger"></span>
+
                 <button type="submit" class="btn btn-custom">註冊</button>
             </form>
             <div class="social-login">

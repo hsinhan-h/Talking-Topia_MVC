@@ -16,8 +16,18 @@
         <div class="login-container">
             <h2>登入</h2>
             <form asp-controller="Account" asp-action="Login" method="post">
-                <input asp-for="LoginViewModel.Email" class="form-control" placeholder="電子郵件"/>
-                <input asp-for="LoginViewModel.Password" class="form-control" type="password" placeholder="密碼" />
+                <div asp-validation-summary="All" class="text-danger"></div> <!-- 用於顯示所有的錯誤訊息 -->
+
+                <div class="form-group">
+                    <input asp-for="LoginViewModel.Email" class="form-control" placeholder="電子郵件" />
+                    <span asp-validation-for="LoginViewModel.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input asp-for="LoginViewModel.Password" class="form-control" type="password" placeholder="密碼" />
+                    <span asp-validation-for="LoginViewModel.Password" class="text-danger"></span>
+                </div>
+
                 <a href="#" class="forgot-password">忘記密碼？</a>
                 <button type="submit" class="btn btn-custom">登入</button>
             </form>

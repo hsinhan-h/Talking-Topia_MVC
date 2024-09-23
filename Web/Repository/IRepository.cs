@@ -14,6 +14,8 @@ namespace Web.Repository
         void SaveChanges();
         void Update<T>(T value) where T : class;
         T FirstOrDefault<T>(Expression<Func<T, bool>> predicate) where T : class;
+        Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
+
         Task SaveChangesAsync();
         Task BeginTransActionAsync();
         Task CommitAsync();
