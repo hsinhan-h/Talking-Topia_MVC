@@ -80,8 +80,8 @@ function saveProfileData() {
 
     const profileData = {
         Account: document.getElementById('floatingInput7').value,
-        LastName: document.getElementById('floatingInput8').value,
-        FirstName: document.getElementById('floatingInput9').value,
+        LastName: document.getElementById('floatingInput9').value,
+        FirstName: document.getElementById('floatingInput8').value,
         Nickname: document.getElementById('floatingInput1').value,
         Gender: gender.toString(),  // 將性別值轉換為字串 "1" 或 "2"
         Birthday: document.getElementById('floatingInput2').value,
@@ -99,6 +99,8 @@ function saveProfileData() {
         success: function (response) {
             if (response.success) {
                 alert('儲存成功！');
+                // 更新 Navbar 上的使用者名稱
+                document.getElementById('navbar-username').textContent = 'Hi! ' + profileData.FirstName;
 
                 // 切換按鈕顯示狀態
                 const editButton = document.getElementById('edit-button');
@@ -171,12 +173,14 @@ function toggleEditMode() {
     const saveButton = document.getElementById('save-button');
     const cancelButton = document.getElementById('cancel-button');
 
-    // 切換按鈕的顯示狀態
+    // 檢查目前的狀態，然後切換顯示狀態
     if (editButton.classList.contains('d-none')) {
+        // 如果編輯按鈕目前隱藏，則顯示它，並隱藏儲存和取消按鈕
         editButton.classList.remove('d-none');
         saveButton.classList.add('d-none');
         cancelButton.classList.add('d-none');
     } else {
+        // 否則，隱藏編輯按鈕，並顯示儲存和取消按鈕
         editButton.classList.add('d-none');
         saveButton.classList.remove('d-none');
         cancelButton.classList.remove('d-none');
