@@ -16,18 +16,22 @@ namespace Web.ViewModels
         /// <summary>
         /// 母語
         /// </summary>
+        [Required(ErrorMessage = "母語為必填欄位")]
         public string NativeLanguage { get; set; }
         /// <summary>
         /// 會說的語言
         /// </summary>
+        [Required(ErrorMessage = "會說的語言為必填欄位")]
         public string SpokenLanguage { get; set; }
         /// <summary>
         /// 銀行帳戶
         /// </summary>
+        [Required(ErrorMessage = "銀行帳戶為必填欄位")]
         public string BankAccount { get; set; }
         /// <summary>
         /// 銀行代號
         /// </summary>
+        [Required(ErrorMessage = "銀行代碼為必填欄位")]
         public string BankCode { get; set; }
         /// <summary>
         /// 學歷
@@ -66,6 +70,7 @@ namespace Web.ViewModels
         public bool Success { get; set; }
         public string Message { get; set; }
 
+        //public Dictionary<string, List<string>> ValidationErrors { get; set; } = new Dictionary<string, List<string>>();
     }
 
     public class WeekdaySchedule
