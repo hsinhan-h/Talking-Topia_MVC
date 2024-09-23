@@ -49,7 +49,11 @@ namespace Web.Controllers
             ViewData["IsLoggedIn"] = isLoggedIn;
             return View();
         }
-
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
         // 註冊
         [HttpPost]
         public async Task<IActionResult> Register(AccountViewModel model)
@@ -133,7 +137,7 @@ namespace Web.Controllers
             var claims = new List<Claim>
             {
                 // 儲存 Email 到 HttpContext.User.Identity.Name
-                new Claim(ClaimTypes.Name, request.Email),
+                new Claim(ClaimTypes.Name, user.FirstName),
             
                 // 將會員的 MemberId 儲存到 NameIdentifier，方便後續提取
                 new Claim(ClaimTypes.NameIdentifier, user.MemberId.ToString()) // 修正 'user.Id' 為 'user.MemberId'
