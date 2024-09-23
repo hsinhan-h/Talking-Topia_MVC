@@ -127,7 +127,7 @@
                                            class="form-control"
                                            id="floatingInput1"
                                            placeholder=""
-                                           :value="[[ bookingDetails.category ]]" />
+                                           :value="[[ bookingDetails.category ]]" disabled="disabled" />
                                     <label for="floatingInput1">課程分類(必填)</label>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
                                            class="form-control"
                                            id="floatingInput2"
                                            placeholder=""
-                                           :value="[[ bookingDetails.courseSubject ]]" />
+                                           :value="[[ bookingDetails.courseSubject ]]" disabled="disabled" />
                                     <label for="floatingInput2">課程科目(必填)</label>
                                 </div>
                             </div>
@@ -154,12 +154,19 @@
                             </div>
                             <div class="col-12 col-md-2">
                                 <div class="form-floating">
-                                    <input type="file"
+                                    @* <input type="file"
                                            class="form-control"
                                            id="floatingInput4"
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
                                            value="" />
+                                    <label for="floatingInput4">請上傳一支自介影片(必填)</label> *@
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           placeholder=""
+                                           v-model="txtVideoPath" 
+                                           :value="[[ bookingDetails.videoUrl ]]" />
                                     <label for="floatingInput4">請上傳一支自介影片(必填)</label>
                                 </div>
                             </div>
@@ -182,7 +189,7 @@
                                            class="form-control"
                                            id="floatingInput5"
                                            placeholder=""
-                                           :value="[[ bookingDetails.title ]]" />
+                                           :value="[[ bookingDetails.title ]]" disabled="disabled" />
                                     <label for="floatingInput5">課程名稱(必填)</label>
                                 </div>
                             </div>
@@ -392,7 +399,7 @@
                             <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <div id="editor3" class="col-12">
-                                        <p style="color: #999"></p>
+                                        <p style="color: #999">請輸入詳細課程介紹</p>
                                     </div>
                                 </div>
                             </div>
