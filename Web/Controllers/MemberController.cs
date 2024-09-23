@@ -14,6 +14,7 @@ namespace Web.Controllers
         private readonly IMemberService _memberService;
         private readonly MemberAppointmentService _memberAppointmentService;
 
+
         public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService)
         {
             _memberDataService = memberDataService;            
@@ -28,7 +29,12 @@ namespace Web.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var memberId = 15; // 測試使用 MemberId
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
+
             var viewModel = await _memberAppointmentService.GetAppointmentData(memberId);
 
             // 確保 viewModel 被正確初始化
@@ -85,13 +91,31 @@ namespace Web.Controllers
 
         public async Task<IActionResult> MemberTransaction()
         {
+            // 從使用者 Claims 中取得 memberIdClaim
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
-            //for (var x = 0; x < 4; x++)
-            //{
-            //    var OrderDatail = await _orderService.GetOrderData(x);
-            //}
-            var Orderdetail = await _orderDetailService.GetOrderData(1);
-            return View(Orderdetail);
+             // 如果沒有找到會員 ID 的 Claim，重定向到登入頁面
+            if (memberIdClaim == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // 嘗試將 memberIdClaim.Value 轉換為整數
+            if (!int.TryParse(memberIdClaim.Value, out int memberId))
+            {
+                return BadRequest("無效的會員 ID");
+            }
+
+            // 根據 memberId 取得訂單明細
+            var orderDetail = await _orderDetailService.GetOrderData(memberId);
+
+            // 確認訂單明細是否為空
+            if (orderDetail == null)
+            {
+                return NotFound("找不到訂單明細");
+            }
+
+            return View(orderDetail);
         }
         public async Task <IActionResult> WatchList()
         {

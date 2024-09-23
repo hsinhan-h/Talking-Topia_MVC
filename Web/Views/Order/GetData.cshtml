@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="reserve-info">
-                            <h5>預約資訊</h5>
+                            <h5>最新預約資訊</h5>
                             <div class="table-responsive">
                                 <table class="table table-hover table-success-order">
                                     <thead>
@@ -77,18 +77,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Additional Accordion Items -->
         </div>
     }
-    <div class="btn-goback">
-        <form asp-controller="ShoppingCart" asp-action="Index" asp-route-memberId="1">
-            @Html.AntiForgeryToken()
-
-            <input class="sc-input" type="hidden" name="memberId" value="1" />
-            <br>
-            <button class="return-order_btn text-white" type="button">返回購物車</button>
-        </form>
-    </div>
-
 </div>

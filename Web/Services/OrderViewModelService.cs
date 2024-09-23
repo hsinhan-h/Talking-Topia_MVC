@@ -38,7 +38,7 @@ namespace Web.Services
             {
                 var course = await _courseRepository.GetByIdAsync(item.CourseId);
                 var tutor = await _memberRepository.GetByIdAsync(course.TutorId);
-                var bookings = await _bookingRepository.ListAsync(b => b.CourseId == course.CourseId);
+                var bookings = await _bookingRepository.ListAsync(b => b.CourseId == course.CourseId && b.StudentId == memberId);
                 ApplicationCore.Entities.Booking booking = null;
                 if (bookings.Count != 0)
                 {
@@ -55,16 +55,24 @@ namespace Web.Services
                     TaxIdNumber = latestOrder.TaxIdNumber,
                     OrderDatetime = latestOrder.TransactionDate.ToString("yyyy-MM-dd hh-mm"),
                     BookingDate = (booking != null) ? booking.BookingDate.ToString("yyyy-MM-dd") : "無",
-                    BookingTime = (booking != null) ? booking.BookingTime.ToString("hh-mm") : "無",
+                    BookingTime = (booking != null) ? BookingTimeConvert(booking.BookingTime) : "無",
                 };
                 result.Add(orderResult);
-
             }
 
             if (result.Count == 0) return null;
             else
             {
                 return result;
+            }
+        }
+        public string BookingTimeConvert(int bookingtime)
+        {
+            if (bookingtime < 0) return null;
+            else
+            {
+                string bookingtimeResult = bookingtime + ":00";
+                return bookingtimeResult;
             }
         }
     }

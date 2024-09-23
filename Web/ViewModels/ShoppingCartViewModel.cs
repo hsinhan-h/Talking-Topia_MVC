@@ -67,12 +67,12 @@
         /// </summary>
         public int FTUnitPrice { get; set; }
 
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
 
         /// <summary>
         /// 小計
         /// </summary>
-        public decimal SubtotalNTD { get; set; }
+        public int SubtotalNTD { get; set; }
 
         /// <summary>
         /// 優惠券
@@ -86,7 +86,6 @@
     }
     public class ShoppingCartListViewModel
     {
-        public int MemberId { get; set; }
         public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
     }
 

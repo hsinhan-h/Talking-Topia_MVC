@@ -111,6 +111,12 @@ export async function generateBookingTable(weekStart, courseId) {
     });
 }
 
+//非模組化環境使用時, 將function掛載到window上
+if (typeof window !== "undefined") {
+    window.generateBookingTable = generateBookingTable;
+}
+
+
 //產生00:00 ~ 23:00 的時間段陣列
 function generateTimeSlots() {
     const times = [];
@@ -168,7 +174,6 @@ addToCartBtn.addEventListener("click", function () {
 //fetch BookingTable API
 async function fetchBookingTableData(courseId) {
     const url = `/api/BookingTableApi?courseId=${courseId}`;
-    console.log(url);
     try {
         const response = await fetch(url);
 
@@ -189,3 +194,5 @@ async function fetchBookingTableData(courseId) {
         console.error('Fetching BookingTableData時發生錯誤:', error);
     }
 }
+
+

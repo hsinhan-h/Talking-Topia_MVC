@@ -89,6 +89,9 @@ namespace Web.Controllers
                 _shoppingCartService.UpdateItem(memberId, item.CourseId, item.CourseQuantity, item.CourseLength, item.SubtotalNTD);
             }
 
+            //bool? isDelete = _shoppingCartService.DeleteCartItems(memberId);
+            //if ((bool)isDelete) { Console.WriteLine("終於刪成功惹"); }
+
             _orderId = await _orderService.CreateOrderAsync(memberId, paymentType, taxIdNumber);
 
             if (_orderId > 0)

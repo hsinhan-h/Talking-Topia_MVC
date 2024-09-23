@@ -104,11 +104,12 @@ namespace Web.Services
             member.Phone = updatedData.Phone ?? member.Phone;
             member.Birthday = updatedData.Birthday;
 
-            // 處理性別的更新（將 "男" 或 "女" 轉換為 1 或 2）
+            // 處理性別的更新
             if (!string.IsNullOrEmpty(updatedData.Gender))
             {
-                member.Gender = (short)(updatedData.Gender == "男" ? 1 : 2);
+                member.Gender = short.Parse(updatedData.Gender);
             }
+
 
 
             // 先將所有的課程主題加載到內存中，避免每次查找都查詢數據庫

@@ -49,7 +49,11 @@ namespace Web.Controllers
             ViewData["IsLoggedIn"] = isLoggedIn;
             return View();
         }
-
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
         // 註冊
         [HttpPost]
         public async Task<IActionResult> Register(AccountViewModel model)
@@ -61,12 +65,16 @@ namespace Web.Controllers
                 {
                     await _accountService.RegisterUserAsync(model);
 
-                    // 註冊成功後，回首頁
-                    return RedirectToAction("Index", "Home");
+                    // 註冊成功後，使用 TempData 傳遞成功訊息
+                    TempData["SuccessMessage"] = "註冊成功，請重新登入";
+                    return RedirectToAction("RegisterSuccess");
+
                 }
                 catch (UserAlreadyExistsException)
                 {
-                    ModelState.AddModelError("", "該電子郵件已被註冊");
+                    // 添加錯誤訊息到 ModelState
+                    ModelState.AddModelError(nameof(model.RegisterViewModel.Email), "該電子郵件已被註冊");
+
                 }
                 catch (Exception ex)
                 {
@@ -133,7 +141,7 @@ namespace Web.Controllers
             var claims = new List<Claim>
             {
                 // 儲存 Email 到 HttpContext.User.Identity.Name
-                new Claim(ClaimTypes.Name, request.Email),
+                new Claim(ClaimTypes.Name, user.FirstName),
             
                 // 將會員的 MemberId 儲存到 NameIdentifier，方便後續提取
                 new Claim(ClaimTypes.NameIdentifier, user.MemberId.ToString()) // 修正 'user.Id' 為 'user.MemberId'
@@ -181,6 +189,15 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult AccessDenied()
         {
+            return View();
+        }
+
+        public IActionResult RegisterSuccess()
+        {
+            if (TempData["SuccessMessage"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
     }

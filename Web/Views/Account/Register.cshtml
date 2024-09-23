@@ -1,0 +1,54 @@
+﻿@using Web.ViewModels
+@model AccountViewModel
+
+@section topCSS
+{
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/normalize.css" rel="stylesheet" />
+    <link href="~/css/homepage.css?v=202408211924" rel="stylesheet" />
+    <link href="~/css/register.css" rel="stylesheet" />
+
+}
+
+<div class="container px-5">
+    <div class="row">
+        <div class="register-container">
+            <h2>註冊</h2>
+            <form asp-controller="Account" asp-action="Register" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div> <!-- 新增這一行 -->
+
+                <input asp-for="RegisterViewModel.FirstName" class="form-control" placeholder="名字" />
+                <span asp-validation-for="RegisterViewModel.FirstName" class="text-danger"></span>
+
+                <input asp-for="RegisterViewModel.Email" class="form-control" placeholder="信箱" />
+                <span asp-validation-for="RegisterViewModel.Email" class="text-danger"></span>
+
+                <input asp-for="RegisterViewModel.Password" class="form-control" placeholder="密碼" />
+                <span asp-validation-for="RegisterViewModel.Password" class="text-danger"></span>
+
+                <input asp-for="RegisterViewModel.ConfirmPassword" class="form-control" placeholder="確認密碼" />
+                <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="text-danger"></span>
+
+                <button type="submit" class="btn btn-custom">註冊</button>
+            </form>
+            <div class="social-login">
+                <p>或使用社群帳號註冊</p>
+                <a href="#" class="google"><i class="fab fa-google"></i></a>
+                <a href="#" class="line"><i class="fab fa-line"></i></a>
+            </div>
+            <hr>
+            <h2>已經有帳號？</h2>
+            <a asp-controller="Account" asp-action="Account" class="login">登入</a>
+        </div>
+    </div>
+</div>
+
+
+ 
+
+
+@section endJS
+{
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+}

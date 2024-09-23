@@ -9,19 +9,23 @@ namespace ApplicationCore.Services
     {
         private readonly IRepository<ShoppingCart> _shoppingCartRepository;
         private readonly IRepository<Course> _courseRepository;
+
         public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _courseRepository = courseRepository;
         }
+
         public bool HasCartItem(int memberId)
         {
             return _shoppingCartRepository.Any(m => m.MemberId == memberId);
         }
+
         public bool HasCartItem(int memberId, int courseId)
         {
             return _shoppingCartRepository.Any(m => m.MemberId == memberId && m.CourseId == courseId);
         }
+
         public decimal GetUnitPrice(int courseId, int courseLength)
         {
             decimal price = _courseRepository.List(c => c.CourseId == courseId)
@@ -30,6 +34,7 @@ namespace ApplicationCore.Services
             if (price < 1) return 0;
             return price;
         }
+
         public async Task<GetAllShoppingCartResultDto> GetAllShoppingCartAsync(int memberId)
         {
             var items = await _shoppingCartRepository.ListAsync(item => item.MemberId == memberId);
@@ -57,6 +62,7 @@ namespace ApplicationCore.Services
             };
             return result;
         }
+
         /// <summary>
         /// 無預約時段
         /// </summary>
@@ -145,6 +151,7 @@ namespace ApplicationCore.Services
                 throw new Exception($"Unexpected error: {ex.Message}");
             }
         }
+
         public void DeleteCartItem(int memberId, int courseId)
         {
             try
@@ -155,6 +162,24 @@ namespace ApplicationCore.Services
             catch (ArgumentException ex)
             {
                 throw new ArgumentException($"無法找到Shopping Cart Item: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public bool DeleteCartItems(int memberId)
+        {
+            try
+            {
+                var shoppingCartItems = _shoppingCartRepository.List(i => i.MemberId == memberId);
+                for (int i = 0; i < shoppingCartItems.Count; i++)
+                {
+                    DeleteCartItem(memberId, shoppingCartItems[i].CourseId);
+                }
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -175,5 +200,7 @@ namespace ApplicationCore.Services
                 await _shoppingCartRepository.UpdateAsync(shoppingCartItem);
             }
         }
+
+
     }
 }
