@@ -56,6 +56,7 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> TutorData(int? memberId)
         {
+
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
             {
@@ -64,7 +65,7 @@ namespace Web.Controllers
             if (!memberId.HasValue)
             {
                 int parsedMemberId = int.Parse(memberIdClaim.Value);
-                return RedirectToAction("TutorData", new { memberId = parsedMemberId });
+                memberId = parsedMemberId;
             }
             var result = await _memberService.GetMemberId(memberId.Value);
             if (!result)
@@ -73,14 +74,30 @@ namespace Web.Controllers
             }
             var tutorData = await _tutorDataService.GetAllInformationAsync(memberId.Value);
 
+
             ViewData["MemberId"] = memberId;
             return View(tutorData);
         }
 
 
         [HttpPost]
+
         public async Task<IActionResult> TutorData(TutorDataViewModel qVM)
         {
+            if (!ModelState.IsValid)
+            {
+                // 提取每個欄位的錯誤訊息，並將欄位名稱與錯誤訊息對應
+                var fieldErrors = ModelState.Where(ms => ms.Value.Errors.Any())
+                                    .ToDictionary(
+                                        ms => ms.Key,
+                                        ms => ms.Value.Errors.Select(e => e.ErrorMessage).ToList() // 錯誤訊息列表
+                                    );
+
+                // 將錯誤訊息儲存到 ViewData 中
+                ViewData["Success"] = false;
+                ViewData["ValidationErrors"] = fieldErrors;
+                return View(qVM);
+            }
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
@@ -90,17 +107,17 @@ namespace Web.Controllers
 
             if (result.Success)
             {
-                // 成功後，重新提取會員完整資料
-                var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
-
-                ViewData["Header"] = "會員資料新增";
-                ViewData["Message"] = "會員資料新增成功";
-                return View("TutorData", tutorData); // 使用完整資料重新渲染 TutorData 頁面
+                TempData["Header"] = "會員資料新增";
+                TempData["Message"] = "會員資料新增成功";
+                return RedirectToAction("TutorData"); // 使用完整資料重新渲染 TutorData 頁面
+                //ViewData["Header"] = "會員資料新增";
+                //ViewData["Message"] = "會員資料新增成功";
+                //return View("TutorData", qVM);
             }
             else
             {
-                ViewData["Header"] = "錯誤訊息";
-                ViewData["Message"] = result.Message;
+                TempData["Header"] = "錯誤訊息";
+                TempData["Message"] = result.Message;
                 return View("_ShowMessage");
             }
         }
@@ -123,16 +140,16 @@ namespace Web.Controllers
             if (resultTime.Success)
             {
                 // 成功後，重新提取會員完整資料
-                var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
+                //var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
 
-                ViewData["Header"] = "會員資料新增";
-                ViewData["Message"] = "會員資料新增成功";
-                return View("TutorData", tutorData); // 使用完整資料重新渲染 TutorData 頁面
+                TempData["Header"] = "會員資料新增";
+                TempData["Message"] = "會員資料新增成功";
+                return RedirectToAction("TutorData"); // 使用完整資料重新渲染 TutorData 頁面
             }
             else
             {
-                ViewData["Header"] = "錯誤訊息";
-                ViewData["Message"] = resultTime.Message;
+                TempData["Header"] = "錯誤訊息";
+                TempData["Message"] = resultTime.Message;
                 return View("_ShowMessage");
             }
         }
@@ -201,6 +218,15 @@ namespace Web.Controllers
             ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(MemberId);
 
             return View(model);
+        }
+         public async Task<IActionResult> AppointmentDetails(int memberId)
+        {
+          
+            // 獲取預約詳細信息
+            var appointmentDetails = await _appointmentDetailService.GetAppointmentData(memberId=47);
+
+            // 返回視圖並傳遞預約數據
+            return View(appointmentDetails);
         }
     }
 }

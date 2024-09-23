@@ -238,6 +238,8 @@ namespace Web.Services
 
         public async Task<TutorDataViewModel> CreateTutorData(TutorDataViewModel qVM, int memberId)
         {
+
+
             // 開始一個資料庫交易
             await _repository.BeginTransActionAsync();
             try
@@ -273,7 +275,8 @@ namespace Web.Services
                 {
                     existingMember.AccountType = 0;
                 }
-                existingMember.IsTutor = (existingMember.IsTutor == true || existingMember.IsTutor);
+                //existingMember.IsTutor = (existingMember.IsTutor == true || existingMember.IsTutor);
+                existingMember.IsTutor = true;
                 existingMember.IsVerifiedTutor = (existingMember.IsVerifiedTutor != false && existingMember.IsVerifiedTutor);
 
                 // 使用 Repository 來新增資料

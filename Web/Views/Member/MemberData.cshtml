@@ -76,15 +76,32 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="text"
-                                       class="form-control"
-                                       id="floatingInput3"
-                                       value="@Model.Gender"
-                                       placeholder=""
-                                       disabled />
-                                <label for="floatingInput3">性別</label>
+                                <div class="d-flex align-items-center form-control" style="height: calc(3.5rem + 2px);">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input"
+                                               type="radio"
+                                               name="gender"
+                                               id="genderMale"
+                                               value="1"
+                                        @(Model.Gender == "男" ? "checked" : "")
+                                               disabled />
+                                        <label class="form-check-label" for="genderMale">男性</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="radio"
+                                               name="gender"
+                                               id="genderFemale"
+                                               value="2"
+                                        @(Model.Gender == "女" ? "checked" : "")
+                                               disabled />
+                                        <label class="form-check-label" for="genderFemale">女性</label>
+                                    </div>
+                                </div>
+                                <label for="genderMale" class="lh-floating-label">性別</label>
                             </div>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-4">
@@ -121,7 +138,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="lh-backstage-preferences">
+@*                 <section class="lh-backstage-preferences">
                     <div class="row mb-2">
                         <div class="col-12">
                             <h3>課程偏好</h3>
@@ -338,22 +355,30 @@
                     </div>
 
                 </section>
-                <form id="memberDataForm" action="#" method="post">
+ *@                <form id="memberDataForm" action="#" method="post">
                     <div class="row">
                         <div class="col-8"></div>
-                        <div class="col-2 d-none">
-                            <input class="btn btn-info col-12 lh-backstage-submit-btn"
+                        <div class="col-4 d-flex justify-content-end">
+                            <input id="save-button"
+                                   class="btn btn-info lh-backstage-submit-btn me-2 d-none"
                                    type="button"
                                    value="儲存"
                                    onclick="saveProfileData()" />
-                        </div>
-                        <div class="col-2">
-                            <input class="btn btn-info col-12 lh-backstage-submit-btn"
+
+                            <input id="cancel-button"
+                                   class="btn btn-secondary lh-backstage-submit-btn me-2 d-none"
+                                   type="button"
+                                   value="取消"
+                                   onclick="toggleEditMode()" />
+
+                            <input id="edit-button"
+                                   class="btn btn-info lh-backstage-submit-btn"
                                    type="button"
                                    value="編輯"
                                    onclick="toggleEditMode()" />
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
