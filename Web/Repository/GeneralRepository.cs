@@ -51,6 +51,10 @@ namespace Web.Repository
             return _context.Set<T>().FirstOrDefault(predicate);
 
         }
+        public async Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
 
         public async Task SaveChangesAsync()
         {
