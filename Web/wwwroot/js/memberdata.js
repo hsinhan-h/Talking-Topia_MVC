@@ -46,32 +46,7 @@ function submitPasswordChange() {
     }
 }
 
-////編輯及儲存
-//document.addEventListener("DOMContentLoaded", function () {
-//    const editButton = document.querySelector('.btn[value="編輯"]');
-//    const saveButton = document.querySelector('.btn[value="儲存"]');
-//    const formFields = document.querySelectorAll('.form-control');
-//    const checkboxes = document.querySelectorAll('.form-check-input');
 
-//    // 當按下編輯按鈕時
-//    editButton.addEventListener('click', function () {
-//        formFields.forEach(field => field.disabled = false); // 解除 disabled
-//        checkboxes.forEach(box => box.disabled = false); // 解除 checkbox 的 disabled
-//        editButton.classList.add('d-none'); // 隱藏編輯按鈕
-//        saveButton.parentElement.classList.remove('d-none'); // 顯示儲存按鈕
-//    });
-
-//    // 當按下儲存按鈕時
-//    saveButton.addEventListener('click', function () {
-//        // 這裡可以觸發保存資料的邏輯，例如提交表單到後端
-//        document.querySelector('form').submit(); // 提交表單
-
-//        formFields.forEach(field => field.disabled = true); // 再次鎖定字段
-//        checkboxes.forEach(box => box.disabled = true); // 鎖定 checkbox
-//        saveButton.parentElement.classList.add('d-none'); // 隱藏儲存按鈕
-//        editButton.classList.remove('d-none'); // 顯示編輯按鈕
-//    });
-//});
 
 function saveProfileData() {
     event.preventDefault();
