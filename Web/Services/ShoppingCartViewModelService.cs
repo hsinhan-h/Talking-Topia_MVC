@@ -78,7 +78,7 @@ namespace Web.Services
                     UnitPrice = (int)item.UnitPrice,
                     TFUnitPrice = (int)course.TwentyFiveMinUnitPrice,
                     FTUnitPrice = (int)course.FiftyMinUnitPrice,
-                    SubtotalNTD = item.Quantity * item.UnitPrice,
+                    SubtotalNTD = item.Quantity * (int)item.UnitPrice,
                     //Coupon = _coupon != null ? coupon.CouponName : "==========",
                     Coupon = "",
                     PaymentType = ""
