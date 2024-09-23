@@ -138,5 +138,14 @@ namespace Web.Controllers
 
             return View(model);
         }
+         public async Task<IActionResult> AppointmentDetails(int memberId)
+        {
+          
+            // 獲取預約詳細信息
+            var appointmentDetails = await _appointmentDetailService.GetAppointmentData(memberId=47);
+
+            // 返回視圖並傳遞預約數據
+            return View(appointmentDetails);
+        }
     }
 }
