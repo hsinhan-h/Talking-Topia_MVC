@@ -1,8 +1,28 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     const submitBtn = document.querySelector('.submitButton');
-
-    submitBtn.addEventListener('click', function () {
-        document.querySelector('.tutorDataForm').submit();
+    const memberId = document.getElementById('memberIdDisplay').innerText
+    document.querySelectorAll('.memberInfoItem').forEach(item => {
+        if (item.value) {
+            item.disabled = true;
+        }
+    });
+    let isEditing = false; // 用來判斷是否處於編輯狀態
+    submitBtn.addEventListener('click', function (event) {
+        // 如果按鈕是處於編輯狀態，阻止提交表單
+        if (!isEditing) {
+            event.preventDefault();
+            // 如果是編輯狀態，先允許編輯
+            document.querySelectorAll('.memberInfoItem').forEach(item => {
+                item.disabled = false;
+            });
+            // 改變按鈕文本為 "提交"
+            submitBtn.textContent = "提交";
+            // 更改狀態，讓下一次按下時可以進行提交
+            isEditing = true;
+        } else {
+            // 第二次按下則允許表單提交
+            document.querySelector('.tutorDataForm').submit();
+        }
     });
 
     const submitTimeBtn = document.querySelector('.submitTimeButton');
@@ -10,24 +30,14 @@
         document.querySelector('.tutorDataTimeForm').submit();
     });
 
-    //取網址列
-    const urlParams = new URLSearchParams(window.location.search);
-    const memberId = urlParams.get('memberId'); // 獲取 `memberId` 參數
-
-
-
     var toastElement = document.getElementById('toast');
     var message = toastElement.getAttribute('data-message');
     var header = toastElement.getAttribute('data-header');
 
-    // 檢查是否有 message，如果有則顯示 Toast
-    if (message && message.trim() !== "") {
+    // 確保 message 和 header 都存在且非空
+    if (message && message.trim() !== "" && header && header.trim() !== "") {
         var toast = new bootstrap.Toast(toastElement);
         toast.show();
-    }
-
-    if (memberId) {
-        document.getElementById('memberIdDisplay').innerText = memberId;
     }
 
     const weekdays = [
@@ -190,10 +200,11 @@
                 if (!data || !data.availableReservation || !Array.isArray(data.availableReservation)) {
                     throw new Error('error');
                 }
-
+                const editButton = document.getElementById('edit-button');
                 if (data.availableReservation.length > 0) {
                     updateReservationList(data.availableReservation);
-
+                    editButton.classList.remove('d-none');
+                    editButton.classList.add('d-block');
                     // 禁用全局 checkbox
                     document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
                         checkbox.disabled = true;
@@ -324,10 +335,7 @@
                     }
                 });
             })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                alert('無法獲取資料，請稍後再試');// 暫時設計沒抓到資料的處理
-            });
+
        
 
 
@@ -378,7 +386,7 @@
 
     // 點擊事件內調用函數
     document.getElementById("edit-button").addEventListener("click", function () {
-        const memberId = urlParams.get('memberId'); // 獲取 `memberId` 參數
+        const memberId = document.getElementById('memberIdDisplay').innerText; // 獲取 `memberId` 參數
         deleteReservation(memberId); // 調用函數
         const enablecheckbox = document.querySelectorAll('input[type="checkbox"]');
         enablecheckbox.forEach(checkbox => { checkbox.disabled = false })// 解除禁用
