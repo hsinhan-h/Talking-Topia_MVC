@@ -118,7 +118,7 @@ namespace Web.ViewModels
     public class TutorRecomCardList
     {
         public int CourseId { get; set; }
-        public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
         public string TutorHeadShot { get; set; }
         public string NationFlagImg { get; set; }
         public string CourseTitle { get; set; }

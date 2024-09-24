@@ -9,5 +9,7 @@ namespace ApplicationCore.Interfaces
     public interface IMemberService
     {
         public Task<bool> GetMemberId(int memberId);
+        public int AddWatchList(int memberId, int courseId);
+
     }
 }

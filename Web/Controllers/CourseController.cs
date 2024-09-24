@@ -13,6 +13,8 @@ namespace Web.Controllers
         private readonly CourseService _courseService;
         private readonly ICourseService _icourseService;
         private readonly IMemberService _memberService;
+
+
         public CourseController(BookingService bookingService, CourseService courseService, ICourseService icourseService, IMemberService memberService)
         {
             _bookingService = bookingService;
@@ -62,11 +64,35 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {               
-                return Content("訂單建立失敗!");
+                return Content("評論建立失敗!");
                
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddFollowingCourse([FromForm]int CourseId)
+        {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            try
+            {
+                var addWatchList = _memberService.AddWatchList(memberId, CourseId);
+                return RedirectToAction(nameof(CourseMainPage), new { courseId = CourseId });
+
+            }
+            catch (Exception ex) 
+            {
+                return Content("新增關注失敗!");
+
+            }
+
+
+
+        }
 
     }
 

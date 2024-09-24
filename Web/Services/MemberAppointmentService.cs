@@ -1,4 +1,7 @@
-﻿namespace Web.Services
+﻿using Humanizer;
+using Web.ViewModels;
+
+namespace Web.Services
 {
     public class MemberAppointmentService
     {
@@ -14,34 +17,38 @@
         public async Task<MemberAppointmentViewModel> GetAppointmentData(int memberId)
         {
 
-            var orders = from Order in _repository.GetAll<Order>()
-                         where Order.MemberId == memberId
-                         join OrderDetail in _repository.GetAll<OrderDetail>() on Order.OrderId equals OrderDetail.OrderId
-                         join member in _repository.GetAll<Member>() on Order.MemberId equals member.MemberId
-                         join course in _repository.GetAll<Course>() on OrderDetail.CourseId equals course.CourseId
-                         join booking in _repository.GetAll<Booking>() on OrderDetail.CourseId equals booking.CourseId
+            var memberAppointments = from booking in _repository.GetAll<Booking>()
+                         where booking.StudentId == memberId
+                         join course in _repository.GetAll<Course>() on booking.CourseId equals course.CourseId
+                         join tutor in _repository.GetAll<Member>() on course.TutorId equals tutor.MemberId
+                         join order in _repository.GetAll<Order>() on memberId equals order.MemberId
+                         join orderDetail in _repository.GetAll<OrderDetail>() on order.OrderId equals orderDetail.OrderId
+                         group new { booking, course, tutor, order, orderDetail } by booking.BookingId into gp
 
                          select new MemberAppointmentVM
                          {
-                             MemberId = Order.MemberId,          // 會員ID
-                             CourseId = OrderDetail.CourseId,   // 課程ID
-                             TrackingNumber = "",              // 訂單編號
-                             FullName = member.FirstName + " " + member.LastName, // 教師名稱
-                             CourseTitle = OrderDetail.CourseTitle,        // 課程名稱
-                             Subtitle = course.SubTitle,//課程副標題
-                             CourseLength = OrderDetail.CourseType == 1 ? "25分鐘" : "50分鐘",// 購買時長
-                             Quantity = OrderDetail.Quantity,  // 購買堂數
-                             TotalPrice = OrderDetail.TotalPrice, // 總價
-                             TaxIdNumber = Order.TaxIdNumber,  // 統一編號
-                             OrderDatetime = Order.TransactionDate.ToString("yyyy-MM-dd"), // 格式化交易時間
-                             BookingDate = booking.BookingDate,//預約上課日期
-
+                             BookingId = gp.Key,
+                             MemberId = memberId,          // 會員ID
+                             CourseId = gp.FirstOrDefault().booking.CourseId,   // 課程ID
+                             //TrackingNumber = "",              // 訂單編號
+                             FullName = gp.FirstOrDefault().tutor.FirstName + " " + gp.FirstOrDefault().tutor.LastName, // 教師名稱
+                             CourseTitle = gp.FirstOrDefault().course.Title,        // 課程名稱
+                             Subtitle = gp.FirstOrDefault().course.SubTitle,//課程副標題
+                             CourseLength = gp.FirstOrDefault().orderDetail.CourseType == 1 ? "25分鐘" : "50分鐘",// 購買時長
+                             Quantity = gp.FirstOrDefault().orderDetail.Quantity,  // 購買堂數
+                             TotalPrice = gp.FirstOrDefault().orderDetail.TotalPrice, // 總價
+                             TaxIdNumber = gp.FirstOrDefault().order.TaxIdNumber,  // 統一編號
+                             OrderDatetime = gp.FirstOrDefault().order.TransactionDate.ToString("yyyy-MM-dd"), // 格式化交易時間
+                             BookingDate = gp.FirstOrDefault().booking.BookingDate,//預約上課日期
+                             BookingTime = gp.FirstOrDefault().booking.BookingTime
                          };
+
+            var orderedMemberAppointments = memberAppointments.OrderByDescending(o => o.BookingDate);
 
             // 返回包含訂單資訊的 ViewModel
             return new MemberAppointmentViewModel()
             {
-                MemberAppointmentList = await orders.ToListAsync(), // 使用非同步處理
+                MemberAppointmentList = await orderedMemberAppointments.ToListAsync(), 
             };
         }
     }
