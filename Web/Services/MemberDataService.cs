@@ -225,6 +225,12 @@ namespace Web.Services
             return watchlist;
         }
 
+        public bool IsWatched(int memberId, int courseId)
+        {
+            var IsFollowed = _repository.GetAll<WatchList>().Any(w => w.CourseId == courseId && w.FollowerId == memberId);
+            return IsFollowed;
+        }
+
     }
 
     // 更新會員資料

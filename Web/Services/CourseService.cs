@@ -382,8 +382,14 @@ namespace Web.Services
                 .Select(c => c.TwentyFiveMinUnitPrice)
                 .FirstOrDefault();
         }
+        public bool IsWatched(int memberId, int courseId)
+        {
+            var IsFollowed = _repository.GetAll<Entities.WatchList>().Any(w => w.CourseId == courseId && w.FollowerId == memberId);
+            return IsFollowed;
 
-        public async Task<CourseMainPageViewModel> GetCourseMainPage(int courseId)
+        }
+
+        public async Task<CourseMainPageViewModel> GetCourseMainPage(int courseId, int memberId)
         {
             // 查詢課程、會員和國籍資料
             var courseMainInfo = await (
@@ -524,7 +530,7 @@ namespace Web.Services
                 {
                     ProfessionName = p.ProfessionalLicenseName
                 }).ToList(),
-                FollowingStatus = false ,// 假設未關注
+                FollowingStatus = IsWatched(memberId,courseId) ,
                 TutorReconmmendCard = recomCard
             };
 
@@ -681,6 +687,7 @@ namespace Web.Services
             return recomCardList;
         }
 
+        
         
     }
 }

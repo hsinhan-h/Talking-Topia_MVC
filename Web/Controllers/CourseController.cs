@@ -42,7 +42,19 @@ namespace Web.Controllers
         public async Task<IActionResult> CourseMainPage([FromQuery, DefaultValue(1)] int courseId)
         {
             ViewData["CourseId"] = courseId;
-            var model = await _courseService.GetCourseMainPage(courseId);
+
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            int memberId = 0;
+
+            // 如果找到 memberIdClaim，將其解析成整數
+            if (memberIdClaim != null)
+            {
+                memberId = int.Parse(memberIdClaim.Value);
+            }
+            
+
+            var model = await _courseService.GetCourseMainPage(courseId,memberId);
             return View(model);
         }
 
