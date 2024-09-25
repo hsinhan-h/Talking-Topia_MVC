@@ -289,6 +289,11 @@ input {
 	background-color: var(--theme-color);
 }
 
+.form-floating label.active {
+	transform: scale(.85) translateY(-0.8rem);
+	opacity: .65;
+}
+
 .form-check-input:checked {
 	background-color: var(--theme-color);
 	border-color: var(--theme-color);

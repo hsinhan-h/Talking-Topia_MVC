@@ -46,12 +46,7 @@
         /// 堂數
         /// </summary>
         public int CourseQuantity { get; set; }
-
-        /// <summary>
-        /// 堂數選項
-        /// </summary>
-        public List<int> CourseQunatityOptions { get; set; }
-
+      
         /// <summary>
         /// 單價
         /// </summary>
