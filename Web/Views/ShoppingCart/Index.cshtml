@@ -44,23 +44,46 @@
                         <td data-label="科目">@item.CourseSubject</td>
                         <td data-label="類別">@item.CourseCategory</td>
                         <td data-label="時間">
-                            <select class="form-select" id="timeSelect">
-
-                                <option value="25">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
-                                <option value="50">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option>
+                            <select class="form-select" id="lh-timeSelect-@i" data-index="@i">
+                                <option class="lh-course-length" value="@item.TFUnitPrice">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
+                                <option class="lh-course-length" value="@item.FTUnitPrice">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option>
                             </select>
                         </td>
                         <td data-label="堂數">
-                            <select class="form-select" id="lh-sc-quantitySelect">
-                                @foreach (var option in item.CourseQunatityOptions)
+                            <select class="form-select" id="lh-sc-quantitySelect-@i" data-index="@i">
+                                @if (item.CourseQuantity == 1)
                                 {
-                                    <option id="lh-sc-quantity-@option" value="@option">@option 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="1" selected>1 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="5">5 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="10">10 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="20">20 堂</option>
+                                }
+                                else if (item.CourseQuantity == 5)
+                                {
+                                    <option id="lh-sc-quantity-@i" value="1">1 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="5" selected>5 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="10">10 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="20">20 堂</option>
+                                }
+                                else if (item.CourseQuantity == 10)
+                                {
+                                    <option id="lh-sc-quantity-@i" value="1">1 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="5">5 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="10" selected>10 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="20">20 堂</option>
+                                }
+                                else if (item.CourseQuantity == 20)
+                                {
+                                    <option id="lh-sc-quantity-@i" value="1">1 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="5">5 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="10">10 堂</option>
+                                    <option id="lh-sc-quantity-@i" value="20" selected>20 堂</option>
                                 }
                             </select>
                         </td>
                         <td data-label="小計">
-                            <p id="subtotal" class="price discount">NT$ @item.SubtotalNTD.ToString("#,###")</p>
-                            <p class="discount-info">省 NT$ @item.Discount</p>
+                            <p class="price discount">NT$ <span id="subtotal" data-index="@i">@item.SubtotalNTD.ToString("#,###")</span></p>
+                            <p class="discount-info">省 NT$ <span id="discount-info" data-index="@i">@item.Discount.ToString("#,###")</span> </p>
                         </td>
                         <td class="del" data-label="刪除">
                             <form asp-controller="ShoppingCart" asp-action="Delete" method="post">
@@ -158,5 +181,8 @@
     <link rel="stylesheet" href="~/css/ShoppingCartCheck.css" />
 }
 @section endJS {
+    <script>
+        window.viewModelData = @Html.Raw(Json.Serialize(Model));
+    </script>
     <script src="~/js/shoppingcart.js"></script>
 }
