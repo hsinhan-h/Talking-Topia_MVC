@@ -58,7 +58,13 @@ namespace Web.ViewModels
         ///// <summary>
         ///// 工作簡述檔案
         ///// </summary>
-        ////[Required(ErrorMessage = "請上傳檔案")]
+        public ApplyCourseList CourseList { get; set; } = new ApplyCourseList();
+        public class ApplyCourseList
+        {
+            public int ApplyCourseCategoryId { get; set; }
+            public int ApplySubCategoryId { get; set; }
+        }
+
         public string WorkExperienceFile { get; set; }
         public string SelectedCategory { get; set; }
         public string SelectedSubcategory { get; set; }
@@ -66,4 +72,5 @@ namespace Web.ViewModels
         public bool Success { get; set; }
         public string Message { get; set; }
     }
+       
 }
