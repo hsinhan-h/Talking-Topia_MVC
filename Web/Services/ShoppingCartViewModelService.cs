@@ -61,6 +61,11 @@ namespace Web.Services
                 var tutor = await _memberRepository.GetByIdAsync(course.TutorId);
                 var subject = await _courseSubjectRepository.GetByIdAsync(course.SubjectId);
                 var category = await _courseCategoryRepository.GetByIdAsync(course.CategoryId);
+                double discount = 0;
+                if (item.Quantity == 1) discount = 0;
+                if (item.Quantity == 5) discount = 0.95;
+                if (item.Quantity == 10) discount = 0.9;
+                if (item.Quantity == 20) discount = 0.85;
                 //foreach (var coupon in _coupon)
                 //{
                 var shoppingResult = new ShoppingCartViewModel
@@ -77,6 +82,7 @@ namespace Web.Services
                     UnitPrice = (int)item.UnitPrice,
                     TFUnitPrice = (int)course.TwentyFiveMinUnitPrice,
                     FTUnitPrice = (int)course.FiftyMinUnitPrice,
+                    Discount = item.Quantity * (int)item.UnitPrice * (1 - discount),
                     SubtotalNTD = item.Quantity * (int)item.UnitPrice,
                     //Coupon = _coupon != null ? coupon.CouponName : "==========",
                     Coupon = "",
