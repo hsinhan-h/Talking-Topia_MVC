@@ -82,8 +82,8 @@
                             </select>
                         </td>
                         <td data-label="小計">
-                            <p class="price discount">NT$ <span id="subtotal" data-index="@i">@item.SubtotalNTD.ToString("#,###")</span></p>
-                            <p class="discount-info">省 NT$ <span id="discount-info" data-index="@i">@item.Discount.ToString("#,###")</span> </p>
+                            <p class="price discount">NT$ <span id="subtotal-@i" data-index="@i">@item.SubtotalNTD.ToString("#,###")</span></p>
+                            <p class="discount-info">省 NT$ <span id="discount-info-@i" data-index="@i">@item.Discount.ToString("#,###")</span></p>
                         </td>
                         <td class="del" data-label="刪除">
                             <form asp-controller="ShoppingCart" asp-action="Delete" method="post">

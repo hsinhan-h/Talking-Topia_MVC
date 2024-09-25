@@ -1,114 +1,98 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    const taxIdCheckbox = document.getElementById('taxIdCheckBox');
-    const taxIdInput = document.getElementById('taxIdInput');
-    const form = document.getElementById('shopping-cart-submit-btn');
-    const taxIdNumberInput = document.querySelector('input[name="taxIdNumber"]');
+    console.log(window.viewModelData);
+    let selectLengthElements = document.querySelectorAll('[id^="lh-timeSelect-"]'); //select抓到的是option selected的值!!!
+    let selectQuantityElements = document.querySelectorAll('[id^="lh-sc-quantitySelect-"]');
 
-});
+    selectLengthElements.forEach(function (selectLength) {
+        selectLength.addEventListener('change', function () {
+            let dataIndex = this.getAttribute('data-index');
+            let vmCourseLength = window.viewModelData.shoppingCartList[dataIndex].courseLength;
+            let vmTFUnitPrice = window.viewModelData.shoppingCartList[dataIndex].tfUnitPrice;
+            let vmFTUnitPrice = window.viewModelData.shoppingCartList[dataIndex].ftUnitPrice;
+            let vmCourseQuantity = window.viewModelData.shoppingCartList[dataIndex].courseQuantity;
 
-function updateSubtotalByTime(priceFor25Minutes, priceFor50Minutes, index) {
+            console.log(`當前選到的option是: ${this.value}, index是: ${dataIndex}, VM的courseLength:${vmCourseLength},VM的TFUnitPrice:${vmTFUnitPrice} `)
 
-    const selectedTime = parseInt(document.getElementById("timeSelect-" + index).value);
-    const quantity = parseInt(document.getElementById("lh-sc-quantitySelect-" + index).value);
-
-    if (isNaN(selectedTime) || isNaN(quantity) || quantity <= 0) {
-        document.getElementById("subtotal-" + index).innerText = "NT$0";
-        let discount = subtotal * 0.1;
-        document.getElementById("discount-info-" + index).innerText = "省NT$0";
-        return;
-    }
-
-    let selectedPrice = (selectedTime === 50) ? priceFor50Minutes : priceFor25Minutes;
-    let subtotal = quantity * selectedPrice;
-    let discount = subtotal * 0.1;
-
-    document.getElementById("subtotal-" + index).innerText = "NT$" + subtotal.toLocaleString();
-    document.getElementById("discount-info-" + index).innerText = "省NT$" + discount.toLocaleString();
-
-    updateCartItem(courseId, selectedTime, quantity, subtotal);
-
-    updateShoppingDetails(index, selectedTime, quantity, subtotal);
-    updateTotalAmount();
-}
-
-
-function updateShoppingDetails(index, time, quantity, subtotal) {
-    document.getElementById("details-time-" + index).innerText = time + " 分鐘";
-    document.getElementById("details-quantity-" + index).innerText = quantity + " 堂";
-    document.getElementById("details-subtotal-" + index).innerText = "NT$" + subtotal.toLocaleString();
-}
-
-function updateTotalAmount() {
-    const subtotals = document.querySelectorAll("[id^='subtotal-']");
-    let total = 0;
-
-    subtotals.forEach(function (element) {
-        let subtotal = parseInt(element.innerText.replace(/[^\d]/g, ''));
-        total += isNaN(subtotal) ? 0 : subtotal;
-    });
-
-    document.getElementById("total-amount").innerText = "NT$" + total.toLocaleString();
-}
-
-form.addEventListener('submit', function (event) {
-    if (taxIdCheckbox.checked) {
-        taxIdNumberInput.value = taxIdInput.value;
-    } else {
-        taxIdNumberInput.value = '';
-    }
-
-    updateTotalAmount();
-
-    const totalAmount = document.getElementById("total-amount").innerText.replace(/[^\d]/g, ''); // 取得總金額
-    const totalAmountInput = document.querySelector('input[name="totalAmount"]');
-    totalAmountInput.value = totalAmount;
-
-    const quantities = document.querySelectorAll("[id^='lh-sc-quantitySelect-']");
-    let times = document.querySelectorAll("[id^='timeSelect-']");
-
-    quantities.forEach(function (quantity, index) {
-        const hiddenQuantityInput = document.createElement("input");
-        hiddenQuantityInput.type = "hidden";
-        hiddenQuantityInput.name = "Items[" + index + "].Quantity";
-        hiddenQuantityInput.value = quantity.value;
-        form.appendChild(hiddenQuantityInput);
-    });
-
-    times.forEach(function (time, index) {
-        const hiddenTimeInput = document.createElement("input");
-        hiddenTimeInput.type = "hidden";
-        hiddenTimeInput.name = "Items[" + index + "].Time";
-        hiddenTimeInput.value = time.value;
-        form.appendChild(hiddenTimeInput);
-    });
-
-});
-
-function updateCartItem(courseId, selectedTime, quantity, subtotal) {
-    let cartItemUpdate = {
-        CourseId: courseId,
-        CourseQuantity: quantity,
-        CourseLength: selectedTime,
-        SubtotalNTD: subtotal
-    };
-
-    fetch('/ShoppingCart/Updat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(cartItemUpdate)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
+            if (this.value == vmTFUnitPrice) {
+                console.log(`選到的值等於vmTFUnitPrice的值: ${vmTFUnitPrice}`);
+                window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
+                updateTotalPrice(dataIndex, vmCourseQuantity, this.value);
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Cart item updated successfully:", data);
-        })
-        .catch(error => {
-            console.error("Error updating cart item:", error);
+            else {
+                console.log(`選到的值等於vmFTUnitPrice的值: ${vmFTUnitPrice}`);
+                window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
+                updateTotalPrice(dataIndex, vmCourseQuantity, this.value);
+            }
         });
-}
+    });
+
+    selectQuantityElements.forEach(function (selectQuantity) {
+        selectQuantity.addEventListener('change', function () {
+            let dataIndex = this.getAttribute('data-index');
+            let vmUnitPrice = window.viewModelData.shoppingCartList[dataIndex].unitPrice;
+            let vmCourseQuantity = window.viewModelData.shoppingCartList[dataIndex].courseQuantity;
+
+            console.log(`當前選到的option是: ${this.value}, index是: ${dataIndex}, VM的CourseQuantity:${vmCourseQuantity} `)
+
+            if (this.value == 1) {
+                console.log(`選到的值等於vmCourseQuantity的值: ${1}`);
+                window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
+                updateTotalPrice(dataIndex, this.value, vmUnitPrice);
+            }
+            else if (this.value == 5) {
+                console.log(`選到的值等於vmCourseQuantity的值: ${5}`);
+                window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
+                updateTotalPrice(dataIndex, this.value, vmUnitPrice);
+            }
+            else if (this.value == 10) {
+                console.log(`選到的值等於vmCourseQuantity的值: ${10}`);
+                window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
+                updateTotalPrice(dataIndex, this.value, vmUnitPrice);
+            }
+            else {
+                console.log(`選到的值等於vmFTUnitPrice的值: ${20}`);
+                window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
+                updateTotalPrice(dataIndex, this.value, vmUnitPrice);
+            }
+        });
+    });
+
+    function updateTotalPrice(dataIndex, quantity, unitPrice) {
+        let subTotal = document.getElementById(`subtotal-${dataIndex}`);
+        let discount = document.getElementById(`discount-info-${dataIndex}`);
+        let totalPrice = 0;
+        if (quantity == 1) {
+            totalPrice = quantity * unitPrice;
+            window.viewModelData.shoppingCartList[dataIndex].subTotalNTD = totalPrice;
+        }
+        else if (quantity == 5) {
+            totalPrice = quantity * unitPrice * 0.95;
+            window.viewModelData.shoppingCartList[dataIndex].subTotalNTD = totalPrice;
+        }
+        if (quantity == 10) {
+            totalPrice = quantity * unitPrice * 0.9;
+            window.viewModelData.shoppingCartList[dataIndex].subTotalNTD = totalPrice;
+        }
+        if (quantity == 20) {
+            totalPrice = quantity * unitPrice * 0.85;
+            window.viewModelData.shoppingCartList[dataIndex].subTotalNTD = totalPrice;
+        }
+        subTotal.textContent = totalPrice.toLocaleString();
+        discount.textContent = ((quantity * unitPrice) - totalPrice).toLocaleString();
+
+        console.log(`subTotal.textContent現在是${subTotal.textContent}`)
+        console.log(`discount.textContent現在是${discount.textContent}`)
+        console.log(window.viewModelData);
+    }
+
+
+
+
+
+
+
+
+
+
+
+});
