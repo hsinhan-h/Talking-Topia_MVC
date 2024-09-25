@@ -74,7 +74,6 @@ namespace Web.Services
                     CourseCategory = category.CategorytName,
                     CourseLength = item.CourseType == 1 ? 25 : 50,
                     CourseQuantity = item.Quantity,
-                    CourseQunatityOptions = [1, 5, 10, 20],
                     UnitPrice = (int)item.UnitPrice,
                     TFUnitPrice = (int)course.TwentyFiveMinUnitPrice,
                     FTUnitPrice = (int)course.FiftyMinUnitPrice,
