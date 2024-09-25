@@ -18,26 +18,21 @@ namespace Web.Services
 
 
 
-        //public async Task<TutorResumeListViewModel> GetEducationAsync(int memberId)
+        //public async Task<TutorResumeViewModel> GetEducationAsync(int memberId)
         //{
-        //    var resumeValues = from e in _repository.GetAll<Education>()
-        //                       join member in _repository.GetAll<Member>() on e.EducationId equals member.EducationId
-        //                       join w in _repository.GetAll<WorkExperience>() on member.MemberId equals w.MemberId
-        //                       where member.MemberId == 2
+        //    var educaiton = from e in _repository.GetAll<Entities.Education>()
+        //                       join member in _repository.GetAll<Entities.Member>() on e.EducationId equals member.EducationId
         //                       select new TutorResumeViewModel
         //                       {
         //                           SchoolName = e.SchoolName,
         //                           StudyEndYear = e.StudyEndYear,
         //                           StudyStartYear = e.StudyStartYear,
         //                           DepartmentName = e.DepartmentName,
-        //                           //WorkEndDate = w.WorkEndDate,
-        //                           //WorkStartDate = w.WorkStartDate,
-        //                           //WorkName= w.WorkName,
         //                       };
 
-        //    return new TutorResumeListViewModel()
+        //    return new TutorResumeViewModel()
         //    {
-        //        TutorResumeList = await resumeValues.ToListAsync(),
+        //        TutorResumeList = await educaiton.ToListAsync(),
         //    };
         //}
 

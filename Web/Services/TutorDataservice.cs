@@ -15,8 +15,7 @@ namespace Web.Services
             _repository = repository;
         }
 
-        //Read 
-        private async Task<bool> Isteacher(int? memberId)
+        public async Task<bool> Isteacher(int? memberId)
         {
             if (memberId == null)
             {
@@ -56,10 +55,12 @@ namespace Web.Services
                         StudyEndYear = edu.StudyEndYear
                     }).ToListAsync();
 
-                var workExperience = await _repository.GetAll<Entities.WorkExperience>()  //還要新增年資
+                var workExperience = await _repository.GetAll<Entities.WorkExperience>() 
                     .Where(wexp => wexp.MemberId == memberId)
                     .Select(wexp => new WorkExp
                     {
+                        WorkStartDate = wexp.WorkStartDate,
+                        WorkEndDate = wexp.WorkEndDate,
                         WorkName = wexp.WorkName
                     }).ToListAsync();
 
@@ -73,7 +74,6 @@ namespace Web.Services
                                          ProfessionalLicenseName = proLi.ProfessionalLicenseName ?? "Default License"
                                      }).ToListAsync();
 
-                // 最後手動組合 ViewModel
                 var tutorData = new TutorDataViewModel
                 {
                     TutorId = tutorTimeSlot?.TutorId ?? 0,
@@ -101,46 +101,28 @@ namespace Web.Services
             if (await Isteacher(memberId))
             {
                 var member = await _repository.GetAll<Entities.Member>()
-                    .Where(m => m.MemberId == memberId)
-                    .FirstOrDefaultAsync();
+            .Where(m => m.MemberId == memberId)
+            .FirstOrDefaultAsync();
 
                 if (member == null)
                 {
                     return null;
                 }
-                var memberPreferences = await _repository.GetAll<Entities.MemberPreference>()
-                    .Where(mp => mp.MemberId == member.MemberId)
-                    .ToListAsync();
-                var categoryDataList = new List<CategoryData>();
+                var applyCourses = await (from ac in _repository.GetAll<Entities.ApplyCourse>()
+                                          join acc in _repository.GetAll<Entities.ApplyCourseCategory>()
+                                          on ac.ApplyCourseCategoryId equals acc.ApplyCourseCategoryId
+                                          join acsc in _repository.GetAll<Entities.ApplyCourseSubCategory>()
+                                          on ac.ApplySubCategoryId equals acsc.ApplySubCategoryId
+                                          where ac.MemberId == member.MemberId
+                                          select new CategoryData
+                                          {
+                                              CategoryName = acc.ApplyCategoryName,
+                                              SubjectName = acsc.ApplySubCategoryName
+                                          }).ToListAsync();
 
-                if (memberPreferences != null && memberPreferences.Any())
-                {
-                    foreach (var preference in memberPreferences)
-                    {
-                        var courseSubject = await _repository.GetAll<Entities.CourseSubject>()
-                            .Where(cs => cs.SubjectId == preference.SubjecId)
-                            .FirstOrDefaultAsync();
-
-                        if (courseSubject != null)
-                        {
-                            var courseCategory = await _repository.GetAll<Entities.CourseCategory>()
-                                .Where(cc => cc.CourseCategoryId == courseSubject.CourseCategoryId)
-                                .FirstOrDefaultAsync();
-
-                            if (courseCategory != null)
-                            {
-                                categoryDataList.Add(new CategoryData
-                                {
-                                    CategoryName = courseCategory.CategorytName,
-                                    SubjectName = courseSubject.SubjectName
-                                });
-                            }
-                        }
-                    }
-                }
-                tutorCourseData.Course = categoryDataList;
+                // 將查詢結果放入 ViewModel 的 Course 列表
+                tutorCourseData.Course = applyCourses;
             }
-
             return tutorCourseData;
         }
         private async Task<TutorDataViewModel> GetCoursestatusAsync(int? memberId)
