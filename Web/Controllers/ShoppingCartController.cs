@@ -74,6 +74,11 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
 
+        /// <summary>
+        /// 針對options變更設置的action
+        /// </summary>
+        /// <param name="Items"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Update(List<CartItemUpdateDto> Items)
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);

@@ -169,21 +169,21 @@ namespace ApplicationCore.Services
             }
         }
 
-        public bool DeleteCartItems(int memberId)
+        public async Task<int> DeleteCartItemsAsync(int memberId)
         {
             try
             {
-                var shoppingCartItems = _shoppingCartRepository.List(i => i.MemberId == memberId);
-                for (int i = 0; i < shoppingCartItems.Count; i++)
+                var shoppingCartItems = await _shoppingCartRepository.ListAsync(i => i.MemberId == memberId);
+                if (shoppingCartItems == null) { return 500; }
+                if (shoppingCartItems.Count > 0)
                 {
-                    DeleteCartItem(memberId, shoppingCartItems[i].CourseId);
+                   await _shoppingCartRepository.DeleteRangeAsync(shoppingCartItems);
                 }
-
-                return true;
+                return 200;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Error occurred while deleting cart items", ex);
             }
         }
 

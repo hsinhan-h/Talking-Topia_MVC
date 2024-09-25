@@ -17,7 +17,7 @@ namespace ApplicationCore.Interfaces
         public Task<int> CreateShoppingCartAsync(int memberId, int courseId, int courseLength, int quantity);
         public Task<int> CreateShoppingCartAsync(int memberId, int courseId, int courseLength, int quantity, DateTime bookingDate, short bookingTime);
         public void DeleteCartItem(int memberId, int courseId);
-        public bool DeleteCartItems(int memberId);
+        public Task<int> DeleteCartItemsAsync(int memberId);
         public void UpdateItem(int memberId, int courseId, int quantity, int courseLength, decimal subTotal);
     }
 }
