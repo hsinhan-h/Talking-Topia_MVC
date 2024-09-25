@@ -1,4 +1,10 @@
 ﻿@model Web.ViewModels.TutorResumeViewModel
+
+@{
+    var message = TempData["Message"]?.ToString();
+    var header = TempData["Header"]?.ToString();
+}
+
 @section topCSS
 {
     <link href="~/css/layout.css" rel="stylesheet" asp-append-version="true" />
@@ -7,93 +13,99 @@
     <link href="~/lib/quill/css/quill.snow.css" rel="stylesheet" asp-append-version="true" />
 }
 
-<main>
-    <form asp-action="TutorResume" method="post">
-        <div class="container-fluid mt-5">
-            <div class="row px-0">
-                <div class="col-12 resume_banner d-flex flex-column justify-content-center">
-                    <p class="fw-bold text-whitetext-white">為您打造更輕鬆的教學方式</p>
-                    <p class="fw-bold align-content-center text-white">在家就能週入破萬</p>
-                </div>
-            </div>
-            <div class="row m-2">
-                <div class="col-12 d-flex flex-row justify-content-center ">
-                    <h1 class="fs-1 fw-bold mt-3">履歷</h1>
-                </div>
-            </div>
-            <div class="row mt-3 resume_border p-3 m-2">
-                <h2 class="fs-2 fw-bold p-3">學歷</h2>
-                <div class="col-md-2 col-4 d-flex justify-content-center mt-3">
-                    <label for="profile_pic">
-                        <div class="apply_head d-flex flex-column justify-content-center align-items-center resume_border">
-                            <i class="fa-solid fa-user-plus fa-2xl"></i>
-                        </div>
-                    </label>
-                </div>
-                <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
-                    <p class="my-1">請提供大頭貼</p>
-                    <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入..." name="HeadShotImage">
-                </div>
-                <div class="col-12 mt-4">
-                    <p class="my-1 bgc fs-4">【學校名稱】</p>
-                    <input class="form-control my-1" type="text" placeholder="輸入..." value="" name="SchoolName">
-                </div>
 
-                <div class="col-12 mt-2">
-                    <p class="my-1 bgc fs-4">【就學期間】</p>
-                    <div class="input-group my-1">
-                        <input type="number" placeholder="開始年份" class="form-control" min="1940" value="" name="StudyStartYear">
-                        <input type="number" placeholder="結束年份" class="form-control" min="1940" value="" name="StudyEndYear">
+
+<main>
+
+    <p>@message</p>
+    <p>@header</p>
+    <form asp-action="TutorResume" method="post">
+        <div id="vue-wrapper">
+            <div class="container-fluid mt-5">
+                <div class="row px-0">
+                    <div class="col-12 resume_banner d-flex flex-column justify-content-center">
+                        <p class="fw-bold text-whitetext-white">為您打造更輕鬆的教學方式</p>
+                        <p class="fw-bold align-content-center text-white">在家就能週入破萬</p>
                     </div>
                 </div>
-                <div class="col-12 mt-2 mb-3">
-                    <p class="my-1 bgc fs-4">【科系名稱】</p>
-                    <input class="form-control my-1" type="text" placeholder="輸入..." value="" name="DepartmentName">
-                </div>
-            </div>
-            <div class="row mt-5 resume_border p-3 m-2">
-                <div class="d-flex flex-row justify-content-between">
-                    <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
-                    <span class="d-flex flex-column justify-content-center align-items-lg-center ">
-                        <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f; "></i>
-                    </span>
-                </div>
-                <div class="col-12 ">
-                    <p class="my-1 bgc fs-4">【證照 (一)】</p>
-                    <div class="my-1 d-flex flex-column">
-                        <input class="form-control my-1" type="text" placeholder="輸入..." name="ProfessionalLicenseName">
-                        <input class="my-2" type="file" placeholder="輸入..." name="ProfessionalLicenseUrl">
+                <div class="row m-2">
+                    <div class="col-12 d-flex flex-row justify-content-center ">
+                        <h1 class="fs-1 fw-bold mt-3">履歷</h1>
                     </div>
                 </div>
-@*                 <div class="col-12 mt-2">
+                <div class="row mt-3 resume_border p-3 m-2">
+                    <h2 class="fs-2 fw-bold p-3">學歷</h2>
+                    <div class="col-md-2 col-4 d-flex justify-content-center mt-3">
+                        <label for="profile_pic">
+                            <div class="apply_head d-flex flex-column justify-content-center align-items-center resume_border">
+                                <i class="fa-solid fa-user-plus fa-2xl"></i>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
+                        <p class="my-1">請提供大頭貼</p>
+                        <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入..." name="HeadShotImage">
+                    </div>
+                    <div class="col-12 mt-4">
+                        <p class="my-1 bgc fs-4">【學校名稱】</p>
+                        <input class="form-control my-1" type="text" placeholder="輸入..." value="" name="SchoolName">
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <p class="my-1 bgc fs-4">【就學期間】</p>
+                        <div class="input-group my-1">
+                            <input type="number" placeholder="開始年份" class="form-control" min="1940" value="" name="StudyStartYear">
+                            <input type="number" placeholder="結束年份" class="form-control" min="1940" value="" name="StudyEndYear">
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2 mb-3">
+                        <p class="my-1 bgc fs-4">【科系名稱】</p>
+                        <input class="form-control my-1" type="text" placeholder="輸入..." value="" name="DepartmentName">
+                    </div>
+                </div>
+                <div class="row mt-5 resume_border p-3 m-2">
+                    <div class="d-flex flex-row justify-content-between">
+                        <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
+                        <span class="d-flex flex-column justify-content-center align-items-lg-center ">
+                            <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f; "></i>
+                        </span>
+                    </div>
+                    <div class="col-12 ">
+                        <p class="my-1 bgc fs-4">【證照 (一)】</p>
+                        <div class="my-1 d-flex flex-column">
+                            <input class="form-control my-1" type="text" placeholder="輸入..." name="ProfessionalLicenseName">
+                            <input class="my-2" type="file" placeholder="輸入..." name="ProfessionalLicenseUrl">
+                        </div>
+                    </div>
+                    @*                 <div class="col-12 mt-2">
                     <p class="my-1 bgc fs-4">【證照 (二)】</p>
                     <div class="my-1 d-flex flex-column">
-                        <input class="form-control my-1" type="text" placeholder="輸入...">
-                        <input class="my-2" type="file" placeholder="輸入...">
+                    <input class="form-control my-1" type="text" placeholder="輸入...">
+                    <input class="my-2" type="file" placeholder="輸入...">
                     </div>
-                </div>
-                <div class="col-12 mt-2 collapse" id="collapselicense">
+                    </div>
+                    <div class="col-12 mt-2 collapse" id="collapselicense">
                     <p class="my-1 bgc fs-4">【證照 (三)】</p>
                     <div class="my-1 d-flex flex-column">
-                        <input class="form-control my-1" type="text" placeholder="輸入...">
-                        <input class="my-2" type="file" placeholder="輸入...">
+                    <input class="form-control my-1" type="text" placeholder="輸入...">
+                    <input class="my-2" type="file" placeholder="輸入...">
                     </div>
-                </div>
-                <div class="col-12 mt-2 collapse" id="collapselicense">
+                    </div>
+                    <div class="col-12 mt-2 collapse" id="collapselicense">
                     <p class="my-1 bgc fs-4">【證照 (四)】</p>
                     <div class="my-1 d-flex flex-column">
-                        <input class="form-control my-1" type="text" placeholder="輸入...">
-                        <input class="my-2" type="file" placeholder="輸入...">
+                    <input class="form-control my-1" type="text" placeholder="輸入...">
+                    <input class="my-2" type="file" placeholder="輸入...">
                     </div>
-                </div> *@
-                <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
-                     aria-expanded="false">
-                    <div class="col-12 d-flex flex-row align-items-center justify-content-center">
-                        <i class=" fa-solid fa-ellipsis "></i>
+                    </div> *@
+                    <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
+                         aria-expanded="false">
+                        <div class="col-12 d-flex flex-row align-items-center justify-content-center">
+                            <i class=" fa-solid fa-ellipsis "></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="vue-wrapper">
+
                 <div class="row mt-5 resume_border p-3 m-2">
                     <div class="col-12">
                         <div class="d-flex flex-row justify-content-between">
@@ -101,63 +113,66 @@
                         </div>
                         <div class="form-group">
                             <label class="my-1 bgc fs-4" for="category">【科目類別】</label>
-                            <select v-model="selectedCategory" class="form-select" name="selectedCategory">
+                            <select v-model="selectedCategory" class="form-select" name="CourseList.ApplyCourseCategoryId">
                                 <option value="">請選擇...</option>
-                                <option v-for="(item, index) in categories" :value="item.name" :key="item.id">
+                                <!-- 改為綁定 item.id -->
+                                <option v-for="(item, index) in categories" :value="item.id" :key="item.id">
                                     {{ item.name }}
                                 </option>
                             </select>
                         </div>
                         <div v-if="selectedCategory" class="form-group">
                             <label class="my-1 bgc fs-4" for="subject">【教學科目】</label>
-                            <select v-model="selectedSubcategory" class="form-select" name="selectedSubcategory">
+                            <select v-model="selectedSubcategory" class="form-select" name="CourseList.ApplySubCategoryId">
                                 <option value="">請選擇...</option>
-                                <option v-for="(item, index) in subcategories" :value="item.name" :key="item.id">
+                                <!-- 改為綁定 item.id -->
+                                <option v-for="(item, index) in subcategories" :value="item.id" :key="item.id">
                                     {{ item.name }}
                                 </option>
                             </select>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-5 resume_border p-3 m-2">
-                <div class="d-flex flex-row justify-content-between">
-                    <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">工作經歷</h2>
-                    <span class="d-flex flex-column justify-content-center align-items-lg-center ">
-                        <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
-                    </span>
-                </div>
-                <div class="col-12 mb-2">
-                    <div class="input-group my-2">
-                        <div class="col-12">
-                            <p class="my-1 bgc fs-4">【工作名稱】</p>
-                            <input class="form-control my-2" type="text" placeholder="輸入..." value="" name="WorkName">
-                            <input class="form-control my-2" type="file" placeholder="輸入..." value="" name="WorkExperienceFile">
-                        </div>
-                        <p class="my-1 bgc fs-4">【年資】</p>
+                <div class="row mt-5 resume_border p-3 m-2">
+                    <div class="d-flex flex-row justify-content-between">
+                        <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">工作經歷</h2>
+                        <span class="d-flex flex-column justify-content-center align-items-lg-center ">
+                            <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
+                        </span>
+                    </div>
+                    <div class="col-12 mb-2">
                         <div class="input-group my-2">
-                            <!-- 開始日期 -->
-                            <input type="date" placeholder="開始年份" class="form-control" min="1940-01-01" max="2099-12-31" name="WorkStartDate">
+                            <div class="col-12">
+                                <p class="my-1 bgc fs-4">【工作名稱】</p>
+                                <input class="form-control my-2" type="text" placeholder="輸入..." value="" name="WorkName">
+                                <input class="form-control my-2" type="file" placeholder="輸入..." value="" name="WorkExperienceFile">
+                            </div>
+                            <p class="my-1 bgc fs-4">【年資】</p>
+                            <div class="input-group my-2">
+                                <!-- 開始日期 -->
+                                <input type="date" placeholder="開始年份" class="form-control" min="1940-01-01" max="2099-12-31" name="WorkStartDate">
 
-                            <!-- 結束日期 -->
-                            <input type="date" placeholder="結束年份" class="form-control" min="1940-01-01" max="2099-12-31" name="WorkEndDate">
+                                <!-- 結束日期 -->
+                                <input type="date" placeholder="結束年份" class="form-control" min="1940-01-01" max="2099-12-31" name="WorkEndDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
+                        <div class="col-12 d-flex flex-row align-items-center justify-content-center">
+                            <i class=" fa-solid fa-ellipsis "></i>
                         </div>
                     </div>
                 </div>
-                <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
-                    <div class="col-12 d-flex flex-row align-items-center justify-content-center">
-                        <i class=" fa-solid fa-ellipsis "></i>
+                <div class="row mt-3 ">
+                    <div class="my-3 d-flex flex-row justify-content-end">
+                        <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
+                        <button type="submit" class="btn resume_border resume_btn m-2">下一步</button>
                     </div>
-                </div>
-            </div>
-            <div class="row mt-3 ">
-                <div class="my-3 d-flex flex-row justify-content-end">
-                    <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
-                    <button type="submit" class="btn resume_border resume_btn m-2">下一步</button>
                 </div>
             </div>
         </div>
     </form>
+
     @section endJS
     {
         <script src="~/lib/myvue/vue.global.min.js " asp-append-version="true"></script>
