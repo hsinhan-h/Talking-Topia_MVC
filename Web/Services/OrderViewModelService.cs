@@ -42,7 +42,8 @@ namespace Web.Services
                 ApplicationCore.Entities.Booking booking = null;
                 if (bookings.Count != 0)
                 {
-                    booking = bookings.OrderByDescending(b => b.Cdate).FirstOrDefault();
+                    booking = bookings.Where(b => b.BookingDate >= DateTime.UtcNow).OrderByDescending(b => b.Cdate).FirstOrDefault();
+                    
                 }
                 var orderResult = new OrderResultViewModel()
                 {
