@@ -82,7 +82,7 @@ namespace Web.Services
                     UnitPrice = (int)item.UnitPrice,
                     TFUnitPrice = (int)course.TwentyFiveMinUnitPrice,
                     FTUnitPrice = (int)course.FiftyMinUnitPrice,
-                    Discount = item.Quantity * (int)item.UnitPrice * (1 - discount),
+                    Discount = (item.Quantity * (int)item.UnitPrice) * (1 - discount),
                     SubtotalNTD = item.Quantity * (int)item.UnitPrice,
                     //Coupon = _coupon != null ? coupon.CouponName : "==========",
                     Coupon = "",
