@@ -30,8 +30,7 @@ namespace ApplicationCore.Services
             try 
             {
                 var addFollow = new WatchList
-                {
-                    
+                {                    
                     CourseId = courseId,
                     FollowerId = memberId,
                 };
@@ -49,10 +48,20 @@ namespace ApplicationCore.Services
 
         }
 
-        //public async Task<bool> FollowStatus(int memberId, int courseId)
-        //{
-
-        //}
+        public async Task<bool> DeleteWatchList(int memberId, int courseId) 
+        {
+            var findWatchList = await _watchListRepository.FirstOrDefaultAsync(w => w.FollowerId == memberId && w.CourseId == courseId);
+            if (findWatchList != null)
+            {
+                await _watchListRepository.DeleteAsync(findWatchList);
+                return true;
+            }
+            else 
+            {
+                throw new Exception("WatchList could not be Deleted");
+            }
+            
+        }
 
 
     }
