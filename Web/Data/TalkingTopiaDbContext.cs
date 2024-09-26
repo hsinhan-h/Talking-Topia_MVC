@@ -77,7 +77,7 @@ public partial class TalkingTopiaDbContext : DbContext
 
         modelBuilder.Entity<Entities.ApplyCourse>(entity =>
         {
-            entity.Property(e => e.ApplyCourseId).ValueGeneratedNever();
+            entity.Property(e => e.ApplyCourseId).ValueGeneratedOnAdd();
             entity.Property(e => e.Cdate)
                 .HasColumnType("datetime")
                 .HasColumnName("CDate");

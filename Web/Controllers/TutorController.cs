@@ -54,26 +54,25 @@ namespace Web.Controllers
 
         //Tutor Data Read and update
         [HttpGet]
-        public async Task<IActionResult> TutorData(int? memberId)
+        public async Task<IActionResult> TutorData()
         {
-
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
-            {
-                return RedirectToAction(nameof(AccountController.Account), "Account");
-            }
-            if (!memberId.HasValue)
-            {
-                int parsedMemberId = int.Parse(memberIdClaim.Value);
-                memberId = parsedMemberId;
-            }
-            var result = await _memberService.GetMemberId(memberId.Value);
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
             if (!result)
             {
                 return RedirectToAction(nameof(AccountController.Account), "Account");
             }
-            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId.Value);
-
+            var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
+            var isTeacher = await _tutorDataService.Isteacher(memberId);
+            if (!isTeacher)
+            {
+                // 如果還不是老師，返回一個訊息頁面或顯示提示訊息
+                ViewData["Message"] = "您還沒成為老師，請提交履歷，如已提交需二到三個工作天請耐心等待。";
+                return View("_ShowMessage");
+            }
 
             ViewData["MemberId"] = memberId;
             return View(tutorData);
@@ -173,12 +172,10 @@ namespace Web.Controllers
             // 檢查操作是否成功
             if (result.Success)
             {
-                // 成功後，重新提取會員完整資料
-                var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
 
-                ViewData["Header"] = "會員資料新增";
-                ViewData["Message"] = "會員資料新增成功";
-                return View("TutorData", tutorData); // 使用完整資料重新渲染 TutorData 頁面
+                TempData["Header"] = "新增履歷資料";
+                TempData["Message"] = "履歷資料新增成功";
+                return View("TutorResume");
             }
             else
             {
