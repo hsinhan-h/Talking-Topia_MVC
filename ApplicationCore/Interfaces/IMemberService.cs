@@ -10,6 +10,6 @@ namespace ApplicationCore.Interfaces
     {
         public Task<bool> GetMemberId(int memberId);
         public int AddWatchList(int memberId, int courseId);
-
+        public Task<bool> DeleteWatchList(int memberId, int courseId);
     }
 }

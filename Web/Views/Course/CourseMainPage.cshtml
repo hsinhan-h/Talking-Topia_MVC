@@ -35,7 +35,7 @@
                     <div class="class-count mt-2">
                         已完成  <strong>@Model.FinishedCoursesTotal</strong>堂課
                     </div>
-                    @if (Model.FollowingStatus ==true)
+                    @if (Model.FollowingStatus == true)
                     {
                         <form asp-action="DeleteFollowingCourse">
                             <input asp-for="CourseId" type="hidden" />

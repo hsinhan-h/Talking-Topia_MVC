@@ -212,9 +212,9 @@ namespace Web.Services
 
                 card.Rating = review?.Rating ?? 0;
             }
-            var language = watchCardInfo.Where(w=>w.CategoryId == 1).ToList();
-            var prgramming = watchCardInfo.Where(w=>w.CategoryId == 2).ToList();
-            var school = watchCardInfo.Where(w => w.CategoryId == 3).ToList();
+            var language = watchCardInfo.Where(w=>w.CategoryId == 1).OrderBy(w=>w.CourseId).ToList();
+            var prgramming = watchCardInfo.Where(w=>w.CategoryId == 2).OrderBy(w => w.CourseId).ToList();
+            var school = watchCardInfo.Where(w => w.CategoryId == 3).OrderBy(w => w.CourseId).ToList();
             var watchlist = new CourseMainPageViewModel
             {
                 MemberId = memberId,

@@ -458,6 +458,7 @@ namespace Web.Services
                 join member in _repository.GetAll<Entities.Member>().AsNoTracking()
                 on comment.StudentId equals member.MemberId
                 where comment.CourseId == courseId
+                orderby comment.Cdate descending
                 select new ReviewViewModel
                 {
                     ReviewerName = member.FirstName + " " + member.LastName,
