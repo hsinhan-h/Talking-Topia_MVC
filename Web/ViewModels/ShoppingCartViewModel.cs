@@ -83,13 +83,4 @@
     {
         public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
     }
-
-    public class CartItemUpdateDto
-    {
-        public int CourseId { get; set; }
-        public int CourseQuantity { get; set; }
-        public int CourseLength { get; set; }
-        public decimal SubtotalNTD { get; set; }
-    }
-
 }
