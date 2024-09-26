@@ -154,10 +154,23 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult TutorResume()
+        public async Task<IActionResult> TutorResumeAsync()
         {
-            var qVM = new TutorResumeViewModel();
-            return View(qVM);
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            if (!result)
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
+            var allTutorResumeData = await _resumeDataService.ReadAllTutorResumeAsync(memberId);
+            if (allTutorResumeData == null) 
+            {
+                allTutorResumeData = new TutorResumeViewModel();
+            }
+            return View(allTutorResumeData);
         }
         [HttpPost]
         [AutoValidateAntiforgeryToken]
@@ -175,13 +188,13 @@ namespace Web.Controllers
 
                 TempData["Header"] = "新增履歷資料";
                 TempData["Message"] = "履歷資料新增成功";
-                return View("TutorResume");
+                return RedirectToAction("TutorResume");
             }
             else
             {
                 ViewData["Header"] = "錯誤訊息";
                 ViewData["Message"] = result.Message;
-                return View("_ShowMessage");
+                return View("TutorResume", qVM); 
             }
         }
 
