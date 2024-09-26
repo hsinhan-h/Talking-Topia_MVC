@@ -6,6 +6,7 @@ using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Services;
+using Infrastructure.Service;
 
 namespace Web
 {
@@ -27,9 +28,20 @@ namespace Web
             //註冊IRepository
             builder.Services.AddScoped<IRepository, GeneralRepository>();
 
+            //註冊LineAuthService
+            builder.Services.AddScoped<ILineAuthService, LineAuthService>();
+
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // 啟用 Session 支援
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // 設定 Session 過期時間
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             //builder.Services.AddScoped<IHostedService,BackgroundTaskService>();
             builder.Services.AddScoped<Services.BookingService>();
@@ -84,10 +96,15 @@ namespace Web
                 app.UseHsts();
             }
 
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // 啟用 Session
+            app.UseSession();
 
             // 先驗證再授權.
             app.UseAuthentication();
@@ -99,5 +116,7 @@ namespace Web
 
             app.Run();
         }
+
+
     }
 }

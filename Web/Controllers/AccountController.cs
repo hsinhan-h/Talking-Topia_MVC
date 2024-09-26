@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Web.Data;
 using TalkingTopiaContext = Infrastructure.Data.TalkingTopiaDbContext;
+using ApplicationCore.Interfaces;
 
 
 namespace Web.Controllers
@@ -23,13 +24,16 @@ namespace Web.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly AccountService _accountService;
         private readonly IRepository _repository;
+        private readonly ILineAuthService _lineAuthService;
 
-        public AccountController(TalkingTopiaContext context, ILogger<AccountController> logger, AccountService accountService, IRepository repository)
+
+        public AccountController(TalkingTopiaContext context, ILogger<AccountController> logger, AccountService accountService, IRepository repository, ILineAuthService lineAuthService)
         {
             _context = context;
             _logger = logger;
             _accountService = accountService;
             _repository = repository;
+            _lineAuthService = lineAuthService;
         }
         public IActionResult Index()
         {
@@ -200,6 +204,107 @@ namespace Web.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public IActionResult LineLogin()
+        {
+            var state = Guid.NewGuid().ToString("N");
+            HttpContext.Session.SetString("LineState", state);
+
+            var redirectUrl = $"https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2006372467&redirect_uri=https://localhost:7263/Account/SSOcallback&state={state}&scope=profile%20openid%20email";
+            return Redirect(redirectUrl);
+        }
+
+        [HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> SSOcallback(string code, string state)
+        {
+            var accessToken = await _lineAuthService.GetAccessTokenAsync(code);
+            var userProfile = await _lineAuthService.GetUserProfileAsync(accessToken);
+
+            // 檢查 LineUserId 是否有效
+            if (string.IsNullOrEmpty(userProfile.LineUserId))
+            {
+                throw new Exception("無法取得 LineUserId，登入失敗");
+            }
+
+            // 使用 LineUserId 查找 Members 表中的用戶
+            var existingMember = await _repository.GetMemberByLineIdAsync(userProfile.LineUserId);
+
+            if (existingMember == null)
+            {
+                // 處理 email 為空的情況
+                var email = string.IsNullOrEmpty(userProfile.Email) ? $"{userProfile.LineUserId}@line.com" : userProfile.Email;
+
+                // 新增 User 到 Users 表
+                var newUser = new User
+                {
+                    Name = userProfile.DisplayName,
+                    Email = email,
+                    LineId = userProfile.LineUserId,
+                    PictureUrl = userProfile.PictureUrl
+                };
+
+                _repository.Create(newUser);
+                await _repository.SaveChangesAsync();
+
+                // 新增 Member 到 Members 表
+                var newMember = new Member
+                {
+                    UserId = newUser.Id, // 將 User Id 設定到 Member 中
+                    LineUserId = userProfile.LineUserId,
+                    FirstName = userProfile.DisplayName,
+                    Password = GenerateRandomPassword(),
+                    LastName = "", // 預設為空白
+                    Birthday = null,
+                    Email = userProfile.Email ?? $"{userProfile.LineUserId}@line.com", // 使用者可能沒有 email
+                    Nickname = "",
+                    Phone = "",
+                    HeadShotImage = userProfile.PictureUrl,
+                    Cdate = DateTime.Now,
+                    Udate = DateTime.Now,
+                    IsTutor = false,
+                    IsVerifiedTutor = false,
+                };
+
+                _repository.Create(newMember);
+                await _repository.SaveChangesAsync();
+
+                existingMember = newMember;
+            }
+
+
+
+            // 設置登入 Claims，確保使用 Members 表中的 MemberId
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, existingMember.MemberId.ToString()),
+        new Claim(ClaimTypes.Name, existingMember.FirstName),
+        new Claim("picture", existingMember.HeadShotImage ?? string.Empty)
+    };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private string GenerateRandomPassword(int length = 10)
+        {
+            const string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(validChars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
     }
 
     public static class StringExtensions
@@ -218,4 +323,6 @@ namespace Web.Controllers
             }
         }
     }
+
+
 }

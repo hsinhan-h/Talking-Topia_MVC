@@ -78,8 +78,19 @@ namespace Web.Services
                     throw new UserAlreadyExistsException("該電子郵件已被註冊");
                 }
 
+                var newUser = new Web.Entities.User
+                {
+                    Name = $"{model.RegisterViewModel.FirstName}", // 使用者名稱
+                    Email = model.RegisterViewModel.Email,
+                    Password = "" // 這裡可以設定為空字串，或者設定其他值，如果需要加密密碼，請加密處理
+                };
+                // 使用 IRepository 創建新的 User
+                _repository.Create(newUser);
+                await _repository.SaveChangesAsync();
+
                 var newMember = new Web.Entities.Member
                 {
+                    UserId = newUser.Id, // 將剛剛創建的 UserId 設定到 Member 中
                     Email = model.RegisterViewModel.Email,
                     Password = model.RegisterViewModel.Password,
                     FirstName = model.RegisterViewModel.FirstName,
@@ -90,7 +101,8 @@ namespace Web.Services
                     Cdate = DateTime.Now,
                     Udate = DateTime.Now,
                     IsTutor = false,
-                    IsVerifiedTutor = false
+                    IsVerifiedTutor = false,
+                    
                 };
 
                 // 使用 PasswordHasher 進行密碼哈希

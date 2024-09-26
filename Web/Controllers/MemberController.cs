@@ -66,18 +66,14 @@ namespace Web.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            // 將會員ID轉換為整數
-            int parsedMemberId = int.Parse(memberIdClaim.Value);
-
-            // 驗證會員ID是否有效
-            if (parsedMemberId <= 0)
+            // 嘗試將會員ID轉換為整數
+            if (!int.TryParse(memberIdClaim.Value, out int parsedMemberId))
             {
-                return BadRequest("無效的會員 ID");
+                return Content($"無效的會員 ID: {memberIdClaim.Value}"); // 顯示取得的值進行檢查
             }
 
             // 從資料庫中查詢會員資料
             var summaryData = await _memberDataService.GetMemberData(parsedMemberId);
-
 
             // 如果沒有找到會員資料
             if (summaryData == null)

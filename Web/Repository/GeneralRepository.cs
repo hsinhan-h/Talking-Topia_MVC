@@ -94,5 +94,11 @@ namespace Web.Repository
                                                         && x.CourseHourId == courseHourId
                                                         && x.Weekday == weekday);
         }
+
+        public async Task<Member> GetMemberByLineIdAsync(string lineId)
+        {
+            return await _context.Members.FirstOrDefaultAsync(u => u.LineUserId == lineId);
+
+        }
     }
 }
