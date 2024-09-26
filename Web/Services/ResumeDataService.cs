@@ -72,7 +72,7 @@ namespace Web.Services
             return resumeEducaition;
         }
 
-        private async Task<TutorResumeViewModel> ReadProfessionalLicense(int memberId)
+        public async Task<TutorResumeViewModel> ReadProfessionalLicense(int memberId)
         {
             var member = await _repository.GetAll<Entities.Member>()
                             .Where(m => m.MemberId == memberId)
@@ -100,7 +100,7 @@ namespace Web.Services
             return resumeEducation;
         }
 
-        private async Task<TutorResumeViewModel> ReadWorkexp(int memberId)
+        public async Task<TutorResumeViewModel> ReadWorkexp(int memberId)
         {
             var member = await _repository.GetAll<Entities.Member>()
                             .Where(m => m.MemberId == memberId)
@@ -169,13 +169,13 @@ namespace Web.Services
             resumeViewModel.StudyEndYear = educationViewModel.StudyEndYear;
             resumeViewModel.DepartmentName = educationViewModel.DepartmentName;
 
-            // 讀取專業執照
-            var professionalLicenseViewModel = await ReadProfessionalLicense(memberId);
-            resumeViewModel.ProfessionalLicenseName = professionalLicenseViewModel.ProfessionalLicenseName;
+            //// 讀取專業執照
+            //var professionalLicenseViewModel = await ReadProfessionalLicense(memberId);
+            //resumeViewModel.ProfessionalLicenseName = professionalLicenseViewModel.ProfessionalLicenseName;
 
             // 讀取工作經驗
-            var workExpViewModel = await ReadWorkexp(memberId);
-            resumeViewModel.WorkBackground = workExpViewModel.WorkBackground;
+            //var workExpViewModel = await ReadWorkexp(memberId);
+            //resumeViewModel.WorkBackground = workExpViewModel.WorkBackground;
 
             return resumeViewModel;
         }

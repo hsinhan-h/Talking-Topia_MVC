@@ -31,13 +31,23 @@ namespace Web.Controllers.Api
                 int memberId = int.Parse(memberIdClaim.Value);
                 var result = await _memberService.GetMemberId(memberId);
                 var applycoursedataJson = await _resumeDataService.ReadApplyCourseData(memberId);
+                var professionalLicenseJson = await _resumeDataService.ReadProfessionalLicense(memberId);
+                var workexpJson = await _resumeDataService.ReadWorkexp(memberId);
                 if (applycoursedataJson == null)
                 {
                     return NotFound(new { success = false, message = "No course data found for the member." });
                 }
 
                 // 返回資料並回傳成功
-                return Ok(new { success = true, data = applycoursedataJson });
+                return Ok(new 
+                { success = true,
+                    data = new
+                    {
+                        applycoursedata = applycoursedataJson,
+                        professionalLicense = professionalLicenseJson,
+                        workexp = workexpJson,
+                    }
+                });
             }
             catch (Exception ex)
             {

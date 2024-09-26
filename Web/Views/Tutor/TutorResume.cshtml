@@ -67,179 +67,113 @@
                 <div class="row mt-5 resume_border p-3 m-2">
                     <div class="d-flex flex-row justify-content-between">
                         <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
-                        <span class="d-flex flex-column justify-content-center align-items-lg-center ">
-                            <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f; "></i>
-                        </span>
-                    </div>
-                    <div class="col-12 ">
-                        <p class="my-1 bgc fs-4">【證照 (一)】</p>
-                        <div class="my-1 d-flex flex-column">
-                            @if (Model.ProfessionalLicenseName != null && Model.ProfessionalLicenseName.Count > 0)
-                            {
-                                @for (int i = 0; i < Model.ProfessionalLicenseName.Count; i++)
-                                {
-                                    <input class="form-control my-1" type="text" placeholder="輸入證照名稱"
-                                           name="ProfessionalLicenseName[@i]" value="@Model.ProfessionalLicenseName[i]">
-                                }
-                            }
-                            else
-                            {
-                                <!-- 如果沒有資料，顯示一個空欄位供使用者輸入 -->
-                                <input class="form-control my-1" type="text" placeholder="輸入證照名稱"
-                                       name="ProfessionalLicenseName[0]" value="">
-                            }
-
-                            @if (Model.ProfessionalLicenseUrl != null && Model.ProfessionalLicenseUrl.Count > 0)
-                            {
-                                @for (int i = 0; i < Model.ProfessionalLicenseUrl.Count; i++)
-                                {
-                                    <input class="my-2" type="file" placeholder="輸入..."
-                                           name="ProfessionalLicenseUrl[@i]" value="">
-                                }
-                            }
-                            else
-                            {
-                                <!-- 如果沒有資料，顯示一個空欄位供使用者上傳 -->
-                                <input class="my-2" type="file" placeholder="輸入..."
-                                       name="ProfessionalLicenseUrl[0]" value="">
-                            }
-                        </div>
-                    </div>
-                    @*                 <div class="col-12 mt-2">
-                    <p class="my-1 bgc fs-4">【證照 (二)】</p>
-                    <div class="my-1 d-flex flex-column">
-                    <input class="form-control my-1" type="text" placeholder="輸入...">
-                    <input class="my-2" type="file" placeholder="輸入...">
-                    </div>
-                    </div>
-                    <div class="col-12 mt-2 collapse" id="collapselicense">
-                    <p class="my-1 bgc fs-4">【證照 (三)】</p>
-                    <div class="my-1 d-flex flex-column">
-                    <input class="form-control my-1" type="text" placeholder="輸入...">
-                    <input class="my-2" type="file" placeholder="輸入...">
-                    </div>
-                    </div>
-                    <div class="col-12 mt-2 collapse" id="collapselicense">
-                    <p class="my-1 bgc fs-4">【證照 (四)】</p>
-                    <div class="my-1 d-flex flex-column">
-                    <input class="form-control my-1" type="text" placeholder="輸入...">
-                    <input class="my-2" type="file" placeholder="輸入...">
-                    </div>
-                    </div> *@
-                    <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
-                         aria-expanded="false">
-                        <div class="col-12 d-flex flex-row align-items-center justify-content-center">
-                            <i class=" fa-solid fa-ellipsis "></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-5 resume_border p-3 m-2">
-                    <div class="col-12">
-                        <div class="d-flex flex-row justify-content-between">
-                            <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">申請科目</h2>
-                        </div>
-                        <div class="form-group">
-                            <label class="my-1 bgc fs-4" for="category">【科目類別】</label>
-                            <select v-model="selectedCategory" class="form-select" name="CourseList.ApplyCourseCategoryId">
-                                <option value="">請選擇...</option>
-                                <!-- 改為綁定 item.id -->
-                                <option v-for="(item, index) in categories" :value="item.id" :key="item.id">
-                                    {{ item.name }}
-                                </option>
-                            </select>
-                        </div>
-                        <div v-if="selectedCategory" class="form-group">
-                            <label class="my-1 bgc fs-4" for="subject">【教學科目】</label>
-                            <select v-model="selectedSubcategory" class="form-select" name="CourseList.ApplySubCategoryId">
-                                <option value="">請選擇...</option>
-                                <!-- 改為綁定 item.id -->
-                                <option v-for="(item, index) in subcategories" :value="item.id" :key="item.id">
-                                    {{ item.name }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-5 resume_border p-3 m-2">
-                    <div class="d-flex flex-row justify-content-between">
-                        <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">工作經歷</h2>
-                        <span class="d-flex flex-column justify-content-center align-items-lg-center ">
+                        <span @@click="addLicense" class="d-flex flex-column justify-content-center align-items-lg-center">
                             <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
                         </span>
                     </div>
-                    <div class="col-12 mb-2" id="work-experience-list">
-                        <div class="input-group my-2">
-                            @if (Model != null)
-                            {
-                                @for (int i = 0; i < Model.WorkBackground.Count; i++)
-                                {
-                                    <div class="col-12">
-                                        <p class="my-1 bgc fs-4">【工作名稱】</p>
-                                        <!-- WorkName -->
-                                        <input class="form-control my-2" type="text" placeholder="輸入..."
-                                        name="WorkBackground[@i].WorkName" value="@Model.WorkBackground[i].WorkName">
+                    <div class="col-12">
+                        <div class="my-1 d-flex flex-column">
+                            <!-- 遍歷 licenses 陣列並動態生成輸入框 -->
+                            <div v-for="(license, index) in licenses" :key="index" class="license-input">
+                                <p class="my-1 bgc fs-4">【證照 ({{ numberToChinese(index + 1) }})】 </p>
+                                <!-- 證照名稱輸入框 -->
+                                <input class="form-control my-1" type="text" placeholder="輸入證照名稱"
+                                       v-model="license.name" :name="'ProfessionalLicenseName[' + index + ']'">
 
-                                        <!-- WorkExperienceFile -->
-                                        <input class="form-control my-2" type="file"
-                                        name="WorkBackground[@i].WorkExperienceFile" value="">
-                                    </div>
+                                <!-- 檔案上傳輸入框 -->
+                                <input class="my-2" type="file" @@change="handleFileUpload($event, index)"
+                                       :name="'ProfessionalLicenseUrl[' + index + ']'">
 
-                                    <p class="my-1 bgc fs-4">【年資】</p>
-                                    <div class="input-group my-2">
-                                        <!-- 開始日期 -->
-                                        <input type="date" placeholder="開始年份" class="form-control"
-                                        min="1940-01-01" max="2099-12-31"
-                                        name="WorkBackground[@i].WorkStartDate"
-                                        value="@(Model.WorkBackground[i].WorkStartDate.HasValue ? Model.WorkBackground[i].WorkStartDate.Value.ToString("yyyy-MM-dd") : "")">
-
-                                        <!-- 結束日期 -->
-                                        <input type="date" placeholder="結束年份" class="form-control"
-                                        min="1940-01-01" max="2099-12-31"
-                                        name="WorkBackground[@i].WorkEndDate"
-                                        value="@(Model.WorkBackground[i].WorkEndDate.HasValue ? Model.WorkBackground[i].WorkEndDate.Value.ToString("yyyy-MM-dd") : "")">
-                                    </div>
-                                }
-                            }
-
-                            <!-- 如果資料庫中沒有工作經驗，添加一個空欄位讓用戶輸入 -->
-                            @if (Model.WorkBackground == null || Model.WorkBackground.Count == 0)
-                            {
-                                <div class="col-12">
-                                    <p class="my-1 bgc fs-4">【工作名稱】</p>
-                                    <!-- 空白工作名稱欄位 -->
-                                    <input class="form-control my-2" type="text" placeholder="輸入..." name="WorkBackground[0].WorkName" value="">
-
-                                    <!-- 空白文件上傳欄位 -->
-                                    <input class="form-control my-2" type="file" name="WorkBackground[0].WorkExperienceFile" value="">
-                                </div>
-
-                                <p class="my-1 bgc fs-4">【年資】</p>
-                                <div class="input-group my-2">
-                                    <!-- 空白開始日期欄位 -->
-                                    <input type="date" placeholder="開始年份" class="form-control"
-                                           min="1940-01-01" max="2099-12-31"
-                                           name="WorkBackground[0].WorkStartDate" value="">
-
-                                    <!-- 空白結束日期欄位 -->
-                                    <input type="date" placeholder="結束年份" class="form-control"
-                                           min="1940-01-01" max="2099-12-31"
-                                           name="WorkBackground[0].WorkEndDate" value="">
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
-                        <div class="col-12 d-flex flex-row align-items-center justify-content-center">
-                            <i class=" fa-solid fa-ellipsis "></i>
+                                <!-- 刪除按鈕 -->
+                                <button v-if="licenses.length > 1" @@click="removeLicense(index)" class="btn btn-danger">移除</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-3 ">
-                    <div class="my-3 d-flex flex-row justify-content-end">
-                        <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
-                        <button type="submit" class="btn resume_border resume_btn m-2">下一步</button>
+                <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
+                     aria-expanded="false">
+                    <div class="col-12 d-flex flex-row align-items-center justify-content-center">
+                        <i class=" fa-solid fa-ellipsis "></i>
                     </div>
+                </div>
+            </div>
+
+            <div class="row mt-5 resume_border p-3 m-2">
+                <div class="col-12">
+                    <div class="d-flex flex-row justify-content-between">
+                        <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">申請科目</h2>
+                    </div>
+                    <div class="form-group">
+                        <label class="my-1 bgc fs-4" for="category">【科目類別】</label>
+                        <select v-model="selectedCategory" class="form-select" name="CourseList.ApplyCourseCategoryId">
+                            <option value="">請選擇...</option>
+                            <!-- 改為綁定 item.id -->
+                            <option v-for="(item, index) in categories" :value="item.id" :key="item.id">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div v-if="selectedCategory" class="form-group">
+                        <label class="my-1 bgc fs-4" for="subject">【教學科目】</label>
+                        <select v-model="selectedSubcategory" class="form-select" name="CourseList.ApplySubCategoryId">
+                            <option value="">請選擇...</option>
+                            <!-- 改為綁定 item.id -->
+                            <option v-for="(item, index) in subcategories" :value="item.id" :key="item.id">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 resume_border p-3 m-2">
+                <div class="d-flex flex-row justify-content-between">
+                    <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">工作經歷</h2>
+                    <span class="d-flex flex-column justify-content-center align-items-lg-center" @@click="addWorkExperience">
+                        <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
+                    </span>
+                </div>
+                <div class="col-12 mb-2" id="work-experience-list">
+                    <div class="input-group my-2">
+                        <div>
+                            <div class="col-12" v-for="(work, index) in works" :key="index">
+                                <p class="my-1 bgc fs-4">【工作名稱 ({{ numberToChinese(index + 1) }})】</p>
+
+                                <!-- 工作名稱輸入框 -->
+                                <input class="form-control my-2" type="text" placeholder="輸入工作名稱"
+                                       v-model="work.workName" :name="'WorkBackground[' + index + '].WorkName'">
+
+                                <!-- 檔案上傳輸入框 -->
+                                <input class="form-control my-2" type="file" @@change="handleWorkFileUpload($event, index)"
+                                       :name="'WorkBackground[' + index + '].WorkExperienceFile'">
+
+                                <p class="my-1 bgc fs-4">【年資】</p>
+
+                                <!-- 開始日期 -->
+                                <input type="date" placeholder="開始年份" class="form-control my-2"
+                                       v-model="work.workStartDate" :min="'1940-01-01'" :max="'2099-12-31'"
+                                       :name="'WorkBackground[' + index + '].WorkStartDate'">
+
+                                <!-- 結束日期 -->
+                                <input type="date" placeholder="結束年份" class="form-control my-2"
+                                       v-model="work.workEndDate" :min="'1940-01-01'" :max="'2099-12-31'"
+                                       :name="'WorkBackground[' + index + '].WorkEndDate'">
+
+                                <!-- 移除按鈕 -->
+                                <button class="btn btn-danger mt-2" @@click="removeWorkExperience(index)">移除工作經歷</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
+                    <div class="col-12 d-flex flex-row align-items-center justify-content-center">
+                        <i class=" fa-solid fa-ellipsis "></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3 ">
+                <div class="my-3 d-flex flex-row justify-content-end">
+                    <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
+                    <button type="submit" class="btn resume_border resume_btn m-2">下一步</button>
                 </div>
             </div>
         </div>
