@@ -382,8 +382,14 @@ namespace Web.Services
                 .Select(c => c.TwentyFiveMinUnitPrice)
                 .FirstOrDefault();
         }
+        public bool IsWatched(int memberId, int courseId)
+        {
+            var IsFollowed = _repository.GetAll<Entities.WatchList>().Any(w => w.CourseId == courseId && w.FollowerId == memberId);
+            return IsFollowed;
 
-        public async Task<CourseMainPageViewModel> GetCourseMainPage(int courseId)
+        }
+
+        public async Task<CourseMainPageViewModel> GetCourseMainPage(int courseId, int memberId)
         {
             // 查詢課程、會員和國籍資料
             var courseMainInfo = await (
@@ -406,6 +412,7 @@ namespace Web.Services
                     CourseTitle = course.Title,
                     CourseSubTitle = course.SubTitle, 
                     TutorIntro = member.TutorIntro,
+                    CourseIntro = course.Description,
                     TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
                     FiftyMinPrice = (int)course.FiftyMinUnitPrice,
                     CourseVideo = course.VideoUrl,
@@ -416,6 +423,12 @@ namespace Web.Services
           
             if (courseMainInfo == null)
                 return null; // 如果找不到對應的課程資料，返回 null
+
+            //完成課堂數查詢           
+            var finishedCourses = await _repository.GetAll<Entities.Booking>()
+                                    .Where(f => f.CourseId == courseId)
+                                    .Where(f=>f.BookingDate < DateTime.Now)
+                                    .CountAsync();
 
            //最高學歷的查詢
             var education = await _repository.GetAll<Entities.Education>()
@@ -445,6 +458,7 @@ namespace Web.Services
                 join member in _repository.GetAll<Entities.Member>().AsNoTracking()
                 on comment.StudentId equals member.MemberId
                 where comment.CourseId == courseId
+                orderby comment.Cdate descending
                 select new ReviewViewModel
                 {
                     ReviewerName = member.FirstName + " " + member.LastName,
@@ -486,13 +500,14 @@ namespace Web.Services
                 CourseTitle = courseMainInfo.CourseTitle,
                 CourseSubTitle = courseMainInfo.CourseSubTitle,
                 TutorIntro = courseMainInfo.TutorIntro,
+                CourseIntro = courseMainInfo.CourseIntro,
                 TwentyFiveMinPrice = courseMainInfo.TwentyFiveMinPrice,
                 FiftyMinPrice = courseMainInfo.FiftyMinPrice,
                 CourseVideo = courseMainInfo.CourseVideo,
                 CourseVideoThumbnail = courseMainInfo.CourseVideoThumbnail,
                 CourseRatings = averageRating,
                 CourseReviews = reviews.Count,
-                FinishedCoursesTotal = 3056, // 假設值，需從其他表查詢
+                FinishedCoursesTotal = finishedCourses, // 假設值，需從其他表查詢
                 ReviewCardList = reviews.Select(r => new ReviewViewModel
                 {
                     ReviewerName = r.ReviewerName,
@@ -516,7 +531,7 @@ namespace Web.Services
                 {
                     ProfessionName = p.ProfessionalLicenseName
                 }).ToList(),
-                FollowingStatus = false ,// 假設未關注
+                FollowingStatus = IsWatched(memberId,courseId) ,
                 TutorReconmmendCard = recomCard
             };
 
@@ -637,6 +652,8 @@ namespace Web.Services
                                 join nation in _repository.GetAll<Entities.Nation>().AsNoTracking()
                                 on member.NationId equals nation.NationId
                                 where course.CategoryId == categoryId
+                                where course.IsEnabled == true
+                                where course.CoursesStatus == 1
                                 select new TutorRecomCardList
                                 {
                                     CourseId = course.CourseId,
@@ -671,6 +688,7 @@ namespace Web.Services
             return recomCardList;
         }
 
+        
         
     }
 }

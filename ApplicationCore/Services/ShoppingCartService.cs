@@ -9,19 +9,23 @@ namespace ApplicationCore.Services
     {
         private readonly IRepository<ShoppingCart> _shoppingCartRepository;
         private readonly IRepository<Course> _courseRepository;
+
         public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _courseRepository = courseRepository;
         }
+
         public bool HasCartItem(int memberId)
         {
             return _shoppingCartRepository.Any(m => m.MemberId == memberId);
         }
+
         public bool HasCartItem(int memberId, int courseId)
         {
             return _shoppingCartRepository.Any(m => m.MemberId == memberId && m.CourseId == courseId);
         }
+
         public decimal GetUnitPrice(int courseId, int courseLength)
         {
             decimal price = _courseRepository.List(c => c.CourseId == courseId)
@@ -30,6 +34,7 @@ namespace ApplicationCore.Services
             if (price < 1) return 0;
             return price;
         }
+
         public async Task<GetAllShoppingCartResultDto> GetAllShoppingCartAsync(int memberId)
         {
             var items = await _shoppingCartRepository.ListAsync(item => item.MemberId == memberId);
@@ -57,6 +62,7 @@ namespace ApplicationCore.Services
             };
             return result;
         }
+
         /// <summary>
         /// 無預約時段
         /// </summary>
@@ -145,6 +151,7 @@ namespace ApplicationCore.Services
                 throw new Exception($"Unexpected error: {ex.Message}");
             }
         }
+
         public void DeleteCartItem(int memberId, int courseId)
         {
             try
@@ -162,6 +169,24 @@ namespace ApplicationCore.Services
             }
         }
 
+        public async Task<int> DeleteCartItemsAsync(int memberId)
+        {
+            try
+            {
+                var shoppingCartItems = await _shoppingCartRepository.ListAsync(i => i.MemberId == memberId);
+                if (shoppingCartItems == null) { return 500; }
+                if (shoppingCartItems.Count > 0)
+                {
+                   await _shoppingCartRepository.DeleteRangeAsync(shoppingCartItems);
+                }
+                return 200;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while deleting cart items", ex);
+            }
+        }
+
         public async void UpdateItem(int memberId, int courseId, int quantity, int courseLength, decimal subTotal)
         {
             var shoppingCartItem = await _shoppingCartRepository.FirstOrDefaultAsync(s => s.MemberId == memberId && s.CourseId == courseId);
@@ -175,5 +200,7 @@ namespace ApplicationCore.Services
                 await _shoppingCartRepository.UpdateAsync(shoppingCartItem);
             }
         }
+
+
     }
 }

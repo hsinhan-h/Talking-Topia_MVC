@@ -29,7 +29,7 @@
                                     {
                                 <tr>
                                     <td>@order.BookingDate.ToString("yyyy-MM-dd")</td>
-                                    <td>@order.BookingDate.ToString("T")</td>>
+                                    <td>@TimeSpan.FromHours(order.BookingTime - 1).ToString(@"hh\:mm")</td>
                                     <td>@order.CourseTitle</td>
                                     <td>@order.Subtitle</td>
                                     <td>@order.CourseLength</td>

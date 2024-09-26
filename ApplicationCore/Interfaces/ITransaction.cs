@@ -2,7 +2,7 @@
 {
     public interface ITransaction : ITransactionAsync
     {
-        void BeginTransAction();
+        void BeginTransaction();
         void Commit();
         void Rollback();
 

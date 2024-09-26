@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace ApplicationCore.Entities;
+
 
 public partial class WorkExperience
 {
@@ -44,4 +44,6 @@ public partial class WorkExperience
     /// 修改時間
     /// </summary>
     public DateTime? Udate { get; set; }
+
+    public virtual Member Member { get; set; }
 }

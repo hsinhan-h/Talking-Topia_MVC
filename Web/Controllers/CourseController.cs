@@ -13,6 +13,8 @@ namespace Web.Controllers
         private readonly CourseService _courseService;
         private readonly ICourseService _icourseService;
         private readonly IMemberService _memberService;
+
+
         public CourseController(BookingService bookingService, CourseService courseService, ICourseService icourseService, IMemberService memberService)
         {
             _bookingService = bookingService;
@@ -40,7 +42,19 @@ namespace Web.Controllers
         public async Task<IActionResult> CourseMainPage([FromQuery, DefaultValue(1)] int courseId)
         {
             ViewData["CourseId"] = courseId;
-            var model = await _courseService.GetCourseMainPage(courseId);
+
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            int memberId = 0;
+
+            // 如果找到 memberIdClaim，將其解析成整數
+            if (memberIdClaim != null)
+            {
+                memberId = int.Parse(memberIdClaim.Value);
+            }
+            
+
+            var model = await _courseService.GetCourseMainPage(courseId,memberId);
             return View(model);
         }
 
@@ -62,11 +76,50 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {               
-                return Content("訂單建立失敗!");
+                return Content("評論建立失敗!");
                
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> AddFollowingCourse([FromForm]int CourseId)
+        {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            try
+            {
+                var addWatchList = _memberService.AddWatchList(memberId, CourseId);
+                return RedirectToAction(nameof(CourseMainPage), new { courseId = CourseId });
+            }
+            catch (Exception ex) 
+            {
+                return Content("新增關注失敗!");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFollowingCourse([FromForm] int CourseId)
+        {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            try
+            {
+                var deleteWatchList = await _memberService.DeleteWatchList(memberId, CourseId);
+                return RedirectToAction(nameof(CourseMainPage), new { courseId = CourseId });
+            }
+            catch (Exception ex)
+            {
+                return Content("取消關注失敗!");
+            }
+
+        }
 
     }
 

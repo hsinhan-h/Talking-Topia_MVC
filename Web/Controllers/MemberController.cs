@@ -126,6 +126,9 @@ namespace Web.Controllers
             var watchlist = await _memberDataService.GetWatchList(memberId);
             return View(watchlist);
         }
+
+
+
         public IActionResult ChatWindow()
         {
             return View();

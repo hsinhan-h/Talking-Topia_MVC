@@ -1,4 +1,6 @@
 ﻿using ApplicationCore.Interfaces;
+using Infrastructure.ECpay;
+using Infrastructure.Interfaces.ECpay;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
@@ -35,7 +37,6 @@ namespace Web.Controllers
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
             var scVM = new ShoppingCartListViewModel
             {
-                MemberId = memberId,
                 ShoppingCartList = cartData
             };
             return View(scVM);
@@ -61,12 +62,36 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
 
-        public async Task<IActionResult> Delete([FromForm] int memberId, [FromForm] int courseId)
-        //public async Task<IActionResult> Delete([FromForm] int courseId)
+        public async Task<IActionResult> Delete([FromForm] int courseId)
         {
-            var user = HttpContext.User.Identity.Name;
-            //var memberId = await _memberService.GetMemberId(user);
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
             _shoppingCartService.DeleteCartItem(memberId, courseId);
+            return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
+        }
+
+        /// <summary>
+        /// 針對options變更設置的action
+        /// </summary>
+        /// <param name="Items"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Update(List<CartItemUpdateDto> Items)
+        {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            foreach (var item in Items)
+            {
+                _shoppingCartService.UpdateItem(memberId, item.CourseId, item.CourseQuantity, item.CourseLength, item.SubtotalNTD);
+            }
+
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
     }

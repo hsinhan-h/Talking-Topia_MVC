@@ -33,9 +33,22 @@
                     <h3>@Model.CourseTitle</h3>
                     <span class="course-spcialty mt-2">@Model.CourseSubTitle</span>
                     <div class="class-count mt-2">
-                        <strong>@Model.FinishedCoursesTotal</strong>堂韓文課
+                        已完成  <strong>@Model.FinishedCoursesTotal</strong>堂課
                     </div>
-                    <div class="follow-button mt-2">+關注</div>
+                    @if (Model.FollowingStatus == true)
+                    {
+                        <form asp-action="DeleteFollowingCourse">
+                            <input asp-for="CourseId" type="hidden" />
+                            <input class="follow-button mt-2" type="submit" value="取消關注">
+                        </form>
+                    }
+                    else
+                    {                        
+                        <form asp-action="AddFollowingCourse">
+                            <input asp-for="CourseId" type="hidden" />
+                            <input class="follow-button mt-2" type="submit" value="+關注">
+                        </form>
+                    }                    
                 </div>
             </div>
             <div class="lh-self-intro">
@@ -60,31 +73,12 @@
             </div>
             <div class="lh-group-course-info">
                 <div class="group-course-header">
-                    <h3>團體班課程</h3>
+                    <h3>課程介紹</h3>
                 </div>
-                <div class="group-course-body">
-                    <strong>約為正式課的 6 折 🔥 優惠名額有限！</strong>
+                <div class="group-course-body">                    
                     <div class="group-course-content">
                         <p class="group-course-paragraph">
-                            Sayeong쌤💖暑假特別團班🌞🌞🌞🌞🌞<br>
-                            🌟第一位報名學生可協調上課時間⚡2人即開班⚡<br>
-                            🎯注重效率與成效🎯口說為最大目標🎯用韓語分享日常<br>
-                            ✅團體班也客製化✅小班制了解需求<br>
-                            🎈輕鬆有趣課堂!🎈快速學會成效!🎈文法可以活用!<br>
-                            <br>
-                            🍰🍰🍰🍰🍰🍰🍰🍰🍰<br>
-                            口說佔90%<br>
-                            注重文法的運用練習<br>
-                            簡單易懂的說明文法<br>
-                            延伸至生活情境活用<br>
-                            補充韓粽<br>
-                            💝💝💝💝💝💝💝💝💝<br>
-                            <br>
-                            🔥連鎖語言補習班團班經驗🔥企業內訓團班經驗<br>
-                            🔥三星電子中文老師團班經驗<br>
-                            <br>
-                            🌈開課資訊: (團體班客製化可私訊老師詢問,協助開班💖)<br>
-                            📖各大語學堂教材、世宗體系教材、自製教材... (請洽老師詢問~💖)<br>
+                            @Model.CourseIntro
                         </p>
                         <input type="checkbox" class="group-crouse-btn"> <i class="fa-solid fa-chevron-down"></i>
                     </div>
@@ -95,7 +89,7 @@
                     <h3>影片介紹</h3>
                 </div>
                 <div class="video-info-body ">
-                    <iframe src="https://www.youtube.com/embed/ZavL9y4Adrk?si=0UIWWwV4gCJyI3Qa"
+                    <iframe src="@Url.Content(Model.CourseVideo)"
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

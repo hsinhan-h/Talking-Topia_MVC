@@ -185,7 +185,7 @@ namespace Web.Services
                                  select new TutorRecomCardList
                                  {
                                      CourseId = course.CourseId,
-                                     CategoryName = category.CategorytName,
+                                     CategoryId = category.CourseCategoryId,
                                      TutorHeadShot = member.HeadShotImage,
                                      NationFlagImg = nation.FlagImage,
                                      CourseTitle = course.Title,
@@ -212,15 +212,24 @@ namespace Web.Services
 
                 card.Rating = review?.Rating ?? 0;
             }
+            var language = watchCardInfo.Where(w=>w.CategoryId == 1).OrderBy(w=>w.CourseId).ToList();
+            var prgramming = watchCardInfo.Where(w=>w.CategoryId == 2).OrderBy(w => w.CourseId).ToList();
+            var school = watchCardInfo.Where(w => w.CategoryId == 3).OrderBy(w => w.CourseId).ToList();
             var watchlist = new CourseMainPageViewModel
             {
                 MemberId = memberId,
-                TutorReconmmendCard = watchCardInfo
+                LanguageWatchList = language,
+                CodingWatchList = prgramming,
+                SchoolWatchList = school,
             };
             return watchlist;
         }
 
-
+        public bool IsWatched(int memberId, int courseId)
+        {
+            var IsFollowed = _repository.GetAll<WatchList>().Any(w => w.CourseId == courseId && w.FollowerId == memberId);
+            return IsFollowed;
+        }
 
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ApplicationCore.Entities;
 
+
 public partial class Member
 {
     /// <summary>
@@ -122,6 +123,8 @@ public partial class Member
 
     public int? UserId { get; set; }
 
+    public virtual ICollection<ApplyCourse> ApplyCourses { get; set; } = new List<ApplyCourse>();
+
     public virtual ICollection<ApplyList> ApplyLists { get; set; } = new List<ApplyList>();
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
@@ -147,4 +150,6 @@ public partial class Member
     public virtual User User { get; set; }
 
     public virtual WatchList WatchList { get; set; }
+
+    public virtual ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
 }

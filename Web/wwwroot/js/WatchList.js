@@ -1,4 +1,5 @@
-﻿// 選擇所有具有 class "tutorrecommendcard" 的元素
+﻿
+// 選擇所有具有 class "tutorrecommendcard" 的元素
 const tutorCards = document.querySelectorAll(".TRMC");
 
 // 為每個卡片添加點擊事件監聽器
@@ -14,16 +15,4 @@ tutorCards.forEach(function (card) {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    new Vue({
-        el: '#app',
-        data: {
-            activeTab: 'english',  // 預設為 "英文" tab
-        },
-        methods: {
-            setActiveTab(tab) {
-                this.activeTab = tab;  // 切換當前選中的 tab
-            }
-        }
-    });
-});
+
