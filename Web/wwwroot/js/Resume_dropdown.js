@@ -126,7 +126,8 @@ const app = createApp({
     },
     created() {
         this.convertData(data_categories);
-        // 如果 TempData 中有 Toast 信息，則顯示
+        this.fetchBackendData();
+        //// 如果 TempData 中有 Toast 信息，則顯示
         if (this.toastHeader && this.toastMessage) {
             this.showToast(this.toastHeader, this.toastMessage);
         }
@@ -142,7 +143,33 @@ const app = createApp({
                 });
             });
             this.commonData = result;
-        }
-    }
+        },
+        fetchBackendData() {
+            fetch('/api/ApplyCourseList/ResumeApplyCouseData', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.success) {
+                        throw new Error(data.message || 'Unknown error');
+                    }
+                    const courseList = data.data.courseList; 
+                    this.selectedCategory = courseList.applyCourseCategoryId; 
+                    this.selectedSubcategory = courseList.applySubCategoryId; 
+                })
+                .catch(error => {
+                    console.error('Error fetching course list:', error);
+                });
+        },
+    },
+
 });
 app.mount('#vue-wrapper');
