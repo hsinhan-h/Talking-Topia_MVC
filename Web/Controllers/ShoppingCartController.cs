@@ -74,25 +74,5 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
 
-        /// <summary>
-        /// 針對options變更設置的action
-        /// </summary>
-        /// <param name="Items"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Update(List<CartItemUpdateDto> Items)
-        {
-            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (memberIdClaim == null)
-            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            int memberId = int.Parse(memberIdClaim.Value);
-            var result = await _memberService.GetMemberId(memberId);
-
-            foreach (var item in Items)
-            {
-                _shoppingCartService.UpdateItem(memberId, item.CourseId, item.CourseQuantity, item.CourseLength, item.SubtotalNTD);
-            }
-
-            return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
-        }
     }
 }
