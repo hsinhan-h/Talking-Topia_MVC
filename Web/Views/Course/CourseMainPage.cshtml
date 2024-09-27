@@ -59,7 +59,7 @@
                     <div class="can-speak"><strong>會說</strong> @Model.SpokenLanguage </div>
                     <div class="self-intro-content">
                         <p class="self-intro-paragraph">
-                            @Model.TutorIntro
+                            @Html.Raw(Model.TutorIntro?.Replace("\n", "<br>"))
                         </p>
                         <input type="checkbox" class="lh-expand-btn">
                         <i class="fa-solid fa-chevron-down"></i>
@@ -78,7 +78,7 @@
                 <div class="group-course-body">                    
                     <div class="group-course-content">
                         <p class="group-course-paragraph">
-                            @Model.CourseIntro
+                            @Html.Raw(Model.CourseIntro?.Replace("\n", "<br>"))
                         </p>
                         <input type="checkbox" class="group-crouse-btn"> <i class="fa-solid fa-chevron-down"></i>
                     </div>
