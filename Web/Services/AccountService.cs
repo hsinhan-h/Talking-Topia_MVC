@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Web.Exceptions;
 using Web.Entities;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 
 
@@ -12,12 +15,16 @@ namespace Web.Services
     public class AccountService
     {
         private readonly IRepository _repository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
 
 
         // 使用依賴注入注入 IRepository 和 ILogger
-        public AccountService(IRepository repository)
+        public AccountService(IRepository repository, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
+            _httpContextAccessor = httpContextAccessor;
+
         }
 
         //public async Task RegisterUserAsync(AccountViewModel model)
@@ -174,6 +181,54 @@ namespace Web.Services
             // 檢查 email 是否已經存在
             var existingUser = await _repository.FirstOrDefaultAsync<Web.Entities.Member>(u => u.Email == email);
             return existingUser != null;
+        }
+
+        public async Task<Entities.Member> GetMemberByResetTokenAsync(string token)
+        {
+            // 使用 LINQ 查詢 Member 資料表，找到對應的重設密碼 token 的會員
+            return await _repository
+                .FirstOrDefaultAsync<Web.Entities.Member>(m => m.ResetPasswordToken == token);
+        }
+        public async Task UpdateMemberAsync(Entities.Member member)
+        {
+            // 更新會員資料
+            _repository.Update(member);
+            await _repository.SaveChangesAsync();
+        }
+        public async Task<Entities.Member> GetMemberByEmailAsync(string email)
+        {
+            return await _repository.FirstOrDefaultAsync<Web.Entities.Member>(m => m.Email == email);
+        }
+
+        public async Task SignInMemberAsync(Entities.Member member, bool isPersistent = true)
+        {
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, member.FirstName),
+        new Claim(ClaimTypes.NameIdentifier, member.MemberId.ToString())
+    };
+
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
+                IsPersistent = isPersistent,
+            };
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            await _httpContextAccessor.HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                claimsPrincipal,
+                authProperties);
+        }
+
+        public bool VerifyPassword(string hashedPassword, string enteredPassword)
+        {
+            var passwordHasher = new PasswordHasher<Entities.Member>();
+            return passwordHasher.VerifyHashedPassword(null, hashedPassword, enteredPassword) == PasswordVerificationResult.Success;
         }
     }
 }

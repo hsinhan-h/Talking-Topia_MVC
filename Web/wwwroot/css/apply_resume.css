@@ -40,6 +40,18 @@
     color: var(--theme-color);
 }
 
+.textbtncolor {
+    color: white
+}
+.btnbg {
+    background-color: var(--theme-color);
+}
+.btndangerbg {
+    background-color: var(--highlight-color);
+}
+.btnbghover:hover {
+    color: black;
+}
 .resume_btn {
     box-shadow: var(--button-hover-shadow);
 }

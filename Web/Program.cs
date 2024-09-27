@@ -31,6 +31,12 @@ namespace Web
             //µù¥ULineAuthService
             builder.Services.AddScoped<ILineAuthService, LineAuthService>();
 
+            //µù¥UEmailService
+            builder.Services.AddScoped<IEmailService, EmailService>();
+
+            builder.Services.AddHttpContextAccessor();
+
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

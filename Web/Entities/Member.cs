@@ -152,4 +152,5 @@ public partial class Member
 
     public virtual ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
     public string LineUserId { get; internal set; }
+    public string ResetPasswordToken { get; internal set; }
 }

@@ -19,6 +19,111 @@ namespace Web.Services
             _repository = repository;
         }
 
+        //Api需要的
+        public async Task<TutorResumeViewModel> ChangeResumeLicenses(int memberId, List<int> licenseIds, List<string> licenseNames, List<string> licenseUrls)
+        {
+            try
+            {
+                // 查找會員資料
+                var member = await _repository.GetAll<Entities.Member>()
+                                    .Include(m => m.ProfessionalLicenses)
+                                    .FirstOrDefaultAsync(m => m.MemberId == memberId);
+
+                if (member == null)
+                {
+                    throw new Exception("Member not found.");
+                }
+
+                // 遍歷前端提交的證照資料
+                for (int i = 0; i < licenseNames.Count; i++)
+                {
+                    // 查找現有證照資料根據 ID
+                    var existingLicense = member.ProfessionalLicenses
+                        .FirstOrDefault(pl => pl.ProfessionalLicenseId == licenseIds[i]);
+
+                    if (existingLicense != null)
+                    {
+                        // 更新現有的證照資料
+                        existingLicense.ProfessionalLicenseName = licenseNames[i];
+                        existingLicense.ProfessionalLicenseUrl = licenseUrls[i];
+                        existingLicense.Udate = DateTime.Now; // 更新修改日期
+                    }
+                    else
+                    {
+                        // 如果找不到證照，則創建新的證照
+                        var newLicense = new Entities.ProfessionalLicense
+                        {
+                            MemberId = memberId,
+                            ProfessionalLicenseName = licenseNames[i],
+                            ProfessionalLicenseUrl = licenseUrls[i],
+                            Cdate = DateTime.Now,
+                            Udate = null
+                        };
+                        member.ProfessionalLicenses.Add(newLicense);
+                    }
+                }
+
+                // 保存變更
+                await _repository.SaveChangesAsync();
+
+                // 回傳成功的 ViewModel
+                return new TutorResumeViewModel();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update licenses", ex);
+            }
+        }
+        public async Task<TutorResumeViewModel> DeleteLicensesAsync(int memberId, List<int> professionalLicenseIds)
+        {
+            // 查找會員資料
+            var member = await _repository.GetAll<Entities.Member>()
+                                .Include(m => m.ProfessionalLicenses)
+                                .FirstOrDefaultAsync(m => m.MemberId == memberId);
+
+            if (member == null)
+            {
+                return new TutorResumeViewModel
+                {
+                    Success = false,
+                    Message = "Member not found."
+                };
+            }
+
+            // 查找需要刪除的證照
+            var licensesToDelete = member.ProfessionalLicenses
+                .Where(pl => professionalLicenseIds.Contains(pl.ProfessionalLicenseId))
+                .ToList();
+
+            if (!licensesToDelete.Any())
+            {
+                return new TutorResumeViewModel
+                {
+                    Success = false,
+                    Message = "No licenses found to delete."
+                };
+            }
+
+            // 逐個刪除證照
+            foreach (var license in licensesToDelete)
+            {
+                _repository.Delete(license);
+            }
+
+            // 保存變更
+            await _repository.SaveChangesAsync();
+
+            return new TutorResumeViewModel
+            {
+                Success = true,
+                Message = "Licenses deleted successfully."
+            };
+        }
+
+
+
+
+
 
         //Read需要的
         private async Task<TutorResumeViewModel> ReadHeadImg(int memberId)
@@ -36,7 +141,7 @@ namespace Web.Services
             return headimg;
         }
 
-            private async Task<TutorResumeViewModel> ReadEducationAsync(int memberId)
+        private async Task<TutorResumeViewModel> ReadEducationAsync(int memberId)
         {
             var member = await _repository.GetAll<Entities.Member>()
                             .Where(m => m.MemberId == memberId)
@@ -91,10 +196,15 @@ namespace Web.Services
                     .Where(e => e.MemberId == member.MemberId)
                     .Select(e => e.ProfessionalLicenseUrl)
                     .ToListAsync();
+            var licenseId = await _repository.GetAll<Entities.ProfessionalLicense>()
+                    .Where(e => e.MemberId == member.MemberId)
+                    .Select(e => e.ProfessionalLicenseId)
+                    .ToListAsync();
             var resumeEducation = new TutorResumeViewModel
             {
                 ProfessionalLicenseName = license,
                 ProfessionalLicenseUrl = licenseUrl,
+                ProfessionalLicenseId = licenseId,
             };
 
             return resumeEducation;
@@ -123,7 +233,7 @@ namespace Web.Services
 
             var resumeViewModel = new TutorResumeViewModel
             {
-                WorkBackground = workExpList 
+                WorkBackground = workExpList
             };
 
             return resumeViewModel;
@@ -142,10 +252,10 @@ namespace Web.Services
 
             var applyCourseList = await _repository.GetAll<Entities.ApplyCourse>()
             .Where(ac => ac.MemberId == member.MemberId)
-            .Select(ac => new ApplyCourseList 
+            .Select(ac => new ApplyCourseList
             {
-            ApplyCourseCategoryId = ac.ApplyCourseCategoryId,
-            ApplySubCategoryId = ac.ApplySubCategoryId,
+                ApplyCourseCategoryId = ac.ApplyCourseCategoryId,
+                ApplySubCategoryId = ac.ApplySubCategoryId,
             }).ToListAsync();
 
             var resumeViewModel = new TutorResumeViewModel
