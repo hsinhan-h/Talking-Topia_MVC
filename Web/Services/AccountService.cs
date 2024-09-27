@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Web.Exceptions;
 using Web.Entities;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 
 
@@ -12,12 +15,16 @@ namespace Web.Services
     public class AccountService
     {
         private readonly IRepository _repository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
 
 
         // 使用依賴注入注入 IRepository 和 ILogger
-        public AccountService(IRepository repository)
+        public AccountService(IRepository repository, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
+            _httpContextAccessor = httpContextAccessor;
+
         }
 
         //public async Task RegisterUserAsync(AccountViewModel model)
@@ -78,8 +85,19 @@ namespace Web.Services
                     throw new UserAlreadyExistsException("該電子郵件已被註冊");
                 }
 
+                var newUser = new Web.Entities.User
+                {
+                    Name = $"{model.RegisterViewModel.FirstName}", // 使用者名稱
+                    Email = model.RegisterViewModel.Email,
+                    Password = "" // 這裡可以設定為空字串，或者設定其他值，如果需要加密密碼，請加密處理
+                };
+                // 使用 IRepository 創建新的 User
+                _repository.Create(newUser);
+                await _repository.SaveChangesAsync();
+
                 var newMember = new Web.Entities.Member
                 {
+                    UserId = newUser.Id, // 將剛剛創建的 UserId 設定到 Member 中
                     Email = model.RegisterViewModel.Email,
                     Password = model.RegisterViewModel.Password,
                     FirstName = model.RegisterViewModel.FirstName,
@@ -90,7 +108,8 @@ namespace Web.Services
                     Cdate = DateTime.Now,
                     Udate = DateTime.Now,
                     IsTutor = false,
-                    IsVerifiedTutor = false
+                    IsVerifiedTutor = false,
+                    
                 };
 
                 // 使用 PasswordHasher 進行密碼哈希
@@ -162,6 +181,54 @@ namespace Web.Services
             // 檢查 email 是否已經存在
             var existingUser = await _repository.FirstOrDefaultAsync<Web.Entities.Member>(u => u.Email == email);
             return existingUser != null;
+        }
+
+        public async Task<Entities.Member> GetMemberByResetTokenAsync(string token)
+        {
+            // 使用 LINQ 查詢 Member 資料表，找到對應的重設密碼 token 的會員
+            return await _repository
+                .FirstOrDefaultAsync<Web.Entities.Member>(m => m.ResetPasswordToken == token);
+        }
+        public async Task UpdateMemberAsync(Entities.Member member)
+        {
+            // 更新會員資料
+            _repository.Update(member);
+            await _repository.SaveChangesAsync();
+        }
+        public async Task<Entities.Member> GetMemberByEmailAsync(string email)
+        {
+            return await _repository.FirstOrDefaultAsync<Web.Entities.Member>(m => m.Email == email);
+        }
+
+        public async Task SignInMemberAsync(Entities.Member member, bool isPersistent = true)
+        {
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, member.FirstName),
+        new Claim(ClaimTypes.NameIdentifier, member.MemberId.ToString())
+    };
+
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
+                IsPersistent = isPersistent,
+            };
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            await _httpContextAccessor.HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                claimsPrincipal,
+                authProperties);
+        }
+
+        public bool VerifyPassword(string hashedPassword, string enteredPassword)
+        {
+            var passwordHasher = new PasswordHasher<Entities.Member>();
+            return passwordHasher.VerifyHashedPassword(null, hashedPassword, enteredPassword) == PasswordVerificationResult.Success;
         }
     }
 }

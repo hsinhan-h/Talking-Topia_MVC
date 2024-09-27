@@ -58,12 +58,12 @@ namespace Web.Services
                 Nickname = member.Nickname ?? "未設定", // 處理暱稱為 null 的情況
                 Birthday = member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null, // 若無生日資料，設為 null
                 Gender = member.Gender == 1 ? "男" : "女",
-                Account = member.Account,
+                Account = member.Account ?? member.LineUserId,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
                 Email = member.Email,
                 Phone = member.Phone,
-                CoursePrefer = coursePrefer
+                CoursePrefer = coursePrefer,
             };
 
             _logger.LogInformation($"成功查詢會員資料，MemberId: {memberId}");
