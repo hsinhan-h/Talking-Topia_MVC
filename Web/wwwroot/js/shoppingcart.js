@@ -55,7 +55,7 @@
     });
 
 
-    // Dto沒辦法順利轉回去
+    // Dto沒辦法順利轉回去action
     submitBtn.addEventListener('click', function (event) {
 
         const paymentType = document.querySelector('input[name="paymentType"]').value;
@@ -63,13 +63,12 @@
         const cart = window.viewModelData.shoppingCartList;
 
         const orderData = {
-            paymentType: paymentType,
+            payment: paymentType,
             taxIdNumber: taxIdNumber,
-            cart: cart
+            scVM: cart,
         };
 
         if (cart.length > 0) {
-            // 使用 fetch 發送 POST 請求
             fetch('/Order/SubmitToOrder', {
                 method: 'POST',
                 headers: {

@@ -80,7 +80,7 @@ namespace Web.Controllers
         /// <param name="taxIdNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitToOrder([FromBody] ShoppingCartDtos scDto)
         {
 
@@ -108,10 +108,11 @@ namespace Web.Controllers
                 {
                     for (var i = 0; i < scDto.scVM.Count; i++)
                     {
-                        _shoppingCartService.UpdateItem(memberId, scDto.scVM[i].CourseId,
-                                                                  scDto.scVM[i].CourseQuantity,
-                                                                  scDto.scVM[i].CourseLength,
-                                                                  scDto.scVM[i].SubtotalNTD);
+                        var updateResult = await _shoppingCartService.UpdateItem(memberId, scDto.scVM[i].CourseId,
+                                                                    scDto.scVM[i].CourseQuantity,
+                                                                    scDto.scVM[i].CourseLength,
+                                                                    scDto.scVM[i].SubtotalNTD);
+                        if (!updateResult) return BadRequest("更新失敗");
                     }
                 }
             }

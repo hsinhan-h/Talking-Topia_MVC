@@ -187,7 +187,7 @@ namespace ApplicationCore.Services
             }
         }
 
-        public async void UpdateItem(int memberId, int courseId, int quantity, int courseLength, decimal subTotal)
+        public async Task<bool> UpdateItem(int memberId, int courseId, int quantity, int courseLength, decimal subTotal)
         {
             var shoppingCartItem = await _shoppingCartRepository.FirstOrDefaultAsync(s => s.MemberId == memberId && s.CourseId == courseId);
             if (shoppingCartItem != null)
@@ -198,7 +198,12 @@ namespace ApplicationCore.Services
                 shoppingCartItem.Udate = DateTime.Now;
 
                 await _shoppingCartRepository.UpdateAsync(shoppingCartItem);
+            
+                return true;
             }
+
+            return false;
+
         }
 
     }
