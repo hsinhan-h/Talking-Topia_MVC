@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using System.Reflection.Metadata;
 using System.Security.Claims;
+using Web.Dtos;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -33,8 +35,6 @@ namespace Web.Controllers
             _shoppingCartService = shoppingCartService;
             _orderVMService = orderVMService;
         }
-
-
 
         /// <summary>
         /// 交易成功導回頁
@@ -81,29 +81,42 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitToOrder(string paymentType, string taxIdNumber, List<CartItemUpdateDto> Items)
+        public async Task<IActionResult> SubmitToOrder([FromBody] ShoppingCartDtos scDto)
         {
+
+            if (scDto == null)
+            {
+                return BadRequest("Invalid data received.");
+            }
+
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             int memberId = int.Parse(memberIdClaim.Value);
-
             var result = await _memberService.GetMemberId(memberId);
             if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            if (string.IsNullOrEmpty(paymentType))
-            { return BadRequest("未選擇付款方式"); }
 
-            taxIdNumber ??= string.Empty;
-            if (Items.Count > 0)
+            if (ModelState.IsValid)
             {
-                foreach (var item in Items)
+                if (string.IsNullOrEmpty(scDto.Payment))
+                { scDto.Payment = "CreditCard"; }
+
+                scDto.TaxIdNumber ??= string.Empty;
+
+                if (scDto.scVM.Count > 0)
                 {
-                    _shoppingCartService.UpdateItem(memberId, item.CourseId, item.CourseQuantity, item.CourseLength, item.SubtotalNTD);
+                    for (var i = 0; i < scDto.scVM.Count; i++)
+                    {
+                        _shoppingCartService.UpdateItem(memberId, scDto.scVM[i].CourseId,
+                                                                  scDto.scVM[i].CourseQuantity,
+                                                                  scDto.scVM[i].CourseLength,
+                                                                  scDto.scVM[i].SubtotalNTD);
+                    }
                 }
             }
 
-            _orderId = await _orderService.CreateOrderAsync(memberId, paymentType, taxIdNumber);
+            _orderId = await _orderService.CreateOrderAsync(memberId, scDto.Payment, scDto.TaxIdNumber);
 
             if (_orderId > 0)
             {

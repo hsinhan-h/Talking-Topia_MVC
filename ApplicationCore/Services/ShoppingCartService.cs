@@ -193,14 +193,13 @@ namespace ApplicationCore.Services
             if (shoppingCartItem != null)
             {
                 shoppingCartItem.Quantity = (short)quantity;
-                shoppingCartItem.CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice; // 更新時間
+                shoppingCartItem.CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice;
                 shoppingCartItem.TotalPrice = subTotal;
                 shoppingCartItem.Udate = DateTime.Now;
 
                 await _shoppingCartRepository.UpdateAsync(shoppingCartItem);
             }
         }
-
 
     }
 }
