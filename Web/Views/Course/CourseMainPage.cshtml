@@ -19,7 +19,7 @@
 
 
 
-<div class="container tutor-course-page">
+<div class="container tutor-course-page" id="app" data-course-id="@Model.CourseId" data-member-id="@ViewData["MemberId"]" v-cloak>
     <div class="row">
         <div class="col-md-8 col-12 " id="tutor-main-page">
             <div class="lh-tutor-title d-flex mb-3">
@@ -35,20 +35,17 @@
                     <div class="class-count mt-2">
                         已完成  <strong>@Model.FinishedCoursesTotal</strong>堂課
                     </div>
-                    @if (Model.FollowingStatus == true)
-                    {
-                        <form asp-action="DeleteFollowingCourse">
-                            <input asp-for="CourseId" type="hidden" />
-                            <input class="follow-button mt-2" type="submit" value="取消關注">
-                        </form>
-                    }
-                    else
-                    {                        
-                        <form asp-action="AddFollowingCourse">
-                            <input asp-for="CourseId" type="hidden" />
-                            <input class="follow-button mt-2" type="submit" value="+關注">
-                        </form>
-                    }                    
+                    <div class="follow-section">
+                        <!-- 關注按鈕，根據 isFollowing 狀態動態顯示 -->
+                        <button id="followBtn" class="btn " @@click="follow" v-if="!isFollowing">
+                            <span class="icon-follow">+關注</span>
+                        </button>
+
+                        <!-- 取消關注按鈕 -->
+                        <button id="unfollowBtn" class="btn " @@click="unfollow" v-else>
+                            <span class="icon-unfollow">關注中</span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="lh-self-intro">
@@ -115,7 +112,7 @@
                     <br>在 AmazingTalker 受到大量學生喜愛，好評不斷的優質教師！
                 </div>
             </div>
-            <div class="lh-tutor-comment " id="app" data-course-id="@Model.CourseId">
+            <div class="lh-tutor-comment " >
                 <form asp-action="CreateCourseReview">
                     <div class="course-comment-generator w-100">
                         <h3 class="my-2">對課程的感想</h3>

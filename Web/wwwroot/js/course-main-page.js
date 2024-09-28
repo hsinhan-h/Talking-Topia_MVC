@@ -1,11 +1,16 @@
 ﻿const { createApp, ref } = Vue ;
 const courseId = document.getElementById('app').dataset.courseId;
+const memberId = document.getElementById('app').dataset.memberId;
+
 const app = createApp({
     data() {
         return {
             rating: null,
             fetchedRating: null ,
-            courseId: courseId      // 從 DOM 中取得的課程 ID
+            courseId: courseId,      // 從 DOM 中取得的課程 ID
+            isFollowing: false,  // 初始關注狀態，從後端來決定是否已關注
+            FollowerId: memberId,       // 假設當前使用者的 ID
+            FollowedCourseId: courseId    // 假設要關注的對象 ID
         }
     },
     methods: {
@@ -39,11 +44,72 @@ const app = createApp({
                 .catch(error => {
                     console.error('錯誤:', error);
                 });
+        },
+        fetchFollowStatusFromServer() {
+            // 假設從後端 API 獲取當前是否已關注狀態
+            fetch(`/api/Following/GetFollowStatus?courseId=${this.courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.isFollowing = data;
+                })
+                .catch(error => {
+                    console.error('錯誤:', error);
+                });
+        },
+
+        // 關注功能
+        follow() {
+            fetch(`/api/Following/AddFollowing?courseId=${this.courseId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    FollowerId: memberId,
+                    FollowedCourseId: courseId,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.isFollowing = true;
+                        alert(data.message);
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        },
+        // 取消關注功能
+        unfollow() {
+            fetch(`/api/Following/DeleteFollowingCourse?courseId=${this.courseId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    FollowerId: memberId,
+                    FollowedCourseId: courseId,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.isFollowing = false;
+                        alert(data.message);
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
+
     },
     mounted() {
         // 在 Vue 應用掛載後自動呼叫 fetchRatingFromServer 來獲取資料
         this.fetchRatingFromServer();
+        this.fetchFollowStatusFromServer();
+        
     }
 
 })

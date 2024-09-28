@@ -18,6 +18,6 @@
         /// <summary>
         /// 關注的課程
         /// </summary>
-        public int CourseId { get; set; }
+        public int FollowedCourseId { get; set; }
     }
 }

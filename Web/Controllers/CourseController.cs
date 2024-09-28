@@ -52,7 +52,7 @@ namespace Web.Controllers
             {
                 memberId = int.Parse(memberIdClaim.Value);
             }
-            
+            ViewData["MemberId"] = memberId;
 
             var model = await _courseService.GetCourseMainPage(courseId,memberId);
             return View(model);
@@ -71,55 +71,16 @@ namespace Web.Controllers
             {
                 var createReview = _icourseService.CreateReviews(memberId,CourseId, rating, NewReviewContent);
                 return RedirectToAction(nameof(CourseMainPage), new { courseId =CourseId });
-               
-
             }
             catch (Exception ex)
             {               
-                return Content("評論建立失敗!");
-               
+                return Content("評論建立失敗!"); 
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+       
 
-        public async Task<IActionResult> AddFollowingCourse([FromForm]int CourseId)
-        {
-            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (memberIdClaim == null)
-            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            int memberId = int.Parse(memberIdClaim.Value);
-            var result = await _memberService.GetMemberId(memberId);
-            try
-            {
-                var addWatchList = _memberService.AddWatchList(memberId, CourseId);
-                return RedirectToAction(nameof(CourseMainPage), new { courseId = CourseId });
-            }
-            catch (Exception ex) 
-            {
-                return Content("新增關注失敗!");
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteFollowingCourse([FromForm] int CourseId)
-        {
-            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            int memberId = int.Parse(memberIdClaim.Value);
-            var result = await _memberService.GetMemberId(memberId);
-            try
-            {
-                var deleteWatchList = await _memberService.DeleteWatchList(memberId, CourseId);
-                return RedirectToAction(nameof(CourseMainPage), new { courseId = CourseId });
-            }
-            catch (Exception ex)
-            {
-                return Content("取消關注失敗!");
-            }
-
-        }
+        
 
     }
 
