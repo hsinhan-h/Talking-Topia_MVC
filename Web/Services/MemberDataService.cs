@@ -22,8 +22,6 @@ namespace Web.Services
 
         }
 
-
-
         public async Task<MemberProfileViewModel> GetMemberData(int memberId)
         {
             _logger.LogInformation($"開始查詢會員資料，會員ID: {memberId}");
@@ -165,10 +163,6 @@ namespace Web.Services
                 throw new Exception("更新會員資料時發生錯誤", ex);
             }
         }
-
-
-
-
 
         public async Task<CourseMainPageViewModel> GetWatchList(int memberId)
         {
