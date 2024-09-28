@@ -29,7 +29,7 @@ const courseCardsApp = Vue.createApp({
     mounted() {
         const params = new URLSearchParams(window.location.search);
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
-        this.selectedSubject = params.get('subject') || null;
+        this.selectedSubject = params.get('subject') ? decodeURIComponent(params.get('subject')) : null;
         this.selectedNation = params.get('nation') || null;
         this.selectedBudget = params.get('budget') || null;       
         this.fetchCoursesDebounced();
@@ -55,7 +55,7 @@ const courseCardsApp = Vue.createApp({
             try {
                 let url = `/api/CourseListApi?page=${this.page}`;
                 if (this.selectedSubject) {
-                    url += `&subject=${this.selectedSubject}`;
+                    url += `&subject=${encodeURIComponent(this.selectedSubject)}`;
                 }
                 if (this.selectedNation) {
                     url += `&nation=${this.selectedNation}`;

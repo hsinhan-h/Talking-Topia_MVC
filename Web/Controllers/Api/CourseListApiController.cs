@@ -25,6 +25,7 @@
             {
                 return BadRequest();
             }
+
             var courses = await _courseService.GetCourseCardsListAsync(page, 6, subject, nation, weekdays, timeslots, budget, sortOption);
             if (courses == null)
             {
