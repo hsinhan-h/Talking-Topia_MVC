@@ -262,7 +262,7 @@
                             const startTime = reservation.coursehours.split(":")[0]; // 取得開始小時部分
 
 
-                            listItem.textContent = `${getWeeking(day)} ${startTime}:00點`;
+                            listItem.textContent = `${getWeeking(day)} ${startTime}:00`;
                             timeList.appendChild(listItem);
                         });
 

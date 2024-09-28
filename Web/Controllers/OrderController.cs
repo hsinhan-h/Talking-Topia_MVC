@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using System.Reflection.Metadata;
 using System.Security.Claims;
+using Web.Dtos;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -33,8 +35,6 @@ namespace Web.Controllers
             _shoppingCartService = shoppingCartService;
             _orderVMService = orderVMService;
         }
-
-
 
         /// <summary>
         /// 交易成功導回頁
@@ -80,30 +80,40 @@ namespace Web.Controllers
         /// <param name="taxIdNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitToOrder(string paymentType, string taxIdNumber, List<CartItemUpdateDto> Items)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> SubmitToOrder([FromBody] ShoppingCartDtos scDto)
         {
+
+            if (scDto == null) return BadRequest("Invalid data received.");
+
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             int memberId = int.Parse(memberIdClaim.Value);
-
             var result = await _memberService.GetMemberId(memberId);
             if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            if (string.IsNullOrEmpty(paymentType))
-            { return BadRequest("未選擇付款方式"); }
 
-            taxIdNumber ??= string.Empty;
-            if (Items.Count > 0)
+            if (ModelState.IsValid)
             {
-                foreach (var item in Items)
+                if (string.IsNullOrEmpty(scDto.Payment)) scDto.Payment = "CreditCard";
+
+                scDto.TaxIdNumber ??= string.Empty;
+
+                if (scDto.scVM.Count > 0)
                 {
-                    _shoppingCartService.UpdateItem(memberId, item.CourseId, item.CourseQuantity, item.CourseLength, item.SubtotalNTD);
+                    for (var i = 0; i < scDto.scVM.Count; i++)
+                    {
+                        var updateResult = await _shoppingCartService.UpdateItem(memberId, scDto.scVM[i].CourseId,
+                                                                    scDto.scVM[i].CourseQuantity,
+                                                                    scDto.scVM[i].CourseLength,
+                                                                    scDto.scVM[i].SubtotalNTD);
+                        if (!updateResult) return BadRequest("更新失敗");
+                    }
                 }
             }
 
-            _orderId = await _orderService.CreateOrderAsync(memberId, paymentType, taxIdNumber);
+            _orderId = await _orderService.CreateOrderAsync(memberId, scDto.Payment, scDto.TaxIdNumber);
 
             if (_orderId > 0)
             {
@@ -116,13 +126,8 @@ namespace Web.Controllers
 
                 using (var client = new HttpClient(handler))
                 {
-                    // 生成要請求的 URL，指向 PaymentController 的 New Action
                     var requestUrl = Url.Action("New", "Payment", null, Request.Scheme);
-
-                    // 生成防偽驗證令牌
                     var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
-
-                    // 構建 POST 請求的表單資料，包括防偽驗證令牌
                     var values = new Dictionary<string, string>
                     {
                         { "__RequestVerificationToken", tokens.RequestToken },  // 添加防偽驗證令牌
@@ -133,17 +138,14 @@ namespace Web.Controllers
                     // 將表單資料編碼成 x-www-form-urlencoded 格式
                     var content = new FormUrlEncodedContent(values);
 
-                    // 發送 POST 請求到 PaymentController.New
                     var response = await client.PostAsync(requestUrl, content);
 
-                    // 檢查回應狀態
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction("CheckOut", "Payment");
                     }
                     else
                     {
-                        // 讀取回應的錯誤訊息
                         var errorResponse = await response.Content.ReadAsStringAsync();
                         return BadRequest($"發送請求到 PaymentController.New 失敗，狀態碼：{response.StatusCode}, 錯誤訊息: {errorResponse}");
                     }

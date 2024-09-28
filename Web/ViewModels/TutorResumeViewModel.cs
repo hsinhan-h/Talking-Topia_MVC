@@ -6,6 +6,8 @@ namespace Web.ViewModels
 
     public class TutorResumeViewModel
     {
+
+        public int memberId { get; set; }
         /// <summary>
         /// 大頭貼
         /// </summary>
@@ -34,30 +36,24 @@ namespace Web.ViewModels
         /// 證照
         /// </summary>
         //[Required]
-        public List<string> ProfessionalLicenseName { get; set; }
+        public List<string> ProfessionalLicenseName { get; set; } = new List<string>();
         ///// <summary>
         ///// 證照Url
         ///// </summary>
         ////[Required]
-        public List<string> ProfessionalLicenseUrl { get; set; }
+        public List<string> ProfessionalLicenseUrl { get; set; } = new List<string>();
         /// <summary>
         /// 工作起始日期
         /// </summary>
         //[Required]
-        public DateOnly WorkStartDate { get; set; }
-        ///// <summary>
-        ///// 工作結束日期
-        ///// </summary>
-        ////[Required]
-        public DateOnly WorkEndDate { get; set; }
-        ///// <summary>
-        ///// 工作名稱
-        ///// </summary>
-        ////[Required]
-        public string WorkName { get; set; }
-        ///// <summary>
-        ///// 工作簡述檔案
-        ///// </summary>
+        public List<int> ProfessionalLicenseId { get; set; } = new List<int>();
+        public List<ResumeWorkExp> WorkBackground { get; set; } = new List<ResumeWorkExp> { new ResumeWorkExp() };
+        public class ResumeWorkExp
+        {
+            public DateOnly? WorkStartDate { get; set; }
+            public DateOnly? WorkEndDate { get; set; }
+            public string WorkName { get; set; }
+        }
         public ApplyCourseList CourseList { get; set; } = new ApplyCourseList();
         public class ApplyCourseList
         {
@@ -71,6 +67,8 @@ namespace Web.ViewModels
 
         public bool Success { get; set; }
         public string Message { get; set; }
+
+       
     }
        
 }

@@ -28,13 +28,14 @@
                     <span asp-validation-for="LoginViewModel.Password" class="text-danger"></span>
                 </div>
 
-                <a href="#" class="forgot-password">忘記密碼？</a>
+                <a asp-action="ForgotPassword" class="forgot-password">忘記密碼？</a>
                 <button type="submit" class="btn btn-custom">登入</button>
             </form>
             <div class="social-login">
                 <p>或使用社群帳號登入</p>
                 <a href="#" class="google"><i class="fab fa-google"></i></a>
-                <a href="#" class="line"><i class="fab fa-line"></i></a>
+
+                <a asp-controller="Account" asp-action="LineLogin" class="line"><i class="fab fa-line"></i></a>
             </div>
             <hr>
             <h2>還不是會員？</h2>

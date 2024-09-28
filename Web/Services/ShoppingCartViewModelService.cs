@@ -63,9 +63,13 @@ namespace Web.Services
                 var category = await _courseCategoryRepository.GetByIdAsync(course.CategoryId);
                 double discount = 0;
                 if (item.Quantity == 1) discount = 0;
-                if (item.Quantity == 5) discount = 0.95;
-                if (item.Quantity == 10) discount = 0.9;
-                if (item.Quantity == 20) discount = 0.85;
+                if (item.Quantity == 5) discount = 0.05;
+                if (item.Quantity == 10) discount = 0.1;
+                if (item.Quantity == 20) discount = 0.15;
+                var total = item.Quantity * (int)item.UnitPrice;
+                var discountPrice = total * discount;
+                var subTotal = total - discountPrice;
+
                 //foreach (var coupon in _coupon)
                 //{
                 var shoppingResult = new ShoppingCartViewModel
@@ -82,8 +86,8 @@ namespace Web.Services
                     UnitPrice = (int)item.UnitPrice,
                     TFUnitPrice = (int)course.TwentyFiveMinUnitPrice,
                     FTUnitPrice = (int)course.FiftyMinUnitPrice,
-                    Discount = (item.Quantity * (int)item.UnitPrice) * (1 - discount),
-                    SubtotalNTD = item.Quantity * (int)item.UnitPrice,
+                    Discount = discountPrice,
+                    SubtotalNTD = (int)subTotal,
                     //Coupon = _coupon != null ? coupon.CouponName : "==========",
                     Coupon = "",
                     PaymentType = ""
