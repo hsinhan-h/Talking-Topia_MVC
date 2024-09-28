@@ -25,6 +25,12 @@ namespace ApplicationCore.Services
             return result;
         }
 
+        public bool IsWatched(int memberId, int courseId)
+        {
+            var IsFollowed = _watchListRepository.List().Any(w => w.CourseId == courseId && w.FollowerId == memberId);
+            return IsFollowed;
+        }
+
         public int AddWatchList(int memberId, int courseId)
         {
             try 
@@ -48,12 +54,12 @@ namespace ApplicationCore.Services
 
         }
 
-        public async Task<bool> DeleteWatchList(int memberId, int courseId) 
+        public bool DeleteWatchList(int memberId, int courseId) 
         {
-            var findWatchList = await _watchListRepository.FirstOrDefaultAsync(w => w.FollowerId == memberId && w.CourseId == courseId);
+            var findWatchList = _watchListRepository.FirstOrDefault(w => w.FollowerId == memberId && w.CourseId == courseId);
             if (findWatchList != null)
             {
-                await _watchListRepository.DeleteAsync(findWatchList);
+               _watchListRepository.Delete(findWatchList);
                 return true;
             }
             else 

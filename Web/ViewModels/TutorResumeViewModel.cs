@@ -6,6 +6,8 @@ namespace Web.ViewModels
 
     public class TutorResumeViewModel
     {
+
+        public int memberId { get; set; }
         /// <summary>
         /// 大頭貼
         /// </summary>
@@ -44,6 +46,7 @@ namespace Web.ViewModels
         /// 工作起始日期
         /// </summary>
         //[Required]
+        public List<int> ProfessionalLicenseId { get; set; } = new List<int>();
         public List<ResumeWorkExp> WorkBackground { get; set; } = new List<ResumeWorkExp> { new ResumeWorkExp() };
         public class ResumeWorkExp
         {
