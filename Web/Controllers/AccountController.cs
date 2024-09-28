@@ -70,28 +70,33 @@ namespace Web.Controllers
             {
                 try
                 {
-                    // 先執行註冊邏輯
+                    // 執行註冊邏輯
                     await _accountService.RegisterUserAsync(model);
 
-                    // 建立驗證 Token（假設您在註冊邏輯中已產生並儲存 token 或可從 _accountService 中取得）
-                    var token = Guid.NewGuid().ToString();
-                    var verificationUrl = Url.Action("VerifyEmail", "Account", new { token = token }, Request.Scheme);
+                    // 取得註冊用戶的驗證 Token
+                    var member = await _accountService.GetMemberByEmailAsync(model.RegisterViewModel.Email);
+                    if (member == null)
+                    {
+                        ModelState.AddModelError("", "註冊過程中發生錯誤，請稍後再試。");
+                        return View("Account", model);
+                    }
+
+                    // 生成驗證連結
+                    var verificationUrl = Url.Action("VerifyEmail", "Account", new { token = member.EmailVerificationToken }, Request.Scheme);
 
                     // 發送驗證電子郵件
                     var subject = "驗證會員信箱";
                     var body = $"<p>請點擊以下連結以驗證您的信箱：</p><a href='{verificationUrl}'>驗證信箱</a>";
-                    await _emailService.SendEmailAsync(model.RegisterViewModel.Email, subject, body);
+                    await _emailService.SendEmailAsync(member.Email, subject, body);
 
                     // 註冊成功後，使用 TempData 傳遞成功訊息
                     TempData["SuccessMessage"] = "註冊成功，請查收您的電子郵件以完成驗證";
                     return RedirectToAction("RegisterSuccess");
-
                 }
                 catch (UserAlreadyExistsException)
                 {
                     // 添加錯誤訊息到 ModelState
                     ModelState.AddModelError(nameof(model.RegisterViewModel.Email), "該電子郵件已被註冊");
-
                 }
                 catch (Exception ex)
                 {
@@ -135,8 +140,25 @@ namespace Web.Controllers
             // 使用 AccountService 取得會員資料
             var member = await _accountService.GetMemberByEmailAsync(request.Email);
 
-            // 驗證使用者是否存在以及密碼是否正確
-            if (member == null || member.Password != request.Password.ToSHA256())
+            // 驗證使用者是否存在
+            if (member == null)
+            {
+                ModelState.AddModelError(string.Empty, "無效的帳號或密碼");
+                return View("AccessDenied", model);
+            }
+
+            // 檢查是否已經完成 Email 驗證
+            if (!member.IsEmailConfirmed)
+            {
+                ModelState.AddModelError(string.Empty, "您的信箱尚未驗證，請先完成驗證。");
+                return View("AccessDenied", model);
+            }
+
+            // 使用 PasswordHasher 驗證密碼
+            var passwordHasher = new PasswordHasher<Web.Entities.Member>();
+            var passwordVerificationResult = passwordHasher.VerifyHashedPassword(member, member.Password, request.Password);
+
+            if (passwordVerificationResult == PasswordVerificationResult.Failed)
             {
                 ModelState.AddModelError(string.Empty, "無效的帳號或密碼");
                 return View("AccessDenied", model);
@@ -184,7 +206,6 @@ namespace Web.Controllers
             return Redirect(redirectUrl);
         }
 
-        [HttpGet]
         [HttpGet]
         public async Task<IActionResult> SSOcallback(string code, string state)
         {
@@ -362,7 +383,6 @@ namespace Web.Controllers
             return View();
         }
 
-        [HttpGet]
         public async Task<IActionResult> VerifyEmail(string token)
         {
             if (string.IsNullOrEmpty(token))
@@ -370,20 +390,29 @@ namespace Web.Controllers
                 return BadRequest("無效的驗證請求");
             }
 
-            // 驗證 token 是否有效 (例如：查詢 token 是否存在於資料庫)
-            bool isTokenValid = true; // 這裡應該檢查 token 是否有效的邏輯
+            var member = await _accountService.GetMemberByVerificationTokenAsync(token);
 
-            if (isTokenValid)
-            {
-                // 更新使用者的狀態為已驗證，並將資料寫入資料庫
-                TempData["SuccessMessage"] = "電子郵件已驗證成功！";
-                return RedirectToAction("Account"); // 轉到登入頁面
-            }
-            else
+            if (member == null)
             {
                 return NotFound("驗證失敗，無法找到相關帳戶");
             }
+
+            // 驗證成功，更新 IsEmailConfirmed 和清除 EmailVerificationToken
+            if (member.EmailVerificationToken == token && !member.IsEmailConfirmed)
+            {
+                member.IsEmailConfirmed = true;
+                member.EmailVerificationToken = ""; // 清除驗證 Token
+                await _accountService.UpdateMemberAsync(member);
+
+                TempData["SuccessMessage"] = "電子郵件已驗證成功！";
+                return RedirectToAction("Account", "Account");
+            }
+            else
+            {
+                return BadRequest("驗證失敗，無效的驗證請求");
+            }
         }
+
 
 
     }
