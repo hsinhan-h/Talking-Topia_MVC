@@ -166,10 +166,11 @@ const courseCardsApp = Vue.createApp({
         //換頁 不刷新頁面
         goToPage(page) {
             if (page > 0 && page <= this.totalPages) {
-                this.page = page;
+                this.page = page; 
                 this.fetchCourses();
-                //this.updateQueryString();
-                //history.pushState(null, '', `?page=${this.page}`);
+                this.updateQueryString();
+                history.pushState(null, '', `?page=${this.page}`);
+                
             }
         },
         updateQueryString() {
