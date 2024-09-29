@@ -30,11 +30,6 @@ namespace Web.Controllers
 
         public IActionResult CourseList()
         {
-            //int pageSize = 6;
-            //int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
-            //int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
-            //ViewData["TotalPages"] = totalPages;
-            //var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
             return View();
         }
 
