@@ -226,7 +226,8 @@ const app = createApp({
             const newLicense = {
                 ProfessionalLicenseName: '',
                 ProfessionalLicenseUrl: null,
-                ProfessionalLicenseId: null // 初始化為 null，稍後設置
+                ProfessionalLicenseId: null,
+                valid: true// 初始化為 null，稍後設置
             };
 
             // 暫時添加到 licenses 列表中
@@ -246,8 +247,7 @@ const app = createApp({
                 .then(data => {
                     if (data.success) {
                         // 更新 licenses 列表中最新的證照物件，設置其 ProfessionalLicenseId
-                        this.licenses[this.licenses.length - 1].ProfessionalLicenseId = data.ProfessionalLicenseId;
-                        window.location.reload()
+                        this.licenses[this.licenses.length - 1].ProfessionalLicenseId = data.professionalLicenseId;
                     } else {
                         alert('Failed to create license: ' + data.message);
                     }
@@ -336,12 +336,38 @@ const app = createApp({
             }
         },
         addWorkExperience() {
-            this.works.push({
+            //新增工作經驗欄位
+            const newWorkExperience = {
                 workName: '',
                 workStartDate: '',
                 workEndDate: '',
                 workExperienceFile: null
-            });
+                //valid: true// 初始化為 null，稍後設置
+            };
+                // 暫時添加到 licenses 列表中
+            this.works.push(newWorkExperience);
+                // 假設後端有一個 API 可以用來生成新證照並返回新的 WorkExperienceId
+            fetch('/api/UpdateResume/CreateWorkExperience', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        memberId: localStorage.getItem('memberId') // 假設 memberId 存在於 localStorage 中
+                    })
+            })
+                .then(response => response.json())
+                .then(data => {
+                        if (data.success) {
+                            // 更新 licenses 列表中最新的證照物件，設置其 ProfessionalLicenseId
+                            this.works[this.works.length - 1].WorkExperienceId = data.workExperienceId;
+                        }
+                        else {
+                            alert('Failed to create license: ' + data.message);
+                        }
+                }).catch(error => {
+                  console.error('Error creating license:', error);
+                });
         },
         handleWorkFileUpload(event, index) {
             this.works[index].workExperienceFile = event.target.files[0];
@@ -350,8 +376,28 @@ const app = createApp({
         // 移除工作經歷欄位
         removeWorkExperience(index) {
             this.works.splice(index, 1);
+        },
+        validateForm() {
+            let formIsValid = true;
+            this.showValidation = true;
+
+            // 驗證每個證照的名稱是否填寫
+            this.licenses.forEach(license => {
+                if (!license.ProfessionalLicenseName) {
+                    license.valid = false;
+                    formIsValid = false;
+                } else {
+                    license.valid = true;
+                }
+            });
+
+            // 如果表單有效，手動觸發提交
+            if (formIsValid) {
+                this.$refs.form.submit();  // 手動觸發表單提交
+            }
         }
     },
+
 
 });
 app.mount('#vue-wrapper');

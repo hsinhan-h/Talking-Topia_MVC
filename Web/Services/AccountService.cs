@@ -7,6 +7,8 @@ using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using NuGet.Common;
+using ApplicationCore.Interfaces;
 
 
 
@@ -16,64 +18,18 @@ namespace Web.Services
     {
         private readonly IRepository _repository;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IEmailService _emailService;   
 
 
 
         // 使用依賴注入注入 IRepository 和 ILogger
-        public AccountService(IRepository repository, IHttpContextAccessor httpContextAccessor)
+        public AccountService(IRepository repository, IHttpContextAccessor httpContextAccessor, IEmailService emailService)
         {
             _repository = repository;
             _httpContextAccessor = httpContextAccessor;
 
+
         }
-
-        //public async Task RegisterUserAsync(AccountViewModel model)
-        //{
-        //    try
-        //    {
-        //        var existingMember = await _repository.GetAll<Web.Entities.Member>()
-        //            .SingleOrDefaultAsync(m => m.Email == model.RegisterViewModel.Email);
-
-        //        if (existingMember != null)
-        //        {
-        //            throw new UserAlreadyExistsException("該電子郵件已被註冊");
-        //        }
-
-        //        var newMember = new Web.Entities.Member
-        //        {
-        //            Email = model.RegisterViewModel.Email,
-        //            Password = model.RegisterViewModel.Password,
-        //            FirstName = model.RegisterViewModel.FirstName,
-        //            LastName = "N/A",
-        //            Birthday = null,
-        //            Nickname = "N/A",
-        //            Phone = "0912345678",
-        //            Cdate = DateTime.Now,
-        //            Udate = DateTime.Now,
-        //            IsTutor = false,
-        //            IsVerifiedTutor = false
-        //        };
-
-        //        var passwordHasher = new PasswordHasher<Web.Entities.Member>();
-        //        newMember.Password = passwordHasher.HashPassword(newMember, model.RegisterViewModel.Password);
-
-        //        _repository.Create(newMember);
-        //        await _repository.SaveChangesAsync();
-
-        //        Console.WriteLine("會員註冊成功");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"註冊失敗，發生錯誤：{ex.Message}");
-        //    }
-        //}
-
-
-
-
-
-        // 驗證使用者帳號和密碼
-
 
         public async Task RegisterUserAsync(AccountViewModel model)
         {
@@ -91,6 +47,7 @@ namespace Web.Services
                     Email = model.RegisterViewModel.Email,
                     Password = "" // 這裡可以設定為空字串，或者設定其他值，如果需要加密密碼，請加密處理
                 };
+
                 // 使用 IRepository 創建新的 User
                 _repository.Create(newUser);
                 await _repository.SaveChangesAsync();
@@ -109,7 +66,10 @@ namespace Web.Services
                     Udate = DateTime.Now,
                     IsTutor = false,
                     IsVerifiedTutor = false,
-                    
+                    IsEmailConfirmed = false, // 註冊時預設未驗證
+                    EmailVerificationToken = Guid.NewGuid().ToString() // 生成唯一的驗證 Token
+
+
                 };
 
                 // 使用 PasswordHasher 進行密碼哈希
@@ -119,6 +79,8 @@ namespace Web.Services
                 // 使用 IRepository 創建新的會員
                 _repository.Create(newMember);
                 await _repository.SaveChangesAsync();
+
+                
 
                 Console.WriteLine("會員註冊成功");
             }
@@ -133,33 +95,6 @@ namespace Web.Services
                 throw;
             }
         }
-
-
-        //public async Task<Web.Entities.Member> ValidateUserAsync(string email, string password)
-        //{
-        //    var user = await _repository.GetAll<Web.Entities.Member>().SingleOrDefaultAsync(m => m.Email == email);
-
-
-        //    if (user == null)
-        //    {
-        //        // 用戶不存在
-        //        return null;
-        //    }
-
-        //    // 使用 PasswordHasher 驗證密碼
-        //    var passwordHasher = new PasswordHasher<Web.Entities.Member>();
-        //    var result = passwordHasher.VerifyHashedPassword(user, user.Password, password);
-
-        //    if (result == PasswordVerificationResult.Success)
-        //    {
-        //        return user;  // 驗證成功，返回使用者
-        //    }
-
-        //    // 密碼不匹配
-        //    return null;
-        //}
-
-
         public async Task<Web.Entities.Member> ValidateUserAsync(string email, string password)
         {
             var user = await _repository.GetAll<Web.Entities.Member>().SingleOrDefaultAsync(m => m.Email == email);
@@ -175,14 +110,12 @@ namespace Web.Services
 
             return result == PasswordVerificationResult.Success ? user : null;
         }
-
         public async Task<bool> IsEmailRegisteredAsync(string email)
         {
             // 檢查 email 是否已經存在
             var existingUser = await _repository.FirstOrDefaultAsync<Web.Entities.Member>(u => u.Email == email);
             return existingUser != null;
         }
-
         public async Task<Entities.Member> GetMemberByResetTokenAsync(string token)
         {
             // 使用 LINQ 查詢 Member 資料表，找到對應的重設密碼 token 的會員
@@ -199,7 +132,6 @@ namespace Web.Services
         {
             return await _repository.FirstOrDefaultAsync<Web.Entities.Member>(m => m.Email == email);
         }
-
         public async Task SignInMemberAsync(Entities.Member member, bool isPersistent = true)
         {
             var claims = new List<Claim>
@@ -224,11 +156,17 @@ namespace Web.Services
                 claimsPrincipal,
                 authProperties);
         }
-
         public bool VerifyPassword(string hashedPassword, string enteredPassword)
         {
             var passwordHasher = new PasswordHasher<Entities.Member>();
             return passwordHasher.VerifyHashedPassword(null, hashedPassword, enteredPassword) == PasswordVerificationResult.Success;
+        }
+        public async Task<Entities.Member> GetMemberByVerificationTokenAsync(string token)
+        {
+            // 假設您已經有 `_repository` 或 `DbContext` 可以查詢資料庫中的會員資料
+            var member = await _repository.FirstOrDefaultAsync<Web.Entities.Member>(m => m.EmailVerificationToken == token);
+
+            return member;
         }
     }
 }
