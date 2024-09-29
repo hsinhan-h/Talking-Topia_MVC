@@ -51,7 +51,7 @@ const app = createApp({
         },
         fetchRatingFromServer() {
             // 從後端獲取 Rating 資料
-            fetch(`/api/CourseReviewRatingValue?courseId=${this.courseId}`) 
+            fetch(`/api/CourseReview/CourseReviewApi?courseId=${this.courseId}`) 
                 .then(response => response.json()) // 解析成 JSON 格式
                 .then(data => {
                     this.fetchedRating = data;  // 將獲取到的評分設置到 fetchedRating 中

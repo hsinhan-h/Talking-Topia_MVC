@@ -67,7 +67,7 @@ namespace Web.Controllers
             int memberId = int.Parse(memberIdClaim.Value);
             var result = await _memberService.GetMemberId(memberId);
 
-            try 
+            try
             {
                 var createReview = _icourseService.CreateReviews(memberId,CourseId, rating, NewReviewContent);
                 return RedirectToAction(nameof(CourseMainPage), new { courseId =CourseId });
