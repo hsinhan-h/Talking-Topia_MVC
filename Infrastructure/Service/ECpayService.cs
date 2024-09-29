@@ -35,6 +35,7 @@ namespace Infrastructure.Service
                 {
                     CourseName = course.Title,
                     UnitPrice = (int)item.UnitPrice,
+                    SubPrice = (int)item.TotalPrice,
                     Quantity = item.Quantity,
                     CourseType = item.CourseType,
                 });
