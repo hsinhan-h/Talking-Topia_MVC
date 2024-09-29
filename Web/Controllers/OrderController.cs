@@ -2,9 +2,11 @@
 using ApplicationCore.Services;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System.Net;
 using System.Reflection.Metadata;
 using System.Security.Claims;
+using Web.Controllers.Api;
 using Web.Dtos;
 using Web.ViewModels;
 
@@ -80,7 +82,6 @@ namespace Web.Controllers
         /// <param name="taxIdNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitToOrder([FromBody] ShoppingCartDtos scDto)
         {
 
@@ -127,22 +128,22 @@ namespace Web.Controllers
                 using (var client = new HttpClient(handler))
                 {
                     var requestUrl = Url.Action("New", "Payment", null, Request.Scheme);
-                    var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
-                    var values = new Dictionary<string, string>
-                    {
-                        { "__RequestVerificationToken", tokens.RequestToken },  // 添加防偽驗證令牌
-                        { "OrderId", _orderId.ToString() },
-                        { "MemberId",memberId.ToString()}
-                    };
+                    //var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+                    //var values = new Dictionary<string, string>
+                    //{
+                    //    { "_RequestVerificationToken", tokens.RequestToken },
+                    //};
 
-                    // 將表單資料編碼成 x-www-form-urlencoded 格式
-                    var content = new FormUrlEncodedContent(values);
+                    //var content = new FormUrlEncodedContent(values);
+
+                    var content = new StringContent("{}", System.Text.Encoding.UTF8, "application/json");
 
                     var response = await client.PostAsync(requestUrl, content);
+                    
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("CheckOut", "Payment");
+                        return Redirect("/api/payment/checkout");
                     }
                     else
                     {
