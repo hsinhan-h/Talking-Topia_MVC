@@ -1,4 +1,19 @@
-﻿const { createApp, ref } = Vue ;
+﻿function checkLoginStatus(callback) {
+    fetch('/api/FindMember/IsLoggedIn')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.isLoggedIn) {
+                // 如果未登入，重導向到登入頁面
+                window.location.href = '/Account/Account';
+            } else {
+                // 如果已登入，執行其他邏輯
+                callback();
+            }
+        });
+}
+
+
+const { createApp, ref } = Vue;
 const courseId = document.getElementById('app').dataset.courseId;
 const memberId = document.getElementById('app').dataset.memberId;
 
@@ -36,7 +51,7 @@ const app = createApp({
         },
         fetchRatingFromServer() {
             // 從後端獲取 Rating 資料
-            fetch(`/api/CourseReviewRatingValue?courseId=${this.courseId}`) 
+            fetch(`/api/CourseReview/CourseReviewApi?courseId=${this.courseId}`) 
                 .then(response => response.json()) // 解析成 JSON 格式
                 .then(data => {
                     this.fetchedRating = data;  // 將獲取到的評分設置到 fetchedRating 中
@@ -59,26 +74,28 @@ const app = createApp({
 
         // 關注功能
         follow() {
-            fetch(`/api/Following/AddFollowing?courseId=${this.courseId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    FollowerId: memberId,
-                    FollowedCourseId: courseId,
-                }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        this.isFollowing = true;
-                        alert(data.message);
-                    } else {
-                        alert(data.message);
-                    }
+            checkLoginStatus(() => {
+                fetch(`/api/Following/AddFollowing?courseId=${this.courseId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        FollowerId: memberId,
+                        FollowedCourseId: courseId,
+                    }),
                 })
-                .catch(error => console.error('Error:', error));
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            this.isFollowing = true;
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
         },
         // 取消關注功能
         unfollow() {

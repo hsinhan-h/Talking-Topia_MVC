@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Entities;
+﻿using ApplicationCore.Dtos;
+using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace ApplicationCore.Services
         {
             return _courseRepository.Any(c => c.CourseId == courseId);
         }
+
+       
 
         public int CreateReviews(int studentId, int courseId,byte NewReviewRating, string NewReviewContent)
         {

@@ -34,7 +34,7 @@ namespace Web.Controllers.Api
 
         [HttpPost]
         public ActionResult<bool> AddFollowing([FromBody] WatchViewModel wVM)
-        {
+        {   
             if (wVM != null)
             {
                 // 使用模型中的 followerId 和 followedUserId 進行業務邏輯處理，例如寫入資料庫

@@ -3,6 +3,7 @@ using CloudinaryDotNet.Actions;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using Web.Entities;
+using Web.Dtos; 
 
 namespace Web.Services
 {
@@ -462,12 +463,12 @@ namespace Web.Services
                 select new ReviewViewModel
                 {
                     ReviewerName = member.FirstName + " " + member.LastName,
-                    CommentRating =comment.Rating,
+                    CommentRating = comment.Rating,
                     ReviewDate = comment.Cdate.ToString("yyyy/MM/dd"),
                     ReviewContent = comment.CommentText
                 }).ToListAsync();
 
-            if (reviews.Count==0)
+            if (reviews.Count == 0)
             {
                 reviews = new List<ReviewViewModel>
                 {
@@ -477,7 +478,7 @@ namespace Web.Services
                    }
                 };
             };
-            
+
             // 查詢教師的工作經驗
             var tutorExperiences = await _repository.GetAll<Entities.WorkExperience>()
                                 .Where(w => w.MemberId == courseMainInfo.TutorId)
@@ -564,9 +565,6 @@ namespace Web.Services
                 DiscountPrice = x.Discount == 0 ? price.ToString() : (price * (1 - (x.Discount / 100))).ToString("0"),
             }).ToList();
         }
-
-
-
 
         /// <summary>
         /// 首頁隨機顯示課程
@@ -688,8 +686,46 @@ namespace Web.Services
             return recomCardList;
         }
 
-        
-        
+        public async Task<CourseReviewListDto> GetReviewList(int courseId)
+        {
+            // 查詢該課程的評論
+            var reviews = await(
+                from comment in _repository.GetAll<Entities.Review>()
+                join member in _repository.GetAll<Entities.Member>().AsNoTracking()
+                on comment.StudentId equals member.MemberId
+                where comment.CourseId == courseId
+                orderby comment.Cdate descending
+                select new CourseReview
+                {
+                    ReviewerName = member.FirstName + " " + member.LastName,
+                    CommentRating = comment.Rating,
+                    ReviewDate = comment.Cdate.ToString("yyyy/MM/dd"),
+                    ReviewContent = comment.CommentText
+                }).ToListAsync();
+
+            if (reviews.Count == 0)
+            {
+                reviews = new List<CourseReview>
+                {
+                   new CourseReview
+                   {
+                        ReviewContent="目前沒有評論"
+                   }
+                };
+            };
+
+            return (new CourseReviewListDto
+            {
+                 CourseReviewList = reviews
+            });
+
+
+
+
+        }
+
+
+
     }
 }
 
