@@ -1,4 +1,5 @@
-﻿function checkLoginStatus(callback) {
+﻿
+function checkLoginStatus(callback) {
     fetch('/api/FindMember/IsLoggedIn')
         .then(response => response.json())
         .then(data => {
@@ -12,12 +13,11 @@
         });
 }
 
-
 const { createApp, ref } = Vue;
 const courseId = document.getElementById('app').dataset.courseId;
 const memberId = document.getElementById('app').dataset.memberId;
 
-const app = createApp({
+const call = createApp({
     data() {
         return {
             rating: null,
@@ -25,7 +25,8 @@ const app = createApp({
             courseId: courseId,      // 從 DOM 中取得的課程 ID
             isFollowing: false,  // 初始關注狀態，從後端來決定是否已關注
             FollowerId: memberId,       // 假設當前使用者的 ID
-            FollowedCourseId: courseId    // 假設要關注的對象 ID
+            FollowedCourseId: courseId,    // 假設要關注的對象 ID
+            courseReviews: []        // 用來儲存課程評論列表
         }
     },
     methods: {
@@ -58,6 +59,17 @@ const app = createApp({
                 })
                 .catch(error => {
                     console.error('錯誤:', error);
+                });
+        },
+        fetchCourseReviews() {
+            // 從後端 API 獲取課程評論列表
+            fetch(`/api/CourseReview/GetCourseReviewList?courseId=${this.courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.courseReviews = data; // 將評論列表數據存入 Vue.js 的 courseReviews
+                })
+                .catch(error => {
+                    console.error('Error fetching course reviews:', error);
                 });
         },
         fetchFollowStatusFromServer() {
@@ -126,16 +138,16 @@ const app = createApp({
         // 在 Vue 應用掛載後自動呼叫 fetchRatingFromServer 來獲取資料
         this.fetchRatingFromServer();
         this.fetchFollowStatusFromServer();
-        
+        this.fetchCourseReviews(); 
     }
 
 })
 
-app.use(PrimeVue.Config);
+call.use(PrimeVue.Config);
 
-app.component('p-rating', PrimeVue.Rating);
+call.component('p-rating', PrimeVue.Rating);
 
-app.mount('#app');
+call.mount('#app');
 
 
 const twentyfive_mins = document.querySelector("#min-25");
