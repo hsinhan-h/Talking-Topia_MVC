@@ -541,19 +541,21 @@
                         <div class="comment-rating-section mb-4">
                             <h3>韓文評價</h3>
                             <div class="comment-rating-group">
-                                <div class="form-check">
-                                    <input class="form-check-input comment-rating-selection" type="checkbox" value="" id="flexCheck-5">
-                                    <label class="form-check-label" for="flexCheck-5">
+                                <div class="form-check" v-for="rating in [5, 4, 3, 2, 1]" :key="rating">
+                                    <input class="form-check-input comment-rating-selection" type="checkbox"
+                                           :id="'flexCheck-' + rating" v-model="selectedRatings"
+                                           :value="rating">
+                                    <label class="form-check-label" :for="'flexCheck-' + rating">
                                         <i class="fa-solid fa-star"></i>
-                                        <p class="rating-level ">5。非常好</p>
-                                        <p>5</p>
+                                        <p class="rating-level">{{ rating }}。{{ getRatingText(rating) }}</p>
+                                        <p>{{ rating }}</p>
                                         <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                             <div class="progress-bar" style="width: 93%"></div>
                                         </div>
                                         <p class="comment-percentage">99.3%</p>
                                     </label>
                                 </div>
-                                <div class="form-check">
+                                @* <div class="form-check">
                                     <input class="form-check-input comment-rating-selection" type="checkbox" value="" id="flexCheck-4">
                                     <label class="form-check-label" for="flexCheck-4">
                                         <i class="fa-solid fa-star"></i>
@@ -600,7 +602,7 @@
                                         </div>
                                         <p class="comment-percentage">99.3%</p>
                                     </label>
-                                </div>
+                                </div> *@
                             </div>
                         </div>
 

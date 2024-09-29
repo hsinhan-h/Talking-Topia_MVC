@@ -26,10 +26,33 @@ const call = createApp({
             isFollowing: false,  // 初始關注狀態，從後端來決定是否已關注
             FollowerId: memberId,       // 假設當前使用者的 ID
             FollowedCourseId: courseId,    // 假設要關注的對象 ID
-            courseReviews: []        // 用來儲存課程評論列表
+            courseReviews: [],        // 用來儲存課程評論列表
+            selectedRatings: []
+        }
+    },
+    computed: {
+        // 根據選中的評分篩選評論
+        filteredReviews() {
+            // 如果沒有選擇任何評分，則顯示所有評論
+            if (this.selectedRatings.length === 0) {
+                return this.courseReviews;
+            }
+            // 根據選中的評分篩選評論
+            return this.courseReviews.filter(review => this.selectedRatings.includes(review.CommentRating));
         }
     },
     methods: {
+        // 根據評分顯示不同的描述
+        getRatingText(rating) {
+            switch (rating) {
+                case 5: return '非常好';
+                case 4: return '很好';
+                case 3: return '普通';
+                case 2: return '不好';
+                case 1: return '非常糟';
+                default: return '';
+            }
+        },
         submitRating() {
             // 構建 FormData 並提交 rating 資料
             let formData = new FormData();
@@ -131,7 +154,18 @@ const call = createApp({
                     }
                 })
                 .catch(error => console.error('Error:', error));
-        }
+        },
+        // 根據評分顯示不同的描述
+        getRatingText(rating) {
+            switch (rating) {
+                case 5: return '非常好';
+                case 4: return '很好';
+                case 3: return '普通';
+                case 2: return '不好';
+                case 1: return '非常糟';
+                default: return '';
+            }
+        },
 
     },
     mounted() {
