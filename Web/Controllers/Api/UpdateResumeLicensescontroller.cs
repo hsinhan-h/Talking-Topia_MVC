@@ -72,6 +72,7 @@ namespace Web.Controllers.Api
             return Ok(new { success = true, message = result.Message });
         }
 
+
         [HttpPost]
         public async Task<IActionResult> CreateLicense([FromBody] TutorResumeViewModel request)
         {
@@ -100,6 +101,105 @@ namespace Web.Controllers.Api
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateWorkExperience([FromBody] TutorResumeViewModel request)
+        {
 
+            try
+            {
+                // 創建一個新的 workexpericen 並儲存到資料庫
+                var newWexp = new WorkExperience
+                {
+                    MemberId = request.memberId,
+                    WorkName = string.Empty,
+                    WorkStartDate = new DateOnly(2024, 1, 1), // 初始化為空，稍後更新
+                    WorkEndDate = new DateOnly(2024, 1, 1),  // 初始化為空，稍後更新
+                    Cdate = DateTime.Now,
+                    Udate = null
+                };
+
+                // 將新證照保存到資料庫
+                _repository.Create(newWexp);
+                await _repository.SaveChangesAsync();
+
+                // 返回新生成的 ProfessionalLicenseId
+                return Ok(new { success = true, newWexp.WorkExperienceId });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteWorkExp([FromBody] TutorResumeViewModel request)
+        {
+            var workExperienceIds = request.WorkBackground
+        .Where(wb => wb.WorkExperienceId.HasValue)  // 只選擇有 WorkExperienceId 的項目
+        .Select(wb => wb.WorkExperienceId.Value)    // 取得 WorkExperienceId
+        .ToList();
+
+            if (!workExperienceIds.Any())
+            {
+                return BadRequest(new { success = false, message = "未找到任何可刪除的工作經歷。" });
+            }
+
+            // 呼叫 Service 方法進行刪除
+            var result = await _resumeDataService.DeleteWorkExpAsync(request.memberId, workExperienceIds);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { success = false, message = result.Message });
+            }
+
+            return Ok(new { success = true, message = result.Message });
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateResumeWorkExp([FromForm] TutorResumeViewModel model)
+        {
+            try
+            {
+                // 獲取上傳的文件（如果有多個文件）
+                var files = Request.Form.Files;
+                var fileUrls = new List<string>();
+
+                // 遍歷每個文件，逐一上傳
+                foreach (var file in files)
+                {
+                    if (file != null && file.Length > 0)
+                    {
+                        // 使用 Cloudinary 上傳，並取得返回的 URL
+                        var fileUrl = await _cloudinaryService.UploadImageAsync(file);
+                        fileUrls.Add(fileUrl);
+                    }
+                }
+
+                // 如果沒有上傳新文件，則使用原本的 URL 列表
+                if (!fileUrls.Any())
+                {
+                    fileUrls = model.ProfessionalLicenseUrl;  // 確保 model.ProfessionalLicenseUrl 是正確的數據類型
+                }
+
+                // 確保 WorkBackground 有數據
+                if (model.WorkBackground != null && model.WorkBackground.Any())
+                {
+                    await _resumeDataService.ChangeResumeWorkExp(
+                        model.memberId,
+                        model.WorkBackground,  // 傳遞工作經驗列表
+                        fileUrls
+                    );
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "No work background data provided" });
+                }
+
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 記錄具體的異常信息，方便調試
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

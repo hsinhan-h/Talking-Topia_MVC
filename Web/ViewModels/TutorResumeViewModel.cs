@@ -47,12 +47,16 @@ namespace Web.ViewModels
         /// </summary>
         //[Required]
         public List<int> ProfessionalLicenseId { get; set; } = new List<int>();
+        
         public List<ResumeWorkExp> WorkBackground { get; set; } = new List<ResumeWorkExp> { new ResumeWorkExp() };
         public class ResumeWorkExp
         {
             public DateOnly? WorkStartDate { get; set; }
             public DateOnly? WorkEndDate { get; set; }
             public string WorkName { get; set; }
+            public int? WorkExperienceId { get; set; }
+            public string WorkExperienceFile { get; set; }
+
         }
         public ApplyCourseList CourseList { get; set; } = new ApplyCourseList();
         public class ApplyCourseList
@@ -61,7 +65,7 @@ namespace Web.ViewModels
             public int ApplySubCategoryId { get; set; }
         }
 
-        public string WorkExperienceFile { get; set; }
+        
         public string SelectedCategory { get; set; }
         public string SelectedSubcategory { get; set; }
 

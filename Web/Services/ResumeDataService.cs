@@ -119,8 +119,114 @@ namespace Web.Services
                 Message = "Licenses deleted successfully."
             };
         }
+        public async Task<TutorResumeViewModel> DeleteWorkExpAsync(int memberId, List<int> workExperienceIds)
+        {
+            // 查找會員資料
+            var member = await _repository.GetAll<Entities.Member>()
+                                .Include(m => m.WorkExperiences)
+                                .FirstOrDefaultAsync(m => m.MemberId == memberId);
 
+            if (member == null)
+            {
+                return new TutorResumeViewModel
+                {
+                    Success = false,
+                    Message = "Member not found."
+                };
+            }
+            var workExpToDelete = member.WorkExperiences
+                .Where(wexp => workExperienceIds.Contains(wexp.WorkExperienceId))
+                .ToList();
 
+            if (workExpToDelete.Count == 0)
+            {
+                return new TutorResumeViewModel
+                {
+                    Success = false,
+                    Message = "No licenses found to delete."
+                };
+            }
+            foreach (var wexp in workExpToDelete)
+            {
+                _repository.Delete(wexp);
+            }
+            await _repository.SaveChangesAsync();
+
+            return new TutorResumeViewModel
+            {
+                Success = true,
+                Message = "Licenses deleted successfully."
+            };
+        }
+
+        public async Task<TutorResumeViewModel> ChangeResumeWorkExp(int memberId, List<ResumeWorkExp> workExperiences, List<string> fileUrls)
+        {
+            try
+            {
+                // 查找會員資料
+                var member = await _repository.GetAll<Entities.Member>()
+                                     .Include(m => m.WorkExperiences)
+                                     .FirstOrDefaultAsync(m => m.MemberId == memberId);
+
+                if (member == null)
+                {
+                    throw new Exception("Member not found.");
+                }
+
+                // 遍歷前端提交的資料
+                for (int i = 0; i < workExperiences.Count; i++)
+                {
+                    var workExp = workExperiences[i];
+
+                    // 檢查是否有 WorkExperienceId，來決定是更新還是新增
+                    if (workExp.WorkExperienceId.HasValue)
+                    {
+                        // 如果有 WorkExperienceId，則嘗試更新現有的資料
+                        var existingWorkExp = member.WorkExperiences
+                            .FirstOrDefault(wexp => wexp.WorkExperienceId == workExp.WorkExperienceId.Value);
+
+                        if (existingWorkExp != null)
+                        {
+                            // 更新現有的資料
+                            existingWorkExp.WorkName = workExp.WorkName;
+                            existingWorkExp.WorkStartDate = (DateOnly)workExp.WorkStartDate;
+                            existingWorkExp.WorkEndDate = (DateOnly)workExp.WorkEndDate;
+                            existingWorkExp.WorkExperienceFile = fileUrls[i];
+                            existingWorkExp.Udate = DateTime.Now; // 更新修改日期
+                        }
+                        else
+                        {
+                            throw new Exception($"Work experience with ID {workExp.WorkExperienceId.Value} not found.");
+                        }
+                    }
+                    else
+                    {
+                        // 如果沒有 WorkExperienceId，則新增新的工作經驗資料
+                        var newWorkExp = new Entities.WorkExperience
+                        {
+                            MemberId = memberId,
+                            WorkName = workExp.WorkName,
+                            WorkStartDate = (DateOnly)workExp.WorkStartDate,
+                            WorkEndDate = (DateOnly)workExp.WorkEndDate,
+                            WorkExperienceFile = fileUrls[i],
+                            Cdate = DateTime.Now,
+                            Udate = null
+                        };
+                        member.WorkExperiences.Add(newWorkExp);
+                    }
+                }
+
+                // 保存變更
+                await _repository.SaveChangesAsync();
+
+                // 回傳成功的 ViewModel
+                return new TutorResumeViewModel();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update licenses", ex);
+            }
+        }
 
 
 
@@ -227,7 +333,8 @@ namespace Web.Services
             {
                 WorkName = wexp.WorkName,
                 WorkStartDate = wexp.WorkStartDate,
-                WorkEndDate = wexp.WorkEndDate
+                WorkEndDate = wexp.WorkEndDate,
+                WorkExperienceId = wexp.WorkExperienceId,
             })
             .ToListAsync();
 
@@ -416,7 +523,7 @@ namespace Web.Services
                     if (existingWorkExperience != null)
                     {
                         // 如果找到對應的工作經歷，則更新
-                        existingWorkExperience.WorkExperienceFile = qVM.WorkExperienceFile;
+                        existingWorkExperience.WorkExperienceFile = workExp.WorkExperienceFile;
                         existingWorkExperience.WorkStartDate = (DateOnly)workExp.WorkStartDate;
                         existingWorkExperience.WorkEndDate = (DateOnly)workExp.WorkEndDate;
                         existingWorkExperience.WorkName = workExp.WorkName;
@@ -429,7 +536,7 @@ namespace Web.Services
                         // 如果找不到對應的工作經歷，則創建新的
                         var newWorkExperience = new Entities.WorkExperience
                         {
-                            WorkExperienceFile = qVM.WorkExperienceFile,
+                            WorkExperienceFile = workExp.WorkExperienceFile,
                             WorkStartDate = (DateOnly)workExp.WorkStartDate,
                             WorkEndDate = (DateOnly)workExp.WorkEndDate,
                             WorkName = workExp.WorkName,

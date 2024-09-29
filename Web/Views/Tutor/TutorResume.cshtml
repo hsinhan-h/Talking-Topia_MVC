@@ -144,7 +144,7 @@
                             <div class="card mb-2">
                                 <div class="card-body">
                                     <p class="my-1 bgc fs-4">【工作名稱 ({{ numberToChinese(index + 1) }})】</p>
-
+                                    <input type="hidden" v-model="works[index].workExperienceId">
                                     <!-- 工作名稱輸入框 -->
                                     <input class="form-control my-2" type="text" placeholder="輸入工作名稱"
                                            v-model="work.workName" :name="'WorkBackground[' + index + '].WorkName'">
@@ -165,9 +165,9 @@
                                            v-model="work.workEndDate" :min="'1940-01-01'" :max="'2099-12-31'"
                                            :name="'WorkBackground[' + index + '].WorkEndDate'">
                                     @* 更改按鈕 *@
-                                    <button type="button" class="btn textbtncolor btnbg btnbghover resume_btn bgc">更新</button>
+                                    <button type="button" @@click="editWorkExp(index)" class="btn textbtncolor btnbg btnbghover resume_btn bgc">更新</button>
                                     <!-- 移除按鈕 -->
-                                    <button class="btn textbtncolor btndangerbg btnbghover resume_btn bgc ms-2" @@click="removeWorkExperience(index)">移除</button>
+                                    <button type="button" class="btn textbtncolor btndangerbg btnbghover resume_btn bgc ms-2" @@click="removeWorkExperience(index)">移除</button>
                                 </div>
                             </div>
                         </div>
