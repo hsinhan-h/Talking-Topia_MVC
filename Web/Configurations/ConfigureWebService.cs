@@ -1,9 +1,4 @@
-﻿using ApplicationCore.Interfaces;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Web.Services;
-
-namespace Web.Configurations
+﻿namespace Web.Configurations
 {
     public static class ConfigureWebService
     {
@@ -14,6 +9,8 @@ namespace Web.Configurations
             services.AddScoped<OrderDetailService>();
             services.AddScoped<OrderViewModelService>();
             services.AddScoped<MemberAppointmentService>();
+            services.AddScoped<DifySearchService>();
+          
             return services;
         }
     }

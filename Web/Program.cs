@@ -49,6 +49,8 @@ namespace Web
                 options.Cookie.IsEssential = true;
             });
 
+            builder.Services.AddHttpClient();
+
             //builder.Services.AddScoped<IHostedService,BackgroundTaskService>();
             builder.Services.AddScoped<Services.BookingService>();
             builder.Services.AddScoped<CourseService>();
@@ -60,9 +62,6 @@ namespace Web
             builder.Services.AddScoped<CourseCategoryService>();
             builder.Services.AddScoped<CloudinaryService>();
             
-
-
-
             // 要加下面這個 AddInfrastructureService      
             builder.Services.AddInfrastructureService(builder.Configuration);
             // 將DI改至Configurations資料夾內的兩支檔案，若有改就可以把上方那一排Service注入個別刪除
