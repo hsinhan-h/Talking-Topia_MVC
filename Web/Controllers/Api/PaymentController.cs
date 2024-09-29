@@ -17,8 +17,6 @@ namespace Web.Controllers.Api
         private readonly ECpayService _eCpayService;
         private readonly IOrderService _orderService;
         private readonly IMemberService _memberService;
-        private int _orderId;
-        private int _memberId;
 
         public PaymentController(IConfiguration configuration, ECpayService eCpayService, IOrderService orderService, IMemberService memberService)
         {
@@ -28,23 +26,14 @@ namespace Web.Controllers.Api
             _memberService = memberService;
         }
 
-        // POST api/payment
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult New([FromForm] string orderId, [FromForm] string memberId)
+        public IActionResult New()
         {
-            if (string.IsNullOrEmpty(orderId) || !int.TryParse(orderId, out _orderId))
-            {
-                return BadRequest("OrderId 不存在或無效");
-            }
-
-            if (string.IsNullOrEmpty(memberId) || !int.TryParse(memberId, out _memberId))
-            {
-                return BadRequest("memberId 不存在或無效");
-            }
-
             return RedirectToAction("checkout");
         }
+
+
+        // POST api/payment
 
         [HttpGet("checkout")]
         public async Task<IActionResult> CheckOut()
@@ -104,9 +93,15 @@ namespace Web.Controllers.Api
                 orderStatus = EOrderStatus.Failed;
                 return BadRequest();
             }
+
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+
             orderStatus = EOrderStatus.Success;
-            _orderId = _orderService.GetLatestOrder(_memberId);
-            _orderService.UpdateOrderTransactionAndStatus(_orderId, result.MerchantTradeNo, result.TradeNo, orderStatus);
+            var orderId = _orderService.GetLatestOrder(memberId);
+            _orderService.UpdateOrderTransactionAndStatus(orderId, result.MerchantTradeNo, result.TradeNo, orderStatus);
 
             return Ok("1|OK");
         }
