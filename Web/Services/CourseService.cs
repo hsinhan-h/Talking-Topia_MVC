@@ -3,7 +3,8 @@ using CloudinaryDotNet.Actions;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using Web.Entities;
-using Web.Dtos; 
+using Web.Dtos;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Web.Services
 {
@@ -19,6 +20,7 @@ namespace Web.Services
         public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(
             int page, 
             int pageSize, 
+            int memberId,
             string selectedSubject = null, 
             string selectedNation = null, 
             string selectedWeekdays = null, 
@@ -76,7 +78,8 @@ namespace Web.Services
                     CourseRatings = courseMain.CourseRatings,
                     CourseReviews = courseMain.CourseReviews,
                     BookedTimeSlots = bookInfo?.BookedTimeSlots ?? new List<TimeSlotViewModel>(),
-                    AvailableTimeSlots = tTimeInfo?.AvailableTimeSlots ?? new List<TimeSlotViewModel>()
+                    AvailableTimeSlots = tTimeInfo?.AvailableTimeSlots ?? new List<TimeSlotViewModel>(),
+                    FollowingStatus = IsWatched(memberId, courseMain.CourseId)
                 }).ToList();
 
             return new CourseInfoListViewModel
