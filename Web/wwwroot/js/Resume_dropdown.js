@@ -91,7 +91,7 @@
     }
 ];
 const { createApp } = Vue;
-const app = createApp({
+const appresume = createApp({
     data() {
         return {
             selectedCategory: '', // 用來儲存選中的分類 ID
@@ -101,7 +101,7 @@ const app = createApp({
                 {
                     ProfessionalLicenseId: null,
                     ProfessionalLicenseName: '',
-                    ProfessionalLicenseUrl: null
+                    ProfessionalLicenseUrl: null,
                 }
             ],
             works: [ // 初始化一個空的工作經驗表單
@@ -113,6 +113,9 @@ const app = createApp({
                     workExperienceId:null,
                 }
             ],
+            formSubmitted: false,
+            licensesUpdated: false,  // 用來標記證書是否已更新
+            worksUpdated: false,
         };
     },
     computed: {
@@ -140,9 +143,11 @@ const app = createApp({
     },
     created() {
         this.convertData(data_categories);
-        this.fetchBackendData();
-        //// 如果 TempData 中有 Toast 信息，則顯示
     },
+    mounted() {
+     this.fetchBackendData();
+    },
+
     methods: {
         convertData(data) {
             let result = {};
@@ -229,7 +234,8 @@ const app = createApp({
                 ProfessionalLicenseName: '',
                 ProfessionalLicenseUrl: null,
                 ProfessionalLicenseId: null,
-                valid: true
+                valid: false,  // 初始化時證書無效，需用戶填寫後更新為 true
+                isTemporary: true // 初始化為暫存狀態
             };
 
             // 暫時添加到 licenses 列表中
@@ -285,6 +291,7 @@ const app = createApp({
                     if (data.success) {
                         // 成功訊息
                         alert('License updated successfully');
+                        this.licenses[index].isTemporary = false;
                     } else {
                         // 失敗訊息
                         alert('Failed to update license:', data.message);
@@ -362,7 +369,7 @@ const app = createApp({
                 .then(data => {
                     if (data.success) {
                         // 更新 licenses 列表中最新的證照物件，設置其 ProfessionalLicenseId
-                        this.works[this.works.length - 1].WorkExperienceId = data.workExperienceId;
+                        this.works[this.works.length - 1].workExperienceId = data.workExperienceId;
                     }
                     else {
                         alert('Failed to create license: ' + data.message);
@@ -418,30 +425,27 @@ const app = createApp({
         editWorkExp(index) {
              const updatedworkexp = this.works[index];
             const memberId = localStorage.getItem('memberId');
+            console.log(`Processing index: ${index}`);
+                            console.log('This is index 1:', updatedworkexp);
 
-            // 檢查 index 和 updatedworkexp 是否有效
-            if (!updatedworkexp || index === undefined) {
-                console.error('Invalid work experience data or index.');
-                return;
-            }
 
             // 使用 FormData 包裝文件和其他資料
             const formData = new FormData();
             formData.append('memberId', memberId);
 
             // 處理單個工作經驗的數據
-            formData.append('WorkBackground[0].WorkExperienceId', updatedworkexp.workExperienceId );
-            formData.append('WorkBackground[0].WorkName', updatedworkexp.workName || '');
-            formData.append('WorkBackground[0].WorkStartDate', updatedworkexp.workStartDate || '');
-            formData.append('WorkBackground[0].WorkEndDate', updatedworkexp.workEndDate || '');
+            formData.append(`WorkBackground[0].WorkExperienceId`, updatedworkexp.workExperienceId );
+            formData.append(`WorkBackground[0].WorkName`, updatedworkexp.workName || '');
+            formData.append(`WorkBackground[0].WorkStartDate`, updatedworkexp.workStartDate || '');
+            formData.append(`WorkBackground[0].WorkEndDate`, updatedworkexp.workEndDate || '');
             // 檢查是否為文件，否則直接傳送 URL
-            if (updatedworkexp.WorkExperienceFile instanceof File) {
-                formData.append('WorkBackground[0].WorkExperienceFile', updatedworkexp.workExperienceFile);
-            } else if (updatedworkexp.WorkExperienceFile) {
-                formData.append('ProfessionalLicenseUrl[0]', updatedworkexp.workExperienceFile.toString());
+            if (updatedworkexp.workExperienceFile instanceof File) {
+                formData.append(`WorkBackground[0].WorkExperienceFile`, updatedworkexp.workExperienceFile);
+            } else if (updatedworkexp.workExperienceFile) {
+                formData.append(`WorkBackground[0].WorkExperienceFile`, updatedworkexp.workExperienceFile.toString());
             } else {
                 // 如果 WorkExperienceFile 是 null 或 undefined，傳遞空字串
-                formData.append('ProfessionalLicenseUrl[0]', '');
+                formData.append(`WorkBackground[0].WorkExperienceFile`, '');
             }
 
             // 發送 API 請求
@@ -463,6 +467,42 @@ const app = createApp({
                     console.error('Error updating work experience:', error);
                 });
         },
+        confirmAllLicensesUpdates() {
+            let updatesCompleted = true;
+
+            this.licenses.forEach((license, index) => {
+                if (license.ProfessionalLicenseName.trim() === '') {
+                    license.valid = false;
+                    updatesCompleted = false;  // 如果有無效的條目，則不允許提交
+                } else {
+                    this.enditLcense(index);  // 觸發更新
+                    license.valid = true;
+                }
+            });
+
+            if (updatesCompleted) {
+                this.licensesUpdated = true;
+                this.checkFormReady();  // 允許提交表單
+                alert("所有證書已更新，您可以提交表單。");
+            } else {
+                alert("請先填寫所有必填字段。");
+            }
+        },
+        confirmAllWorksUpdates() {
+            this.works.forEach((work, index) => {
+                this.editWorkExp(index);  // 觸發每個工作的更新邏輯
+            });
+
+            this.worksUpdated = true;  // 標記工作經驗已更新
+            this.checkFormReady();  // 檢查是否可以提交表單
+            alert("所有工作經驗已更新，您可以提交表單。");
+        },
+        checkFormReady() {
+            if (this.licensesUpdated && this.worksUpdated) {
+                this.formSubmitted = true;
+            }
+        },
+
         validateForm() {
             let formIsValid = true;
             this.showValidation = true;
@@ -478,9 +518,7 @@ const app = createApp({
             });
 
             // 手動移除無效的項目
-            this.$nextTick(() => {
-                this.licenses = this.licenses.filter(license => license.valid)
-            });
+                this.licenses = this.licenses.filter(license => !license.isTemporary || license.valid);
                 // 如果表單有效，手動觸發提交
                 if (formIsValid) {
                     this.$refs.form.submit();  // 手動觸發表單提交
@@ -488,4 +526,4 @@ const app = createApp({
         },
     },
 });
-app.mount('#vue-wrapper');
+appresume.mount('#vue-wrapper');

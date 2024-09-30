@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/css/course_list.css" />
     <link rel="stylesheet" href="~/css/tutor_intro_medias_slider.css">
     <link rel="stylesheet" href="~/css/booking_table_modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <style>
         [v-cloak] {
             display: none;
@@ -216,7 +217,8 @@
                         <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
                              :src="courseCard.tutorFlagImage.replace('~', '')" />
                     </div>
-                    <div class="lh-tutor-follow mt-2" v-on:click="toggleFollow(courseCard)">
+                    <div :class="['lh-tutor-follow mt-2', {'following': courseCard.followingStatus}]"
+                         v-on:click="toggleFollow(courseCard)">
                         <span v-if="courseCard.followingStatus">關注中</span>
                         <span v-else>+關注</span>
                     </div>
@@ -433,6 +435,7 @@
 
 @section endJS
 {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="~/js/course_list/course_list_nested_dropdown.js"></script>
     <script src="~/lib/myvue/vue.global.prod.js" asp-append-version="true"></script>
     <script src="~/lib/lodash.js/lodash.min.js"></script>
