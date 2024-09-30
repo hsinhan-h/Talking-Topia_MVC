@@ -36,8 +36,6 @@ namespace Web
 
             builder.Services.AddHttpContextAccessor();
 
-
-
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -74,6 +72,19 @@ namespace Web
             //    builder.Configuration.AddUserSecrets<Program>();
             //}
 
+            builder.Services.AddCors(options => {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader()
+                               .WithExposedHeaders("*");
+
+                        //builder.WithOrigins("http://example.com","http://www.contoso.com")
+                        //       .WithMethods("GET", "POST", "PUT", "DELETE");
+                    });
+            });
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie(options =>
@@ -90,6 +101,7 @@ namespace Web
             builder.Services.AddAuthorization();
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
+
             var app = builder.Build();
 
 
@@ -110,6 +122,8 @@ namespace Web
 
             // 啟用 Session
             app.UseSession();
+
+            app.UseCors();
 
             // 先驗證再授權.
             app.UseAuthentication();
