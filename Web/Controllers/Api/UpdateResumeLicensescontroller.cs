@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Services;
+using static Web.ViewModels.TutorResumeViewModel;
 
 namespace Web.Controllers.Api
 {
@@ -182,11 +183,15 @@ namespace Web.Controllers.Api
                 // 確保 WorkBackground 有數據
                 if (model.WorkBackground != null && model.WorkBackground.Any())
                 {
-                    await _resumeDataService.ChangeResumeWorkExp(
-                        model.memberId,
-                        model.WorkBackground,  // 傳遞工作經驗列表
-                        fileUrls
-                    );
+                    // 遍歷 WorkBackground 列表，逐一處理每個工作經驗
+                    foreach (var workExperience in model.WorkBackground)
+                    {
+                        await _resumeDataService.ChangeResumeWorkExp(
+                            model.memberId,
+                            new List<ResumeWorkExp> { workExperience },  // 傳遞單個工作經驗
+                            fileUrls
+                        );
+                    }
                 }
                 else
                 {
