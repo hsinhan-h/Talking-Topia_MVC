@@ -20,9 +20,8 @@
 
     <p>@message</p>
     <p>@header</p>
-    
         <div id="vue-wrapper">
-        <form asp-action="TutorResume" method="post" ref="form">
+        <form asp-action="TutorResume" method="post" ref="form" >
             <div class="container-fluid mt-5">
                 <div class="row px-0">
                     <div class="col-12 resume_banner d-flex flex-column justify-content-center">
@@ -47,7 +46,7 @@
                     <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
                         <p class="my-1">請提供大頭貼</p>
                         <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入..." name="HeadShotImage">
-                        @* <a href="@Url.Content(Model.HeadShotImage)" target="_blank">下載已上傳的檔案</a> *@
+                        <a href="@Url.Content(Model.HeadShotImageUrl)" target="_blank">下載已上傳的檔案</a>
                     </div>
                     <div class="col-12 mt-4">
                         <p class="my-1 bgc fs-4">【學校名稱】</p>
@@ -87,6 +86,7 @@
                                     <input type="hidden" v-model="licenses[index].ProfessionalLicenseId">
                                     <input class="my-2" type="file" @@change="handleFileUpload($event, index)"
                                            :name="'ProfessionalLicenseUrl[' + index + ']'">
+                                    
                                     @* 更改按鈕 *@
                                     <button type="button" @@click="enditLcense(index)" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">更新</button>
                                     <!-- 刪除按鈕 -->
@@ -95,6 +95,8 @@
                             </div>
                         </div>
                     </div>
+                    @* 確認按鈕 *@
+                    <button type="button" @@click="confirmAllLicensesUpdates" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">確認</button>
                 </div>
                 <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
                      aria-expanded="false">
@@ -170,9 +172,11 @@
                                     <button type="button" class="btn textbtncolor btndangerbg btnbghover resume_btn bgc ms-2" @@click="removeWorkExperience(index)">移除</button>
                                 </div>
                             </div>
+                            @* 確認按鈕 *@
                         </div>
                     </div>
                 </div>
+                <button type="button" @@click="confirmAllWorksUpdates" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">確認</button>
 
                 <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
                     <div class="col-12 d-flex flex-row align-items-center justify-content-center">
@@ -184,7 +188,7 @@
             <div class="row mt-3 ">
                 <div class="my-3 d-flex flex-row justify-content-end">
                     <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
-                    <button type="button" @@click="validateForm" class="btn resume_border resume_btn m-2">下一步</button>
+                <button type="button" :disabled="!formSubmitted" @@click="validateForm" class="btn resume_border resume_btn m-2">下一步</button>
                 </div>
             </div>
         </div>

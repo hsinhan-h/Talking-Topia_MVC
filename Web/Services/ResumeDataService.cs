@@ -14,9 +14,11 @@ namespace Web.Services
     public class ResumeDataService
     {
         private readonly IRepository _repository;
-        public ResumeDataService(IRepository repository)
+        private readonly CloudinaryService _cloudinaryService;
+        public ResumeDataService(IRepository repository, CloudinaryService cloudinaryService)
         {
             _repository = repository;
+            _cloudinaryService = cloudinaryService;
         }
 
         //Api需要的
@@ -159,7 +161,7 @@ namespace Web.Services
             };
         }
 
-        public async Task<TutorResumeViewModel> ChangeResumeWorkExp(int memberId, List<ResumeWorkExp> workExperiences, List<string> fileUrls)
+        public async Task ChangeResumeWorkExp(int memberId, List<ResumeWorkExp> workExperiences, List<string> fileUrls)
         {
             try
             {
@@ -173,58 +175,52 @@ namespace Web.Services
                     throw new Exception("Member not found.");
                 }
 
-                // 遍歷前端提交的資料
-                for (int i = 0; i < workExperiences.Count; i++)
+                // 處理單個工作經驗
+                var workExp = workExperiences.First();  // 只會有一個工作經驗
+
+                // 檢查是否有 WorkExperienceId，來決定是更新還是新增
+                if (workExp.WorkExperienceId.HasValue)
                 {
-                    var workExp = workExperiences[i];
+                    // 如果有 WorkExperienceId，則嘗試更新現有的資料
+                    var existingWorkExp = member.WorkExperiences
+                        .FirstOrDefault(wexp => wexp.WorkExperienceId == workExp.WorkExperienceId.Value);
 
-                    // 檢查是否有 WorkExperienceId，來決定是更新還是新增
-                    if (workExp.WorkExperienceId.HasValue)
+                    if (existingWorkExp != null)
                     {
-                        // 如果有 WorkExperienceId，則嘗試更新現有的資料
-                        var existingWorkExp = member.WorkExperiences
-                            .FirstOrDefault(wexp => wexp.WorkExperienceId == workExp.WorkExperienceId.Value);
-
-                        if (existingWorkExp != null)
-                        {
-                            // 更新現有的資料
-                            existingWorkExp.WorkName = workExp.WorkName;
-                            existingWorkExp.WorkStartDate = (DateOnly)workExp.WorkStartDate;
-                            existingWorkExp.WorkEndDate = (DateOnly)workExp.WorkEndDate;
-                            existingWorkExp.WorkExperienceFile = fileUrls[i];
-                            existingWorkExp.Udate = DateTime.Now; // 更新修改日期
-                        }
-                        else
-                        {
-                            throw new Exception($"Work experience with ID {workExp.WorkExperienceId.Value} not found.");
-                        }
+                        // 更新現有的資料
+                        existingWorkExp.WorkName = workExp.WorkName;
+                        existingWorkExp.WorkStartDate = (DateOnly)workExp.WorkStartDate;
+                        existingWorkExp.WorkEndDate = (DateOnly)workExp.WorkEndDate;
+                        existingWorkExp.WorkExperienceFile = fileUrls.FirstOrDefault(); 
+                        existingWorkExp.Udate = DateTime.Now; 
                     }
                     else
                     {
-                        // 如果沒有 WorkExperienceId，則新增新的工作經驗資料
-                        var newWorkExp = new Entities.WorkExperience
-                        {
-                            MemberId = memberId,
-                            WorkName = workExp.WorkName,
-                            WorkStartDate = (DateOnly)workExp.WorkStartDate,
-                            WorkEndDate = (DateOnly)workExp.WorkEndDate,
-                            WorkExperienceFile = fileUrls[i],
-                            Cdate = DateTime.Now,
-                            Udate = null
-                        };
-                        member.WorkExperiences.Add(newWorkExp);
+                        throw new Exception($"Work experience with ID {workExp.WorkExperienceId.Value} not found.");
                     }
+                }
+                else
+                {
+                    // 如果沒有 WorkExperienceId，則新增新的工作經驗資料
+                    var newWorkExp = new Entities.WorkExperience
+                    {
+                        MemberId = memberId,
+                        WorkName = workExp.WorkName,
+                        WorkStartDate = (DateOnly)workExp.WorkStartDate,
+                        WorkEndDate = (DateOnly)workExp.WorkEndDate,
+                        WorkExperienceFile = fileUrls.FirstOrDefault(),  
+                        Cdate = DateTime.Now,
+                        Udate = null
+                    };
+                    member.WorkExperiences.Add(newWorkExp);
                 }
 
                 // 保存變更
                 await _repository.SaveChangesAsync();
-
-                // 回傳成功的 ViewModel
-                return new TutorResumeViewModel();
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update licenses", ex);
+                throw new Exception("Failed to update work experiences", ex);
             }
         }
 
@@ -235,15 +231,19 @@ namespace Web.Services
         private async Task<TutorResumeViewModel> ReadHeadImg(int memberId)
         {
             var headimg = await _repository.GetAll<Entities.Member>()
-                            .Where(m => m.MemberId == memberId)
-                            .Select(m => new TutorResumeViewModel
-                            {
-                                HeadShotImage = m.HeadShotImage,
-                            }).FirstOrDefaultAsync();
+                     .Where(m => m.MemberId == memberId)
+                     .Select(m => new TutorResumeViewModel
+                     {
+                         // 將資料庫中的 HeadShotImage (URL) 賦值給 HeadShotImageUrl
+                         HeadShotImageUrl = m.HeadShotImage
+                     })
+                     .FirstOrDefaultAsync();
+
             if (headimg == null)
             {
                 return new TutorResumeViewModel();
             }
+
             return headimg;
         }
 
@@ -267,7 +267,7 @@ namespace Web.Services
                         StudyStartYear = e.StudyStartYear,
                         DepartmentName = e.DepartmentName
                     })
-                    .FirstOrDefaultAsync(); // 這裡應該是 FirstOrDefaultAsync()
+                    .FirstOrDefaultAsync(); 
             if (education == null)
             {
                 return new TutorResumeViewModel();
@@ -285,6 +285,7 @@ namespace Web.Services
 
         public async Task<TutorResumeViewModel> ReadProfessionalLicense(int memberId)
         {
+            // 查找會員
             var member = await _repository.GetAll<Entities.Member>()
                             .Where(m => m.MemberId == memberId)
                             .FirstOrDefaultAsync();
@@ -294,23 +295,42 @@ namespace Web.Services
                 return new TutorResumeViewModel();
             }
 
-            var license = await _repository.GetAll<Entities.ProfessionalLicense>()
-                    .Where(e => e.MemberId == member.MemberId)
-                    .Select(e => e.ProfessionalLicenseName)
-                    .ToListAsync();
-            var licenseUrl = await _repository.GetAll<Entities.ProfessionalLicense>()
-                    .Where(e => e.MemberId == member.MemberId)
-                    .Select(e => e.ProfessionalLicenseUrl)
-                    .ToListAsync();
-            var licenseId = await _repository.GetAll<Entities.ProfessionalLicense>()
-                    .Where(e => e.MemberId == member.MemberId)
-                    .Select(e => e.ProfessionalLicenseId)
-                    .ToListAsync();
+            // 查找會員是否已有 ProfessionalLicense 資料
+            var licenses = await _repository.GetAll<Entities.ProfessionalLicense>()
+                                .Where(e => e.MemberId == member.MemberId)
+                                .ToListAsync();
+
+            // 如果會員尚無 ProfessionalLicense 資料，插入空白資料
+            if (!licenses.Any())
+            {
+                var newLicense = new Entities.ProfessionalLicense
+                {
+                    MemberId = member.MemberId,
+                    ProfessionalLicenseName = string.Empty,  
+                    ProfessionalLicenseUrl = string.Empty,  
+                    Cdate = DateTime.Now,  
+                    Udate = DateTime.Now   
+                };
+
+                // 插入資料庫
+                _repository.Create(newLicense);
+                await _repository.SaveChangesAsync();
+
+                // 更新 licenses 列表，包含新插入的資料
+                licenses = new List<Entities.ProfessionalLicense> { newLicense };
+            }
+
+            // 提取 LicenseName, LicenseUrl, LicenseId
+            var licenseNames = licenses.Select(e => e.ProfessionalLicenseName).ToList();
+            var licenseUrls = licenses.Select(e => e.ProfessionalLicenseUrl).ToList();
+            var licenseIds = licenses.Select(e => e.ProfessionalLicenseId).ToList();
+
+            // 返回 ViewModel
             var resumeEducation = new TutorResumeViewModel
             {
-                ProfessionalLicenseName = license,
-                ProfessionalLicenseUrl = licenseUrl,
-                ProfessionalLicenseId = licenseId,
+                ProfessionalLicenseName = licenseNames,
+                ProfessionalLicenseUrl = licenseUrls,
+                ProfessionalLicenseId = licenseIds
             };
 
             return resumeEducation;
@@ -318,6 +338,7 @@ namespace Web.Services
 
         public async Task<TutorResumeViewModel> ReadWorkexp(int memberId)
         {
+            // 查找會員
             var member = await _repository.GetAll<Entities.Member>()
                             .Where(m => m.MemberId == memberId)
                             .FirstOrDefaultAsync();
@@ -327,17 +348,46 @@ namespace Web.Services
                 return new TutorResumeViewModel();
             }
 
+            // 查找會員的工作經驗
             var workExpList = await _repository.GetAll<Entities.WorkExperience>()
-            .Where(wexp => wexp.MemberId == member.MemberId)
-            .Select(wexp => new ResumeWorkExp
-            {
-                WorkName = wexp.WorkName,
-                WorkStartDate = wexp.WorkStartDate,
-                WorkEndDate = wexp.WorkEndDate,
-                WorkExperienceId = wexp.WorkExperienceId,
-            })
-            .ToListAsync();
+                .Where(wexp => wexp.MemberId == member.MemberId)
+                .Select(wexp => new ResumeWorkExp
+                {
+                    WorkName = wexp.WorkName,
+                    WorkStartDate = wexp.WorkStartDate,
+                    WorkEndDate = wexp.WorkEndDate,
+                    WorkExperienceId = wexp.WorkExperienceId,
+                })
+                .ToListAsync();
 
+            // 如果沒有工作經驗資料，插入一條空白的
+            if (!workExpList.Any())
+            {
+                var newWorkExp = new Entities.WorkExperience
+                {
+                    MemberId = member.MemberId,
+                    WorkName = string.Empty, 
+                    WorkStartDate = new DateOnly(2024, 1, 1),
+                    WorkEndDate = new DateOnly(2024, 1, 1),    
+                    Cdate = DateTime.UtcNow, 
+                    Udate = DateTime.UtcNow  
+                };
+
+                // 插入到資料庫
+                _repository.Create(newWorkExp);
+                await _repository.SaveChangesAsync();
+
+                // 將新插入的工作經驗添加到列表中
+                workExpList.Add(new ResumeWorkExp
+                {
+                    WorkName = newWorkExp.WorkName,
+                    WorkStartDate = newWorkExp.WorkStartDate,
+                    WorkEndDate = newWorkExp.WorkEndDate,
+                    WorkExperienceId = newWorkExp.WorkExperienceId
+                });
+            }
+
+            // 返回 ViewModel
             var resumeViewModel = new TutorResumeViewModel
             {
                 WorkBackground = workExpList
@@ -345,6 +395,7 @@ namespace Web.Services
 
             return resumeViewModel;
         }
+
 
         public async Task<TutorResumeViewModel> ReadApplyCourseData(int memberId)
         {
@@ -385,14 +436,6 @@ namespace Web.Services
             resumeViewModel.StudyStartYear = educationViewModel.StudyStartYear;
             resumeViewModel.StudyEndYear = educationViewModel.StudyEndYear;
             resumeViewModel.DepartmentName = educationViewModel.DepartmentName;
-
-            //// 讀取專業執照
-            //var professionalLicenseViewModel = await ReadProfessionalLicense(memberId);
-            //resumeViewModel.ProfessionalLicenseName = professionalLicenseViewModel.ProfessionalLicenseName;
-
-            // 讀取工作經驗
-            //var workExpViewModel = await ReadWorkexp(memberId);
-            //resumeViewModel.WorkBackground = workExpViewModel.WorkBackground;
 
             return resumeViewModel;
         }
@@ -440,6 +483,7 @@ namespace Web.Services
             await _repository.BeginTransActionAsync();
             try
             {
+                
                 // 檢查會員是否存在
                 var existingMember = await _repository.GetMemberByIdAsync(memberId);
                 if (existingMember == null)
@@ -450,10 +494,19 @@ namespace Web.Services
                         Message = "找不到該會員，請檢查會員資料。",
                     };
                 }
+                if (qVM.HeadShotImage != null)
+                {
+                    var headShotUrl = await _cloudinaryService.UploadImageAsync(qVM.HeadShotImage);
 
+                    if (!string.IsNullOrEmpty(headShotUrl))
+                    {
+                        existingMember.HeadShotImage = headShotUrl;
+                        _repository.Update(existingMember);
+                        await _repository.SaveChangesAsync();
+                    }
+                }
                 // 更新會員資料
                 existingMember.IsVerifiedTutor = false;
-                existingMember.HeadShotImage = qVM.HeadShotImage;
                 existingMember.Cdate = DateTime.Now;
                 existingMember.Udate = null;
                 existingMember.FirstName = existingMember.FirstName ?? "N/A";
