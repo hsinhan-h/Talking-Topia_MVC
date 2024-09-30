@@ -12,9 +12,8 @@ namespace Web.ViewModels
         /// 大頭貼
         /// </summary>
         //[Required]
-        //public string HeadShotImage { get; set; }
-        public IFormFile HeadShotImage { get; set; }
-        public string HeadShotImageUrl { get; set; }
+        public string HeadShotImage { get; set; }
+
         /// <summary>
         /// 學校名稱
         /// </summary>

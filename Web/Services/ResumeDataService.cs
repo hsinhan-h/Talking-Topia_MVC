@@ -224,24 +224,53 @@ namespace Web.Services
             }
         }
 
+        public async Task ChangeHeadShotImage(int memberId, string headShotImageUrl)
+        {
+            var member = await _repository.GetAll<Entities.Member>()
+                              .FirstOrDefaultAsync(m => m.MemberId == memberId);
 
+            if (member != null)
+            {
+                member.HeadShotImage = headShotImageUrl;
+                _repository.Update(member);
+                await _repository.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Member not found");
+            }
+        }
 
 
         //Read需要的
         private async Task<TutorResumeViewModel> ReadHeadImg(int memberId)
         {
             var headimg = await _repository.GetAll<Entities.Member>()
-                     .Where(m => m.MemberId == memberId)
-                     .Select(m => new TutorResumeViewModel
-                     {
-                         // 將資料庫中的 HeadShotImage (URL) 賦值給 HeadShotImageUrl
-                         HeadShotImageUrl = m.HeadShotImage
-                     })
-                     .FirstOrDefaultAsync();
+                .Where(m => m.MemberId == memberId)
+                .Select(m => new TutorResumeViewModel
+                {
+                    HeadShotImage = m.HeadShotImage
+                })
+                .FirstOrDefaultAsync();
 
             if (headimg == null)
             {
-                return new TutorResumeViewModel();
+                var member = await _repository.GetAll<Entities.Member>()
+                    .FirstOrDefaultAsync(m => m.MemberId == memberId);
+                if (member != null)
+                {
+                    member.HeadShotImage = ""; 
+                    _repository.Update(member); 
+                    await _repository.SaveChangesAsync();
+                    return new TutorResumeViewModel
+                    {
+                        HeadShotImage = ""
+                    };
+                }
+                else
+                {
+                    return new TutorResumeViewModel();
+                }
             }
 
             return headimg;
@@ -494,19 +523,10 @@ namespace Web.Services
                         Message = "找不到該會員，請檢查會員資料。",
                     };
                 }
-                if (qVM.HeadShotImage != null)
-                {
-                    var headShotUrl = await _cloudinaryService.UploadImageAsync(qVM.HeadShotImage);
-
-                    if (!string.IsNullOrEmpty(headShotUrl))
-                    {
-                        existingMember.HeadShotImage = headShotUrl;
-                        _repository.Update(existingMember);
-                        await _repository.SaveChangesAsync();
-                    }
-                }
+               
                 // 更新會員資料
                 existingMember.IsVerifiedTutor = false;
+                //existingMember.HeadShotImage = qVM.HeadShotImage;
                 existingMember.Cdate = DateTime.Now;
                 existingMember.Udate = null;
                 existingMember.FirstName = existingMember.FirstName ?? "N/A";

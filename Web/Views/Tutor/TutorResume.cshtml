@@ -39,14 +39,22 @@
                     <div class="col-md-2 col-4 d-flex justify-content-center mt-3">
                         <label for="profile_pic">
                             <div class="apply_head d-flex flex-column justify-content-center align-items-center resume_border">
-                                <i class="fa-solid fa-user-plus fa-2xl"></i>
+                                <img v-if="headShotImage" :src="headShotImage" class="resume_headimg_fill" /> 
+                                <i v-else class="fa-solid fa-user-plus fa-2xl"></i>
                             </div>
                         </label>
                     </div>
                     <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
                         <p class="my-1">請提供大頭貼</p>
-                        <input class="form-control my-0 w-100" type="file" id="profile_pic" placeholder="輸入..." name="HeadShotImage">
-                        <a href="@Url.Content(Model.HeadShotImageUrl)" target="_blank">下載已上傳的檔案</a>
+                        <input class="form-control my-0 w-100" type="file" id="profile_pic" @@change="HeadImgChange" placeholder="輸入..." name="HeadShotImage" :disabled="!editMode">
+                    </div>
+                    <div class="col-12 d-flex justify-content-end">
+
+                        <button type="button" @@click="toggleEditMode" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2 ">
+                            {{ editMode ? '取消' : '編輯' }}  <!-- 動態顯示按鈕文本 -->
+                        </button>
+                        @* 確認按鈕 *@
+                        <button type="button" v-if="editMode" @@click="onFileChange" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2 ms-2">確認</button>
                     </div>
                     <div class="col-12 mt-4">
                         <p class="my-1 bgc fs-4">【學校名稱】</p>
@@ -172,10 +180,11 @@
                                     <button type="button" class="btn textbtncolor btndangerbg btnbghover resume_btn bgc ms-2" @@click="removeWorkExperience(index)">移除</button>
                                 </div>
                             </div>
-                            @* 確認按鈕 *@
+                            
                         </div>
                     </div>
                 </div>
+                @* 確認按鈕 *@
                 <button type="button" @@click="confirmAllWorksUpdates" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">確認</button>
 
                 <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
@@ -202,5 +211,6 @@
     <script>
         let memberId = '@ViewData["MemberId"]';
         localStorage.setItem('memberId', memberId);
+        const headImage = '@Model.HeadShotImage'|| '';
     </script>
 </main>
