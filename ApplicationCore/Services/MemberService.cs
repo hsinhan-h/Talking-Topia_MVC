@@ -41,7 +41,7 @@ namespace ApplicationCore.Services
                     FollowerId = memberId,
                 };
                 var addWatchList = _watchListRepository.Add(addFollow);
-                if (addFollow is null)
+                if (addWatchList is null)
                 {
                     throw new Exception("WatchList could not be created");
                 }
