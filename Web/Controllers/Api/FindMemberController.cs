@@ -16,7 +16,8 @@ namespace Web.Controllers.Api
             {
                 return Ok(new { isLoggedIn = false });
             }
-            return Ok(new { isLoggedIn = true });
+            var memberId = memberIdClaim.Value;
+            return Ok(new { isLoggedIn = true, memberId });
         }
     }
 }

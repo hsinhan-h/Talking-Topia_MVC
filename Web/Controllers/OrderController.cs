@@ -128,19 +128,18 @@ namespace Web.Controllers
                 using (var client = new HttpClient(handler))
                 {
                     var requestUrl = Url.Action("New", "Payment", null, Request.Scheme);
-                    //var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
-                    //var values = new Dictionary<string, string>
-                    //{
-                    //    { "_RequestVerificationToken", tokens.RequestToken },
-                    //};
+                    var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+                    var values = new Dictionary<string, string>
+                    {
+                          { "_RequestVerificationToken", tokens.RequestToken },
+                          { "MemberId",memberId.ToString()}
+                    };
 
-                    //var content = new FormUrlEncodedContent(values);
-
-                    var content = new StringContent("{}", System.Text.Encoding.UTF8, "application/json");
+                    var content = new FormUrlEncodedContent(values);
 
                     var response = await client.PostAsync(requestUrl, content);
-                    
 
+                    // 這是測試response有沒有成功的區塊
                     if (response.IsSuccessStatusCode)
                     {
                         return Redirect("/api/payment/checkout");

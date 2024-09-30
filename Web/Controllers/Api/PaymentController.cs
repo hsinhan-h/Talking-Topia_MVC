@@ -17,6 +17,7 @@ namespace Web.Controllers.Api
         private readonly ECpayService _eCpayService;
         private readonly IOrderService _orderService;
         private readonly IMemberService _memberService;
+        private int _memberId;
 
         public PaymentController(IConfiguration configuration, ECpayService eCpayService, IOrderService orderService, IMemberService memberService)
         {
@@ -27,17 +28,23 @@ namespace Web.Controllers.Api
         }
 
         [HttpPost]
-        public IActionResult New()
+        public IActionResult New([FromForm] string memberId)
         {
-            return RedirectToAction("checkout");
+            if (string.IsNullOrEmpty(memberId) || !int.TryParse(memberId, out _memberId))
+            {
+                return BadRequest("memberId 不存在或無效");
+            }
+
+            return RedirectToAction("checkout", new { memberId = _memberId });
         }
 
 
         // POST api/payment
 
         [HttpGet("checkout")]
-        public async Task<IActionResult> CheckOut()
+        public async Task<IActionResult> CheckOut(int memberId)
         {
+
             // 資料藏在appsettings.json及UserSecret(目前註解中)
             var service = new
             {
@@ -48,15 +55,6 @@ namespace Web.Controllers.Api
                 ServerUrl = _configuration["ECpay:Service:ServerUrl"],
                 ClientUrl = _configuration["ECpay:Service:ClientUrl"]
             };
-
-            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (memberIdClaim == null)
-            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            int memberId = int.Parse(memberIdClaim.Value);
-            var result = await _memberService.GetMemberId(memberId);
-
-            if (!result)
-            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
 
             var transaction = new
             {

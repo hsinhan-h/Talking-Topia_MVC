@@ -216,7 +216,10 @@
                         <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
                              :src="courseCard.tutorFlagImage.replace('~', '')" />
                     </div>
-                    <div class="lh-tutor-follow mt-2">+關注</div>
+                    <div class="lh-tutor-follow mt-2" v-on:click="toggleFollow(courseCard)">
+                        <span v-if="courseCard.followingStatus">關注中</span>
+                        <span v-else>+關注</span>
+                    </div>
                 </div>
                 <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
                     <div class="tutor-description-title-wrapper d-flex justify-content-between">

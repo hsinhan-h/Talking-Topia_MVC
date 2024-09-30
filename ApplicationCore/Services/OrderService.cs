@@ -68,7 +68,7 @@ namespace ApplicationCore.Services
                     InvoiceType = taxIdNumber == null ? (short)EInvoiceType.NormalInvoice : (short)EInvoiceType.GUIInvoice,
                     Vatnumber = "",
                     SentVatemail = member.Email,
-                    OrderStatusId = (short)EOrderStatus.Outstanding,
+                    OrderStatusId = (short)EOrderStatus.Success,
                     MerchantTradeNo = "",
                     TradeNo = "",
                 };
