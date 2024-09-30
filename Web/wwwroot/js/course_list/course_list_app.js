@@ -31,15 +31,15 @@ const courseCardsApp = Vue.createApp({
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
         this.selectedSubject = params.get('subject') ? decodeURIComponent(params.get('subject')) : null;
         this.selectedNation = params.get('nation') || null;
-        this.selectedBudget = params.get('budget') || null;       
+        this.selectedBudget = params.get('budget') || null;
         this.fetchCoursesDebounced();
         this.fetchCategories();
-        this.fetchNations();        
+        this.fetchNations();
     },
     updated() {
         //DOM 已更新完後, 重新呼叫slick function & tooltips & modals
         this.$nextTick(() => {
-            initHoverPopup();  
+            initHoverPopup();
             initTooltips();
             autoPlayYouTubeModal();
         });
@@ -93,7 +93,7 @@ const courseCardsApp = Vue.createApp({
             } catch (e) {
                 this.error = e;
             } finally {
-                this.loading = false;     
+                this.loading = false;
             }
         },
         goToCourseMainPage(courseId) {
@@ -153,24 +153,24 @@ const courseCardsApp = Vue.createApp({
                 const response = await fetch('/api/NationApi');
                 if (response.ok) {
                     const nationNameData = await response.json();
-                    this.nations = nationNameData;          
+                    this.nations = nationNameData;
                 }
             } catch (e) {
                 this.error = e;
             } finally {
-                
+
                 this.loading = false;
             }
         },
-        
+
         //換頁 不刷新頁面
         goToPage(page) {
             if (page > 0 && page <= this.totalPages) {
-                this.page = page; 
+                this.page = page;
                 this.fetchCourses();
                 this.updateQueryString();
                 history.pushState(null, '', `?page=${this.page}`);
-                
+
             }
         },
         updateQueryString() {
@@ -256,7 +256,7 @@ const courseCardsApp = Vue.createApp({
             this.selectedNation = null;
             this.applyFilter();
         },
-        clearWeekdayAndTimeslotFilter() {            
+        clearWeekdayAndTimeslotFilter() {
             this.selectedWeekdays = [];
             this.selectedTimeslots = [];
             this.applyFilter();
@@ -270,7 +270,7 @@ const courseCardsApp = Vue.createApp({
             this.selectedNation = null;
             this.selectedWeekdays = [];
             this.selectedTimeslots = [];
-            this.selectedBudget = null;           
+            this.selectedBudget = null;
             this.applyFilter();
         },
 
@@ -309,6 +309,51 @@ const courseCardsApp = Vue.createApp({
             e.preventDefault();
             this.selectedSortOption = "rating";
             this.applyFilter();
+        },
+
+
+        //關注
+        toggleFollow(courseCard) {
+            //TODO: 檢查使用者登入狀態, 
+            fetch('/api/FindMember/IsLoggedIn')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.isLoggedIn) {
+                        //1. 如果未登入, 導向登入頁 
+                        window.location.href = '/Account/Account';
+                    } else {
+                        //2. 如果已登入, 將memberId存入localStorage並進行關注操作    
+                        localStorage.setItem('memberId', data.memberId);
+
+                        const url = courseCard.followingStatus
+                            ? `/api/Following/DeleteFollowingCourse`
+                            : `/api/Following/AddFollowing`;
+
+                        const watchViewModel = {
+                            FollowerId: localStorage.getItem('memberId'),
+                            FollowedCourseId: courseCard.courseId
+                        };
+
+                        //發送POST請求
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(watchViewModel)
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    courseCard.followingStatus = !courseCard.followingStatus;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }
+                })
+
         }
     }
 });
