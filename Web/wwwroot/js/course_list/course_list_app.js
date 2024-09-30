@@ -345,7 +345,15 @@ const courseCardsApp = Vue.createApp({
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success) {
+                                    //更新課程關注狀態
                                     courseCard.followingStatus = !courseCard.followingStatus;
+
+                                    //彈出toastr
+                                    if (courseCard.followingStatus) {
+                                        toastr.success("已關注此課程!");
+                                    } else {
+                                        toastr.info("已取消關注此課程!");
+                                    }
                                 }
                             })
                             .catch(error => {
