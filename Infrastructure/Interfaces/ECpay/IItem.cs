@@ -10,9 +10,13 @@ namespace Infrastructure.Interfaces.ECpay
         /// </summary>
         string CourseName { get; set; }
         /// <summary>
-        /// 商品單價。
+        /// 商品單價
         /// </summary>
         int UnitPrice { get; set; }
+        /// <summary>
+        /// 商品小計。
+        /// </summary>
+        int SubPrice { get; set; }
         /// <summary>
         /// 購買數量。
         /// </summary>

@@ -24,7 +24,6 @@ namespace Web.Controllers.Api
         {
             try
             {
-                //int memberId = 98;
                 var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (memberIdClaim == null)
                 { return RedirectToAction(nameof(AccountController.Account), "Account"); }
