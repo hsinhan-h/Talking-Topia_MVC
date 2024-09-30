@@ -1,5 +1,4 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    console.log(window.viewModelData.shoppingCartList);
     let selectLengthElements = document.querySelectorAll('[id^="lh-timeSelect-"]'); //select抓到的是option selected的值!!!
     let selectQuantityElements = document.querySelectorAll('[id^="lh-sc-quantitySelect-"]');
     const submitBtn = document.getElementById('shopping-cart-submit-btn');
@@ -54,9 +53,9 @@
         });
     });
 
-
-    // Dto沒辦法順利轉回去action
     submitBtn.addEventListener('click', function (event) {
+
+        event.preventDefault();
 
         const paymentType = document.querySelector('input[name="paymentType"]').value;
         const taxIdNumber = document.getElementById('taxIdInput').value;
@@ -69,16 +68,82 @@
         };
 
         if (cart.length > 0) {
-            fetch('/Order/SubmitToOrder', {
+
+            fetch('/order/submitToOrder', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(orderData)
             })
-                .then(response => response.json())
-                .then(result => {
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                }
+                ).then(result => {
                     console.log('Response from server:', result);
+
+                    // 準備去敲Payment！！！！
+                    if (result.status === "OK") {
+
+                        const memberId = result.memberId;
+
+                        if (memberId) {
+                            const paymentData = { MemberId: memberId };
+                            fetch('api/payment/new', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(paymentData)
+                            })
+                                .then(paymentResponse => {
+
+                                    console.log(`response.status是${response.status}`)
+                                    debugger;
+                                    // 這裡有問題
+                                    if (response.status === 302) {
+                                        console.log(`response.headers.get('Location') : ${response.headers.get('Location')}`)
+                                        debugger;
+                                        return response.headers.get('Location');
+                                    }
+                                    paymentResponse.json();
+                                })
+                                .then(locationUrl => {
+                                    if (locationUrl) {
+                                        // 手動跟隨重定向
+
+                                        console.log(`locationUrl是${locationUrl}!!!!`)
+                                        debugger;
+                                        return fetch(locationUrl);
+                                    }
+                                })
+                                .then(paymentResult => {
+                                    console.log('Payment response:', paymentResult);
+                                    debugger;
+                                })
+                                .catch(error => {
+                                    console.error('Error in payment:', error);
+                                });
+                        } else {
+                            console.error('memberId not returned from server');
+                        }
+
+                    } else {
+                        console.error('Order submission failed:', result);
+                    }
+
+
+
+
+
+
+
+
+
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -122,7 +187,6 @@
             theTotalPrice.value = price;
             theTotalPrice.textContent = theTotalPrice.value.toLocaleString('zh-TW', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
-        console.log(`現在的總金額是${theTotalPrice.textContent}元`);
     }
 });
 

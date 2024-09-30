@@ -85,6 +85,8 @@ namespace Web.Controllers
         public async Task<IActionResult> SubmitToOrder([FromBody] ShoppingCartDtos scDto)
         {
 
+            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"我抓到的scDto是 {scDto}");
+
             if (scDto == null) return BadRequest("Invalid data received.");
 
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -118,38 +120,9 @@ namespace Web.Controllers
 
             if (_orderId > 0)
             {
-                // 使用 HttpClientHandler 來處理 Cookies，確保 AntiForgeryToken 和 Session 被維護
-                var handler = new HttpClientHandler
-                {
-                    UseCookies = true,
-                    CookieContainer = new CookieContainer()
-                };
+                var jsonResult = Json(new { status = "OK", memberId = memberId });
+                return jsonResult;
 
-                using (var client = new HttpClient(handler))
-                {
-                    var requestUrl = Url.Action("New", "Payment", null, Request.Scheme);
-                    var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
-                    var values = new Dictionary<string, string>
-                    {
-                          { "_RequestVerificationToken", tokens.RequestToken },
-                          { "MemberId",memberId.ToString()}
-                    };
-
-                    var content = new FormUrlEncodedContent(values);
-
-                    var response = await client.PostAsync(requestUrl, content);
-
-                    // 這是測試response有沒有成功的區塊
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return Redirect("/api/payment/checkout");
-                    }
-                    else
-                    {
-                        var errorResponse = await response.Content.ReadAsStringAsync();
-                        return BadRequest($"發送請求到 PaymentController.New 失敗，狀態碼：{response.StatusCode}, 錯誤訊息: {errorResponse}");
-                    }
-                }
             }
             else
             {

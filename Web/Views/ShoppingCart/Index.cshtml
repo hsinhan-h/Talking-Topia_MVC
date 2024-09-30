@@ -166,10 +166,8 @@
     </div>
     <div>
         <form id="shopping-cart-submit-btn" method="post" asp-controller="Order" asp-action="SubmitToOrder">
-            @Html.AntiForgeryToken()
             <input class="sc-input" type="hidden" name="paymentType" value="CreditCard" />
             <input class="sc-input" type="hidden" name="totalAmount" value="@total" />
-
             <button type="submit" class="return-order_btn text-white">確認並支付</button>
             <br>
             <br>
