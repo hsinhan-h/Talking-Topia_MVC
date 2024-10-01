@@ -1,9 +1,7 @@
 ﻿@model ShoppingCartListViewModel
-
 @{
     int total = 0;
 }
-
 <div class="container" id="app">
     <div class="container-title">
         <h2>購物車</h2>
@@ -45,8 +43,16 @@
                         <td data-label="類別">@item.CourseCategory</td>
                         <td data-label="時間">
                             <select class="form-select" id="lh-timeSelect-@i" data-index="@i">
-                                <option class="lh-course-length" value="@item.TFUnitPrice">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
-                                <option class="lh-course-length" value="@item.FTUnitPrice">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option>
+                                @if (item.CourseLength == 25)
+                                {
+                                    <option class="lh-course-length" value="@item.TFUnitPrice" selected>25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
+                                    <option class="lh-course-length" value="@item.FTUnitPrice">50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option>
+                                }
+                                else if (item.CourseLength == 50)
+                                {
+                                    <option class="lh-course-length" value="@item.TFUnitPrice">25分鐘 - NT$@item.TFUnitPrice.ToString("#,###")</option>
+                                    <option class="lh-course-length" value="@item.FTUnitPrice" selected>50分鐘 - NT$@item.FTUnitPrice.ToString("#,###")</option>
+                                }
                             </select>
                         </td>
                         <td data-label="堂數">
@@ -119,7 +125,7 @@
     </div> *@
     <div class="payment-list">
         <div class="coupon-title">
-            <h3>選擇付款方式</h3>
+            <h3>付款方式</h3>
         </div>
         <div class="payment row-payment">
             <div class="card card-payment col-md-4 col-12" data-payment="creditcard">
@@ -132,13 +138,10 @@
     </div>
     <div class="invoice-list">
         <div class="invoice-title">
-            <h3>開立統一發票</h3>
+            <h3 class="lh-sc-invoice-title">開立統一發票</h3>
+            <p style="color:var(--highlight-color); margin-bottom: 50px;margin-left: 50px;">若需開立統一編號發票請填寫下列欄位（未填寫統編將自動開立二聯式發票）</p>
         </div>
         <div class="container invoice">
-            <div class="form-check">
-                <input class="form-check-input lh-shopping-cart-tax-id" type="checkbox" id="taxIdCheckBox" />
-                <label class="form-check-label" for="taxIdCheckBox">需開立統一編號發票（未填寫統編將自動開立二聯式發票）</label>
-            </div>
             <div class="container invoice-input">
                 <form class="row g-3">
                     <div class="col-md-6">
@@ -155,21 +158,15 @@
         </div>
     </div>
     <div class="total-price">
-        <div class="total-price-title">
-            <h3>總金額</h3>
-        </div>
         <div class="container total-price">
-            <p>NT$ @total</p>
+
+            <p>總金額：NT$ <span id="lh-sc-totalPrice" value="@total">@total.ToString("#,###")</span></p>
             <input type="hidden" name="totalAmount" value="@total" />
         </div>
     </div>
     <div>
-        <form id="shopping-cart-submit-btn" method="post" asp-controller="Order" asp-action="SubmitToOrder">
-            @Html.AntiForgeryToken()
             <input class="sc-input" type="hidden" name="paymentType" value="CreditCard" />
-            <input class="sc-input" type="hidden" name="taxIdNumber" value="" />
-            <input class="sc-input" type="hidden" name="totalAmount" value="@total" />
-
+        <form id="shopping-cart-submit-btn" method="post" asp-controller="Payment" asp-action="New">
             <button type="submit" class="return-order_btn text-white">確認並支付</button>
             <br>
             <br>

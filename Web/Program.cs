@@ -31,6 +31,10 @@ namespace Web
             //註冊LineAuthService
             builder.Services.AddScoped<ILineAuthService, LineAuthService>();
 
+            //註冊EmailService
+            builder.Services.AddScoped<IEmailService, EmailService>();
+
+            builder.Services.AddHttpContextAccessor();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -43,6 +47,8 @@ namespace Web
                 options.Cookie.IsEssential = true;
             });
 
+            builder.Services.AddHttpClient();
+
             //builder.Services.AddScoped<IHostedService,BackgroundTaskService>();
             builder.Services.AddScoped<Services.BookingService>();
             builder.Services.AddScoped<CourseService>();
@@ -54,9 +60,6 @@ namespace Web
             builder.Services.AddScoped<CourseCategoryService>();
             builder.Services.AddScoped<CloudinaryService>();
             
-
-
-
             // 要加下面這個 AddInfrastructureService      
             builder.Services.AddInfrastructureService(builder.Configuration);
             // 將DI改至Configurations資料夾內的兩支檔案，若有改就可以把上方那一排Service注入個別刪除
@@ -69,6 +72,19 @@ namespace Web
             //    builder.Configuration.AddUserSecrets<Program>();
             //}
 
+            builder.Services.AddCors(options => {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader()
+                               .WithExposedHeaders("*");
+
+                        //builder.WithOrigins("http://example.com","http://www.contoso.com")
+                        //       .WithMethods("GET", "POST", "PUT", "DELETE");
+                    });
+            });
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie(options =>
@@ -85,6 +101,7 @@ namespace Web
             builder.Services.AddAuthorization();
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
+
             var app = builder.Build();
 
 
@@ -105,6 +122,8 @@ namespace Web
 
             // 啟用 Session
             app.UseSession();
+
+            app.UseCors();
 
             // 先驗證再授權.
             app.UseAuthentication();

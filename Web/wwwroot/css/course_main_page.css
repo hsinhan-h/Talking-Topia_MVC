@@ -6,6 +6,10 @@
     --button-hover-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.1);
 }
 
+[v-cloak] {
+    display: none;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -84,7 +88,7 @@ strong {
     font-weight: bold;
 }
 
-.follow-button {
+#followBtn, #unfollowBtn {
     border: var(--theme-color) 1px solid;
     border-radius: 6px;
     color: var(--theme-color);
@@ -92,13 +96,35 @@ strong {
     font-size: 13px;
     padding: 2px 4px;
     font-weight: bolder;
+    white-space: nowrap; /* 禁止換行 */
+    overflow: hidden; /* 防止超出內容的部分溢出 */
+    text-overflow: ellipsis; /* 可選，讓文字過長時顯示省略號 */
 }
 
-    .follow-button:hover {
+    #followBtn:hover, #unfollowBtn:hover {
         box-shadow: var(--button-hover-shadow);
         background-color: cadetblue;
         cursor: pointer;
     }
+    #unfollowBtn:hover .icon-unfollow {
+        position: relative;
+    }
+
+        #unfollowBtn:hover .icon-unfollow::after {
+            content: "取消關注";
+            font-size:10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            align-items: center;
+            justify-content: center;
+            visibility: visible;
+        }
+
+    #unfollowBtn:hover .icon-unfollow {
+        visibility: hidden;
+    }
+
 
 .lh-self-intro,
 .lh-group-course-info,
@@ -369,6 +395,7 @@ strong {
 
 .comment-date {
     font-size: 13.5px;
+    margin-bottom : 0;
 }
 
 .comment-info {

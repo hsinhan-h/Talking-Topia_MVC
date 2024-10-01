@@ -68,7 +68,7 @@ namespace ApplicationCore.Services
                     InvoiceType = taxIdNumber == null ? (short)EInvoiceType.NormalInvoice : (short)EInvoiceType.GUIInvoice,
                     Vatnumber = "",
                     SentVatemail = member.Email,
-                    OrderStatusId = (short)EOrderStatus.Outstanding,
+                    OrderStatusId = (short)EOrderStatus.Success,
                     MerchantTradeNo = "",
                     TradeNo = "",
                 };
@@ -122,8 +122,8 @@ namespace ApplicationCore.Services
                     order.OrderStatusId = (short)EOrderStatus.Success;
                     order.Udate = DateTime.Now;
                     order.MerchantTradeNo = merchantTradeNo;
-                    order.TradeNo = tradeNo;
-                    await _orderRepository.UpdateAsync(order);
+                    //order.TradeNo = tradeNo;
+                    var updateResult =  await _orderRepository.UpdateAsync(order);
                     foreach (var item in shoppingCartItem)
                     {
                         if (item.BookingDate.HasValue && item.BookingTime.HasValue)

@@ -215,10 +215,16 @@
     cursor: pointer;
 }
 
-    .lh-tutor-follow:hover {
-        background-color: var(--theme-color);
-        color: #fff;
-    }
+.following {
+    background-color: var(--theme-color);
+    color: #fff;
+}
+
+.lh-tutor-follow:hover {
+    background-color: var(--theme-color);
+    color: #fff;
+    box-shadow: var(--button-hover-shadow);
+}
 
 .tutor-description-title-wrapper {
     max-height: 3em;

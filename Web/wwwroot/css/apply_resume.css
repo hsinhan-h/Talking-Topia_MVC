@@ -6,7 +6,11 @@
     --button-hover-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.1);
 }
 
-
+.resume_headimg_fill {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+}
 
 .resume_border {
     border-top: 2px solid rgb(2, 202, 185);
@@ -40,6 +44,22 @@
     color: var(--theme-color);
 }
 
+.textbtncolor {
+    color: white
+}
+
+.textdangercolor {
+    color: var(--highlight-color);
+}
+.btnbg {
+    background-color: var(--theme-color);
+}
+.btndangerbg {
+    background-color: var(--highlight-color);
+}
+.btnbghover:hover {
+    color: black;
+}
 .resume_btn {
     box-shadow: var(--button-hover-shadow);
 }
@@ -49,7 +69,12 @@
     border: 1px solid #ff5f5f;
 }
 
-
+.icon_Headimg_hover {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.icon_Headimg_hover:hover {
+   transform: scale(1.1); /* 懸停時放大效果 */
+}
 
 .icon_plus {
     max-width: 80px;
