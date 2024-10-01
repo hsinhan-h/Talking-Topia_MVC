@@ -165,9 +165,8 @@
         </div>
     </div>
     <div>
-        <form id="shopping-cart-submit-btn" method="post" asp-controller="Order" asp-action="SubmitToOrder">
             <input class="sc-input" type="hidden" name="paymentType" value="CreditCard" />
-            <input class="sc-input" type="hidden" name="totalAmount" value="@total" />
+        <form id="shopping-cart-submit-btn" method="post" asp-controller="Payment" asp-action="New">
             <button type="submit" class="return-order_btn text-white">確認並支付</button>
             <br>
             <br>

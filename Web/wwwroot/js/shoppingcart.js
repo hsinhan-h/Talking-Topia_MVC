@@ -15,6 +15,7 @@
                 window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].courseLength = 25;
                 updateTotalPrice(dataIndex, vmCourseQuantity, this.value);
+                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else {
                 window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
@@ -66,92 +67,51 @@
             taxIdNumber: taxIdNumber,
             scVM: cart,
         };
+        console.log(`orderData是${orderData}!!!!!`)
+        debugger;
+
+        let url = '/order/submitToOrder';
 
         if (cart.length > 0) {
 
-            fetch('/order/submitToOrder', {
+            try {
+                const response = await fetchOrderData(url, orderData);
+
+                console.log(`fetch後的response是${response}`)
+                debugger;
+                if (response.ok) { this.submit(); }
+            }
+            catch (error) {
+                console.error('訂單提交失敗', error);
+            }
+        }
+        else {
+            console.log('購物車為空！');
+        }
+    });
+
+    function fetchOrderData(url, orderData) {
+        try {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(orderData)
-            })
-                .then(response => {
+            });
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                }
-                ).then(result => {
-                    console.log('Response from server:', result);
+            if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
 
-                    // 準備去敲Payment！！！！
-                    if (result.status === "OK") {
+            const result = await response.json();
+            console.log(`我抓到result了啊啊啊啊啊：${result}`)
 
-                        const memberId = result.memberId;
-
-                        if (memberId) {
-                            const paymentData = { MemberId: memberId };
-                            fetch('api/payment/new', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(paymentData)
-                            })
-                                .then(paymentResponse => {
-
-                                    console.log(`response.status是${response.status}`)
-                                    debugger;
-                                    // 這裡有問題
-                                    if (response.status === 302) {
-                                        console.log(`response.headers.get('Location') : ${response.headers.get('Location')}`)
-                                        debugger;
-                                        return response.headers.get('Location');
-                                    }
-                                    paymentResponse.json();
-                                })
-                                .then(locationUrl => {
-                                    if (locationUrl) {
-                                        // 手動跟隨重定向
-
-                                        console.log(`locationUrl是${locationUrl}!!!!`)
-                                        debugger;
-                                        return fetch(locationUrl);
-                                    }
-                                })
-                                .then(paymentResult => {
-                                    console.log('Payment response:', paymentResult);
-                                    debugger;
-                                })
-                                .catch(error => {
-                                    console.error('Error in payment:', error);
-                                });
-                        } else {
-                            console.error('memberId not returned from server');
-                        }
-
-                    } else {
-                        console.error('Order submission failed:', result);
-                    }
-
-
-
-
-
-
-
-
-
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        } else {
-            console.log('購物車為空！');
+            return response;
         }
-    });
+        catch (error) {
+            console.error('fetch 發生錯誤:', error);
+            throw error;
+        }
+    }
 
     function updateTotalPrice(dataIndex, quantity, unitPrice) {
         let subTotal = document.getElementById(`subtotal-${dataIndex}`);

@@ -84,9 +84,6 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitToOrder([FromBody] ShoppingCartDtos scDto)
         {
-
-            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"我抓到的scDto是 {scDto}");
-
             if (scDto == null) return BadRequest("Invalid data received.");
 
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -126,7 +123,6 @@ namespace Web.Controllers
             }
             else
             {
-                // 如果訂單創建失敗，返回 BadRequest 錯誤訊息
                 return BadRequest("發送請求到 PaymentController.New 失敗。");
             }
         }

@@ -10,7 +10,7 @@ using Web.Dtos;
 
 namespace Web.Controllers.Api
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : Controller
     {
@@ -34,22 +34,14 @@ namespace Web.Controllers.Api
             _logger = logger;
         }
 
-        [HttpPost]
-        public IActionResult New([FromBody] OrderDto memberId)
+        [HttpPost("new")]
+        public IActionResult New()
         {
-            if (memberId == null)
-            {
-                _logger.LogError($"memberId.MemberId就是{memberId.MemberId}");
-                return BadRequest("Invalid data received.");
-            }
-
             return RedirectToAction(nameof(CheckOut), "Payment");
-            
         }
 
 
         // POST api/payment
-
         [HttpGet("checkout")]
         public async Task<IActionResult> CheckOut()
         {
@@ -59,8 +51,7 @@ namespace Web.Controllers.Api
             { _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"memberIdClaim這王八是null!!!!!!"); }
             int memberId = int.Parse(memberIdClaim.Value);
 
-            // 這裡抓到的是0
-            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"memberIdR是 {memberId}");
+            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"memberId是 {memberId}");
 
             // 資料藏在appsettings.json及UserSecret
             var service = new
@@ -73,8 +64,6 @@ namespace Web.Controllers.Api
                 ClientUrl = _configuration["ECpay:Service:ClientUrl"]
             };
 
-            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"service是 {service}");
-
             var transaction = new
             {
                 No = "Ec" + DateTime.Now.ToString("yyyyMMddhhmmss"),
@@ -83,8 +72,6 @@ namespace Web.Controllers.Api
                 Method = EPaymentMethod.Credit,
                 Items = await _eCpayService.GetItemsToECStageDtoAsync(memberId)
             };
-
-            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"transaction是 {transaction}");
 
             IPayment payment = new PaymentConfiguration()
                 .Send.ToApi(url: service.Url)
