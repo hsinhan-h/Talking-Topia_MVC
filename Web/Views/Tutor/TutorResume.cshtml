@@ -20,7 +20,7 @@
 
     <p>@message</p>
     <p>@header</p>
-        <div id="vue-wrapper">
+   <div id="vue-wrapper">
         <form asp-action="TutorResume" method="post" ref="form">
             <div class="container-fluid mt-5">
                 <div class="row px-0">
@@ -86,36 +86,39 @@
                         <i class=" fa-solid fa-ellipsis "></i>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mt-5 resume_border p-3 m-2">
-                <div class="col-12">
-                    <div class="d-flex flex-row justify-content-between">
-                        <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">申請科目</h2>
-                    </div>
-                    <div class="form-group">
-                        <label class="my-1 bgc fs-4" for="category">【科目類別】</label>
-                        <select v-model="selectedCategory" class="form-select" name="CourseList.ApplyCourseCategoryId">
-                            <option value="">請選擇...</option>
-                            <!-- 改為綁定 item.id -->
-                            <option v-for="(item, index) in categories" :value="item.id" :key="item.id">
-                                {{ item.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div v-if="selectedCategory" class="form-group">
-                        <label class="my-1 bgc fs-4" for="subject">【教學科目】</label>
-                        <select v-model="selectedSubcategory" class="form-select" name="CourseList.ApplySubCategoryId">
-                            <option value="">請選擇...</option>
-                            <!-- 改為綁定 item.id -->
-                            <option v-for="(item, index) in subcategories" :value="item.id" :key="item.id">
-                                {{ item.name }}
-                            </option>
-                        </select>
+                <div class="row mt-5 resume_border p-3 m-2">
+                    <div class="col-12">
+                        <div class="d-flex flex-row justify-content-between">
+                            <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">申請科目</h2>
+                        </div>
+                        <div class="form-group">
+                            <label class="my-1 bgc fs-4" for="category">【科目類別】</label>
+                            <select v-model="selectedCategory" class="form-select" name="CourseList.ApplyCourseCategoryId">
+                                <option value="">請選擇...</option>
+                                <!-- 改為綁定 item.id -->
+                                <option v-for="(item, index) in categories" :value="item.id" :key="item.id">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div v-if="selectedCategory" class="form-group">
+                            <label class="my-1 bgc fs-4" for="subject">【教學科目】</label>
+                            <select v-model="selectedSubcategory" class="form-select" name="CourseList.ApplySubCategoryId">
+                                <option value="">請選擇...</option>
+                                <!-- 改為綁定 item.id -->
+                                <option v-for="(item, index) in subcategories" :value="item.id" :key="item.id">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
+
+
+        <div class="container-fluid mt-5">
+        
         <div class="row mt-5 resume_border p-3 m-2">
             <div class="d-flex flex-row justify-content-between">
                 <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
@@ -273,14 +276,14 @@
                     </div>
                 </div>
             </div>
-        
+        </div>
             <div class="row mt-3 ">
                 <div class="my-3 d-flex flex-row justify-content-end">
                     <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
                 <button type="button" :disabled="!confirmAllLicensesUpdates()" @@click="validateForm" class="btn resume_border resume_btn m-2">下一步</button>
                 </div>
             </div>
-        </div>
+   </div>
 
     
     
