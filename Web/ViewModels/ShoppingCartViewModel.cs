@@ -79,8 +79,8 @@
         /// </summary>
         public string PaymentType { get; set; }
     }
-    public class ShoppingCartListViewModel
-    {
-        public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
-    }
+    //public class ShoppingCartListViewModel
+    //{
+    //    public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
+    //}
 }

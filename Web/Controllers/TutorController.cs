@@ -195,7 +195,7 @@ namespace Web.Controllers
 
                 TempData["Header"] = "新增履歷資料";
                 TempData["Message"] = "履歷資料新增成功";
-                return RedirectToAction("TutorResume");
+                return RedirectToAction("TutorData");
             }
             else
             {

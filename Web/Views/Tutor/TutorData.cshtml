@@ -132,8 +132,10 @@
                                     </div>
                                     @*  apply status 為true 預設0*@
                                     <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn lh-backstage-submit-btn submitButton">@(Model.NativeLanguage == null ? "儲存" : "編輯")</button>
-                                        @* <button type="button" class="btn lh-backstage-submit-btn submitButton @(Model.TutorId == 0 ? "d-block" : "d-none")">儲存</button> *@
+                                        <button type="button" class="btn lh-backstage-submit-btn submitButton">
+                                            @(Model.NativeLanguage == null ? "儲存" : "編輯")
+                                            <span class="spinner-border spinner-border-sm submitspinner d-none mx-2" aria-hidden="true" ></span>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -261,6 +263,9 @@
                 <h5 class="modal-title" id="editModalLabel">
                     編輯教師可預約時段
                 </h5>
+                <div class="spinner-grow spinner-grow-sm text-danger ms-3 d-none" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
@@ -333,17 +338,16 @@
     </div>
 </div>
 <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
-     data-bs-delay="2000" style="position: absolute; top: 25%; left: 50%; transform: translate(-50%, -50%);"
+     data-bs-delay="2000" style="position: fixed; top: 50px; right: 20px; z-index: 20;"
      data-message="@message" data-header="@header">
-    <div class="toast-header " style="font-size: 1.2rem;">
+    <div class="toast-header">
         <img src="~/image/logo_imgs/talkingtopia logo_final.png" class="rounded me-2 img-fluid w-25" alt="...">
-        <strong class="me-auto">@header</strong>
+        <strong class="me-auto ">@header</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-    <div class="toast-body fs-3 p-2 ">
+    <div class="toast-body p-2 text-center my-3 fs-3" style="color: #ff5f5f;">
         @message
     </div>
-</div>
 </div>
 
 @section topCSS {
