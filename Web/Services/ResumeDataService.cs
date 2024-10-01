@@ -240,6 +240,19 @@ namespace Web.Services
                 throw new Exception("Member not found");
             }
         }
+        public async Task<TutorResumeViewModel> GetProfessionalLicenseById(int memberId, int professionalLicenseId)
+        {
+            var query = from license in _repository.GetAll<Entities.ProfessionalLicense>()
+                        where license.MemberId == memberId && license.ProfessionalLicenseId == professionalLicenseId
+                        select new TutorResumeViewModel
+                        {
+                            ProlLicenseId = license.ProfessionalLicenseId,
+                            ProlLicenseUrl = license.ProfessionalLicenseUrl
+                        };
+
+            var result = await query.FirstOrDefaultAsync();
+            return result;
+        }
 
 
         //Read需要的
@@ -481,14 +494,6 @@ namespace Web.Services
             }
             return education;
         }
-        private async Task<List<Entities.WorkExperience>> GetWorkExperienceByMemberIdAsync(int memberId)
-        {
-            var workExperiences = await _repository.GetAll<Entities.WorkExperience>()
-                                                   .Where(w => w.MemberId == memberId)
-                                                   .ToListAsync();
-
-            return workExperiences;
-        }
         private async Task<Entities.ApplyCourse> GetApplyCouseByMemberIdAsync(int memberId)
         {
             var applyCourseHasMember = await _repository.GetAll<Entities.ApplyCourse>()
@@ -499,11 +504,6 @@ namespace Web.Services
                 return null;
             }
             return applyCourseHasMember;
-        }
-        private async Task<Entities.ProfessionalLicense> GetProfessionalLicenseByMemberIdAsync(string licenseName, int memberId)
-        {
-            return await _repository.GetAll<Entities.ProfessionalLicense>()
-                           .FirstOrDefaultAsync(pl => pl.ProfessionalLicenseName == licenseName && pl.MemberId == memberId);
         }
 
 
@@ -583,46 +583,6 @@ namespace Web.Services
                     existingMember.EducationId = education.EducationId;
                 }
 
-                // 創建工作經驗
-                var workExperiences = await GetWorkExperienceByMemberIdAsync(existingMember.MemberId);
-
-                // 更新每個工作經歷的邏輯
-                foreach (var workExp in qVM.WorkBackground)
-                {
-                    // 嘗試找到對應的工作經歷
-                    var existingWorkExperience = workExperiences
-                    .FirstOrDefault(we => we.MemberId == memberId && we.WorkName == workExp.WorkName && we.WorkStartDate == workExp.WorkStartDate);
-
-                    if (existingWorkExperience != null)
-                    {
-                        // 如果找到對應的工作經歷，則更新
-                        existingWorkExperience.WorkExperienceFile = workExp.WorkExperienceFile;
-                        existingWorkExperience.WorkStartDate = (DateOnly)workExp.WorkStartDate;
-                        existingWorkExperience.WorkEndDate = (DateOnly)workExp.WorkEndDate;
-                        existingWorkExperience.WorkName = workExp.WorkName;
-                        existingWorkExperience.Udate = DateTime.Now;
-
-                        _repository.Update(existingWorkExperience);
-                    }
-                    else
-                    {
-                        // 如果找不到對應的工作經歷，則創建新的
-                        var newWorkExperience = new Entities.WorkExperience
-                        {
-                            WorkExperienceFile = workExp.WorkExperienceFile,
-                            WorkStartDate = (DateOnly)workExp.WorkStartDate,
-                            WorkEndDate = (DateOnly)workExp.WorkEndDate,
-                            WorkName = workExp.WorkName,
-                            MemberId = existingMember.MemberId,  // 關聯到會員的 MemberId
-                            Cdate = DateTime.Now,
-                            Udate = DateTime.Now,
-                        };
-
-                        _repository.Create(newWorkExperience);
-                    }
-                }
-                await _repository.SaveChangesAsync();
-
                 var applyCourse = await GetApplyCouseByMemberIdAsync(existingMember.MemberId);
                 if (applyCourse != null)
                 {
@@ -654,31 +614,7 @@ namespace Web.Services
                     _repository.Create(newApplyCourse);
 
                 }
-                for (int i = 0; i < qVM.ProfessionalLicenseName.Count; i++)
-                {
-                    // 檢查此會員是否已有相同名稱的專業執照
-                    var existingLicense = await GetProfessionalLicenseByMemberIdAsync(qVM.ProfessionalLicenseName[i], existingMember.MemberId);
 
-                    if (existingLicense == null)
-                    {
-                        // 創建新的執照
-                        var professionalLicense = new Entities.ProfessionalLicense
-                        {
-                            ProfessionalLicenseName = qVM.ProfessionalLicenseName[i],
-                            ProfessionalLicenseUrl = qVM.ProfessionalLicenseUrl[i],
-                            MemberId = existingMember.MemberId,
-                            Cdate = DateTime.Now
-                        };
-                        _repository.Create(professionalLicense);
-                    }
-                    else
-                    {
-                        // 更新現有的執照
-                        existingLicense.ProfessionalLicenseUrl = qVM.ProfessionalLicenseUrl[i];
-                        existingLicense.Udate = DateTime.Now;
-                        _repository.Update(existingLicense);
-                    }
-                }
                 await _repository.SaveChangesAsync();
                 await _repository.CommitAsync();
                 return new TutorResumeViewModel

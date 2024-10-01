@@ -36,12 +36,15 @@ namespace Web.ViewModels
         /// <summary>
         /// 證照
         /// </summary>
+        
         //[Required]
         public List<string> ProfessionalLicenseName { get; set; } = new List<string>();
         ///// <summary>
         ///// 證照Url
         ///// </summary>
         ////[Required]
+        public int ProlLicenseId { get; set; } 
+        public string ProlLicenseUrl { get; set; } 
         public List<string> ProfessionalLicenseUrl { get; set; } = new List<string>();
         /// <summary>
         /// 工作起始日期
