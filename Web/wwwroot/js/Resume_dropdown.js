@@ -303,7 +303,7 @@ const appresume = createApp({
             // 使用 FormData 包裝文件和其他資料
             const formData = new FormData();
             formData.append('memberId', memberId);
-            formData.append('ProfessionalLicenseId', updatedLicense.ProfessionalLicenseId);
+            formData.append('ProfessionalLicenseId', updatedLicense.ProfessionalLicenseId || 0); // 如果是新證照，設置 ID 為 0
             formData.append('ProfessionalLicenseName', updatedLicense.ProfessionalLicenseName);
 
             // 檢查是否為文件，否則直接傳送 URL
@@ -319,19 +319,24 @@ const appresume = createApp({
             })
                 .then(response => response.json())
                 .then(data => {
-                    this.licenses[index].isUploading = false;  
+                    this.licenses[index].isUploading = false;
                     if (data.success) {
                         console.log('License updated successfully');
-                        this.licenses[index].uploadStatus = true; 
+                        this.licenses[index].uploadStatus = true;
+
+                        // 如果是新證照，更新前端的 ProfessionalLicenseId
+                        if (!this.licenses[index].ProfessionalLicenseId) {
+                            this.licenses[index].ProfessionalLicenseId = data.professionalLicenseId; 
+                        }
                     } else {
                         console.log('Failed to update license:', data.message);
-                        this.licenses[index].uploadStatus = false;  
+                        this.licenses[index].uploadStatus = false;
                     }
                 })
                 .catch(error => {
                     this.licenses[index].isUploading = false;
                     console.error('Error updating license:', error);
-                    this.licenses[index].uploadStatus = false; 
+                    this.licenses[index].uploadStatus = false;
                 });
         },
         removeLicense(index) {
@@ -458,58 +463,52 @@ const appresume = createApp({
         editWorkExp(index) {
             const updatedworkexp = this.works[index];
             const memberId = localStorage.getItem('memberId');
-            const updatedWork = this.works[index];
-            
-            if (!updatedWork.workName || !updatedWork.workExperienceFile || !updatedWork.workStartDate || !updatedWork.workEndDate) {
+
+            if (!updatedworkexp.workName || !updatedworkexp.workExperienceFile || !updatedworkexp.workStartDate || !updatedworkexp.workEndDate) {
                 console.log('請填寫所有必填的工作信息');
                 this.works[index].uploadWorkStatus = false;
                 return;
             }
 
-            
             this.works[index].isWorkUploading = true;
             this.works[index].isConfirmed = true;
-            this.works[index].workEditMode = false; // 禁止編輯
-            // 使用 FormData 包裝文件和其他資料
+            this.works[index].workEditMode = false;
+
             const formData = new FormData();
             formData.append('memberId', memberId);
 
-            // 處理單個工作經驗的數據
-            formData.append(`WorkBackground[0].WorkExperienceId`, updatedworkexp.workExperienceId);
+            formData.append(`WorkBackground[0].WorkExperienceId`, updatedworkexp.workExperienceId || 0); // 如果是新工作經驗，設置 ID 為 0
             formData.append(`WorkBackground[0].WorkName`, updatedworkexp.workName || '');
             formData.append(`WorkBackground[0].WorkStartDate`, updatedworkexp.workStartDate || '');
             formData.append(`WorkBackground[0].WorkEndDate`, updatedworkexp.workEndDate || '');
-            // 檢查是否為文件，否則直接傳送 URL
+
             if (updatedworkexp.workExperienceFile instanceof File) {
                 formData.append(`WorkBackground[0].WorkExperienceFile`, updatedworkexp.workExperienceFile);
-            } else if (updatedworkexp.workExperienceFile) {
-                formData.append(`WorkBackground[0].WorkExperienceFile`, updatedworkexp.workExperienceFile.toString());
-            } else {
-                // 如果 WorkExperienceFile 是 null 或 undefined，傳遞空字串
-                formData.append(`WorkBackground[0].WorkExperienceFile`, '');
             }
 
-            // 發送 API 請求
             fetch('/api/UpdateResume/UpdateResumeWorkExp', {
                 method: 'POST',
                 body: formData,
             })
                 .then(response => response.json())
                 .then(data => {
-                    this.works[index].isWorkUploading = false;  
+                    this.works[index].isWorkUploading = false;
                     if (data.success) {
-                        // 成功訊息
                         this.works[index].uploadWorkStatus = true;
-                        console.log('Work experience updated successfully');
 
+                        // 更新 WorkExperienceId
+                        if (!this.works[index].workExperienceId) {
+                            this.works[index].workExperienceId = data.workExperienceId;
+                        }
+
+                        console.log('Work experience updated successfully');
                     } else {
-                        // 失敗訊息
-                        this.works[index].isWorkUploading = false; 
-                        this.works[index].uploadWorkStatus = false;
                         console.log('Failed to update work experience: ' + data.message);
+                        this.works[index].uploadWorkStatus = false;
                     }
                 })
                 .catch(error => {
+                    this.works[index].isWorkUploading = false;
                     console.error('Error updating work experience:', error);
                 });
         },

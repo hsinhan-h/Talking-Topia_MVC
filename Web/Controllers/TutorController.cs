@@ -109,9 +109,7 @@ namespace Web.Controllers
                 TempData["Header"] = "會員資料新增";
                 TempData["Message"] = "會員資料新增成功";
                 return RedirectToAction("TutorData"); // 使用完整資料重新渲染 TutorData 頁面
-                //ViewData["Header"] = "會員資料新增";
-                //ViewData["Message"] = "會員資料新增成功";
-                //return View("TutorData", qVM);
+
             }
             else
             {
