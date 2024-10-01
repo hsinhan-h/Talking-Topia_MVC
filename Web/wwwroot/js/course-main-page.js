@@ -35,18 +35,12 @@ const call = createApp({
     computed: {
         // 根據選中的評分篩選評論
         filteredReviews() {
-            //// 如果沒有選擇任何評分，則顯示所有評論
-            //if (this.selectedRatings.length === 0) {
-            //    return this.courseReviews;
-            //}
-            //// 根據選中的評分篩選評論
-            //return this.courseReviews.filter(review => this.selectedRatings.includes(Number(review.CommentRating)));
             console.log('Selected Ratings:', this.selectedRatings);
             if (this.selectedRatings.length === 0) {
                 return this.courseReviews;
             }
             const filtered = this.courseReviews.filter(review =>
-                this.selectedRatings.includes(review.CommentRating)
+                this.selectedRatings.includes(Number(review.CommentRating))
             );
             console.log('Filtered Reviews:', filtered);
             return filtered;
@@ -63,6 +57,12 @@ const call = createApp({
                 case 1: return '非常糟';
                 default: return '';
             }
+        },
+        getRatingPercentage(rating) {
+            const totalReviews = this.courseReviews.length;
+            if (totalReviews === 0) return 0;  // 避免除以 0 的錯誤
+            const ratingCount = this.courseReviews.filter(review => review.CommentRating === rating).length;
+            return ((ratingCount / totalReviews) * 100).toFixed(1);
         },
         submitRating() {
             // 構建 FormData 並提交 rating 資料
@@ -164,18 +164,6 @@ const call = createApp({
                 })
                 .catch(error => console.error('Error:', error));
         },
-        // 根據評分顯示不同的描述
-        getRatingText(rating) {
-            switch (rating) {
-                case 5: return '非常好';
-                case 4: return '很好';
-                case 3: return '普通';
-                case 2: return '不好';
-                case 1: return '非常糟';
-                default: return '';
-            }
-        },
-
     },
     mounted() {
         // 在 Vue 應用掛載後自動呼叫 fetchRatingFromServer 來獲取資料
@@ -191,6 +179,8 @@ call.use(PrimeVue.Config);
 call.component('p-rating', PrimeVue.Rating);
 
 call.mount('#app');
+
+
 
 
 const twentyfive_mins = document.querySelector("#min-25");
