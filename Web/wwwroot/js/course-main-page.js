@@ -27,18 +27,29 @@ const call = createApp({
             FollowerId: memberId,       // 假設當前使用者的 ID
             FollowedCourseId: courseId,    // 假設要關注的對象 ID
             courseReviews: [],        // 用來儲存課程評論列表
-            selectedRatings: []
+            selectedRatings: [],
+            tutorName: [],
+            bookedLessons :[]
         }
     },
     computed: {
         // 根據選中的評分篩選評論
         filteredReviews() {
-            // 如果沒有選擇任何評分，則顯示所有評論
+            //// 如果沒有選擇任何評分，則顯示所有評論
+            //if (this.selectedRatings.length === 0) {
+            //    return this.courseReviews;
+            //}
+            //// 根據選中的評分篩選評論
+            //return this.courseReviews.filter(review => this.selectedRatings.includes(Number(review.CommentRating)));
+            console.log('Selected Ratings:', this.selectedRatings);
             if (this.selectedRatings.length === 0) {
                 return this.courseReviews;
             }
-            // 根據選中的評分篩選評論
-            return this.courseReviews.filter(review => this.selectedRatings.includes(review.CommentRating));
+            const filtered = this.courseReviews.filter(review =>
+                this.selectedRatings.includes(review.CommentRating)
+            );
+            console.log('Filtered Reviews:', filtered);
+            return filtered;
         }
     },
     methods: {
@@ -57,8 +68,6 @@ const call = createApp({
             // 構建 FormData 並提交 rating 資料
             let formData = new FormData();
             formData.append('Rating', this.rating);
-            
-
             // 使用 fetch 提交資料到後端控制器
             fetch('/Course/CreateCourseReview', {
                 method: 'POST',

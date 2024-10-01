@@ -543,9 +543,9 @@
                             <div class="comment-rating-group">
                                 <div class="form-check" v-for="rating in [5, 4, 3, 2, 1]" :key="rating">
                                     <input class="form-check-input comment-rating-selection" type="checkbox"
-                                           :id="'flexCheck-' + rating" v-model="selectedRatings"
+                                           :id="rating" v-model="selectedRatings"
                                            :value="rating">
-                                    <label class="form-check-label" :for="'flexCheck-' + rating">
+                                    <label class="form-check-label" :for="rating">
                                         <i class="fa-solid fa-star"></i>
                                         <p class="rating-level">{{ rating }}。{{ getRatingText(rating) }}</p>
                                         <p>{{ rating }}</p>

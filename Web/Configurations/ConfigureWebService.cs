@@ -9,7 +9,7 @@
             services.AddScoped<OrderDetailService>();
             services.AddScoped<OrderViewModelService>();
             services.AddScoped<MemberAppointmentService>();
-            services.AddScoped<DifySearchService>();
+            //services.AddScoped<DifySearchService>();
           
             return services;
         }
