@@ -488,18 +488,6 @@ namespace Web.Services
                     ReviewDate = comment.Cdate.ToString("yyyy/MM/dd"),
                     ReviewContent = comment.CommentText
                 }).ToListAsync();
-
-            if (reviews.Count == 0)
-            {
-                reviews = new List<ReviewViewModel>
-                {
-                   new ReviewViewModel
-                   {
-                        ReviewContent="目前沒有評論"
-                   }
-                };
-            };
-
             // 查詢教師的工作經驗
             var tutorExperiences = await _repository.GetAll<Entities.WorkExperience>()
                                 .Where(w => w.MemberId == courseMainInfo.TutorId)
