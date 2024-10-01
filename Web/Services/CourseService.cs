@@ -719,7 +719,7 @@ namespace Web.Services
                 select new CourseReview
                 {
                     ReviewerName = member.FirstName + " " + member.LastName,
-                    CommentRating = comment.Rating,
+                    CommentRating = (int)comment.Rating,
                     ReviewDate = comment.Cdate.ToString("yyyy/MM/dd"),
                     ReviewContent = comment.CommentText
                 }).ToListAsync();
