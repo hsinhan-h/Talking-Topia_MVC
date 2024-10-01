@@ -206,5 +206,46 @@ namespace Web.Controllers.Api
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> UpdateHeadShotImage([FromForm] TutorResumeViewModel model)
+        {
+            try
+            {
+                var files = Request.Form.Files;
+
+                if (files == null || files.Count == 0)
+                {
+                    return BadRequest(new { success = false, message = "No file uploaded" });
+                }
+
+                var file = files[0];
+                string fileUrl = await _cloudinaryService.UploadImageAsync(file);
+
+                await _resumeDataService.ChangeHeadShotImage(model.memberId, fileUrl);
+
+                return Ok(new { success = true, fileUrl });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetHeadShotImage(int memberId)
+        {
+            var member = await _repository.GetAll<Entities.Member>()
+                .Where(m => m.MemberId == memberId)
+                .Select(m => new { HeadShotImage = m.HeadShotImage })
+                .FirstOrDefaultAsync();
+
+            if (member != null && !string.IsNullOrEmpty(member.HeadShotImage))
+            {
+                return Ok(new { success = true, headShotImage = member.HeadShotImage });
+            }
+            else
+            {
+                return Ok(new { success = true, headShotImage = "" }); 
+            }
+        }
     }
 }

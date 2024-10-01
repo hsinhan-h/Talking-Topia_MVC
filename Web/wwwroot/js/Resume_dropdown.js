@@ -110,12 +110,16 @@ const appresume = createApp({
                     workStartDate: '',
                     workEndDate: '',
                     workExperienceFile: null,
-                    workExperienceId:null,
+                    workExperienceId: null,
                 }
             ],
             formSubmitted: false,
             licensesUpdated: false,  // 用來標記證書是否已更新
             worksUpdated: false,
+            selectedFile: null,   // 存儲選擇的文件
+            headShotImage: headImage,
+            headImageUpdated: false,
+            editMode:false,
         };
     },
     computed: {
@@ -143,9 +147,10 @@ const appresume = createApp({
     },
     created() {
         this.convertData(data_categories);
+        this.loadHeadShotImage()
     },
     mounted() {
-     this.fetchBackendData();
+        this.fetchBackendData();
     },
 
     methods: {
@@ -280,6 +285,7 @@ const appresume = createApp({
                     ? updatedLicense.ProfessionalLicenseUrl
                     : updatedLicense.ProfessionalLicenseUrl.toString()
             );
+            console.log(updatedLicense)
 
             fetch('/api/UpdateResume/UpdateResumeLicenses', {
                 method: 'POST',
@@ -423,10 +429,10 @@ const appresume = createApp({
             }
         },
         editWorkExp(index) {
-             const updatedworkexp = this.works[index];
+            const updatedworkexp = this.works[index];
             const memberId = localStorage.getItem('memberId');
             console.log(`Processing index: ${index}`);
-                            console.log('This is index 1:', updatedworkexp);
+            console.log('This is index 1:', updatedworkexp);
 
 
             // 使用 FormData 包裝文件和其他資料
@@ -434,7 +440,7 @@ const appresume = createApp({
             formData.append('memberId', memberId);
 
             // 處理單個工作經驗的數據
-            formData.append(`WorkBackground[0].WorkExperienceId`, updatedworkexp.workExperienceId );
+            formData.append(`WorkBackground[0].WorkExperienceId`, updatedworkexp.workExperienceId);
             formData.append(`WorkBackground[0].WorkName`, updatedworkexp.workName || '');
             formData.append(`WorkBackground[0].WorkStartDate`, updatedworkexp.workStartDate || '');
             formData.append(`WorkBackground[0].WorkEndDate`, updatedworkexp.workEndDate || '');
@@ -498,7 +504,7 @@ const appresume = createApp({
             alert("所有工作經驗已更新，您可以提交表單。");
         },
         checkFormReady() {
-            if (this.licensesUpdated && this.worksUpdated) {
+            if (this.licensesUpdated && this.worksUpdated && this.headImageUpdated) {
                 this.formSubmitted = true;
             }
         },
@@ -518,11 +524,72 @@ const appresume = createApp({
             });
 
             // 手動移除無效的項目
-                this.licenses = this.licenses.filter(license => !license.isTemporary || license.valid);
-                // 如果表單有效，手動觸發提交
-                if (formIsValid) {
-                    this.$refs.form.submit();  // 手動觸發表單提交
-                }
+            this.licenses = this.licenses.filter(license => !license.isTemporary || license.valid);
+            // 如果表單有效，手動觸發提交
+            if (formIsValid) {
+                this.$refs.form.submit();  // 手動觸發表單提交
+            }
+        },
+        onFileChange() {
+            const HeadImage = this.selectedFile;
+            const memberId = localStorage.getItem('memberId');
+            this.headImageUpdated = true;
+            this.checkFormReady();
+            // 使用 FormData 包装文件和其他资料
+            const formData = new FormData();
+            formData.append('memberId', memberId);
+
+            // 检查是否为文件，上传文件或传递 URL
+            if (HeadImage instanceof File) {
+                formData.append('HeadShotImage', HeadImage);
+            } else if (HeadImage) {
+                formData.append('HeadShotImage', HeadImage.toString());
+            } else {
+                formData.append('HeadShotImage', '');
+            }
+
+            fetch('/api/UpdateResume/UpdateHeadShotImage', {
+                method: 'POST', 
+                body: formData, 
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Profile picture updated successfully');
+                        this.loadHeadShotImage();
+                        
+                    } else {
+                        alert('Failed to update profile picture: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating profile picture:', error);
+                });
+            
+            
+        },
+        HeadImgChange(event) {
+            this.selectedFile = event.target.files[0];
+        },
+        loadHeadShotImage() {
+            const memberId = localStorage.getItem('memberId');
+            this.editMode = false; 
+            fetch(`/api/UpdateResume/GetHeadShotImage?memberId=${memberId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.headShotImage) {
+                        this.headShotImage = data.headShotImage;
+                        localStorage.setItem('headShotImage', data.headShotImage); 
+                    } else {
+                        this.headShotImage = '';
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error fetching headshot image: ${error}`);
+                });
+        },
+        toggleEditMode() {
+            this.editMode = !this.editMode;  
         },
     },
 });
