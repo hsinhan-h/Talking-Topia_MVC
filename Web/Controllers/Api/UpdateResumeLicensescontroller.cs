@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Services;
+using static Web.ViewModels.TutorResumeViewModel;
 
 namespace Web.Controllers.Api
 {
@@ -182,11 +183,15 @@ namespace Web.Controllers.Api
                 // 確保 WorkBackground 有數據
                 if (model.WorkBackground != null && model.WorkBackground.Any())
                 {
-                    await _resumeDataService.ChangeResumeWorkExp(
-                        model.memberId,
-                        model.WorkBackground,  // 傳遞工作經驗列表
-                        fileUrls
-                    );
+                    // 遍歷 WorkBackground 列表，逐一處理每個工作經驗
+                    foreach (var workExperience in model.WorkBackground)
+                    {
+                        await _resumeDataService.ChangeResumeWorkExp(
+                            model.memberId,
+                            new List<ResumeWorkExp> { workExperience },  // 傳遞單個工作經驗
+                            fileUrls
+                        );
+                    }
                 }
                 else
                 {
@@ -199,6 +204,47 @@ namespace Web.Controllers.Api
             {
                 // 記錄具體的異常信息，方便調試
                 return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateHeadShotImage([FromForm] TutorResumeViewModel model)
+        {
+            try
+            {
+                var files = Request.Form.Files;
+
+                if (files == null || files.Count == 0)
+                {
+                    return BadRequest(new { success = false, message = "No file uploaded" });
+                }
+
+                var file = files[0];
+                string fileUrl = await _cloudinaryService.UploadImageAsync(file);
+
+                await _resumeDataService.ChangeHeadShotImage(model.memberId, fileUrl);
+
+                return Ok(new { success = true, fileUrl });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetHeadShotImage(int memberId)
+        {
+            var member = await _repository.GetAll<Entities.Member>()
+                .Where(m => m.MemberId == memberId)
+                .Select(m => new { HeadShotImage = m.HeadShotImage })
+                .FirstOrDefaultAsync();
+
+            if (member != null && !string.IsNullOrEmpty(member.HeadShotImage))
+            {
+                return Ok(new { success = true, headShotImage = member.HeadShotImage });
+            }
+            else
+            {
+                return Ok(new { success = true, headShotImage = "" }); 
             }
         }
     }

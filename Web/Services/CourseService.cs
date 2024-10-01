@@ -20,7 +20,7 @@ namespace Web.Services
         public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(
             int page, 
             int pageSize, 
-            int memberId,
+            int userId,
             string selectedSubject = null, 
             string selectedNation = null, 
             string selectedWeekdays = null, 
@@ -47,6 +47,7 @@ namespace Web.Services
             //var courseRatingsAndReviewsInfo = await GetCourseRatingsAndReviewsAsync(courseIds);
             var bookedTimeSlotsInfo = await GetBookedTimeSlotsAsync(courseIds);
             var availableTimeSlotsInfo = await GetAvailableTimeSlotsAsync(memberIds);
+            var followingCoursesInfo = await GetFollowingStatusAsync(userId, memberIds);
 
             // 合併查詢
             var completeCoursesInfo = (
@@ -59,6 +60,8 @@ namespace Web.Services
                 from bookInfo in bookInfoGroup.DefaultIfEmpty()
                 join tTimeInfo in availableTimeSlotsInfo on courseMain.MemberId equals tTimeInfo.MemberId into tTimeInfoGroup
                 from tTimeInfo in tTimeInfoGroup.DefaultIfEmpty()
+                join followingInfo in followingCoursesInfo on courseMain.CourseId equals followingInfo.CourseId into followingInfoGroup
+                from followingInfo in followingInfoGroup.DefaultIfEmpty()
                 select new CourseInfoViewModel
                 {
                     CourseId = courseMain.CourseId,
@@ -79,7 +82,7 @@ namespace Web.Services
                     CourseReviews = courseMain.CourseReviews,
                     BookedTimeSlots = bookInfo?.BookedTimeSlots ?? new List<TimeSlotViewModel>(),
                     AvailableTimeSlots = tTimeInfo?.AvailableTimeSlots ?? new List<TimeSlotViewModel>(),
-                    FollowingStatus = IsWatched(memberId, courseMain.CourseId)
+                    FollowingStatus = followingInfo.FollowingStatus
                 }).ToList();
 
             return new CourseInfoListViewModel
@@ -263,7 +266,7 @@ namespace Web.Services
                     CourseVideoThumbnail = course.ThumbnailUrl,
                     SubjectName = subject.SubjectName,
                     CourseRatings = gpReview.Any()? Math.Round(gpReview.Average(cr => cr.Rating), 2) : 0,
-                    CourseReviews = gpReview.Count()
+                    CourseReviews = gpReview.Count(),
                 });
         }
 
@@ -335,8 +338,22 @@ namespace Web.Services
                         StartHour = mt.CourseHourId - 1,
                     }).ToList()
                 }).ToListAsync();
-
         }
+
+        //關注課程查詢 (by courseIds)
+        public async Task<List<CourseInfoViewModel>> GetFollowingStatusAsync(int userId, List<int> courseIds)
+        {
+            var watchedCourses = await _repository
+                .GetAll<Entities.WatchList>().AsNoTracking()
+                .Where(w => w.FollowerId == userId && courseIds.Contains(w.CourseId ?? -1))
+                .Select(w => w.CourseId).ToListAsync();
+            return courseIds.Select(courseId => new CourseInfoViewModel
+            {
+                CourseId = courseId,
+                FollowingStatus = watchedCourses.Contains(courseId)
+            }).ToList();
+        }
+
 
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
         {
@@ -378,6 +395,7 @@ namespace Web.Services
 
             return courseInfo;
         }
+
 
         public decimal GetCourse25MinUnitPrice(int courseId)
         {

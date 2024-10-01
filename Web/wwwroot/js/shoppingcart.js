@@ -1,5 +1,4 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    console.log(window.viewModelData.shoppingCartList);
     let selectLengthElements = document.querySelectorAll('[id^="lh-timeSelect-"]'); //select抓到的是option selected的值!!!
     let selectQuantityElements = document.querySelectorAll('[id^="lh-sc-quantitySelect-"]');
     const submitBtn = document.getElementById('shopping-cart-submit-btn');
@@ -16,6 +15,7 @@
                 window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].courseLength = 25;
                 updateTotalPrice(dataIndex, vmCourseQuantity, this.value);
+                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else {
                 window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
@@ -54,9 +54,9 @@
         });
     });
 
-
-    // Dto沒辦法順利轉回去action
     submitBtn.addEventListener('click', function (event) {
+
+        event.preventDefault();
 
         const paymentType = document.querySelector('input[name="paymentType"]').value;
         const taxIdNumber = document.getElementById('taxIdInput').value;
@@ -67,26 +67,51 @@
             taxIdNumber: taxIdNumber,
             scVM: cart,
         };
+        console.log(`orderData是${orderData}!!!!!`)
+        debugger;
+
+        let url = '/order/submitToOrder';
 
         if (cart.length > 0) {
-            fetch('/Order/SubmitToOrder', {
+
+            try {
+                const response = await fetchOrderData(url, orderData);
+
+                console.log(`fetch後的response是${response}`)
+                debugger;
+                if (response.ok) { this.submit(); }
+            }
+            catch (error) {
+                console.error('訂單提交失敗', error);
+            }
+        }
+        else {
+            console.log('購物車為空！');
+        }
+    });
+
+    function fetchOrderData(url, orderData) {
+        try {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(orderData)
-            })
-                .then(response => response.json())
-                .then(result => {
-                    console.log('Response from server:', result);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        } else {
-            console.log('購物車為空！');
+            });
+
+            if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
+
+            const result = await response.json();
+            console.log(`我抓到result了啊啊啊啊啊：${result}`)
+
+            return response;
         }
-    });
+        catch (error) {
+            console.error('fetch 發生錯誤:', error);
+            throw error;
+        }
+    }
 
     function updateTotalPrice(dataIndex, quantity, unitPrice) {
         let subTotal = document.getElementById(`subtotal-${dataIndex}`);
@@ -122,7 +147,6 @@
             theTotalPrice.value = price;
             theTotalPrice.textContent = theTotalPrice.value.toLocaleString('zh-TW', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
-        console.log(`現在的總金額是${theTotalPrice.textContent}元`);
     }
 });
 

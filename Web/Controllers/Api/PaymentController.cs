@@ -6,46 +6,54 @@ using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
 using Infrastructure.Service;
 using System.Security.Claims;
+using Web.Dtos;
 
 namespace Web.Controllers.Api
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly ILogger<PaymentController> _logger;
         private readonly ECpayService _eCpayService;
         private readonly IOrderService _orderService;
         private readonly IMemberService _memberService;
-        private int _memberId;
+        //private int _memberId;
 
-        public PaymentController(IConfiguration configuration, ECpayService eCpayService, IOrderService orderService, IMemberService memberService)
+        public PaymentController(IConfiguration configuration,
+                                 ECpayService eCpayService,
+                                 IOrderService orderService,
+                                 IMemberService memberService,
+                                 ILogger<PaymentController> logger)
         {
             _configuration = configuration;
             _eCpayService = eCpayService;
             _orderService = orderService;
             _memberService = memberService;
+            _logger = logger;
         }
 
-        [HttpPost]
-        public IActionResult New([FromForm] string memberId)
+        [HttpPost("new")]
+        public IActionResult New()
         {
-            if (string.IsNullOrEmpty(memberId) || !int.TryParse(memberId, out _memberId))
-            {
-                return BadRequest("memberId 不存在或無效");
-            }
-
-            return RedirectToAction("checkout", new { memberId = _memberId });
+            return RedirectToAction(nameof(CheckOut), "Payment");
         }
 
 
         // POST api/payment
-
         [HttpGet("checkout")]
-        public async Task<IActionResult> CheckOut(int memberId)
+        public async Task<IActionResult> CheckOut()
         {
 
-            // 資料藏在appsettings.json及UserSecret(目前註解中)
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"memberIdClaim這王八是null!!!!!!"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+
+            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"memberId是 {memberId}");
+
+            // 資料藏在appsettings.json及UserSecret
             var service = new
             {
                 Url = _configuration["ECpay:Service:Url"],
@@ -75,6 +83,8 @@ namespace Web.Controllers.Api
                 .Transaction.UseMethod(method: transaction.Method)
                 .Transaction.WithItems(items: transaction.Items)
                 .Generate();
+
+            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"payment是 {payment}");
 
             return View(payment);
         }

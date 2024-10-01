@@ -8,6 +8,12 @@
 
         public List<ShoppingCartVM> scVM { get; set; }
     }
+
+    public class OrderDto
+    {
+        public int MemberId { get; set; }
+    }
+
     public class ShoppingCartVM
     {
 

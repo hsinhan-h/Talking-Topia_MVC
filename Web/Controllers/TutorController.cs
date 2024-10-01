@@ -181,7 +181,6 @@ namespace Web.Controllers
             return View(allTutorResumeData);
         }
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> TutorResume(TutorResumeViewModel qVM)
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);

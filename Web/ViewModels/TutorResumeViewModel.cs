@@ -13,6 +13,7 @@ namespace Web.ViewModels
         /// </summary>
         //[Required]
         public string HeadShotImage { get; set; }
+
         /// <summary>
         /// 學校名稱
         /// </summary>
@@ -56,6 +57,7 @@ namespace Web.ViewModels
             public string WorkName { get; set; }
             public int? WorkExperienceId { get; set; }
             public string WorkExperienceFile { get; set; }
+
 
         }
         public ApplyCourseList CourseList { get; set; } = new ApplyCourseList();

@@ -33,14 +33,12 @@ namespace Web.Controllers.Api
                 return BadRequest();
             }
 
-            //var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            //int memberId = 0;  //預設的匿名或訪客用戶Id
-            //if (memberIdClaim != null)
-            //{
-            //    memberId = int.Parse(memberIdClaim.Value);
-            //}
-
-            var memberId = 19;
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int memberId = 0;  //預設的匿名或訪客用戶Id
+            if (memberIdClaim != null)
+            {
+                memberId = int.Parse(memberIdClaim.Value);
+            }
 
             var courses = await _courseService.GetCourseCardsListAsync(page, 6, memberId, subject, nation, weekdays, timeslots, budget, sortOption);
             if (courses == null)
