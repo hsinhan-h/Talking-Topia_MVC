@@ -4,6 +4,7 @@
     let selectQuantityElements = document.querySelectorAll('[id^="lh-sc-quantitySelect-"]');
     const submitBtn = document.getElementById('shopping-cart-submit-btn');
 
+
     selectLengthElements.forEach(function (selectLength) {
         selectLength.addEventListener('change', function () {
             let dataIndex = this.getAttribute('data-index');
@@ -16,11 +17,13 @@
                 window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].courseLength = 25;
                 updateTotalPrice(dataIndex, vmCourseQuantity, this.value);
+                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else {
                 window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].courseLength = 50;
                 updateTotalPrice(dataIndex, vmCourseQuantity, this.value);
+                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
         });
     });
@@ -35,31 +38,34 @@
                 window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].discount = 0;
                 updateTotalPrice(dataIndex, this.value, vmUnitPrice);
+                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else if (this.value == 5) {
                 window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].discount = 0.95;
                 updateTotalPrice(dataIndex, this.value, vmUnitPrice);
+                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else if (this.value == 10) {
                 window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].discount = 0.9;
                 updateTotalPrice(dataIndex, this.value, vmUnitPrice);
+                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else {
                 window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].discount = 0.85;
                 updateTotalPrice(dataIndex, this.value, vmUnitPrice);
+                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
         });
     });
 
-
-    // Dto沒辦法順利轉回去action
-    submitBtn.addEventListener('click', function (event) {
+    submitBtn.addEventListener("click", function (event) {
+        event.preventDefault();
 
         const paymentType = document.querySelector('input[name="paymentType"]').value;
-        const taxIdNumber = document.getElementById('taxIdInput').value;
+        const taxIdNumber = document.getElementById("taxIdInput").value;
         const cart = window.viewModelData.shoppingCartList;
 
         const orderData = {
@@ -68,23 +74,34 @@
             scVM: cart,
         };
 
+        console.log(`orderData是${orderData}!!!!!`);
+        debugger;
+
         if (cart.length > 0) {
-            fetch('/Order/SubmitToOrder', {
-                method: 'POST',
+            const response = fetch("/order/submitToOrder", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(orderData)
+                body: JSON.stringify(orderData),
             })
-                .then(response => response.json())
-                .then(result => {
-                    console.log('Response from server:', result);
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    else
+                    {
+                        this.submit();
+                    }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
+                .then((result) => {
+                    console.log("Response from server:", result);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
                 });
         } else {
-            console.log('購物車為空！');
+            console.log("購物車為空！");
         }
     });
 
@@ -122,7 +139,6 @@
             theTotalPrice.value = price;
             theTotalPrice.textContent = theTotalPrice.value.toLocaleString('zh-TW', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
-        console.log(`現在的總金額是${theTotalPrice.textContent}元`);
     }
 });
 

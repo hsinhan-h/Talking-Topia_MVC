@@ -8,7 +8,7 @@
 
     public class CourseReview
     {
-        public double CommentRating { get; set; }
+        public int CommentRating { get; set; }
         public string ReviewerName { get; set; }
         public string ReviewDate { get; set; }
         public string ReviewContent { get; set; }
