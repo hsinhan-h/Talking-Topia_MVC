@@ -3,13 +3,21 @@
     public class AppointmentDetailsViewModel
     {
         public List<AppointmentDetailVM> AppointmentDetailsList { get; set; }
+       
     }
     public class AppointmentDetailVM
     {
         /// <summary>
         /// 會員Id
         /// </summary>
+        
         public int MemberId { get; set; }
+        /// <summary>
+        /// 訂單編號
+        /// </summary>
+        public int BookingId { get; set; }
+
+     
         /// <summary>
         /// 課程ID 
         /// </summary>
@@ -79,6 +87,9 @@
         /// <summary>
         /// 預約上課時間
         /// </summary>
-        public short BookingTime { get; set; }
+        public int BookingTime { get; set; }
+
     }
+   
+
 }

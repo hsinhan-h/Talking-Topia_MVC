@@ -5,7 +5,10 @@ namespace Web.ViewModels
     public class MemberOrderViewModel
 
     {
-       public List<MemberOrderVM> MemberOderList { get; set; }
+       public List<MemberOrderVM> MemberOrderList { get; set; }// 已付款訂單
+        public List<MemberOrderVM> PendingOrders { get; set; }// 待付款訂單
+        public List<MemberOrderVM> CancelledOrders { get; set; }// 待付款訂單
+
     }
 
     public class MemberOrderVM
@@ -67,5 +70,13 @@ namespace Web.ViewModels
         /// 統一編號
         /// </summary>
         public string TaxIdNumber { get; set; }
+        /// <summary>
+        /// 訂單狀態
+        /// </summary>
+        public short OrderStatusId { get; set; }
+    }
+    public class ShoppingCartListViewModel
+    {
+        public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
     }
 }

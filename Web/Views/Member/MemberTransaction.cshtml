@@ -53,7 +53,7 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    @foreach (var order in Model.MemberOderList)
+                                    @foreach (var order in Model.MemberOrderList)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
@@ -70,7 +70,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="container tab-pane fade"
+                        <div class="container tab-pane fade"
                          id="lh-backstage-transaction-pending-payment-page">
                         <div class="lh-backstage-transaction-table">
                             <table class="lh-backstage-transaction-detail col-12 mt-5"
@@ -88,7 +88,7 @@
                                     </tr>
                                 </thead>
                                 <tbody border="1">
-                                    @foreach (var order in Model.MemberOderList)
+                                    @foreach (var order in Model.MemberOrderList)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
@@ -104,8 +104,8 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="container tab-pane fade"
+                    </div> 
+                     <div class="container tab-pane fade"
                          id="lh-backstage-transaction-cancelled-page">
                         <div class="lh-backstage-transaction-table">
                             <table class="lh-backstage-transaction-detail col-12 mt-5"
@@ -120,29 +120,29 @@
                                         <td>購買堂數</td>
                                         <td>金額(台幣)</td>
                                     </tr>
-                                </thead>
-                                <tbody border="1">
-                                    @foreach (var order in Model.MemberOderList)
+                                </thead> 
+                                 <tbody border="1">
+                                    @foreach (var order in Model.PendingOrders)
                                     {
                                         <tr>
                                             <td>#@order.TrackingNumber</td>
                                             <td>@order.OrderDatetime</td>
                                             <td>@order.FullName</td>
                                             <td>@order.CourseTitle</td>
-                                            <td>@order.CourseLength</td>
+                                            <td>@order.CourseLength 分鐘</td>
                                             <td>@order.Quantity 堂</td>
                                             <td>NT$@order.TotalPrice.ToString("#,###")</td>
                                             <td>@order.TaxIdNumber</td>
                                         </tr>
                                     }
-                                </tbody>
-                            </table>
+                                </tbody> 
+                             </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
     <!-- screen modal for 課程明細-->
     <div class="modal fade"
          id="lh-backstage-tutor-data-edit"
