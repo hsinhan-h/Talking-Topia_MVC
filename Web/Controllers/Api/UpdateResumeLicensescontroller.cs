@@ -212,14 +212,14 @@ namespace Web.Controllers.Api
             try
             {
                 var files = Request.Form.Files;
+                string fileUrl = null;  // 預設為 null
 
-                if (files == null || files.Count == 0)
+                // 如果有文件，則上傳圖片
+                if (files != null && files.Count > 0)
                 {
-                    return BadRequest(new { success = false, message = "No file uploaded" });
+                    var file = files[0];
+                    fileUrl = await _cloudinaryService.UploadImageAsync(file);
                 }
-
-                var file = files[0];
-                string fileUrl = await _cloudinaryService.UploadImageAsync(file);
 
                 await _resumeDataService.ChangeHeadShotImage(model.memberId, fileUrl);
 
@@ -244,8 +244,25 @@ namespace Web.Controllers.Api
             }
             else
             {
-                return Ok(new { success = true, headShotImage = "" }); 
+                return Ok(new { success = true, headShotImage = "" });
             }
+        }
+        [HttpPost]
+        public async Task<IActionResult> DownloadImg([FromBody] TutorResumeViewModel model)
+        {
+            var professionalLicense = await _resumeDataService.GetProfessionalLicenseById(model.memberId, model.ProlLicenseId);
+
+            if (professionalLicense == null)
+            {
+                return NotFound(new { success = false, message = "Professional License not found" });
+            }
+
+            return Ok(new
+            {
+                success = true,
+                professionalLicenseId = professionalLicense.ProlLicenseId,
+                professionalLicenseUrl = professionalLicense.ProlLicenseUrl
+            });
         }
     }
 }

@@ -102,6 +102,10 @@ const appresume = createApp({
                     ProfessionalLicenseId: null,
                     ProfessionalLicenseName: '',
                     ProfessionalLicenseUrl: null,
+                    licenseEditMode: false,
+                    isConfirmed: false,
+                    uploadStatus: null,
+                    isUploading: false,
                 }
             ],
             works: [ // 初始化一個空的工作經驗表單
@@ -111,15 +115,22 @@ const appresume = createApp({
                     workEndDate: '',
                     workExperienceFile: null,
                     workExperienceId: null,
+                    isConfirmed: false,
+                    workEditMode: false,
+                    uploadWorkStatus: null,
+                    isWorkUploading:false,
                 }
             ],
             formSubmitted: false,
-            licensesUpdated: false,  // 用來標記證書是否已更新
-            worksUpdated: false,
             selectedFile: null,   // 存儲選擇的文件
             headShotImage: headImage,
             headImageUpdated: false,
-            editMode:false,
+            editMode: false,
+            HeadImgisUploading: false,
+            showValidation: false ,
+            validationMessage:'',
+            
+            
         };
     },
     computed: {
@@ -240,13 +251,12 @@ const appresume = createApp({
                 ProfessionalLicenseUrl: null,
                 ProfessionalLicenseId: null,
                 valid: false,  // 初始化時證書無效，需用戶填寫後更新為 true
-                isTemporary: true // 初始化為暫存狀態
+                /*isTemporary: true */
             };
 
             // 暫時添加到 licenses 列表中
             this.licenses.push(newLicense);
 
-            // 假設後端有一個 API 可以用來生成新證照並返回新的 ProfessionalLicenseId
             fetch('/api/UpdateResume/CreateLicense', {
                 method: 'POST',
                 headers: {
@@ -273,10 +283,27 @@ const appresume = createApp({
             const updatedLicense = this.licenses[index];
             const memberId = localStorage.getItem('memberId');
 
+            // 驗證證照名稱和文件
+            if (!updatedLicense.ProfessionalLicenseName) {
+                console.log('請填寫證照名稱');
+                this.licenses[index].uploadStatus = false;
+                return; // 阻止提交
+            }
+
+            if (!updatedLicense.ProfessionalLicenseUrl) {
+                console.log('請上傳證照文件');
+                this.licenses[index].uploadStatus = false;
+                return; // 阻止提交
+            }
+
+            this.licenses[index].isConfirmed = true;
+            this.licenses[index].licenseEditMode = false; // 禁止編輯
+            this.licenses[index].isUploading = true;
+
             // 使用 FormData 包裝文件和其他資料
             const formData = new FormData();
             formData.append('memberId', memberId);
-            formData.append('ProfessionalLicenseId', updatedLicense.ProfessionalLicenseId); // 添加證照 ID
+            formData.append('ProfessionalLicenseId', updatedLicense.ProfessionalLicenseId);
             formData.append('ProfessionalLicenseName', updatedLicense.ProfessionalLicenseName);
 
             // 檢查是否為文件，否則直接傳送 URL
@@ -285,26 +312,26 @@ const appresume = createApp({
                     ? updatedLicense.ProfessionalLicenseUrl
                     : updatedLicense.ProfessionalLicenseUrl.toString()
             );
-            console.log(updatedLicense)
 
             fetch('/api/UpdateResume/UpdateResumeLicenses', {
                 method: 'POST',
-                body: formData, // 使用 FormData 發送
-                // 注意：不需要顯式設置 Content-Type，瀏覽器會自動設置為 multipart/form-data
+                body: formData
             })
                 .then(response => response.json())
                 .then(data => {
+                    this.licenses[index].isUploading = false;  
                     if (data.success) {
-                        // 成功訊息
-                        alert('License updated successfully');
-                        this.licenses[index].isTemporary = false;
+                        console.log('License updated successfully');
+                        this.licenses[index].uploadStatus = true; 
                     } else {
-                        // 失敗訊息
-                        alert('Failed to update license:', data.message);
+                        console.log('Failed to update license:', data.message);
+                        this.licenses[index].uploadStatus = false;  
                     }
                 })
                 .catch(error => {
+                    this.licenses[index].isUploading = false;
                     console.error('Error updating license:', error);
+                    this.licenses[index].uploadStatus = false; 
                 });
         },
         removeLicense(index) {
@@ -431,10 +458,18 @@ const appresume = createApp({
         editWorkExp(index) {
             const updatedworkexp = this.works[index];
             const memberId = localStorage.getItem('memberId');
-            console.log(`Processing index: ${index}`);
-            console.log('This is index 1:', updatedworkexp);
+            const updatedWork = this.works[index];
+            
+            if (!updatedWork.workName || !updatedWork.workExperienceFile || !updatedWork.workStartDate || !updatedWork.workEndDate) {
+                console.log('請填寫所有必填的工作信息');
+                this.works[index].uploadWorkStatus = false;
+                return;
+            }
 
-
+            
+            this.works[index].isWorkUploading = true;
+            this.works[index].isConfirmed = true;
+            this.works[index].workEditMode = false; // 禁止編輯
             // 使用 FormData 包裝文件和其他資料
             const formData = new FormData();
             formData.append('memberId', memberId);
@@ -461,72 +496,53 @@ const appresume = createApp({
             })
                 .then(response => response.json())
                 .then(data => {
+                    this.works[index].isWorkUploading = false;  
                     if (data.success) {
                         // 成功訊息
-                        alert('Work experience updated successfully');
+                        this.works[index].uploadWorkStatus = true;
+                        console.log('Work experience updated successfully');
+
                     } else {
                         // 失敗訊息
-                        alert('Failed to update work experience: ' + data.message);
+                        this.works[index].isWorkUploading = false; 
+                        this.works[index].uploadWorkStatus = false;
+                        console.log('Failed to update work experience: ' + data.message);
                     }
                 })
                 .catch(error => {
                     console.error('Error updating work experience:', error);
                 });
         },
+        //確認所有確認按鈕都有點才可submit
         confirmAllLicensesUpdates() {
-            let updatesCompleted = true;
-
-            this.licenses.forEach((license, index) => {
-                if (license.ProfessionalLicenseName.trim() === '') {
-                    license.valid = false;
-                    updatesCompleted = false;  // 如果有無效的條目，則不允許提交
-                } else {
-                    this.enditLcense(index);  // 觸發更新
-                    license.valid = true;
-                }
-            });
-
-            if (updatesCompleted) {
-                this.licensesUpdated = true;
-                this.checkFormReady();  // 允許提交表單
-                alert("所有證書已更新，您可以提交表單。");
-            } else {
-                alert("請先填寫所有必填字段。");
-            }
+            return this.licenses.every(license => license.isConfirmed);
         },
         confirmAllWorksUpdates() {
-            this.works.forEach((work, index) => {
-                this.editWorkExp(index);  // 觸發每個工作的更新邏輯
-            });
-
-            this.worksUpdated = true;  // 標記工作經驗已更新
-            this.checkFormReady();  // 檢查是否可以提交表單
-            alert("所有工作經驗已更新，您可以提交表單。");
+            return this.works.every(work => work.isConfirmed);
         },
-        checkFormReady() {
-            if (this.licensesUpdated && this.worksUpdated && this.headImageUpdated) {
-                this.formSubmitted = true;
-            }
-        },
-
+  
         validateForm() {
             let formIsValid = true;
-            this.showValidation = true;
+            this.showValidation = true; // 顯示表單驗證錯誤提示
 
-            // 遍歷 this.licenses，過濾掉未填寫名稱的證照
-            this.licenses.forEach((license, index) => {
-                if (!license.ProfessionalLicenseName || license.ProfessionalLicenseName.trim() === '') {
-                    license.valid = false;  // 無效的條目設置為 false
-                    formIsValid = false;    // 表單無效
-                } else {
-                    license.valid = true;   // 有效的條目設置為 true
-                }
-            });
+            // 檢查所有證照是否已確認
+            if (!this.confirmAllLicensesUpdates()) {
+                this.validationMessage = '請確認所有證照後再提交';
+                formIsValid = false;
+            }
 
-            // 手動移除無效的項目
-            this.licenses = this.licenses.filter(license => !license.isTemporary || license.valid);
-            // 如果表單有效，手動觸發提交
-            if (formIsValid) {
+            // 檢查所有工作經驗是否已確認
+            if (!this.confirmAllWorksUpdates()) {
+                this.validationMessage = '請確認所有工作經驗後再提交';
+                formIsValid = false;
+            }
+
+            // 如果表單無效，顯示模態框提示
+            if (!formIsValid) {
+                const validationModal = new bootstrap.Modal(document.getElementById('validationModal'));
+                validationModal.show();
+            } else {
+                // 如果所有證照和工作經驗都已確認，提交表單
                 this.$refs.form.submit();  // 手動觸發表單提交
             }
         },
@@ -534,7 +550,7 @@ const appresume = createApp({
             const HeadImage = this.selectedFile;
             const memberId = localStorage.getItem('memberId');
             this.headImageUpdated = true;
-            this.checkFormReady();
+            this.HeadImgisUploading = true;
             // 使用 FormData 包装文件和其他资料
             const formData = new FormData();
             formData.append('memberId', memberId);
@@ -555,15 +571,18 @@ const appresume = createApp({
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert('Profile picture updated successfully');
+                        console.log('Profile picture updated successfully');
                         this.loadHeadShotImage();
+                        this.HeadImgisUploading = false;
                         
                     } else {
-                        alert('Failed to update profile picture: ' + data.message);
+                        console.log('Failed to update profile picture: ' + data.message);
+                        this.HeadImgisUploading = false;
                     }
                 })
                 .catch(error => {
                     console.error('Error updating profile picture:', error);
+                    this.HeadImgisUploading = false;
                 });
             
             
@@ -591,6 +610,76 @@ const appresume = createApp({
         toggleEditMode() {
             this.editMode = !this.editMode;  
         },
+        toggleLicenseEditMode(index)
+        {
+            this.licenses[index].licenseEditMode = !this.licenses[index].licenseEditMode;
+
+            // 如果重新進入編輯模式，則取消“確認上傳”的禁用
+            if (this.licenses[index].licenseEditMode) {
+                this.licenses[index].isConfirmed = false;
+            }
+        },
+        toggleWorkEditMode(index) {
+            this.works[index].workEditMode = !this.works[index].workEditMode;
+
+            // 如果重新進入編輯模式，則取消“確認上傳”的禁用
+            if (this.works[index].workEditMode) {
+                this.works[index].isConfirmed = false;  // 取消確認狀態
+            }
+        },
+        downloadFile(index) {
+            // 獲取會員 ID
+            const memberId = localStorage.getItem('memberId');
+            const professionalLicenseId = this.licenses[index]?.ProfessionalLicenseId;
+
+            if (!memberId || !professionalLicenseId) {
+                console.log("無法獲取會員 ID 或 ProfessionalLicenseId");
+                return;
+            }
+
+            // 發送 POST 請求以獲取 ProfessionalLicenseUrl
+            fetch(`/api/UpdateResume/DownloadImg`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    memberId: memberId,
+                    ProlLicenseId: professionalLicenseId,
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const modalImg = document.getElementById('modalImage');
+                    const modalMessage = document.getElementById('modalMessage');
+
+                    if (data.success && data.professionalLicenseUrl) {
+                        const previewUrl = data.professionalLicenseUrl;
+
+                        modalMessage.textContent = '';
+                        modalImg.src = previewUrl;
+                        modalImg.style.display = 'block';
+
+                    } else {
+                        modalMessage.textContent = "您尚未上傳證照圖檔";
+                        modalImg.style.display = 'none';  // 隱藏圖片
+                    }
+                    const modal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+                    modal.show();
+                })
+                .catch(error => {
+                    console.error(`Error fetching image: ${error}`);
+
+                    const modalMessage = document.getElementById('modalMessage');
+                    modalMessage.textContent = "無法下載圖片，請稍後再試";
+                    const modalImg = document.getElementById('modalImage');
+                    modalImg.style.display = 'none';  // 隱藏圖片
+
+                    // 顯示 Bootstrap modal
+                    const modal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+                    modal.show();
+                });
+        }
     },
 });
 appresume.mount('#vue-wrapper');
