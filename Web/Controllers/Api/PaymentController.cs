@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Enums;
+using ApplicationCore.Interfaces;
 using ApplicationCore.Services;
 using Infrastructure.Configurations.ECpay;
 using Infrastructure.ECpay;
@@ -82,7 +83,11 @@ namespace Web.Controllers.Api
                 .Transaction.New(no: transaction.No, description: transaction.Description, date: transaction.Date)
                 .Transaction.UseMethod(method: transaction.Method)
                 .Transaction.WithItems(items: transaction.Items)
-                .Generate();
+            .Generate();
+
+            EOrderStatus orderStatus = EOrderStatus.Success;
+            var orderId = _orderService.GetLatestOrder(memberId);
+            _orderService.UpdateOrderTransactionAndStatus(orderId, payment.MerchantTradeNo, payment.CheckMacValue, orderStatus);
 
             _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"payment是 {payment}");
 
@@ -94,22 +99,11 @@ namespace Web.Controllers.Api
         {
             var hashKey = _configuration["ECpay:Service:HashKey"];
             var hashIV = _configuration["ECpay:Service:HashIV"];
-            EOrderStatus orderStatus;
             // 務必判斷檢查碼是否正確。
             if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV))
             {
-                orderStatus = EOrderStatus.Failed;
                 return BadRequest();
             }
-
-            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (memberIdClaim == null)
-            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            int memberId = int.Parse(memberIdClaim.Value);
-
-            orderStatus = EOrderStatus.Success;
-            var orderId = _orderService.GetLatestOrder(memberId);
-            _orderService.UpdateOrderTransactionAndStatus(orderId, result.MerchantTradeNo, result.TradeNo, orderStatus);
 
             return Ok("1|OK");
         }

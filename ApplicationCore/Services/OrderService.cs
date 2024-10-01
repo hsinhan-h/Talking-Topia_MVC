@@ -122,8 +122,8 @@ namespace ApplicationCore.Services
                     order.OrderStatusId = (short)EOrderStatus.Success;
                     order.Udate = DateTime.Now;
                     order.MerchantTradeNo = merchantTradeNo;
-                    order.TradeNo = tradeNo;
-                    await _orderRepository.UpdateAsync(order);
+                    //order.TradeNo = tradeNo;
+                    var updateResult =  await _orderRepository.UpdateAsync(order);
                     foreach (var item in shoppingCartItem)
                     {
                         if (item.BookingDate.HasValue && item.BookingTime.HasValue)
