@@ -15,12 +15,15 @@ namespace Web.Controllers
         private readonly MemberAppointmentService _memberAppointmentService;
 
 
+
         public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService)
         {
             _memberDataService = memberDataService;            
             _memberService = memberService;
             _orderDetailService = orderdetailservice;
             _memberAppointmentService = memberappointmentService;
+
+
         }
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
@@ -30,6 +33,10 @@ namespace Web.Controllers
         public async Task<IActionResult> Index()
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             int memberId = int.Parse(memberIdClaim.Value);
             var result = await _memberService.GetMemberId(memberId);
 
@@ -104,9 +111,12 @@ namespace Web.Controllers
 
             // 根據 memberId 取得訂單明細
             var orderDetail = await _orderDetailService.GetOrderData(memberId);
+            //var pendingOrders = await _orderDetailService.GetPendingOrders(memberId);
+            //var cancelledOrders = await _orderDetailService.GetCancelledOrders(memberId);
+
 
             // 確認訂單明細是否為空
-            if (orderDetail == null)
+            if (orderDetail == null)    
             {
                 return NotFound("找不到訂單明細");
             }
