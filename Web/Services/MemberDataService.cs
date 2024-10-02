@@ -5,6 +5,7 @@ using Web.Repository;
 using Web.ViewModels;
 using Infrastructure.Data;
 using Web.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Web.Services
 {
@@ -13,12 +14,15 @@ namespace Web.Services
         private readonly IRepository _repository;
         
         private readonly ILogger<MemberDataService> _logger;
+        private readonly AccountService _accountService;
 
-        public MemberDataService(IRepository repository,  ILogger<MemberDataService> logger)
+        public MemberDataService(IRepository repository,  ILogger<MemberDataService> logger, AccountService accountService)
         {
             _repository = repository;
             
             _logger = logger;
+
+            _accountService = accountService;
 
         }
 
@@ -224,6 +228,34 @@ namespace Web.Services
             var IsFollowed = _repository.GetAll<WatchList>().Any(w => w.CourseId == courseId && w.FollowerId == memberId);
             return IsFollowed;
         }
+        public async Task<(bool Success, string Message)> ChangePasswordAsync(int memberId, string currentPassword, string newPassword)
+        {
+            // 使用 AccountService 取得會員資料
+            var member = await _accountService.GetMemberByIdAsync(memberId);
+            if (member == null)
+            {
+                return (false, "無法找到使用者。");
+            }
+
+            var passwordHasher = new PasswordHasher<Web.Entities.Member>();
+
+            // 驗證目前密碼
+            var passwordVerificationResult = passwordHasher.VerifyHashedPassword(member, member.Password, currentPassword);
+            if (passwordVerificationResult != PasswordVerificationResult.Success)
+            {
+                return (false, "目前密碼不正確。");
+            }
+
+            // 設置新密碼，統一使用 PasswordHasher
+            member.Password = passwordHasher.HashPassword(member, newPassword);
+
+            // 更新資料庫
+            _repository.Update(member);
+            await _repository.SaveChangesAsync();
+
+            return (true, "密碼修改成功。");
+        }
+
 
     }
 

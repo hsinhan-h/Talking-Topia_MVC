@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using NuGet.Common;
 using ApplicationCore.Interfaces;
+using Member = Web.Entities.Member;
 
 
 
@@ -168,5 +169,11 @@ namespace Web.Services
 
             return member;
         }
+
+        public async Task<Member> GetMemberByIdAsync(int memberId)
+        {
+            return await _repository.FirstOrDefaultAsync<Web.Entities.Member>(m => m.MemberId == memberId);
+        }
+
     }
 }

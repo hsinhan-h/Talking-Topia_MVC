@@ -29,11 +29,11 @@
                                 <label for="floatingInput7">帳號</label>
                             </div>
                         </div>
-                        <!-- 修改密碼按鈕 -->
+                        <!-- 修改密碼 -->
                         <div class="col-12 col-md-6">
                             <button class="btn lh-backstage-submit-btn mt-2"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#step1Modal">
+                                    data-bs-target="#changePasswordModal">
                                 修改密碼
                             </button>
                         </div>
@@ -383,9 +383,40 @@
             </div>
         </div>
     </div>
+    <!-- 修改密碼 Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="changePasswordLabel">修改密碼</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="changePasswordForm" method="post" action="/Member/ChangePassword">
+                        <div class="mb-3">
+                            <label for="currentPasswordInput" class="col-form-label">目前密碼</label>
+                            <input type="password" class="form-control" id="currentPasswordInput" required />
+                        </div>
 
+                        <div class="mb-3">
+                            <label for="newPasswordInput" class="col-form-label">新密碼</label>
+                            <input type="password" class="form-control" id="newPasswordInput" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPasswordInput" class="col-form-label">確認新密碼</label>
+                            <input type="password" class="form-control" id="confirmPasswordInput" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn lh-backstage-submit-btn" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn lh-backstage-submit-btn" onclick="submitPasswordChange()">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- modal 第一步 -->
+@*     <!-- modal 第一步 -->
     <div class="modal fade" id="step1Modal" tabindex="-1" aria-labelledby="step1Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -465,7 +496,7 @@
             </div>
         </div>
     </div>
-
+ *@
 </div>
 
 

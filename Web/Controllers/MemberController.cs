@@ -16,6 +16,7 @@ namespace Web.Controllers
 
 
 
+
         public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService)
         {
             _memberDataService = memberDataService;            
@@ -168,6 +169,43 @@ namespace Web.Controllers
             }
 
             return Json(new { success = false, message = "資料驗證失敗" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, message = "請檢查表單輸入是否正確", errors });
+            }
+
+
+            // 檢查新密碼與確認新密碼是否一致
+            if (model.NewPassword != model.ConfirmNewPassword)
+            {
+                return Json(new { success = false, message = "新密碼與確認新密碼不相符喔喔喔喔喔喔喔。" });
+            }
+
+            // 從當前登入的使用者取得 MemberId
+            var memberId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(memberId))
+            {
+                return Json(new { success = false, message = "無法取得使用者 ID，請重新登入。" });
+            }
+
+            // 執行密碼變更邏輯
+            var result = await _memberDataService.ChangePasswordAsync(int.Parse(memberId), model.CurrentPassword, model.NewPassword);
+
+            if (result.Success)
+            {
+                return Json(new { success = true, message = "密碼修改成功。" });
+            }
+            else
+            {
+                return Json(new { success = false, message = result.Message });
+            }
         }
 
     }
