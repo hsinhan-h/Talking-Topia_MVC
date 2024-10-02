@@ -82,8 +82,6 @@ namespace Web.Services
                         OrderStatusId = order.OrderStatusId,
                     }; ;
 
-                    _logger.LogWarning($"取得的資料是{orderDetailResult}");
-                    Console.WriteLine("這裡暫停一下");
                     // 判斷交易狀態
                     if (orderDetailResult.OrderStatusId == (int)EOrderStatus.Success) { memberOrderList.Add(orderDetailResult); }
                     if (orderDetailResult.OrderStatusId == (int)EOrderStatus.Outstanding) { pendingOrders.Add(orderDetailResult); }
