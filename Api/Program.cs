@@ -1,5 +1,8 @@
 
-using Api.Services;
+using Api.Configurations;
+using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
+using Infrastructure;
 
 namespace Api
 {
@@ -32,7 +35,8 @@ namespace Api
                 });
             });
 
-            builder.Services.AddScoped<OrderApiService>();
+            builder.Services.AddInfrastructureService(builder.Configuration);
+            builder.Services.AddApiService();
 
             var app = builder.Build();
 
