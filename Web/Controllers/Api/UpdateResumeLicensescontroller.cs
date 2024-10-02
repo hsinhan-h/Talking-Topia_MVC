@@ -47,8 +47,24 @@ namespace Web.Controllers.Api
                     fileUrls = model.ProfessionalLicenseUrl;
                 }
 
-                // 調用服務層，更新資料庫中的證照資料
-                await _resumeDataService.ChangeResumeLicenses(model.memberId, model.ProfessionalLicenseId, model.ProfessionalLicenseName, fileUrls);
+                // 檢查是否傳遞的是單個證照 ID，並將其轉換為列表
+                var licenseIds = model.ProfessionalLicenseId?.Count > 0 ? model.ProfessionalLicenseId : new List<int> { 0 };
+                var licenseNames = model.ProfessionalLicenseName?.Count > 0 ? model.ProfessionalLicenseName : new List<string> { string.Empty };
+                var professionalLicenseUrls = fileUrls.Any() ? fileUrls : new List<string> { string.Empty };
+
+                // 檢查 ProfessionalLicenseId 列表中是否有值
+                var licenseId = licenseIds.FirstOrDefault();
+
+                // 如果 ProfessionalLicenseId 為 0，表示這是新的證照
+                if (licenseId == 0)
+                {
+                    // 在資料庫中插入新證照，並取得新生成的 ProfessionalLicenseId
+                    var newLicenseId = await _resumeDataService.CreateNewLicense(model.memberId, licenseNames.First(), professionalLicenseUrls);
+                    return Ok(new { success = true, ProfessionalLicenseId = newLicenseId });
+                }
+
+                // 否則更新現有的證照條目
+                await _resumeDataService.ChangeResumeLicenses(model.memberId, licenseIds, licenseNames, professionalLicenseUrls);
 
                 return Ok(new { success = true });
             }
@@ -57,6 +73,8 @@ namespace Web.Controllers.Api
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> DeleteLicense([FromBody] TutorResumeViewModel request)
@@ -177,7 +195,7 @@ namespace Web.Controllers.Api
                 // 如果沒有上傳新文件，則使用原本的 URL 列表
                 if (!fileUrls.Any())
                 {
-                    fileUrls = model.ProfessionalLicenseUrl;  // 確保 model.ProfessionalLicenseUrl 是正確的數據類型
+                    fileUrls = model.WorkBackground.Select(w => w.WorkExperienceFile).ToList();
                 }
 
                 // 確保 WorkBackground 有數據
@@ -186,11 +204,14 @@ namespace Web.Controllers.Api
                     // 遍歷 WorkBackground 列表，逐一處理每個工作經驗
                     foreach (var workExperience in model.WorkBackground)
                     {
-                        await _resumeDataService.ChangeResumeWorkExp(
+                        var newWorkExperienceId = await _resumeDataService.ChangeResumeWorkExp(
                             model.memberId,
                             new List<ResumeWorkExp> { workExperience },  // 傳遞單個工作經驗
                             fileUrls
                         );
+
+                        // 返回新生成的 WorkExperienceId，如果是新增
+                        return Ok(new { success = true, workExperienceId = newWorkExperienceId });
                     }
                 }
                 else
