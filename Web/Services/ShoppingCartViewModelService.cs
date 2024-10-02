@@ -5,7 +5,6 @@ namespace Web.Services
 {
     public class ShoppingCartViewModelService
     {
-        private readonly IRepository _repository;
         private readonly IRepository<ApplicationCore.Entities.Course> _courseRepository;
         private readonly IRepository<ApplicationCore.Entities.Member> _memberRepository;
         private readonly IRepository<ApplicationCore.Entities.ShoppingCart> _shoppingCartRepository;
@@ -15,7 +14,7 @@ namespace Web.Services
         private readonly IRepository<ApplicationCore.Entities.Coupon> _couponRepository;
         //private List<Entities.Coupon> _coupon;
 
-        public ShoppingCartViewModelService(IRepository repository,
+        public ShoppingCartViewModelService(
                                             IRepository<ApplicationCore.Entities.Course> courseRepository,
                                             IRepository<ApplicationCore.Entities.Member> memberRepository,
                                             IRepository<ApplicationCore.Entities.ShoppingCart> shoppingCartRepository,
@@ -24,7 +23,6 @@ namespace Web.Services
                                             IRepository<ApplicationCore.Entities.MemberCoupon> memberCouponRepository,
                                             IRepository<ApplicationCore.Entities.Coupon> couponRepository)
         {
-            _repository = repository;
             _courseRepository = courseRepository;
             _memberRepository = memberRepository;
             _shoppingCartRepository = shoppingCartRepository;

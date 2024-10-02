@@ -1,12 +1,12 @@
 ﻿@model MemberOrderViewModel
 
-<div class="container lh-backstage" id="app">
+<div class="container lh-backstage">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
             <div class="lh-backstage-transaction-section mb-5"
                  id="lh-backstage-transaction-section">
+                <h3>交易紀錄</h3>
                 <ul>
-                    <h3>交易紀錄</h3>
                     <li>
                         若因為教師或學生個人因素導致無法繼續上課，已購買課程將退至原消費之信用卡，請聯繫客服。
                     </li>
@@ -31,9 +31,10 @@
                     <li class="nav-item lh-backstage-nav-item">
                         <a class="nav-link"
                            data-bs-toggle="tab"
-                           href="#lh-backstage-transaction-cancelled-page">已取消訂單</a>
+                           href="#lh-backstage-transaction-cancelled-page">付款失敗訂單</a>
                     </li>
                 </ul>
+
                 <div class="tab-content">
                     <div class="container tab-pane fade show active"
                          id="lh-backstage-transaction-finished-page">
@@ -45,32 +46,51 @@
                                         <td>訂單編號</td>
                                         <td>交易時間</td>
                                         <td>教師名稱</td>
-                                        <td>課程內容</td>
-                                        <td>購買時長</td>
-                                        <td>購買堂數</td>
-                                        <td>金額(台幣)</td>
+                                        <td>課程名稱</td>
+                                        <td>時長/單價/堂數</td>
+                                        <td>折扣</td>
+                                        <td>小計</td>
                                         <td>統一編號</td>
                                     </tr>
                                 </thead>
-                                <tbody border="1">
-                                    @foreach (var order in Model.MemberOrderList)
+                                <tbody>
+                                    @if (Model.MemberOrderList.Count > 0)
+                                    {
+                                        @for (var i = 0; i < Model.MemberOrderList.Count; i++)
+                                        {
+                                            string discountPrice = "";
+                                            @if (@Model.MemberOrderList[i].DiscountPrice > 0)
+                                            {
+                                                discountPrice = $"NT${@Model.MemberOrderList[i].DiscountPrice.ToString("#,###")}";
+                                            }
+
+                                            <tr>
+                                                <td>@Model.MemberOrderList[i].TrackingNumber</td>
+                                                <td>@Model.MemberOrderList[i].OrderDatetime</td>
+                                                <td>@Model.MemberOrderList[i].FullName</td>
+                                                <td>
+                                                    <a href='@Url.Action("CourseMainPage", "Course", new { courseId = Model.MemberOrderList[i].CourseId })'>
+                                                        @Model.MemberOrderList[i].CourseTitle
+                                                    </a>
+                                                </td>
+                                                <td>@Model.MemberOrderList[i].CourseLength 分鐘/NT$@Model.MemberOrderList[i].UnitPrice.ToString("#,###")/@Model.MemberOrderList[i].CourseQuantity 堂</td>
+                                                <td>@discountPrice</td>
+                                                <td>NT$@Model.MemberOrderList[i].SubTotal.ToString("#,###")</td>
+                                                <td>@Model.MemberOrderList[i].TaxIdNumber</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td>#@order.TrackingNumber</td>
-                                            <td>@order.OrderDatetime</td>
-                                            <td>@order.FullName</td>
-                                            <td>@order.CourseTitle</td>
-                                            <td>@order.CourseLength 分鐘</td>
-                                            <td>@order.Quantity 堂</td>
-                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
-                                            <td>@order.TaxIdNumber</td>
+                                            <td colspan="8">沒有交易紀錄</td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                        <div class="container tab-pane fade"
+                    <div class="container tab-pane fade"
                          id="lh-backstage-transaction-pending-payment-page">
                         <div class="lh-backstage-transaction-table">
                             <table class="lh-backstage-transaction-detail col-12 mt-5"
@@ -80,32 +100,52 @@
                                         <td>訂單編號</td>
                                         <td>交易時間</td>
                                         <td>教師名稱</td>
-                                        <td>課程內容</td>
-                                        <td>購買時長</td>
-                                        <td>購買堂數</td>
-                                        <td>金額(台幣)</td>
+                                        <td>課程名稱</td>
+                                        <td>時長/單價/堂數</td>
+                                        <td>折扣</td>
+                                        <td>小計</td>
                                         <td>統一編號</td>
                                     </tr>
                                 </thead>
-                                <tbody border="1">
-                                    @foreach (var order in Model.MemberOrderList)
+                                <tbody>
+                                    @if (Model.PendingOrders.Count > 0)
+                                    {
+                                        @for (var i = 0; i < Model.PendingOrders.Count; i++)
+                                        {
+                                            string discountPrice = "";
+                                            @if (@Model.PendingOrders[i].DiscountPrice > 0)
+                                            {
+                                                discountPrice = $"NT${@Model.PendingOrders[i].DiscountPrice.ToString("#,###")}";
+                                            }
+
+                                            <tr>
+                                                <td>@Model.PendingOrders[i].TrackingNumber</td>
+                                                <td>@Model.PendingOrders[i].OrderDatetime</td>
+                                                <td>@Model.PendingOrders[i].FullName</td>
+                                                <td>
+                                                    <a href='@Url.Action("CourseMainPage", "Course", new { courseId = Model.PendingOrders[i].CourseId })'>
+                                                        @Model.PendingOrders[i].CourseTitle
+                                                    </a>
+                                                </td>
+                                                <td>@Model.PendingOrders[i].CourseLength 分鐘/NT$@Model.PendingOrders[i].UnitPrice.ToString("#,###")/@Model.PendingOrders[i].CourseQuantity 堂</td>
+                                                <td>@discountPrice</td>
+                                                <td>NT$@Model.PendingOrders[i].SubTotal.ToString("#,###")</td>
+                                                <td>@Model.PendingOrders[i].TaxIdNumber</td>
+                                            </tr>
+
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td>#@order.TrackingNumber</td>
-                                            <td>@order.OrderDatetime</td>
-                                            <td>@order.FullName</td>
-                                            <td>@order.CourseTitle</td>
-                                            <td>@order.CourseLength 分鐘</td>
-                                            <td>@order.Quantity 堂</td>
-                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
-                                            <td>@order.TaxIdNumber</td>
+                                            <td colspan="8">沒有交易紀錄</td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
                         </div>
-                    </div> 
-                     <div class="container tab-pane fade"
+                    </div>
+                    <div class="container tab-pane fade"
                          id="lh-backstage-transaction-cancelled-page">
                         <div class="lh-backstage-transaction-table">
                             <table class="lh-backstage-transaction-detail col-12 mt-5"
@@ -115,470 +155,57 @@
                                         <td>訂單編號</td>
                                         <td>交易時間</td>
                                         <td>教師名稱</td>
-                                        <td>課程內容</td>
-                                        <td>購買時長</td>
-                                        <td>購買堂數</td>
-                                        <td>金額(台幣)</td>
+                                        <td>課程名稱</td>
+                                        <td>時長/單價/堂數</td>
+                                        <td>折扣</td>
+                                        <td>小計</td>
+                                        <td>統一編號</td>
                                     </tr>
-                                </thead> 
-                                 <tbody border="1">
-                                    @foreach (var order in Model.PendingOrders)
+                                </thead>
+                                <tbody>
+                                    @if (Model.FailedOrders.Count > 0)
+                                    {
+                                        @for (var i = 0; i < Model.FailedOrders.Count; i++)
+                                        {
+                                            string discountPrice = "";
+                                            @if (@Model.FailedOrders[i].DiscountPrice > 0)
+                                            {
+                                                discountPrice = $"NT${@Model.FailedOrders[i].DiscountPrice.ToString("#,###")}";
+                                            }
+                                            <tr>
+                                                <td>@Model.FailedOrders[i].TrackingNumber</td>
+                                                <td>@Model.FailedOrders[i].OrderDatetime</td>
+                                                <td>@Model.FailedOrders[i].FullName</td>
+                                                <td>
+                                                    <a href='@Url.Action("CourseMainPage", "Course", new { courseId = Model.FailedOrders[i].CourseId })'>
+                                                        @Model.FailedOrders[i].CourseTitle
+                                                    </a>
+                                                </td>
+                                                <td>@Model.FailedOrders[i].CourseLength 分鐘/NT$@Model.FailedOrders[i].UnitPrice.ToString("#,###")/@Model.FailedOrders[i].CourseQuantity 堂</td>
+                                                <td>@discountPrice</td>
+                                                <td>NT$@Model.FailedOrders[i].SubTotal.ToString("#,###")</td>
+                                                <td>@Model.FailedOrders[i].TaxIdNumber</td>
+                                            </tr>
+
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td>#@order.TrackingNumber</td>
-                                            <td>@order.OrderDatetime</td>
-                                            <td>@order.FullName</td>
-                                            <td>@order.CourseTitle</td>
-                                            <td>@order.CourseLength 分鐘</td>
-                                            <td>@order.Quantity 堂</td>
-                                            <td>NT$@order.TotalPrice.ToString("#,###")</td>
-                                            <td>@order.TaxIdNumber</td>
+                                            <td colspan="8">沒有交易紀錄</td>
                                         </tr>
                                     }
-                                </tbody> 
-                             </table>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> 
-    <!-- screen modal for 課程明細-->
-    <div class="modal fade"
-         id="lh-backstage-tutor-data-edit"
-         tabindex="-1"
-         aria-labelledby=""
-         aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content container">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        課程明細
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <section class="lh-backstage-lh-backstage-real-data">
-                        <div class="row mb-2">
-                            <div class="col-12 col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text"
-                                           class="form-control"
-                                           id="floatingInput"
-                                           placeholder=""
-                                           value="唬爛嘴教學" />
-                                    <label for="floatingInput">課程名稱</label>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text"
-                                           class="form-control"
-                                          @*  id="floatingInput" *@
-                                           placeholder=""
-                                           value="教你成為國畫大師" />
-                                    <label for="floatingInput">課程內容</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <select class="form-select lh-backstage-select"
-                                        aria-label="Default select example">
-                                    <option selected>選擇時長(分鐘／堂)</option>
-                                    <option value="1">25分鐘</option>
-                                    <option value="2">50分鐘</option>
-                                </select>
-                            </div>
-                            <div class="col-12 col-md-6 lh-backstage-course-time-filter">
-                                <div class="btn-group course-time-filter mx-md-2 my-3">
-                                    <button class="btn dropdown-toggle px-3 py-2 lh-backstage-submit-btn"
-                                            type="button"
-                                            data-bs-toggle="dropdown">
-                                        選擇
-                                    </button>
-                                    <ul class="dropdown-menu px-3 py-2 px-md-4 py-md-3">
-                                        <div class="col-12">選擇時間段</div>
-                                        <div class="checkbox-wrapper col-12 d-flex">
-                                            <div class="mt-2 col-3 weekday-checkbox">
-                                                <span class="fw-bolder">星期</span>
-                                                <div class="form-check">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           value="monday"
-                                                           id="monday"
-                                                           name="weekday" />
-                                                    <label class="form-check-label" for="monday">
-                                                        週一
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           value="tuesday"
-                                                           id="tuesday"
-                                                           name="weekday" />
-                                                    <label class="form-check-label" for="tuesday">
-                                                        週二
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           value="wednesday"
-                                                           id="wednesday"
-                                                           name="weekday" />
-                                                    <label class="form-check-label" for="wednesday">
-                                                        週三
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           value="thursday"
-                                                           id="thursday"
-                                                           name="weekday" />
-                                                    <label class="form-check-label" for="thursday">
-                                                        週四
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           value="friday"
-                                                           id="friday"
-                                                           name="weekday" />
-                                                    <label class="form-check-label" for="friday">
-                                                        週五
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           value="saturday"
-                                                           id="saturday"
-                                                           name="weekday" />
-                                                    <label class="form-check-label" for="saturday">
-                                                        週六
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           value="sunday"
-                                                           id="sunday"
-                                                           name="weekday" />
-                                                    <label class="form-check-label" for="sunday">
-                                                        週日
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="mt-2 ps-3 col-4 timeslot-checkbox col-9">
-                                                <span class="fw-bolder">時段</span>
-                                                <div class="d-flex flex-wrap">
-                                                    <div class="mt-1 col-12">am</div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="zero-oclock"
-                                                               id="zero-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="zero-oclock">
-                                                            00:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="one-oclock"
-                                                               id="one-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="one-oclock">
-                                                            01:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="two-oclock"
-                                                               id="two-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="two-oclock">
-                                                            02:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="three-oclock"
-                                                               id="three-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="three-oclock">
-                                                            03:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="four-oclock"
-                                                               id="four-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="four-oclock">
-                                                            04:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="five-oclock"
-                                                               id="five-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="five-oclock">
-                                                            05:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="six-oclock"
-                                                               id="six-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="six-oclock">
-                                                            06:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="seven-oclock"
-                                                               id="seven-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="seven-oclock">
-                                                            07:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="eight-oclock"
-                                                               id="eight-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="eight-oclock">
-                                                            08:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="nine-oclock"
-                                                               id="nine-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="nine-oclock">
-                                                            09:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="ten-oclock"
-                                                               id="ten-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="ten-oclock">
-                                                            10:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="eleven-oclock"
-                                                               id="eleven-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="eleven-oclock">
-                                                            11:00
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex flex-wrap">
-                                                    <div class="col-12">pm</div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="twelve-oclock"
-                                                               id="twelve-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="twelve-oclock">
-                                                            12:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="thirteen-oclock"
-                                                               id="thirteen-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="thirteen-oclock">
-                                                            13:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="fourteen-oclock"
-                                                               id="fourteen-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="fourteen-oclock">
-                                                            14:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="fifteen-oclock"
-                                                               id="fifteen-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="fifteen-oclock">
-                                                            15:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="sixteen-oclock"
-                                                               id="sixteen-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="sixteen-oclock">
-                                                            16:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="seventeen-oclock"
-                                                               id="seventeen-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="seventeen-oclock">
-                                                            17:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="eighteen-oclock"
-                                                               id="eighteen-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="eighteen-oclock">
-                                                            18:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="nineteen-oclock"
-                                                               id="nineteen-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="nineteen-oclock">
-                                                            19:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="twenty-oclock"
-                                                               id="twenty-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="twenty-oclock">
-                                                            20:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="twenty-one-oclock"
-                                                               id="twenty-one-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="twenty-one-oclock">
-                                                            21:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="twenty-two-oclock"
-                                                               id="twenty-two-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="twenty-two-oclock">
-                                                            22:00
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check col-4">
-                                                        <input class="form-check-input"
-                                                               type="checkbox"
-                                                               value="twenty-three-oclock"
-                                                               id="twenty-three-oclock"
-                                                               name="time" />
-                                                        <label class="form-check-label"
-                                                               for="twenty-three-oclock">
-                                                            23:00
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-floating mb-3">
-                                    <input type="text"
-                                           class="form-control"
-                                         @*   id="floatingInput" *@
-                                           placeholder=""
-                                           value="9999" />
-                                    <label for="floatingInput">金額(台幣/堂)</label>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-secondary lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        儲存
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+
+
 
 @section topCSS {
 

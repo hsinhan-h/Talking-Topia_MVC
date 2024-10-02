@@ -9,23 +9,21 @@ namespace Web.Controllers
 {
     public class MemberController : Controller
     {
-        private readonly MemberDataService _memberDataService;
-        private readonly OrderDetailService _orderDetailService;   
+        private readonly ILogger<MemberController> _logger;
         private readonly IMemberService _memberService;
+        private readonly MemberDataService _memberDataService;
+        private readonly OrderDetailViewModelService _orderDetailVMService;
         private readonly MemberAppointmentService _memberAppointmentService;
 
-
-
-
-        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService)
+        public MemberController(MemberDataService memberDataService, OrderDetailViewModelService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService, ILogger<MemberController> logger)
         {
-            _memberDataService = memberDataService;            
+            _memberDataService = memberDataService;
             _memberService = memberService;
-            _orderDetailService = orderdetailservice;
+            _orderDetailVMService = orderdetailservice;
             _memberAppointmentService = memberappointmentService;
-
-
+            _logger = logger;
         }
+
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
         /// 調整為學員課程預約明細
@@ -60,6 +58,7 @@ namespace Web.Controllers
 
             return View(viewModel); // 將正確初始化的 viewModel 傳遞到視圖
         }
+
         public async Task<IActionResult> MemberData(int memberId)
         {
             //var summaryData = await _memberDataService.GetMemberData(memberId);  // 使用 MemberId 查找
@@ -92,49 +91,37 @@ namespace Web.Controllers
             return View(summaryData);
         }
 
-
+        /// <summary>
+        /// 會員交易明細瀏覽
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> MemberTransaction()
         {
-            // 從使用者 Claims 中取得 memberIdClaim
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            if (!result) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
 
-             // 如果沒有找到會員 ID 的 Claim，重定向到登入頁面
-            if (memberIdClaim == null)
+            var orderDetail = await _orderDetailVMService.GetOrderData(memberId);
+            if (orderDetail != null)
             {
-                return RedirectToAction("Login", "Account");
+                return View(orderDetail);
             }
-
-            // 嘗試將 memberIdClaim.Value 轉換為整數
-            if (!int.TryParse(memberIdClaim.Value, out int memberId))
+            else
             {
-                return BadRequest("無效的會員 ID");
+                return BadRequest("交易明細為空");
             }
-
-            // 根據 memberId 取得訂單明細
-            var orderDetail = await _orderDetailService.GetOrderData(memberId);
-            //var pendingOrders = await _orderDetailService.GetPendingOrders(memberId);
-            //var cancelledOrders = await _orderDetailService.GetCancelledOrders(memberId);
-
-
-            // 確認訂單明細是否為空
-            if (orderDetail == null)    
-            {
-                return NotFound("找不到訂單明細");
-            }
-
-            return View(orderDetail);
         }
-        public async Task <IActionResult> WatchList()
+        public async Task<IActionResult> WatchList()
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            
+
             int memberId = int.Parse(memberIdClaim.Value);
 
             var watchlist = await _memberDataService.GetWatchList(memberId);
             return View(watchlist);
         }
-
-
 
         public IActionResult ChatWindow()
         {
