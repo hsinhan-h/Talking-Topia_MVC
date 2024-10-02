@@ -1,4 +1,6 @@
 
+using Api.Services;
+
 namespace Api
 {
     public class Program
@@ -29,6 +31,8 @@ namespace Api
 
                 });
             });
+
+            builder.Services.AddScoped<OrderApiService>();
 
             var app = builder.Build();
 
