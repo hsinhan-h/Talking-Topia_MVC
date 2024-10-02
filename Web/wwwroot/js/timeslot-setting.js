@@ -210,6 +210,7 @@
                 if (!data || !data.availableReservation || !Array.isArray(data.availableReservation)) {
                     throw new Error('error');
                 }
+
                 const editButton = document.getElementById('edit-button');
                 if (data.availableReservation.length > 0) {
                     updateReservationList(data.availableReservation);
@@ -345,6 +346,9 @@
                     }
                 });
             })
+            .catch(error => {
+                console.error('Error fetching or processing data:', error);
+            });
 
 
         // 事件監聽器，用來控制時段選項的顯示和隱藏

@@ -85,14 +85,12 @@ namespace Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // 提取每個欄位的錯誤訊息，並將欄位名稱與錯誤訊息對應
                 var fieldErrors = ModelState.Where(ms => ms.Value.Errors.Any())
                                     .ToDictionary(
                                         ms => ms.Key,
-                                        ms => ms.Value.Errors.Select(e => e.ErrorMessage).ToList() // 錯誤訊息列表
+                                        ms => ms.Value.Errors.Select(e => e.ErrorMessage).ToList()
                                     );
 
-                // 將錯誤訊息儲存到 ViewData 中
                 ViewData["Success"] = false;
                 ViewData["ValidationErrors"] = fieldErrors;
                 return View(qVM);
@@ -101,14 +99,13 @@ namespace Web.Controllers
             if (memberIdClaim == null)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             int memberId = int.Parse(memberIdClaim.Value);
-            // 呼叫服務層的 CreateTutorData 方法
             var result = await _tutorDataService.CreateTutorData(qVM, memberId);
 
             if (result.Success)
             {
                 TempData["Header"] = "會員資料新增";
                 TempData["Message"] = "會員資料新增成功";
-                return RedirectToAction("TutorData"); // 使用完整資料重新渲染 TutorData 頁面
+                return RedirectToAction("TutorData"); 
 
             }
             else
