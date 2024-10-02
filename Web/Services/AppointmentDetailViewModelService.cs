@@ -57,7 +57,6 @@ namespace Web.Services
                         CourseId = course.CourseId,
                         BookingDate = booking.BookingDate.ToString("yyyy-MM-dd"),
                         BookingTime = booking.BookingTime + ":00",
-                        CourseLength = "無",
                         FullName = student.FirstName + " " + student.LastName,
                         Subject = subject.SubjectName,
                         CourseTitle = course.Title,
