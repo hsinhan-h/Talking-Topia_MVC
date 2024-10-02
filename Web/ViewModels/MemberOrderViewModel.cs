@@ -75,8 +75,4 @@ namespace Web.ViewModels
         /// </summary>
         public short OrderStatusId { get; set; }
     }
-    public class ShoppingCartListViewModel
-    {
-        public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
-    }
 }
