@@ -13,21 +13,22 @@ namespace Web.Controllers
 {
     public class TutorController : Controller
     {
-
+        private readonly ILogger<TutorController> _logger;
         private readonly ResumeDataService _resumeDataService;
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
-        private readonly AppointmentDetailService _appointmentDetailService;
+        private readonly AppointmentDetailViewModelService _appointmentDetailVMService;
         private readonly CourseCategoryService _courseCategoryService;
         private readonly IMemberService _memberService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService, CourseCategoryService courseCategoryService, IMemberService memberService)
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailViewModelService appointmentDetailService, CourseCategoryService courseCategoryService, IMemberService memberService, ILogger<TutorController> logger)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
-            _appointmentDetailService = appointmentDetailService;
+            _appointmentDetailVMService = appointmentDetailService;
             _courseCategoryService = courseCategoryService;
             _memberService = memberService;
+            _logger = logger;
         }
 
 
@@ -105,7 +106,7 @@ namespace Web.Controllers
             {
                 TempData["Header"] = "會員資料新增";
                 TempData["Message"] = "會員資料新增成功";
-                return RedirectToAction("TutorData"); 
+                return RedirectToAction("TutorData");
 
             }
             else
@@ -196,7 +197,7 @@ namespace Web.Controllers
             {
                 ViewData["Header"] = "錯誤訊息";
                 ViewData["Message"] = result.Message;
-                return View("TutorResume", qVM); 
+                return View("TutorResume", qVM);
             }
         }
 
@@ -222,7 +223,6 @@ namespace Web.Controllers
             return View();
         }
 
-
         public async Task<IActionResult> Test()
         {
             int MemberId = 3;
@@ -231,13 +231,18 @@ namespace Web.Controllers
 
             return View(model);
         }
-         public async Task<IActionResult> AppointmentDetails(int memberId)
-        {
-          
-            // 獲取預約詳細信息
-            var appointmentDetails = await _appointmentDetailService.GetAppointmentData(memberId=47);
 
-            // 返回視圖並傳遞預約數據
+        public async Task<IActionResult> AppointmentDetails()
+        {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            if (!result) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+
+            var appointmentDetails = await _appointmentDetailVMService.GetAppointmentData(memberId);
+
+            if (appointmentDetails == null) { _logger.LogWarning("教師被預約明細為空"); }
             return View(appointmentDetails);
         }
     }
