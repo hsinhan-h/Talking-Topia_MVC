@@ -27,18 +27,22 @@
                                 {
                                     @foreach (var order in Model.MemberAppointmentList)
                                     {
-                                <tr>
-                                    <td>@order.BookingDate.ToString("yyyy-MM-dd")</td>
-                                    <td>@TimeSpan.FromHours(order.BookingTime - 1).ToString(@"hh\:mm")</td>
-                                    <td>@order.CourseTitle</td>
-                                    <td>@order.Subtitle</td>
-                                    <td>@order.CourseLength</td>
-                                    <td>@order.FullName</td>
-                                </tr>
+                                        <tr>
+                                            <td>@order.BookingDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@TimeSpan.FromHours(order.BookingTime - 1).ToString(@"hh\:mm")</td>
+                                            <td>
+                                                <a href="~/Course/CourseMainPage?courseId=@order.CourseId">
+                                                    @order.CourseTitle
+                                                </a>
+                                            </td>
+                                            <td>@order.Subtitle</td>
+                                            <td>@order.CourseLength</td>
+                                            <td>@order.FullName</td>
+                                        </tr>
                                     }
                                 }
                                 else
-                                {   
+                                {
                                     <tr>
                                         <td colspan="6">沒有預約資料</td>
                                     </tr>
