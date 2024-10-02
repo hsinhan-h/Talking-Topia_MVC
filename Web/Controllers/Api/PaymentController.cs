@@ -87,7 +87,7 @@ namespace Web.Controllers.Api
 
             EOrderStatus orderStatus = EOrderStatus.Success;
             var orderId = _orderService.GetLatestOrder(memberId);
-            _orderService.UpdateOrderTransactionAndStatus(orderId, payment.MerchantTradeNo, payment.CheckMacValue, orderStatus);
+            await _orderService.UpdateOrderTransactionAndStatus(orderId, payment.MerchantTradeNo, payment.CheckMacValue, orderStatus);
 
             _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"payment是 {payment}");
 
