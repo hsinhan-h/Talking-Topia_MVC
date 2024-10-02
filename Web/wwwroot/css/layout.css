@@ -39,15 +39,15 @@
         box-shadow: none;
         border: none;
     }
-
+    
 
 .shopping-bag {
-    background-color: var(--theme-color);
+    background-color: none;
     border-radius: 5px;
 }
 
     .shopping-bag .nav-link {
-        color: #ffffff;
+        color: var(--theme-color);
     }
 
 .nav-item label a:hover,
