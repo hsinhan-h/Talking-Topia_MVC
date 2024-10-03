@@ -51,6 +51,7 @@ namespace Web.Services
 
                 foreach (var booking in bookings)
                 {
+                    if (booking.BookingDate < DateTime.Now.AddDays(1)) continue;
                     var student = await _memberRepository.GetByIdAsync(booking.StudentId);
                     var bookingDetail = new AppointmentDetailVM
                     {
