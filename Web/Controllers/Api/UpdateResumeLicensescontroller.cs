@@ -187,7 +187,7 @@ namespace Web.Controllers.Api
                     if (file != null && file.Length > 0)
                     {
                         // 使用 Cloudinary 上傳，並取得返回的 URL
-                        var fileUrl = await _cloudinaryService.UploadImageAsync(file);
+                        var fileUrl = await _cloudinaryService.UploadFileAsync(file);
                         fileUrls.Add(fileUrl);
                     }
                 }

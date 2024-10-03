@@ -103,7 +103,7 @@ const appresume = createApp({
                     ProfessionalLicenseName: '',
                     ProfessionalLicenseUrl: null,
                     licenseEditMode: false,
-                    isConfirmed: false,
+                    isConfirmed: false, // 提交條件
                     uploadStatus: null,
                     isUploading: false,
                 }
@@ -115,7 +115,7 @@ const appresume = createApp({
                     workEndDate: '',
                     workExperienceFile: null,
                     workExperienceId: null,
-                    isConfirmed: false,
+                    isConfirmed: false,// 提交條件
                     workEditMode: false,
                     uploadWorkStatus: null,
                     isWorkUploading:false,
@@ -245,16 +245,12 @@ const appresume = createApp({
         },
 
         addLicense() {
-            // 增加新的證照欄位
             const newLicense = {
                 ProfessionalLicenseName: '',
                 ProfessionalLicenseUrl: null,
                 ProfessionalLicenseId: null,
-                valid: false,  // 初始化時證書無效，需用戶填寫後更新為 true
-                /*isTemporary: true */
+                valid: false,  
             };
-
-            // 暫時添加到 licenses 列表中
             this.licenses.push(newLicense);
 
             fetch('/api/UpdateResume/CreateLicense', {
@@ -263,13 +259,12 @@ const appresume = createApp({
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    memberId: localStorage.getItem('memberId') // 假設 memberId 存在於 localStorage 中
+                    memberId: localStorage.getItem('memberId') 
                 })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // 更新 licenses 列表中最新的證照物件，設置其 ProfessionalLicenseId
                         this.licenses[this.licenses.length - 1].ProfessionalLicenseId = data.professionalLicenseId;
                     } else {
                         alert('Failed to create license: ' + data.message);
@@ -283,27 +278,26 @@ const appresume = createApp({
             const updatedLicense = this.licenses[index];
             const memberId = localStorage.getItem('memberId');
 
-            // 驗證證照名稱和文件
             if (!updatedLicense.ProfessionalLicenseName) {
                 console.log('請填寫證照名稱');
                 this.licenses[index].uploadStatus = false;
-                return; // 阻止提交
+                return; 
             }
 
             if (!updatedLicense.ProfessionalLicenseUrl) {
                 console.log('請上傳證照文件');
                 this.licenses[index].uploadStatus = false;
-                return; // 阻止提交
+                return; 
             }
 
-            this.licenses[index].isConfirmed = true;
-            this.licenses[index].licenseEditMode = false; // 禁止編輯
+            this.licenses[index].isConfirmed = true;// 提交條件
+            this.licenses[index].licenseEditMode = false; 
             this.licenses[index].isUploading = true;
 
             // 使用 FormData 包裝文件和其他資料
             const formData = new FormData();
             formData.append('memberId', memberId);
-            formData.append('ProfessionalLicenseId', updatedLicense.ProfessionalLicenseId || 0); // 如果是新證照，設置 ID 為 0
+            formData.append('ProfessionalLicenseId', updatedLicense.ProfessionalLicenseId || 0);
             formData.append('ProfessionalLicenseName', updatedLicense.ProfessionalLicenseName);
 
             // 檢查是否為文件，否則直接傳送 URL
@@ -342,10 +336,8 @@ const appresume = createApp({
         removeLicense(index) {
             const licenseToRemove = this.licenses[index];
 
-            // 檢查是否有 ProfessionalLicenseId，只有存在於資料庫中的項目才進行刪除操作
             if (licenseToRemove.ProfessionalLicenseId) {
-                // 發送刪除請求到後端
-                const memberId = localStorage.getItem('memberId'); // 假設 memberId 是存在本地存儲中
+                const memberId = localStorage.getItem('memberId'); 
                 fetch('/api/UpdateResume/DeleteLicense', {
                     method: 'POST',
                     headers: {
@@ -353,13 +345,12 @@ const appresume = createApp({
                     },
                     body: JSON.stringify({
                         memberId: memberId,
-                        ProfessionalLicenseId: [licenseToRemove.ProfessionalLicenseId] // 包裝成數組發送
+                        ProfessionalLicenseId: [licenseToRemove.ProfessionalLicenseId] 
                     })
                 })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            // 刪除成功，從 licenses 陣列中移除該項目
                             this.licenses.splice(index, 1);
                         } else {
                             alert('Failed to delete license: ' + data.message);
@@ -370,15 +361,12 @@ const appresume = createApp({
                     });
             }
             else {
-                // 如果沒有 ProfessionalLicenseId，只是刪除本地未儲存的證照
                 this.licenses.splice(index, 1);
             }
         },
         handleFileUpload(event, index) {
-            // 當用戶上傳文件時，更新文件數據
             const file = event.target.files[0];
             if (file) {
-                // 可以直接將文件物件存儲在 ProfessionalLicenseUrl 中
                 this.licenses[index].ProfessionalLicenseUrl = file;
             }
         },
@@ -389,24 +377,20 @@ const appresume = createApp({
                 workStartDate: '',
                 workEndDate: '',
                 workExperienceFile: null
-                //valid: true// 初始化為 null，稍後設置
             };
-            // 暫時添加到 licenses 列表中
             this.works.push(newWorkExperience);
-            // 假設後端有一個 API 可以用來生成新證照並返回新的 WorkExperienceId
             fetch('/api/UpdateResume/CreateWorkExperience', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    memberId: localStorage.getItem('memberId') // 假設 memberId 存在於 localStorage 中
+                    memberId: localStorage.getItem('memberId') 
                 })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // 更新 licenses 列表中最新的證照物件，設置其 ProfessionalLicenseId
                         this.works[this.works.length - 1].workExperienceId = data.workExperienceId;
                     }
                     else {
@@ -419,7 +403,6 @@ const appresume = createApp({
         handleWorkFileUpload(event, index) {
             const file = event.target.files[0];
             if (file) {
-                // 可以直接將文件物件存儲在 workExperienceUrl 中
                 this.works[index].workExperienceFile = file;
             }
         },
@@ -437,7 +420,7 @@ const appresume = createApp({
                     },
                     body: JSON.stringify({
                         memberId: memberId,
-                        WorkBackground: [   // 傳遞需要刪除的工作經驗
+                        WorkBackground: [  
                             {
                                 WorkExperienceId: workexpToRemove.workExperienceId
                             }
@@ -471,13 +454,13 @@ const appresume = createApp({
             }
 
             this.works[index].isWorkUploading = true;
-            this.works[index].isConfirmed = true;
+            this.works[index].isConfirmed = true;// 提交條件
             this.works[index].workEditMode = false;
 
             const formData = new FormData();
             formData.append('memberId', memberId);
 
-            formData.append(`WorkBackground[0].WorkExperienceId`, updatedworkexp.workExperienceId || 0); // 如果是新工作經驗，設置 ID 為 0
+            formData.append(`WorkBackground[0].WorkExperienceId`, updatedworkexp.workExperienceId || 0); 
             formData.append(`WorkBackground[0].WorkName`, updatedworkexp.workName || '');
             formData.append(`WorkBackground[0].WorkStartDate`, updatedworkexp.workStartDate || '');
             formData.append(`WorkBackground[0].WorkEndDate`, updatedworkexp.workEndDate || '');
@@ -524,13 +507,13 @@ const appresume = createApp({
             let formIsValid = true;
             this.showValidation = true; // 顯示表單驗證錯誤提示
 
-            // 檢查所有證照是否已確認
+            //// 檢查所有證照是否已確認
             if (!this.confirmAllLicensesUpdates()) {
                 this.validationMessage = '請確認所有證照後再提交';
                 formIsValid = false;
             }
 
-            // 檢查所有工作經驗是否已確認
+            //// 檢查所有工作經驗是否已確認
             if (!this.confirmAllWorksUpdates()) {
                 this.validationMessage = '請確認所有工作經驗後再提交';
                 formIsValid = false;
@@ -550,11 +533,9 @@ const appresume = createApp({
             const memberId = localStorage.getItem('memberId');
             this.headImageUpdated = true;
             this.HeadImgisUploading = true;
-            // 使用 FormData 包装文件和其他资料
             const formData = new FormData();
             formData.append('memberId', memberId);
 
-            // 检查是否为文件，上传文件或传递 URL
             if (HeadImage instanceof File) {
                 formData.append('HeadShotImage', HeadImage);
             } else if (HeadImage) {

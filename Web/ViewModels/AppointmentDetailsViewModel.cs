@@ -20,10 +20,6 @@
         /// </summary>
         public string BookingTime { get; set; }
         /// <summary>
-        /// 預約時長
-        /// </summary>
-        public string CourseLength { get; set; }
-        /// <summary>
         /// 學生名稱
         /// </summary>
         public string FullName { get; set; }

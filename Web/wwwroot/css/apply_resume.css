@@ -11,7 +11,12 @@
     height: 100%; 
     object-fit: cover;
 }
-
+.textbtncolorgreen {
+    color: #02cab9
+}
+.filename {
+    letter-spacing: 1.5px
+}
 .resume_border {
     border-top: 2px solid rgb(2, 202, 185);
     border-bottom: 2px solid rgb(2, 202, 185);

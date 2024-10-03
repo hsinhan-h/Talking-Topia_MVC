@@ -45,8 +45,8 @@
                         </label>
                     </div>
                     <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
-                        <p class="my-1">請提供大頭貼</p>
-                        <input class="form-control my-0 w-100" type="file" id="profile_pic" @@change="HeadImgChange" placeholder="輸入..." name="HeadShotImage" :disabled="!editMode">
+                        <p class="my-1 textbtncolorgreen fw-bold">【請提供大頭貼】</p><span class="textbtncolorgreen">請上傳 jpg、jpeg、png 或 webp 格式的圖片</span>
+                        <input class="form-control my-0 w-100" type="file" accept=".jpg, .jpeg, .png, .webp" id="profile_pic" @@change="HeadImgChange" placeholder="輸入..." name="HeadShotImage" :disabled="!editMode">
                     </div>
                     <div v-if="HeadImgisUploading" class="text-center m-2">
                         <div class="spinner-border" role="status">
@@ -139,7 +139,8 @@
                             <p v-if="!license.valid && showValidation" class="textdangercolor">請輸入證照名稱，如無須提交請點選移除</p>
 
                             <!-- 檔案上傳輸入框 -->
-                            <input type="hidden" v-model="licenses[index].ProfessionalLicenseId">
+                            <span class="textbtncolorgreen">請上傳 jpg、jpeg、png 或 webp 格式的圖片</span>
+                            <input type="hidden" accept=".jpg, .jpeg, .png, .webp" v-model="licenses[index].ProfessionalLicenseId">
                             <input class="my-2" type="file" @@change="handleFileUpload($event, index)"
                                    :name="'ProfessionalLicenseUrl[' + index + ']'" :disabled="!license.licenseEditMode">
 
@@ -195,11 +196,11 @@
                                     <!-- 工作名稱輸入框 -->
                                     <input class="form-control my-2" type="text" placeholder="輸入工作名稱"
                                            v-model="work.workName" :disabled="!work.workEditMode" :name="'WorkBackground[' + index + '].WorkName'">
-                                    
+                                    <span class="bgc fs-6 m-0 px-2 textbtncolorgreen">請上傳文字檔，簡述您的工作經歷</span><span class="filename ms-1 textbtncolorgreen">(.docx&nbsp;.doc&nbsp;.txt)</span>
                                     <!-- 檔案上傳輸入框 -->
-                                    <input class="form-control my-2" :disabled="!work.workEditMode" type="file" @@change="handleWorkFileUpload($event, index)"
+                                    <input class="form-control my-2" :disabled="!work.workEditMode" accept=".docx, .txt .doc" type="file" @@change="handleWorkFileUpload($event, index)"
                                            :name="'WorkBackground[' + index + '].WorkExperienceFile'">
-                                    <i class="fa-solid fa-exclamation m-2" style="color: #63E6BE;"><span class="bgc fs-6 m-0">請上傳文字檔，簡述您的工作經歷</span></i>
+                                    
                                     <p class="my-1 bgc fs-4">【年資】</p>
 
                                     <!-- 開始日期 -->

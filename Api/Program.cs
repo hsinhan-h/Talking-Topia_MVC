@@ -1,4 +1,9 @@
 
+using Api.Configurations;
+using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
+using Infrastructure;
+
 namespace Api
 {
     public class Program
@@ -30,6 +35,9 @@ namespace Api
                 });
             });
 
+            builder.Services.AddInfrastructureService(builder.Configuration);
+            builder.Services.AddApiService();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -44,7 +52,6 @@ namespace Api
             app.UseCors();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

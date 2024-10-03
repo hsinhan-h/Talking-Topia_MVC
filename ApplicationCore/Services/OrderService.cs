@@ -110,7 +110,7 @@ namespace ApplicationCore.Services
             }
         }
 
-        public async void UpdateOrderTransactionAndStatus(int orderId, string merchantTradeNo, string tradeNo, EOrderStatus orderStatus)
+        public async Task UpdateOrderTransactionAndStatus(int orderId, string merchantTradeNo, string tradeNo, EOrderStatus orderStatus)
         {
             try
             {
