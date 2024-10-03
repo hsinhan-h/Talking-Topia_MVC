@@ -33,5 +33,23 @@ namespace Web.Services
 
             return null;
         }
+        public async Task<string> UploadFileAsync(IFormFile file)
+        {
+            if (file.Length > 0)
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    var uploadParams = new RawUploadParams() // RawUploadParams can handle non-image files.
+                    {
+                        File = new FileDescription(file.FileName, stream)
+                    };
+
+                    var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                    return uploadResult.SecureUrl.ToString();
+                }
+            }
+
+            return null;
+        }
     }
 }
