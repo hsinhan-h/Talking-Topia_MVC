@@ -94,37 +94,36 @@ const { createApp } = Vue;
 const appresume = createApp({
     data() {
         return {
-            selectedCategory: '', // 用來儲存選中的分類 ID
-            selectedSubcategory: '', // 用來儲存選中的子分類 ID
-            commonData: {}, // 用來存儲轉換過後的數據
-            licenses: [ // 正確初始化 licenses，加入 ID 欄位
+            selectedCategory: '', 
+            selectedSubcategory: '', 
+            commonData: {}, 
+            licenses: [ 
                 {
                     ProfessionalLicenseId: null,
                     ProfessionalLicenseName: '',
                     ProfessionalLicenseUrl: null,
                     licenseEditMode: false,
-                    isConfirmed: false, // 提交條件
                     uploadStatus: null,
                     isUploading: false,
                 }
             ],
-            works: [ // 初始化一個空的工作經驗表單
+            works: [
                 {
                     workName: '',
                     workStartDate: '',
                     workEndDate: '',
                     workExperienceFile: null,
                     workExperienceId: null,
-                    isConfirmed: false,// 提交條件
                     workEditMode: false,
                     uploadWorkStatus: null,
                     isWorkUploading:false,
                 }
             ],
             formSubmitted: false,
-            selectedFile: null,   // 存儲選擇的文件
+            selectedFile: null,   
             headShotImage: headImage,
             headImageUpdated: false,
+            confirmheadShotImg: true, 
             editMode: false,
             HeadImgisUploading: false,
             showValidation: false ,
@@ -135,7 +134,7 @@ const appresume = createApp({
     },
     computed: {
         categories() {
-            return this.commonData['raw_data'] || []; // 返回所有的主分類
+            return this.commonData['raw_data'] || []; 
         },
         subcategories() {
             if (this.selectedCategory) {
@@ -167,7 +166,7 @@ const appresume = createApp({
     methods: {
         convertData(data) {
             let result = {};
-            result["raw_data"] = data; // 儲存原始數據
+            result["raw_data"] = data; 
             data.forEach(category => {
                 result["category_" + category.id] = category;
                 category.subcategories.forEach(subcategory => {
@@ -194,7 +193,6 @@ const appresume = createApp({
                         throw new Error(data.message || 'Unknown error');
                     }
 
-                    // 獲取 courseList 和 professionalLicense
                     const courseList = data.data.applycoursedata.courseList;
                     this.selectedCategory = courseList.applyCourseCategoryId;
                     this.selectedSubcategory = courseList.applySubCategoryId;
@@ -224,7 +222,7 @@ const appresume = createApp({
             const chineseNumbers = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
 
             if (num === 10) {
-                return '十'; // 對於10特殊處理
+                return '十'; 
             }
 
             let result = '';
@@ -232,13 +230,13 @@ const appresume = createApp({
             const ones = num % 10;
 
             if (tens === 1) {
-                result += '十'; // 當數字在10到19之間
+                result += '十'; 
             } else if (tens > 1) {
-                result += chineseNumbers[tens] + '十'; // 大於19時處理
+                result += chineseNumbers[tens] + '十'; 
             }
 
             if (ones !== 0) {
-                result += chineseNumbers[ones]; // 加上個位數
+                result += chineseNumbers[ones]; 
             }
 
             return result;
@@ -290,17 +288,14 @@ const appresume = createApp({
                 return; 
             }
 
-            this.licenses[index].isConfirmed = true;// 提交條件
             this.licenses[index].licenseEditMode = false; 
             this.licenses[index].isUploading = true;
 
-            // 使用 FormData 包裝文件和其他資料
             const formData = new FormData();
             formData.append('memberId', memberId);
             formData.append('ProfessionalLicenseId', updatedLicense.ProfessionalLicenseId || 0);
             formData.append('ProfessionalLicenseName', updatedLicense.ProfessionalLicenseName);
 
-            // 檢查是否為文件，否則直接傳送 URL
             formData.append('ProfessionalLicenseUrl',
                 updatedLicense.ProfessionalLicenseUrl instanceof File
                     ? updatedLicense.ProfessionalLicenseUrl
@@ -318,7 +313,6 @@ const appresume = createApp({
                         console.log('License updated successfully');
                         this.licenses[index].uploadStatus = true;
 
-                        // 如果是新證照，更新前端的 ProfessionalLicenseId
                         if (!this.licenses[index].ProfessionalLicenseId) {
                             this.licenses[index].ProfessionalLicenseId = data.professionalLicenseId; 
                         }
@@ -454,7 +448,7 @@ const appresume = createApp({
             }
 
             this.works[index].isWorkUploading = true;
-            this.works[index].isConfirmed = true;// 提交條件
+            /*this.works[index].isConfirmed = true;// 提交條件*/
             this.works[index].workEditMode = false;
 
             const formData = new FormData();
@@ -495,30 +489,14 @@ const appresume = createApp({
                     console.error('Error updating work experience:', error);
                 });
         },
-        //確認所有確認按鈕都有點才可submit
-        confirmAllLicensesUpdates() {
-            return this.licenses.every(license => license.isConfirmed);
-        },
-        confirmAllWorksUpdates() {
-            return this.works.every(work => work.isConfirmed);
-        },
   
         validateForm() {
             let formIsValid = true;
-            this.showValidation = true; // 顯示表單驗證錯誤提示
-
-            //// 檢查所有證照是否已確認
-            if (!this.confirmAllLicensesUpdates()) {
-                this.validationMessage = '請確認所有證照後再提交';
-                formIsValid = false;
+            this.showValidation = true; 
+            if (this.headShotImage == null) {
+                alert('請提供大頭貼');
+                return;
             }
-
-            //// 檢查所有工作經驗是否已確認
-            if (!this.confirmAllWorksUpdates()) {
-                this.validationMessage = '請確認所有工作經驗後再提交';
-                formIsValid = false;
-            }
-
             // 如果表單無效，顯示模態框提示
             if (!formIsValid) {
                 const validationModal = new bootstrap.Modal(document.getElementById('validationModal'));
@@ -528,11 +506,25 @@ const appresume = createApp({
                 this.$refs.form.submit();  // 手動觸發表單提交
             }
         },
+        checkHeadFile() {
+            const HeadImage = this.selectedFile;
+
+            if (!HeadImage) {
+                this.confirmheadShotImg = false;  // 沒有選擇大頭貼，顯示錯誤提示
+            } else {
+                this.confirmheadShotImg = true;   // 已選擇大頭貼，隱藏錯誤提示
+                this.onFileChange();              // 上傳大頭貼
+            }
+        },
         onFileChange() {
             const HeadImage = this.selectedFile;
             const memberId = localStorage.getItem('memberId');
+           
             this.headImageUpdated = true;
             this.HeadImgisUploading = true;
+            this.confirmheadShotImg = true;
+
+
             const formData = new FormData();
             formData.append('memberId', memberId);
 

@@ -134,8 +134,6 @@ namespace Web.Controllers
             // 檢查操作是否成功
             if (resultTime.Success)
             {
-                // 成功後，重新提取會員完整資料
-                //var tutorData = await _tutorDataService.GetAllInformationAsync(memberId);
 
                 TempData["Header"] = "會員資料新增";
                 TempData["Message"] = "會員資料新增成功";

@@ -47,7 +47,9 @@
                     <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
                         <p class="my-1 textbtncolorgreen fw-bold">【請提供大頭貼】</p><span class="textbtncolorgreen">請上傳 jpg、jpeg、png 或 webp 格式的圖片</span>
                         <input class="form-control my-0 w-100" type="file" accept=".jpg, .jpeg, .png, .webp" id="profile_pic" @@change="HeadImgChange" placeholder="輸入..." name="HeadShotImage" :disabled="!editMode">
+                        <p v-show="!confirmheadShotImg" class="text-danger">尚未選擇大頭貼，請提供您的大頭貼</p>
                     </div>
+                    
                     <div v-if="HeadImgisUploading" class="text-center m-2">
                         <div class="spinner-border" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -60,7 +62,7 @@
                             {{ editMode ? '取消' : '編輯' }}  <!-- 動態顯示按鈕文本 -->
                         </button>
                         @* 確認按鈕 *@
-                        <button type="button" v-if="editMode" @@click="onFileChange" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2 ms-2">確認</button>
+                        <button type="button" v-if="editMode" @@click="checkHeadFile" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2 ms-2">確認</button>
                     </div>
                     <div class="col-12 mt-4">
                         <p class="my-1 bgc fs-4">【學校名稱】</p>
@@ -140,8 +142,8 @@
 
                             <!-- 檔案上傳輸入框 -->
                             <span class="textbtncolorgreen">請上傳 jpg、jpeg、png 或 webp 格式的圖片</span>
-                            <input type="hidden" accept=".jpg, .jpeg, .png, .webp" v-model="licenses[index].ProfessionalLicenseId">
-                            <input class="my-2" type="file" @@change="handleFileUpload($event, index)"
+                            <input type="hidden" v-model="licenses[index].ProfessionalLicenseId">
+                            <input class="my-2" accept=".jpg, .jpeg, .png, .webp" type="file" @@change="handleFileUpload($event, index)"
                                    :name="'ProfessionalLicenseUrl[' + index + ']'" :disabled="!license.licenseEditMode">
 
                             <!-- 放大鏡圖標 -->
@@ -155,7 +157,7 @@
                             </button>
 
                             <!-- 確認按鈕 -->
-                            <button type="button" :disabled="!license.licenseEditMode || license.isConfirmed"
+                            <button type="button" :disabled="!license.licenseEditMode "
                                     @@click="enditLcense(index)"
                                     class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">
                                 確認上傳
@@ -220,7 +222,7 @@
 
                                     @* 確認按鈕 *@
                                     <button type="button" @@click="editWorkExp(index)" class="btn textbtncolor btnbg btnbghover resume_btn bgc mx-2"
-                                            :disabled="!work.workEditMode || work.isConfirmed">
+                                            :disabled="!work.workEditMode ">
                                         確認上傳
                                     </button>
                                     <!-- 移除按鈕 -->
@@ -281,7 +283,7 @@
             <div class="row mt-3 ">
                 <div class="my-3 d-flex flex-row justify-content-end">
                     <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
-                <button type="button" :disabled="!confirmAllLicensesUpdates()" @@click="validateForm" class="btn resume_border resume_btn m-2">下一步</button>
+                <button type="button"  @@click="validateForm" class="btn resume_border resume_btn m-2">下一步</button>
                 </div>
             </div>
    </div>
