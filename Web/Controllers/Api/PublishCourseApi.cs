@@ -16,7 +16,11 @@ namespace Web.Controllers.Api
             _bookingService = bookingService;
             _memberService = memberService;
         }
-
+        /// <summary>
+        /// 取得一筆課程明細
+        /// </summary>
+        /// <param name="CourseId"></param>
+        /// <returns></returns>
         [HttpGet("{CourseId}")]
         public async Task<IActionResult> GetBookingDetails(int CourseId)
         {
@@ -93,7 +97,7 @@ namespace Web.Controllers.Api
         }
 
         /// <summary>
-        /// 課程儲存
+        /// 課程儲存-更新
         /// </summary>
         /// <param name="Category"></param>
         /// <returns></returns>
