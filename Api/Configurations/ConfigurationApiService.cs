@@ -7,6 +7,7 @@ namespace Api.Configurations
         public static IServiceCollection AddApiService(this IServiceCollection services)
         {
             services.AddScoped<OrderApiService>();
+            services.AddScoped<ReviewApiService>();
 
 
             return services;
