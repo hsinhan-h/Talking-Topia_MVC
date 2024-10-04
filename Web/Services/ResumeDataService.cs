@@ -113,6 +113,7 @@ namespace Web.Services
         }
         public async Task<int> CreateNewLicense(int memberId, string licenseName, List<string> licenseUrls)
         {
+
             // 檢查是否有可用的 licenseUrls，並使用第一個作為新證照的 URL
             var licenseUrl = licenseUrls.FirstOrDefault() ?? string.Empty;
 
@@ -589,8 +590,8 @@ namespace Web.Services
 
                     // 更新現有教育經歷
                     education.SchoolName = qVM.SchoolName;
-                    education.StudyStartYear = qVM.StudyStartYear;
-                    education.StudyEndYear = qVM.StudyEndYear;
+                    education.StudyStartYear = (int)qVM.StudyStartYear;
+                    education.StudyEndYear = (int)qVM.StudyEndYear;
                     education.DepartmentName = qVM.DepartmentName;
                     education.Udate = DateTime.Now;
                     _repository.Update(education);
@@ -601,8 +602,8 @@ namespace Web.Services
                     education = new Entities.Education
                     {
                         SchoolName = qVM.SchoolName,
-                        StudyStartYear = qVM.StudyStartYear,
-                        StudyEndYear = qVM.StudyEndYear,
+                        StudyStartYear = (int)qVM.StudyStartYear,
+                        StudyEndYear = (int)qVM.StudyEndYear,
                         DepartmentName = qVM.DepartmentName,
                         Cdate = DateTime.Now,
                         Udate = DateTime.Now

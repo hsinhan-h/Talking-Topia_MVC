@@ -104,8 +104,8 @@ namespace Web.Controllers
 
             if (result.Success)
             {
-                TempData["Header"] = "會員資料新增";
-                TempData["Message"] = "會員資料新增成功";
+                TempData["Header"] = "教師資料新增";
+                TempData["Message"] = "教師資料新增成功";
                 return RedirectToAction("TutorData");
 
             }
@@ -128,16 +128,13 @@ namespace Web.Controllers
 
             int memberId = int.Parse(memberIdClaim.Value);
 
-            // 呼叫服務層的 CreateTutorTimeData 方法
             var resultTime = await _tutorDataService.CreateTutorTimeData(qVM, memberId);
-
-            // 檢查操作是否成功
             if (resultTime.Success)
             {
 
-                TempData["Header"] = "會員資料新增";
-                TempData["Message"] = "會員資料新增成功";
-                return RedirectToAction("TutorData"); // 使用完整資料重新渲染 TutorData 頁面
+                TempData["Header"] = "教師資料新增";
+                TempData["Message"] = "教師資料新增成功";
+                return RedirectToAction("TutorData"); 
             }
             else
             {
@@ -168,8 +165,6 @@ namespace Web.Controllers
             {
                 allTutorResumeData = new TutorResumeViewModel();
             }
-
-            // 將 memberId 傳遞到 View
             ViewData["MemberId"] = memberId;
 
             return View(allTutorResumeData);
@@ -179,14 +174,26 @@ namespace Web.Controllers
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
-            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            {
+                return RedirectToAction(nameof(AccountController.Account), "Account");
+            }
+            if (qVM.StudyStartYear.HasValue && qVM.StudyEndYear.HasValue)
+            {
+                if (qVM.StudyStartYear > qVM.StudyEndYear)
+                {
+                    ModelState.AddModelError("StudyStartYear", "就學始年必須小於結束年");
+                }
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(qVM);
+            }
+
             int memberId = int.Parse(memberIdClaim.Value);
-            // 呼叫服務層的 CreateTutorData 方法
             var result = await _resumeDataService.AddResumeAsync(qVM, memberId);
-            // 檢查操作是否成功
+
             if (result.Success)
             {
-
                 TempData["Header"] = "新增履歷資料";
                 TempData["Message"] = "履歷資料新增成功";
                 return RedirectToAction("TutorData");
@@ -198,6 +205,7 @@ namespace Web.Controllers
                 return View("TutorResume", qVM);
             }
         }
+
 
         [HttpGet]
         public async Task<IActionResult> PublishCourse()

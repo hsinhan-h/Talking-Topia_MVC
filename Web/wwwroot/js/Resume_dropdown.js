@@ -128,7 +128,7 @@ const appresume = createApp({
             HeadImgisUploading: false,
             showValidation: false ,
             validationMessage:'',
-            
+
             
         };
     },
@@ -265,7 +265,7 @@ const appresume = createApp({
                     if (data.success) {
                         this.licenses[this.licenses.length - 1].ProfessionalLicenseId = data.professionalLicenseId;
                     } else {
-                        alert('Failed to create license: ' + data.message);
+                        console.log('Failed to create license: ' + data.message);
                     }
                 })
                 .catch(error => {
@@ -494,7 +494,7 @@ const appresume = createApp({
             let formIsValid = true;
             this.showValidation = true; 
             if (this.headShotImage == null) {
-                alert('請提供大頭貼');
+                console.log('請提供大頭貼');
                 return;
             }
             // 如果表單無效，顯示模態框提示
@@ -653,5 +653,6 @@ const appresume = createApp({
                 });
         }
     },
+    
 });
 appresume.mount('#vue-wrapper');

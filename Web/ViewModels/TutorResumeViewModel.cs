@@ -11,27 +11,30 @@ namespace Web.ViewModels
         /// <summary>
         /// 大頭貼
         /// </summary>
-        //[Required]
         public string HeadShotImage { get; set; }
 
         /// <summary>
         /// 學校名稱
         /// </summary>
         //[Required]
+        [Required(ErrorMessage = "請輸入最高學歷(必填欄位)")]
         public string SchoolName { get; set; }
         /// <summary>
         /// 就學始年
         /// </summary>
-        //[Required(ErrorMessage = "請輸入西元年份")]
-        public int StudyStartYear { get; set; }
+        [Required(ErrorMessage = "請輸入西元年份(必填欄位)")]
+        [Range(1900, 2200, ErrorMessage = "請輸入有效的西元年份（1900 至 2200）")]
+        public int? StudyStartYear { get; set; }
         /// <summary>
         /// 就學結束年
         /// </summary>
-        //[Required(ErrorMessage = "請輸入西元年份")]
-        public int StudyEndYear { get; set; }
+        [Required(ErrorMessage = "請輸入西元年份(必填欄位)")]
+        [Range(1900, 2200, ErrorMessage = "請輸入有效的西元年份（1900 至 2200）")]
+        public int? StudyEndYear { get; set; }
         /// <summary>
         /// 科系名稱
         /// </summary>
+        [Required(ErrorMessage = "請輸入科系名稱(必填欄位)")]
         public string DepartmentName { get; set; }
         /// <summary>
         /// 證照
