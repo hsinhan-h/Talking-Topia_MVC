@@ -347,7 +347,7 @@ const appresume = createApp({
                         if (data.success) {
                             this.licenses.splice(index, 1);
                         } else {
-                            alert('Failed to delete license: ' + data.message);
+                            console.log('Failed to delete license: ' + data.message);
                         }
                     })
                     .catch(error => {
@@ -388,7 +388,7 @@ const appresume = createApp({
                         this.works[this.works.length - 1].workExperienceId = data.workExperienceId;
                     }
                     else {
-                        alert('Failed to create license: ' + data.message);
+                        console.log('Failed to create license: ' + data.message);
                     }
                 }).catch(error => {
                     console.error('Error creating license:', error);
@@ -426,7 +426,7 @@ const appresume = createApp({
                         if (data.success) {
                             this.works.splice(index, 1);
                         } else {
-                            alert('Failed to delete license: ' + data.message);
+                            console.log('Failed to delete license: ' + data.message);
                         }
                     })
                     .catch(error => {
