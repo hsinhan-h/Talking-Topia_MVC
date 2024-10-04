@@ -1,20 +1,73 @@
-﻿const { createApp, ref } = Vue ;
+﻿
+function checkLoginStatus(callback) {
+    fetch('/api/FindMember/IsLoggedIn')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.isLoggedIn) {
+                // 如果未登入，重導向到登入頁面
+                window.location.href = '/Account/Account';
+            } else {
+                // 如果已登入，執行其他邏輯
+                callback();
+            }
+        });
+}
+
+const { createApp, ref } = Vue;
 const courseId = document.getElementById('app').dataset.courseId;
-const app = createApp({
+const memberId = document.getElementById('app').dataset.memberId;
+
+const call = createApp({
     data() {
         return {
             rating: null,
             fetchedRating: null ,
-            courseId: courseId      // 從 DOM 中取得的課程 ID
+            courseId: courseId,      // 從 DOM 中取得的課程 ID
+            isFollowing: false,  // 初始關注狀態，從後端來決定是否已關注
+            FollowerId: memberId,       // 假設當前使用者的 ID
+            FollowedCourseId: courseId,    // 假設要關注的對象 ID
+            courseReviews: [],        // 用來儲存課程評論列表
+            selectedRatings: [],
+            tutorName: [],
+            bookedLessons :[]
+        }
+    },
+    computed: {
+        // 根據選中的評分篩選評論
+        filteredReviews() {
+            console.log('Selected Ratings:', this.selectedRatings);
+            if (this.selectedRatings.length === 0) {
+                return this.courseReviews;
+            }
+            const filtered = this.courseReviews.filter(review =>
+                this.selectedRatings.includes(Number(review.CommentRating))
+            );
+            console.log('Filtered Reviews:', filtered);
+            return filtered;
         }
     },
     methods: {
+        // 根據評分顯示不同的描述
+        getRatingText(rating) {
+            switch (rating) {
+                case 5: return '非常好';
+                case 4: return '很好';
+                case 3: return '普通';
+                case 2: return '不好';
+                case 1: return '非常糟';
+                default: return '';
+            }
+        },
+        getRatingPercentage(rating) {
+            const totalReviews = this.courseReviews.length;
+            if (totalReviews === 0) return 0;  // 避免除以 0 的錯誤
+            const ratingCount = this.courseReviews.filter(review => review.CommentRating === rating).length;
+            return ((ratingCount / totalReviews) * 100).toFixed(1);
+        },
         submitRating() {
             // 構建 FormData 並提交 rating 資料
             let formData = new FormData();
             formData.append('Rating', this.rating);
-            
-
             // 使用 fetch 提交資料到後端控制器
             fetch('/Course/CreateCourseReview', {
                 method: 'POST',
@@ -31,7 +84,7 @@ const app = createApp({
         },
         fetchRatingFromServer() {
             // 從後端獲取 Rating 資料
-            fetch(`/api/CourseReviewRatingValue?courseId=${this.courseId}`) 
+            fetch(`/api/CourseReview/CourseReviewApi?courseId=${this.courseId}`) 
                 .then(response => response.json()) // 解析成 JSON 格式
                 .then(data => {
                     this.fetchedRating = data;  // 將獲取到的評分設置到 fetchedRating 中
@@ -39,20 +92,95 @@ const app = createApp({
                 .catch(error => {
                     console.error('錯誤:', error);
                 });
-        }
+        },
+        fetchCourseReviews() {
+            // 從後端 API 獲取課程評論列表
+            fetch(`/api/CourseReview/GetCourseReviewList?courseId=${this.courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.courseReviews = data; // 將評論列表數據存入 Vue.js 的 courseReviews
+                })
+                .catch(error => {
+                    console.error('Error fetching course reviews:', error);
+                });
+        },
+        fetchFollowStatusFromServer() {
+            // 假設從後端 API 獲取當前是否已關注狀態
+            fetch(`/api/Following/GetFollowStatus?courseId=${this.courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.isFollowing = data;
+                })
+                .catch(error => {
+                    console.error('錯誤:', error);
+                });
+        },
+
+        // 關注功能
+        follow() {
+            checkLoginStatus(() => {
+                fetch(`/api/Following/AddFollowing?courseId=${this.courseId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        FollowerId: memberId,
+                        FollowedCourseId: courseId,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            this.isFollowing = true;
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        },
+        // 取消關注功能
+        unfollow() {
+            fetch(`/api/Following/DeleteFollowingCourse?courseId=${this.courseId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    FollowerId: memberId,
+                    FollowedCourseId: courseId,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.isFollowing = false;
+                        alert(data.message);
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        },
     },
     mounted() {
         // 在 Vue 應用掛載後自動呼叫 fetchRatingFromServer 來獲取資料
         this.fetchRatingFromServer();
+        this.fetchFollowStatusFromServer();
+        this.fetchCourseReviews(); 
     }
 
 })
 
-app.use(PrimeVue.Config);
+call.use(PrimeVue.Config);
 
-app.component('p-rating', PrimeVue.Rating);
+call.component('p-rating', PrimeVue.Rating);
 
-app.mount('#app');
+call.mount('#app');
+
+
 
 
 const twentyfive_mins = document.querySelector("#min-25");

@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
-
+using ApplicationCore.Entities;
 namespace Web.Data;
 
 public partial class TalkingTopiaDbContext : DbContext
 {
-    public TalkingTopiaDbContext()
-    {
-    }
-
-    public TalkingTopiaDbContext(DbContextOptions<TalkingTopiaDbContext> options)
+    private readonly IConfiguration _configuration;
+    public TalkingTopiaDbContext(DbContextOptions<TalkingTopiaDbContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
+
+    public virtual DbSet<Entities.ApplyCourse> ApplyCourses { get; set; }
+
+    public virtual DbSet<Entities.ApplyCourseCategory> ApplyCourseCategories { get; set; }
+
+    public virtual DbSet<Entities.ApplyCourseSubCategory> ApplyCourseSubCategories { get; set; }
 
     public virtual DbSet<Entities.ApplyList> ApplyLists { get; set; }
 
@@ -72,11 +75,77 @@ public partial class TalkingTopiaDbContext : DbContext
     {
         modelBuilder.UseCollation("Chinese_Taiwan_Stroke_CI_AS");
 
+        modelBuilder.Entity<Entities.ApplyCourse>(entity =>
+        {
+            entity.Property(e => e.ApplyCourseId).ValueGeneratedOnAdd();
+            entity.Property(e => e.Cdate)
+                .HasColumnType("datetime")
+                .HasColumnName("CDate");
+            entity.Property(e => e.Udate)
+                .HasColumnType("datetime")
+                .HasColumnName("UDate");
+
+            entity.HasOne(d => d.ApplyCourseCategory).WithMany(p => p.ApplyCourses)
+                .HasForeignKey(d => d.ApplyCourseCategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ApplyCourses_ApplyCourseCategory");
+
+            entity.HasOne(d => d.ApplySubCategory).WithMany(p => p.ApplyCourses)
+                .HasForeignKey(d => d.ApplySubCategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ApplyCourses_ApplyCourseSubCategory");
+
+            entity.HasOne(d => d.Member).WithMany(p => p.ApplyCourses)
+                .HasForeignKey(d => d.MemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ApplyCourses_Members");
+        });
+
+        modelBuilder.Entity<Entities.ApplyCourseCategory>(entity =>
+        {
+            entity.HasKey(e => e.ApplyCourseCategoryId).HasName("PK__ApplyCou__1CC616FF4D15312C");
+
+            entity.ToTable("ApplyCourseCategory");
+
+            entity.Property(e => e.ApplyCategoryName)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.Cdate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("CDate");
+            entity.Property(e => e.Udate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("UDate");
+        });
+
+        modelBuilder.Entity<Entities.ApplyCourseSubCategory>(entity =>
+        {
+            entity.HasKey(e => e.ApplySubCategoryId).HasName("PK__ApplyCou__EBF7B0ADD349BDC6");
+
+            entity.ToTable("ApplyCourseSubCategory");
+
+            entity.Property(e => e.ApplySubCategoryId).ValueGeneratedNever();
+            entity.Property(e => e.ApplySubCategoryName)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.Cdate)
+                .HasColumnType("datetime")
+                .HasColumnName("CDate");
+            entity.Property(e => e.Udate)
+                .HasColumnType("datetime")
+                .HasColumnName("UDate");
+
+            entity.HasOne(d => d.ApplyCourseCategory).WithMany(p => p.ApplyCourseSubCategories)
+                .HasForeignKey(d => d.ApplyCourseCategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ApplyCourseSubCategory_ApplyCourseCategory1");
+        });
+
         modelBuilder.Entity<Entities.ApplyList>(entity =>
         {
             entity.HasKey(e => e.ApplyId).HasName("PK__ApplyLis__F0687F91F95B14E5");
-
-            entity.HasIndex(e => e.MemberId, "IX_ApplyLists_MemberId");
 
             entity.Property(e => e.ApplyId)
                 .HasComment("申請Id")
@@ -99,7 +168,7 @@ public partial class TalkingTopiaDbContext : DbContext
             entity.HasOne(d => d.Member).WithMany(p => p.ApplyLists)
                 .HasForeignKey(d => d.MemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ApplyList__Membe__59FA5E80");
+                .HasConstraintName("FK_ApplyLists_Members");
         });
 
         modelBuilder.Entity<Entities.Booking>(entity =>
@@ -741,7 +810,7 @@ public partial class TalkingTopiaDbContext : DbContext
             entity.HasIndex(e => e.CourseId, "IX_WatchLists_CourseId");
 
             entity.Property(e => e.WatchListId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasComment("關注Id");
             entity.Property(e => e.CourseId).HasComment("關注的課程");
             entity.Property(e => e.FollowerId).HasComment("送出關注的人");
@@ -758,8 +827,6 @@ public partial class TalkingTopiaDbContext : DbContext
 
         modelBuilder.Entity<Entities.WorkExperience>(entity =>
         {
-            entity.HasKey(e => e.WorkExperienceId).HasName("PK__WorkExpe__55A2B889201583D4");
-
             entity.Property(e => e.WorkExperienceId).HasComment("工作經驗Id");
             entity.Property(e => e.Cdate)
                 .HasComment("建立時間")
@@ -771,13 +838,17 @@ public partial class TalkingTopiaDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
             entity.Property(e => e.WorkEndDate).HasComment("工作結束日");
-            entity.Property(e => e.WorkExperienceFile)
-                .IsRequired()
-                .HasComment("工作經驗檔案路徑");
+            entity.Property(e => e.WorkExperienceFile).HasComment("工作經驗檔案路徑");
             entity.Property(e => e.WorkName)
+                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("工作經驗名稱");
             entity.Property(e => e.WorkStartDate).HasComment("工作起始日");
+
+            entity.HasOne(d => d.Member).WithMany(p => p.WorkExperiences)
+                .HasForeignKey(d => d.MemberId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_WorkExperiences_Members");
         });
 
         OnModelCreatingPartial(modelBuilder);

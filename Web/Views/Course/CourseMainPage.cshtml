@@ -19,7 +19,7 @@
 
 
 
-<div class="container tutor-course-page">
+<div class="container tutor-course-page" id="app" data-course-id="@Model.CourseId" data-member-id="@ViewData["MemberId"]" v-cloak>
     <div class="row">
         <div class="col-md-8 col-12 " id="tutor-main-page">
             <div class="lh-tutor-title d-flex mb-3">
@@ -33,9 +33,19 @@
                     <h3>@Model.CourseTitle</h3>
                     <span class="course-spcialty mt-2">@Model.CourseSubTitle</span>
                     <div class="class-count mt-2">
-                        <strong>@Model.FinishedCoursesTotal</strong>堂韓文課
+                        已完成  <strong>@Model.FinishedCoursesTotal</strong>堂課
                     </div>
-                    <div class="follow-button mt-2">+關注</div>
+                    <div class="follow-section">
+                        <!-- 關注按鈕，根據 isFollowing 狀態動態顯示 -->
+                        <button id="followBtn" class="btn " @@click="follow" v-if="!isFollowing">
+                            <span class="icon-follow">+關注</span>
+                        </button>
+
+                        <!-- 取消關注按鈕 -->
+                        <button id="unfollowBtn" class="btn " @@click="unfollow" v-else>
+                            <span class="icon-unfollow">關注中</span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="lh-self-intro">
@@ -46,7 +56,7 @@
                     <div class="can-speak"><strong>會說</strong> @Model.SpokenLanguage </div>
                     <div class="self-intro-content">
                         <p class="self-intro-paragraph">
-                            @Model.TutorIntro
+                            @Html.Raw(Model.TutorIntro?.Replace("\n", "<br>"))
                         </p>
                         <input type="checkbox" class="lh-expand-btn">
                         <i class="fa-solid fa-chevron-down"></i>
@@ -60,31 +70,12 @@
             </div>
             <div class="lh-group-course-info">
                 <div class="group-course-header">
-                    <h3>團體班課程</h3>
+                    <h3>課程介紹</h3>
                 </div>
-                <div class="group-course-body">
-                    <strong>約為正式課的 6 折 🔥 優惠名額有限！</strong>
+                <div class="group-course-body">                    
                     <div class="group-course-content">
                         <p class="group-course-paragraph">
-                            Sayeong쌤💖暑假特別團班🌞🌞🌞🌞🌞<br>
-                            🌟第一位報名學生可協調上課時間⚡2人即開班⚡<br>
-                            🎯注重效率與成效🎯口說為最大目標🎯用韓語分享日常<br>
-                            ✅團體班也客製化✅小班制了解需求<br>
-                            🎈輕鬆有趣課堂!🎈快速學會成效!🎈文法可以活用!<br>
-                            <br>
-                            🍰🍰🍰🍰🍰🍰🍰🍰🍰<br>
-                            口說佔90%<br>
-                            注重文法的運用練習<br>
-                            簡單易懂的說明文法<br>
-                            延伸至生活情境活用<br>
-                            補充韓粽<br>
-                            💝💝💝💝💝💝💝💝💝<br>
-                            <br>
-                            🔥連鎖語言補習班團班經驗🔥企業內訓團班經驗<br>
-                            🔥三星電子中文老師團班經驗<br>
-                            <br>
-                            🌈開課資訊: (團體班客製化可私訊老師詢問,協助開班💖)<br>
-                            📖各大語學堂教材、世宗體系教材、自製教材... (請洽老師詢問~💖)<br>
+                            @Html.Raw(Model.CourseIntro?.Replace("\n", "<br>"))
                         </p>
                         <input type="checkbox" class="group-crouse-btn"> <i class="fa-solid fa-chevron-down"></i>
                     </div>
@@ -95,7 +86,7 @@
                     <h3>影片介紹</h3>
                 </div>
                 <div class="video-info-body ">
-                    <iframe src="https://www.youtube.com/embed/ZavL9y4Adrk?si=0UIWWwV4gCJyI3Qa"
+                    <iframe src="@Url.Content(Model.CourseVideo)"
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -121,7 +112,7 @@
                     <br>在 AmazingTalker 受到大量學生喜愛，好評不斷的優質教師！
                 </div>
             </div>
-            <div class="lh-tutor-comment " id="app" data-course-id="@Model.CourseId">
+            <div class="lh-tutor-comment " >
                 <form asp-action="CreateCourseReview">
                     <div class="course-comment-generator w-100">
                         <h3 class="my-2">對課程的感想</h3>
@@ -143,25 +134,21 @@
                         <p-rating class="display-rating-star my-1" v-model="fetchedRating" readonly></p-rating>
                     </div>
                 </div>
-                @foreach (var review in Model.ReviewCardList.Take(2))
-                {
-                <div class="comment-card">
-                <div class="comment d-flex ">
-                <div class="user-icon ">
-                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                </svg>
+                <div v-for="(review, index) in courseReviews.slice(0, 2)" :key="index" class="comment-card">
+                    <div class="comment d-flex ">
+                        <div class="user-icon ">
+                            <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                            </svg>
+                        </div>
+                        <div class="comment-info d-flex flex-column">
+                            <p class="user-name">{{ review.ReviewerName }}</p>
+                            <p class="comment-date">{{ review.ReviewDate }}</p>
+                            <p-rating v-model="review.CommentRating" readonly></p-rating>
+                        </div>
+                    </div>
+                    <p>{{ review.ReviewContent }}</p>
                 </div>
-                <div class="comment-info d-flex flex-column">
-                <p class="user-name">@review.ReviewerName</p>
-                <p class="comment-date">@review.ReviewDate</p>
-                </div>
-                </div>
-                <p>
-                @review.ReviewContent
-                </p>
-                </div>
-                }
                
                 <button type="button" class="btn more-comment" data-bs-target="#moreInfoModal" data-bs-toggle="modal">
                     顯示全部@(Model.CourseReviews)則評論
@@ -542,6 +529,61 @@
         </div>
     </div>
 
+    <div class="modal fade comment-popout-view" id="moreInfoModal" tabindex="-1" aria-labelledby="moreInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content " id="course-comment-modal">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">@Model.CourseTitle</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body course-comment-modal-body d-flex">
+                    <div class="comment-modal-selection col-md-6 col-12">
+                        <div class="comment-rating-section mb-4">
+                            <h3>韓文評價</h3>
+                            <div class="comment-rating-group">
+                                <div class="form-check" v-for="rating in [5, 4, 3, 2, 1]" :key="rating">
+                                    <input class="form-check-input comment-rating-selection" type="checkbox"
+                                           :id="'rating-' + rating" v-model="selectedRatings"
+                                           :value="rating">
+                                    <label class="form-check-label" :for="'rating-' + rating">
+                                        <i class="fa-solid fa-star"></i>
+                                        <p class="rating-level">{{ rating }}。{{ getRatingText(rating) }}</p>
+                                        <p>{{ rating }}</p>
+                                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" :style="{ width: getRatingPercentage(rating) + '%' }"></div>
+                                        </div>
+                                        <p class="comment-percentage">{{ getRatingPercentage(rating) }}%</p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-12 comment-card-section h-100">
+                        <p v-if="selectedRatings.length === 0 && courseReviews.length === 0">目前沒有評論</p>
+                        <p v-else-if="filteredReviews.length === 0 && selectedRatings.length !== 0">目前沒有此分數的評論!!</p>
+                        <div v-for="(review, index) in filteredReviews" :key="index" class="comment-card">
+                            <div class="comment d-flex ">                                
+                                <div class="user-icon">
+                                    <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                                    </svg>
+                                </div>
+                                <div class="comment-info d-flex flex-column">
+                                    <p class="user-name">{{ review.ReviewerName }}</p>
+                                    <p class="comment-date">{{ review.ReviewDate }}</p>
+                                    <p-rating v-model="review.CommentRating" readonly></p-rating>
+                                </div>
+                            </div>
+                            <p>{{ review.ReviewContent }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <div class="lh-rwd-course-info-tab col-12">
     <div class="try-out-class-info">
@@ -557,165 +599,7 @@
 
 
 
-<div class="modal fade comment-popout-view" id="moreInfoModal" tabindex="-1" aria-labelledby="moreInfoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content " id="course-comment-modal">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">@Model.CourseTitle</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body course-comment-modal-body d-flex">
-                <div class="comment-modal-selection col-md-6 col-12">
-                    <div class="comment-rating-section mb-4">
-                        <h3>韓文評價</h3>
-                        <div class="comment-rating-group">
-                            <div class="form-check">
-                                <input class="form-check-input comment-rating-selection" type="checkbox" value="" id="flexCheck-5">
-                                <label class="form-check-label" for="flexCheck-5">
-                                    <i class="fa-solid fa-star"></i>
-                                    <p class="rating-level ">5。非常好</p>
-                                    <p>5</p>
-                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 93%"></div>
-                                    </div>
-                                    <p class="comment-percentage">99.3%</p>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input comment-rating-selection" type="checkbox" value="" id="flexCheck-4">
-                                <label class="form-check-label" for="flexCheck-4">
-                                    <i class="fa-solid fa-star"></i>
-                                    <p class="rating-level ">4。很好</p>
-                                    <p>4</p>
-                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 93%"></div>
-                                    </div>
-                                    <p class="comment-percentage">99.3%</p>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input comment-rating-selection" type="checkbox" value="" id="flexCheck-3">
-                                <label class="form-check-label" for="flexCheck-3">
-                                    <i class="fa-solid fa-star"></i>
-                                    <p class="rating-level ">3。普通</p>
-                                    <p>3</p>
-                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 93%"></div>
-                                    </div>
-                                    <p class="comment-percentage">99.3%</p>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input comment-rating-selection" type="checkbox" value="" id="flexCheck-2">
-                                <label class="form-check-label" for="flexCheck-2">
-                                    <i class="fa-solid fa-star"></i>
-                                    <p class="rating-level ">2。不好</p>
-                                    <p>2</p>
-                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 93%"></div>
-                                    </div>
-                                    <p class="comment-percentage">99.3%</p>
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input comment-rating-selection" type="checkbox" value="" id="flexCheck-1">
-                                <label class="form-check-label" for="flexCheck-1">
-                                    <i class="fa-solid fa-star"></i>
-                                    <p class="rating-level ">1。非常糟</p>
-                                    <p>1</p>
-                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 93%"></div>
-                                    </div>
-                                    <p class="comment-percentage">99.3%</p>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="teaching-category d-none">
-                        <h3>教學項目</h3>
-                        <div class="teaching-category-container">
-                            <div class="teaching-category-item d-flex">
-                                <p>韓文</p>
-                                <p class="comment-teaching-item-count">(416)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>TOPIK II</p>
-                                <p class="comment-teaching-item-count">(221)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>韓文會話</p>
-                                <p class="comment-teaching-item-count">(76)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>中階韓文</p>
-                                <p class="comment-teaching-item-count">(1)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>初階韓文</p>
-                                <p class="comment-teaching-item-count">(21)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>韓文口說</p>
-                                <p class="comment-teaching-item-count">(34)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>TOPIK I</p>
-                                <p class="comment-teaching-item-count">(7)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>入門韓文</p>
-                                <p class="comment-teaching-item-count">(38)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>旅遊韓文</p>
-                                <p class="comment-teaching-item-count">(1)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>韓文興趣</p>
-                                <p class="comment-teaching-item-count">(2)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>國中韓文(12-14)</p>
-                                <p class="comment-teaching-item-count">(7)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>韓文出國</p>
-                                <p class="comment-teaching-item-count">(5)</p>
-                            </div>
-                            <div class="teaching-category-item d-flex">
-                                <p>韓文發音</p>
-                                <p class="comment-teaching-item-count">(7)</p>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="col-md-6 col-12 comment-card-section h-100">
-                    @foreach (var review in Model.ReviewCardList)
-                    {
-                        <div class="comment-card">
-                            <div class="comment d-flex ">
-                                <div class="user-icon ">
-                                    <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
-                                    </svg>
-                                </div>
-                                <div class="comment-info d-flex flex-column">
-                                    <p class="user-name">@review.ReviewerName</p>
-                                    <p class="comment-date">@review.ReviewDate</p>
-                                </div>
-                            </div>
-                            <p>
-                                @review.ReviewContent
-                            </p>
-                        </div>
-                    }
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 @section endJS
 {
@@ -723,9 +607,9 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
     <script src="https://unpkg.com/@@primevue/themes/umd/aura.min.js"></script>
-    <script src="~/js/booking_table/booking_table.js" asp-append-version="true"></script>
-    <script src="~/js/tutor_recommend_carousel.js" asp-append-version="true"></script>
     <script src="~/js/course-main-page.js" asp-append-version="true"></script>
+    <script type="module" src="~/js/booking_table/booking_table_modal.js" asp-append-version="true"></script>
+    <script src="~/js/tutor_recommend_carousel.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var courseId = @ViewData["CourseId"];

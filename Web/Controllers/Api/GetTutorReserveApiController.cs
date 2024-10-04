@@ -19,7 +19,7 @@ namespace Web.Controllers.Api
             var tutortime = await _tutorDataService.GetTutorReserveTimeAsync(memberId);
             if (tutortime == null)
             {
-                return NotFound();//如果後端取不到資料要返回404??
+                return NotFound();
             }
             // 返回 JSON 給前端
             return Ok(tutortime);

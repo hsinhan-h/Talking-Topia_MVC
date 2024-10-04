@@ -6,44 +6,46 @@
     <link href="~/css/layout.css" rel="stylesheet" />
     <link href="~/css/normalize.css" rel="stylesheet" />
     <link href="~/css/homepage.css?v=202408211924" rel="stylesheet" />
+    <link href="~/css/login.css" rel="stylesheet" />
+
 }
 
 <div class="container px-5">
     <div class="row">
         <!-- 左邊欄位 -->
-        <div class="col-md-6 d-flex flex-column justify-content-center">
-            <h5 class="text-center">請輸入您的電子信箱來登入</h5>
+        <div class="login-container">
+            <h2>登入</h2>
             <form asp-controller="Account" asp-action="Login" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div asp-validation-summary="All" class="text-danger"></div> <!-- 用於顯示所有的錯誤訊息 -->
+
                 <div class="form-group">
-                    <label asp-for="LoginViewModel.Email"></label>
-                    <input asp-for="LoginViewModel.Email" class="form-control" />
+                    <input asp-for="LoginViewModel.Email" class="form-control" placeholder="電子郵件" />
                     <span asp-validation-for="LoginViewModel.Email" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="LoginViewModel.Password"></label>
-                    <input asp-for="LoginViewModel.Password" class="form-control" type="password" />
+                    <input asp-for="LoginViewModel.Password" class="form-control" type="password" placeholder="密碼" />
                     <span asp-validation-for="LoginViewModel.Password" class="text-danger"></span>
                 </div>
-                <div class="form-group" hidden>
-                    <label asp-for="LoginViewModel.ReturnUrl"></label>
-                    <input asp-for="LoginViewModel.ReturnUrl" class="form-control" />
-                </div>
-                <button type="submit" class="btn btn-primary">登入</button>
+
+                <a asp-action="ForgotPassword" class="forgot-password">忘記密碼？</a>
+                <button type="submit" class="btn btn-custom">登入</button>
             </form>
+            <div class="social-login">
+                <p>或使用社群帳號登入</p>
+                <a href="#" class="google"><i class="fab fa-google"></i></a>
+
+                <a asp-controller="Account" asp-action="LineLogin" class="line"><i class="fab fa-line"></i></a>
+            </div>
             <hr>
-            <p class="text-center">或</p>
-            <button class="btn btn-outline-secondary mb-3 w-100">
-                <img src="~/image/mainpage_imgs/google.png" alt="Google" style="width:20px; height:20px; margin-right:10px;">
-                以 Google 登入
-            </button>
-            <button class="btn btn-outline-secondary mb-3 w-100">
-                <img src="~/image/mainpage_imgs/line.png" alt="LINE" style="width:20px; height:20px; margin-right:10px;">
-                以 LINE 登入
-            </button>
+            <h2>還不是會員？</h2>
+            <a asp-controller="Account" asp-action="Register" class="register">註冊會員</a>
         </div>
-        <!-- 右邊欄位 -->
-        <div class="col-md-6 d-flex flex-column justify-content-center mt-3">
+    </div>
+</div>
+
+       
+@*          <div class="col-md-6 d-flex flex-column justify-content-center mt-3">
             <p>尚未註冊過，請註冊</p>
             <form asp-action="Register" method="post">
                 <!-- First Name Field -->
@@ -83,8 +85,7 @@
                 </p>
             </form>
         </div>
-    </div>
-</div>
+ *@    
 
 
 

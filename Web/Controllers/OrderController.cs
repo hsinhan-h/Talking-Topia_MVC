@@ -2,8 +2,13 @@
 using ApplicationCore.Services;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Security.Claims;
+using Web.Controllers.Api;
+using Web.Dtos;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -18,12 +23,18 @@ namespace Web.Controllers
         private readonly OrderViewModelService _orderVMService;
         private int _orderId;
 
-        public OrderController(ILogger<OrderController> logger, IAntiforgery antiforgery, IOrderService orderService, IMemberService memberService, OrderViewModelService orderVMService)
+        public OrderController(ILogger<OrderController> logger,
+                               IAntiforgery antiforgery,
+                               IOrderService orderService,
+                               IMemberService memberService,
+                               IShoppingCartService shoppingCartService,
+                               OrderViewModelService orderVMService)
         {
             _logger = logger;
             _antiforgery = antiforgery;
             _orderService = orderService;
             _memberService = memberService;
+            _shoppingCartService = shoppingCartService;
             _orderVMService = orderVMService;
         }
 
@@ -32,8 +43,6 @@ namespace Web.Controllers
         /// </summary>
         public IActionResult Index()
         {
-
-
             return View();
         }
 
@@ -52,14 +61,17 @@ namespace Web.Controllers
             if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
 
+            var isDelete = await _shoppingCartService.DeleteCartItemsAsync(memberId);
+            if (isDelete == 200) { _logger.LogError("Delete!!!!"); }
+
             var order = await _orderVMService.GetOrderResultViewModelAsync(memberId);
             if (order == null) return BadRequest("找不到訂單!!!!!!!?");
-            var orderResult = new OrderResultListViewModel
+            var oVM = new OrderResultListViewModel
             {
                 OrderResult = order,
             };
 
-            return View(orderResult);
+            return View(oVM);
         }
 
         /// <summary>
@@ -70,76 +82,47 @@ namespace Web.Controllers
         /// <param name="taxIdNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitToOrder(string paymentType, string taxIdNumber, List<CartItemUpdateViewModel> Items)
+        public async Task<IActionResult> SubmitToOrder([FromBody] ShoppingCartDtos scDto)
         {
+            if (scDto == null) return BadRequest("Invalid data received.");
+
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             int memberId = int.Parse(memberIdClaim.Value);
             var result = await _memberService.GetMemberId(memberId);
-
             if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            if (string.IsNullOrEmpty(paymentType))
-            { return BadRequest("未選擇付款方式"); }
 
-            taxIdNumber ??= string.Empty;
-
-            foreach (var item in Items)
+            if (ModelState.IsValid)
             {
-                
-                _shoppingCartService.UpdateItem(memberId, item.CourseId, item.CourseQuantity, item.CourseLength, item.SubtotalNTD);
-            }
+                if (string.IsNullOrEmpty(scDto.Payment)) scDto.Payment = "CreditCard";
 
-            _orderId = await _orderService.CreateOrderAsync(memberId, paymentType, taxIdNumber);
+                scDto.TaxIdNumber ??= string.Empty;
 
-            if (_orderId > 0)
-            {
-                // 使用 HttpClientHandler 來處理 Cookies，確保 AntiForgeryToken 和 Session 被維護
-                var handler = new HttpClientHandler
+                if (scDto.scVM.Count > 0)
                 {
-                    UseCookies = true,
-                    CookieContainer = new CookieContainer()
-                };
-
-                using (var client = new HttpClient(handler))
-                {
-                    // 生成要請求的 URL，指向 PaymentController 的 New Action
-                    var requestUrl = Url.Action("New", "Payment", null, Request.Scheme);
-
-                    // 生成防偽驗證令牌
-                    var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
-
-                    // 構建 POST 請求的表單資料，包括防偽驗證令牌
-                    var values = new Dictionary<string, string>
+                    for (var i = 0; i < scDto.scVM.Count; i++)
                     {
-                        { "__RequestVerificationToken", tokens.RequestToken },  // 添加防偽驗證令牌
-                         { "OrderId", _orderId.ToString() }
-                    };
-
-                    // 將表單資料編碼成 x-www-form-urlencoded 格式
-                    var content = new FormUrlEncodedContent(values);
-
-                    // 發送 POST 請求到 PaymentController.New
-                    var response = await client.PostAsync(requestUrl, content);
-
-                    // 檢查回應狀態
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("CheckOut", "Payment");
-                    }
-                    else
-                    {
-                        // 讀取回應的錯誤訊息
-                        var errorResponse = await response.Content.ReadAsStringAsync();
-                        return BadRequest($"發送請求到 PaymentController.New 失敗，狀態碼：{response.StatusCode}, 錯誤訊息: {errorResponse}");
+                        var updateResult = await _shoppingCartService.UpdateItem(memberId, scDto.scVM[i].CourseId,
+                                                                    scDto.scVM[i].CourseQuantity,
+                                                                    scDto.scVM[i].CourseLength,
+                                                                    scDto.scVM[i].SubtotalNTD);
+                        if (!updateResult) return BadRequest("更新失敗");
                     }
                 }
             }
+
+            _orderId = await _orderService.CreateOrderAsync(memberId, scDto.Payment, scDto.TaxIdNumber);
+
+            if (_orderId > 0)
+            {
+                var jsonResult = Json(new { status = "OK", memberId = memberId });
+                return jsonResult;
+
+            }
             else
             {
-                // 如果訂單創建失敗，返回 BadRequest 錯誤訊息
                 return BadRequest("發送請求到 PaymentController.New 失敗。");
             }
         }

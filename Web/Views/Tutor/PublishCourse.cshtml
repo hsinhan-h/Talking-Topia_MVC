@@ -5,7 +5,7 @@
 }
 <div class="container lh-backstage" id="app">
     <div class="row">
-        <div class="col-12 lh-backstage-main-section">
+        <div class="col-12 lh-backstage-main-section mt-4">
             <div class="lh-backstage-tutor-section position-relative w-100 mb-5"
                  id="lh-backstage-tutor-section">
                 <ul class="nav nav-tabs">
@@ -304,7 +304,6 @@
                                         {
                                             <option value="@item.CourseCategoryId">@item.CategoryName</option>
                                         }
-                                        <option value="1">One</option>
                                     </select>
                                     <label for="floatingInput1">課程分類(必填)</label>
                                 </div>
@@ -354,9 +353,9 @@
                                     <input type="text"
                                            class="form-control"
                                            id="floatingInput5"
-                                           placeholder=""
+                                           placeholder=" "
                                            v-model="txtVideoPath" />
-                                    <label for="floatingInput4">請上傳一支自介影片(必填)</label>
+                                    <label for="floatingInput5" class="active">請上傳一支自介影片(必填)</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
@@ -629,7 +628,7 @@
                         .catch(error => {
                             console.error('Upload failed:', error);
                         });
-                },
+                }
             }
         }).mount('#app'); // mount 到 id 為 #app 的元素
     </script>

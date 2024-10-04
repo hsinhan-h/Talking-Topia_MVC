@@ -7,7 +7,8 @@ namespace Web.ViewModels
 {
     public class TutorDataViewModel
     {
-        public int TutorId { get; set; }    
+        public int MemberId { get; set; }
+        public int TutorId { get; set; }
         /// <summary>
         /// 國籍
         /// </summary>
@@ -15,22 +16,29 @@ namespace Web.ViewModels
         /// <summary>
         /// 母語
         /// </summary>
+        [Required(ErrorMessage = "母語為必填欄位")]
         public string NativeLanguage { get; set; }
         /// <summary>
         /// 會說的語言
         /// </summary>
+        [Required(ErrorMessage = "會說的語言為必填欄位")]
         public string SpokenLanguage { get; set; }
         /// <summary>
         /// 銀行帳戶
         /// </summary>
+        [Required(ErrorMessage = "銀行帳戶為必填欄位")]
         public string BankAccount { get; set; }
         /// <summary>
         /// 銀行代號
         /// </summary>
+        [Required(ErrorMessage = "銀行代碼為必填欄位")]
         public string BankCode { get; set; }
         /// <summary>
         /// 學歷
         /// </summary>
+        /// {
+        public Dictionary<int, WeekdaySchedule> Schedule { get; set; }
+
         public List<Educational> EducationalBackground { get; set; } = new List<Educational>();
         /// <summary>
         /// 經歷
@@ -59,12 +67,17 @@ namespace Web.ViewModels
             get { return Course != null && Course.Any(); }
         }
 
-        public bool Success { get; set; } 
+        public bool Success { get; set; }
         public string Message { get; set; }
 
+        //public Dictionary<string, List<string>> ValidationErrors { get; set; } = new Dictionary<string, List<string>>();
     }
 
-
+    public class WeekdaySchedule
+    {
+        public int Weekday { get; set; } // 對應的星期
+        public List<int> CouseHoursId { get; set; } = new List<int>();
+    }
 
     public class Educational
     {
@@ -86,13 +99,13 @@ namespace Web.ViewModels
 
     public class AvailReservation
     {
-        public int Weekday { get; set; }
+        public int? Weekday { get; set; }
         public string Coursehours { get; set; }
     }
 
-    public class LicenseData 
+    public class LicenseData
     {
-        public  string ProfessionalLicenseName { get; set; }
-        public string  ProfessionalLicenseUrl { get; set; }
+        public string ProfessionalLicenseName { get; set; }
+        public string ProfessionalLicenseUrl { get; set; }
     }
 }

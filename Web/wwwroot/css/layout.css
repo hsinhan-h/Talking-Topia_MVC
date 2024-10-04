@@ -33,22 +33,22 @@
     border: none;
 }
 
-.navbar-toggler:focus,
-.navbar-toggler:active {
-    outline: none;
-    box-shadow: none;
-    border: none;
-}
-
+    .navbar-toggler:focus,
+    .navbar-toggler:active {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+    
 
 .shopping-bag {
-    background-color: var(--theme-color);
+    background-color: none;
     border-radius: 5px;
 }
 
-.shopping-bag .nav-link {
-    color: #ffffff;
-}
+    .shopping-bag .nav-link {
+        color: var(--theme-color);
+    }
 
 .nav-item label a:hover,
 .lh-backstage-nav-item a:hover {
@@ -58,20 +58,21 @@
 .search-course {
     list-style: none;
 }
-.search-course .input-container {
-    position: relative;
-    width: 210px; /* 輸入框的固定寬度 */
-    display: flex;
-    align-items: center; /* 將內容垂直居中 */
-}
 
-.search-course .form-control {
-    flex-grow: 1; /* 使輸入框撐滿剩餘空間 */
-    border: 1px solid var(--theme-color);
-    border-radius: 20px;
-    padding-right: 45px; /* 為按鈕留出空間 */
-    background-color: #f8f9fa;
-}
+    .search-course .input-container {
+        position: relative;
+        width: 210px; /* 輸入框的固定寬度 */
+        display: flex;
+        align-items: center; /* 將內容垂直居中 */
+    }
+
+    .search-course .form-control {
+        flex-grow: 1; /* 使輸入框撐滿剩餘空間 */
+        border: 1px solid var(--theme-color);
+        border-radius: 20px;
+        padding-right: 45px; /* 為按鈕留出空間 */
+        background-color: #f8f9fa;
+    }
 
     .search-course .btn-search {
         position: absolute;
@@ -86,7 +87,7 @@
         cursor: pointer;
     }
 
-       
+
 
 
 @media screen and (max-width: 767px) {
@@ -97,7 +98,7 @@
         top: 50%;
         transform: translate(-50%, -50%);
         width: 140px;
-        z-index: 1;
+        z-index: 1030;
     }
 
 
@@ -118,58 +119,44 @@
     position: relative;
 }
 
-.mega-menu .col-4 {
-    padding: 10px;
-}
+    .mega-menu .col-4 {
+        padding: 10px;
+    }
 
-.mega-menu a {
-    display: block;
-    padding: 5px 0;
-    color: #333;
-    text-decoration: none;
-}
+    .mega-menu a {
+        display: block;
+        padding: 5px 0;
+        color: #333;
+        text-decoration: none;
+    }
 
-.mega-menu a:hover {
-    color: #00c8c8;
-}
+        .mega-menu a:hover {
+            color: #00c8c8;
+        }
 
-/* 隱藏所有第二欄的子選單 */
-.mega-menu .second-column .sub-menu {
-    display: none;
-}
+    /* 隱藏所有第二欄的子選單 */
+    .mega-menu .second-column .sub-menu {
+        display: none;
+    }
 
-.mega-menu .second-column {
-    max-height: 300px; /* 固定高度，依需求調整 */
-    overflow-y: auto; /* 當內容超過高度時，啟用垂直捲軸 */
-    padding-right: 15px; /* 讓內容不要被捲軸擋住 */
-}
-
-/* 可選，讓第一欄的高度也與第二欄一致 */
-.mega-menu .first-column {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-/* 當 hover 到第一欄的時候顯示第二欄和第三欄 */
-.mega-menu:hover .second-column,
-.mega-menu:hover .third-column {
-    display: block;
-}
+    /* 當 hover 到第一欄的時候顯示第二欄和第三欄 */
+    .mega-menu:hover .second-column,
+    .mega-menu:hover .third-column {
+        display: block;
+    }
 
 /* 根據 hover 的第一欄顯示對應的第二欄選單 */
-.first-column a[data-target="hot-subjects"]:hover ~ .second-column .hot-subjects {
+.first-column a:hover[data-target="language-learning"] ~ .second-column .language-learning,
+.first-column a:hover[data-target="programming-language"] ~ .second-column .programming-language,
+.first-column a:hover[data-target="academic"] ~ .second-column .academic {
     display: block;
 }
 
-.first-column a[data-target="language-learning"]:hover ~ .second-column .language-learning {
-    display: block;
-}
-
+/* 隱藏第二欄和第三欄，預設不顯示 */
 .mega-menu .second-column,
 .mega-menu .third-column {
     display: none;
 }
-
 
 /* 固定顯示的第三欄樣式 */
 .rating {
@@ -185,46 +172,83 @@
     margin-bottom: 0;
 }
 
+/*教師系統子選單*/
+/* 自訂的下拉選單樣式，可根據需要調整 */
+.tutor-dropdown-menu {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tutor-dropdown-item {
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+}
+
+    .tutor-dropdown-item:hover {
+        color: #00c8c8;
+        background-color: #f8f9fa;
+    }
+/*會員系統子選單*/
+/* 自訂會員下拉選單的樣式 */
+.member-dropdown-menu {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.member-dropdown-item {
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+}
+
+    .member-dropdown-item:hover {
+        color: #00c8c8;
+        background-color: #f8f9fa;
+    }
+
 .register-form {
     flex: 1;
     border-left: 2px solid #e0e0e0;
     padding-left: 20px;
 }
 
-.register-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+    .register-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-.register-form form input {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    .register-form form input {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-.register-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #d3d3d3;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .register-form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #d3d3d3;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.register-form p {
-    font-size: 12px;
-    color: #999;
-    text-align: center;
-}
+    .register-form p {
+        font-size: 12px;
+        color: #999;
+        text-align: center;
+    }
 
-.register-form a {
-    color: #0066cc;
-    text-decoration: none;
-}
+    .register-form a {
+        color: #0066cc;
+        text-decoration: none;
+    }
 
 
 
@@ -333,7 +357,7 @@
     /* 確保li項目與h5對齊 */
 }
 
-.lh-layout-footer-link ul li a {
+    .lh-layout-footer-link ul li a {
         text-decoration: none;
         color: #fff;
     }

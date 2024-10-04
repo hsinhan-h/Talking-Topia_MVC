@@ -5,7 +5,7 @@
             <div class="lh-backstage-homepage-section mb-5"
                  id="lh-backstage-homepage-section">
                 <h3 class="lh-backstage-homepage-title my-5">
-                    歡迎回來 <span>Chiaki</span>！這是你的課程被預約概況！
+                    歡迎回來 <span>@User.Identity.Name</span>！這是你的課程被預約概況！
                 </h3>
                 <div class="lh-backstage-divider"></div>
                 <div class="col-12">
@@ -15,25 +15,23 @@
                             <thead>
                                 <tr>
                                     <td>預約日期</td>
-                                    <td>預約時間</td>
+                                    <td>預約時段</td>
+                                    <td>學生名稱</td>
+                                    <td>課程科目</td>
                                     <td>課程名稱</td>
-                                    <td>課程內容</td>
-                                    <td>預約時長</td>
-                                    <td>學員名稱</td>
                                 </tr>
                             </thead>
                             <tbody border="1">
                                 @if (Model.AppointmentDetailsList != null && Model.AppointmentDetailsList.Any())
                                 {
-                                    @foreach (var order in Model.AppointmentDetailsList)
+                                    @foreach (var item in Model.AppointmentDetailsList)
                                     {
                                         <tr>
-                                            <td>@order.BookingDate.ToString("yyyy-MM-dd")</td>
-                                            <td>@order.BookingDate.ToString("T")</td>
-                                            <td>@order.CourseTitle</td>
-                                            <td>@order.Subtitle</td>
-                                            <td>@order.CourseLength</td>
-                                            <td>@order.FullName</td>
+                                            <td>@item.BookingDate</td>
+                                            <td>@item.BookingTime</td>
+                                            <td>@item.FullName</td>
+                                            <td>@item.Subject</td>
+                                            <td>@item.CourseTitle</td>
                                         </tr>
                                     }
                                 }

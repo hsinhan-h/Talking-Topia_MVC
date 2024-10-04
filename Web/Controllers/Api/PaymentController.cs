@@ -1,49 +1,60 @@
-﻿using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Enums;
+using ApplicationCore.Interfaces;
+using ApplicationCore.Services;
 using Infrastructure.Configurations.ECpay;
 using Infrastructure.ECpay;
 using Infrastructure.Enums.ECpay;
 using Infrastructure.Interfaces.ECpay;
 using Infrastructure.Service;
+using System.Security.Claims;
+using Web.Dtos;
 
 namespace Web.Controllers.Api
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly ILogger<PaymentController> _logger;
         private readonly ECpayService _eCpayService;
         private readonly IOrderService _orderService;
-        //private readonly IPaymentTransactionConfiguration _paymentTransactionConfiguration;
-        private int _orderId;
+        private readonly IMemberService _memberService;
+        //private int _memberId;
 
-        public PaymentController(IConfiguration configuration, ECpayService eCpayService, IOrderService orderService)
+        public PaymentController(IConfiguration configuration,
+                                 ECpayService eCpayService,
+                                 IOrderService orderService,
+                                 IMemberService memberService,
+                                 ILogger<PaymentController> logger)
         {
             _configuration = configuration;
             _eCpayService = eCpayService;
             _orderService = orderService;
-            //_paymentTransactionConfiguration = paymentTransactionConfiguration;
+            _memberService = memberService;
+            _logger = logger;
         }
 
+        [HttpPost("new")]
+        public IActionResult New()
+        {
+            return RedirectToAction(nameof(CheckOut), "Payment");
+        }
 
 
         // POST api/payment
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult New([FromForm] string orderId)
-        {
-            if (string.IsNullOrEmpty(orderId) || !int.TryParse(orderId, out _orderId))
-            {
-                return BadRequest("OrderId 不存在或無效");
-            }
-
-            return RedirectToAction("checkout");
-        }
-
         [HttpGet("checkout")]
         public async Task<IActionResult> CheckOut()
         {
-            // 資料藏在appsettings.json及UserSecret(目前註解中)
+
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"memberIdClaim這王八是null!!!!!!"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+
+            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"memberId是 {memberId}");
+
+            // 資料藏在appsettings.json及UserSecret
             var service = new
             {
                 Url = _configuration["ECpay:Service:Url"],
@@ -60,7 +71,7 @@ namespace Web.Controllers.Api
                 Description = "測試購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
-                Items = await _eCpayService.GetItemsToECStageDtoAsync(1)
+                Items = await _eCpayService.GetItemsToECStageDtoAsync(memberId)
             };
 
             IPayment payment = new PaymentConfiguration()
@@ -72,7 +83,13 @@ namespace Web.Controllers.Api
                 .Transaction.New(no: transaction.No, description: transaction.Description, date: transaction.Date)
                 .Transaction.UseMethod(method: transaction.Method)
                 .Transaction.WithItems(items: transaction.Items)
-                .Generate();
+            .Generate();
+
+            EOrderStatus orderStatus = EOrderStatus.Success;
+            var orderId = _orderService.GetLatestOrder(memberId);
+            await _orderService.UpdateOrderTransactionAndStatus(orderId, payment.MerchantTradeNo, payment.CheckMacValue, orderStatus);
+
+            _logger.LogWarning(DateTime.Now.ToLongTimeString() + $"payment是 {payment}");
 
             return View(payment);
         }
@@ -82,12 +99,11 @@ namespace Web.Controllers.Api
         {
             var hashKey = _configuration["ECpay:Service:HashKey"];
             var hashIV = _configuration["ECpay:Service:HashIV"];
-
             // 務必判斷檢查碼是否正確。
-            if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
-
-            var orderStatus = EOrderStatus.Success;
-            _orderService.UpdateOrderTransactionAndStatus(_orderId, result.MerchantTradeNo, result.TradeNo ,orderStatus);
+            if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV))
+            {
+                return BadRequest();
+            }
 
             return Ok("1|OK");
         }

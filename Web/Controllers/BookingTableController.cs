@@ -23,9 +23,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToCart(int courseId, DateTime bookingDate, short bookingTime)
         {
-
-            // todo: 剩餘堂數 > 0, 允許預約
-            // 寫入booking資料表, 導向預約成功頁面
+           
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
@@ -34,6 +32,8 @@ namespace Web.Controllers
 
             if (!result) { return BadRequest("找不到會員"); }
 
+            // todo: 剩餘堂數 > 0, 允許預約
+            // 寫入booking資料表, 導向預約成功頁面
             int remainSessions = await _bookingService.GetRemainCourseQtyAsync(memberId, courseId);
             if (remainSessions > 0)
             {

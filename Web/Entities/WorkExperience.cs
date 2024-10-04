@@ -44,4 +44,6 @@ public partial class WorkExperience
     /// 修改時間
     /// </summary>
     public DateTime? Udate { get; set; }
+
+    public virtual Member Member { get; set; }
 }

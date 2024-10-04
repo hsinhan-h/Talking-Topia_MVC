@@ -13,6 +13,8 @@ namespace Web.Controllers
         private readonly CourseService _courseService;
         private readonly ICourseService _icourseService;
         private readonly IMemberService _memberService;
+
+
         public CourseController(BookingService bookingService, CourseService courseService, ICourseService icourseService, IMemberService memberService)
         {
             _bookingService = bookingService;
@@ -28,11 +30,6 @@ namespace Web.Controllers
 
         public IActionResult CourseList()
         {
-            //int pageSize = 6;
-            //int totalCourseQty = await _courseService.GetTotalCourseQtyAsync();
-            //int totalPages =  (int)Math.Ceiling((double)totalCourseQty / pageSize);
-            //ViewData["TotalPages"] = totalPages;
-            //var model = await _courseService.GetCourseCardsListAsync(page, pageSize);
             return View();
         }
 
@@ -40,7 +37,19 @@ namespace Web.Controllers
         public async Task<IActionResult> CourseMainPage([FromQuery, DefaultValue(1)] int courseId)
         {
             ViewData["CourseId"] = courseId;
-            var model = await _courseService.GetCourseMainPage(courseId);
+
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            int memberId = 0;
+
+            // 如果找到 memberIdClaim，將其解析成整數
+            if (memberIdClaim != null)
+            {
+                memberId = int.Parse(memberIdClaim.Value);
+            }
+            ViewData["MemberId"] = memberId;
+
+            var model = await _courseService.GetCourseMainPage(courseId,memberId);
             return View(model);
         }
 
@@ -53,20 +62,20 @@ namespace Web.Controllers
             int memberId = int.Parse(memberIdClaim.Value);
             var result = await _memberService.GetMemberId(memberId);
 
-            try 
+            try
             {
                 var createReview = _icourseService.CreateReviews(memberId,CourseId, rating, NewReviewContent);
                 return RedirectToAction(nameof(CourseMainPage), new { courseId =CourseId });
-               
-
             }
             catch (Exception ex)
             {               
-                return Content("訂單建立失敗!");
-               
+                return Content("評論建立失敗!"); 
             }
         }
 
+       
+
+        
 
     }
 

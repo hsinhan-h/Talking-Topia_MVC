@@ -9,18 +9,21 @@ namespace Web.Controllers
 {
     public class MemberController : Controller
     {
-        private readonly MemberDataService _memberDataService;
-        private readonly OrderDetailService _orderDetailService;   
+        private readonly ILogger<MemberController> _logger;
         private readonly IMemberService _memberService;
+        private readonly MemberDataService _memberDataService;
+        private readonly OrderDetailViewModelService _orderDetailVMService;
         private readonly MemberAppointmentService _memberAppointmentService;
 
-        public MemberController(MemberDataService memberDataService,OrderDetailService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService)
+        public MemberController(MemberDataService memberDataService, OrderDetailViewModelService orderdetailservice, IMemberService memberService, MemberAppointmentService memberappointmentService, ILogger<MemberController> logger)
         {
-            _memberDataService = memberDataService;            
+            _memberDataService = memberDataService;
             _memberService = memberService;
-            _orderDetailService = orderdetailservice;
+            _orderDetailVMService = orderdetailservice;
             _memberAppointmentService = memberappointmentService;
+            _logger = logger;
         }
+
         /// <summary>
         /// 原MemberCenterHomepage.cshtml頁面
         /// 調整為學員課程預約明細
@@ -28,7 +31,16 @@ namespace Web.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var memberId = 15; // 測試使用 MemberId
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result) { return BadRequest("找不到會員"); }
+
             var viewModel = await _memberAppointmentService.GetAppointmentData(memberId);
 
             // 確保 viewModel 被正確初始化
@@ -46,6 +58,7 @@ namespace Web.Controllers
 
             return View(viewModel); // 將正確初始化的 viewModel 傳遞到視圖
         }
+
         public async Task<IActionResult> MemberData(int memberId)
         {
             //var summaryData = await _memberDataService.GetMemberData(memberId);  // 使用 MemberId 查找
@@ -60,18 +73,14 @@ namespace Web.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            // 將會員ID轉換為整數
-            int parsedMemberId = int.Parse(memberIdClaim.Value);
-
-            // 驗證會員ID是否有效
-            if (parsedMemberId <= 0)
+            // 嘗試將會員ID轉換為整數
+            if (!int.TryParse(memberIdClaim.Value, out int parsedMemberId))
             {
-                return BadRequest("無效的會員 ID");
+                return Content($"無效的會員 ID: {memberIdClaim.Value}"); // 顯示取得的值進行檢查
             }
 
             // 從資料庫中查詢會員資料
             var summaryData = await _memberDataService.GetMemberData(parsedMemberId);
-
 
             // 如果沒有找到會員資料
             if (summaryData == null)
@@ -82,26 +91,38 @@ namespace Web.Controllers
             return View(summaryData);
         }
 
-
+        /// <summary>
+        /// 會員交易明細瀏覽
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> MemberTransaction()
         {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            if (!result) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
 
-            //for (var x = 0; x < 4; x++)
-            //{
-            //    var OrderDatail = await _orderService.GetOrderData(x);
-            //}
-            var Orderdetail = await _orderDetailService.GetOrderData(1);
-            return View(Orderdetail);
+            var orderDetail = await _orderDetailVMService.GetOrderData(memberId);
+            if (orderDetail != null)
+            {
+                return View(orderDetail);
+            }
+            else
+            {
+                return BadRequest("交易明細為空");
+            }
         }
-        public async Task <IActionResult> WatchList()
+        public async Task<IActionResult> WatchList()
         {
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            
+
             int memberId = int.Parse(memberIdClaim.Value);
 
             var watchlist = await _memberDataService.GetWatchList(memberId);
             return View(watchlist);
         }
+
         public IActionResult ChatWindow()
         {
             return View();
@@ -135,6 +156,43 @@ namespace Web.Controllers
             }
 
             return Json(new { success = false, message = "資料驗證失敗" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, message = "請檢查表單輸入是否正確", errors });
+            }
+
+
+            // 檢查新密碼與確認新密碼是否一致
+            if (model.NewPassword != model.ConfirmNewPassword)
+            {
+                return Json(new { success = false, message = "新密碼與確認新密碼不相符喔喔喔喔喔喔喔。" });
+            }
+
+            // 從當前登入的使用者取得 MemberId
+            var memberId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(memberId))
+            {
+                return Json(new { success = false, message = "無法取得使用者 ID，請重新登入。" });
+            }
+
+            // 執行密碼變更邏輯
+            var result = await _memberDataService.ChangePasswordAsync(int.Parse(memberId), model.CurrentPassword, model.NewPassword);
+
+            if (result.Success)
+            {
+                return Json(new { success = true, message = "密碼修改成功。" });
+            }
+            else
+            {
+                return Json(new { success = false, message = result.Message });
+            }
         }
 
     }
