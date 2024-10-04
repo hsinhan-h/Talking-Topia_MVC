@@ -135,6 +135,7 @@
                     </div>
                 </div>
                 <div v-for="(review, index) in courseReviews.slice(0, 2)" :key="index" class="comment-card">
+                    <p v-if="courseReviews.length === 0">目前沒有評論</p>
                     <div class="comment d-flex ">
                         <div class="user-icon ">
                             <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
