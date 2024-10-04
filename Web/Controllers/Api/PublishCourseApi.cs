@@ -22,12 +22,12 @@ namespace Web.Controllers.Api
         {
             try
             {
-                int memberId = 3;
-                //var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-                //if (memberIdClaim == null)
-                //{ return RedirectToAction(nameof(AccountController.Account), "Account"); }
-                //int memberId = int.Parse(memberIdClaim.Value);
-                //var result = await _memberService.GetMemberId(memberId);
+                //int memberId = 3;
+                var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (memberIdClaim == null)
+                { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+                int memberId = int.Parse(memberIdClaim.Value);
+                var result = await _memberService.GetMemberId(memberId);
 
                 var booking = await _bookingService.GetPublishCourse(memberId, CourseId);
                 if (booking == null)
