@@ -9,6 +9,7 @@ namespace Api.Configurations
             services.AddScoped<OrderApiService>();
             services.AddScoped<ReviewApiService>();
 
+            services.AddScoped<CourseManagementApiService>();
 
             return services;
         }
