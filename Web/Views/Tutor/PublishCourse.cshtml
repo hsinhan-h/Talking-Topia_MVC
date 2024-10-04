@@ -110,7 +110,13 @@
             <div class="modal-content container">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        課程明細
+                        課程明細更新 @* <label>:value="[[ bookingDetails.courseId ]]" disabled="disabled" </label> *@
+                        <input type="hidden"
+                               class="form-control"
+                               id="txtCourseIdUpdate"
+                               placeholder=""
+                               v-model="bookingDetails.courseId"
+                               :value="[[ bookingDetails.courseId ]]" disabled="disabled" >
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -127,7 +133,7 @@
                                            class="form-control"
                                            id="floatingInput1"
                                            placeholder=""
-                                           :value="[[ bookingDetails.category ]]" disabled="disabled" />
+                                           :value="[[ bookingDetails.categoryName ]]" disabled="disabled" />
                                     <label for="floatingInput1">課程分類(必填)</label>
                                 </div>
                             </div>
@@ -137,7 +143,7 @@
                                            class="form-control"
                                            id="floatingInput2"
                                            placeholder=""
-                                           :value="[[ bookingDetails.courseSubject ]]" disabled="disabled" />
+                                           :value="[[ bookingDetails.subjectName ]]" disabled="disabled" />
                                     <label for="floatingInput2">課程科目(必填)</label>
                                 </div>
                             </div>
@@ -165,7 +171,7 @@
                                            class="form-control"
                                            id="floatingInput5"
                                            placeholder=""
-                                           v-model="txtVideoPath" 
+                                           v-model="bookingDetails.videoUrl"
                                            :value="[[ bookingDetails.videoUrl ]]" />
                                     <label for="floatingInput4">請上傳一支自介影片(必填)</label>
                                 </div>
@@ -239,6 +245,7 @@
                                            class="form-control"
                                            id="floatingInput8"
                                            placeholder=""
+                                           v-model="bookingDetails.twentyFiveMinPriceNTD"
                                            :value="[[ bookingDetails.twentyFiveMinPriceNTD ]]" />
                                     <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
                                 </div>
@@ -249,6 +256,7 @@
                                            class="form-control"
                                            id="floatingInput9"
                                            placeholder=""
+                                           v-model="bookingDetails.fiftyMinPriceNTD"
                                            :value="[[ bookingDetails.fiftyMinPriceNTD ]]" />
                                     <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
                                 </div>
@@ -259,8 +267,8 @@
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-secondary lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        儲存
+                            data-bs-dismiss="modal" v-on:click="submitDataUpdate">
+                        更新
                     </button>
                 </div>
             </div>
@@ -486,6 +494,9 @@
                     txtFiftyMinPriceNTD: '',
                     CouresImagesList: [],
 
+                    //更新欄位
+                    CourseIdUpdate: '',
+
 
                     selectedCourseCategoryId: null, // 儲存下拉的 CourseCategoryId
                     subjects: [], // 儲存 API 回傳的科目列表
@@ -509,7 +520,7 @@
                             console.error("Error fetching booking details:", error);
                         });
                 },
-                // 存檔
+                // 存檔(新增)
                 submitData() {
 
                     axios.post('/api/PublishCourseApi/SaveToCouresData', {
@@ -522,6 +533,35 @@
                         TwentyFiveMinPriceNTD: this.txtTwentyFiveMinPriceNTD,
                         FiftyMinPriceNTD: this.txtFiftyMinPriceNTD,
                         CouresImagesList: this.imagePaths,
+                    })
+                        .then(response => {
+                            console.log('資料成功傳送', response);
+                            alert('存檔成功：' + response.data);
+                            window.location.reload();  // 完成後重整頁面
+                        })
+                        .catch(error => {
+                            console.error('傳送失敗', error);
+                            if (error.response && error.response.status === 400) {
+                                alert('錯誤：' + error.response.data);
+                            } else {
+                                alert('發生錯誤，請稍後再試。');
+                            }
+                        });
+                },
+                // 存檔(更新)
+                submitDataUpdate() {
+                    // console.log("submitDataUpdate");
+                    // console.log(this.bookingDetails.courseId);
+
+                    axios.post('/api/PublishCourseApi/SaveToCouresDataUpdate', {
+                        CategoryId: this.bookingDetails.courseId,
+                        ThumbnailUrl: this.imagePath,
+                        VideoUrl: this.bookingDetails.videoUrl,
+                        Title: this.txtTitle,
+                        SubTitle: this.txtSubTitle,
+                        TwentyFiveMinPriceNTD: this.bookingDetails.twentyFiveMinPriceNTD,
+                        FiftyMinPriceNTD: this.bookingDetails.fiftyMinPriceNTD,
+                        // CouresImagesList: this.imagePaths,
                     })
                         .then(response => {
                             console.log('資料成功傳送', response);

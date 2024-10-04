@@ -104,13 +104,13 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> PublishCourse()
         {
-            //int memberId = 3;
+            int memberId = 3;
 
-            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (memberIdClaim == null)
-            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            int memberId = int.Parse(memberIdClaim.Value);
-            var result = await _memberService.GetMemberId(memberId);
+            //var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            //if (memberIdClaim == null)
+            //{ return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            //int memberId = int.Parse(memberIdClaim.Value);
+            //var result = await _memberService.GetMemberId(memberId);
 
             var model = await _bookingService.GetPublishCourseList(memberId);
             ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(memberId);

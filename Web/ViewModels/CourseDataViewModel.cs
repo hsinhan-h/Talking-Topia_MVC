@@ -4,7 +4,9 @@
     {
         public int CourseId { get; set; }
         public string CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public int SubjectId { get; set; }
+        public string SubjectName { get; set; }
         public List<string> ThumbnailUrl { get; set; }
         public string VideoUrl { get; set; }
         public string Title { get; set; }
@@ -15,5 +17,6 @@
         public string Description { get; set; } = "課程描述";
         public bool IsEnabled { get; set; } = true;
         public short CoursesStatus { get; set; } = 0;
+        public List<CourseDataViewModel> BookingList { get; internal set; }
     }
 }
