@@ -36,18 +36,22 @@ namespace Web.Services
                     throw new Exception("Member not found.");
                 }
 
-                // 遍歷前端提交的證照資料
-                for (int i = 0; i < licenseNames.Count; i++)
+                // 檢查 licenseIds 和其他參數是否為單一值的情況
+                if (licenseIds.Count == 1 && licenseNames.Count == 1 && licenseUrls.Count == 1)
                 {
+                    // 單一證照處理
+                    var licenseId = licenseIds[0];
+                    var licenseName = licenseNames[0];
+                    var licenseUrl = licenseUrls[0];
+
                     // 查找現有證照資料根據 ID
-                    var existingLicense = member.ProfessionalLicenses
-                        .FirstOrDefault(pl => pl.ProfessionalLicenseId == licenseIds[i]);
+                    var existingLicense = member.ProfessionalLicenses.FirstOrDefault(pl => pl.ProfessionalLicenseId == licenseId);
 
                     if (existingLicense != null)
                     {
                         // 更新現有的證照資料
-                        existingLicense.ProfessionalLicenseName = licenseNames[i];
-                        existingLicense.ProfessionalLicenseUrl = licenseUrls[i];
+                        existingLicense.ProfessionalLicenseName = licenseName;
+                        existingLicense.ProfessionalLicenseUrl = licenseUrl;
                         existingLicense.Udate = DateTime.Now; // 更新修改日期
                     }
                     else
@@ -56,12 +60,43 @@ namespace Web.Services
                         var newLicense = new Entities.ProfessionalLicense
                         {
                             MemberId = memberId,
-                            ProfessionalLicenseName = licenseNames[i],
-                            ProfessionalLicenseUrl = licenseUrls[i],
+                            ProfessionalLicenseName = licenseName,
+                            ProfessionalLicenseUrl = licenseUrl,
                             Cdate = DateTime.Now,
                             Udate = null
                         };
                         member.ProfessionalLicenses.Add(newLicense);
+                    }
+                }
+                else
+                {
+                    // 遍歷前端提交的證照資料，處理多個證照的情況
+                    for (int i = 0; i < licenseNames.Count; i++)
+                    {
+                        // 查找現有證照資料根據 ID
+                        var existingLicense = member.ProfessionalLicenses
+                            .FirstOrDefault(pl => pl.ProfessionalLicenseId == licenseIds[i]);
+
+                        if (existingLicense != null)
+                        {
+                            // 更新現有的證照資料
+                            existingLicense.ProfessionalLicenseName = licenseNames[i];
+                            existingLicense.ProfessionalLicenseUrl = licenseUrls[i];
+                            existingLicense.Udate = DateTime.Now; // 更新修改日期
+                        }
+                        else
+                        {
+                            // 如果找不到證照，則創建新的證照
+                            var newLicense = new Entities.ProfessionalLicense
+                            {
+                                MemberId = memberId,
+                                ProfessionalLicenseName = licenseNames[i],
+                                ProfessionalLicenseUrl = licenseUrls[i],
+                                Cdate = DateTime.Now,
+                                Udate = null
+                            };
+                            member.ProfessionalLicenses.Add(newLicense);
+                        }
                     }
                 }
 
@@ -76,6 +111,31 @@ namespace Web.Services
                 throw new Exception("Failed to update licenses", ex);
             }
         }
+        public async Task<int> CreateNewLicense(int memberId, string licenseName, List<string> licenseUrls)
+        {
+            // 檢查是否有可用的 licenseUrls，並使用第一個作為新證照的 URL
+            var licenseUrl = licenseUrls.FirstOrDefault() ?? string.Empty;
+
+            // 創建新的證照實體
+            var newLicense = new Entities.ProfessionalLicense
+            {
+                MemberId = memberId,
+                ProfessionalLicenseName = licenseName,
+                ProfessionalLicenseUrl = licenseUrl,
+                Cdate = DateTime.UtcNow,
+                Udate = null
+            };
+
+            // 將新證照新增到資料庫
+            _repository.Create(newLicense);
+
+            // 保存變更
+            await _repository.SaveChangesAsync();
+
+            // 返回新生成的 ProfessionalLicenseId
+            return newLicense.ProfessionalLicenseId;
+        }
+
         public async Task<TutorResumeViewModel> DeleteLicensesAsync(int memberId, List<int> professionalLicenseIds)
         {
             // 查找會員資料
@@ -161,7 +221,7 @@ namespace Web.Services
             };
         }
 
-        public async Task ChangeResumeWorkExp(int memberId, List<ResumeWorkExp> workExperiences, List<string> fileUrls)
+        public async Task<int> ChangeResumeWorkExp(int memberId, List<ResumeWorkExp> workExperiences, List<string> fileUrls)
         {
             try
             {
@@ -179,7 +239,7 @@ namespace Web.Services
                 var workExp = workExperiences.First();  // 只會有一個工作經驗
 
                 // 檢查是否有 WorkExperienceId，來決定是更新還是新增
-                if (workExp.WorkExperienceId.HasValue)
+                if (workExp.WorkExperienceId.HasValue && workExp.WorkExperienceId != 0)
                 {
                     // 如果有 WorkExperienceId，則嘗試更新現有的資料
                     var existingWorkExp = member.WorkExperiences
@@ -191,8 +251,8 @@ namespace Web.Services
                         existingWorkExp.WorkName = workExp.WorkName;
                         existingWorkExp.WorkStartDate = (DateOnly)workExp.WorkStartDate;
                         existingWorkExp.WorkEndDate = (DateOnly)workExp.WorkEndDate;
-                        existingWorkExp.WorkExperienceFile = fileUrls.FirstOrDefault(); 
-                        existingWorkExp.Udate = DateTime.Now; 
+                        existingWorkExp.WorkExperienceFile = fileUrls.FirstOrDefault();
+                        existingWorkExp.Udate = DateTime.Now;
                     }
                     else
                     {
@@ -208,15 +268,22 @@ namespace Web.Services
                         WorkName = workExp.WorkName,
                         WorkStartDate = (DateOnly)workExp.WorkStartDate,
                         WorkEndDate = (DateOnly)workExp.WorkEndDate,
-                        WorkExperienceFile = fileUrls.FirstOrDefault(),  
+                        WorkExperienceFile = fileUrls.FirstOrDefault(),
                         Cdate = DateTime.Now,
                         Udate = null
                     };
                     member.WorkExperiences.Add(newWorkExp);
+
+                    // 保存變更，並返回新生成的 WorkExperienceId
+                    await _repository.SaveChangesAsync();
+                    return newWorkExp.WorkExperienceId;
                 }
 
                 // 保存變更
                 await _repository.SaveChangesAsync();
+
+                // 返回原本的 WorkExperienceId（更新情況下）
+                return workExp.WorkExperienceId ?? 0;
             }
             catch (Exception ex)
             {
@@ -239,6 +306,19 @@ namespace Web.Services
             {
                 throw new Exception("Member not found");
             }
+        }
+        public async Task<TutorResumeViewModel> GetProfessionalLicenseById(int memberId, int professionalLicenseId)
+        {
+            var query = from license in _repository.GetAll<Entities.ProfessionalLicense>()
+                        where license.MemberId == memberId && license.ProfessionalLicenseId == professionalLicenseId
+                        select new TutorResumeViewModel
+                        {
+                            ProlLicenseId = license.ProfessionalLicenseId,
+                            ProlLicenseUrl = license.ProfessionalLicenseUrl
+                        };
+
+            var result = await query.FirstOrDefaultAsync();
+            return result;
         }
 
 
@@ -329,24 +409,15 @@ namespace Web.Services
                                 .Where(e => e.MemberId == member.MemberId)
                                 .ToListAsync();
 
-            // 如果會員尚無 ProfessionalLicense 資料，插入空白資料
+            // 如果會員尚無 ProfessionalLicense 資料，返回空值
             if (!licenses.Any())
             {
-                var newLicense = new Entities.ProfessionalLicense
+                return new TutorResumeViewModel
                 {
-                    MemberId = member.MemberId,
-                    ProfessionalLicenseName = string.Empty,  
-                    ProfessionalLicenseUrl = string.Empty,  
-                    Cdate = DateTime.Now,  
-                    Udate = DateTime.Now   
+                    ProfessionalLicenseName = new List<string>(),
+                    ProfessionalLicenseUrl = new List<string>(),
+                    ProfessionalLicenseId = new List<int>()
                 };
-
-                // 插入資料庫
-                _repository.Create(newLicense);
-                await _repository.SaveChangesAsync();
-
-                // 更新 licenses 列表，包含新插入的資料
-                licenses = new List<Entities.ProfessionalLicense> { newLicense };
             }
 
             // 提取 LicenseName, LicenseUrl, LicenseId
@@ -389,34 +460,7 @@ namespace Web.Services
                 })
                 .ToListAsync();
 
-            // 如果沒有工作經驗資料，插入一條空白的
-            if (!workExpList.Any())
-            {
-                var newWorkExp = new Entities.WorkExperience
-                {
-                    MemberId = member.MemberId,
-                    WorkName = string.Empty, 
-                    WorkStartDate = new DateOnly(2024, 1, 1),
-                    WorkEndDate = new DateOnly(2024, 1, 1),    
-                    Cdate = DateTime.UtcNow, 
-                    Udate = DateTime.UtcNow  
-                };
-
-                // 插入到資料庫
-                _repository.Create(newWorkExp);
-                await _repository.SaveChangesAsync();
-
-                // 將新插入的工作經驗添加到列表中
-                workExpList.Add(new ResumeWorkExp
-                {
-                    WorkName = newWorkExp.WorkName,
-                    WorkStartDate = newWorkExp.WorkStartDate,
-                    WorkEndDate = newWorkExp.WorkEndDate,
-                    WorkExperienceId = newWorkExp.WorkExperienceId
-                });
-            }
-
-            // 返回 ViewModel
+            // 不再插入空白資料，只返回現有工作經驗資料
             var resumeViewModel = new TutorResumeViewModel
             {
                 WorkBackground = workExpList
@@ -481,14 +525,6 @@ namespace Web.Services
             }
             return education;
         }
-        private async Task<List<Entities.WorkExperience>> GetWorkExperienceByMemberIdAsync(int memberId)
-        {
-            var workExperiences = await _repository.GetAll<Entities.WorkExperience>()
-                                                   .Where(w => w.MemberId == memberId)
-                                                   .ToListAsync();
-
-            return workExperiences;
-        }
         private async Task<Entities.ApplyCourse> GetApplyCouseByMemberIdAsync(int memberId)
         {
             var applyCourseHasMember = await _repository.GetAll<Entities.ApplyCourse>()
@@ -499,11 +535,6 @@ namespace Web.Services
                 return null;
             }
             return applyCourseHasMember;
-        }
-        private async Task<Entities.ProfessionalLicense> GetProfessionalLicenseByMemberIdAsync(string licenseName, int memberId)
-        {
-            return await _repository.GetAll<Entities.ProfessionalLicense>()
-                           .FirstOrDefaultAsync(pl => pl.ProfessionalLicenseName == licenseName && pl.MemberId == memberId);
         }
 
 
@@ -583,46 +614,6 @@ namespace Web.Services
                     existingMember.EducationId = education.EducationId;
                 }
 
-                // 創建工作經驗
-                var workExperiences = await GetWorkExperienceByMemberIdAsync(existingMember.MemberId);
-
-                // 更新每個工作經歷的邏輯
-                foreach (var workExp in qVM.WorkBackground)
-                {
-                    // 嘗試找到對應的工作經歷
-                    var existingWorkExperience = workExperiences
-                    .FirstOrDefault(we => we.MemberId == memberId && we.WorkName == workExp.WorkName && we.WorkStartDate == workExp.WorkStartDate);
-
-                    if (existingWorkExperience != null)
-                    {
-                        // 如果找到對應的工作經歷，則更新
-                        existingWorkExperience.WorkExperienceFile = workExp.WorkExperienceFile;
-                        existingWorkExperience.WorkStartDate = (DateOnly)workExp.WorkStartDate;
-                        existingWorkExperience.WorkEndDate = (DateOnly)workExp.WorkEndDate;
-                        existingWorkExperience.WorkName = workExp.WorkName;
-                        existingWorkExperience.Udate = DateTime.Now;
-
-                        _repository.Update(existingWorkExperience);
-                    }
-                    else
-                    {
-                        // 如果找不到對應的工作經歷，則創建新的
-                        var newWorkExperience = new Entities.WorkExperience
-                        {
-                            WorkExperienceFile = workExp.WorkExperienceFile,
-                            WorkStartDate = (DateOnly)workExp.WorkStartDate,
-                            WorkEndDate = (DateOnly)workExp.WorkEndDate,
-                            WorkName = workExp.WorkName,
-                            MemberId = existingMember.MemberId,  // 關聯到會員的 MemberId
-                            Cdate = DateTime.Now,
-                            Udate = DateTime.Now,
-                        };
-
-                        _repository.Create(newWorkExperience);
-                    }
-                }
-                await _repository.SaveChangesAsync();
-
                 var applyCourse = await GetApplyCouseByMemberIdAsync(existingMember.MemberId);
                 if (applyCourse != null)
                 {
@@ -654,31 +645,7 @@ namespace Web.Services
                     _repository.Create(newApplyCourse);
 
                 }
-                for (int i = 0; i < qVM.ProfessionalLicenseName.Count; i++)
-                {
-                    // 檢查此會員是否已有相同名稱的專業執照
-                    var existingLicense = await GetProfessionalLicenseByMemberIdAsync(qVM.ProfessionalLicenseName[i], existingMember.MemberId);
 
-                    if (existingLicense == null)
-                    {
-                        // 創建新的執照
-                        var professionalLicense = new Entities.ProfessionalLicense
-                        {
-                            ProfessionalLicenseName = qVM.ProfessionalLicenseName[i],
-                            ProfessionalLicenseUrl = qVM.ProfessionalLicenseUrl[i],
-                            MemberId = existingMember.MemberId,
-                            Cdate = DateTime.Now
-                        };
-                        _repository.Create(professionalLicense);
-                    }
-                    else
-                    {
-                        // 更新現有的執照
-                        existingLicense.ProfessionalLicenseUrl = qVM.ProfessionalLicenseUrl[i];
-                        existingLicense.Udate = DateTime.Now;
-                        _repository.Update(existingLicense);
-                    }
-                }
                 await _repository.SaveChangesAsync();
                 await _repository.CommitAsync();
                 return new TutorResumeViewModel

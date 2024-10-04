@@ -11,7 +11,12 @@
     height: 100%; 
     object-fit: cover;
 }
-
+.textbtncolorgreen {
+    color: #02cab9
+}
+.filename {
+    letter-spacing: 1.5px
+}
 .resume_border {
     border-top: 2px solid rgb(2, 202, 185);
     border-bottom: 2px solid rgb(2, 202, 185);
@@ -47,6 +52,10 @@
 .textbtncolor {
     color: white
 }
+
+.textdangercolor {
+    color: var(--highlight-color);
+}
 .btnbg {
     background-color: var(--theme-color);
 }
@@ -65,7 +74,12 @@
     border: 1px solid #ff5f5f;
 }
 
-
+.icon_Headimg_hover {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.icon_Headimg_hover:hover {
+   transform: scale(1.1); /* 懸停時放大效果 */
+}
 
 .icon_plus {
     max-width: 80px;

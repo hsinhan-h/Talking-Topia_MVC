@@ -158,11 +158,13 @@ namespace Web.Controllers
             var passwordHasher = new PasswordHasher<Web.Entities.Member>();
             var passwordVerificationResult = passwordHasher.VerifyHashedPassword(member, member.Password, request.Password);
 
-            if (passwordVerificationResult == PasswordVerificationResult.Failed)
+            if (passwordVerificationResult != PasswordVerificationResult.Success)
             {
+                _logger.LogError("密碼驗證失敗。輸入的密碼: {Password}", request.Password);
                 ModelState.AddModelError(string.Empty, "無效的帳號或密碼");
                 return View("AccessDenied", model);
             }
+
 
             // 使用 SignInMemberAsync 進行登入
             await _accountService.SignInMemberAsync(member);
@@ -351,7 +353,6 @@ namespace Web.Controllers
             var model = new ResetPasswordViewModel { Token = token };
             return View(model);
         }
-
         [HttpPost]
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
@@ -361,7 +362,8 @@ namespace Web.Controllers
                 var member = await _accountService.GetMemberByResetTokenAsync(model.Token);
                 if (member != null)
                 {
-                    member.Password = model.NewPassword.ToSHA256();
+                    var passwordHasher = new PasswordHasher<Web.Entities.Member>();
+                    member.Password = passwordHasher.HashPassword(member, model.NewPassword); // 使用 PasswordHasher 加密新密碼
                     member.ResetPasswordToken = null;
                     await _accountService.UpdateMemberAsync(member);
 
@@ -371,7 +373,7 @@ namespace Web.Controllers
                 else
                 {
                     // 調試訊息
-                    Console.WriteLine($"Token not found: {model.Token}");
+                    _logger.LogError($"Token not found: {model.Token}");
                     ModelState.AddModelError("", "無效的重設密碼請求");
                 }
             }

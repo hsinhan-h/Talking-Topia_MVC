@@ -7,6 +7,7 @@
         }
     });
     let isEditing = false; // 用來判斷是否處於編輯狀態
+    const spinner = submitBtn.querySelector('.submitspinner');
     submitBtn.addEventListener('click', function (event) {
         // 如果按鈕是處於編輯狀態，阻止提交表單
         if (!isEditing) {
@@ -16,10 +17,12 @@
                 item.disabled = false;
             });
             // 改變按鈕文本為 "提交"
-            submitBtn.textContent = "提交";
+            submitBtn.childNodes[0].textContent = "提交";  // 只更改文本部分
             // 更改狀態，讓下一次按下時可以進行提交
             isEditing = true;
         } else {
+            // 顯示 spinner
+            spinner.classList.remove('d-none');
             // 第二次按下則允許表單提交
             document.querySelector('.tutorDataForm').submit();
         }
@@ -27,6 +30,13 @@
 
     const submitTimeBtn = document.querySelector('.submitTimeButton');
     submitTimeBtn.addEventListener('click', function () {
+        // 取得 spinner 元素
+        const spinner = document.querySelector('.spinner-grow');
+
+        // 顯示 spinner
+        spinner.classList.remove('d-none');
+
+        // 提交表單
         document.querySelector('.tutorDataTimeForm').submit();
     });
 
@@ -200,6 +210,7 @@
                 if (!data || !data.availableReservation || !Array.isArray(data.availableReservation)) {
                     throw new Error('error');
                 }
+
                 const editButton = document.getElementById('edit-button');
                 if (data.availableReservation.length > 0) {
                     updateReservationList(data.availableReservation);
@@ -335,9 +346,9 @@
                     }
                 });
             })
-
-       
-
+            .catch(error => {
+                console.error('Error fetching or processing data:', error);
+            });
 
 
         // 事件監聽器，用來控制時段選項的顯示和隱藏
@@ -373,22 +384,32 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('請重新選擇時段');
+                    const editButton = document.querySelector('#edit-button');
+                    editButton.classList.remove('d-none'); 
+                    const popover = new bootstrap.Popover(editButton, {
+                        trigger: 'manual', 
+                        content: '請重新選擇時段', 
+                        placement: 'top' 
+                    });
+                    popover.show();
+                    setTimeout(() => {
+                        popover.hide();
+                    }, 3000);
                 } else {
-                    alert('更新失敗，請重試！');
+                    console.log('更新失敗，請重試！');
                 }
             })
             .catch(error => {
                 console.error('Error updating data:', error);
-                alert('更新過程中發生錯誤！');
+                console.log('更新過程中發生錯誤！');
             });
     }
 
     // 點擊事件內調用函數
     document.getElementById("edit-button").addEventListener("click", function () {
-        const memberId = document.getElementById('memberIdDisplay').innerText; // 獲取 `memberId` 參數
-        deleteReservation(memberId); // 調用函數
+        const memberId = document.getElementById('memberIdDisplay').innerText; 
+        deleteReservation(memberId); 
         const enablecheckbox = document.querySelectorAll('input[type="checkbox"]');
-        enablecheckbox.forEach(checkbox => { checkbox.disabled = false })// 解除禁用
+        enablecheckbox.forEach(checkbox => { checkbox.disabled = false })
     });
 });

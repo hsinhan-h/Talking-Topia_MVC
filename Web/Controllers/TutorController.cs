@@ -13,21 +13,22 @@ namespace Web.Controllers
 {
     public class TutorController : Controller
     {
-
+        private readonly ILogger<TutorController> _logger;
         private readonly ResumeDataService _resumeDataService;
         private readonly BookingService _bookingService;
         private readonly TutorDataservice _tutorDataService;
-        private readonly AppointmentDetailService _appointmentDetailService;
+        private readonly AppointmentDetailViewModelService _appointmentDetailVMService;
         private readonly CourseCategoryService _courseCategoryService;
         private readonly IMemberService _memberService;
-        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailService appointmentDetailService, CourseCategoryService courseCategoryService, IMemberService memberService)
+        public TutorController(ResumeDataService resumeDataService, BookingService bookingService, TutorDataservice tutorDataservice, AppointmentDetailViewModelService appointmentDetailService, CourseCategoryService courseCategoryService, IMemberService memberService, ILogger<TutorController> logger)
         {
             _resumeDataService = resumeDataService;
             _bookingService = bookingService;
             _tutorDataService = tutorDataservice;
-            _appointmentDetailService = appointmentDetailService;
+            _appointmentDetailVMService = appointmentDetailService;
             _courseCategoryService = courseCategoryService;
             _memberService = memberService;
+            _logger = logger;
         }
 
 
@@ -85,14 +86,12 @@ namespace Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // 提取每個欄位的錯誤訊息，並將欄位名稱與錯誤訊息對應
                 var fieldErrors = ModelState.Where(ms => ms.Value.Errors.Any())
                                     .ToDictionary(
                                         ms => ms.Key,
-                                        ms => ms.Value.Errors.Select(e => e.ErrorMessage).ToList() // 錯誤訊息列表
+                                        ms => ms.Value.Errors.Select(e => e.ErrorMessage).ToList()
                                     );
 
-                // 將錯誤訊息儲存到 ViewData 中
                 ViewData["Success"] = false;
                 ViewData["ValidationErrors"] = fieldErrors;
                 return View(qVM);
@@ -101,17 +100,14 @@ namespace Web.Controllers
             if (memberIdClaim == null)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
             int memberId = int.Parse(memberIdClaim.Value);
-            // 呼叫服務層的 CreateTutorData 方法
             var result = await _tutorDataService.CreateTutorData(qVM, memberId);
 
             if (result.Success)
             {
                 TempData["Header"] = "會員資料新增";
                 TempData["Message"] = "會員資料新增成功";
-                return RedirectToAction("TutorData"); // 使用完整資料重新渲染 TutorData 頁面
-                //ViewData["Header"] = "會員資料新增";
-                //ViewData["Message"] = "會員資料新增成功";
-                //return View("TutorData", qVM);
+                return RedirectToAction("TutorData");
+
             }
             else
             {
@@ -195,13 +191,13 @@ namespace Web.Controllers
 
                 TempData["Header"] = "新增履歷資料";
                 TempData["Message"] = "履歷資料新增成功";
-                return RedirectToAction("TutorResume");
+                return RedirectToAction("TutorData");
             }
             else
             {
                 ViewData["Header"] = "錯誤訊息";
                 ViewData["Message"] = result.Message;
-                return View("TutorResume", qVM); 
+                return View("TutorResume", qVM);
             }
         }
 
@@ -227,7 +223,6 @@ namespace Web.Controllers
             return View();
         }
 
-
         public async Task<IActionResult> Test()
         {
             int MemberId = 3;
@@ -236,13 +231,18 @@ namespace Web.Controllers
 
             return View(model);
         }
-         public async Task<IActionResult> AppointmentDetails(int memberId)
-        {
-          
-            // 獲取預約詳細信息
-            var appointmentDetails = await _appointmentDetailService.GetAppointmentData(memberId=47);
 
-            // 返回視圖並傳遞預約數據
+        public async Task<IActionResult> AppointmentDetails()
+        {
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+            if (!result) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+
+            var appointmentDetails = await _appointmentDetailVMService.GetAppointmentData(memberId);
+
+            if (appointmentDetails == null) { _logger.LogWarning("教師被預約明細為空"); }
             return View(appointmentDetails);
         }
     }

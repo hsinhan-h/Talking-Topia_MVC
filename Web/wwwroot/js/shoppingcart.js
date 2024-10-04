@@ -1,5 +1,4 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    console.log(window.viewModelData.shoppingCartList);
     let selectLengthElements = document.querySelectorAll('[id^="lh-timeSelect-"]'); //select抓到的是option selected的值!!!
     let selectQuantityElements = document.querySelectorAll('[id^="lh-sc-quantitySelect-"]');
     const submitBtn = document.getElementById('shopping-cart-submit-btn');
@@ -17,13 +16,11 @@
                 window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].courseLength = 25;
                 updateTotalPrice(dataIndex, vmCourseQuantity, this.value);
-                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else {
                 window.viewModelData.shoppingCartList[dataIndex].unitPrice = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].courseLength = 50;
                 updateTotalPrice(dataIndex, vmCourseQuantity, this.value);
-                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
         });
     });
@@ -38,25 +35,21 @@
                 window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].discount = 0;
                 updateTotalPrice(dataIndex, this.value, vmUnitPrice);
-                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else if (this.value == 5) {
                 window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].discount = 0.95;
                 updateTotalPrice(dataIndex, this.value, vmUnitPrice);
-                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else if (this.value == 10) {
                 window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].discount = 0.9;
                 updateTotalPrice(dataIndex, this.value, vmUnitPrice);
-                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
             else {
                 window.viewModelData.shoppingCartList[dataIndex].courseQuantity = this.value;
                 window.viewModelData.shoppingCartList[dataIndex].discount = 0.85;
                 updateTotalPrice(dataIndex, this.value, vmUnitPrice);
-                console.log(`現在的scVM是${window.viewModelData.shoppingCartList[dataIndex]}`)
             }
         });
     });
@@ -74,8 +67,6 @@
             scVM: cart,
         };
 
-        console.log(`orderData是${orderData}!!!!!`);
-        debugger;
 
         if (cart.length > 0) {
             const response = fetch("/order/submitToOrder", {
@@ -128,7 +119,6 @@
         subTotal.textContent = totalPrice.toLocaleString('zh-TW', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         discount.textContent = ((quantity * unitPrice) - totalPrice).toLocaleString('zh-TW', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         calculateTotalPrice(dataIndex);
-
     }
 
     function calculateTotalPrice(dataIndex) {

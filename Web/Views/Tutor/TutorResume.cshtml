@@ -20,8 +20,8 @@
 
     <p>@message</p>
     <p>@header</p>
-        <div id="vue-wrapper">
-        <form asp-action="TutorResume" method="post" ref="form" >
+   <div id="vue-wrapper">
+        <form asp-action="TutorResume" method="post" ref="form">
             <div class="container-fluid mt-5">
                 <div class="row px-0">
                     <div class="col-12 resume_banner d-flex flex-column justify-content-center">
@@ -45,9 +45,15 @@
                         </label>
                     </div>
                     <div class="col-md-10 col-8 d-flex flex-column justify-content-center align-items-start">
-                        <p class="my-1">請提供大頭貼</p>
-                        <input class="form-control my-0 w-100" type="file" id="profile_pic" @@change="HeadImgChange" placeholder="輸入..." name="HeadShotImage" :disabled="!editMode">
+                        <p class="my-1 textbtncolorgreen fw-bold">【請提供大頭貼】</p><span class="textbtncolorgreen">請上傳 jpg、jpeg、png 或 webp 格式的圖片</span>
+                        <input class="form-control my-0 w-100" type="file" accept=".jpg, .jpeg, .png, .webp" id="profile_pic" @@change="HeadImgChange" placeholder="輸入..." name="HeadShotImage" :disabled="!editMode">
                     </div>
+                    <div v-if="HeadImgisUploading" class="text-center m-2">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    
                     <div class="col-12 d-flex justify-content-end">
 
                         <button type="button" @@click="toggleEditMode" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2 ">
@@ -73,74 +79,106 @@
                         <input class="form-control my-1" type="text" placeholder="輸入..." value="@Model.DepartmentName" name="DepartmentName">
                     </div>
                 </div>
-                <div class="row mt-5 resume_border p-3 m-2">
-                    <div class="d-flex flex-row justify-content-between">
-                        <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
-                        <span @@click="addLicense" class="d-flex flex-column justify-content-center align-items-lg-center">
-                            <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
-                        </span>
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <!-- 遍歷 licenses 陣列並動態生成輸入框 -->
-                            <div v-for="(license, index) in licenses" :key="index" class="col-md-2 mb-3">
-                                <div class="card p-2">
-                                    <p class="my-1 bgc fs-5">【證照 ({{ numberToChinese(index + 1) }})】</p>
-                                    <!-- 證照名稱輸入框 -->
-                                    <input class="form-control my-1" type="text" placeholder="輸入證照名稱"
-                                           v-model="license.ProfessionalLicenseName" :name="'ProfessionalLicenseName[' + index + ']'">
-                                    <p v-if="!license.valid && showValidation" class="text-danger">請輸入證照名稱，如無須提交請點選移除</p>
-                                    <!-- 檔案上傳輸入框 -->
-                                    <input type="hidden" v-model="licenses[index].ProfessionalLicenseId">
-                                    <input class="my-2" type="file" @@change="handleFileUpload($event, index)"
-                                           :name="'ProfessionalLicenseUrl[' + index + ']'">
-                                    
-                                    @* 更改按鈕 *@
-                                    <button type="button" @@click="enditLcense(index)" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">更新</button>
-                                    <!-- 刪除按鈕 -->
-                                    <button type="button" @@click="removeLicense(index)" class="btn textbtncolor btndangerbg btnbghover resume_btn bgc ">移除</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @* 確認按鈕 *@
-                    <button type="button" @@click="confirmAllLicensesUpdates" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">確認</button>
-                </div>
+                
                 <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapselicense"
                      aria-expanded="false">
                     <div class="col-12 d-flex flex-row align-items-center justify-content-center">
                         <i class=" fa-solid fa-ellipsis "></i>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mt-5 resume_border p-3 m-2">
-                <div class="col-12">
-                    <div class="d-flex flex-row justify-content-between">
-                        <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">申請科目</h2>
-                    </div>
-                    <div class="form-group">
-                        <label class="my-1 bgc fs-4" for="category">【科目類別】</label>
-                        <select v-model="selectedCategory" class="form-select" name="CourseList.ApplyCourseCategoryId">
-                            <option value="">請選擇...</option>
-                            <!-- 改為綁定 item.id -->
-                            <option v-for="(item, index) in categories" :value="item.id" :key="item.id">
-                                {{ item.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div v-if="selectedCategory" class="form-group">
-                        <label class="my-1 bgc fs-4" for="subject">【教學科目】</label>
-                        <select v-model="selectedSubcategory" class="form-select" name="CourseList.ApplySubCategoryId">
-                            <option value="">請選擇...</option>
-                            <!-- 改為綁定 item.id -->
-                            <option v-for="(item, index) in subcategories" :value="item.id" :key="item.id">
-                                {{ item.name }}
-                            </option>
-                        </select>
+                <div class="row mt-5 resume_border p-3 m-2">
+                    <div class="col-12">
+                        <div class="d-flex flex-row justify-content-between">
+                            <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">申請科目</h2>
+                        </div>
+                        <div class="form-group">
+                            <label class="my-1 bgc fs-4" for="category">【科目類別】</label>
+                            <select v-model="selectedCategory" class="form-select" name="CourseList.ApplyCourseCategoryId">
+                                <option value="">請選擇...</option>
+                                <!-- 改為綁定 item.id -->
+                                <option v-for="(item, index) in categories" :value="item.id" :key="item.id">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div v-if="selectedCategory" class="form-group">
+                            <label class="my-1 bgc fs-4" for="subject">【教學科目】</label>
+                            <select v-model="selectedSubcategory" class="form-select" name="CourseList.ApplySubCategoryId">
+                                <option value="">請選擇...</option>
+                                <!-- 改為綁定 item.id -->
+                                <option v-for="(item, index) in subcategories" :value="item.id" :key="item.id">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
+        </form>
+
+
+        <div class="container-fluid mt-5">
+        
+        <div class="row mt-5 resume_border p-3 m-2">
+            <div class="d-flex flex-row justify-content-between">
+                <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
+                <span @@click="addLicense" class="d-flex flex-column justify-content-center align-items-lg-center">
+                    <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
+                </span>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <!-- 遍歷 licenses 陣列並動態生成輸入框 -->
+                    <div v-for="(license, index) in licenses" :key="index" class="col-md-2 mb-3">
+                        <div class="card p-2">
+                            <p class="my-1 bgc fs-5">【證照 ({{ numberToChinese(index + 1) }})】</p>
+                            <!-- 證照名稱輸入框 -->
+                            <input class="form-control my-1" type="text" placeholder="輸入證照名稱"
+                                   v-model="license.ProfessionalLicenseName" :name="'ProfessionalLicenseName[' + index + ']'"
+                                   :disabled="!license.licenseEditMode">
+                            <p v-if="!license.valid && showValidation" class="textdangercolor">請輸入證照名稱，如無須提交請點選移除</p>
+
+                            <!-- 檔案上傳輸入框 -->
+                            <span class="textbtncolorgreen">請上傳 jpg、jpeg、png 或 webp 格式的圖片</span>
+                            <input type="hidden" accept=".jpg, .jpeg, .png, .webp" v-model="licenses[index].ProfessionalLicenseId">
+                            <input class="my-2" type="file" @@change="handleFileUpload($event, index)"
+                                   :name="'ProfessionalLicenseUrl[' + index + ']'" :disabled="!license.licenseEditMode">
+
+                            <!-- 放大鏡圖標 -->
+                            <i class="fa-solid fa-magnifying-glass m-2 icon_Headimg_hover"
+                               style="color: #63E6BE;" @@click="downloadFile(index)"></i>
+
+                            <!-- 編輯按鈕 -->
+                            <button type="button" @@click="toggleLicenseEditMode(index)"
+                                    class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">
+                                {{ license.licenseEditMode ? '取消' : '編輯' }}
+                            </button>
+
+                            <!-- 確認按鈕 -->
+                            <button type="button" :disabled="!license.licenseEditMode || license.isConfirmed"
+                                    @@click="enditLcense(index)"
+                                    class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">
+                                確認上傳
+                            </button>
+
+                            <!-- 刪除按鈕 -->
+                            <button type="button" @@click="removeLicense(index)"
+                                    class="btn textbtncolor btndangerbg btnbghover resume_btn bgc">
+                                移除
+                            </button>
+                            <div v-if="license.isUploading" class="text-center m-2">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-check m-2" style="color: #ff5f5f;" v-if="license.uploadStatus === true"><span class="textdangercolor ">證照上傳成功</span></i>
+                            <i class="fa-solid fa-xmark m-2" style="color: #ff5f5f;" v-if="license.uploadStatus === false"><span class="textdangercolor">請填寫證照名稱並上傳證照圖檔，如無需求請點選移除</span></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
             <div class="row mt-5 resume_border p-3 m-2">
                 <div class="d-flex flex-row justify-content-between">
                     <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">工作經歷</h2>
@@ -157,50 +195,98 @@
                                     <input type="hidden" v-model="works[index].workExperienceId">
                                     <!-- 工作名稱輸入框 -->
                                     <input class="form-control my-2" type="text" placeholder="輸入工作名稱"
-                                           v-model="work.workName" :name="'WorkBackground[' + index + '].WorkName'">
-
+                                           v-model="work.workName" :disabled="!work.workEditMode" :name="'WorkBackground[' + index + '].WorkName'">
+                                    <span class="bgc fs-6 m-0 px-2 textbtncolorgreen">請上傳文字檔，簡述您的工作經歷</span><span class="filename ms-1 textbtncolorgreen">(.docx&nbsp;.doc&nbsp;.txt)</span>
                                     <!-- 檔案上傳輸入框 -->
-                                    <input class="form-control my-2" type="file" @@change="handleWorkFileUpload($event, index)"
+                                    <input class="form-control my-2" :disabled="!work.workEditMode" accept=".docx, .txt .doc" type="file" @@change="handleWorkFileUpload($event, index)"
                                            :name="'WorkBackground[' + index + '].WorkExperienceFile'">
-
+                                    
                                     <p class="my-1 bgc fs-4">【年資】</p>
 
                                     <!-- 開始日期 -->
-                                    <input type="date" placeholder="開始年份" class="form-control my-2"
+                                    <input type="date" placeholder="開始年份" :disabled="!work.workEditMode" class="form-control my-2"
                                            v-model="work.workStartDate" :min="'1940-01-01'" :max="'2099-12-31'"
                                            :name="'WorkBackground[' + index + '].WorkStartDate'">
 
                                     <!-- 結束日期 -->
-                                    <input type="date" placeholder="結束年份" class="form-control my-2"
+                                    <input type="date" placeholder="結束年份" :disabled="!work.workEditMode" class="form-control my-2"
                                            v-model="work.workEndDate" :min="'1940-01-01'" :max="'2099-12-31'"
                                            :name="'WorkBackground[' + index + '].WorkEndDate'">
-                                    @* 更改按鈕 *@
-                                    <button type="button" @@click="editWorkExp(index)" class="btn textbtncolor btnbg btnbghover resume_btn bgc">更新</button>
+                                    <!-- 編輯按鈕 -->
+                                    <button type="button" @@click="toggleWorkEditMode(index)"
+                                            class="btn textbtncolor btnbg btnbghover resume_btn bgc mx-2">
+                                        {{ work.workEditMode ? '取消' : '編輯' }}
+                                    </button>
+
+                                    @* 確認按鈕 *@
+                                    <button type="button" @@click="editWorkExp(index)" class="btn textbtncolor btnbg btnbghover resume_btn bgc mx-2"
+                                            :disabled="!work.workEditMode || work.isConfirmed">
+                                        確認上傳
+                                    </button>
                                     <!-- 移除按鈕 -->
-                                    <button type="button" class="btn textbtncolor btndangerbg btnbghover resume_btn bgc ms-2" @@click="removeWorkExperience(index)">移除</button>
+                                    <button type="button" class="btn textbtncolor btndangerbg btnbghover resume_btn bgc" @@click="removeWorkExperience(index)">移除</button>
+                                    <i class="fa-solid fa-check m-2" style="color: #ff5f5f;" v-if="work.uploadWorkStatus === true"><span class="textdangercolor ">工作經歷上傳成功</span></i>
+                                    <i class="fa-solid fa-check m-2" style="color: #ff5f5f;" v-if="work.uploadWorkStatus === false"><span class="textdangercolor ">請填寫所有工作經歷的欄位，如無工作經驗請點選移除</span></i>
+                                </div>
+                                <div v-if="work.isWorkUploading" class="text-center m-2">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
                                 </div>
                             </div>
                             
                         </div>
                     </div>
                 </div>
-                @* 確認按鈕 *@
-                <button type="button" @@click="confirmAllWorksUpdates" class="btn textbtncolor btnbg btnbghover resume_btn bgc mb-2">確認</button>
 
                 <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
                     <div class="col-12 d-flex flex-row align-items-center justify-content-center">
                         <i class=" fa-solid fa-ellipsis "></i>
                     </div>
                 </div>
-            </div>
-        </form>
-            <div class="row mt-3 ">
-                <div class="my-3 d-flex flex-row justify-content-end">
-                    <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
-                <button type="button" :disabled="!formSubmitted" @@click="validateForm" class="btn resume_border resume_btn m-2">下一步</button>
+                <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title bgc " id="validationModalLabel">表單提交</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body textdangercolor text-center">
+                                {{validationMessage}}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn textbtncolor btndangerbg btnbghover resume_btn bgc ms-2" data-bs-dismiss="modal">關閉</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="imagePreviewLabel">證照預覽</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- 圖片區域 -->
+                                <img id="modalImage" src="" alt="證照預覽" class="img-fluid" style="display:none;">
+                                <!-- 訊息區域 -->
+                                <p id="modalMessage" class="text-danger"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+            <div class="row mt-3 ">
+                <div class="my-3 d-flex flex-row justify-content-end">
+                    <button type="button" class="btn resume_border resume_btn m-2 ">取消</button>
+                <button type="button" :disabled="!confirmAllLicensesUpdates()" @@click="validateForm" class="btn resume_border resume_btn m-2">下一步</button>
+                </div>
+            </div>
+   </div>
+
+    
     
 
     @section endJS

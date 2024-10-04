@@ -109,21 +109,15 @@
                             教師系統
                         </a>
                         <ul class="dropdown-menu tutor-dropdown-menu" aria-labelledby="tutorSystemDropdown">
-                            <li><a class="dropdown-item tutor-dropdown-item" href="#">課程被預約明細</a></li>
+                            <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="AppointmentDetails">課程被預約明細</a></li>
                             <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="TutorData">教師資料</a></li>
                             <li><a class="dropdown-item tutor-dropdown-item" asp-controller="Tutor" asp-action="PublishCourse">上架課程</a></li>
                         </ul>
                     </li>
                     <!--教師系統子選單結束-->
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Member" asp-action="WatchList">關注列表</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Account" asp-action="Logout">登出</a>
-                    </li>
                     <li class="nav-item shopping-bag">
                         <a class="nav-link" asp-controller="ShoppingCart" asp-action="Index">
-                            <img src="https://fakeimg.pl/20x20/200" alt="">購物車
+                            <i class="fa-solid fa-cart-shopping"></i>
                         </a>
                     </li>
                     <li class="nav-item message-item">
@@ -131,21 +125,28 @@
                             <i class="fa-regular fa-comments"></i>
                         </a>
                     </li>
+                   
+
                     <!--會員系統子選單開始-->
                     <li class="nav-item dropdown user-item member-dropdown">
                         <a class="nav-link dropdown-toggle member-link" href="#" id="memberMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://fakeimg.pl/20x20/200" alt="">
+                            <i class="fa-solid fa-user"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end member-dropdown-menu" aria-labelledby="memberMenu">
                             <li><a class="dropdown-item member-dropdown-item" asp-controller="Member" asp-action="MemberData">會員資料</a></li>
                             <li><a class="dropdown-item member-dropdown-item" asp-controller="Member" asp-action="Index">課程預約明細</a></li>
                             <li><a class="dropdown-item member-dropdown-item" asp-controller="Member" asp-action="MemberTransaction">交易明細</a></li>
+                            <li><a class="dropdown-item member-dropdown-item" asp-controller="Member" asp-action="WatchList">關注列表</a></li>
                         </ul>
                     </li>
                     <!--會員系統子選單結束-->
                     <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Logout">登出</a>
+                    </li>
+                    <li class="nav-item">
                         <span class="nav-link" id="navbar-username">Hi! @User.Identity.Name</span>
                     </li>
+
                 }
                 else
                 {
