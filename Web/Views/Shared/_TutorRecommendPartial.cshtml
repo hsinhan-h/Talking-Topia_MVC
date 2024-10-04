@@ -1,6 +1,6 @@
 ﻿@model TutorRecomCardList
 
-<div class="lh-tutor-card py-3 px-4 position-relative TRMC" data-courseid="@Model.CourseId">
+<div class="lh-tutor-card py-3 px-4 position-relative " data-courseid="@Model.CourseId">
     <div class="lh-tutor-card__header mx-auto d-flex flex-column align-items-center  mx-auto">
         <div class="lh-tutor-images__head position-relative mt-1 mb-2">
             <img class="tutor-headshot rounded-circle"
@@ -39,11 +39,9 @@
             </div>
         </div>
         <div class="contact-btns-wrapper d-flex gap-1">
-            <button type="button" class="lh-tutor-card__book-btn col-8">
+            <button type="button" class="lh-tutor-card__book-btn col-12"
+                    onclick="window.location.href='@Url.Action("CourseMainPage", "Course", new { courseId = Model.CourseId })'">
                 預約體驗
-            </button>
-            <button type="button" class="lh-tutor-card__contact-tutor-btn col-4">
-                聯繫老師
             </button>
         </div>
     </div>

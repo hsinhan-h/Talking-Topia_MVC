@@ -440,9 +440,7 @@ namespace Web.Services
                     CourseVideo = course.VideoUrl,
                     CourseVideoThumbnail = course.ThumbnailUrl
                 })
-                .FirstOrDefaultAsync();          
-                   
-          
+                .FirstOrDefaultAsync();         
             if (courseMainInfo == null)
                 return null; // 如果找不到對應的課程資料，返回 null
 
@@ -518,12 +516,6 @@ namespace Web.Services
                 CourseRatings = averageRating,
                 CourseReviews = reviews.Count,
                 FinishedCoursesTotal = finishedCourses, // 假設值，需從其他表查詢
-                ReviewCardList = reviews.Select(r => new ReviewViewModel
-                {
-                    ReviewerName = r.ReviewerName,
-                    ReviewDate = r.ReviewDate,
-                    ReviewContent = r.ReviewContent,
-                }).ToList(),
                 ExperienceList = tutorExperiences.Select(e => new TutorExperience
                 {
                     StartYear = e.WorkStartDate.Year.ToString(),
