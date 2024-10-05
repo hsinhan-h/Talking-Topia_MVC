@@ -68,10 +68,10 @@ namespace Web.Services
                                      join proLi in _repository.GetAll<Entities.ProfessionalLicense>()
                                      on memb.MemberId equals proLi.MemberId into licenseGroup
                                      from proLi in licenseGroup.DefaultIfEmpty()
-                                     where memb.MemberId == memberId
+                                     where memb.MemberId == memberId && proLi != null
                                      select new LicenseData
                                      {
-                                         ProfessionalLicenseName = proLi.ProfessionalLicenseName ?? "Default License"
+                                         ProfessionalLicenseName = proLi.ProfessionalLicenseName 
                                      }).ToListAsync();
 
                 var tutorData = new TutorDataViewModel
