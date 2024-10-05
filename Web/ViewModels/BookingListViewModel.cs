@@ -11,8 +11,8 @@ namespace Web.ViewModels
     public class CouresImagesVM
     {
         public int CourseImageId { get; set; }
-        public int CourseId {  get; set; }
-        public string ImageUrl {  get; set; }
+        public int CourseId { get; set; }
+        public string ImageUrl { get; set; }
     }
     public class BookingViewModel
     {
@@ -44,7 +44,7 @@ namespace Web.ViewModels
         /// 課程圖片
         /// </summary>
         //public string CourseImageId { get; set; }
-        public List<CouresImagesVM> CouresImagesList {  get; set; }
+        public List<CouresImagesVM> CouresImagesList { get; set; }
 
         /// <summary>
         /// 上架課程ID
@@ -90,6 +90,8 @@ namespace Web.ViewModels
         public string CourseLength { get; set; }
         [DisplayName("學員名稱")]
         public string MemberName { get; set; }
+        public int SubjectId { get; set; }
+        public int CategoryId { get; set; }
 
     }
 }

@@ -53,7 +53,7 @@ namespace ApplicationCore.Services
             try
             {
                 var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
-                var totalPrice = shoppingCartItem.Sum(item => item.Quantity * item.UnitPrice);
+                var totalPrice = shoppingCartItem.Sum(item => item.TotalPrice);
                 var member = await _memberRepository.FirstOrDefaultAsync(m => m.MemberId == memberId);
 
                 // 成功或失敗都應先寫入資料庫，由訂單狀態去判定成功與否就好
