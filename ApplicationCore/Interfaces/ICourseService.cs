@@ -11,8 +11,6 @@ namespace ApplicationCore.Interfaces
     {
         public bool IsCourse(int courseId);
 
-        public int CreateReviews(int studentId, int courseId, byte NewReviewRating, string NewReviewContent);
-
         public int GetReviewRatingApiService(int courseId);
     }
 }

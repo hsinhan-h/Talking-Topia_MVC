@@ -21,6 +21,7 @@ const call = createApp({
     data() {
         return {
             rating: null,
+            newReviewContent:'',
             fetchedRating: null ,
             courseId: courseId,      // 從 DOM 中取得的課程 ID
             isFollowing: false,  // 初始關注狀態，從後端來決定是否已關注
@@ -29,7 +30,9 @@ const call = createApp({
             courseReviews: [],        // 用來儲存課程評論列表
             selectedRatings: [],
             tutorName: [],
-            bookedLessons :[]
+            bookedLessons: [],
+            hasCommented: false,
+            hasTakenClass:false
         }
     },
     computed: {
@@ -64,23 +67,54 @@ const call = createApp({
             const ratingCount = this.courseReviews.filter(review => review.CommentRating === rating).length;
             return ((ratingCount / totalReviews) * 100).toFixed(1);
         },
+
         submitRating() {
-            // 構建 FormData 並提交 rating 資料
-            let formData = new FormData();
-            formData.append('Rating', this.rating);
-            // 使用 fetch 提交資料到後端控制器
-            fetch('/Course/CreateCourseReview', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('成功:', data);
-                    // 在這裡可以處理提交成功後的邏輯
+            checkLoginStatus(() => {
+                // 檢查是否已經上課
+                if (!this.hasTakenClass) {
+                    toastr.error('您尚未上過課程，無法提交評論');
+                    return; // 阻止提交
+                }
+
+                // 檢查是否已經評論過
+                if (this.hasCommented) {
+                    toastr.warning('您已經提交過評論，無法再次提交');
+                    return; // 阻止提交
+                }
+                if (this.rating === null) {
+                    toastr.warning('您尚未為課程評分!!');
+                    return; // 阻止提交
+                }
+                if (this.newReviewContent === '') {
+                    toastr.warning('您尚未填寫評論內容!!');
+                    return; // 阻止提交
+                }
+
+                // 構建 FormData 並提交 rating 資料
+                let formData = new FormData();
+                formData.append('Rating', this.rating);
+                formData.append('NewReviewContent', this.newReviewContent);
+                formData.append('CourseId', courseId);
+                formData.append('MemberId', memberId);
+
+                // 使用 fetch 提交資料到後端控制器
+                fetch('/api/CourseReview/CreateCourseReview', {
+                    method: 'POST',
+                    body: formData
                 })
-                .catch(error => {
-                    console.error('錯誤:', error);
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        toastr.success('評論提交成功！');
+                        this.rating = null;
+                        this.newReviewContent = '';
+                        this.hasCommented = true;
+                        this.fetchCourseReviews();
+                    })
+                    .catch(error => {
+                        toastr.error('提交時發生錯誤，請稍後再試');
+                        console.error('錯誤:', error);
+                    });
+            });
         },
         fetchRatingFromServer() {
             // 從後端獲取 Rating 資料
@@ -115,7 +149,17 @@ const call = createApp({
                     console.error('錯誤:', error);
                 });
         },
-
+        fetchCommentCondition() {
+            fetch(`/api/CourseReview/ReviewRules?courseId=${this.courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.hasCommented = data.HasCommented,
+                    this.hasTakenClass = data.HasTakenClass
+                })
+                .catch(error => {
+                    console.error('錯誤:', error);
+                });
+        },
         // 關注功能
         follow() {
             checkLoginStatus(() => {
@@ -133,9 +177,7 @@ const call = createApp({
                     .then(data => {
                         if (data.success) {
                             this.isFollowing = true;
-                            alert(data.message);
-                        } else {
-                            alert(data.message);
+                            toastr.success(data.message);
                         }
                     })
                     .catch(error => console.error('Error:', error));
@@ -157,9 +199,7 @@ const call = createApp({
                 .then(data => {
                     if (data.success) {
                         this.isFollowing = false;
-                        alert(data.message);
-                    } else {
-                        alert(data.message);
+                        toastr.success(data.message);
                     }
                 })
                 .catch(error => console.error('Error:', error));
@@ -169,7 +209,8 @@ const call = createApp({
         // 在 Vue 應用掛載後自動呼叫 fetchRatingFromServer 來獲取資料
         this.fetchRatingFromServer();
         this.fetchFollowStatusFromServer();
-        this.fetchCourseReviews(); 
+        this.fetchCourseReviews();
+        this.fetchCommentCondition();
     }
 
 })
