@@ -129,13 +129,6 @@
     border: 0;
 }
 
-.lh-tutor-card__contact-tutor-btn {
-    background-color: #fff;
-    color: var(--theme-color);
-    border: 1px solid var(--theme-color);
-}
-
-
 .tutor-recommend-carousel .slick-track {
     display: flex;
     gap: 18px;

@@ -2,6 +2,8 @@
 {
     public class CourseApprovalDto
     {
+        public int CourseId { get; set; }
+        
         /// <summary>
         /// 教師姓名
         /// </summary>

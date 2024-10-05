@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Web.Dtos;
 using Web.Services;
 using static Web.ViewModels.TutorResumeViewModel;
 
@@ -22,7 +23,8 @@ namespace Web.Controllers.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateResumeLicenses([FromForm] TutorResumeViewModel model)
+
+        public async Task<IActionResult> UpdateResumeLicenses([FromForm] ResumeDto model)
         {
             try
             {
@@ -59,12 +61,12 @@ namespace Web.Controllers.Api
                 if (licenseId == 0)
                 {
                     // 在資料庫中插入新證照，並取得新生成的 ProfessionalLicenseId
-                    var newLicenseId = await _resumeDataService.CreateNewLicense(model.memberId, licenseNames.First(), professionalLicenseUrls);
+                    var newLicenseId = await _resumeDataService.CreateNewLicense(model.MemberId, licenseNames.First(), professionalLicenseUrls);
                     return Ok(new { success = true, ProfessionalLicenseId = newLicenseId });
                 }
 
                 // 否則更新現有的證照條目
-                await _resumeDataService.ChangeResumeLicenses(model.memberId, licenseIds, licenseNames, professionalLicenseUrls);
+                await _resumeDataService.ChangeResumeLicenses(model.MemberId, licenseIds, licenseNames, professionalLicenseUrls);
 
                 return Ok(new { success = true });
             }
@@ -77,11 +79,11 @@ namespace Web.Controllers.Api
 
 
         [HttpPost]
-        public async Task<IActionResult> DeleteLicense([FromBody] TutorResumeViewModel request)
+        public async Task<IActionResult> DeleteLicense([FromBody] ResumeDto request)
         {
 
             // 調用服務層來刪除證照
-            var result = await _resumeDataService.DeleteLicensesAsync(request.memberId, request.ProfessionalLicenseId);
+            var result = await _resumeDataService.DeleteLicensesAsync(request.MemberId, request.ProfessionalLicenseId);
 
             if (!result.Success)
             {
@@ -93,17 +95,16 @@ namespace Web.Controllers.Api
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateLicense([FromBody] TutorResumeViewModel request)
+        public async Task<IActionResult> CreateLicense([FromBody] ResumeDto request)
         {
-
             try
             {
                 // 創建一個新的 ProfessionalLicense 並儲存到資料庫
                 var newLicense = new ProfessionalLicense
                 {
-                    MemberId = request.memberId,
-                    ProfessionalLicenseName = string.Empty, // 初始化為空，稍後更新
-                    ProfessionalLicenseUrl = string.Empty,  // 初始化為空，稍後更新
+                    MemberId = request.MemberId,
+                    ProfessionalLicenseName = string.Empty, 
+                    ProfessionalLicenseUrl = string.Empty,  
                     Cdate = DateTime.Now,
                     Udate = null
                 };
@@ -121,7 +122,7 @@ namespace Web.Controllers.Api
             }
         }
         [HttpPost]
-        public async Task<IActionResult> CreateWorkExperience([FromBody] TutorResumeViewModel request)
+        public async Task<IActionResult> CreateWorkExperience([FromBody] ResumeDto request)
         {
 
             try
@@ -129,7 +130,7 @@ namespace Web.Controllers.Api
                 // 創建一個新的 workexpericen 並儲存到資料庫
                 var newWexp = new WorkExperience
                 {
-                    MemberId = request.memberId,
+                    MemberId = request.MemberId,
                     WorkName = string.Empty,
                     WorkStartDate = new DateOnly(2024, 1, 1), // 初始化為空，稍後更新
                     WorkEndDate = new DateOnly(2024, 1, 1),  // 初始化為空，稍後更新
@@ -150,7 +151,7 @@ namespace Web.Controllers.Api
             }
         }
         [HttpPost]
-        public async Task<IActionResult> DeleteWorkExp([FromBody] TutorResumeViewModel request)
+        public async Task<IActionResult> DeleteWorkExp([FromBody] ResumeDto request)
         {
             var workExperienceIds = request.WorkBackground
         .Where(wb => wb.WorkExperienceId.HasValue)  // 只選擇有 WorkExperienceId 的項目
@@ -163,7 +164,7 @@ namespace Web.Controllers.Api
             }
 
             // 呼叫 Service 方法進行刪除
-            var result = await _resumeDataService.DeleteWorkExpAsync(request.memberId, workExperienceIds);
+            var result = await _resumeDataService.DeleteWorkExpAsync(request.MemberId, workExperienceIds);
 
             if (!result.Success)
             {
@@ -173,62 +174,75 @@ namespace Web.Controllers.Api
             return Ok(new { success = true, message = result.Message });
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateResumeWorkExp([FromForm] TutorResumeViewModel model)
+        [HttpPost]
+public async Task<IActionResult> UpdateResumeWorkExp([FromForm] ResumeDto model)
+{
+    try
+    {
+        // 獲取上傳的文件（如果有多個文件）
+        var files = Request.Form.Files;
+        var fileUrls = new List<string>();
+
+        // 遍歷每個文件，逐一上傳
+        foreach (var file in files)
         {
-            try
+            if (file != null && file.Length > 0)
             {
-                // 獲取上傳的文件（如果有多個文件）
-                var files = Request.Form.Files;
-                var fileUrls = new List<string>();
-
-                // 遍歷每個文件，逐一上傳
-                foreach (var file in files)
-                {
-                    if (file != null && file.Length > 0)
-                    {
-                        // 使用 Cloudinary 上傳，並取得返回的 URL
-                        var fileUrl = await _cloudinaryService.UploadFileAsync(file);
-                        fileUrls.Add(fileUrl);
-                    }
-                }
-
-                // 如果沒有上傳新文件，則使用原本的 URL 列表
-                if (!fileUrls.Any())
-                {
-                    fileUrls = model.WorkBackground.Select(w => w.WorkExperienceFile).ToList();
-                }
-
-                // 確保 WorkBackground 有數據
-                if (model.WorkBackground != null && model.WorkBackground.Any())
-                {
-                    // 遍歷 WorkBackground 列表，逐一處理每個工作經驗
-                    foreach (var workExperience in model.WorkBackground)
-                    {
-                        var newWorkExperienceId = await _resumeDataService.ChangeResumeWorkExp(
-                            model.memberId,
-                            new List<ResumeWorkExp> { workExperience },  // 傳遞單個工作經驗
-                            fileUrls
-                        );
-
-                        // 返回新生成的 WorkExperienceId，如果是新增
-                        return Ok(new { success = true, workExperienceId = newWorkExperienceId });
-                    }
-                }
-                else
-                {
-                    return BadRequest(new { success = false, message = "No work background data provided" });
-                }
-
-                return Ok(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                // 記錄具體的異常信息，方便調試
-                return BadRequest(new { success = false, message = ex.Message });
+                // 使用 Cloudinary 上傳，並取得返回的 URL
+                var fileUrl = await _cloudinaryService.UploadFileAsync(file);
+                fileUrls.Add(fileUrl);
             }
         }
+
+        // 如果沒有上傳新文件，則使用原本的 URL 列表
+        if (!fileUrls.Any())
+        {
+            fileUrls = model.WorkBackground.Select(w => w.WorkExperienceFile).ToList();
+        }
+
+        // 確保 WorkBackground 有數據
+        if (model.WorkBackground != null && model.WorkBackground.Any())
+        {
+            // 遍歷 WorkBackground 列表，將 DTO 轉換為實體類 ResumeWorkExp
+            foreach (var workExperienceDto in model.WorkBackground)
+            {
+                // 將 DTO 轉換為實體
+                var workExperience = new ResumeWorkExp
+                {
+                    WorkExperienceId = workExperienceDto.WorkExperienceId,
+                    WorkName = workExperienceDto.WorkName,
+                    WorkStartDate = workExperienceDto.WorkStartDate,
+                    WorkEndDate = workExperienceDto.WorkEndDate,
+                    WorkExperienceFile = workExperienceDto.WorkExperienceFile
+                };
+
+                // 調用服務層，傳遞轉換後的實體
+                var newWorkExperienceId = await _resumeDataService.ChangeResumeWorkExp(
+                    model.MemberId,
+                    new List<ResumeWorkExp> { workExperience },  // 傳遞單個工作經驗
+                    fileUrls
+                );
+
+                // 返回新生成的 WorkExperienceId（如果是新增）
+                return Ok(new { success = true, workExperienceId = newWorkExperienceId });
+            }
+        }
+        else
+        {
+            return BadRequest(new { success = false, message = "No work background data provided" });
+        }
+
+        return Ok(new { success = true });
+    }
+    catch (Exception ex)
+    {
+        // 記錄具體的異常信息，方便調試
+        return BadRequest(new { success = false, message = ex.Message });
+    }
+}
+
         [HttpPost]
-        public async Task<IActionResult> UpdateHeadShotImage([FromForm] TutorResumeViewModel model)
+        public async Task<IActionResult> UpdateHeadShotImage([FromForm] ResumeDto model)
         {
             try
             {
@@ -242,7 +256,7 @@ namespace Web.Controllers.Api
                     fileUrl = await _cloudinaryService.UploadImageAsync(file);
                 }
 
-                await _resumeDataService.ChangeHeadShotImage(model.memberId, fileUrl);
+                await _resumeDataService.ChangeHeadShotImage(model.MemberId, fileUrl);
 
                 return Ok(new { success = true, fileUrl });
             }
@@ -269,9 +283,9 @@ namespace Web.Controllers.Api
             }
         }
         [HttpPost]
-        public async Task<IActionResult> DownloadImg([FromBody] TutorResumeViewModel model)
+        public async Task<IActionResult> DownloadImg([FromBody] ResumeDto model)
         {
-            var professionalLicense = await _resumeDataService.GetProfessionalLicenseById(model.memberId, model.ProlLicenseId);
+            var professionalLicense = await _resumeDataService.GetProfessionalLicenseById(model.MemberId, model.ProlLicenseId);
 
             if (professionalLicense == null)
             {

@@ -145,12 +145,21 @@
                                     }
                                 </ul>
                                 <h4>經歷</h4>
-                                <ul>
-                                    @foreach (var work in Model.WorkBackground)
-                                    {
-                                        <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
-                                    }
-                                </ul>
+                                @if (Model.WorkBackground != null && Model.WorkBackground.Any())
+                                {
+                                    <ul>
+                                        @foreach (var work in Model.WorkBackground)
+                                        {
+                                            <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul>
+                                        <li>目前沒有工作經歷，請提供相關工作經歷。</li>
+                                    </ul>
+                                }
                             </div>
 
                             <h4>證照資訊</h4>
@@ -229,13 +238,19 @@
             </div>
             <div class="modal-body">
                 <section class="lh-backstage-lh-backstage-tutor-data">
-                    @*當lisence關聯修好後再測試*@
-                    <ul>
-                        @foreach (var lisence in Model.License)
-                        {
-                            <li>證照名稱：@lisence.ProfessionalLicenseName</li>
-                        }
-                    </ul>
+                    @if (Model.License != null && Model.License.Any())
+                    {
+                        <ul>
+                            @foreach (var license in Model.License)
+                            {
+                                <li>證照名稱：@license.ProfessionalLicenseName</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>目前沒有證照，請提供相關證照。</p>
+                    }
                 </section>
             </div>
             <div class="modal-footer">
