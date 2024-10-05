@@ -221,6 +221,7 @@ namespace Web.Controllers
             var model = await _bookingService.GetPublishCourseList(memberId);
             ViewData["HistoryList"] = await _bookingService.GetPublishCourseHistoryList(memberId);
             ViewData["CourseCategoryList"] = await _courseCategoryService.GetCourseCategoryListAsync();
+            ViewBag.IsTutor = _memberService.GetIsTutor(memberId);
 
             return View(model);
         }

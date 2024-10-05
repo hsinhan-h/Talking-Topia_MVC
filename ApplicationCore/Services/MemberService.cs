@@ -69,6 +69,10 @@ namespace ApplicationCore.Services
             
         }
 
-
+        public bool GetIsTutor(int memberId)
+        {
+            var result =  _memberRepository.FirstOrDefault(x => x.MemberId == memberId).IsTutor;
+            return result;
+        }
     }
 }

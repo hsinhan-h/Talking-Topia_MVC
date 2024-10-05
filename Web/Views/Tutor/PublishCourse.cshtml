@@ -27,14 +27,19 @@
                     <div class="container tab-pane fade show active"
                          id="lh-backstage-course-detail">
                         <div class="lh-backstage-transaction-table position-relative">
-                            <button class="btn lh-backstage-submit-btn mt-3 li-backstage-publish-btn"
+                            @{
+                                if(ViewBag.IsTutor == true)
+                                {
+                                    <button class="btn lh-backstage-submit-btn mt-3 li-backstage-publish-btn"
                                     data-bs-toggle="modal"
                                     data-bs-target="#lh-backstage-tutor-data-add">
                                 上架課程
-                            </button>
+                                    </button>
+                                }
+                            }
                             <br />
                             <table class="lh-backstage-transaction-detail col-12 mt-5"
-                                   border="1">
+                            border="1">
                                 <thead>
                                     <tr>
                                         <td>更新日期</td>
@@ -42,7 +47,10 @@
                                         <td>課程內容</td>
                                         <td>25分鐘</td>
                                         <td>50分鐘</td>
-                                        <td>編輯</td>
+                                        @if (ViewBag.IsTutor == true)
+                                        {
+                                            <td>編輯</td>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody border="1">
@@ -54,13 +62,18 @@
                                             <td>@item.SubTitle</td>
                                             <td>NTD$ @item.TwentyFiveMinPriceNTD.ToString("#,###")</td>
                                             <td>NTD$ @item.FiftyMinPriceNTD.ToString("#,###")</td>
-                                            <td>
-                                                <button class="btn lh-backstage-submit-btn"
+                                            
+                                                @if (ViewBag.IsTutor == true)
+                                                {
+                                                    <td>
+                                                        <button class="btn lh-backstage-submit-btn"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#lh-backstage-tutor-data-edit" v-on:click="fetchBookingDetails(@item.CourseId)">
                                                     編輯
                                                 </button>
-                                            </td>
+                                                    </td>
+                                                }
+                                            
                                         </tr>
                                     }
                                 </tbody>
@@ -110,7 +123,13 @@
             <div class="modal-content container">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        課程明細
+                        課程明細更新 @* <label>:value="[[ bookingDetails.courseId ]]" disabled="disabled" </label> *@
+                        <input type="hidden"
+                               class="form-control"
+                               id="txtCourseIdUpdate"
+                               placeholder=""
+                               v-model="bookingDetails.courseId"
+                               :value="[[ bookingDetails.courseId ]]" disabled="disabled" >
                     </h1>
                     <button type="button"
                             class="btn-close"
@@ -127,7 +146,7 @@
                                            class="form-control"
                                            id="floatingInput1"
                                            placeholder=""
-                                           :value="[[ bookingDetails.category ]]" />
+                                           :value="[[ bookingDetails.categoryName ]]" disabled="disabled" />
                                     <label for="floatingInput1">課程分類(必填)</label>
                                 </div>
                             </div>
@@ -137,7 +156,7 @@
                                            class="form-control"
                                            id="floatingInput2"
                                            placeholder=""
-                                           :value="[[ bookingDetails.courseSubject ]]" />
+                                           :value="[[ bookingDetails.subjectName ]]" disabled="disabled" />
                                     <label for="floatingInput2">課程科目(必填)</label>
                                 </div>
                             </div>
@@ -154,12 +173,19 @@
                             </div>
                             <div class="col-12 col-md-2">
                                 <div class="form-floating">
-                                    <input type="file"
+                                    @* <input type="file"
                                            class="form-control"
                                            id="floatingInput4"
                                            aria-describedby="inputGroupFileAddon04"
                                            aria-label="Upload"
                                            value="" />
+                                    <label for="floatingInput4">請上傳一支自介影片(必填)</label> *@
+                                    <input type="text"
+                                           class="form-control"
+                                           id="floatingInput5"
+                                           placeholder=""
+                                           v-model="bookingDetails.videoUrl"
+                                           :value="[[ bookingDetails.videoUrl ]]" />
                                     <label for="floatingInput4">請上傳一支自介影片(必填)</label>
                                 </div>
                             </div>
@@ -182,7 +208,7 @@
                                            class="form-control"
                                            id="floatingInput5"
                                            placeholder=""
-                                           :value="[[ bookingDetails.title ]]" />
+                                           :value="[[ bookingDetails.title ]]" disabled="disabled" />
                                     <label for="floatingInput5">課程名稱(必填)</label>
                                 </div>
                             </div>
@@ -232,6 +258,7 @@
                                            class="form-control"
                                            id="floatingInput8"
                                            placeholder=""
+                                           v-model="bookingDetails.twentyFiveMinPriceNTD"
                                            :value="[[ bookingDetails.twentyFiveMinPriceNTD ]]" />
                                     <label for="floatingInput8">金額(台幣/25分鐘/堂)(必填)</label>
                                 </div>
@@ -242,6 +269,7 @@
                                            class="form-control"
                                            id="floatingInput9"
                                            placeholder=""
+                                           v-model="bookingDetails.fiftyMinPriceNTD"
                                            :value="[[ bookingDetails.fiftyMinPriceNTD ]]" />
                                     <label for="floatingInput9">金額(台幣/50分鐘/堂)(必填)</label>
                                 </div>
@@ -252,8 +280,8 @@
                 <div class="modal-footer">
                     <button type="button"
                             class="btn btn-secondary lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        儲存
+                            data-bs-dismiss="modal" v-on:click="submitDataUpdate">
+                        更新
                     </button>
                 </div>
             </div>
@@ -391,7 +419,7 @@
                             <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <div id="editor3" class="col-12">
-                                        <p style="color: #999"></p>
+                                        <p style="color: #999">請輸入詳細課程介紹</p>
                                     </div>
                                 </div>
                             </div>
@@ -478,6 +506,9 @@
                     txtFiftyMinPriceNTD: '',
                     CouresImagesList: [],
 
+                    //更新欄位
+                    CourseIdUpdate: '',
+
 
                     selectedCourseCategoryId: null, // 儲存下拉的 CourseCategoryId
                     subjects: [], // 儲存 API 回傳的科目列表
@@ -501,7 +532,7 @@
                             console.error("Error fetching booking details:", error);
                         });
                 },
-                // 存檔
+                // 存檔(新增)
                 submitData() {
 
                     axios.post('/api/PublishCourseApi/SaveToCouresData', {
@@ -514,6 +545,35 @@
                         TwentyFiveMinPriceNTD: this.txtTwentyFiveMinPriceNTD,
                         FiftyMinPriceNTD: this.txtFiftyMinPriceNTD,
                         CouresImagesList: this.imagePaths,
+                    })
+                        .then(response => {
+                            console.log('資料成功傳送', response);
+                            alert('存檔成功：' + response.data);
+                            window.location.reload();  // 完成後重整頁面
+                        })
+                        .catch(error => {
+                            console.error('傳送失敗', error);
+                            if (error.response && error.response.status === 400) {
+                                alert('錯誤：' + error.response.data);
+                            } else {
+                                alert('發生錯誤，請稍後再試。');
+                            }
+                        });
+                },
+                // 存檔(更新)
+                submitDataUpdate() {
+                    // console.log("submitDataUpdate");
+                    // console.log(this.bookingDetails.courseId);
+
+                    axios.post('/api/PublishCourseApi/SaveToCouresDataUpdate', {
+                        CategoryId: this.bookingDetails.courseId,
+                        ThumbnailUrl: this.imagePath,
+                        VideoUrl: this.bookingDetails.videoUrl,
+                        Title: this.txtTitle,
+                        SubTitle: this.txtSubTitle,
+                        TwentyFiveMinPriceNTD: this.bookingDetails.twentyFiveMinPriceNTD,
+                        FiftyMinPriceNTD: this.bookingDetails.fiftyMinPriceNTD,
+                        // CouresImagesList: this.imagePaths,
                     })
                         .then(response => {
                             console.log('資料成功傳送', response);

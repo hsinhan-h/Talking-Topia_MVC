@@ -12,5 +12,6 @@ namespace ApplicationCore.Interfaces
         public bool IsWatched(int memberId, int courseId);
         public int AddWatchList(int memberId, int courseId);
         public bool DeleteWatchList(int memberId, int courseId);
+        public bool GetIsTutor(int memberId);
     }
 }
