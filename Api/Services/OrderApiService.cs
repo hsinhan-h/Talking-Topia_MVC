@@ -34,25 +34,24 @@ namespace Api.Services
                 var member = await _memberRepository.GetByIdAsync(order.MemberId);
                 var orderDetails = await _orderDetailRepository.ListAsync(od => od.OrderId == order.OrderId);
                 foreach (var od in orderDetails)
-                { 
+                {
                     var course = await _courseRepository.GetByIdAsync(od.CourseId);
 
                     var discount = od.DiscountPrice ?? 0;
 
-
                     var oResult = new OrderDto
                     {
+                        OrderID = order.OrderId,
                         MerchantTradeNo = order.MerchantTradeNo,
                         TransactionDate = order.TransactionDate.ToString("yyyy-MM-dd hh:mm:ss"),
                         FullName = member.FirstName + " " + member.LastName,
                         Email = member.Email,
-                        OrderStatusId = order.OrderStatusId,
+                        OrderStatusId = order.OrderStatusId == 1 ? "已成功" : "待付款",
                         PaymentType = order.PaymentType,
                         CourseTitle = course.Title,
                         CourseType = od.CourseType == 1 ? 25 : 50,
                         Quantity = od.Quantity,
                         UnitPrice = (int)od.UnitPrice,
-                        DiscountPrice = (int)discount,
                         SubTotal = (int)od.TotalPrice,
                         TotalPrice = (int)order.TotalPrice,
                     };
@@ -64,9 +63,14 @@ namespace Api.Services
 
         public async Task<int> UpdateOrder(UpdateOrderDto request)
         {
+            if (request == null || request.OrderId <= 0 || string.IsNullOrWhiteSpace(request.OrderStatusId))
+            {
+                throw new ArgumentException("Invalid order update request.");
+            }
+
             var entity = await _orderRepository.GetByIdAsync(request.OrderId);
-            entity.MemberId = request.MemberId;
-            entity.OrderStatusId = request.OrderStatusId;
+            var orderStatusId = request.OrderStatusId.Trim() == "1" ? 1 : 0;
+            entity.OrderStatusId = (short)orderStatusId;
             var result = await _orderRepository.UpdateAsync(entity);
 
             if (result != null) return 1;
