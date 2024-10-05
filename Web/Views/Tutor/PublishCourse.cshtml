@@ -27,14 +27,19 @@
                     <div class="container tab-pane fade show active"
                          id="lh-backstage-course-detail">
                         <div class="lh-backstage-transaction-table position-relative">
-                            <button class="btn lh-backstage-submit-btn mt-3 li-backstage-publish-btn"
+                            @{
+                                if(ViewBag.IsTutor == true)
+                                {
+                                    <button class="btn lh-backstage-submit-btn mt-3 li-backstage-publish-btn"
                                     data-bs-toggle="modal"
                                     data-bs-target="#lh-backstage-tutor-data-add">
                                 上架課程
-                            </button>
+                                    </button>
+                                }
+                            }
                             <br />
                             <table class="lh-backstage-transaction-detail col-12 mt-5"
-                                   border="1">
+                            border="1">
                                 <thead>
                                     <tr>
                                         <td>更新日期</td>
@@ -42,7 +47,10 @@
                                         <td>課程內容</td>
                                         <td>25分鐘</td>
                                         <td>50分鐘</td>
-                                        <td>編輯</td>
+                                        @if (ViewBag.IsTutor == true)
+                                        {
+                                            <td>編輯</td>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody border="1">
@@ -54,13 +62,18 @@
                                             <td>@item.SubTitle</td>
                                             <td>NTD$ @item.TwentyFiveMinPriceNTD.ToString("#,###")</td>
                                             <td>NTD$ @item.FiftyMinPriceNTD.ToString("#,###")</td>
-                                            <td>
-                                                <button class="btn lh-backstage-submit-btn"
+                                            
+                                                @if (ViewBag.IsTutor == true)
+                                                {
+                                                    <td>
+                                                        <button class="btn lh-backstage-submit-btn"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#lh-backstage-tutor-data-edit" v-on:click="fetchBookingDetails(@item.CourseId)">
                                                     編輯
                                                 </button>
-                                            </td>
+                                                    </td>
+                                                }
+                                            
                                         </tr>
                                     }
                                 </tbody>
