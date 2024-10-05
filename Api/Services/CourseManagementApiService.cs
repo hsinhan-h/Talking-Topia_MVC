@@ -45,6 +45,7 @@ namespace Api.Services
 
             //只抓unApprovedCourses的images, category, subject
             var images = await _courseImageRepository.ListAsync(i => courseIds.Contains(i.CourseId));
+            var images1 = await _courseImageRepository.ListAsync();
             var categories = await _courseCategoryRepository.ListAsync(c => categoryIds.Contains(c.CourseCategoryId));
             var subjects = await _courseSubjectRepository.ListAsync(s => subjectIds.Contains(s.SubjectId));
             var tutors = await _memberRepository.ListAsync(m => memberIds.Contains(m.MemberId));
@@ -61,7 +62,8 @@ namespace Api.Services
                 from courseTutor in courseTutors.DefaultIfEmpty()
                 select new CourseApprovalDto
                 {
-                    TutorName = courseTutor.FirstName + ' ' + courseTutor.LastName,
+                    CourseId = c.CourseId,
+                    TutorName = courseTutor.FirstName + " " + courseTutor.LastName,
                     ApplyDate = c.Cdate,
                     CourseCategory = courseCategory.CategorytName,
                     CourseSubject = courseSubject.SubjectName,
@@ -74,7 +76,10 @@ namespace Api.Services
                     VideoUrl = c.VideoUrl
                 };
 
-            return courseApprovalList.ToList();
+            return courseApprovalList
+                .GroupBy(c => c.CourseId)
+                .Select(gp => gp.First())
+                .ToList();
         }
     }
 }
