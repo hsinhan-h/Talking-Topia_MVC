@@ -3,6 +3,10 @@
     public class OrderDto
     {
         /// <summary>
+        /// 訂單ID
+        /// </summary>
+        public int OrderID { get; set; }
+        /// <summary>
         /// 訂單編號
         /// </summary>
         public string MerchantTradeNo { get; set; }
@@ -21,7 +25,7 @@
         /// <summary>
         /// 訂單狀態
         /// </summary>
-        public short OrderStatusId { get; set; }
+        public string OrderStatusId { get; set; }
         /// <summary>
         /// 付款方式
         /// </summary>
@@ -42,10 +46,6 @@
         /// 課程單價
         /// </summary>
         public int UnitPrice { get; set; }
-        /// <summary>
-        /// 折扣金額
-        /// </summary>
-        public int DiscountPrice { get; set; }
         /// <summary>
         /// 小計金額
         /// </summary>
