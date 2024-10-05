@@ -29,6 +29,27 @@ namespace Api.Controllers
             }
         }
 
+        [HttpPut]
+        public async Task<ActionResult> UpdateCoursesStatus([FromBody] UpdateCoursesStatusDto dto)
+        {
+            try
+            {
+                var result = await _courseManagementApiService.UpdateCoursesStatus(dto.CourseId, dto.CourseApprove);
+
+                if (result)
+                {
+                    return Ok("更新課程審核資訊成功!");
+                }
+                else
+                {
+                    return BadRequest("更新課程審核資訊失敗!");
+                }
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
     }
 }

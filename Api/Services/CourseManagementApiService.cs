@@ -63,10 +63,10 @@ namespace Api.Services
                 select new CourseApprovalDto
                 {
                     CourseId = c.CourseId,
-                    TutorName = courseTutor.FirstName + " " + courseTutor.LastName,
+                    TutorName = courseTutor != null ? courseTutor.FirstName + " " + courseTutor.LastName : "教師名稱不存在",
                     ApplyDate = c.Cdate,
-                    CourseCategory = courseCategory.CategorytName,
-                    CourseSubject = courseSubject.SubjectName,
+                    CourseCategory = courseCategory != null ? courseCategory.CategorytName : "其他",
+                    CourseSubject = courseSubject.SubjectName != null ? courseSubject.SubjectName : "其他",
                     CourseTitle = c.Title,
                     TwentyFiveMinUnitPrice = c.TwentyFiveMinUnitPrice,
                     FiftyMinUnitPrice = c.FiftyMinUnitPrice,
@@ -80,6 +80,21 @@ namespace Api.Services
                 .GroupBy(c => c.CourseId)
                 .Select(gp => gp.First())
                 .ToList();
+        }
+
+        public async Task<bool> UpdateCoursesStatus(int courseId, bool courseApprove)
+        {
+            var course =  await _courseRepository.GetByIdAsync(courseId);
+            
+            if ((course == null))
+            {
+                return false;
+            }
+
+            course.CoursesStatus = courseApprove ? (short)1 : (short)2; //如果審核通過, 將CourseStatus設為1, 反之設為2
+
+            _courseRepository.Update(course);
+            return true;
         }
     }
 }
