@@ -32,6 +32,11 @@
     {
       "library": "lodash.js@4.17.21",
       "destination": "wwwroot/lodash.js/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "quill@2.0.2",
+      "destination": "wwwroot/lib/quill"
     }
   ]
 }
