@@ -42,5 +42,13 @@ namespace Api.Controllers
             else return BadRequest("更新失敗");
         }
 
+        [HttpPut]
+        public async Task<IActionResult> DeleteBooking(DeleteBookingDto request)
+        {
+            var result = await _bookingApiService.DeleteBooking(request.BookingID);
+
+            if (result == 1) return Ok(200);
+            else return BadRequest("刪除失敗");
+        }
     }
 }

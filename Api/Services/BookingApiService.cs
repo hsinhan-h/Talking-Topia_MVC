@@ -41,6 +41,8 @@ namespace Api.Services
                     CourseTitle = course.Title,
                     TutorName = tutor.FirstName + " " + tutor.LastName,
                     StudentName = student.FirstName + " " + student.LastName,
+                    MonthCount = bookingCount["Month"],
+                    YearCount = bookingCount["Year"]
                 };
                 result.Add(bResult);
             }
@@ -48,8 +50,8 @@ namespace Api.Services
         }
         public async Task<int> UpdateBooking(UpdateBookingDto request)
         {
-            if (request == null || request.BookingID <= 0 || 
-                string.IsNullOrWhiteSpace(request.BookingDate) || 
+            if (request == null || request.BookingID <= 0 ||
+                string.IsNullOrWhiteSpace(request.BookingDate) ||
                 string.IsNullOrWhiteSpace(request.BookingTime))
             {
                 throw new ArgumentException("Invalid booking update request.");
@@ -65,7 +67,6 @@ namespace Api.Services
             if (result != null) return 1;
             else return 0;
         }
-
         public Dictionary<string, int> CalculateBookings(List<Booking> bookings)
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
@@ -80,6 +81,21 @@ namespace Api.Services
             result.Add("Year", yearCount);
 
             return result;
+        }
+
+        public async Task<int> DeleteBooking(int bookingId)
+        {
+            try
+            {
+                var booking = await _bookingRepository.FirstOrDefaultAsync(b => b.BookingId == bookingId);
+                await _bookingRepository.DeleteAsync(booking);
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
         }
     }
 }
