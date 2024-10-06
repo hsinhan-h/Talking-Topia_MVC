@@ -34,7 +34,7 @@ namespace Api.Controllers
 
             // TODO: 這裡應該驗證使用者帳號與密碼是否正確，例如從資料庫比對
             // 假設驗證通過
-            if (request.Username == "testuser" && request.Password == "password123") // 簡單範例
+            if (request.Username == "testuser@gmail.com" && request.Password == "password123")
             {
                 // 生成 JWT Token，並設定 30 分鐘有效期
                 var jwtResult = _jwtService.GenerateToken(request.Username, 30);
