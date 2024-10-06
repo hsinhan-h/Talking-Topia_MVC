@@ -57,7 +57,7 @@ namespace Web.ViewModels
         
         public List<ReviewViewModel> ReviewCardList { get; set; }
         [Display(Name = "關注狀態")]
-        public bool FollowingStatus { get; set; }
+        public bool? FollowingStatus { get; set; }
         [Display(Name = "科目Id")]
         public int SubjectId { get; set; }
         [Display(Name = "科目名稱")]
