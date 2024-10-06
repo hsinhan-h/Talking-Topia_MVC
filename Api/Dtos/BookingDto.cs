@@ -8,6 +8,7 @@
         public string CourseTitle { get; set; }
         public string TutorName { get; set; }
         public string StudentName { get; set; }
+        public string Surplus { get; set; }
         public int MonthCount { get; set; }
         public int YearCount { get; set; }
     }
