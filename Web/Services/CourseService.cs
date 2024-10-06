@@ -725,6 +725,40 @@ namespace Web.Services
 
         }
 
+        public ReviewButtonDto GetReviewInfo(int memberId, int courseId) 
+        {
+            var hasCommented = _repository.GetAll<Entities.Review>().Any(r => r.StudentId == memberId && r.CourseId == courseId);
+            var hasTakenClass = _repository.GetAll<Entities.Booking>().Any(b=>b.StudentId == memberId && b.CourseId == courseId);
+            var reviewButtonDto = new ReviewButtonDto
+            {
+                HasCommented = hasCommented,
+                HasTakenClass = hasTakenClass,
+            };
+            return (reviewButtonDto);
+        }
+
+        public void CreateReviews(int studentId, int courseId, byte NewReviewRating, string NewReviewContent)
+        {
+            try
+            {
+                var reviewEntity = new Entities.Review()
+                {
+                    StudentId = studentId,
+                    Rating = NewReviewRating,
+                    CourseId = courseId,
+                    CommentText = NewReviewContent,
+                    Cdate = DateTime.Now
+                };
+                _repository.Create<Entities.Review>(reviewEntity);
+                _repository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Review could not be created", ex);
+            }
+
+        }
+
 
 
     }

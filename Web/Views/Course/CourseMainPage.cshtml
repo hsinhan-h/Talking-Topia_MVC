@@ -10,11 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <link href="~/css/course_main_page.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/normalize.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/booking_table_modal.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/tutor_recommend.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/tutor_recommend_carousel_slider.css" rel="stylesheet" asp-append-version="true" />
+
 }
 
 
@@ -113,23 +115,22 @@
                 </div>
             </div>
             <div class="lh-tutor-comment " >
-                <form asp-action="CreateCourseReview">
-                    <div class="course-comment-generator w-100">
-                        <h3 class="my-2">對課程的感想</h3>
-                        <div class="comment-rating-stars w-100 d-flex " >
-                            <p class="rating-star-sign">留下你對此課程的評分:</p>
-                            <p-rating class="comment-rating-little-star my-1" name="rating" v-model="rating"></p-rating>
-                        </div>
-                        <div class="comment-input-section my-3 d-flex form-group">
-                            <input asp-for="CourseId" type="hidden" />
-                            <input asp-for="NewReviewContent" type="text comment-input-box w-100 my-3" class="form-control" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
-                            <input class="btn comment-submit-btn my-3" type="submit" value="送出" v-on:click="submitRating">
-                        </div>
+                <div class="course-comment-generator w-100">
+                    <h3 class="my-2">對課程的感想</h3>
+                    <div class="comment-rating-stars w-100 d-flex ">
+                        <p class="rating-star-sign">留下你對此課程的評分:</p>
+                        <p-rating class="comment-rating-little-star my-1" name="rating" v-model="rating"></p-rating>
                     </div>
-                </form>
+                    <div class="comment-input-section my-3 d-flex form-group">
+                        <input type="text" v-model="newReviewContent" class="comment-input-box my-3 col-10" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
+                        <button class="btn comment-submit-btn my-3 " @@click="submitRating">
+                            <i class="bi bi-send"></i> 送出
+                        </button>
+                    </div>
+                </div>
                 
                 <div class="tutor-rating d-flex align-content-center">
-                    <p class="comment-count ">@Model.CourseReviews 筆韓文課程評價</p>
+                    <p class="comment-count ">{{ courseReviews.length }} 筆韓文課程評價</p>
                     <div class="rating-star" >
                         <p-rating class="display-rating-star my-1" v-model="fetchedRating" readonly></p-rating>
                     </div>
@@ -152,7 +153,7 @@
                 </div>
                
                 <button type="button" class="btn more-comment" data-bs-target="#moreInfoModal" data-bs-toggle="modal">
-                    顯示全部@(Model.CourseReviews)則評論
+                    顯示全部{{ courseReviews.length }}則評論
                     <i class="fa-solid fa-chevron-down"></i>
                 </button>
             </div>
@@ -608,6 +609,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
     <script src="https://unpkg.com/@@primevue/themes/umd/aura.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="~/js/course-main-page.js" asp-append-version="true"></script>
     <script type="module" src="~/js/booking_table/booking_table_modal.js" asp-append-version="true"></script>
     <script src="~/js/tutor_recommend_carousel.js" asp-append-version="true"></script>

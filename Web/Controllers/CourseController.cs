@@ -53,28 +53,6 @@ namespace Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateCourseReview([FromForm] int CourseId,[FromForm]byte rating, [FromForm] string NewReviewContent)
-        {
-            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (memberIdClaim == null)
-            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-            int memberId = int.Parse(memberIdClaim.Value);
-            var result = await _memberService.GetMemberId(memberId);
-
-            try
-            {
-                var createReview = _icourseService.CreateReviews(memberId,CourseId, rating, NewReviewContent);
-                return RedirectToAction(nameof(CourseMainPage), new { courseId =CourseId });
-            }
-            catch (Exception ex)
-            {               
-                return Content("評論建立失敗!"); 
-            }
-        }
-
-       
-
         
 
     }
