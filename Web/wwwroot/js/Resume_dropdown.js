@@ -160,9 +160,24 @@ const appresume = createApp({
         this.loadHeadShotImage()
     },
     mounted() {
-        this.fetchBackendData();
-    },
+        //const editors = document.querySelectorAll(".editor_resume");//這裡一改成標籤的class name
+        //editors.forEach((element) => {
+        //    element.style.height = "300px"; 
+        //    new Quill(element, {
+        //        theme: 'snow',
+        //        placeholder: '輸入...',
+        //        modules: {
+        //            toolbar: [
+        //                ['bold', 'italic', 'underline'],
+        //                ['link', 'image', 'video'],
+        //                [{ 'list': 'ordered' }, { 'list': 'bullet' }]
+        //            ]
+        //        }
+        //    });
+        //});
 
+        this.fetchBackendData(); 
+    },
     methods: {
         convertData(data) {
             let result = {};

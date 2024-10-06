@@ -11,10 +11,8 @@
     <link href="~/css/layout.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/normalize.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/apply_resume.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/lib/quill/css/quill.snow.css" rel="stylesheet" asp-append-version="true" />
+@*     <link href="~/lib/quill/quill.snow.min.css" rel="stylesheet" /> *@
 }
-
-
 
 <main>
 
@@ -201,6 +199,11 @@
                                     <!-- 檔案上傳輸入框 -->
                                     <input class="form-control my-2" :disabled="!work.workEditMode" accept=".docx, .txt .doc" type="file" @@change="handleWorkFileUpload($event, index)"
                                            :name="'WorkBackground[' + index + '].WorkExperienceFile'">
+@*                                     <div class="editor_resume">
+                                        <p>Hello World!</p>
+                                        <p>Some initial <strong>bold</strong> text</p>
+                                        <p>123</p>
+                                    </div> *@
                                     
                                     <p class="my-1 bgc fs-4">【年資】</p>
 
@@ -234,6 +237,7 @@
                                         <span class="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
+
                             </div>
                             
                         </div>
@@ -287,13 +291,16 @@
             </div>
    </div>
 
+  
+
     
     
 
     @section endJS
     {
         <script src="~/lib/myvue/vue.global.min.js " asp-append-version="true"></script>
-        <script src="~/js/resume_dropdown.js" asp-append-version="true"></script>
+@*         <script src="~/lib/quill/quill.min.js"></script> *@
+        <script src="~/js/resume_dropdown.js"></script>
     }
     <script>
         let memberId = '@ViewData["MemberId"]';

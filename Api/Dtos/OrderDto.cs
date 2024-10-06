@@ -54,5 +54,13 @@
         /// 訂單總額
         /// </summary>
         public int TotalPrice { get; set; }
+        /// <summary>
+        /// 本月訂單數量
+        /// </summary>
+        public int MonthCount { get; set; }
+        /// <summary>
+        /// 年度訂單數量
+        /// </summary>
+        public int YearCount { get; set; }
     }
 }

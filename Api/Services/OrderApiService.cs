@@ -27,6 +27,8 @@ namespace Api.Services
             // 整張表撈出來
             var orders = (await _orderRepository.ListAsync());
 
+            var orderCount = CalculateOrders(orders);
+
             var result = new List<OrderDto>();
 
             foreach (var order in orders)
@@ -54,6 +56,8 @@ namespace Api.Services
                         UnitPrice = (int)od.UnitPrice,
                         SubTotal = (int)od.TotalPrice,
                         TotalPrice = (int)order.TotalPrice,
+                        MonthCount = orderCount["Month"],
+                        YearCount = orderCount["Year"]
                     };
                     result.Add(oResult);
                 }
@@ -75,6 +79,22 @@ namespace Api.Services
 
             if (result != null) return 1;
             else return 0;
+        }
+
+        public Dictionary<string,int> CalculateOrders(List<Order> orders)
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+
+            var currentYear = DateTime.Now.Year;
+            var currentMonth = DateTime.Now.Month;
+
+            int monthCount =  orders.Count(order => order.TransactionDate.Year == currentYear && order.TransactionDate.Month == currentMonth);
+            int yearCount = orders.Count(order => order.TransactionDate.Year == currentYear);
+
+            result.Add("Month", monthCount);
+            result.Add("Year", yearCount);
+
+            return result;
         }
     }
 }
