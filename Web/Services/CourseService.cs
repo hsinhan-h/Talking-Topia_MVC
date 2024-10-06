@@ -82,7 +82,7 @@ namespace Web.Services
                     CourseReviews = courseMain.CourseReviews,
                     BookedTimeSlots = bookInfo?.BookedTimeSlots ?? new List<TimeSlotViewModel>(),
                     AvailableTimeSlots = tTimeInfo?.AvailableTimeSlots ?? new List<TimeSlotViewModel>(),
-                    FollowingStatus = followingInfo?.FollowingStatus
+                    FollowingStatus = followingInfo.FollowingStatus
                 }).ToList();
 
             return new CourseInfoListViewModel
