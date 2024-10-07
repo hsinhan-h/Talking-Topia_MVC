@@ -126,9 +126,9 @@
                         課程明細更新 @* <label>:value="[[ bookingDetails.courseId ]]" disabled="disabled" </label> *@
                         <input type="hidden"
                                class="form-control"
-                               id="txtCourseIdUpdate"
+                               id="CourseIdUpdate"
                                placeholder=""
-                               v-model="bookingDetails.courseId"
+                               v-model="txtCourseIdUpdate"
                                :value="[[ bookingDetails.courseId ]]" disabled="disabled" >
                     </h1>
                     <button type="button"
@@ -208,6 +208,7 @@
                                            class="form-control"
                                            id="floatingInput5"
                                            placeholder=""
+                                           v-model="titleUpdate"
                                            :value="[[ bookingDetails.title ]]" disabled="disabled" />
                                     <label for="floatingInput5">課程名稱(必填)</label>
                                 </div>
@@ -218,21 +219,30 @@
                                            class="form-control"
                                            id="floatingInput6"
                                            placeholder=""
+                                           v-model="subTitleUpdate"
                                            :value="[[ bookingDetails.subTitle ]]" />
                                     <label for="floatingInput6">課程簡述(必填)</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-12">
+                            @* <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <div id="editor1" class="col-12">
                                         <p style="color: #999"></p>
                                     </div>
                                 </div>
+                            </div> *@
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control"
+                                          id="floatingInput10"
+                                          placeholder=""
+                                          :value="[[ bookingDetails.description ]]"
+                                          v-model="txtDescription"></textarea>
+                                <label for="floatingInput10">請輸入詳細課程介紹</label><br>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                       @*  <div class="row mb-2">
                             <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <div id="editor2" class="col-12">
@@ -240,7 +250,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> *@
                         <div class="row mb-2">
                             <!--<div class="col-12 col-md-4">
                                 <div class="form-floating mb-3">
@@ -353,7 +363,7 @@
                                     </div>
                                 </div>
                                 <!-- 用來存圖片路徑的隱藏欄位 -->
-                                <input type="hidden" v-model="imagePath" />
+                                @* <input type="hidden" v-model="bookingDetails.imagePath" :value="[[ bookingDetails.imagePath ]]" /> *@
                             </div>
                             <div class="col-12 col-md-2">
                                 <div class="form-floating">
@@ -516,7 +526,8 @@
                     txtDescription: '',
 
                     //更新欄位
-                    CourseIdUpdate: '',
+                    txtCourseIdUpdate: null,
+                    subTitleUpdate: '',
 
 
                     selectedCourseCategoryId: null, // 儲存下拉的 CourseCategoryId
@@ -572,22 +583,24 @@
                 },
                 // 存檔(更新)
                 submitDataUpdate() {
-                    // console.log("submitDataUpdate");
-                    // console.log(this.bookingDetails.courseId);
+                    console.log("submitDataUpdate");
+                    console.log(this.bookingDetails.courseId);
 
                     axios.post('/api/PublishCourseApi/SaveToCouresDataUpdate', {
-                        CategoryId: this.bookingDetails.courseId,
-                        ThumbnailUrl: this.imagePath,
+                        //CategoryId: this.txtCourseIdUpdate,
+                        CourseId: this.bookingDetails.courseId.toString(),
+                        ThumbnailUrl: this.bookingDetails.imagePath,
                         VideoUrl: this.bookingDetails.videoUrl,
-                        Title: this.txtTitle,
-                        SubTitle: this.txtSubTitle,
+                        Title: this.bookingDetails.title,
+                        SubTitle: this.bookingDetails.subTitle,
                         TwentyFiveMinPriceNTD: this.bookingDetails.twentyFiveMinPriceNTD,
                         FiftyMinPriceNTD: this.bookingDetails.fiftyMinPriceNTD,
-                        // CouresImagesList: this.imagePaths,
+                        Description: this.bookingDetails.description,
+                        CouresImagesList: this.imagePaths,
                     })
                         .then(response => {
                             console.log('資料成功傳送', response);
-                            alert('存檔成功：' + response.data);
+                            alert('更新成功：' + response.data);
                             window.location.reload();  // 完成後重整頁面
                         })
                         .catch(error => {
