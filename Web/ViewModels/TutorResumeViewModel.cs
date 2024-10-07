@@ -73,7 +73,16 @@ namespace Web.ViewModels
             public int ApplySubCategoryId { get; set; }
         }
 
-        
+
+        public bool ApplyStatus { get; set; }
+        public DateTime ApplyDateTime { get; set; }
+
+        public DateTime ApprovedDateTime { get; set; }
+
+        public DateTime UpdateStatusDateTime {  get; set; }
+        public string RejectReason { get; set; }
+
+
         public string SelectedCategory { get; set; }
         public string SelectedSubcategory { get; set; }
 

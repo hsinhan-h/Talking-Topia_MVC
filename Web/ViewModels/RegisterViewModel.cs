@@ -16,5 +16,9 @@
         [StringLength(50, ErrorMessage = "名字不得超過50字元")]
         public string FirstName { get; set; }
 
+        [Required(ErrorMessage = "姓氏是必填欄位")]
+        [StringLength(50, ErrorMessage = "名字不得超過50字元")]
+        public string LastName { get; set; }
+
     }
 }
