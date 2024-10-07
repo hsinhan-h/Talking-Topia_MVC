@@ -59,7 +59,7 @@ namespace Web.Services
                     Email = model.RegisterViewModel.Email,
                     Password = model.RegisterViewModel.Password,
                     FirstName = model.RegisterViewModel.FirstName,
-                    LastName = "",
+                    LastName = model.RegisterViewModel.LastName,
                     Birthday = null,
                     Nickname = "",
                     Phone = "",
