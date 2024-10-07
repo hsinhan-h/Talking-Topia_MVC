@@ -24,5 +24,18 @@ namespace Web.Controllers.Api
             }
             return Ok(categoryAndSubjectnNames);
         }
+
+        // 新增的 API 來處理課程分類與主題
+        [HttpGet("with-subjects")]
+        public async Task<IActionResult> GetCourseCategoriesWithSubjects()
+        {
+            var categoryAndSubjectNames = await _courseCategoryService.GetCourseCategoriesWithSubjectsAsync();
+
+            if (categoryAndSubjectNames == null || categoryAndSubjectNames.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(categoryAndSubjectNames);
+        }
     }
 }

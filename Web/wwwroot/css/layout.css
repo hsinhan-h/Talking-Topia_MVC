@@ -39,7 +39,15 @@
         box-shadow: none;
         border: none;
     }
-    
+.btn-find-tutor{
+    background: #00d0c2;
+    color: #fff;
+}
+
+.btn-find-tutor:hover {
+    border: #00d0c2;
+    color: #00d0c2;
+}
 
 .shopping-bag {
     background-color: none;
@@ -72,6 +80,7 @@
         border-radius: 20px;
         padding-right: 45px; /* 為按鈕留出空間 */
         background-color: #f8f9fa;
+        text-align: center;
     }
 
     .search-course .btn-search {
@@ -120,6 +129,7 @@
 }
 
     .mega-menu .col-4 {
+        width: 50%; /* 調整第一欄與第二欄的寬度各佔50% */
         padding: 10px;
     }
 
@@ -134,14 +144,8 @@
             color: #00c8c8;
         }
 
-    /* 隱藏所有第二欄的子選單 */
-    .mega-menu .second-column .sub-menu {
-        display: none;
-    }
-
-    /* 當 hover 到第一欄的時候顯示第二欄和第三欄 */
-    .mega-menu:hover .second-column,
-    .mega-menu:hover .third-column {
+    /* 當 hover 到第一欄的時候顯示第二欄 */
+    .mega-menu:hover .second-column {
         display: block;
     }
 
@@ -152,16 +156,9 @@
     display: block;
 }
 
-/* 隱藏第二欄和第三欄，預設不顯示 */
-.mega-menu .second-column,
-.mega-menu .third-column {
+/* 預設不顯示第二欄 */
+.mega-menu .second-column {
     display: none;
-}
-
-/* 固定顯示的第三欄樣式 */
-.rating {
-    font-size: 1.2em;
-    color: #00c8c8;
 }
 
 .btn-block {
