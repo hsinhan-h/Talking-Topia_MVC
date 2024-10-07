@@ -144,13 +144,20 @@ namespace Web.Services
                     .Where(a => a.MemberId == memberId)
                     .FirstOrDefaultAsync();
 
-                if (applyList != null && applyList.ApplyStatus)
+                if (applyList != null)
                 {
-                    tutorCourseData.Coursestatus = CourseStatus.已審核;
-                }
-                else
-                {
-                    tutorCourseData.Coursestatus = CourseStatus.未審核;
+                    if (applyList.ApplyStatus)
+                    {
+                        tutorCourseData.Coursestatus = CourseStatus.已審核;
+                    }
+                    else if (!string.IsNullOrEmpty(applyList.RejectReason))  
+                    {
+                        tutorCourseData.Coursestatus = CourseStatus.申請駁回;
+                    }
+                    else
+                    {
+                        tutorCourseData.Coursestatus = CourseStatus.未審核;
+                    }
                 }
             }
 
@@ -187,7 +194,7 @@ namespace Web.Services
         {
             未審核 = 0,
             已審核 = 1,
-
+            申請駁回 = 2,
         }
         //取得可預約時段的方法
         public async Task<TutorDataViewModel> GetTutorReserveTimeAsync(int? memberId)
@@ -257,8 +264,8 @@ namespace Web.Services
                 {
                     existingMember.AccountType = 0;
                 }
-                //existingMember.IsTutor = (existingMember.IsTutor == true || existingMember.IsTutor);
-                existingMember.IsTutor = true;
+                existingMember.IsTutor = (existingMember.IsTutor == true || existingMember.IsTutor);
+                //existingMember.IsTutor = true;
                 existingMember.IsVerifiedTutor = (existingMember.IsVerifiedTutor != false && existingMember.IsVerifiedTutor);
 
                 // 使用 Repository 來新增資料

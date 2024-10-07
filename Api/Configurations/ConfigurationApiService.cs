@@ -10,7 +10,7 @@ namespace Api.Configurations
             services.AddScoped<ReviewApiService>();
             services.AddScoped<BookingApiService>();
             services.AddScoped<CourseManagementApiService>();
-
+            services.AddScoped<MemberManagermentApiService>();
             return services;
         }
     }
