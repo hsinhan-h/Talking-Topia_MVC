@@ -17,19 +17,19 @@
         /// <summary>
         /// 最熱門科目
         /// </summary>
-        public string FirstSubjecteName { get; set; }
+        public string FirstCourseName { get; set; }
         /// <summary>
         /// 次熱門科目
         /// </summary>
-        public string SecondSubjectName { get; set; }
+        public string SecondCourseName { get; set; }
         /// <summary>
         /// 最熱門科目業績
         /// </summary>
-        public int[] FirstSubjectData { get; set; }
+        public int[] FirstCourseData { get; set; }
         /// <summary>
         /// 次熱門科目業績
         /// </summary>
-        public int[] SecondSubjectData { get; set; }
+        public int[] SecondCourseData { get; set; }
         /// <summary>
         /// 總銷售堂數
         /// </summary>
