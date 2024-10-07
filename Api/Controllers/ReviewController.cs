@@ -1,5 +1,6 @@
 ﻿using Api.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -31,12 +32,42 @@ namespace Api.Controllers
         /// 刪除評論
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        public IActionResult DeleteReview()
+        [HttpDelete("{reviewId}")]
+        public async Task<IActionResult> DeleteReview(int reviewId)
         {
+            try
+            {
+                await _reviewApiService.DeleteReview(reviewId);
+                return Ok(new BaseApiResponse { ErrMsg = "Reviews deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new BaseApiResponse { ErrMsg = "An error occurred while deleting the review." });
+            }
+        }
 
+        /// <summary>
+        /// 刪除多筆評論
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteReviews(List<int> reviewIds)
+        {
+            if (reviewIds == null || !reviewIds.Any())
+            {
+                return BadRequest(new { error = "No review IDs provided." });
+            }
 
-            return Ok();
+            try
+            {
+                await _reviewApiService.DeleteReviews(reviewIds);
+
+                return Ok(new BaseApiResponse { ErrMsg = "Reviews deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new BaseApiResponse{ ErrMsg = "An error occurred while deleting the reviews."});
+            }
         }
     }
 }

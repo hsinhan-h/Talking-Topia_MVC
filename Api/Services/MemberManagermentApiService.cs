@@ -9,12 +9,14 @@ namespace Api.Services
     {
         private readonly IRepository<Member> _memberRepository;
         private readonly IRepository<Nation> _nationRepository;
+        private readonly IRepository<ApplyList> _applyListRepository;
 
 
-        public MemberManagermentApiService(IRepository<Member> memberRepository, IRepository<Nation> nationRepository)
+        public MemberManagermentApiService(IRepository<Member> memberRepository, IRepository<Nation> nationRepository, IRepository<ApplyList> applyListRepository)
         {
             _memberRepository = memberRepository;
             _nationRepository = nationRepository;
+            _applyListRepository= applyListRepository;
         }
 
 
@@ -84,15 +86,52 @@ namespace Api.Services
         //        return false;
         //    }
         //    member.IsEmailConfirmed = memberDto.IsEmailConfirmed;
-            
+
         //    await _memberRepository.UpdateAsync(member);
 
         //    return true; 
         //}
+        public async Task<List<TutorDataDto>> GetTutorDataList()
+        {
+            var memberdatainfo = await _memberRepository.ListAsync();
+            var applyListinfo = await _applyListRepository.ListAsync();
+
+            var allTutordata =
+            from member in memberdatainfo
+            join applyList in applyListinfo on member.MemberId equals applyList.MemberId into tutorinfo
+            from applyList in tutorinfo.DefaultIfEmpty()
+            select new TutorDataDto
+            {
+                MemberId = member.MemberId,
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                MemberName = member.LastName + " " + member.FirstName,
+                ApplyDateTime = applyList != null ? applyList.ApplyDateTime.ToString("yyyy-MM-dd") : "N/A",
+                RejectReason = applyList?.RejectReason ?? "無",
+                ApplyStatus = applyList?.ApplyStatus ?? false,
+                ApprovedDateTime = applyList?.ApprovedDateTime?.ToString("yyyy-MM-dd") ?? "N/A",
+                Istutor = member.IsTutor ? "已成為教師" : "尚未成為教師",
+                ResumeStatus = applyList != null && applyList.ApplyStatus
+                                ? resumeStatus.已審核.ToString()  
+                                : applyList?.RejectReason != null
+                                    ? resumeStatus.申請駁回.ToString()
+                                    : resumeStatus.未審核.ToString()
+            };
+
+            return allTutordata.ToList();
+        }
+
+
     }
     public enum GenderEnum
     {
         Male = 1,  // 男
         Female = 2 // 女
+    }
+    public enum resumeStatus
+    {
+        未審核 = 0,
+        已審核 = 1,
+        申請駁回 = 2,
     }
 }
