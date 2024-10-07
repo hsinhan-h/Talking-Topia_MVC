@@ -1,5 +1,5 @@
 ﻿@using Web.ViewModels
-@model CourseInfoListViewModel
+@model IEnumerable<CourseTopicTabViewModel>
 @section topCSS
 {
     <link href="~/css/layout.css" rel="stylesheet" />
@@ -15,23 +15,30 @@
             <div class="col-12">
                 <div class="lh-layout-tabs-wrapper mt-5">
                     <div class="lh-layout-tabs">
-                        <span class="lh-layout-tab active">語言學習</span>
-                        <span class="lh-layout-tab">程式語言</span>
-                        <span class="lh-layout-tab">升學補習</span>
-                    </div>
-               </div>
-            </div>
-            <!-- 卡片內容 -->
-            @foreach (var item in Model.CourseInfoList)
-            {
-                <div class="col-12 col-md-2 lh-layout-course-card">
-                    <img src="@item.TutorHeadShotImage">
-                    <div class="lh-layout-course-info">
-                        <p>@item.SubjectName</p>
-                        <span>NT$ @item.TwentyFiveMinUnitPrice/堂</span>
+                        <span class="lh-layout-tab active" data-category="語言學習">語言學習</span>
+                        <span class="lh-layout-tab" data-category="程式設計">程式設計</span>
+                        <span class="lh-layout-tab" data-category="升學科目">升學科目</span>
                     </div>
                 </div>
-            }
+            </div>
+            <!-- 卡片內容 -->
+            <div id="lh-layout-course-list" class="lh-layout-course-list">
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var course in Model)
+                    {
+                        <a href="@Url.Action("CourseList", "Course", new { page = 1, subject = course.SubjectName, sortOption = "default" })" class="lh-layout-course-item">
+                            <img src="@course.TutorHeadShotImage" alt="Teacher's Image" />
+                            <h3>@course.SubjectName</h3>
+                        </a>
+                    }
+                }
+                else
+                {
+                    <p>沒有可用的課程資料。</p>
+                }
+            </div>
+
             <!-- hotCourse -->
             <div class="lh-layout-hot-course-container mt-5">
                 <div class="lh-layout-hot-course-title col-12 col-md-12 text-center mb-5">
@@ -303,4 +310,8 @@
         </div>
     </div>
 </main>
+
+@section endJS{
+    <script src="~/js/homepage.js"></script>
+}
 

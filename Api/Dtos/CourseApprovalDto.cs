@@ -3,7 +3,7 @@
     public class CourseApprovalDto
     {
         public int CourseId { get; set; }
-        
+
         /// <summary>
         /// 教師姓名
         /// </summary>
@@ -42,7 +42,7 @@
         /// <summary>
         /// 課程介紹
         /// </summary>
-        public string Description {  get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// 課程圖片
@@ -58,6 +58,7 @@
         /// 自介影片
         /// </summary>
         public string VideoUrl { get; set; }
+
 
     }
 }

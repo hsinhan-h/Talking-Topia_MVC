@@ -5,6 +5,7 @@ using System.Linq;
 using Web.Entities;
 using Web.Dtos;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Services
 {
@@ -571,64 +572,23 @@ namespace Web.Services
         /// 首頁隨機顯示課程
         /// </summary>
         /// <returns></returns>
-        public async Task<CourseInfoListViewModel> GetCourseList()
+        public async Task<CourseInfoListViewModel> GetCourseList(string categoryName)
         {
-            var courseList = new List<CourseInfoViewModel>
-            {
-                new CourseInfoViewModel
-                {
-                    CourseId=1,
-                    SubjectId=1,
-                    SubjectName="法文",
-                    TwentyFiveMinUnitPrice=100,
-                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=France"
-                },
-                new CourseInfoViewModel
-                {
-                    CourseId=1,
-                    SubjectId=1,
-                    SubjectName="國文",
-                    TwentyFiveMinUnitPrice=150,
-                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=Chinese"
-                },
-                new CourseInfoViewModel
-                {
-                    CourseId=1,
-                    SubjectId=1,
-                    SubjectName="日文",
-                    TwentyFiveMinUnitPrice=200,
-                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=Japen"
-                }
-                ,
-                new CourseInfoViewModel
-                {
-                    CourseId=1,
-                    SubjectId=1,
-                    SubjectName="台語",
-                    TwentyFiveMinUnitPrice=250,
-                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=Taiwaness"
-                }
-                ,
-                new CourseInfoViewModel
-                {
-                    CourseId=1,
-                    SubjectId=1,
-                    SubjectName="韓文",
-                    TwentyFiveMinUnitPrice=300,
-                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=Karen"
-                }
-                ,
-                new CourseInfoViewModel
-                {
-                    CourseId=1,
-                    SubjectId=1,
-                    SubjectName="英文",
-                    TwentyFiveMinUnitPrice=350,
-                    TutorHeadShotImage="https://fakeimg.pl/300x300/?text=English"
-                }
-            };
+            var courseList = await (from course in _repository.GetAll<Entities.Course>()
+                                    join image in _repository.GetAll<Entities.CourseImage>() on course.CourseId equals image.CourseId
+                                    join subject in _repository.GetAll<Entities.CourseSubject>() on course.SubjectId equals subject.SubjectId
+                                    join category in _repository.GetAll<Entities.CourseCategory>() on subject.CourseCategoryId equals category.CourseCategoryId
+                                    
+                                    select new CourseInfoViewModel
+                                    {
+                                        CourseId = course.CourseId,
+                                        SubjectId = subject.SubjectId,
+                                        SubjectName = subject.SubjectName,
+                                        TwentyFiveMinUnitPrice = course.TwentyFiveMinUnitPrice,
+                                        TutorHeadShotImage = image.ImageUrl
+                                    }).ToListAsync();
 
-            return new CourseInfoListViewModel()
+            return new CourseInfoListViewModel
             {
                 CourseInfoList = courseList
             };
@@ -758,6 +718,8 @@ namespace Web.Services
             }
 
         }
+
+
 
 
 

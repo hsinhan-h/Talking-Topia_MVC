@@ -233,13 +233,16 @@
                                     </div>
                                 </div>
                             </div> *@
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control"
-                                          id="floatingInput10"
-                                          placeholder=""
-                                          :value="[[ bookingDetails.description ]]"
-                                          v-model="txtDescription"></textarea>
-                                <label for="floatingInput10">請輸入詳細課程介紹</label><br>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control"
+                                              id="floatingInput10"
+                                              placeholder=""
+                                              :value="[[ bookingDetails.description ]]"
+                                              v-model="txtDescription"
+                                              rows="20"></textarea>
+                                    <label for="floatingInput10">請輸入詳細課程介紹</label><br>
+                                </div>
                             </div>
                         </div>
                        @*  <div class="row mb-2">
@@ -359,7 +362,7 @@
                                 <!-- 圖片預覽 -->
                                 <div v-if="imageUrl.length > 0">
                                     <div v-for="(url, index) in imageUrl" :key="index">
-                                        <img :src="url" alt="Uploaded Image" style="width: 50px; height: 50px;">
+                                        <img :src="url" alt="Uploaded Image" style="width: 100px; height: 100px;">
                                     </div>
                                 </div>
                                 <!-- 用來存圖片路徑的隱藏欄位 -->
@@ -396,7 +399,7 @@
                                 <!-- 圖片預覽 -->
                                 <div v-if="imageUrls.length > 0">
                                     <div v-for="(url, index) in imageUrls" :key="index">
-                                        <img :src="url" alt="Uploaded Image" style="width: 50px; height: 50px;">
+                                        <img :src="url" alt="Uploaded Image" style="width: 100px; height: 100px;">
                                     </div>
                                 </div>
                                 <!-- 用來存圖片路徑的隱藏欄位 -->
@@ -433,13 +436,16 @@
                                     </div>
                                 </div>
                             </div> *@
-                            <div class="form-floating mb-3">
-                                    <textarea 
-                                           class="form-control"
-                                           id="floatingInput10"
-                                           placeholder=""
-                                           v-model="txtDescription" ></textarea>
-                                    <label for="floatingInput10">請輸入詳細課程介紹</label><br>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                        <textarea 
+                                               class="form-control"
+                                               id="floatingInput10"
+                                               placeholder=""
+                                               v-model="txtDescription"
+                                               rows="20"></textarea>
+                                        <label for="floatingInput10">請輸入詳細課程介紹</label><br>
+                                </div>
                             </div>
                         </div>
                       @*   <div class="row mb-2">
