@@ -118,6 +118,7 @@ namespace Api.Services
             }
 
             course.CoursesStatus = courseApprove ? (short)1 : (short)2; //如果審核通過, 將CourseStatus設為1, 反之設為2
+            if (courseApprove == true) course.Cdate = DateTime.Now; //更新課程上架時間
 
             _courseRepository.Update(course);
             return true;
