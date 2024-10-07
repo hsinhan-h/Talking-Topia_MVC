@@ -269,7 +269,7 @@ namespace Web.Services
                         FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
                         Description = courseData.Description,
                         IsEnabled = courseData.IsEnabled,
-                        ThumbnailUrl = courseData.ThumbnailUrl[0],
+                        //ThumbnailUrl = courseData.ThumbnailUrl[0],
                         VideoUrl = courseData.VideoUrl,
                         CoursesStatus = courseData.CoursesStatus,
                         Udate = DateTime.Now,

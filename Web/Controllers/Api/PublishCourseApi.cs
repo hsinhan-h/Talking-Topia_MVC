@@ -27,10 +27,12 @@ namespace Web.Controllers.Api
             try
             {
                 //int memberId = 3;
+
                 var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (memberIdClaim == null)
                 { return RedirectToAction(nameof(AccountController.Account), "Account"); }
                 int memberId = int.Parse(memberIdClaim.Value);
+
                 var result = await _memberService.GetMemberId(memberId);
 
                 var booking = await _bookingService.GetPublishCourse(memberId, CourseId);
@@ -60,6 +62,7 @@ namespace Web.Controllers.Api
             if (memberIdClaim == null) { return BadRequest("請重新登入"); }
             int memberId = int.Parse(memberIdClaim.Value);
             var result = await _memberService.GetMemberId(memberId);
+
             if (!result) { return BadRequest("找不到會員"); }
 
             if (string.IsNullOrWhiteSpace(course.CategoryId))
@@ -109,21 +112,14 @@ namespace Web.Controllers.Api
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (memberIdClaim == null) { return BadRequest("請重新登入"); }
             int memberId = int.Parse(memberIdClaim.Value);
+
             var result = await _memberService.GetMemberId(memberId);
             if (!result) { return BadRequest("找不到會員"); }
 
-            if (string.IsNullOrWhiteSpace(course.CategoryId))
-            {
-                return BadRequest("課程分類為必填欄位");
-            }
-            if (course.SubjectId == 0)
-            {
-                return BadRequest("課程科目為必填欄位");
-            }
-            if (course.ThumbnailUrl == null)
-            {
-                return BadRequest("自介照片為必上傳欄位");
-            }
+            //if (course.ThumbnailUrl == null)
+            //{
+            //    return BadRequest("自介照片為必上傳欄位");
+            //}
             if (string.IsNullOrWhiteSpace(course.VideoUrl))
             {
                 return BadRequest("自介影片為必填欄位");
@@ -143,7 +139,7 @@ namespace Web.Controllers.Api
 
             await _bookingService.SaveCourse(CRUDStatus.Update, course, memberId);
 
-            return Ok("新增成功");
+            return Ok("更新成功");
         }
 
         /// <summary>

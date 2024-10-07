@@ -14,7 +14,7 @@
         public string TwentyFiveMinPriceNTD { get; set; }
         public string FiftyMinPriceNTD { get; set; }
         public List<string> CouresImagesList { get; set; }
-        public string Description { get; set; } = "課程描述";
+        public string Description { get; set; }
         public bool IsEnabled { get; set; } = true;
         public short CoursesStatus { get; set; } = 0;
         public List<CourseDataViewModel> BookingList { get; internal set; }

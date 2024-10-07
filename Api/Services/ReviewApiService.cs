@@ -42,5 +42,47 @@ namespace Api.Services
             }
             return result;
         }
+
+
+        public  async Task DeleteReview(int reviewId) 
+        {
+            var findReview = await _reviewRepository.GetByIdAsync(reviewId);
+
+            if (findReview == null)
+            {
+                throw new ArgumentNullException(nameof(findReview), "Review not found.");
+            }
+
+            await _reviewRepository.DeleteAsync(findReview);
+        }
+
+        public async Task DeleteReviews(List<int> reviewIds)
+        {
+            // 檢查是否有傳入有效的 reviewId
+            if (reviewIds == null || !reviewIds.Any())
+            {
+                throw new ArgumentException("No review IDs provided.");
+            }
+
+            foreach (var reviewId in reviewIds)
+            {
+                try
+                {
+                    // 使用非同步方法取得評論
+                    var findReview = await _reviewRepository.GetByIdAsync(reviewId);
+
+                    if (findReview != null)
+                    {
+                        // 刪除評論
+                        await _reviewRepository.DeleteAsync(findReview);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentNullException("Reviews not found.");
+                }
+            }
+        }
+
     }
 }
