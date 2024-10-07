@@ -49,5 +49,18 @@ namespace Api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet]
+        public async Task<ActionResult> GetTutorDataList()
+        {
+            try
+            {
+                var allTutordatalList = await _memberManagermentApiService.GetTutorDataList();
+                return Ok(allTutordatalList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

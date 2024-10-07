@@ -686,7 +686,6 @@ namespace Web.Services
                 }
                 else
                 {
-                    // 如果該會員沒有資料，創建新的 ApplyList 記錄
                     var newApplyList = new Entities.ApplyList
                     {
                         MemberId = existingMember.MemberId,
@@ -697,7 +696,7 @@ namespace Web.Services
                         RejectReason = null,
                     };
 
-                    _repository.Create(newApplyList);  // 創建新的記錄
+                    _repository.Create(newApplyList);  
                 }
 
 
