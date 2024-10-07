@@ -416,15 +416,23 @@
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <div class="col-12">
+                            @* <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <div id="editor3" class="col-12">
                                         <p style="color: #999">請輸入詳細課程介紹</p>
                                     </div>
                                 </div>
+                            </div> *@
+                            <div class="form-floating mb-3">
+                                    <textarea 
+                                           class="form-control"
+                                           id="floatingInput10"
+                                           placeholder=""
+                                           v-model="txtDescription" ></textarea>
+                                    <label for="floatingInput10">請輸入詳細課程介紹</label><br>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                      @*   <div class="row mb-2">
                             <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <div id="editor4" class="col-12">
@@ -432,7 +440,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> *@
                         <div class="row mb-2">
                             <!-- <div class="col-12 col-md-4">
                                  <div class="form-floating mb-3">
@@ -505,6 +513,7 @@
                     txtTwentyFiveMinPriceNTD: '',
                     txtFiftyMinPriceNTD: '',
                     CouresImagesList: [],
+                    txtDescription: '',
 
                     //更新欄位
                     CourseIdUpdate: '',
@@ -545,6 +554,7 @@
                         TwentyFiveMinPriceNTD: this.txtTwentyFiveMinPriceNTD,
                         FiftyMinPriceNTD: this.txtFiftyMinPriceNTD,
                         CouresImagesList: this.imagePaths,
+                        Description: this.txtDescription,
                     })
                         .then(response => {
                             console.log('資料成功傳送', response);
