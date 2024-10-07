@@ -23,6 +23,11 @@
                 </div>
 
                 <div class="mb-3">
+                    <input asp-for="RegisterViewModel.LastName" class="form-control" placeholder="姓氏" />
+                    <span asp-validation-for="RegisterViewModel.LastName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
                     <input asp-for="RegisterViewModel.Email" class="form-control" placeholder="信箱" />
                     <span asp-validation-for="RegisterViewModel.Email" class="text-danger"></span>
                 </div>
