@@ -42,7 +42,35 @@ namespace Api.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-    }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetApprovedCourseQtyStartingFrom2024()
+        {
+            try
+            {
+                var approvedCourseQty = await _courseManagementApiService.GetApprovedCourseQtyStartingFrom2024();
+                return Ok(approvedCourseQty);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetRejectedCourseQtyStartingFrom2024()
+        {
+            try
+            {
+                var rejectedCourseQty = await _courseManagementApiService.GetRejectedCourseQtyStartingFrom2024();
+                return Ok(rejectedCourseQty);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
 
         [HttpPut]

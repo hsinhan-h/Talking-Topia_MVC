@@ -90,6 +90,24 @@ namespace Api.Services
                 .Count();
         }
 
+        public async Task<int> GetApprovedCourseQtyStartingFrom2024()
+        {
+            var courses = await _courseRepository.ListAsync();
+            return courses
+                .Where(course => course.CoursesStatus == 1 && course.Cdate > new DateTime(2024, 1, 1))
+                .Count();
+        }
+
+        public async Task<int> GetRejectedCourseQtyStartingFrom2024()
+        {
+            var courses = await _courseRepository.ListAsync();
+            return courses
+                .Where(course => course.CoursesStatus == 2 && course.Cdate > new DateTime(2024, 1, 1))
+                .Count();
+        }
+
+
+
         public async Task<bool> UpdateCoursesStatus(int courseId, bool courseApprove)
         {
             var course =  await _courseRepository.GetByIdAsync(courseId);
