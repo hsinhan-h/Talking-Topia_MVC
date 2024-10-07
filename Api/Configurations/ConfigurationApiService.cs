@@ -11,7 +11,7 @@ namespace Api.Configurations
             services.AddScoped<BookingApiService>();
             services.AddScoped<DashboardApiService>();
             services.AddScoped<CourseManagementApiService>();
-
+            services.AddScoped<MemberManagermentApiService>();
             return services;
         }
     }

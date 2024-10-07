@@ -537,6 +537,17 @@ namespace Web.Services
             }
             return applyCourseHasMember;
         }
+        private async Task<Entities.ApplyList> GetApplyListByMemberIdAsync(int memberId)
+        {
+            var applyListHasMember = await _repository.GetAll<Entities.ApplyList>()
+                                             .FirstOrDefaultAsync(w => w.MemberId == memberId);
+
+            if (applyListHasMember == null)
+            {
+                return null;
+            }
+            return applyListHasMember;
+        }
 
 
         public async Task<TutorResumeViewModel> AddResumeAsync(TutorResumeViewModel qVM, int memberId)
@@ -632,8 +643,6 @@ namespace Web.Services
                 // 創建課程類別
                 else
                 {
-                    // 如果沒有找到 ApplyCourse 記錄，則創建新的 ApplyCourse 記錄
-
                     var newApplyCourse = new Entities.ApplyCourse
                     {
                         MemberId = existingMember.MemberId,  // 關聯到會員的 MemberId
@@ -646,6 +655,51 @@ namespace Web.Services
                     _repository.Create(newApplyCourse);
 
                 }
+
+                //創建履歷申請
+                var applyList = await GetApplyListByMemberIdAsync(existingMember.MemberId);
+
+                if (applyList != null)
+                {
+                    if (applyList.ApplyStatus != true)
+                    {
+                        applyList.ApplyStatus = false;
+                    }
+
+                    if (applyList.ApplyDateTime == null)
+                    {
+                        applyList.ApplyDateTime = DateTime.Now;  
+                    }
+
+
+                    if (applyList.UpdateStatusDateTime == null)
+                    {
+                        applyList.UpdateStatusDateTime = DateTime.Now; 
+                    }
+
+                    if (string.IsNullOrEmpty(applyList.RejectReason))
+                    {
+                        applyList.RejectReason = null;  
+                    }
+
+                    _repository.Update(applyList);  
+                }
+                else
+                {
+                    // 如果該會員沒有資料，創建新的 ApplyList 記錄
+                    var newApplyList = new Entities.ApplyList
+                    {
+                        MemberId = existingMember.MemberId,
+                        ApplyStatus = false,
+                        ApplyDateTime = DateTime.Now,
+                        ApprovedDateTime = null,
+                        UpdateStatusDateTime = null,
+                        RejectReason = null,
+                    };
+
+                    _repository.Create(newApplyList);  // 創建新的記錄
+                }
+
 
                 await _repository.SaveChangesAsync();
                 await _repository.CommitAsync();
