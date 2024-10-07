@@ -80,6 +80,7 @@
         border-radius: 20px;
         padding-right: 45px; /* 為按鈕留出空間 */
         background-color: #f8f9fa;
+        text-align: center;
     }
 
     .search-course .btn-search {
