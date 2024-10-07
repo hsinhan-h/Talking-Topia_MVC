@@ -47,7 +47,7 @@ namespace Web.Services
             //var courseRatingsAndReviewsInfo = await GetCourseRatingsAndReviewsAsync(courseIds);
             var bookedTimeSlotsInfo = await GetBookedTimeSlotsAsync(courseIds);
             var availableTimeSlotsInfo = await GetAvailableTimeSlotsAsync(memberIds);
-            var followingCoursesInfo = await GetFollowingStatusAsync(userId, memberIds);
+            var followingCoursesInfo = await GetFollowingStatusAsync(userId, courseIds);
 
             // 合併查詢
             var completeCoursesInfo = (
