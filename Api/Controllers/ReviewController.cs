@@ -1,4 +1,5 @@
-﻿using Api.Services;
+﻿using Api.Dtos;
+using Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -32,12 +33,12 @@ namespace Api.Controllers
         /// 刪除評論
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("{reviewId}")]
-        public async Task<IActionResult> DeleteReview(int reviewId)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteReview(DeleteReviewDto review)
         {
             try
             {
-                await _reviewApiService.DeleteReview(reviewId);
+                await _reviewApiService.DeleteReview(review.ReviewId);
                 return Ok(new BaseApiResponse { ErrMsg = "Reviews deleted successfully." });
             }
             catch (Exception ex)
