@@ -1,6 +1,7 @@
 ﻿using Api.Dtos;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace Api.Controllers
 {
@@ -28,6 +29,21 @@ namespace Api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetUnapprovedCourseQtyStartingFrom2024()
+        {
+            try
+            {
+                var unapprovedCourseQty = await _courseManagementApiService.GetUnapprovedCourseQtyStartingFrom2024();
+                return Ok(unapprovedCourseQty);
+            }         
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+    }
+
 
         [HttpPut]
         public async Task<ActionResult> UpdateCoursesStatus([FromBody] UpdateCoursesStatusDto dto)

@@ -82,6 +82,14 @@ namespace Api.Services
                 .ToList();
         }
 
+        public async Task<int> GetUnapprovedCourseQtyStartingFrom2024()
+        {
+            var courses = await _courseRepository.ListAsync();
+            return courses
+                .Where(course => course.CoursesStatus == 0 && course.Cdate > new DateTime(2024, 1, 1))
+                .Count();
+        }
+
         public async Task<bool> UpdateCoursesStatus(int courseId, bool courseApprove)
         {
             var course =  await _courseRepository.GetByIdAsync(courseId);
