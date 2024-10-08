@@ -27,4 +27,9 @@
         /// </summary>
         public string CreateDateTime { get; set; }
     }
+
+    public class DeleteReviewDto 
+    {
+        public int ReviewId { get; set; }
+    }
 }
