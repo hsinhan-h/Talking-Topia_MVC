@@ -208,7 +208,7 @@
                                            class="form-control"
                                            id="floatingInput5"
                                            placeholder=""
-                                           v-model="titleUpdate"
+                                           v-model="bookingDetails.title"
                                            :value="[[ bookingDetails.title ]]" disabled="disabled" />
                                     <label for="floatingInput5">課程名稱(必填)</label>
                                 </div>
@@ -219,7 +219,7 @@
                                            class="form-control"
                                            id="floatingInput6"
                                            placeholder=""
-                                           v-model="subTitleUpdate"
+                                           v-model="bookingDetails.subTitle"
                                            :value="[[ bookingDetails.subTitle ]]" />
                                     <label for="floatingInput6">課程簡述(必填)</label>
                                 </div>
@@ -239,7 +239,7 @@
                                               id="floatingInput10"
                                               placeholder=""
                                               :value="[[ bookingDetails.description ]]"
-                                              v-model="txtDescription"
+                                              v-model="bookingDetails.description"
                                               rows="20"
                                               style="height: 300px"></textarea>
                                     <label for="floatingInput10">請輸入詳細課程介紹</label><br>
