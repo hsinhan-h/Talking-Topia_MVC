@@ -76,10 +76,12 @@ namespace Api.Services
 
             // 最熱門科目及次熱門科目
             var halfYearOrders = await _orderRepository.ListAsync(o => o.TransactionDate.Month >= 7 && o.TransactionDate.Month <= 12);
+            List<int> halfYearOrdersId = new List<int>();
+            List<OrderDetail> halfOrderDetails = new List<OrderDetail>();
             if (halfYearOrders.Count > 0)
             {
-                var halfYearOrdersId = halfYearOrders.Select(o => o.OrderId).ToList();
-                var halfOrderDetails = await _orderDetailRepository.ListAsync(od => halfYearOrdersId.Contains(od.OrderId));
+                halfYearOrdersId = halfYearOrders.Select(o => o.OrderId).ToList();
+                halfOrderDetails = await _orderDetailRepository.ListAsync(od => halfYearOrdersId.Contains(od.OrderId));
 
                 var halfCourseSales = halfOrderDetails.GroupBy(od => new { od.CourseId, od.Order.TransactionDate.Month })
                                                        .Select(g => new
@@ -115,9 +117,32 @@ namespace Api.Services
                 result.SecondCourseData = lineChartResult[1].MonthlySales.ToArray();
             }
 
-            result.OrderQuantityData = [0, 0, 30, 40, 0, 0];
-            result.BookingQuantiyData = [0, 0, 10, 15, 1, 1];
+            // 預訂課程總堂數
+            var halfYearBookings = await _bookingRepository.ListAsync(b => b.BookingDate.Month >= 7 && b.BookingDate.Month <= 12);
+            var bookingCourseCounts = halfYearBookings.GroupBy(b => b.BookingDate.Month)
+                                                      .Select(g => new
+                                                      {
+                                                          Month = g.Key,
+                                                          TotalBookings = g.Count()
+                                                      })
+                                                      .OrderBy(g => g.Month)
+                                                      .ToList();
+            // 銷售課程總堂數
+            var salesCourseCounts = halfOrderDetails.GroupBy(od => od.Order.TransactionDate.Month)
+                                        .Select(g => new
+                                        {
+                                            Month = g.Key,
+                                            TotalCourses = g.Sum(od => od.Quantity)
+                                        })
+                                        .OrderBy(g => g.Month)
+                                        .ToList();
 
+            result.OrderQuantityData = Enumerable.Range(7, 6)
+                                                 .Select(month => salesCourseCounts.FirstOrDefault(sc => sc.Month == month)?.TotalCourses ?? 0)
+                                                 .ToArray();
+            result.BookingQuantiyData = Enumerable.Range(7, 6)
+                                                  .Select(month => bookingCourseCounts.FirstOrDefault(bc => bc.Month == month)?.TotalBookings ?? 0)
+                                                  .ToArray();
 
             return result;
         }
