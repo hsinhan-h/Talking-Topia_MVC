@@ -2,9 +2,8 @@
 
 
 $(document).ready(function () {
-    console.log('正在加載 "語言學習" 資料');
-    // 預設顯示 "語言學習" 的課程
-    loadCourses("語言學習");
+    
+    
 
     // 監聽 tab 點擊事件
     $('.lh-layout-tab').on('click', function () {
@@ -15,7 +14,7 @@ $(document).ready(function () {
 
         // 獲取對應的 category 名稱 (中文)
         var category = $(this).data('category');
-                console.log('加載中: ' + category);  // 調試用，顯示當前加載的分類
+                
 
         loadCourses(category);
     });
@@ -30,7 +29,7 @@ $(document).ready(function () {
                 renderCourses(data);  // 成功獲取數據後渲染
             },
             error: function (err) {
-                console.error("Error fetching courses:", err);
+                
             }
         });
     }
