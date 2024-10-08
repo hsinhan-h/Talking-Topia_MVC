@@ -26,7 +26,7 @@ function moveUserItem() {
 document.addEventListener('DOMContentLoaded', function () {
     const firstColumnLinks = document.querySelectorAll('.first-column a');
     const secondColumn = document.querySelector('.second-column');
-    const thirdColumn = document.querySelector('.third-column');
+    //const thirdColumn = document.querySelector('.third-column');
     const subMenus = document.querySelectorAll('.second-column .sub-menu');
 
     firstColumnLinks.forEach(link => {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 顯示第二欄和第三欄
             secondColumn.style.display = 'block';
-            thirdColumn.style.display = 'block';
+            /*thirdColumn.style.display = 'block';*/
         });
     });
 
@@ -52,31 +52,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const firstColumn = document.querySelector('.first-column');
     firstColumn.addEventListener('mouseleave', function () {
         secondColumn.style.display = 'none';
-        thirdColumn.style.display = 'none';
+    //    thirdColumn.style.display = 'none';
     });
 
      //讓第二、第三欄不會在滑鼠移到其他地方時消失
     secondColumn.addEventListener('mouseenter', function () {
         secondColumn.style.display = 'block';
-        thirdColumn.style.display = 'block';
+    //    thirdColumn.style.display = 'block';
     });
 
-    thirdColumn.addEventListener('mouseenter', function () {
-        secondColumn.style.display = 'block';
-        thirdColumn.style.display = 'block';
-    });
+    //thirdColumn.addEventListener('mouseenter', function () {
+    //    secondColumn.style.display = 'block';
+    //    thirdColumn.style.display = 'block';
+    //});
 
     secondColumn.addEventListener('mouseleave', function () {
         secondColumn.style.display = 'none';
         thirdColumn.style.display = 'none';
     });
 
-    thirdColumn.addEventListener('mouseleave', function () {
-        secondColumn.style.display = 'none';
-        thirdColumn.style.display = 'none';
+    //thirdColumn.addEventListener('mouseleave', function () {
+    //    secondColumn.style.display = 'none';
+    //    thirdColumn.style.display = 'none';
     });
-});
-
 
 
 
