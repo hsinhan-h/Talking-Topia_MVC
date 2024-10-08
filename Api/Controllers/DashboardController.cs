@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    //[Authorize]  // 只有持有有效 JWT 的使用者才能訪問
+    [Authorize]  // 只有持有有效 JWT 的使用者才能訪問
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class DashboardController : ControllerBase
