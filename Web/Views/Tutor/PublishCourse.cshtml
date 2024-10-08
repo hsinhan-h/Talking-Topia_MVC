@@ -240,7 +240,8 @@
                                               placeholder=""
                                               :value="[[ bookingDetails.description ]]"
                                               v-model="txtDescription"
-                                              rows="20"></textarea>
+                                              rows="20"
+                                              style="height: 300px"></textarea>
                                     <label for="floatingInput10">請輸入詳細課程介紹</label><br>
                                 </div>
                             </div>
@@ -443,7 +444,8 @@
                                                id="floatingInput10"
                                                placeholder=""
                                                v-model="txtDescription"
-                                               rows="20"></textarea>
+                                               rows="20"
+                                               style="height: 300px"></textarea>
                                         <label for="floatingInput10">請輸入詳細課程介紹</label><br>
                                 </div>
                             </div>
@@ -503,12 +505,12 @@
     </div>
 </div>
 @section topCSS {
-    <link href="~/lib/Quill/css/quill.snow.css" rel="stylesheet" />
+    @* <link href="~/lib/Quill/css/quill.snow.css" rel="stylesheet" /> *@
     <link rel="stylesheet" href="~/css/backstage.css" />
 }
 @section endJS {
-    <script src="~/lib/Quill/JS/quill.js"></script>
-    <script src="~/js/editor.js"></script>
+   @*  <script src="~/lib/Quill/JS/quill.js"></script>
+    <script src="~/js/editor.js"></script> *@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
