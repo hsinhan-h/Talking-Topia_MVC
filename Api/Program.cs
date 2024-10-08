@@ -102,7 +102,7 @@ namespace Api
 
             var origins = new[]
              {
-                "http://localhost:5173",
+                "http://localhost:5173","https://talkingtopiaadminsystem.azurewebsites.net"
             };
 
             builder.Services.AddCors(options =>
