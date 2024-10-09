@@ -569,7 +569,6 @@ namespace Web.Services
                
                 // 更新會員資料
                 existingMember.IsVerifiedTutor = false;
-                //existingMember.HeadShotImage = qVM.HeadShotImage;
                 existingMember.Cdate = DateTime.Now;
                 existingMember.Udate = null;
                 existingMember.FirstName = existingMember.FirstName ?? "N/A";
@@ -580,7 +579,7 @@ namespace Web.Services
                 existingMember.Phone = existingMember.Phone ?? "N/A";
                 existingMember.Gender = (short)(existingMember.Gender != 0 ? existingMember.Gender : 0);
                 existingMember.AccountType = (existingMember.AccountType != 0 ? existingMember.AccountType : 0);
-                existingMember.IsTutor = true; //暫時先true 
+                existingMember.IsTutor = false; //教師判斷 
 
                 // 創建或更新教育經歷
                 Entities.Education education;

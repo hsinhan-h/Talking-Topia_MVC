@@ -2,6 +2,7 @@
 using ApplicationCore.Entities;
 using Api.Dtos;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services
 {
@@ -25,6 +26,7 @@ namespace Api.Services
         {
             var memberdatainfo = await _memberRepository.ListAsync();
             var nationdatainfo = await _nationRepository.ListAsync();
+            
 
             var allmemberdata =
             from member in memberdatainfo
@@ -33,15 +35,15 @@ namespace Api.Services
             select new MemberDataDto
             {
                 MemberId = member.MemberId,
-                FirstName = member.FirstName,
-                LastName = member.LastName,
-                MemeberName = member.LastName + " " + member.FirstName,
-                NickName =member.Nickname,
+                FirstName = member.FirstName.Trim(),
+                LastName = member.LastName.Trim(),
+                MemeberName = (member.LastName + " " + member.FirstName).Trim(),
+                NickName =member.Nickname.Trim(),
                 Gender = member.Gender == (int)GenderEnum.Male ? "男" : "女",
-                Birthday = member.Birthday.ToString(),
-                Phone = member.Phone,
-                Email = member.Email,
-                Cdate = member.Cdate.ToString(),
+                Birthday = member.Birthday?.ToString("yyyy-MM-dd") ?? "Unknown",
+                Phone = member.Phone.Trim(),
+                Email = member.Email.Trim(),
+                Cdate = member.Cdate.ToString("yyyy-MM-dd"),
                 NationId = member.NationId,
                 NationName = nation != null ? nation.NationName : "Unknown" 
             };
@@ -112,16 +114,122 @@ namespace Api.Services
                 ApprovedDateTime = applyList?.ApprovedDateTime?.ToString("yyyy-MM-dd") ?? "N/A",
                 Istutor = member.IsTutor ? "已成為教師" : "尚未成為教師",
                 ResumeStatus = applyList != null && applyList.ApplyStatus
-                                ? resumeStatus.已審核.ToString()  
+                                ? resumeStatus.通過申請.ToString()  
                                 : applyList?.RejectReason != null
-                                    ? resumeStatus.申請駁回.ToString()
+                                    ? resumeStatus.駁回申請.ToString()
                                     : resumeStatus.未審核.ToString()
             };
 
             return allTutordata.ToList();
         }
 
+        
+        public async Task<(bool IsSuccess, string Message)> ProcessTutorApplicationAsync(UpdateTutorDataDto tutorDto)
+        {
+            var memberApplyData =
+                from member in await _memberRepository.ListAsync(m => m.MemberId == tutorDto.MemberId)
+                join applyList in await _applyListRepository.ListAsync(a => a.MemberId == tutorDto.MemberId)
+                on member.MemberId equals applyList.MemberId
+                select new { Member = member, ApplyList = applyList };
 
+            var memberToUpdate = memberApplyData.FirstOrDefault();
+            if (memberToUpdate == null)
+            {
+                return (false, "未找到該會員或申請記錄。");
+            }
+
+            // 更新 IsTutor 和 ApplyStatus
+            memberToUpdate.Member.IsTutor = tutorDto.Istutor;
+            memberToUpdate.ApplyList.ApplyStatus = tutorDto.ApplyStatus;
+            memberToUpdate.ApplyList.RejectReason = tutorDto.RejectReason;
+
+            // 更新 ApprovedDateTime，只有當 ApplyStatus 為 true 時才更新
+            if (tutorDto.ApplyStatus)
+                if (DateTime.TryParse(tutorDto.ApprovedDateTime, out var parsedDateTime))
+                {
+                    memberToUpdate.ApplyList.ApprovedDateTime = parsedDateTime;
+                }
+                else
+                {
+                memberToUpdate.ApplyList.ApprovedDateTime = null; 
+                }
+
+            // 保存變更
+            await _memberRepository.UpdateAsync(memberToUpdate.Member);
+            await _applyListRepository.UpdateAsync(memberToUpdate.ApplyList);
+
+            return (true, "會員資料已成功更新。");
+        }
+
+        public async Task<(bool IsSuccess, string Message)> ProcessTutorRejectAsync(UpdateTutorDataDto tutorDto)
+        {
+            var memberApplyData =
+                from member in await _memberRepository.ListAsync(m => m.MemberId == tutorDto.MemberId)
+                join applyList in await _applyListRepository.ListAsync(a => a.MemberId == tutorDto.MemberId)
+                on member.MemberId equals applyList.MemberId
+                select new { Member = member, ApplyList = applyList };
+
+            var memberToUpdate = memberApplyData.FirstOrDefault();
+            if (memberToUpdate == null)
+            {
+                return (false, "未找到該會員或申請記錄。");
+            }
+
+            // 更新 IsTutor 和 ApplyStatus
+            memberToUpdate.Member.IsTutor = tutorDto.Istutor;
+            memberToUpdate.ApplyList.ApplyStatus = tutorDto.ApplyStatus;
+            memberToUpdate.ApplyList.RejectReason = tutorDto.RejectReason;
+
+            // 更新 ApprovedDateTime，只有當 ApplyStatus 為 true 時才更新
+            if (!tutorDto.ApplyStatus && DateTime.TryParse(tutorDto.ApprovedDateTime, out var parsedDateTime))
+            {
+             memberToUpdate.ApplyList.ApprovedDateTime = null;
+            }
+            
+                
+
+            // 保存變更
+            await _memberRepository.UpdateAsync(memberToUpdate.Member);
+            await _applyListRepository.UpdateAsync(memberToUpdate.ApplyList);
+
+            return (true, "會員資料已成功更新。");
+        }
+        public async Task<TutorDataStatisticsDto> GetTutorDataInformation()
+        {
+            var tutorDataInfo = await _applyListRepository.ListAsync();
+            var memberDataInfo = await _memberRepository.ListAsync();
+
+            var memberCount = memberDataInfo.Count;
+            var isTutorCount = memberDataInfo.Count(x => x.IsTutor);
+            var applyCount = tutorDataInfo.Count(x => x.ApplyDateTime != null);
+            var pendingReviewCount = tutorDataInfo.Count(x => x.RejectReason != null);
+
+            //從這個月開始算起
+            var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var currentMonth = DateTime.Now.ToString("yyyy/MM");
+
+            // 計算當月的數據
+            var monthlyApplyCount = tutorDataInfo.Count(x => x.ApplyDateTime != null && x.ApplyDateTime >= firstDayOfMonth);
+            var monthlyPendingReviewCount = tutorDataInfo.Count(x => x.RejectReason != null && x.ApplyDateTime >= firstDayOfMonth);
+            var monthlyIsTutorCount = tutorDataInfo.Count(x => x.ApprovedDateTime != null && x.ApprovedDateTime >= firstDayOfMonth); 
+            var monthlyNewMemberCount = memberDataInfo.Count(x => x.Cdate >= firstDayOfMonth); 
+
+
+            var statisticsDto = new TutorDataStatisticsDto
+            {
+                MemberCount = memberCount,
+                IsTutorCount = isTutorCount,
+                ApplyCount = applyCount,
+                PendingReviewCount = pendingReviewCount,
+                MonthlyApplyCount = monthlyApplyCount, 
+                MonthlyPendingReviewCount = monthlyPendingReviewCount, 
+                MonthlyIsTutorCount = monthlyIsTutorCount, 
+                MonthlyNewMemberCount = monthlyNewMemberCount,
+                CurrentMonth = currentMonth
+            };
+
+            return statisticsDto;
+        }
     }
     public enum GenderEnum
     {
@@ -131,7 +239,7 @@ namespace Api.Services
     public enum resumeStatus
     {
         未審核 = 0,
-        已審核 = 1,
-        申請駁回 = 2,
+        通過申請 = 1,
+        駁回申請 = 2,
     }
 }

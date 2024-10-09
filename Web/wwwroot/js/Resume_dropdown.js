@@ -518,17 +518,17 @@ const appresume = createApp({
                 validationModal.show();
             } else {
                 // 如果所有證照和工作經驗都已確認，提交表單
-                this.$refs.form.submit();  // 手動觸發表單提交
+                this.$refs.form.submit();  
             }
         },
         checkHeadFile() {
             const HeadImage = this.selectedFile;
 
             if (!HeadImage) {
-                this.confirmheadShotImg = false;  // 沒有選擇大頭貼，顯示錯誤提示
+                this.confirmheadShotImg = false;  
             } else {
-                this.confirmheadShotImg = true;   // 已選擇大頭貼，隱藏錯誤提示
-                this.onFileChange();              // 上傳大頭貼
+                this.confirmheadShotImg = true;   
+                this.onFileChange();              
             }
         },
         onFileChange() {

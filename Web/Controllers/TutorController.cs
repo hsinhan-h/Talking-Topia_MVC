@@ -71,7 +71,7 @@ namespace Web.Controllers
             if (!isTeacher)
             {
                 // 如果還不是老師，返回一個訊息頁面或顯示提示訊息
-                ViewData["Message"] = "您還沒成為老師，請提交履歷，如已提交需二到三個工作天請耐心等待。";
+                ViewData["Message"] = "您還沒成為老師，請提交履歷，如已提交請耐心等待。";
                 return View("_ShowMessage");
             }
 

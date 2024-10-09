@@ -62,5 +62,53 @@ namespace Api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpPut]
+        public async Task<IActionResult> ApproveTutorData([FromBody] UpdateTutorDataDto tutorDto)
+        {
+            if (tutorDto == null || tutorDto.MemberId <= 0)
+            {
+                return BadRequest("無效的數據。");
+            }
+            var result = await _memberManagermentApiService.ProcessTutorApplicationAsync(tutorDto);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result.Message);
+            }
+
+            return BadRequest(result.Message);
+        }
+        [HttpPut]
+        public async Task<IActionResult> RejectTutorData([FromBody] UpdateTutorDataDto tutorDto)
+        {
+            if (tutorDto == null || tutorDto.MemberId <= 0)
+            {
+                return BadRequest("無效的數據。");
+            }
+            var result = await _memberManagermentApiService.ProcessTutorRejectAsync(tutorDto);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result.Message);
+            }
+
+            return BadRequest(result.Message);
+        }
+        [HttpGet]
+        public async Task<ActionResult> TutorDataInformation()
+        {
+            try
+            {
+                var tutordatainformationList = await _memberManagermentApiService.GetTutorDataInformation();
+                return Ok(tutordatainformationList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+
     }
 }
