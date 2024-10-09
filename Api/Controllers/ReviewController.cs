@@ -34,11 +34,11 @@ namespace Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> DeleteReview(DeleteReviewDto review)
+        public async Task<IActionResult> DeleteReview(int reviewId)
         {
             try
             {
-                await _reviewApiService.DeleteReview(review.ReviewId);
+                await _reviewApiService.DeleteReview(reviewId);
                 return Ok(new BaseApiResponse { ErrMsg = "Reviews deleted successfully." });
             }
             catch (Exception ex)
