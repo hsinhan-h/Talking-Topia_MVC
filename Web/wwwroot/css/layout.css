@@ -121,7 +121,7 @@
 }
 
 .mega-menu {
-    width: 800px;
+    width: 600px; /* Adjusted to make it narrower */
     background-color: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -158,6 +158,10 @@
 
 /* 預設不顯示第二欄 */
 .mega-menu .second-column {
+    display: none;
+}
+
+.second-column .sub-menu {
     display: none;
 }
 
