@@ -134,7 +134,7 @@ namespace Web.Controllers
 
                 TempData["Header"] = "教師資料新增";
                 TempData["Message"] = "教師資料新增成功";
-                return RedirectToAction("TutorData"); 
+                return RedirectToAction("TutorData");
             }
             else
             {
@@ -249,7 +249,13 @@ namespace Web.Controllers
 
             var appointmentDetails = await _appointmentDetailVMService.GetAppointmentData(memberId);
 
-            if (appointmentDetails == null) { _logger.LogWarning("教師被預約明細為空"); }
+            if (appointmentDetails == null)
+            {
+                appointmentDetails = new AppointmentDetailsViewModel
+                {
+                    AppointmentDetailsList = new List<AppointmentDetailVM>()
+                };
+            }
             return View(appointmentDetails);
         }
     }

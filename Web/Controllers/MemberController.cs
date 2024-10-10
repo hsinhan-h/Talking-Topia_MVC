@@ -104,14 +104,16 @@ namespace Web.Controllers
             if (!result) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
 
             var orderDetail = await _orderDetailVMService.GetOrderData(memberId);
-            if (orderDetail != null)
+            if (orderDetail == null)
             {
+                orderDetail = new MemberOrderViewModel
+                {
+                    MemberOrderList = new List<MemberOrderVM>(),
+                    PendingOrders = new List<MemberOrderVM>(),
+                    FailedOrders = new List<MemberOrderVM>()
+                };
+            }
                 return View(orderDetail);
-            }
-            else
-            {
-                return BadRequest("交易明細為空");
-            }
         }
         public async Task<IActionResult> WatchList()
         {

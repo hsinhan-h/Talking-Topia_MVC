@@ -1,6 +1,6 @@
 ﻿@model MemberOrderViewModel
 
-<div class="container lh-backstage">
+<div class="container lh-backstage pt-4">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
             <div class="lh-backstage-transaction-section mb-5"
@@ -54,7 +54,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Model.MemberOrderList.Count > 0)
+                                    @if (Model.MemberOrderList != null && Model.MemberOrderList.Any())
                                     {
                                         @for (var i = 0; i < Model.MemberOrderList.Count; i++)
                                         {
@@ -108,7 +108,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Model.PendingOrders.Count > 0)
+                                    @if (Model.PendingOrders != null && Model.PendingOrders.Any())
                                     {
                                         @for (var i = 0; i < Model.PendingOrders.Count; i++)
                                         {
@@ -163,7 +163,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Model.FailedOrders.Count > 0)
+                                    @if (Model.FailedOrders != null && Model.FailedOrders.Any())
                                     {
                                         @for (var i = 0; i < Model.FailedOrders.Count; i++)
                                         {
