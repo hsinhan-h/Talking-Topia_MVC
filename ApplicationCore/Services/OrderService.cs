@@ -52,6 +52,7 @@ namespace ApplicationCore.Services
 
             try
             {
+                await _transaction.BeginTransactionAsync();
                 var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == memberId);
                 var totalPrice = shoppingCartItem.Sum(item => item.TotalPrice);
                 var member = await _memberRepository.FirstOrDefaultAsync(m => m.MemberId == memberId);
@@ -97,16 +98,23 @@ namespace ApplicationCore.Services
                 }
                 if (await _orderRepository.FirstOrDefaultAsync(x => x.OrderId == orderResult.OrderId) == null)
                 {
+                    await _transaction.RollbackAsync();
                     throw new Exception("Order could not be created");
                 }
                 else
                 {
+                    await _transaction.CommitAsync();
                     return orderResult.OrderId;
                 }
             }
             catch (Exception ex)
             {
+                await _transaction.RollbackAsync();
                 throw new Exception($"Unexpected error: {ex.Message}");
+            }
+            finally
+            {
+                _transaction.Dispose();
             }
         }
 
@@ -114,6 +122,7 @@ namespace ApplicationCore.Services
         {
             try
             {
+                await _transaction.BeginTransactionAsync();
                 var order = await _orderRepository.GetByIdAsync(orderId);
                 var shoppingCartItem = await _shoppingCartRepository.ListAsync(m => m.MemberId == order.MemberId);
 
@@ -123,7 +132,7 @@ namespace ApplicationCore.Services
                     order.Udate = DateTime.Now;
                     order.MerchantTradeNo = merchantTradeNo;
                     //order.TradeNo = tradeNo;
-                    var updateResult =  await _orderRepository.UpdateAsync(order);
+                    var updateResult = await _orderRepository.UpdateAsync(order);
                     foreach (var item in shoppingCartItem)
                     {
                         if (item.BookingDate.HasValue && item.BookingTime.HasValue)
@@ -140,15 +149,22 @@ namespace ApplicationCore.Services
                         }
                         await _shoppingCartRepository.DeleteAsync(item);
                     }
+                    await _transaction.CommitAsync();
                 }
                 else if (orderStatus == EOrderStatus.Failed)
                 {
+                    await _transaction.RollbackAsync();
                     throw new Exception("Order Status is Failed");
                 }
             }
             catch (Exception ex)
             {
+                await _transaction.RollbackAsync();
                 throw new Exception($"UpDate error: {ex.Message}");
+            }
+            finally
+            {
+                _transaction.Dispose();
             }
         }
 
