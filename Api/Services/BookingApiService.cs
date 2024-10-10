@@ -125,7 +125,7 @@ namespace Api.Services
                     result.Add(bResult);
                 }
             }
-
+            result.OrderByDescending(r => r.BookingDate);
             return result;
         }
 
