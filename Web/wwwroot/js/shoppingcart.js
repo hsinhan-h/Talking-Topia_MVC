@@ -58,7 +58,7 @@
         event.preventDefault();
 
         const paymentType = document.querySelector('input[name="paymentType"]').value;
-        const taxIdNumber = document.getElementById("taxIdInput").value;
+        const taxIdNumber = " ";
         const cart = window.viewModelData.shoppingCartList;
 
         const orderData = {
