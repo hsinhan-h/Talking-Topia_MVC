@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "_ShowMessage";
+}
+
+<div class="container text-center mt-6">
+    <div class="alert alert-success">
+        <p class="fs-3 ">@ViewData["Message"]</p>
+        <p id="countdown">6 秒後將前往申請教師...</p>
+    </div>
+</div>
+<script>
+    let seconds = 6;
+    const countdownElement = document.getElementById("countdown");
+
+    const countdownInterval = setInterval(() => {
+        seconds--;
+        countdownElement.textContent = `${seconds} 秒後將自動返回登入畫面...`;
+
+        if (seconds === 0) {
+            clearInterval(countdownInterval);
+            window.location.href = '@Url.Action("Index", "Tutor")';
+        }
+    }, 1000);
+</script>

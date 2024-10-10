@@ -40,13 +40,13 @@
         /// <summary>
         /// 分鐘數
         /// </summary>
-        public string CourseLength { get; set; }
+        public int CourseLength { get; set; }
 
         /// <summary>
         /// 堂數
         /// </summary>
         public int CourseQuantity { get; set; }
-
+      
         /// <summary>
         /// 單價
         /// </summary>
@@ -62,12 +62,12 @@
         /// </summary>
         public int FTUnitPrice { get; set; }
 
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
 
         /// <summary>
         /// 小計
         /// </summary>
-        public decimal SubtotalNTD { get; set; }
+        public int SubtotalNTD { get; set; }
 
         /// <summary>
         /// 優惠券
@@ -81,16 +81,6 @@
     }
     public class ShoppingCartListViewModel
     {
-        public int MemberId { get; set; }
         public List<ShoppingCartViewModel> ShoppingCartList { get; set; }
     }
-
-    public class CartItemUpdateViewModel
-    {
-        public int CourseId { get; set; }
-        public int CourseQuantity { get; set; }
-        public int CourseLength { get; set; }
-        public decimal SubtotalNTD { get; set; }
-    }
-
 }

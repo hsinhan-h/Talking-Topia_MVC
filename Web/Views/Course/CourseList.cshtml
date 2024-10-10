@@ -2,11 +2,10 @@
 
 @section topCSS
 {
-    <link rel="stylesheet" href="~/css/normalize.css" />
-    <link rel="stylesheet" href="~/css/utilities.css" />
     <link rel="stylesheet" href="~/css/course_list.css" />
     <link rel="stylesheet" href="~/css/tutor_intro_medias_slider.css">
     <link rel="stylesheet" href="~/css/booking_table_modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <style>
         [v-cloak] {
             display: none;
@@ -16,9 +15,9 @@
 
 <partial name="_BannerPartial"  />
 <section class="tutors mb-3" id="course-cards-app">
-    <div class="lh-tutors-filter d-flex">
-        <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-3">
-            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedSubject}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
+    <div class="lh-tutors-filter d-flex flex-wrap flex-md-nowrap" v-cloak>
+        <div class="btn-group mx-1 ms-sm-4 me-sm-2 mt-4 mb-1 mb-md-3">
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedSubject}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                 {{ selectedSubject ? selectedSubject : '學習需求' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
@@ -38,8 +37,8 @@
                 </li>
             </ul> 
         </div>
-        <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
-            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedNation}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
+        <div class="btn-group me-1 mx-sm-2 mt-4 mb-0 mb-1 mb-md-3">
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedNation}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                 {{ selectedNation ? selectedNation : '教師國籍' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
@@ -53,7 +52,7 @@
                 </li>
             </ul>
         </div>
-        <div class="btn-group course-time-filter me-1 mx-sm-2 mt-4 mb-3">
+        <div class="btn-group course-time-filter me-1 mx-sm-2 mt-4 mb-1 mb-md-3">
             <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedWeekdays.length > 0 || selectedTimeslots.length > 0}]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                 <template v-if="selectedWeekdays.length > 0">
                     {{ getWeekdayName(selectedWeekdays[0]) }} <span v-if="selectedWeekdays.length > 1 && selectedTimeslots.length === 0"> + 1</span>
@@ -170,8 +169,8 @@
 
 
         </div>
-        <div class="btn-group me-1 mx-sm-2 mt-4 mb-3">
-            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedBudget }]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" v-cloak>
+        <div class="btn-group me-1 mx-sm-2 mt-4 mb-1 mb-md-3">
+            <button :class="['btn dropdown-toggle px-1 px-sm-3 py-2', {'dropdown-selected': selectedBudget }]" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                 {{ selectedBudget ? 'NT$ ' + selectedBudget : '預算區間' }} <i class="bi bi-filter"></i>
             </button>
             <ul class="dropdown-menu">
@@ -185,20 +184,29 @@
                 </li>
             </ul>
         </div>
-        <div v-cloak class="btn-group me-1 mx-sm-2 mt-4 mb-3" v-if="selectedSubject || selectedNation || selectedWeekdays.length > 0 || selectedTimeslots.length > 0 || selectedBudget">
+        <div class="btn-group me-1 mx-sm-2 mt-1 mt-md-4 mb-1 mb-md-3" v-if="selectedSubject || selectedNation || selectedWeekdays.length > 0 || selectedTimeslots.length > 0 || selectedBudget">
             <button class="dropdown-item cancel-filter-btn ms-md-2" type="button" v-on:click="clearAllFilter"><i class="bi bi-x-circle-fill"></i>  <strong>清除篩選</strong></button>
         </div>
     </div>
     <div class="lh-tutors-order">
         <span class="fw-bold ms-2 ms-md-4">目前排序</span>
-        <a href="" class="recommend" v-on:click="clearAllFilter">即時推薦</a>
-        <a href="">優質教師優先</a>
-        <a href="">低價優先</a>
-        <a href="">多評價數優先</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'default' }" v-on:click="sortByDefault">即時推薦</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'verifiedTutor' }" v-on:click="sortByVerifiedTutor">優質教師優先</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'priceAscend' }" v-on:click="sortByPriceAscend">低價優先</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'reviewsCount' }" v-on:click="sortByReviewsCount">多評價數優先</a>
+        <a href="" :class="{'sort-option-selected': selectedSortOption == 'rating' }" v-on:click="sortByRating">評分高優先</a>
     </div>
-    <div v-if="loading"></div>
-    <div v-else class="lh-tutor-cards">
-        <div v-for="(courseCard, index) in courses" :key="courseCard.courseId" class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
+    <div v-if="loading" class="course-spinner ms-3 my-3">
+        <img src="~/image/spinner_imgs/block_spinner-1.gif" />
+        <span>加載課程資料中...</span>
+    </div>
+    
+    <div v-else class="lh-tutor-cards" v-cloak>
+        <div v-if="noCoursesFound" class="no-courses-found">
+            <p class="ms-4 mt-5"><i class="fa-solid fa-book me-2"></i>沒有找到符合篩選條件的課程</p>
+            <img class="ms-md-4" src="~/image/course_list_imgs/no-courses-found-4.webp" />
+        </div>
+        <div v-else v-for="(courseCard, index) in courses" :key="courseCard.courseId" class="lh-tutor-card p-2 m-2 m-md-4 position-relative">
             <div class="lh-tutor-card__main d-flex pb-3 pb-md-0 pt-md-2">
                 <div class="lh-tutor-images col-3 col-sm-2 d-flex flex-column align-items-center">
                     <div class="lh-tutor-images__head position-relative">
@@ -207,11 +215,15 @@
                         <img class="tutor-nation-icon rounded-circle border border-white position-absolute"
                              :src="courseCard.tutorFlagImage.replace('~', '')" />
                     </div>
-                    <div class="lh-tutor-follow mt-2">+關注</div>
+                    <div :class="['lh-tutor-follow mt-2', {'following': courseCard.followingStatus}]"
+                         v-on:click="toggleFollow(courseCard)">
+                        <span v-if="courseCard.followingStatus">關注中</span>
+                        <span v-else>+關注</span>
+                    </div>
                 </div>
                 <div class="lh-tutor-description flex-grow-1 col-9 col-md-7 px-2 px-md-3">
                     <div class="tutor-description-title-wrapper d-flex justify-content-between">
-                        <a class="tutor-description-title" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer" v-cloak>
+                        <a class="tutor-description-title" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer">
                             {{ courseCard.courseTitle }}
                         </a>
 
@@ -221,29 +233,29 @@
                             <img src="~/image/tutor_badge_imgs/tutor_badge.webp">
                         </span>
                     </div>
-                    <div class="tutor-subtitle my-1" v-cloak>{{ courseCard.courseSubTitle }}</div>
+                    <div class="tutor-subtitle my-1">{{ courseCard.courseSubTitle }}</div>
                     <div class="course-pricing d-flex justify-content-between mb-2 d-md-none">
-                        <div class="fifty-min-course-pricing" v-cloak>
+                        <div class="fifty-min-course-pricing">
                             NT${{ formatPrice(courseCard.fiftyMinUnitPrice) }} <span class="text">/ 50分鐘</span>
                         </div>
-                        <div class="trail-course-pricing" v-cloak>NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <span class="text">/ 25分鐘</span></div>
+                        <div class="trail-course-pricing">NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <span class="text">/ 25分鐘</span></div>
                     </div>
                     <div class="tutor-received-feedback d-flex gap-1 my-md-2">
-                        <div class="tutor-ranking" v-cloak><i class="bi bi-star-fill pe-1"></i><span>{{ courseCard.courseRatings }}</span></div>
+                        <div class="tutor-ranking"><i class="bi bi-star-fill pe-1"></i><span>{{ courseCard.courseRatings }}</span></div>
                         <div>・</div>
-                        <div class="tutor-total-reviews" v-cloak><span class="pe-1">{{ courseCard.courseReviews }}</span>個評論</div>
+                        <div class="tutor-total-reviews"><span class="pe-1">{{ courseCard.courseReviews }}</span>個評論</div>
                     </div>
-                    <p class="tutor-intro-text mb-2" v-cloak>
+                    <p class="tutor-intro-text mb-2">
                         {{ courseCard.tutorIntro }}
                     </p>
                     <a class="tutor-viewmore d-none d-md-inline" v-on:click="goToCourseMainPage(courseCard.courseId)" style="cursor: pointer">瀏覽更多</a>
                 </div>
                 <div class="lh-tutor-contact d-none d-md-flex flex-column col-md-3 ps-md-2 gap-2">
                     <div class="course-pricing d-flex">
-                        <div class="trail-course-pricing col-6" v-cloak>
+                        <div class="trail-course-pricing col-6">
                             NT${{ formatPrice(courseCard.twentyFiveMinUnitPrice) }} <div class="text">25分鐘</div>
                         </div>
-                        <div class="fifty-min-course-pricing col-6" v-cloak>
+                        <div class="fifty-min-course-pricing col-6">
                             NT${{ formatPrice(courseCard.fiftyMinUnitPrice) }} <div class="text">50分鐘</div>
                         </div>
                     </div>
@@ -254,13 +266,13 @@
                             data-bs-toggle="modal" data-bs-target="#contactTutorModal">
                         聯繫老師
                     </button> *@
-                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11">
-                        聯繫老師
+                    <button type="button" class="lh-tutor-card__contact-tutor-btn mx-auto my-1 col-11" v-on:click="goToCourseMainPage(courseCard.courseId)">
+                        查看教師
                     </button>
                 </div>
             </div>
             <div class="lh-tutor-card__preview mt-3 mb-2 col-12 d-md-none">
-                <p class="tutor-intro-text" v-cloak>
+                <p class="tutor-intro-text">
                     {{ courseCard.tutorIntro }}
                 </p>
             </div>
@@ -398,7 +410,7 @@
         </div>
     </div>
 
-    <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center">
+    <div class="lh-tutors-switch-page-btns d-flex justify-content-center align-items-center" v-cloak>
         <button v-on:click="goToPage(page - 1)" type="button" class="prev-page"><i class="fa-solid fa-angle-left"></i></button>
         <div class="page-text mx-3 mx-md-4"> {{ page }} </div>
         <button v-on:click="goToPage(page + 1)" type="button" class="next-page"><i class="fa-solid fa-angle-right"></i></button>
@@ -421,8 +433,9 @@
 
 @section endJS
 {
-    <script src="~/js/course_list/course_list_pagination.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="~/js/course_list/course_list_nested_dropdown.js"></script>
     <script src="~/lib/myvue/vue.global.prod.js" asp-append-version="true"></script>
-    <script type="module" src="~/js/course_list/course_cards_app.js"></script>
+    <script src="~/lib/lodash.js/lodash.min.js"></script>
+    <script type="module" src="~/js/course_list/course_list_app.js"></script>
 }

@@ -1,23 +1,34 @@
 ﻿@model TutorDataViewModel
 
+@{
+    var memberId = ViewData["MemberID"];
+    var message = TempData["Message"]?.ToString();
+    var header = TempData["Header"]?.ToString();
+    var validationErrors = ViewData["ValidationErrors"] as Dictionary<string, List<string>>;
+}
 
-<p style="display: none;">會員ID: <span id="memberIdDisplay"></span></p>
+
+@* <p>@memberId</p> *@
+@* <template> style="display: none;">會員ID: <span id="memberIdDisplay">@memberId</span></template> *@
+<p style="display: none;">會員ID: <span id="memberIdDisplay">@memberId</span></p>
 <div class="container lh-backstage mt-5" id="app">
     <div class="row">
         <div class="col-12 lh-backstage-main-section">
             <div class="lh-backstage-member-section mb-5">
                 <div class="container" id="lh-backstage-tutor-page">
-                    <div class="lh-backstage-tutor-page mb-5">
-                        <section class="lh-backstage-lh-backstage-tutor-data">
+                    <section class="lh-backstage-lh-backstage-tutor-data">
+                        <div class="lh-backstage-tutor-page mb-5">
+
                             <div class="row mb-2">
                                 <form asp-action="TutorData" method="post" class="tutorDataForm">
                                     <div class="col-12">
                                         <h3>家教資料</h3>
                                         <div class="row">
-                                            <div class="col-12 col-md-4">
+                                            <div class="col-12 col-md-4 mb-2">
                                                 <div>
                                                     <select asp-for="NationID" asp-items="@(new SelectList(new List<SelectListItem>
-                                                {
+
+                                                {   new SelectListItem { Value = "", Text = "請選擇" },
                                                     new SelectListItem { Value = "1", Text = "台灣" },
                                                     new SelectListItem { Value = "2", Text = "日本" },
                                                     new SelectListItem { Value = "3", Text = "英國" },
@@ -27,251 +38,327 @@
                                                     new SelectListItem { Value = "7", Text = "西班牙" },
                                                     new SelectListItem { Value = "8", Text = "印度" },
                                                     new SelectListItem { Value = "9", Text = "其他" }
-                                                }, "Value", "Text"))" class="form-select select-form" aria-label="Default select example">
+                                                }, "Value", "Text"))" class="form-select select-form memberInfoItem" aria-label="Default select example">
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-4">
-                                                <div class="form-floating mb-3">
+                                            <div class="col-12 col-md-4 mb-2">
+                                                <div class="form-floating ">
                                                     <input asp-for="NativeLanguage"
                                                            type="text"
-                                                           class="form-control"
+                                                           class="form-control memberInfoItem"
                                                            id="floatingInput5"
                                                            placeholder=""
                                                            value="@Model.NativeLanguage" />
                                                     <label for="floatingInput5">母語</label>
                                                 </div>
+                                                @if (validationErrors != null && validationErrors.ContainsKey("NativeLanguage"))
+                                                {
+                                                    <p class="text-danger">
+                                                        @foreach (var error in validationErrors["NativeLanguage"])
+                                                        {
+                                                            @error
+                                                        }
+                                                    </p>
+                                                }
                                             </div>
-                                            <div class="col-12 col-md-4">
-                                                <div class="form-floating mb-3">
+                                            <div class="col-12 col-md-4 mb-2">
+                                                <div class="form-floating">
                                                     <input asp-for="SpokenLanguage"
                                                            type="text"
-                                                           class="form-control"
+                                                           class="form-control memberInfoItem"
                                                            id="floatingInput6"
                                                            placeholder=""
                                                            value="@Model.SpokenLanguage" />
                                                     <label for="floatingInput6">會說的語言</label>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <input asp-for="BankAccount"
-                                                           type="text"
-                                                           class="form-control"
-                                                           id="floatingInput13"
-                                                           value="@Model.BankCode"
-                                                           placeholder="" />
-                                                    <label for="floatingInput13">銀行代號</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <input asp-for="BankCode"
-                                                           type="text"
-                                                           class="form-control"
-                                                           id="floatingInput14"
-                                                           value=" @Model.BankAccount"
-                                                           placeholder="" />
-                                                    <label for="floatingInput14">銀行帳戶</label>
-                                                </div>
+
+                                                @if (validationErrors != null && validationErrors.ContainsKey("SpokenLanguage"))
+                                                {
+                                                    <p class="text-danger">
+                                                        @foreach (var error in validationErrors["SpokenLanguage"])
+                                                        {
+                                                            @error
+                                                        }
+                                                    </p>
+                                                }
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="lh-baclstage-member-data-list mt-3">
-                                        <h4>學歷</h4>
-                                        <ul>
-                                            @foreach (var edu in Model.EducationalBackground)
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input asp-for="BankCode"
+                                                       type="text"
+                                                       class="form-control memberInfoItem"
+                                                       id="floatingInput13"
+                                                       value="@Model.BankCode"
+                                                       placeholder="" />
+                                                <label for="floatingInput13">銀行代號</label>
+                                            </div>
+                                            @if (validationErrors != null && validationErrors.ContainsKey("BankCode"))
                                             {
-                                                <li>@edu.SchoolName - @edu.StudyStartYear 至 @edu.StudyEndYear</li>
+                                                <p class="text-danger">
+                                                    @foreach (var error in validationErrors["BankCode"])
+                                                    {
+                                                        @error
+                                                    }
+                                                </p>
                                             }
-                                        </ul>
-                                        <h4>經歷</h4>
-                                        <ul>
-                                            @foreach (var work in Model.WorkBackground)
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input asp-for="BankAccount"
+                                                       type="text"
+                                                       class="form-control memberInfoItem"
+                                                       id="floatingInput14"
+                                                       value="@Model.BankAccount"
+                                                       placeholder="" />
+                                                <label for="floatingInput14">銀行帳戶</label>
+                                            </div>
+                                            @if (validationErrors != null && validationErrors.ContainsKey("BankAccount"))
                                             {
-                                                <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
+                                                <p class="text-danger">
+                                                    @foreach (var error in validationErrors["BankAccount"])
+                                                    {
+                                                        @error
+                                                    }
+                                                </p>
                                             }
-                                        </ul>
+                                        </div>
+                                    </div>
+                                    @*  apply status 為true 預設0*@
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn lh-backstage-submit-btn submitButton">
+                                            @(Model.NativeLanguage == null ? "儲存" : "編輯")
+                                            <span class="spinner-border spinner-border-sm submitspinner d-none mx-2" aria-hidden="true" ></span>
+                                        </button>
                                     </div>
                                 </form>
-                                <h4>證照資訊</h4>
-                                <div>
-                                    <button class="btn lh-backstage-submit-btn"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#lh-backstage-tutor-application-audit">
-                                        證照資訊
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="lh-baclstage-member-data-list mt-3">
+                                <h4>學歷</h4>
+                                <ul>
+                                    @foreach (var edu in Model.EducationalBackground)
+                                    {
+                                        <li>@edu.SchoolName - @edu.StudyStartYear 至 @edu.StudyEndYear</li>
+                                    }
+                                </ul>
+                                <h4>經歷</h4>
+                                @if (Model.WorkBackground != null && Model.WorkBackground.Any())
+                                {
+                                    <ul>
+                                        @foreach (var work in Model.WorkBackground)
+                                        {
+                                            <li>工作名稱：@work.WorkName；年資：起 @work.WorkStartDate.ToString("yyyy-MM-dd") 訖 @work.WorkEndDate.ToString("yyyy-MM-dd")</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul>
+                                        <li>目前沒有工作經歷，請提供相關工作經歷。</li>
+                                    </ul>
+                                }
+                            </div>
 
-                                <h4>可接受預約時段</h4>
-                                <div class=" d-flex flex-wrap col-10" id="reservation-list">
+                            <h4>證照資訊</h4>
+                            <div>
+                                <button class="btn lh-backstage-submit-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#lh-backstage-tutor-application-audit">
+                                    證照資訊
+                                </button>
+                            </div>
+                            <h4>可接受預約時段</h4>
+                            <div class=" d-flex flex-wrap col-10" id="reservation-list">
+                            </div>
+                            <div class=" d-flex flex-wrap col-10">
                                 <button type="button"
                                         class="btn lh-backstage-submit-btn"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editTimeSlotModal">
                                     編輯教師可預約時段
-                                </div>
                                 </button>
                             </div>
 
-                            <div class="lh-backstage-member-card-list d-flex">
-                                <div class="card col-12 col-md-3 me-2 p-2">
-                                    @if (Model.HasCourses)
+                        </div>
+
+                        <div class="lh-backstage-member-card-list d-flex">
+                            <div class="card col-12 col-md-3 me-2 p-2">
+                                @if (Model.HasCourses)
+                                {
+                                    @foreach (var course in Model.Course)
                                     {
-                                        @foreach (var course in Model.Course)
-                                        {
-                                            <div class="fs-2 ps-3">@course.CategoryName</div>
-                                            <div class="card-body">
-                                                <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
-                                                <p class="card-text">申請狀態：<span>@Model.Coursestatus</span></p>
-                                                @*  要return回履歷 <a href="/TalkingTopia/Tutor/TutorResume.html?memberId=@Model.MemberId"
-                                        class="btn lh-backstage-submit-btn">編輯家教資料 *@
-                                                <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
-                                                    編輯家教資料
-                                                </a>
-                                            </div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <div class="fs-2 ps-3"></div>
+                                        <div class="fs-2 ps-3">@course.CategoryName</div>
                                         <div class="card-body">
-                                            <p class="card-text">申請科目：<span></span></p>
-                                            <p class="card-text">申請狀態：<span></span></p>
+                                            <p class="card-text">申請科目：<span>@course.SubjectName</span></p>
+                                            <p class="card-text">申請狀態：<span>@Model.Coursestatus</span></p>
                                             <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
                                                 編輯家教資料
                                             </a>
                                         </div>
                                     }
-                                </div>
+                                }
+                                else
+                                {
+                                    <div class="fs-2 ps-3"></div>
+                                    <div class="card-body">
+                                        <p class="card-text">申請科目：<span></span></p>
+                                        <p class="card-text">申請狀態：<span></span></p>
+                                        <a asp-controller="Tutor" asp-action="TutorResume" class="btn lh-backstage-submit-btn">
+                                            編輯家教資料
+                                        </a>
+                                    </div>
+                                }
                             </div>
-                            @*  apply status 為true 預設0*@
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn lh-backstage-submit-btn submitButton">@(Model.TutorId == 0 ? "儲存" : "編輯")</button>
-                            </div>
-
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- screen modal for 家教申請審核-->
-    <div class="modal fade"
-         id="lh-backstage-tutor-application-audit"
-         tabindex="-1"
-         aria-labelledby=""
-         aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content container">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
-                        證照資訊
-                    </h1>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <section class="lh-backstage-lh-backstage-tutor-data">
-                        @*當lisence關聯修好後再測試*@
-                        <ul>
-                            @foreach (var lisence in Model.License)
-                            {
-                                <li>證照名稱：@lisence.ProfessionalLicenseName</li>
-                            }
-                        </ul>
+                        </div>
                     </section>
                 </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-secondary lh-backstage-submit-btn"
-                            data-bs-dismiss="modal">
-                        確認
-                    </button>
-                </div>
             </div>
         </div>
     </div>
-    <!-- modal 時段-->
-    <div class="modal fade"
-         id="editTimeSlotModal"
-         tabindex="-1"
-         aria-labelledby="editModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">
-                        編輯教師可預約時段
-                    </h5>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+</div>
+<!-- screen modal for 家教申請審核-->
+<div class="modal fade"
+     id="lh-backstage-tutor-application-audit"
+     tabindex="-1"
+     aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content container">
+            <div class="modal-header">
+                <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">
+                    證照資訊
+                </h1>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <section class="lh-backstage-lh-backstage-tutor-data">
+                    @if (Model.License != null && Model.License.Any())
+                    {
+                        <ul>
+                            @foreach (var license in Model.License)
+                            {
+                                <li>證照名稱：@license.ProfessionalLicenseName</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>目前沒有證照，請提供相關證照。</p>
+                    }
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary lh-backstage-submit-btn"
+                        data-bs-dismiss="modal">
+                    確認
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal 時段-->
+<div class="modal fade"
+     id="editTimeSlotModal"
+     tabindex="-1"
+     aria-labelledby="editModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">
+                    編輯教師可預約時段
+                </h5>
+                <div class="spinner-grow spinner-grow-sm text-danger ms-3 d-none" role="status">
+                    <span class="visually-hidden">Loading...</span>
                 </div>
-                <div class="modal-body">
-                    <!-- 星期區塊 -->
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 星期區塊 -->
+                <form asp-action="TutorTimeData" method="post" class="tutorDataTimeForm">
                     <div class="row" id="timeslot-row">
                         <div class="col-12">
                             <div class="weekday-checkbox">
                                 <span class="fw-bolder mb-3 d-inline-block">請選擇可預約星期</span>
                                 <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-1" name="weekday" value="1">
+                                    <input class="form-check-input Weekday"
+                                           type="checkbox" id="weekday-1" name="Schedule[1].Weekday" value="1">
                                     <label class="form-check-label" for="monday">星期一</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-2" name="weekday" value="2">
+                                    <input class="form-check-input Weekday"
+                                           type="checkbox" id="weekday-2" name="Schedule[2].Weekday" value="2">
                                     <label class="form-check-label" for="tuesday">星期二</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-3" name="weekday" value="3">
+                                    <input class="form-check-input Weekday"
+                                           type="checkbox" id="weekday-3" name="Schedule[3].Weekday" value="3">
                                     <label class="form-check-label" for="wednesday">星期三</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-4" name="weekday" value="4">
+                                    <input class="form-check-input Weekday"
+                                           type="checkbox" id="weekday-4" name="Schedule[4].Weekday" value="4">
                                     <label class="form-check-label" for="thursday">星期四</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-5" name="weekday" value="5">
+                                    <input class="form-check-input Weekday"
+                                           type="checkbox" id="weekday-5" name="Schedule[5].Weekday" value="5">
                                     <label class="form-check-label" for="friday">星期五</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-6" name="weekday" value="6">
+                                    <input class="form-check-input Weekday"
+                                           type="checkbox" id="weekday-6" name="Schedule[6].Weekday" value="6">
                                     <label class="form-check-label" for="saturday">星期六</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox" id="weekday-0" name="weekday" value="0">
+                                    <input class="form-check-input Weekday"
+                                           type="checkbox" id="weekday-0" name="Schedule[7].Weekday" value="0">
                                     <label class="form-check-label" for="sunday">星期日</label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
-                        關閉
-                    </button>
-                    <button type="button"
-                            class="btn lh-backstage-submit-btn ">
-                        儲存
-                    </button>
-                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
+                    關閉
+                </button>
+                <button type="button"
+                        class="btn lh-backstage-submit-btn d-none"
+                        id="edit-button">
+                    更新
+                </button>
+                <button type="button"
+                        class="btn lh-backstage-submit-btn submitTimeButton">
+                    儲存
+                </button>
             </div>
         </div>
+    </div>
+</div>
+<div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+     data-bs-delay="2000" style="position: fixed; top: 50px; right: 20px; z-index: 20;"
+     data-message="@message" data-header="@header">
+    <div class="toast-header">
+        <img src="~/image/logo_imgs/talkingtopia logo_final.png" class="rounded me-2 img-fluid w-25" alt="...">
+        <strong class="me-auto ">@header</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body p-2 text-center my-3 fs-3" style="color: #ff5f5f;">
+        @message
     </div>
 </div>
 

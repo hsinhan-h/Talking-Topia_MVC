@@ -121,7 +121,7 @@ namespace Web.Services
         /// </summary>
         /// <param name="MemberId"></param>
         /// <returns></returns>
-        public async Task<BookingListViewModel> GetPublishCourse(int MemberId, int CourseId)
+        public async Task<CourseDataViewModel> GetPublishCourse(int MemberId, int CourseId)
         {
             // 將 courseImg 實體化為 List<CouresImagesViewModel>
             var courseImg = (from img in _repository.GetAll<Web.Entities.CourseImage>()
@@ -141,38 +141,41 @@ namespace Web.Services
                                join member in _repository.GetAll<Web.Entities.Member>() on course.TutorId equals member.MemberId
                                //join booking in _repository.GetAll<Booking>() on course.CourseId equals booking.CourseId
                                where member.MemberId == MemberId && course.CourseId == CourseId
-                               select new BookingViewModel
+                               select new CourseDataViewModel
                                {
-                                   UpdateDatetime = DateTime.Now,
-                                   CourseTitle = course.Title,  //這不確定是哪個欄位
-                                   Category = category.CategorytName,
-                                   CourseSubject = subject.SubjectName,
-                                   Thumbnail = course.ThumbnailUrl,
+                                   //UpdateDatetime = DateTime.Now,
+                                   //CourseTitle = course.Title,  //這不確定是哪個欄位
+                                   //Category = category.CategorytName,
+                                   CategoryName = category.CategorytName,
+                                   //CourseSubject = subject.SubjectName,
+                                   SubjectName = subject.SubjectName,
+                                   //Thumbnail = course.ThumbnailUrl,
                                    VideoUrl = course.VideoUrl,
                                    //CourseImageId = image.CourseImageId.ToString(),
-
+                                   //ThumbnailUrl = (List<string>)courseImg,
                                    //courseImageList = courseImg, // 直接指派 List
 
                                    CourseId = course.CourseId,
                                    Title = course.Title,
                                    SubTitle = course.SubTitle,
-                                   TutorIntro = member.TutorIntro,
+                                   //TutorIntro = member.TutorIntro,
                                    Description = course.Description,
-                                   TrialPriceNTD = 0,
-                                   TwentyFiveMinPriceNTD = course.TwentyFiveMinUnitPrice,
-                                   FiftyMinPriceNTD = course.FiftyMinUnitPrice,
+                                   //TrialPriceNTD = 0,
+                                   TwentyFiveMinPriceNTD = course.TwentyFiveMinUnitPrice.ToString("###"),
+                                   FiftyMinPriceNTD = course.FiftyMinUnitPrice.ToString("###"),
                                    //BookingId = booking.BookingId,
                                    //BookingDate = booking.BookingDate,
-                                   CourseLength = "", //這不確定是哪個欄位
-                                   MemberName = $"{member.FirstName}, {member.LastName}",
-                                   MemberId = member.MemberId,
+                                   //CourseLength = "", //這不確定是哪個欄位
+                                   //MemberName = $"{member.FirstName}, {member.LastName}",
+                                   //MemberId = member.MemberId,
+                                   SubjectId = subject.SubjectId,
+                                   //CategoryId = course.CategoryId,
                                };
 
-            return new BookingListViewModel()
+            return new CourseDataViewModel()
             {
                 BookingList = await bookingValue.ToListAsync(),
             };
-
 
         }
 
@@ -257,19 +260,19 @@ namespace Web.Services
                     var course = new Course
                     {
                         CourseId = courseData.CourseId,
-                        CategoryId = int.Parse(courseData.CategoryId),
-                        SubjectId = courseData.SubjectId,
-                        TutorId = memberId,
-                        Title = courseData.Title,
-                        SubTitle = courseData.SubTitle,
+                        //CategoryId = int.Parse(courseData.CategoryId),
+                        //SubjectId = courseData.SubjectId,
+                        //TutorId = memberId,
+                        //Title = courseData.Title,
+                        //SubTitle = courseData.SubTitle,
                         TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
                         FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
-                        Description = courseData.Description,
-                        IsEnabled = courseData.IsEnabled,
-                        ThumbnailUrl = courseData.ThumbnailUrl[0],
-                        VideoUrl = courseData.VideoUrl,
-                        CoursesStatus = courseData.CoursesStatus,
-                        Udate = DateTime.Now,
+                        //Description = courseData.Description,
+                        //IsEnabled = courseData.IsEnabled,
+                        //ThumbnailUrl = courseData.ThumbnailUrl[0],
+                        //VideoUrl = courseData.VideoUrl,
+                        //CoursesStatus = courseData.CoursesStatus,
+                        //Udate = DateTime.Now,
                     };
                     _repository.Update(course);
                     await _repository.SaveChangesAsync();

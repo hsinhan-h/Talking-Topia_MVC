@@ -57,9 +57,12 @@
     font-size: 13px;
     font-weight: 600;
     color: var(--theme-color);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 
-.tutor-title-and-ranking {
+.tutor-title-and-ranking, .tutor-subtitle {
     overflow: hidden;
 }
 
@@ -125,13 +128,6 @@
     color: #fff;
     border: 0;
 }
-
-.lh-tutor-card__contact-tutor-btn {
-    background-color: #fff;
-    color: var(--theme-color);
-    border: 1px solid var(--theme-color);
-}
-
 
 .tutor-recommend-carousel .slick-track {
     display: flex;

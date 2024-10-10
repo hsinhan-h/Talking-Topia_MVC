@@ -6,6 +6,18 @@
     --button-hover-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.1);
 }*/
 
+/*spinner*/
+.course-spinner img{
+   width: 60px;
+   height: 60px;
+}
+
+.course-spinner span{
+    color: var(--theme-color);
+    font-size: 16px;
+}
+
+
 .tutors {
     max-width: 1400px;
     margin: auto;
@@ -25,6 +37,7 @@
 
 .cancel-filter-btn, .cancel-filter-btn:hover {
     color: var(--highlight-color);
+    font-size: 15px;
 }
 
 .cancel-filter-btn:focus {
@@ -42,6 +55,10 @@
     .lh-tutors-filter {
         gap: 1%;
         justify-content: center;
+    }
+
+    .cancel-filter-btn {
+        font-size: 13px;
     }
 }
 
@@ -115,17 +132,49 @@
     }
 }
 
+.no-courses-found p {
+    font-size: 15px;
+}
+
+.no-courses-found .fa-solid {
+    color: var(--theme-color);
+}
+
+.no-courses-found img {
+    width: 100vw;
+    max-width: 800px;
+    filter: grayscale(60%);
+    opacity: 0.8;
+    margin-bottom: 8vh;
+}
+
+@media screen and (min-width: 768px) {
+    .no-courses-found p {
+        font-size: 16px;
+    }
+}
+
 /* order */
 .lh-tutors-order > * {
     text-decoration: none;
     font-size: 13px;
     margin-right: 8px;
+}
+
+.lh-tutors-order > *:not(.sort-option-selected) {
     color: #555;
 }
 
 .lh-tutors-order > a:hover {
     color: var(--theme-color);
     font-weight: 600;
+}
+
+.sort-option-selected {
+    font-weight: 900;
+    color: var(--theme-color);
+    padding-bottom: 2px;
+    border-bottom: 1.5px solid var(--theme-color);
 }
 
 
@@ -166,10 +215,16 @@
     cursor: pointer;
 }
 
-    .lh-tutor-follow:hover {
-        background-color: var(--theme-color);
-        color: #fff;
-    }
+.following {
+    background-color: var(--theme-color);
+    color: #fff;
+}
+
+.lh-tutor-follow:hover {
+    background-color: var(--theme-color);
+    color: #fff;
+    box-shadow: var(--button-hover-shadow);
+}
 
 .tutor-description-title-wrapper {
     max-height: 3em;

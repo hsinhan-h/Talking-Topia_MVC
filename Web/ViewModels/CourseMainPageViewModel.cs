@@ -61,9 +61,10 @@ namespace Web.ViewModels
         public bool FollowingStatus { get; set; }
         public List<TutorRecomCardList> TutorReconmmendCard { get; set; }
         
-        public int NewReviewRating  { get; set; }
-        public int NewReviewStudentId { get; set; }
-        public int NewReviewCourseId { get; set; }
+        public List<TutorRecomCardList> LanguageWatchList { get; set; }
+        public List<TutorRecomCardList> CodingWatchList { get; set; }
+        public List<TutorRecomCardList> SchoolWatchList { get; set; }
+
 
         [Required(ErrorMessage = "請輸入評論內容")]
         [StringLength(500, ErrorMessage = "評論內容不可超過500個字")]
@@ -117,6 +118,7 @@ namespace Web.ViewModels
     public class TutorRecomCardList
     {
         public int CourseId { get; set; }
+        public int CategoryId { get; set; }
         public string TutorHeadShot { get; set; }
         public string NationFlagImg { get; set; }
         public string CourseTitle { get; set; }

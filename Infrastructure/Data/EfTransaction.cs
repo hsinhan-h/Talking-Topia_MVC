@@ -11,7 +11,7 @@ namespace Infrastructure.Data
         {
             _dbContext = dbContext;
         }
-        public void BeginTransAction()
+        public void BeginTransaction()
         {
             _transaction = _dbContext.Database.BeginTransaction();
         }

@@ -5,6 +5,7 @@ using Web.Repository;
 using Web.ViewModels;
 using Infrastructure.Data;
 using Web.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Web.Services
 {
@@ -13,16 +14,17 @@ namespace Web.Services
         private readonly IRepository _repository;
         
         private readonly ILogger<MemberDataService> _logger;
+        private readonly AccountService _accountService;
 
-        public MemberDataService(IRepository repository,  ILogger<MemberDataService> logger)
+        public MemberDataService(IRepository repository,  ILogger<MemberDataService> logger, AccountService accountService)
         {
             _repository = repository;
             
             _logger = logger;
 
+            _accountService = accountService;
+
         }
-
-
 
         public async Task<MemberProfileViewModel> GetMemberData(int memberId)
         {
@@ -57,13 +59,13 @@ namespace Web.Services
                 ImageUrl = member.HeadShotImage ?? string.Empty, // 如果圖片為 null，使用空字串代替
                 Nickname = member.Nickname ?? "未設定", // 處理暱稱為 null 的情況
                 Birthday = member.Birthday.HasValue ? member.Birthday.Value : (DateTime?)null, // 若無生日資料，設為 null
-                Gender = ((Gender)member.Gender).ToString(), // 將性別枚舉轉為字符串
-                Account = member.Account,
+                Gender = member.Gender == 1 ? "男" : "女",
+                Account = member.Account ?? member.LineUserId,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
                 Email = member.Email,
                 Phone = member.Phone,
-                CoursePrefer = coursePrefer
+                CoursePrefer = coursePrefer,
             };
 
             _logger.LogInformation($"成功查詢會員資料，MemberId: {memberId}");
@@ -96,12 +98,21 @@ namespace Web.Services
             }
 
             // 更新基本資料
+            member.Account = updatedData.Account ?? member.Account;
             member.FirstName = updatedData.FirstName ?? member.FirstName;
             member.LastName = updatedData.LastName ?? member.LastName;
             member.Nickname = updatedData.Nickname ?? member.Nickname;
             member.Email = updatedData.Email ?? member.Email;
             member.Phone = updatedData.Phone ?? member.Phone;
             member.Birthday = updatedData.Birthday;
+
+            // 處理性別的更新
+            if (!string.IsNullOrEmpty(updatedData.Gender))
+            {
+                member.Gender = short.Parse(updatedData.Gender);
+            }
+
+
 
             // 先將所有的課程主題加載到內存中，避免每次查找都查詢數據庫
             var allCourseSubjects = await _repository.GetAll<CourseSubject>().ToListAsync();
@@ -157,10 +168,6 @@ namespace Web.Services
             }
         }
 
-
-
-
-
         public async Task<CourseMainPageViewModel> GetWatchList(int memberId)
         {
             var watchCardInfo = (from watch in _repository.GetAll<WatchList>().AsNoTracking()
@@ -170,10 +177,13 @@ namespace Web.Services
                                  on course.TutorId equals member.MemberId
                                  join nation in _repository.GetAll<Nation>().AsNoTracking()
                                  on member.NationId equals nation.NationId
+                                 join category in _repository.GetAll<CourseCategory>().AsNoTracking()
+                                 on course.CategoryId equals category.CourseCategoryId
                                  where watch.FollowerId == memberId
                                  select new TutorRecomCardList
                                  {
                                      CourseId = course.CourseId,
+                                     CategoryId = category.CourseCategoryId,
                                      TutorHeadShot = member.HeadShotImage,
                                      NationFlagImg = nation.FlagImage,
                                      CourseTitle = course.Title,
@@ -200,14 +210,51 @@ namespace Web.Services
 
                 card.Rating = review?.Rating ?? 0;
             }
+            var language = watchCardInfo.Where(w=>w.CategoryId == 1).OrderBy(w=>w.CourseId).ToList();
+            var prgramming = watchCardInfo.Where(w=>w.CategoryId == 2).OrderBy(w => w.CourseId).ToList();
+            var school = watchCardInfo.Where(w => w.CategoryId == 3).OrderBy(w => w.CourseId).ToList();
             var watchlist = new CourseMainPageViewModel
             {
                 MemberId = memberId,
-                TutorReconmmendCard = watchCardInfo
+                LanguageWatchList = language,
+                CodingWatchList = prgramming,
+                SchoolWatchList = school,
             };
             return watchlist;
         }
 
+        public bool IsWatched(int memberId, int courseId)
+        {
+            var IsFollowed = _repository.GetAll<WatchList>().Any(w => w.CourseId == courseId && w.FollowerId == memberId);
+            return IsFollowed;
+        }
+        public async Task<(bool Success, string Message)> ChangePasswordAsync(int memberId, string currentPassword, string newPassword)
+        {
+            // 使用 AccountService 取得會員資料
+            var member = await _accountService.GetMemberByIdAsync(memberId);
+            if (member == null)
+            {
+                return (false, "無法找到使用者。");
+            }
+
+            var passwordHasher = new PasswordHasher<Web.Entities.Member>();
+
+            // 驗證目前密碼
+            var passwordVerificationResult = passwordHasher.VerifyHashedPassword(member, member.Password, currentPassword);
+            if (passwordVerificationResult != PasswordVerificationResult.Success)
+            {
+                return (false, "目前密碼不正確。");
+            }
+
+            // 設置新密碼，統一使用 PasswordHasher
+            member.Password = passwordHasher.HashPassword(member, newPassword);
+
+            // 更新資料庫
+            _repository.Update(member);
+            await _repository.SaveChangesAsync();
+
+            return (true, "密碼修改成功。");
+        }
 
 
     }

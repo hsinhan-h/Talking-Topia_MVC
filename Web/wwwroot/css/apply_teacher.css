@@ -40,6 +40,8 @@
     -webkit-line-clamp: 4;
 }
 
+
+
 .bgr {
     background-color: rgb(255, 239, 239);
 }
@@ -95,7 +97,13 @@
 }
 
 .yt_card_row {
-    max-width: 1200px;
+    max-width: 1200px; 
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center; 
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 .adj_img {

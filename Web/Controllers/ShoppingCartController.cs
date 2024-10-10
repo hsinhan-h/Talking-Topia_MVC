@@ -1,4 +1,6 @@
 ﻿using ApplicationCore.Interfaces;
+using Infrastructure.ECpay;
+using Infrastructure.Interfaces.ECpay;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
@@ -11,7 +13,7 @@ namespace Web.Controllers
         private readonly IMemberService _memberService;
         private readonly ICourseService _courseService;
         private readonly ShoppingCartViewModelService _shoppingCartViewModelService;
-
+         
         public ShoppingCartController(IShoppingCartService shoppingCartService, IMemberService memberService, ICourseService courseService, ShoppingCartViewModelService shoppingCartViewModelService)
         {
             _shoppingCartService = shoppingCartService;
@@ -35,7 +37,6 @@ namespace Web.Controllers
             var cartData = await _shoppingCartViewModelService.GetShoppingCartViewModelsAsync(memberId);
             var scVM = new ShoppingCartListViewModel
             {
-                MemberId = memberId,
                 ShoppingCartList = cartData
             };
             return View(scVM);
@@ -61,13 +62,17 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
 
-        public async Task<IActionResult> Delete([FromForm] int memberId, [FromForm] int courseId)
-        //public async Task<IActionResult> Delete([FromForm] int courseId)
+        public async Task<IActionResult> Delete([FromForm] int courseId)
         {
-            var user = HttpContext.User.Identity.Name;
-            //var memberId = await _memberService.GetMemberId(user);
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
             _shoppingCartService.DeleteCartItem(memberId, courseId);
             return RedirectToAction(nameof(Index), "ShoppingCart", new { memberId });
         }
+
     }
 }

@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Web.Data;
 using TalkingTopiaContext = Infrastructure.Data.TalkingTopiaDbContext;
+using ApplicationCore.Interfaces;
 
 
 namespace Web.Controllers
@@ -23,13 +24,19 @@ namespace Web.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly AccountService _accountService;
         private readonly IRepository _repository;
+        private readonly ILineAuthService _lineAuthService;
+        private readonly IEmailService _emailService;
 
-        public AccountController(TalkingTopiaContext context, ILogger<AccountController> logger, AccountService accountService, IRepository repository)
+
+
+        public AccountController(TalkingTopiaContext context, ILogger<AccountController> logger, AccountService accountService, IRepository repository, ILineAuthService lineAuthService, IEmailService emailService)
         {
             _context = context;
             _logger = logger;
             _accountService = accountService;
             _repository = repository;
+            _lineAuthService = lineAuthService;
+            _emailService = emailService;
         }
         public IActionResult Index()
         {
@@ -49,7 +56,11 @@ namespace Web.Controllers
             ViewData["IsLoggedIn"] = isLoggedIn;
             return View();
         }
-
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
         // 註冊
         [HttpPost]
         public async Task<IActionResult> Register(AccountViewModel model)
@@ -59,14 +70,33 @@ namespace Web.Controllers
             {
                 try
                 {
+                    // 執行註冊邏輯
                     await _accountService.RegisterUserAsync(model);
 
-                    // 註冊成功後，回首頁
-                    return RedirectToAction("Index", "Home");
+                    // 取得註冊用戶的驗證 Token
+                    var member = await _accountService.GetMemberByEmailAsync(model.RegisterViewModel.Email);
+                    if (member == null)
+                    {
+                        ModelState.AddModelError("", "註冊過程中發生錯誤，請稍後再試。");
+                        return View("Account", model);
+                    }
+
+                    // 生成驗證連結
+                    var verificationUrl = Url.Action("VerifyEmail", "Account", new { token = member.EmailVerificationToken }, Request.Scheme);
+
+                    // 發送驗證電子郵件
+                    var subject = "驗證會員信箱";
+                    var body = $"<p>請點擊以下連結以驗證您的信箱：</p><a href='{verificationUrl}'>驗證信箱</a>";
+                    await _emailService.SendEmailAsync(member.Email, subject, body);
+
+                    // 註冊成功後，使用 TempData 傳遞成功訊息
+                    TempData["SuccessMessage"] = "註冊成功，請查收您的電子郵件以完成驗證";
+                    return RedirectToAction("RegisterSuccess");
                 }
                 catch (UserAlreadyExistsException)
                 {
-                    ModelState.AddModelError("", "該電子郵件已被註冊");
+                    // 添加錯誤訊息到 ModelState
+                    ModelState.AddModelError(nameof(model.RegisterViewModel.Email), "該電子郵件已被註冊");
                 }
                 catch (Exception ex)
                 {
@@ -93,76 +123,52 @@ namespace Web.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login([FromForm] AccountViewModel model)
         {
-            var request = model.LoginViewModel;  // 提取 LoginViewModel
-                                                 //Console.WriteLine($"帳號:{request.Email}");
-                                                 //Console.WriteLine($"密碼:{request.Password}");
+            var request = model.LoginViewModel;
 
-            // 首先檢查 ModelState 是否有效
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("ModelState is not valid");
                 ModelState.AddModelError(string.Empty, "登入失敗，請檢查您的輸入資料");
-                return View("AccessDenied", model); // 返回登入頁面，顯示錯誤
+                return View("AccessDenied", model);
             }
 
-            // 檢查 Email 和 Password 是否為空
             if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
             {
                 ModelState.AddModelError(string.Empty, "帳號或密碼不可為空");
-                Console.WriteLine("空空空空空空空空空空");
-                return View("AccessDenied", model); // 返回登入頁面並顯示錯誤訊息
+                return View("AccessDenied", model);
             }
 
-            // 使用 AccountService 驗證用戶
-            var user = await _accountService.ValidateUserAsync(request.Email, request.Password);
+            // 使用 AccountService 取得會員資料
+            var member = await _accountService.GetMemberByEmailAsync(request.Email);
 
-            // 驗證用戶是否存在
-            if (user == null)
+            // 驗證使用者是否存在
+            if (member == null)
             {
-                // 如果用戶不存在或密碼不正確，添加錯誤訊息到 ModelState
                 ModelState.AddModelError(string.Empty, "無效的帳號或密碼");
-                Console.WriteLine("無效的帳號或密碼");
-                return View("AccessDenied", model); // 返回登入頁面，顯示錯誤訊息
+                return View("AccessDenied", model);
             }
 
-            //取得使用者角色
-            //var userRoles = _context.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
-            //var userRoleClaims = _context.Roles.Where(x => userRoles.Contains(x.Id)).ToList().Select(role => new Claim(ClaimTypes.Role, role.Name));
-
-            // 登入成功，設定 Cookie.
-            var claims = new List<Claim>
+            // 檢查是否已經完成 Email 驗證
+            if (!member.IsEmailConfirmed)
             {
-                // 儲存 Email 到 HttpContext.User.Identity.Name
-                new Claim(ClaimTypes.Name, request.Email),
-            
-                // 將會員的 MemberId 儲存到 NameIdentifier，方便後續提取
-                new Claim(ClaimTypes.NameIdentifier, user.MemberId.ToString()) // 修正 'user.Id' 為 'user.MemberId'
-            };
+                ModelState.AddModelError(string.Empty, "您的信箱尚未驗證，請先完成驗證。");
+                return View("AccessDenied", model);
+            }
 
-            //加入角色
-            //claims.AddRange(userRoleClaims);
+            // 使用 PasswordHasher 驗證密碼
+            var passwordHasher = new PasswordHasher<Web.Entities.Member>();
+            var passwordVerificationResult = passwordHasher.VerifyHashedPassword(member, member.Password, request.Password);
 
-            //可以設定 Cookie 的其他屬性 (https://learn.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.authenticationproperties)
-            var authProperties = new AuthenticationProperties
+            if (passwordVerificationResult != PasswordVerificationResult.Success)
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
-                IsPersistent = true,
-            };
+                _logger.LogError("密碼驗證失敗。輸入的密碼: {Password}", request.Password);
+                ModelState.AddModelError(string.Empty, "無效的帳號或密碼");
+                return View("AccessDenied", model);
+            }
 
-            // 建立 ClaimsIdentity.
-            var claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            // 建立 ClaimsPrincipal.
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+            // 使用 SignInMemberAsync 進行登入
+            await _accountService.SignInMemberAsync(member);
 
-            // 網站登入.(寫入cookie, response 回傳後生效)
-            await HttpContext.SignInAsync(
-                              CookieAuthenticationDefaults.AuthenticationScheme,
-                              claimsPrincipal,
-                              authProperties);
-
-            //導向處理
             if (string.IsNullOrEmpty(request.ReturnUrl))
             {
                 request.ReturnUrl = "/";
@@ -170,7 +176,6 @@ namespace Web.Controllers
 
             return Redirect(request.ReturnUrl);
         }
-
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
@@ -183,6 +188,235 @@ namespace Web.Controllers
         {
             return View();
         }
+
+        public IActionResult RegisterSuccess()
+        {
+            if (TempData["SuccessMessage"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult LineLogin()
+        {
+            var state = Guid.NewGuid().ToString("N");
+            HttpContext.Session.SetString("LineState", state);
+
+            var redirectUrl = $"https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2006372467&redirect_uri=https://localhost:7263/Account/SSOcallback&state={state}&scope=profile%20openid%20email";
+            return Redirect(redirectUrl);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SSOcallback(string code, string state)
+        {
+            var accessToken = await _lineAuthService.GetAccessTokenAsync(code);
+            var userProfile = await _lineAuthService.GetUserProfileAsync(accessToken);
+
+            // 檢查 LineUserId 是否有效
+            if (string.IsNullOrEmpty(userProfile.LineUserId))
+            {
+                throw new Exception("無法取得 LineUserId，登入失敗");
+            }
+
+            // 使用 LineUserId 查找 Members 表中的用戶
+            var existingMember = await _repository.GetMemberByLineIdAsync(userProfile.LineUserId);
+
+            if (existingMember == null)
+            {
+                // 處理 email 為空的情況
+                var email = string.IsNullOrEmpty(userProfile.Email) ? $"{userProfile.LineUserId}@line.com" : userProfile.Email;
+
+                // 新增 User 到 Users 表
+                var newUser = new User
+                {
+                    Name = userProfile.DisplayName,
+                    Email = email,
+                    LineId = userProfile.LineUserId,
+                    PictureUrl = userProfile.PictureUrl
+                };
+
+                _repository.Create(newUser);
+                await _repository.SaveChangesAsync();
+
+                // 新增 Member 到 Members 表
+                var newMember = new Member
+                {
+                    UserId = newUser.Id, // 將 User Id 設定到 Member 中
+                    LineUserId = userProfile.LineUserId,
+                    FirstName = userProfile.DisplayName,
+                    Password = GenerateRandomPassword(),
+                    LastName = "", // 預設為空白
+                    Birthday = null,
+                    Email = userProfile.Email ?? $"{userProfile.LineUserId}@line.com", // 使用者可能沒有 email
+                    Nickname = "",
+                    Phone = "",
+                    HeadShotImage = userProfile.PictureUrl,
+                    Cdate = DateTime.Now,
+                    Udate = DateTime.Now,
+                    IsTutor = false,
+                    IsVerifiedTutor = false,
+                };
+
+                _repository.Create(newMember);
+                await _repository.SaveChangesAsync();
+
+                existingMember = newMember;
+            }
+
+
+
+            // 設置登入 Claims，確保使用 Members 表中的 MemberId
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, existingMember.MemberId.ToString()),
+        new Claim(ClaimTypes.Name, existingMember.FirstName),
+        new Claim("picture", existingMember.HeadShotImage ?? string.Empty)
+    };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private string GenerateRandomPassword(int length = 10)
+        {
+            const string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(validChars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        // 顯示忘記密碼的畫面 (GET 方法)
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        // 處理忘記密碼的請求 (POST 方法)
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // 使用 AccountService 查詢該 email 是否存在於系統中
+                var member = await _accountService.GetMemberByEmailAsync(model.Email);
+
+                if (member != null)
+                {
+                    // 建立重設密碼的 token 並儲存在資料庫
+                    var token = Guid.NewGuid().ToString();
+                    member.ResetPasswordToken = token;
+                    await _accountService.UpdateMemberAsync(member);
+
+                    // 建立重設密碼的連結
+                    var resetUrl = Url.Action("ResetPassword", "Account", new { token = token }, Request.Scheme);
+
+                    var subject = "忘記密碼";
+                    var body = $"<p>請點擊以下連結以重設您的密碼：</p><a href='{resetUrl}'>重設密碼</a>";
+
+                    // 發送電子郵件
+                    await _emailService.SendEmailAsync(model.Email, subject, body);
+
+                    TempData["SuccessMessage"] = "重設密碼的連結已寄到您的電子郵件，請查收";
+                    return RedirectToAction("ForgotPasswordConfirmation");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "該電子郵件未註冊");
+                }
+            }
+
+            return View(model);
+        }
+
+        // 忘記密碼確認畫面
+        [HttpGet]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token)
+        {
+            var model = new ResetPasswordViewModel { Token = token };
+            return View(model);
+        }
+        [HttpPost]
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var member = await _accountService.GetMemberByResetTokenAsync(model.Token);
+                if (member != null)
+                {
+                    var passwordHasher = new PasswordHasher<Web.Entities.Member>();
+                    member.Password = passwordHasher.HashPassword(member, model.NewPassword); // 使用 PasswordHasher 加密新密碼
+                    member.ResetPasswordToken = null;
+                    await _accountService.UpdateMemberAsync(member);
+
+                    TempData["SuccessMessage"] = "密碼已成功重設";
+                    return RedirectToAction("ResetPasswordSuccess");
+                }
+                else
+                {
+                    // 調試訊息
+                    _logger.LogError($"Token not found: {model.Token}");
+                    ModelState.AddModelError("", "無效的重設密碼請求");
+                }
+            }
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult ResetPasswordSuccess()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> VerifyEmail(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("無效的驗證請求");
+            }
+
+            var member = await _accountService.GetMemberByVerificationTokenAsync(token);
+
+            if (member == null)
+            {
+                return NotFound("驗證失敗，無法找到相關帳戶");
+            }
+
+            // 驗證成功，更新 IsEmailConfirmed 和清除 EmailVerificationToken
+            if (member.EmailVerificationToken == token && !member.IsEmailConfirmed)
+            {
+                member.IsEmailConfirmed = true;
+                member.EmailVerificationToken = ""; // 清除驗證 Token
+                await _accountService.UpdateMemberAsync(member);
+
+                TempData["SuccessMessage"] = "電子郵件已驗證成功！";
+                return RedirectToAction("Account", "Account");
+            }
+            else
+            {
+                return BadRequest("驗證失敗，無效的驗證請求");
+            }
+        }
+
+
+
     }
 
     public static class StringExtensions
@@ -201,4 +435,6 @@ namespace Web.Controllers
             }
         }
     }
+
+
 }

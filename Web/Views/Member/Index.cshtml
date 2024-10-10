@@ -5,7 +5,7 @@
             <div class="lh-backstage-homepage-section mb-5"
                  id="lh-backstage-homepage-section">
                 <h3 class="lh-backstage-homepage-title my-5">
-                    歡迎回來 <span>Chiaki</span>！這是你的課程預約概況！
+                    歡迎回來 <span>@User.Identity.Name</span>！這是你的課程預約概況！
                 </h3>
                 <div class="lh-backstage-divider"></div>
                 <div class="col-12">
@@ -15,10 +15,9 @@
                             <thead>
                                 <tr>
                                     <td>預約日期</td>
-                                    <td>預約時間</td>
+                                    <td>預約時段</td>
                                     <td>課程名稱</td>
                                     <td>課程內容</td>
-                                    <td>預約時長</td>
                                     <td>教師名稱</td>
                                 </tr>
                             </thead>
@@ -27,14 +26,17 @@
                                 {
                                     @foreach (var order in Model.MemberAppointmentList)
                                     {
-                                <tr>
-                                    <td>@order.BookingDate.ToString("yyyy-MM-dd")</td>
-                                    <td>@order.BookingDate.ToString("T")</td>>
-                                    <td>@order.CourseTitle</td>
-                                    <td>@order.Subtitle</td>
-                                    <td>@order.CourseLength</td>
-                                    <td>@order.FullName</td>
-                                </tr>
+                                        <tr>
+                                            <td>@order.BookingDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@TimeSpan.FromHours(order.BookingTime - 1).ToString(@"hh\:mm")</td>
+                                            <td>
+                                                <a href="~/Course/CourseMainPage?courseId=@order.CourseId">
+                                                    @order.CourseTitle
+                                                </a>
+                                            </td>
+                                            <td>@order.Subtitle</td>
+                                            <td>@order.FullName</td>
+                                        </tr>
                                     }
                                 }
                                 else

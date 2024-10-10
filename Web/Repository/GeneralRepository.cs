@@ -51,6 +51,10 @@ namespace Web.Repository
             return _context.Set<T>().FirstOrDefault(predicate);
 
         }
+        public async Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
 
         public async Task SaveChangesAsync()
         {
@@ -74,6 +78,26 @@ namespace Web.Repository
         public T FirstOrDefault<T>(Expression<Func<T, bool>> predicate) where T : class
         {
             return _context.Set<T>().FirstOrDefault(predicate);
+
+        }
+
+        public async Task<Member> GetMemberByIdAsync(int memberId)
+        {
+            return await _context.Members
+            .FirstOrDefaultAsync(m => m.MemberId == memberId);
+        }
+
+        public async Task<TutorTimeSlot> GetTutorTimeSlotAsync(int tutorId, int courseHourId, int weekday)
+        {
+            return await _context.TutorTimeSlots
+                                 .FirstOrDefaultAsync(x => x.TutorId == tutorId
+                                                        && x.CourseHourId == courseHourId
+                                                        && x.Weekday == weekday);
+        }
+
+        public async Task<Member> GetMemberByLineIdAsync(string lineId)
+        {
+            return await _context.Members.FirstOrDefaultAsync(u => u.LineUserId == lineId);
 
         }
     }
