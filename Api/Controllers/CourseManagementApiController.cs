@@ -17,6 +17,21 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> GetCourseManagementData()
+        {
+            try
+            {
+                var courseManagementData = await _courseManagementApiService.GetCourseManagementData();
+                return Ok(courseManagementData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        [HttpGet]
         public async Task<ActionResult> GetCourseApprovalList()
         {
             try

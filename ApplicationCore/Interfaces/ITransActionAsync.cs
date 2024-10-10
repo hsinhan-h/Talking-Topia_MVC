@@ -1,8 +1,9 @@
 ﻿namespace ApplicationCore.Interfaces
 {
-    public interface ITransactionAsync
+    public interface ITransactionAsync :IDisposable
     {
-        Task BeginTransActionAsync();
+        IRepository<T> GetRepository<T>() where T : class;
+        Task BeginTransactionAsync();
         Task CommitAsync();
         Task RollbackAsync();
     }

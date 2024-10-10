@@ -25,11 +25,9 @@ namespace Api.Services
             _memberRepository = memberRepository;
         }
 
-        //public async Task<List<CourseManagementDto>> GetCourseInfo()
-        //{
-        //    var courses = _courseRepository.ListAsync();
+        
 
-        //}
+
 
         public async Task<List<CourseApprovalDto>> GetCourseApprovalList()
         {
@@ -45,7 +43,6 @@ namespace Api.Services
 
             //只抓unApprovedCourses的images, category, subject
             var images = await _courseImageRepository.ListAsync(i => courseIds.Contains(i.CourseId));
-            var images1 = await _courseImageRepository.ListAsync();
             var categories = await _courseCategoryRepository.ListAsync(c => categoryIds.Contains(c.CourseCategoryId));
             var subjects = await _courseSubjectRepository.ListAsync(s => subjectIds.Contains(s.SubjectId));
             var tutors = await _memberRepository.ListAsync(m => memberIds.Contains(m.MemberId));
@@ -104,6 +101,46 @@ namespace Api.Services
             return courses
                 .Where(course => course.CoursesStatus == 2 && course.Cdate > new DateTime(2024, 1, 1))
                 .Count();
+        }
+
+
+        public async Task<List<CourseManagementDto>> GetCourseManagementData()
+        {
+            var courses = await _courseRepository.ListAsync();
+            var images = await _courseImageRepository.ListAsync();
+            var categories = await _courseCategoryRepository.ListAsync();
+            var subjects = await _courseSubjectRepository.ListAsync();
+            var tutors = await _memberRepository.ListAsync();
+
+            var courseManagementData =
+                from c in courses
+                join img in images on c.CourseId equals img.CourseId into courseImages
+                from courseImage in courseImages.DefaultIfEmpty()
+                join ct in categories on c.CategoryId equals ct.CourseCategoryId into courseCategories
+                from courseCategory in courseCategories.DefaultIfEmpty()
+                join s in subjects on c.SubjectId equals s.SubjectId into courseSubjects
+                from courseSubject in courseSubjects.DefaultIfEmpty()
+                join t in tutors on c.TutorId equals t.MemberId into courseTutors
+                from courseTutor in courseTutors.DefaultIfEmpty()
+                select new CourseManagementDto
+                {
+                    CourseId = c.CourseId,
+                    CourseTitle = c.Title,
+                    CourseSubTitle = c.SubTitle,
+                    TutorName = courseTutor != null ? courseTutor.FirstName + " " + courseTutor.LastName : "教師名稱不存在",
+                    CourseCategory = courseCategory != null ? courseCategory.CategorytName : "其他",
+                    CourseSubject = courseSubject.SubjectName != null ? courseSubject.SubjectName : "其他",
+                    Description = c.Description,
+                    CourseImages = courseImages.Select(i => i.ImageUrl).ToList(),
+                    PublishStatus = c.IsEnabled && c.CoursesStatus == 1,
+                    PublishDate = c.Cdate,
+                    IsUnderReview = c.CoursesStatus == 0
+                };
+
+            return courseManagementData
+                .GroupBy(c => c.CourseId)
+                .Select(gp => gp.First())
+                .ToList();
         }
 
 

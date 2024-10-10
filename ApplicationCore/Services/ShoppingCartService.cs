@@ -9,9 +9,11 @@ namespace ApplicationCore.Services
     {
         private readonly IRepository<ShoppingCart> _shoppingCartRepository;
         private readonly IRepository<Course> _courseRepository;
+        private readonly ITransaction _transaction;
 
-        public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository)
+        public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, IRepository<Course> courseRepository, ITransaction transaction)
         {
+            _transaction = transaction;
             _shoppingCartRepository = shoppingCartRepository;
             _courseRepository = courseRepository;
         }
@@ -76,6 +78,7 @@ namespace ApplicationCore.Services
         {
             try
             {
+                await _transaction.BeginTransactionAsync();
                 decimal unitPrice = GetUnitPrice(courseId, courseLength);
                 if (memberId < 1 || courseId < 1 || courseLength < 1 || quantity < 1 || unitPrice < 1)
                 {
@@ -97,11 +100,18 @@ namespace ApplicationCore.Services
                     throw new Exception("Shopping Cart could not be created");
                 }
 
+                await _transaction.CommitAsync();
+
                 return shoppingCart.MemberId;
             }
             catch (Exception ex)
             {
+                await _transaction.RollbackAsync();
                 throw new Exception($"Unexpected error: {ex.Message}");
+            }
+            finally
+            {
+                _transaction.Dispose();
             }
         }
 
@@ -121,6 +131,7 @@ namespace ApplicationCore.Services
         {
             try
             {
+                await _transaction.BeginTransactionAsync();
                 decimal unitPrice = GetUnitPrice(courseId, courseLength);
                 if (memberId < 1 || courseId < 1 || courseLength < 1 || quantity < 1 || unitPrice < 1)
                 {
@@ -144,11 +155,18 @@ namespace ApplicationCore.Services
                     throw new Exception("Shopping Cart could not be created");
                 }
 
+                await _transaction.CommitAsync();
+
                 return shoppingCart.MemberId;
             }
             catch (Exception ex)
             {
+                await _transaction.RollbackAsync();
                 throw new Exception($"Unexpected error: {ex.Message}");
+            }
+            finally
+            {
+                _transaction.Dispose();
             }
         }
 
@@ -156,16 +174,24 @@ namespace ApplicationCore.Services
         {
             try
             {
+                _transaction.BeginTransaction();
                 var target = _shoppingCartRepository.FirstOrDefault(x => x.MemberId == memberId && x.CourseId == courseId);
                 _shoppingCartRepository.Delete(target);
+                _transaction.Commit();
             }
             catch (ArgumentException ex)
             {
+                _transaction.Rollback();
                 throw new ArgumentException($"無法找到Shopping Cart Item: {ex.Message}");
             }
             catch (Exception ex)
             {
+                _transaction.Rollback();
                 throw new Exception(ex.Message);
+            }
+            finally
+            {
+                _transaction.Dispose();
             }
         }
 
@@ -173,38 +199,55 @@ namespace ApplicationCore.Services
         {
             try
             {
+                await _transaction.BeginTransactionAsync();
                 var shoppingCartItems = await _shoppingCartRepository.ListAsync(i => i.MemberId == memberId);
                 if (shoppingCartItems == null) { return 500; }
                 if (shoppingCartItems.Count > 0)
                 {
-                   await _shoppingCartRepository.DeleteRangeAsync(shoppingCartItems);
+                    await _shoppingCartRepository.DeleteRangeAsync(shoppingCartItems);
                 }
+
+                await _transaction.CommitAsync();
                 return 200;
             }
             catch (Exception ex)
             {
+                await _transaction.RollbackAsync();
                 throw new Exception("Error occurred while deleting cart items", ex);
+            }
+            finally
+            {
+                _transaction.Dispose();
             }
         }
 
         public async Task<bool> UpdateItem(int memberId, int courseId, int quantity, int courseLength, decimal subTotal)
         {
-            var shoppingCartItem = await _shoppingCartRepository.FirstOrDefaultAsync(s => s.MemberId == memberId && s.CourseId == courseId);
-            if (shoppingCartItem != null)
+            try
             {
-                shoppingCartItem.Quantity = (short)quantity;
-                shoppingCartItem.CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice;
-                shoppingCartItem.TotalPrice = subTotal;
-                shoppingCartItem.Udate = DateTime.Now;
+                await _transaction.BeginTransactionAsync();
+                var shoppingCartItem = await _shoppingCartRepository.FirstOrDefaultAsync(s => s.MemberId == memberId && s.CourseId == courseId);
+                if (shoppingCartItem != null)
+                {
+                    shoppingCartItem.Quantity = (short)quantity;
+                    shoppingCartItem.CourseType = courseLength == 25 ? (short)ECourseType.TwentyFiveMinUnitPrice : (short)ECourseType.FiftyMinUnitPrice;
+                    shoppingCartItem.TotalPrice = subTotal;
+                    shoppingCartItem.Udate = DateTime.Now;
 
-                await _shoppingCartRepository.UpdateAsync(shoppingCartItem);
-            
+                    await _shoppingCartRepository.UpdateAsync(shoppingCartItem);
+                }
+                await _transaction.CommitAsync();
                 return true;
             }
-
-            return false;
-
+            catch (Exception ex)
+            {
+                await _transaction.RollbackAsync();
+                return false;
+            }
+            finally
+            {
+                _transaction.Dispose();
+            }
         }
-
     }
 }
