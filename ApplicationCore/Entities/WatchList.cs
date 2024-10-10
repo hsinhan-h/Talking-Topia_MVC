@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace ApplicationCore.Entities;
 
-
 public partial class WatchList
 {
     /// <summary>
@@ -23,5 +22,5 @@ public partial class WatchList
 
     public virtual Course Course { get; set; }
 
-    public virtual Member WatchListNavigation { get; set; }
+    public virtual Member Follower { get; set; }
 }

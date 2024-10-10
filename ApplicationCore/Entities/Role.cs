@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace ApplicationCore.Entities;
 
-
 public partial class Role
 {
     public int Id { get; set; }

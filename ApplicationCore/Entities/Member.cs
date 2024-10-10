@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace ApplicationCore.Entities;
 
-
 public partial class Member
 {
     /// <summary>
@@ -123,6 +122,16 @@ public partial class Member
 
     public int? UserId { get; set; }
 
+    public string LineUserId { get; set; }
+
+    public string EmailVerificationToken { get; set; }
+
+    public DateTime EmailVerificationTokenExpiration { get; set; }
+
+    public bool IsEmailConfirmed { get; set; }
+
+    public string ResetPasswordToken { get; set; }
+
     public virtual ICollection<ApplyCourse> ApplyCourses { get; set; } = new List<ApplyCourse>();
 
     public virtual ICollection<ApplyList> ApplyLists { get; set; } = new List<ApplyList>();
@@ -149,7 +158,7 @@ public partial class Member
 
     public virtual User User { get; set; }
 
-    public virtual WatchList WatchList { get; set; }
+    public virtual ICollection<WatchList> WatchLists { get; set; } = new List<WatchList>();
 
     public virtual ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
 }
