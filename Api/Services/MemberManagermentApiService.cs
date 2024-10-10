@@ -4,6 +4,7 @@ using Api.Dtos;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Api.Services
 {
     public class MemberManagermentApiService
@@ -11,7 +12,6 @@ namespace Api.Services
         private readonly IRepository<Member> _memberRepository;
         private readonly IRepository<Nation> _nationRepository;
         private readonly IRepository<ApplyList> _applyListRepository;
-
 
         public MemberManagermentApiService(IRepository<Member> memberRepository, IRepository<Nation> nationRepository, IRepository<ApplyList> applyListRepository)
         {
@@ -80,19 +80,18 @@ namespace Api.Services
             return true; 
         }
 
-        //public async Task<bool> LockMemberAccess(MemberDataDto memberDto)
-        //{
-        //    var member = await _memberRepository.GetByIdAsync(memberDto.MemberId);
-        //    if (member == null)
-        //    {
-        //        return false;
-        //    }
-        //    member.IsEmailConfirmed = memberDto.IsEmailConfirmed;
+        public async Task<bool> LockMemberAccess(int memberId)
+        {
+            var member = await _memberRepository.GetByIdAsync(memberId);
+            if (member == null)
+            {
+                return false;
+            }
+            member.AccountType = 8;
 
-        //    await _memberRepository.UpdateAsync(member);
-
-        //    return true; 
-        //}
+            await _memberRepository.UpdateAsync(member);
+            return true;
+        }
         public async Task<List<TutorDataDto>> GetTutorDataList()
         {
             var memberdatainfo = await _memberRepository.ListAsync();

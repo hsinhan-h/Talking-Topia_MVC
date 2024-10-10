@@ -49,6 +49,36 @@ namespace Api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateMemberAccoutType(int memberId)
+        {
+            try
+            {
+                var result = await _memberManagermentApiService.LockMemberAccess(memberId);
+
+                if (result)
+                {
+                    return Ok("會員資料更新成功!");
+                }
+                else
+                {
+                    return BadRequest("會員資料更新失敗!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+
+
+
+
+
+
         [HttpGet]
         public async Task<ActionResult> GetTutorDataList()
         {
