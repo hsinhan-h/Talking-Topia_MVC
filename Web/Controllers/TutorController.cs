@@ -247,8 +247,14 @@ namespace Web.Controllers
             var result = await _memberService.GetMemberId(memberId);
             if (!result) { return RedirectToAction(nameof(AccountController.Account), "Account"); }
 
+            var isTeacher = await _tutorDataService.Isteacher(memberId);
+            if (!isTeacher)
+            {
+                // 如果還不是老師，返回一個訊息頁面或顯示提示訊息
+                ViewData["Message"] = "您還沒成為老師，請提交履歷，如已提交請耐心等待。";
+                return View("_ShowMessage");
+            }
             var appointmentDetails = await _appointmentDetailVMService.GetAppointmentData(memberId);
-
             if (appointmentDetails == null)
             {
                 appointmentDetails = new AppointmentDetailsViewModel
