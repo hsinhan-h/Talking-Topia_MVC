@@ -579,7 +579,10 @@ namespace Web.Services
                 existingMember.Phone = existingMember.Phone ?? "N/A";
                 existingMember.Gender = (short)(existingMember.Gender != 0 ? existingMember.Gender : 0);
                 existingMember.AccountType = (existingMember.AccountType != 0 ? existingMember.AccountType : 0);
-                existingMember.IsTutor = false; //教師判斷 
+                if (!existingMember.IsTutor)
+                {
+                    existingMember.IsTutor = false; 
+                }
 
                 // 創建或更新教育經歷
                 Entities.Education education;

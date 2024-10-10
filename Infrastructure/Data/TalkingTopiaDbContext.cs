@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ApplicationCore.Entities;
 
@@ -78,7 +80,6 @@ public partial class TalkingTopiaDbContext : DbContext
 
         modelBuilder.Entity<ApplyCourse>(entity =>
         {
-            entity.Property(e => e.ApplyCourseId).ValueGeneratedNever();
             entity.Property(e => e.Cdate)
                 .HasColumnType("datetime")
                 .HasColumnName("CDate");
@@ -197,12 +198,12 @@ public partial class TalkingTopiaDbContext : DbContext
             entity.HasOne(d => d.Course).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Bookings__Course__5441852A");
+                .HasConstraintName("FK_Bookings_Courses");
 
             entity.HasOne(d => d.Student).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.StudentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Bookings__Member__534D60F1");
+                .HasConstraintName("FK_Bookings_Members");
         });
 
         modelBuilder.Entity<Coupon>(entity =>
@@ -439,6 +440,13 @@ public partial class TalkingTopiaDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(255)
                 .HasComment("電子郵件信箱");
+            entity.Property(e => e.EmailVerificationToken)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasDefaultValue("");
+            entity.Property(e => e.EmailVerificationTokenExpiration)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.FirstName)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -451,6 +459,7 @@ public partial class TalkingTopiaDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("姓氏");
+            entity.Property(e => e.LineUserId).HasMaxLength(50);
             entity.Property(e => e.NationId).HasComment("國籍Id");
             entity.Property(e => e.NativeLanguage)
                 .HasMaxLength(255)
@@ -469,6 +478,7 @@ public partial class TalkingTopiaDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasComment("電話");
+            entity.Property(e => e.ResetPasswordToken).HasMaxLength(256);
             entity.Property(e => e.SpokenLanguage)
                 .HasMaxLength(255)
                 .HasComment("會的語言");
@@ -795,6 +805,11 @@ public partial class TalkingTopiaDbContext : DbContext
                 .HasConstraintName("FK__TutorTime__Membe__5535A963");
         });
 
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.Property(e => e.LineId).HasMaxLength(255);
+        });
+
         modelBuilder.Entity<UserRole>(entity =>
         {
             entity.HasIndex(e => e.RoleId, "IX_UserRoles_RoleId");
@@ -810,9 +825,7 @@ public partial class TalkingTopiaDbContext : DbContext
         {
             entity.HasIndex(e => e.CourseId, "IX_WatchLists_CourseId");
 
-            entity.Property(e => e.WatchListId)
-                .ValueGeneratedOnAdd()
-                .HasComment("關注Id");
+            entity.Property(e => e.WatchListId).HasComment("關注Id");
             entity.Property(e => e.CourseId).HasComment("關注的課程");
             entity.Property(e => e.FollowerId).HasComment("送出關注的人");
 
@@ -820,10 +833,9 @@ public partial class TalkingTopiaDbContext : DbContext
                 .HasForeignKey(d => d.CourseId)
                 .HasConstraintName("FK_WatchLists_Courses");
 
-            entity.HasOne(d => d.WatchListNavigation).WithOne(p => p.WatchList)
-                .HasForeignKey<WatchList>(d => d.WatchListId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_WatchLists_WatchLists");
+            entity.HasOne(d => d.Follower).WithMany(p => p.WatchLists)
+                .HasForeignKey(d => d.FollowerId)
+                .HasConstraintName("FK_WatchLists_Members");
         });
 
         modelBuilder.Entity<WorkExperience>(entity =>
