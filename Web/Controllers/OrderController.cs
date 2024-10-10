@@ -65,7 +65,10 @@ namespace Web.Controllers
             if (isDelete == 200) { _logger.LogError("Delete!!!!"); }
 
             var order = await _orderVMService.GetOrderResultViewModelAsync(memberId);
-            if (order == null) return BadRequest("找不到訂單!!!!!!!?");
+            if (order == null)
+            {
+                order = new List<OrderResultViewModel>();
+            }
             var oVM = new OrderResultListViewModel
             {
                 OrderResult = order,
