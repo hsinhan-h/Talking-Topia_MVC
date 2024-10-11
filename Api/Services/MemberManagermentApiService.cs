@@ -53,15 +53,15 @@ namespace Api.Services
         public async Task<MemberDataCountDto> GetMemberInformation()
         {
             var memberdatainfo = await _memberRepository.ListAsync();
-            var nationdatainfo = await _nationRepository.ListAsync();
+
 
             var memberCount = memberdatainfo.Count;
             var blockAccess = memberdatainfo.Count(x => x.IsEmailConfirmed == false);
             var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             var currentMonth = DateTime.Now.ToString("yyyy/MM");
-
+            var rateblockandnormal = Math.Round(((double)blockAccess / memberCount) * 100, 1);
             var monthlyNewMemberCount = memberdatainfo.Count(x => x.Cdate >= firstDayOfMonth);
-            var monthlyBlockAccessCount = memberdatainfo.Count(x => x.IsEmailConfirmed == false && x.Cdate >= firstDayOfMonth);
+            
 
 
             var membercountDto = new MemberDataCountDto
@@ -70,7 +70,7 @@ namespace Api.Services
                 MonthlyNewMemberCount = monthlyNewMemberCount,
                 CurrentMonth = currentMonth,
                 BlockAccessCount = blockAccess,
-                MonthlyBlockAccessCount = monthlyBlockAccessCount,
+                Rateblockandnormal = rateblockandnormal,
             };
 
             return membercountDto;

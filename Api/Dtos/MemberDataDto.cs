@@ -33,6 +33,7 @@
         public int MonthlyNewMemberCount { get; set; }
         public string CurrentMonth { get; set; }
         public int BlockAccessCount { get; set; }
-        public int MonthlyBlockAccessCount { get; set; }
+
+        public double Rateblockandnormal { get; set; }
     }
 }
