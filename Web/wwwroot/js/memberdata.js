@@ -38,6 +38,73 @@ function submitPasswordChange() {
         });
 }
 
+
+
+//function saveProfileData() {
+//    event.preventDefault();
+
+//    const gender = document.querySelector('input[name="gender"]:checked').value;
+
+//    const profileData = {
+//        Account: document.getElementById('floatingInput7').value,
+//        LastName: document.getElementById('floatingInput9').value,
+//        FirstName: document.getElementById('floatingInput8').value,
+//        Nickname: document.getElementById('floatingInput1').value,
+//        Gender: gender.toString(),  // 將性別值轉換為字串 "1" 或 "2"
+//        Birthday: document.getElementById('floatingInput2').value,
+//        Email: document.getElementById('floatingInput10').value,
+//        Phone: document.getElementById('floatingInput11').value,
+//        CoursePrefer: collectCoursePreferences()
+//    };
+
+//    $.ajax({
+//        type: "POST",
+//        url: '/Member/SaveProfile',
+//        data: JSON.stringify(profileData),
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        success: function (response) {
+//            if (response.success) {
+//                alert('儲存成功！');
+//                // 更新 Navbar 上的使用者名稱
+//                document.getElementById('navbar-username').textContent = 'Hi! ' + profileData.FirstName;
+
+//                // 切換按鈕顯示狀態
+//                const editButton = document.getElementById('edit-button');
+//                const saveButton = document.getElementById('save-button');
+//                const cancelButton = document.getElementById('cancel-button');
+
+//                editButton.classList.remove('d-none');
+//                saveButton.classList.add('d-none');
+//                cancelButton.classList.add('d-none');
+
+//                // 禁用所有表單元素
+//                const inputs = document.querySelectorAll('#app input.form-control');
+//                const checkboxes = document.querySelectorAll('#app input[type="checkbox"]');
+//                const radioButtons = document.querySelectorAll('#app input[type="radio"]');
+
+//                inputs.forEach(input => {
+//                    input.disabled = true;
+//                });
+
+//                checkboxes.forEach(checkbox => {
+//                    checkbox.disabled = true;
+//                });
+
+//                radioButtons.forEach(radio => {
+//                    radio.disabled = true;
+//                });
+//            } else {
+//                alert('儲存失敗，請重試。錯誤原因: ' + response.message + '\n' + (response.exception || ''));
+//            }
+//        },
+//        error: function (xhr, status, error) {
+//            alert('儲存過程中出現錯誤，請稍後再試。錯誤訊息: ' + xhr.responseText);
+//        }
+//    });
+//}
+
+
 function saveProfileData() {
     event.preventDefault();
 
@@ -48,7 +115,7 @@ function saveProfileData() {
         LastName: document.getElementById('floatingInput9').value,
         FirstName: document.getElementById('floatingInput8').value,
         Nickname: document.getElementById('floatingInput1').value,
-        Gender: gender.toString(),  // 將性別值轉換為字串 "1" 或 "2"
+        Gender: gender.toString(),
         Birthday: document.getElementById('floatingInput2').value,
         Email: document.getElementById('floatingInput10').value,
         Phone: document.getElementById('floatingInput11').value,
@@ -63,7 +130,8 @@ function saveProfileData() {
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                alert('儲存成功！');
+                showToast("會員資料儲存", "儲存成功！");
+
                 // 更新 Navbar 上的使用者名稱
                 document.getElementById('navbar-username').textContent = 'Hi! ' + profileData.FirstName;
 
@@ -93,14 +161,15 @@ function saveProfileData() {
                     radio.disabled = true;
                 });
             } else {
-                alert('儲存失敗，請重試。錯誤原因: ' + response.message + '\n' + (response.exception || ''));
+                showToast("錯誤訊息", '儲存失敗，請重試。錯誤原因: ' + response.message + '\n' + (response.exception || ''));
             }
         },
         error: function (xhr, status, error) {
-            alert('儲存過程中出現錯誤，請稍後再試。錯誤訊息: ' + xhr.responseText);
+            showToast("錯誤訊息", '儲存過程中出現錯誤，請稍後再試。錯誤訊息: ' + xhr.responseText);
         }
     });
 }
+
 function collectCoursePreferences() {
     const selectedCourses = [];
     document.querySelectorAll('input[type="checkbox"]:checked').forEach(input => {
@@ -108,6 +177,7 @@ function collectCoursePreferences() {
     });
     return selectedCourses;
 }
+//編輯
 function toggleEditMode() {
     // 取得所有需要編輯的文字輸入欄位
     const inputs = document.querySelectorAll('#app input.form-control');
@@ -150,5 +220,19 @@ function toggleEditMode() {
         saveButton.classList.remove('d-none');
         cancelButton.classList.remove('d-none');
     }
+}
+//showToast
+function showToast(header, message) {
+    const toastElement = document.getElementById('toast');
+    const toastHeader = toastElement.querySelector('.toast-header strong');
+    const toastBody = toastElement.querySelector('.toast-body');
+
+    // 設定 toast 標題和訊息
+    toastHeader.textContent = header;
+    toastBody.textContent = message;
+
+    // 顯示 toast
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
 }
 
