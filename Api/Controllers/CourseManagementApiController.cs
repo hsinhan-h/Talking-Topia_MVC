@@ -1,5 +1,6 @@
 ﻿using Api.Dtos;
 using Api.Services;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 
@@ -23,6 +24,51 @@ namespace Api.Controllers
             {
                 var courseManagementData = await _courseManagementApiService.GetCourseManagementData();
                 return Ok(courseManagementData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateCourseInfo([FromBody] UpdateCourseDto dto)
+        {
+            try
+            {
+                var result = await _courseManagementApiService.UpadateCourseInfo(dto);
+
+                if (result)
+                {
+                    return Ok("更新課程資訊成功!");
+                }
+                else
+                {
+                    return BadRequest("更新課程資訊失敗!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        [HttpPut]
+        public async Task<ActionResult> UpdatePublishingStatus([FromBody] UpdatePublishingStatusDto dto)
+        {
+            try
+            {
+                var result = await _courseManagementApiService.UpdatePublishingStatus(dto.CourseId, dto.IsEnabled);
+
+                if (result)
+                {
+                    return Ok("更新課程審核資訊成功!");
+                }
+                else
+                {
+                    return BadRequest("更新課程審核資訊失敗!");
+                }
             }
             catch (Exception ex)
             {

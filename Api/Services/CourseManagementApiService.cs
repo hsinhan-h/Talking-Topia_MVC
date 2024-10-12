@@ -134,7 +134,11 @@ namespace Api.Services
                     CourseImages = courseImages.Select(i => i.ImageUrl).ToList(),
                     PublishStatus = c.IsEnabled && c.CoursesStatus == 1,
                     PublishDate = c.Cdate,
-                    IsUnderReview = c.CoursesStatus == 0
+                    IsUnderReview = c.CoursesStatus == 0,
+                    TwentyFiveMinUnitPrice = c.TwentyFiveMinUnitPrice,
+                    FiftyMinUnitPrice = c.FiftyMinUnitPrice,
+                    ThumbnailUrl = c.ThumbnailUrl,
+                    VideoUrl = c.VideoUrl
                 };
 
             return courseManagementData
@@ -143,19 +147,58 @@ namespace Api.Services
                 .ToList();
         }
 
+        public async Task<bool> UpadateCourseInfo(UpdateCourseDto dto)
+        {
+            var course = await _courseRepository.GetByIdAsync(dto.CourseId);
+            //var category = await _courseCategoryRepository.FirstOrDefaultAsync(ct => ct.CategorytName == dto.CourseCategory);
+            //var subject = await _courseSubjectRepository.FirstOrDefaultAsync(s => s.SubjectName == dto.CourseSubject);
+            if (course == null)
+            {
+                return false;
+            }
+            course.Title = dto.CourseTitle;
+            course.SubTitle = dto.CourseSubTitle;
+            course.CategoryId = dto.CourseCategory;
+            course.SubjectId = dto.CourseSubject;
+            course.TwentyFiveMinUnitPrice = (decimal)dto.TwentyFiveMinUnitPrice;
+            course.FiftyMinUnitPrice = (decimal)dto.FiftyMinUnitPrice;
+            course.VideoUrl = dto.VideoUrl;
+            course.Description = dto.Description;
+
+
+            _courseRepository.Update(course);
+            return true;
+        }
 
 
         public async Task<bool> UpdateCoursesStatus(int courseId, bool courseApprove)
         {
             var course =  await _courseRepository.GetByIdAsync(courseId);
             
-            if ((course == null))
+            if (course == null)
             {
                 return false;
             }
 
             course.CoursesStatus = courseApprove ? (short)1 : (short)2; //如果審核通過, 將CourseStatus設為1, 反之設為2
             if (courseApprove == true) course.Cdate = DateTime.Now; //更新課程上架時間
+
+            _courseRepository.Update(course);
+            return true;
+        }
+
+
+        public async Task<bool> UpdatePublishingStatus(int courseId, bool coursePublish)
+        {
+            var course = await _courseRepository.GetByIdAsync(courseId);
+
+            if ((course == null))
+            {
+                return false;
+            }
+
+            course.IsEnabled = coursePublish; 
+            course.Udate = DateTime.Now; 
 
             _courseRepository.Update(course);
             return true;
