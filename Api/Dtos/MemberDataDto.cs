@@ -22,8 +22,18 @@
         //Cdate
         public string Cdate { get; set; }
         //nationid
-        public int?  NationId { get; set; }
+        public int? NationId { get; set; }
         public string NationName { get; set; }
+        public string IsEmailConfirmed { get; set; }
+
     }
-    
+    public class MemberDataCountDto
+    {
+        public int MemberCount { get; set; }
+        public int MonthlyNewMemberCount { get; set; }
+        public string CurrentMonth { get; set; }
+        public int BlockAccessCount { get; set; }
+
+        public double Rateblockandnormal { get; set; }
+    }
 }

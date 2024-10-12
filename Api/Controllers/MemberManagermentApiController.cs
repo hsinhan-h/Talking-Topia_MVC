@@ -137,6 +137,19 @@ namespace Api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet]
+        public async Task<ActionResult> MemberDataCountInformation()
+        {
+            try
+            {
+                var memberDataCount = await _memberManagermentApiService.GetMemberInformation();
+                return Ok(memberDataCount);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
 
 
