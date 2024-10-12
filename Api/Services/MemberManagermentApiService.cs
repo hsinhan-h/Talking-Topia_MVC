@@ -26,8 +26,6 @@ namespace Api.Services
         {
             var memberdatainfo = await _memberRepository.ListAsync();
             var nationdatainfo = await _nationRepository.ListAsync();
-            
-
             var allmemberdata =
             from member in memberdatainfo
             join nation in nationdatainfo on member.NationId equals nation.NationId into nationinfo
@@ -45,10 +43,37 @@ namespace Api.Services
                 Email = member.Email.Trim(),
                 Cdate = member.Cdate.ToString("yyyy-MM-dd"),
                 NationId = member.NationId,
-                NationName = nation != null ? nation.NationName : "Unknown" 
+                NationName = nation != null ? nation.NationName : "Unknown",
+                IsEmailConfirmed = member.IsEmailConfirmed== false?  "已停權" : "授權中",
+                
             };
 
             return allmemberdata.ToList();
+        }
+        public async Task<MemberDataCountDto> GetMemberInformation()
+        {
+            var memberdatainfo = await _memberRepository.ListAsync();
+
+
+            var memberCount = memberdatainfo.Count;
+            var blockAccess = memberdatainfo.Count(x => x.IsEmailConfirmed == false);
+            var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var currentMonth = DateTime.Now.ToString("yyyy/MM");
+            var rateblockandnormal = Math.Round(((double)blockAccess / memberCount) * 100, 1);
+            var monthlyNewMemberCount = memberdatainfo.Count(x => x.Cdate >= firstDayOfMonth);
+            
+
+
+            var membercountDto = new MemberDataCountDto
+            {
+                MemberCount = memberCount,
+                MonthlyNewMemberCount = monthlyNewMemberCount,
+                CurrentMonth = currentMonth,
+                BlockAccessCount = blockAccess,
+                Rateblockandnormal = rateblockandnormal,
+            };
+
+            return membercountDto;
         }
         public async Task<bool> UpdateMemberData(MemberDataDto memberDto)
         {
@@ -87,7 +112,7 @@ namespace Api.Services
             {
                 return false;
             }
-            member.AccountType = 8;
+            member.IsEmailConfirmed = false;
 
             await _memberRepository.UpdateAsync(member);
             return true;

@@ -11,13 +11,12 @@
     <link href="~/css/layout.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/normalize.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/apply_resume.css" rel="stylesheet" asp-append-version="true" />
-@*     <link href="~/lib/quill/quill.snow.min.css" rel="stylesheet" /> *@
 }
 
 <main>
-
+@* 
     <p>@message</p>
-    <p>@header</p>
+    <p>@header</p> *@
    <div id="vue-wrapper">
         <form asp-action="TutorResume" method="post" ref="form">
             <div class="container-fluid mt-5">
@@ -120,7 +119,7 @@
         
         <div class="row mt-5 resume_border p-3 m-2">
             <div class="d-flex flex-row justify-content-between">
-                <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照</h2>
+                    <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">證照<span class="textbtncolorgreen fs-6 ms-5">【選填】如無需求請移除 (證照最多上傳三張)</span></h2>
                 <span @@click="addLicense" class="d-flex flex-column justify-content-center align-items-lg-center">
                     <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
                 </span>
@@ -180,7 +179,7 @@
         </div>
             <div class="row mt-5 resume_border p-3 m-2">
                 <div class="d-flex flex-row justify-content-between">
-                    <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">工作經歷</h2>
+                    <h2 class="fs-2 fw-bold ps-2 pt-2 pe-2">工作經歷<span class="textbtncolorgreen fs-6 ms-5">【選填】如無需求請移除 (工作經歷最多上傳三件)</span></h2>
                     <span class="d-flex flex-column justify-content-center align-items-lg-center" @@click="addWorkExperience">
                         <i class="fa-solid fa-circle-plus fa-2xl icon_plus" style="color: #ff5f5f;"></i>
                     </span>
@@ -199,11 +198,6 @@
                                     <!-- 檔案上傳輸入框 -->
                                     <input class="form-control my-2" :disabled="!work.workEditMode" accept=".docx, .txt .doc" type="file" @@change="handleWorkFileUpload($event, index)"
                                            :name="'WorkBackground[' + index + '].WorkExperienceFile'">
-@*                                     <div class="editor_resume">
-                                        <p>Hello World!</p>
-                                        <p>Some initial <strong>bold</strong> text</p>
-                                        <p>123</p>
-                                    </div> *@
                                     
                                     <p class="my-1 bgc fs-4">【年資】</p>
 
@@ -237,16 +231,8 @@
                                         <span class="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
-
                             </div>
-                            
                         </div>
-                    </div>
-                </div>
-
-                <div class="apply-expend mb-3 " data-bs-toggle="collapse" data-bs-target="#collapsework" aria-expanded="false">
-                    <div class="col-12 d-flex flex-row align-items-center justify-content-center">
-                        <i class=" fa-solid fa-ellipsis "></i>
                     </div>
                 </div>
                 <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
@@ -256,8 +242,7 @@
                                 <h5 class="modal-title bgc " id="validationModalLabel">表單提交</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body textdangercolor text-center">
-                                {{validationMessage}}
+                            <div class="modal-body textdangercolor text-center">請將未填寫的欄位完成，如無需求請點選移除。
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn textbtncolor btndangerbg btnbghover resume_btn bgc ms-2" data-bs-dismiss="modal">關閉</button>
@@ -290,7 +275,7 @@
                 </div>
             </div>
    </div>
-
+    
   
 
     
@@ -299,7 +284,6 @@
     @section endJS
     {
         <script src="~/lib/myvue/vue.global.min.js " asp-append-version="true"></script>
-@*         <script src="~/lib/quill/quill.min.js"></script> *@
         <script src="~/js/resume_dropdown.js"></script>
     }
     <script>
