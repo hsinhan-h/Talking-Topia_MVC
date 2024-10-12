@@ -79,6 +79,35 @@ namespace Api.Services
                 .ToList();
         }
 
+        public async Task<int> GetCourseQtyByPublishingStatus(bool isPublished, bool startFromCurrentMonth)
+        {
+            var courses = await _courseRepository
+                .ListAsync();
+            var filteredCourses = courses
+                .Where(c => c.IsEnabled == isPublished && c.CoursesStatus == 1);
+            if (startFromCurrentMonth)
+            {
+                var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return filteredCourses.Where(c => c.Cdate >= firstDayOfCurrentMonth).Count();
+            }
+            return filteredCourses.Count();
+        }
+
+        public async Task<int> GetCourseQty(bool startFromCurrentMonth)
+        {
+            var courses = await _courseRepository
+                .ListAsync();
+            var filteredCourses = courses
+               .Where(c => c.CoursesStatus != 2);
+            if (startFromCurrentMonth)
+            {
+                var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return filteredCourses.Where(c => c.Cdate >= firstDayOfCurrentMonth).Count();
+            }
+            return filteredCourses.Count();
+        }
+
+
         public async Task<int> GetCourseQtyByCoursesStatus(int coursesStatus, bool startFromCurrentMonth)
         {
             var courses = await _courseRepository
@@ -189,7 +218,7 @@ namespace Api.Services
             }
 
             course.IsEnabled = coursePublish; 
-            course.Udate = DateTime.Now; 
+            course.Cdate = DateTime.Now; 
 
             _courseRepository.Update(course);
             return true;
