@@ -93,41 +93,18 @@ namespace Api.Services
             return filteredCourses.Count();
         }
 
-        //public async Task<int> GetUnapprovedCourseQtyStartingFrom2024()
-        //{
-        //    var courses = await _courseRepository.ListAsync();
-        //    return courses
-        //        .Where(course => course.CoursesStatus == 0 && course.Cdate > new DateTime(2024, 1, 1))
-        //        .Count();
-        //}
-
-        //public async Task<int> GetApprovedCourseQtyStartingFrom2024()
-        //{
-        //    var courses = await _courseRepository.ListAsync();
-        //    return courses
-        //        .Where(course => course.CoursesStatus == 1 && course.Cdate > new DateTime(2024, 1, 1))
-        //        .Count();
-        //}
-
-        //public async Task<int> GetRejectedCourseQtyStartingFrom2024()
-        //{
-        //    var courses = await _courseRepository.ListAsync();
-        //    return courses
-        //        .Where(course => course.CoursesStatus == 2 && course.Cdate > new DateTime(2024, 1, 1))
-        //        .Count();
-        //}
-
 
         public async Task<List<CourseManagementDto>> GetCourseManagementData()
         {
             var courses = await _courseRepository.ListAsync();
+            var validCourses = courses.Where(c => c.CoursesStatus != 2);
             var images = await _courseImageRepository.ListAsync();
             var categories = await _courseCategoryRepository.ListAsync();
             var subjects = await _courseSubjectRepository.ListAsync();
             var tutors = await _memberRepository.ListAsync();
 
             var courseManagementData =
-                from c in courses
+                from c in validCourses
                 join img in images on c.CourseId equals img.CourseId into courseImages
                 from courseImage in courseImages.DefaultIfEmpty()
                 join ct in categories on c.CategoryId equals ct.CourseCategoryId into courseCategories
