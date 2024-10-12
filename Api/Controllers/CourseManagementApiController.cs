@@ -92,40 +92,12 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetUnapprovedCourseQtyStartingFrom2024()
+        public async Task<ActionResult> GetCourseQtyByCoursesStatus(int coursesStatus, bool startFromCurrentMonth)
         {
             try
             {
-                var unapprovedCourseQty = await _courseManagementApiService.GetUnapprovedCourseQtyStartingFrom2024();
-                return Ok(unapprovedCourseQty);
-            }         
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetApprovedCourseQtyStartingFrom2024()
-        {
-            try
-            {
-                var approvedCourseQty = await _courseManagementApiService.GetApprovedCourseQtyStartingFrom2024();
+                var approvedCourseQty = await _courseManagementApiService.GetCourseQtyByCoursesStatus(coursesStatus, startFromCurrentMonth);
                 return Ok(approvedCourseQty);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetRejectedCourseQtyStartingFrom2024()
-        {
-            try
-            {
-                var rejectedCourseQty = await _courseManagementApiService.GetRejectedCourseQtyStartingFrom2024();
-                return Ok(rejectedCourseQty);
             }
             catch (Exception ex)
             {

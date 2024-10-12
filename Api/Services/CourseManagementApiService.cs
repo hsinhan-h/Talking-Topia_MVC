@@ -79,29 +79,43 @@ namespace Api.Services
                 .ToList();
         }
 
-        public async Task<int> GetUnapprovedCourseQtyStartingFrom2024()
+        public async Task<int> GetCourseQtyByCoursesStatus(int coursesStatus, bool startFromCurrentMonth)
         {
-            var courses = await _courseRepository.ListAsync();
-            return courses
-                .Where(course => course.CoursesStatus == 0 && course.Cdate > new DateTime(2024, 1, 1))
-                .Count();
+            var courses = await _courseRepository
+                .ListAsync();
+            var filteredCourses = courses
+                .Where(c => c.CoursesStatus == coursesStatus);
+            if (startFromCurrentMonth)
+            {
+                var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return filteredCourses.Where(c => c.Cdate >= firstDayOfCurrentMonth).Count();
+            }
+            return filteredCourses.Count();
         }
 
-        public async Task<int> GetApprovedCourseQtyStartingFrom2024()
-        {
-            var courses = await _courseRepository.ListAsync();
-            return courses
-                .Where(course => course.CoursesStatus == 1 && course.Cdate > new DateTime(2024, 1, 1))
-                .Count();
-        }
+        //public async Task<int> GetUnapprovedCourseQtyStartingFrom2024()
+        //{
+        //    var courses = await _courseRepository.ListAsync();
+        //    return courses
+        //        .Where(course => course.CoursesStatus == 0 && course.Cdate > new DateTime(2024, 1, 1))
+        //        .Count();
+        //}
 
-        public async Task<int> GetRejectedCourseQtyStartingFrom2024()
-        {
-            var courses = await _courseRepository.ListAsync();
-            return courses
-                .Where(course => course.CoursesStatus == 2 && course.Cdate > new DateTime(2024, 1, 1))
-                .Count();
-        }
+        //public async Task<int> GetApprovedCourseQtyStartingFrom2024()
+        //{
+        //    var courses = await _courseRepository.ListAsync();
+        //    return courses
+        //        .Where(course => course.CoursesStatus == 1 && course.Cdate > new DateTime(2024, 1, 1))
+        //        .Count();
+        //}
+
+        //public async Task<int> GetRejectedCourseQtyStartingFrom2024()
+        //{
+        //    var courses = await _courseRepository.ListAsync();
+        //    return courses
+        //        .Where(course => course.CoursesStatus == 2 && course.Cdate > new DateTime(2024, 1, 1))
+        //        .Count();
+        //}
 
 
         public async Task<List<CourseManagementDto>> GetCourseManagementData()
@@ -181,7 +195,7 @@ namespace Api.Services
             }
 
             course.CoursesStatus = courseApprove ? (short)1 : (short)2; //如果審核通過, 將CourseStatus設為1, 反之設為2
-            if (courseApprove == true) course.Cdate = DateTime.Now; //更新課程上架時間
+            course.Cdate = DateTime.Now; //更新課程上架時間
 
             _courseRepository.Update(course);
             return true;
