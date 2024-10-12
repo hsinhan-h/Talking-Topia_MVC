@@ -1,9 +1,99 @@
-﻿import categoriesData from './json/categories.json'; 
+﻿var data_categories = [
+    {
+        "name": "語言學習",
+        "id": 1,
+        "subcategories": [
+            {
+                "name": "法文",
+                "id": 1
+            },
+            {
+                "name": "中文",
+                "id": 2
+            },
+            {
+                "name": "日文",
+                "id": 3
+            },
+            {
+                "name": "西班牙",
+                "id": 4
+            },
+            {
+                "name": "德文",
+                "id": 5
+            },
+            {
+                "name": "英文",
+                "id": 6
+            }
+        ]
+    },
+    {
+        "name": "程式設計",
+        "id": 2,
+        "subcategories": [
+            {
+                "name": "HTML/CSS",
+                "id": 7
+            },
+            {
+                "name": "JavaScript",
+                "id": 8
+            },
+            {
+                "name": "C#",
+                "id": 9
+            },
+            {
+                "name": "SQL",
+                "id": 10
+            },
+            {
+                "name": "Python",
+                "id": 11
+            },
+            {
+                "name": "Java",
+                "id": 12
+            }
+        ]
+    },
+    {
+        "name": "升學科目",
+        "id": 3,
+        "subcategories": [
+            {
+                "name": "數學",
+                "id": 13
+            },
+            {
+                "name": "物理",
+                "id": 14
+            },
+            {
+                "name": "化學",
+                "id": 15
+            },
+            {
+                "name": "歷史",
+                "id": 16
+            },
+            {
+                "name": "地理",
+                "id": 17
+            },
+            {
+                "name": "生物",
+                "id": 18
+            }
+        ]
+    }
+];
 const { createApp } = Vue;
 const appresume = createApp({
     data() {
         return {
-            data_categories: categoriesData,
             selectedCategory: '', 
             selectedSubcategory: '', 
             commonData: {}, 
@@ -627,4 +717,4 @@ const appresume = createApp({
     },
     
 });
-appresume.mount('#vue-wrapper');
+appresume.mount('#vue-wrappers');
