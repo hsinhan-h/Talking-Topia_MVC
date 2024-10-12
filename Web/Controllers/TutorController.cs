@@ -177,6 +177,8 @@ namespace Web.Controllers
             {
                 return RedirectToAction(nameof(AccountController.Account), "Account");
             }
+            int memberId = int.Parse(memberIdClaim.Value);
+            ViewData["MemberId"] = memberId;
             if (qVM.StudyStartYear.HasValue && qVM.StudyEndYear.HasValue)
             {
                 if (qVM.StudyStartYear > qVM.StudyEndYear)
@@ -189,7 +191,7 @@ namespace Web.Controllers
                 return View(qVM);
             }
 
-            int memberId = int.Parse(memberIdClaim.Value);
+            
             var result = await _resumeDataService.AddResumeAsync(qVM, memberId);
 
             if (result.Success)
