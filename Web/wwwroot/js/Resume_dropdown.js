@@ -153,6 +153,12 @@ const appresume = createApp({
                 return this.commonData['subcategory_' + this.selectedSubcategory]?.name || '';
             }
             return '';
+        },
+        canAddWorkExperience() {
+            return this.works.length < 3;
+        },
+        canAddLicens() {
+            return this.licenses.length < 3;
         }
     },
     created() {
@@ -160,22 +166,6 @@ const appresume = createApp({
         this.loadHeadShotImage()
     },
     mounted() {
-        //const editors = document.querySelectorAll(".editor_resume");//這裡一改成標籤的class name
-        //editors.forEach((element) => {
-        //    element.style.height = "300px"; 
-        //    new Quill(element, {
-        //        theme: 'snow',
-        //        placeholder: '輸入...',
-        //        modules: {
-        //            toolbar: [
-        //                ['bold', 'italic', 'underline'],
-        //                ['link', 'image', 'video'],
-        //                [{ 'list': 'ordered' }, { 'list': 'bullet' }]
-        //            ]
-        //        }
-        //    });
-        //});
-
         this.fetchBackendData(); 
     },
     methods: {
@@ -258,6 +248,7 @@ const appresume = createApp({
         },
 
         addLicense() {
+            if (!this.canAddLicens) return;
             const newLicense = {
                 ProfessionalLicenseName: '',
                 ProfessionalLicenseUrl: null,
@@ -380,6 +371,7 @@ const appresume = createApp({
             }
         },
         addWorkExperience() {
+            if (!this.canAddWorkExperience) return;
             //新增工作經驗欄位
             const newWorkExperience = {
                 workName: '',
