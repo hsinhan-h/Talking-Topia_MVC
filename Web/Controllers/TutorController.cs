@@ -104,15 +104,15 @@ namespace Web.Controllers
 
             if (result.Success)
             {
-                TempData["Header"] = "教師資料新增";
-                TempData["Message"] = "教師資料新增成功";
+                TempData["Header"] = "教師資料";
+                TempData["Message"] = "教師資料更新成功";
                 return RedirectToAction("TutorData");
 
             }
             else
             {
                 TempData["Header"] = "錯誤訊息";
-                TempData["Message"] = result.Message;
+                TempData["Message"] = "教師資料更新失敗";
                 return View("_ShowMessage");
             }
         }
@@ -132,14 +132,14 @@ namespace Web.Controllers
             if (resultTime.Success)
             {
 
-                TempData["Header"] = "教師資料新增";
-                TempData["Message"] = "教師資料新增成功";
+                TempData["Header"] = "教師資料";
+                TempData["Message"] = "教師資料更新成功";
                 return RedirectToAction("TutorData");
             }
             else
             {
                 TempData["Header"] = "錯誤訊息";
-                TempData["Message"] = resultTime.Message;
+                TempData["Message"] = "教師資料更新失敗";
                 return View("_ShowMessage");
             }
         }
@@ -196,14 +196,14 @@ namespace Web.Controllers
 
             if (result.Success)
             {
-                TempData["Header"] = "新增履歷資料";
-                TempData["Message"] = "履歷資料新增成功";
+                TempData["Header"] = "履歷資料";
+                TempData["Message"] = "履歷資料更新成功";
                 return RedirectToAction("TutorData");
             }
             else
             {
                 ViewData["Header"] = "錯誤訊息";
-                ViewData["Message"] = result.Message;
+                ViewData["Message"] = "履歷資料更新失敗";
                 return View("TutorResume", qVM);
             }
         }
