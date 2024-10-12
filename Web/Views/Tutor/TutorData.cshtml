@@ -355,7 +355,10 @@
         </div>
     </div>
 </div>
-<div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+<div id="toast" data-message="@message" data-header="@header" class="d-none">
+123
+</div>
+@* <div id="toas2" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
      data-bs-delay="2000" style="position: fixed; top: 50px; right: 20px; z-index: 20;"
      data-message="@message" data-header="@header">
     <div class="toast-header">
@@ -366,11 +369,14 @@
     <div class="toast-body p-2 text-center my-3 fs-3" style="color: #ff5f5f;">
         @message
     </div>
-</div>
+</div> *@
 
 @section topCSS {
     <link rel="stylesheet" href="~/css/backstage.css?v=202408211917" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 }
 @section endJS {
     <script src="~/js/timeslot-setting.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 }
