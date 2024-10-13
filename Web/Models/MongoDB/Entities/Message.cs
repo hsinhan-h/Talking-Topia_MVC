@@ -1,0 +1,50 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Web.Models.MongoDB.Entities;
+
+public class Message
+{
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId MessageId { get; set; }
+
+    [BsonElement("ConversationId")]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId ConversationId { get; set; }
+
+    [BsonElement("SenderId")]
+    public string SenderId { get; set; }
+
+    [BsonElement("ReceiverId")]
+    public string ReceiverId { get; set; }
+
+    [BsonElement("Content")]
+    public string Content { get; set; }
+
+    [BsonElement("MessageType")]
+    [BsonRepresentation(BsonType.String)]
+    public MessageType MessageType { get; set; }
+
+    [BsonElement("Timestamp")]
+    public DateTime Timestamp { get; set; }
+
+    [BsonElement("Visibility")]
+    public Visibility Visibility { get; set; }
+}
+
+public enum MessageType
+{
+    Sent,
+    Read,
+    Deleted,
+}
+
+public class Visibility
+{
+    [BsonElement("A")]
+    public bool A { get; set; }
+
+    [BsonElement("B")]
+    public bool B { get; set; }
+}

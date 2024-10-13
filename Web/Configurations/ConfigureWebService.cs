@@ -1,4 +1,6 @@
-﻿namespace Web.Configurations
+﻿using Microsoft.AspNetCore.SignalR;
+
+namespace Web.Configurations
 {
     public static class ConfigureWebService
     {
@@ -9,8 +11,9 @@
             services.AddScoped<OrderDetailViewModelService>();
             services.AddScoped<OrderViewModelService>();
             services.AddScoped<MemberAppointmentService>();
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             //services.AddScoped<DifySearchService>();
-          
+
             return services;
         }
     }
