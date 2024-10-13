@@ -79,6 +79,35 @@ namespace Api.Services
                 .ToList();
         }
 
+        public async Task<int> GetCourseQtyByPublishingStatus(bool isPublished, bool startFromCurrentMonth)
+        {
+            var courses = await _courseRepository
+                .ListAsync();
+            var filteredCourses = courses
+                .Where(c => c.IsEnabled == isPublished && c.CoursesStatus == 1);
+            if (startFromCurrentMonth)
+            {
+                var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return filteredCourses.Where(c => c.Cdate >= firstDayOfCurrentMonth).Count();
+            }
+            return filteredCourses.Count();
+        }
+
+        public async Task<int> GetCourseQty(bool startFromCurrentMonth)
+        {
+            var courses = await _courseRepository
+                .ListAsync();
+            var filteredCourses = courses
+               .Where(c => c.CoursesStatus != 2);
+            if (startFromCurrentMonth)
+            {
+                var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return filteredCourses.Where(c => c.Cdate >= firstDayOfCurrentMonth).Count();
+            }
+            return filteredCourses.Count();
+        }
+
+
         public async Task<int> GetCourseQtyByCoursesStatus(int coursesStatus, bool startFromCurrentMonth)
         {
             var courses = await _courseRepository
@@ -93,41 +122,18 @@ namespace Api.Services
             return filteredCourses.Count();
         }
 
-        //public async Task<int> GetUnapprovedCourseQtyStartingFrom2024()
-        //{
-        //    var courses = await _courseRepository.ListAsync();
-        //    return courses
-        //        .Where(course => course.CoursesStatus == 0 && course.Cdate > new DateTime(2024, 1, 1))
-        //        .Count();
-        //}
-
-        //public async Task<int> GetApprovedCourseQtyStartingFrom2024()
-        //{
-        //    var courses = await _courseRepository.ListAsync();
-        //    return courses
-        //        .Where(course => course.CoursesStatus == 1 && course.Cdate > new DateTime(2024, 1, 1))
-        //        .Count();
-        //}
-
-        //public async Task<int> GetRejectedCourseQtyStartingFrom2024()
-        //{
-        //    var courses = await _courseRepository.ListAsync();
-        //    return courses
-        //        .Where(course => course.CoursesStatus == 2 && course.Cdate > new DateTime(2024, 1, 1))
-        //        .Count();
-        //}
-
 
         public async Task<List<CourseManagementDto>> GetCourseManagementData()
         {
             var courses = await _courseRepository.ListAsync();
+            var validCourses = courses.Where(c => c.CoursesStatus != 2);
             var images = await _courseImageRepository.ListAsync();
             var categories = await _courseCategoryRepository.ListAsync();
             var subjects = await _courseSubjectRepository.ListAsync();
             var tutors = await _memberRepository.ListAsync();
 
             var courseManagementData =
-                from c in courses
+                from c in validCourses
                 join img in images on c.CourseId equals img.CourseId into courseImages
                 from courseImage in courseImages.DefaultIfEmpty()
                 join ct in categories on c.CategoryId equals ct.CourseCategoryId into courseCategories
@@ -212,7 +218,7 @@ namespace Api.Services
             }
 
             course.IsEnabled = coursePublish; 
-            course.Udate = DateTime.Now; 
+            course.Cdate = DateTime.Now; 
 
             _courseRepository.Update(course);
             return true;

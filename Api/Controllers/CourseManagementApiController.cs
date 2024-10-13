@@ -92,12 +92,40 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> GetCourseQty(bool startFromCurrentMonth)
+        {
+            try
+            {
+                var courseQty = await _courseManagementApiService.GetCourseQty(startFromCurrentMonth);
+                return Ok(courseQty);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetCourseQtyByPublishingStatus(bool isPublished, bool startFromCurrentMonth)
+        {
+            try
+            {
+                var courseQty = await _courseManagementApiService.GetCourseQtyByPublishingStatus(isPublished, startFromCurrentMonth);
+                return Ok(courseQty);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
         public async Task<ActionResult> GetCourseQtyByCoursesStatus(int coursesStatus, bool startFromCurrentMonth)
         {
             try
             {
-                var approvedCourseQty = await _courseManagementApiService.GetCourseQtyByCoursesStatus(coursesStatus, startFromCurrentMonth);
-                return Ok(approvedCourseQty);
+                var courseQty = await _courseManagementApiService.GetCourseQtyByCoursesStatus(coursesStatus, startFromCurrentMonth);
+                return Ok(courseQty);
             }
             catch (Exception ex)
             {

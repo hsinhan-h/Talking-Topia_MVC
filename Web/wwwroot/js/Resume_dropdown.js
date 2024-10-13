@@ -717,4 +717,4 @@ const appresume = createApp({
     },
     
 });
-appresume.mount('#vue-wrapper');
+appresume.mount('#vue-wrappers');
