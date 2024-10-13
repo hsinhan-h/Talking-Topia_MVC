@@ -16,8 +16,8 @@
         <div class="login-container">
             <h2>登入</h2>
             <form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div> <!-- 用於顯示所有的錯誤訊息 -->
-
+@*                 <div asp-validation-summary="All" class="text-danger"></div> <!-- 用於顯示所有的錯誤訊息 -->
+ *@
                 <div class="form-group mb-3">
                     <input asp-for="LoginViewModel.Email" class="form-control" id="emailInput" placeholder="電子郵件" />
                     <span asp-validation-for="LoginViewModel.Email" id="emailError" class="text-danger mb-3"></span>
