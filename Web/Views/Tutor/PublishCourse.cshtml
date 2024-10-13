@@ -2,6 +2,8 @@
 @{
     BookingListViewModel HistoryList = ViewData["HistoryList"] as BookingListViewModel;
     CourseCategoryListViewModel CategoryList = ViewData["CourseCategoryList"] as CourseCategoryListViewModel;
+    var message = TempData["Message"]?.ToString();
+    var header = TempData["Header"]?.ToString();
 }
 <div class="container lh-backstage" id="app">
     <div class="row">
@@ -504,9 +506,18 @@
         </div>
     </div>
 </div>
+<div id="toast" data-message="@message" data-header="@header" class="d-none">
+    123
+</div>
 @section topCSS {
     @* <link href="~/lib/Quill/css/quill.snow.css" rel="stylesheet" /> *@
     <link rel="stylesheet" href="~/css/backstage.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 }
 @section endJS {
    @*  <script src="~/lib/Quill/JS/quill.js"></script>
@@ -514,6 +525,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
         const { createApp } = Vue;
@@ -577,13 +589,18 @@
                     })
                         .then(response => {
                             console.log('資料成功傳送', response);
-                            alert('存檔成功：' + response.data);
-                            window.location.reload();  // 完成後重整頁面
+                            toastr.success("存檔成功");
+
+                            // 延遲 1 秒後重新載入頁面
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
                         })
                         .catch(error => {
                             console.error('傳送失敗', error);
                             if (error.response && error.response.status === 400) {
-                                alert('錯誤：' + error.response.data);
+                                //alert('錯誤：' + error.response.data);
+                                toastr.info('存檔錯誤：' + error.response.data);
                             } else {
                                 alert('發生錯誤，請稍後再試。');
                             }
@@ -608,13 +625,18 @@
                     })
                         .then(response => {
                             console.log('資料成功傳送', response);
-                            alert('更新成功：' + response.data);
-                            window.location.reload();  // 完成後重整頁面
+                            toastr.success("更新成功");
+                            // 延遲 1 秒後重新載入頁面
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
                         })
                         .catch(error => {
                             console.error('傳送失敗', error);
                             if (error.response && error.response.status === 400) {
-                                alert('錯誤：' + error.response.data);
+                                //alert('更新錯誤：' + error.response.data);
+                                console.log('更新錯誤', response);
+                                toastr.info('更新錯誤：' + error.response.data);
                             } else {
                                 alert('發生錯誤，請稍後再試。');
                             }

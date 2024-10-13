@@ -18,5 +18,7 @@
         public bool IsEnabled { get; set; } = true;
         public short CoursesStatus { get; set; } = 0;
         public List<CourseDataViewModel> BookingList { get; internal set; }
+
+        public string Thumbnail { get; set; }
     }
 }
