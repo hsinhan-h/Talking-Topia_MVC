@@ -1,0 +1,18 @@
+﻿body {
+    background-color: #f8f9fa;
+}
+
+.registration-success-container {
+    max-width: 500px;
+    margin: 80px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.alert {
+    margin: 0;
+    font-size: 16px;
+}
