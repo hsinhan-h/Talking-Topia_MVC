@@ -12,11 +12,13 @@ namespace ApplicationCore.Services
     {
         private readonly IRepository<Member> _memberRepository;
         private readonly IRepository<WatchList> _watchListRepository;
- 
-        public MemberService(IRepository<Member> memberRepository, IRepository<WatchList> watchListRepository)
+        private readonly IRepository<Course> _courseRepository;
+
+        public MemberService(IRepository<Member> memberRepository, IRepository<WatchList> watchListRepository, IRepository<Course> courseRepository)
         {
             _memberRepository = memberRepository;
             _watchListRepository = watchListRepository;
+            _courseRepository = courseRepository;
         }
 
         public async Task<bool> GetMemberId(int memberId)
@@ -73,6 +75,12 @@ namespace ApplicationCore.Services
         {
             var result =  _memberRepository.FirstOrDefault(x => x.MemberId == memberId).IsTutor;
             return result;
+        }
+
+        public async Task<int> GetTutorId(int courseId)
+        {
+            var course = await _courseRepository.FirstOrDefaultAsync(c => c.CourseId == courseId);
+            return course.TutorId;
         }
     }
 }
