@@ -15,17 +15,17 @@
         <!-- 左邊欄位 -->
         <div class="login-container">
             <h2>登入</h2>
-            <form asp-controller="Account" asp-action="Login" method="post">
+            <form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
                 <div asp-validation-summary="All" class="text-danger"></div> <!-- 用於顯示所有的錯誤訊息 -->
 
-                <div class="form-group">
-                    <input asp-for="LoginViewModel.Email" class="form-control" placeholder="電子郵件" />
-                    <span asp-validation-for="LoginViewModel.Email" class="text-danger"></span>
+                <div class="form-group mb-3">
+                    <input asp-for="LoginViewModel.Email" class="form-control" id="emailInput" placeholder="電子郵件" />
+                    <span asp-validation-for="LoginViewModel.Email" id="emailError" class="text-danger mb-3"></span>
                 </div>
 
-                <div class="form-group">
-                    <input asp-for="LoginViewModel.Password" class="form-control" type="password" placeholder="密碼" />
-                    <span asp-validation-for="LoginViewModel.Password" class="text-danger"></span>
+                <div class="form-group mb-3">
+                    <input asp-for="LoginViewModel.Password" class="form-control" id="passwordInput" type="password" placeholder="密碼" />
+                    <span asp-validation-for="LoginViewModel.Password" id="passwordError" class="text-danger"></span>
                 </div>
 
                 <a asp-action="ForgotPassword" class="forgot-password">忘記密碼？</a>
@@ -33,9 +33,8 @@
             </form>
             <div class="social-login">
                 <p>或使用社群帳號登入</p>
-                <a href="#" class="google"><i class="fab fa-google"></i></a>
-
-                <a asp-controller="Account" asp-action="LineLogin" class="line"><i class="fab fa-line"></i></a>
+@*                 <a href="#" class="google"><i class="fab fa-google"></i></a>
+ *@                <a asp-controller="Account" asp-action="LineLogin" class="line"><i class="fab fa-line"></i></a>
             </div>
             <hr>
             <h2>還不是會員？</h2>
@@ -48,7 +47,8 @@
 
 
 @section endJS
-    {
+{
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="~/js/login.js"></script>
 
 }
