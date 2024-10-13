@@ -63,9 +63,9 @@ namespace Web.Controllers
         }
         // 註冊
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Register(AccountViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 try
@@ -78,7 +78,7 @@ namespace Web.Controllers
                     if (member == null)
                     {
                         ModelState.AddModelError("", "註冊過程中發生錯誤，請稍後再試。");
-                        return View("Account", model);
+                        return View("Register", model);
                     }
 
                     // 生成驗證連結
@@ -105,9 +105,9 @@ namespace Web.Controllers
                 }
             }
 
-            return View("Account", model);
+            // 返回註冊頁面，而不是 Account 頁面
+            return View("Register", model);
         }
-
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {

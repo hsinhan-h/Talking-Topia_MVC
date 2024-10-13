@@ -29,11 +29,12 @@
                             <div class="form-floating mb-3">
                                 <input type="text"
                                        class="form-control"
-                                       id="floatingInput7"
+                                       id="accountInput"
                                        value="@Model.Email"
                                        placeholder=""
                                        disabled />
-                                <label for="floatingInput7">帳號</label>
+                                <label for="accountInput">帳號</label>
+                                <span id="accountInput-error" class="text-danger"></span>
                             </div>
                         </div>
                         <!-- 修改密碼 -->
@@ -50,22 +51,26 @@
                             <div class="form-floating mb-3">
                                 <input type="text"
                                        class="form-control"
-                                       id="floatingInput8"
+                                       id="firstnameInput"
                                        value="@Model.FirstName"
                                        placeholder=""
                                        disabled />
-                                <label for="floatingInput8">名字</label>
+                                <label for="firstnameInput">名字</label>
+                                <span id="firstnameInput-error" class="text-danger"></span>
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-floating mb-3">
                                 <input type="text"
                                        class="form-control"
-                                       id="floatingInput9"
+                                       id="lastnameInput"
                                        value="@Model.LastName"
                                        placeholder=""
                                        disabled />
-                                <label for="floatingInput9">姓氏</label>
+                                <label for="lastnameInput">姓氏</label>
+                                <span id="lastnameInput-error" class="text-danger"></span>
+
                             </div>
                         </div>
                     </div>
@@ -74,11 +79,13 @@
                             <div class="form-floating mb-3">
                                 <input type="text"
                                        class="form-control"
-                                       id="floatingInput1"
+                                       id="nicknameInput"
                                        value="@Model.Nickname"
                                        placeholder=""
                                        disabled />
-                                <label for="floatingInput1">暱稱</label>
+                                <label for="nicknameInput">暱稱</label>
+                                <span id="nicknameInput-error" class="text-danger"></span>
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -106,6 +113,7 @@
                                     </div>
                                 </div>
                                 <label for="genderMale" class="lh-floating-label">性別</label>
+                                <span id="gender-error" class="text-danger"></span>
                             </div>
                         </div>
 
@@ -113,34 +121,40 @@
                     <div class="row">
                         <div class="col-12 col-md-4">
                             <div class="form-floating mb-3">
-                                <input type="date" class="form-control" id="floatingInput2"
+                                <input type="date" class="form-control" id="birthdayInput"
                                        value="@(Model.Birthday.HasValue ? Model.Birthday.Value.ToString("yyyy-MM-dd") : "")"
                                        min="1753-01-01"
                                        disabled />
 
-                                <label for="floatingInput2">生日</label>
+                                <label for="birthdayInput">生日</label>
+                                <span id="birthdayInput-error" class="text-danger"></span>
+
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating mb-3">
                                 <input type="email"
                                        class="form-control"
-                                       id="floatingInput10"
+                                       id="emailInput"
                                        value="@Model.Email"
                                        placeholder="name@example.com"
                                        disabled />
-                                <label for="floatingInput10">電子信箱</label>
+                                <label for="emailInput">電子信箱</label>
+                                <span id="emailInput-error" class="text-danger"></span>
+
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating mb-3">
                                 <input type="tel"
                                        class="form-control"
-                                       id="floatingInput11"
+                                       id="phoneInput"
                                        value="@Model.Phone"
                                        placeholder=""
                                        disabled />
-                                <label for="floatingInput11">電話</label>
+                                <label for="phoneInput">電話</label>
+                                <span id="phoneInput-error" class="text-danger"></span>
+
                             </div>
                         </div>
                     </div>
@@ -153,7 +167,7 @@
                                    class="btn btn-info lh-backstage-submit-btn me-2 d-none"
                                    type="button"
                                    value="儲存"
-                                   onclick="saveProfileData()" />
+                                   onclick="saveProfileData(event)" />
 
                             <input id="cancel-button"
                                    class="btn btn-secondary lh-backstage-submit-btn me-2 d-none"
