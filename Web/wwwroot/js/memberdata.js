@@ -5,7 +5,7 @@ function submitPasswordChange() {
     let confirmPassword = document.getElementById('confirmPasswordInput').value;
 
     if (newPassword !== confirmPassword) {
-        alert("新密碼與確認密碼不相符");
+        showToast("新密碼與確認密碼不相符");
         return;
     }
 
@@ -23,18 +23,23 @@ function submitPasswordChange() {
         },
         body: JSON.stringify(requestData)
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
-                alert("密碼修改成功");
-                window.location.reload(); // 重新載入頁面
+                showToast('成功', '密碼修改成功');
+                setTimeout(() => window.location.reload(), 2000); // 重新載入頁面
             } else {
-                alert(data.message);
+                showToast('錯誤', data.message);
             }
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert("密碼修改失敗");
+            showToast('錯誤', '密碼修改失敗，請稍後再試');
         });
 }
 
