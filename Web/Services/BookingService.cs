@@ -2,6 +2,7 @@
 using Web.Entities;
 using Web.Repository;
 using Web.ViewModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Web.Services
 {
@@ -146,10 +147,11 @@ namespace Web.Services
                                    //UpdateDatetime = DateTime.Now,
                                    //CourseTitle = course.Title,  //這不確定是哪個欄位
                                    //Category = category.CategorytName,
+                                   CategoryId = course.CategoryId.ToString(),
                                    CategoryName = category.CategorytName,
                                    //CourseSubject = subject.SubjectName,
                                    SubjectName = subject.SubjectName,
-                                   //Thumbnail = course.ThumbnailUrl,
+                                   Thumbnail = course.ThumbnailUrl,
                                    VideoUrl = course.VideoUrl,
                                    //CourseImageId = image.CourseImageId.ToString(),
                                    //ThumbnailUrl = (List<string>)courseImg,
@@ -170,6 +172,7 @@ namespace Web.Services
                                    //MemberId = member.MemberId,
                                    SubjectId = subject.SubjectId,
                                    //CategoryId = course.CategoryId,
+                                   CoursesStatus = course.CoursesStatus,
                                };
 
             return new CourseDataViewModel()
@@ -257,47 +260,50 @@ namespace Web.Services
                 }
                 else if (status == CRUDStatus.Update)
                 {
+                    CourseDataViewModel orgData = (await GetPublishCourse(memberId, courseData.CourseId)).BookingList[0];
+
                     var course = new Course
                     {
                         CourseId = courseData.CourseId,
-                        //CategoryId = int.Parse(courseData.CategoryId),
-                        //SubjectId = courseData.SubjectId,
-                        //TutorId = memberId,
-                        //Title = courseData.Title,
-                        //SubTitle = courseData.SubTitle,
+                        CategoryId = int.Parse(orgData.CategoryId),
+                        SubjectId = orgData.SubjectId,
+                        TutorId = memberId,
+                        Title = courseData.Title,
+                        SubTitle = courseData.SubTitle,
                         TwentyFiveMinUnitPrice = decimal.Parse(courseData.TwentyFiveMinPriceNTD),
                         FiftyMinUnitPrice = decimal.Parse(courseData.FiftyMinPriceNTD),
-                        //Description = courseData.Description,
-                        //IsEnabled = courseData.IsEnabled,
-                        //ThumbnailUrl = courseData.ThumbnailUrl[0],
-                        //VideoUrl = courseData.VideoUrl,
-                        //CoursesStatus = courseData.CoursesStatus,
-                        //Udate = DateTime.Now,
+                        Description = courseData.Description,
+                        IsEnabled = orgData.IsEnabled,
+                        ThumbnailUrl = orgData.Thumbnail,
+                        VideoUrl = courseData.VideoUrl,
+                        CoursesStatus = orgData.CoursesStatus,
+                        Cdate = DateTime.Now,
+                        Udate = DateTime.Now,
                     };
                     _repository.Update(course);
                     await _repository.SaveChangesAsync();
 
                     var courseId = course.CourseId;
 
-                    //先刪除圖檔
-                    var couresImg = from Img in _repository.GetAll<CourseImage>()
-                                    where Img.CourseId == courseId
-                                    select Img;
-                    _repository.Delete(couresImg);
-                    await _repository.SaveChangesAsync();
+                    ////先刪除圖檔
+                    //var couresImg = from Img in _repository.GetAll<CourseImage>()
+                    //                where Img.CourseId == courseId
+                    //                select Img;
+                    //_repository.Delete(couresImg);
+                    //await _repository.SaveChangesAsync();
 
-                    //再存檔
-                    foreach (var item in courseData.CouresImagesList)
-                    {
-                        var courseImg = new CourseImage
-                        {
-                            CourseId = courseId,
-                            ImageUrl = item,
-                            Cdate = DateTime.Now,
-                        };
-                        _repository.Create(courseImg);
-                        await _repository.SaveChangesAsync();
-                    }
+                    ////再存檔
+                    //foreach (var item in courseData.CouresImagesList)
+                    //{
+                    //    var courseImg = new CourseImage
+                    //    {
+                    //        CourseId = courseId,
+                    //        ImageUrl = item,
+                    //        Cdate = DateTime.Now,
+                    //    };
+                    //    _repository.Create(courseImg);
+                    //    await _repository.SaveChangesAsync();
+                    //}
                 }
             }
             catch (Exception ex)

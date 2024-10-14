@@ -1,0 +1,18 @@
+﻿<div>
+    <h1>SignalR 私人聊天</h1>
+
+    <label for="userInput">使用者 ID：</label>
+    <input type="text" id="userInput" placeholder="輸入使用者 ID" />
+    <button id="connectBtn">連線</button>
+
+    <div id="chat" style="display:none;">
+        <h2>聊天</h2>
+        <input type="text" id="targetUserId" placeholder="目標使用者 ID" />
+        <input type="text" id="messageInput" placeholder="輸入訊息" />
+        <button id="sendButton">發送訊息</button>
+
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js" defer></script>

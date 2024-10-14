@@ -22,21 +22,28 @@ namespace Web.ViewModels
         /// <summary>
         /// 名字
         /// </summary>
+        [Required(ErrorMessage = "名字是必填的")]
+        [StringLength(50, ErrorMessage = "名字不得超過50字元")]
         public string FirstName { get; set; }
 
         /// <summary>
         /// 姓氏
         /// </summary>
+        [Required(ErrorMessage = "姓氏是必填的")]
+        [StringLength(50, ErrorMessage = "姓氏不得超過50字元")]
         public string LastName { get; set; }
 
         /// <summary>
         /// 暱稱
         /// </summary>
+        [Required(ErrorMessage = "暱稱是必填的")]
+        [StringLength(50, ErrorMessage = "暱稱不得超過50字元")]
         public string Nickname { get; set; }
 
         /// <summary>
         /// 性別
         /// </summary>
+        [Required(ErrorMessage = "性別是必填的")]
         public string Gender { get; set; }
 
         /// <summary>
@@ -47,11 +54,15 @@ namespace Web.ViewModels
         /// <summary>
         /// 信箱
         /// </summary>
+        [Required(ErrorMessage = "信箱是必填的")]
+        [EmailAddress(ErrorMessage = "請輸入有效的電子郵件地址")]
         public string Email { get; set; }
 
         /// <summary>
         /// 電話
         /// </summary>
+        [Required(ErrorMessage = "電話是必填的")]
+        [Phone(ErrorMessage = "請輸入有效的電話號碼")]
         public string Phone { get; set; }
 
         /// <summary>

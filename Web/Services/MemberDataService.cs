@@ -327,7 +327,7 @@ namespace Web.Services
             var member = await _accountService.GetMemberByIdAsync(memberId);
             if (member == null)
             {
-                return (false, "無法找到使用者。");
+                return (false, "無法找到使用者");
             }
 
             var passwordHasher = new PasswordHasher<Web.Entities.Member>();
@@ -336,7 +336,7 @@ namespace Web.Services
             var passwordVerificationResult = passwordHasher.VerifyHashedPassword(member, member.Password, currentPassword);
             if (passwordVerificationResult != PasswordVerificationResult.Success)
             {
-                return (false, "目前密碼不正確。");
+                return (false, "目前密碼不正確");
             }
 
             // 設置新密碼，統一使用 PasswordHasher
@@ -346,9 +346,8 @@ namespace Web.Services
             _repository.Update(member);
             await _repository.SaveChangesAsync();
 
-            return (true, "密碼修改成功。");
+            return (true, "密碼修改成功");
         }
-
 
     }
 
