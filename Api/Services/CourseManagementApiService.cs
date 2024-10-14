@@ -167,7 +167,7 @@ namespace Api.Services
                 .ToList();
         }
 
-        public async Task<bool> UpadateCourseInfo(UpdateCourseDto dto)
+        public async Task<bool> UpdateCourseInfo(UpdateCourseDto dto)
         {
             var course = await _courseRepository.GetByIdAsync(dto.CourseId);
             //var category = await _courseCategoryRepository.FirstOrDefaultAsync(ct => ct.CategorytName == dto.CourseCategory);
@@ -185,6 +185,29 @@ namespace Api.Services
             course.VideoUrl = dto.VideoUrl;
             course.Description = dto.Description;
 
+            //DB課程圖片
+            var existingImages = await _courseImageRepository.ListAsync(ci => ci.CourseId == dto.CourseId);
+            
+            //刪除
+            var imagesToRemove = existingImages.Where(ei => !dto.CourseImages.Contains(ei.ImageUrl)).ToList();
+            if (imagesToRemove.Any())
+            {
+                await _courseImageRepository.DeleteRangeAsync(imagesToRemove);
+            }
+
+            //新增
+            var newImages = dto.CourseImages
+                .Where(imageUrl => !existingImages.Any(ei => ei.ImageUrl == imageUrl))
+                .Select(imageUrl => new CourseImage
+                {
+                    CourseId = dto.CourseId,
+                    ImageUrl = imageUrl,
+                    Cdate = DateTime.Now
+                }).ToList();
+            if(newImages.Any())
+            {
+                await _courseImageRepository.AddRangeAsync(newImages);
+            }
 
             _courseRepository.Update(course);
             return true;
