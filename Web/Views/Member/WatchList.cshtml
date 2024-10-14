@@ -22,7 +22,7 @@
     <div v-if="!isLoading">
         <div class="tutor-recommend-carousel-wrapper w-100 my-2 position-relative">
             <div v-if="activeTab === 'language'" class="tab-pane active">
-                <div v-if="languageWatchList.length === 0">
+                <div v-if="languageWatchList.length === 0" class="p-auto">
                     <p>目前沒有關注任何此類別的課程!!</p>
                 </div>
                 <div v-else class="tutor-recommend-carousel d-flex">
@@ -31,12 +31,10 @@
                                 :card="card"
                                 @@book-course="bookCourse">
                     </tutor-card>
-                    <div class="arrow_prev "><i class="fa-solid fa-angle-left"></i></div>
-                    <div class="arrow_next "><i class="fa-solid fa-angle-right"></i></div>
                 </div>
             </div>
             <div v-if="activeTab === 'coding'" class="tab-pane active">
-                <div v-if="codingWatchList.length === 0">
+                <div v-if="codingWatchList.length === 0" class="p-auto">
                     <p>目前沒有關注任何此類別的課程!!</p>
                 </div>
                 <div v-else class="tutor-recommend-carousel d-flex">
@@ -45,12 +43,10 @@
                                 :card="card"
                                 @@book-course="bookCourse">
                     </tutor-card>
-                    <div class="arrow_prev "><i class="fa-solid fa-angle-left"></i></div>
-                    <div class="arrow_next "><i class="fa-solid fa-angle-right"></i></div>
                 </div>
             </div>
             <div v-if="activeTab === 'school'" class="tab-pane active">
-                <div v-if="schoolWatchList.length === 0">
+                <div v-if="schoolWatchList.length === 0" class="p-auto">
                     <p>目前沒有關注任何此類別的課程!!</p>
                 </div>
                 <div v-else class="tutor-recommend-carousel d-flex">
@@ -58,12 +54,12 @@
                                 :key="card.CourseId"
                                 :card="card"
                                 @@book-course="bookCourse">
-                    </tutor-card>
-                    <div class="arrow_prev "><i class="fa-solid fa-angle-left"></i></div>
-                    <div class="arrow_next "><i class="fa-solid fa-angle-right"></i></div>
+                    </tutor-card>                   
                 </div>
             </div>
-        </div>        
+        </div> 
+        @* <div class="arrow_prev "><i class="fa-solid fa-angle-left"></i></div>
+        <div class="arrow_next "><i class="fa-solid fa-angle-right"></i></div> *@
     </div>
     <div v-else>
         <p>Loading...</p>

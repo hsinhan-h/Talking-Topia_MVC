@@ -42,6 +42,7 @@ const tutorCardComponent = {
     `
 };
 
+
 const watch = createApp({
     components: {
         'tutor-card': tutorCardComponent
@@ -58,6 +59,27 @@ const watch = createApp({
     methods: {
         switchTab(tab) {
             this.activeTab = tab;
+            this.$nextTick(() => {
+                const tutorRecommendCarousel = $('.tutor-recommend-carousel-wrapper');
+                const arrowPrev = tutorRecommendCarousel.find('.arrow_prev');
+                const arrowNext = tutorRecommendCarousel.find('.arrow_next');
+
+                $('.tutor-recommend-carousel').slick({
+                    infinite: true,
+                    autoplay: false,
+                    slidesToShow: 5,
+                    slidesToScroll: 1,
+                    responsive: [
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                            },
+                        }
+                    ],
+                });
+            });
         },
         bookCourse(courseId) {
             window.location.href = `/Course/CourseMainPage?courseId=${courseId}`;
@@ -73,7 +95,6 @@ const watch = createApp({
                 this.schoolWatchList = data.Result.SchoolWatchList || [];
                 this.isLoading = false;
 
-                // 初始化 Slick 插件
                 this.$nextTick(() => {
                     const tutorRecommendCarousel = $('.tutor-recommend-carousel-wrapper');
                     const arrowPrev = tutorRecommendCarousel.find('.arrow_prev');
@@ -81,19 +102,10 @@ const watch = createApp({
 
                     $('.tutor-recommend-carousel').slick({
                         infinite: true,
-                        autoplay: true,
-                        autoplaySpeed: 2000,
-                        speed: 300,
+                        autoplay: false,
                         slidesToShow: 4,
-                        slidesToScroll: 2, 
-                        responsive: [
-                            {
-                                breakpoint: 2000,
-                                settings: {
-                                    slidesToShow: 2,
-                                    slidesToScroll: 1,
-                                },
-                            },
+                        slidesToScroll: 1,
+                        responsive: [                            
                             {
                                 breakpoint: 480,
                                 settings: {
@@ -101,9 +113,7 @@ const watch = createApp({
                                     slidesToScroll: 1,
                                 },
                             }
-                        ],
-                        prevArrow: arrowPrev,
-                        nextArrow: arrowNext,
+                        ],                      
                     });
                 });
             })
