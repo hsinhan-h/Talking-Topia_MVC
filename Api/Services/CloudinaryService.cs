@@ -1,0 +1,37 @@
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+
+namespace Api.Services
+{
+    public class CloudinaryService
+    {
+        private readonly Cloudinary _cloudinary; 
+
+        public CloudinaryService(IConfiguration configuration)
+        {
+            Account account = new Account(
+                configuration["Cloudinary:CloudName"],
+                configuration["Cloudinary:ApiKey"],
+                configuration["Cloudinary:ApiSecret"]);
+            _cloudinary = new Cloudinary(account);
+        }
+
+        public async Task<string> UploadImageAsync(IFormFile imageFile)
+        {
+            if (imageFile.Length > 0)
+            {
+                using (var stream = imageFile.OpenReadStream())
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(imageFile.FileName, stream)
+                    };
+
+                    var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                    return uploadResult.SecureUrl.ToString();
+                }  
+            }
+            return null;
+        }
+    }
+}
