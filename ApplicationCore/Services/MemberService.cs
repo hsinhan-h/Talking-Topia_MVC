@@ -82,5 +82,17 @@ namespace ApplicationCore.Services
             var course = await _courseRepository.FirstOrDefaultAsync(c => c.CourseId == courseId);
             return course.TutorId;
         }
+
+        public async Task<string> GetMemberName(int memberId)
+        {
+            var result = await _memberRepository.FirstOrDefaultAsync(x => x.MemberId == memberId);
+            return result.FirstName + " " + result.LastName;
+        }
+
+        public async Task<string> GetTutorName(int tutorId)
+        {
+            var result = await _memberRepository.FirstOrDefaultAsync(x => x.MemberId == tutorId);
+            return result.FirstName + " " + result.LastName;
+        }
     }
 }

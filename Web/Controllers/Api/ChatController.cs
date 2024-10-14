@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using System.Security.Claims;
 using Web.Models.MongoDB;
 
 namespace Web.Controllers.Api
@@ -8,14 +10,37 @@ namespace Web.Controllers.Api
     public class ChatController : Controller
     {
         private readonly MongoRepository _repository;
+        private readonly IMemberService _memberService;
 
-        public ChatController(MongoRepository repository)
+        public ChatController(MongoRepository repository, IMemberService memberService)
         {
             _repository = repository;
+            _memberService = memberService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int courseId)
         {
+            // 抓SenderID
+            var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (memberIdClaim == null)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+            int memberId = int.Parse(memberIdClaim.Value);
+            var result = await _memberService.GetMemberId(memberId);
+
+            if (!result)
+            { return RedirectToAction(nameof(AccountController.Account), "Account"); }
+
+            // 抓ReceiverId
+            int tutorId = await _memberService.GetTutorId(courseId);
+            
+            string member = await _memberService.GetMemberName(memberId);
+            string tutor = await _memberService.GetTutorName(tutorId);
+
+            ViewBag.SenderId = memberId;
+            ViewBag.SenderName = member;
+            ViewBag.ReceiverId = tutorId;
+            ViewBag.ReceiverName = tutor;
+
             return View();
         }
 
@@ -30,7 +55,16 @@ namespace Web.Controllers.Api
         private ObjectId CreateConversationId(string user1, string user2)
         {
             var idString = string.Compare(user1, user2) < 0 ? $"{user1}_{user2}" : $"{user2}_{user1}";
-            return ObjectId.GenerateNewId();
+            return new ObjectId(HashStringToObjectId(idString));
+        }
+
+        private string HashStringToObjectId(string input)
+        {
+            using (var sha1 = System.Security.Cryptography.SHA1.Create())
+            {
+                var hash = sha1.ComputeHash(System.Text.Encoding.UTF8.GetBytes(input));
+                return BitConverter.ToString(hash).Replace("-", "").Substring(0, 24);
+            }
         }
     }
 }

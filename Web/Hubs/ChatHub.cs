@@ -14,25 +14,21 @@ namespace Web.Hubs
             _repository = repository;
         }
 
-        private static List<User> Users = new()
-        {
-            new User { UserId = "1", UserName = "Alice" },
-            new User { UserId = "2", UserName = "Bob" },
-            new User { UserId = "3", UserName = "Charlie" }
-        };
-
         public override async Task OnConnectedAsync()
         {
-            var userId = Context.UserIdentifier;
+            var httpContext = Context.GetHttpContext();
+            var senderId = httpContext.Request.Query["senderId"];
+            var receiverId = httpContext.Request.Query["receiverId"];
 
-            if (string.IsNullOrEmpty(userId) || !Users.Any(u => u.UserId == userId))
+
+            if (string.IsNullOrEmpty(senderId) || string.IsNullOrEmpty(receiverId))
             {
                 await Clients.Caller.SendAsync("Error", "無效的使用者 ID。");
                 Context.Abort();
                 return;
             }
 
-            Console.WriteLine($"使用者 {userId} 已連線。");
+            Console.WriteLine($"使用者 {senderId} 已連線。");
             await base.OnConnectedAsync();
         }
 
@@ -42,34 +38,34 @@ namespace Web.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendPrivateMessage(string targetUserId, string message)
+        public async Task SendPrivateMessage(string receiverId, string message)
         {
             try
             {
-                var senderUserId = Context.UserIdentifier;
+                var httpContext = Context.GetHttpContext();
+                var senderId = httpContext.Request.Query["senderId"];
 
-                if (string.IsNullOrEmpty(senderUserId) || senderUserId == targetUserId)
+                if (string.IsNullOrEmpty(senderId) || string.IsNullOrEmpty(receiverId))
                 {
-                    await Clients.Caller.SendAsync("Error", "無法發送訊息給自己或無效的使用者。");
+                    await Clients.Caller.SendAsync("Error", "無效的使用者 ID。");
                     return;
                 }
 
                 var newMessage = new Message
                 {
                     MessageId = ObjectId.GenerateNewId(),
-                    ConversationId = CreateConversationId(senderUserId, targetUserId),
-                    SenderId = senderUserId,
-                    ReceiverId = targetUserId,
+                    ConversationId = CreateConversationId(senderId, receiverId),
+                    SenderId = senderId,
+                    ReceiverId = receiverId,
                     Content = message,
                     Timestamp = DateTime.UtcNow,
                     MessageType = MessageType.Sent,
-                    Visibility = new Visibility { A = true, B = true }
+                    Visibility = new Visibility { Sender = true, Receiver = true }
                 };
                 await _repository.CreateMessageByConversationIdAsync(newMessage.ConversationId, newMessage);
 
-                await Clients.User(targetUserId).SendAsync("ReceiveMessage", senderUserId, message);
-                await Clients.User(senderUserId).SendAsync("ReceiveMessage", senderUserId, message);
-
+                await Clients.User(receiverId).SendAsync("ReceiveMessage", senderId, message);
+                await Clients.User(senderId).SendAsync("ReceiveMessage", senderId, message);
             }
             catch (Exception ex)
             {
@@ -80,14 +76,17 @@ namespace Web.Hubs
 
         private ObjectId CreateConversationId(string user1, string user2)
         {
-            var idString = string.Compare(user1, user2) < 0 ? $"{user1}_{user2}" : $"{user2}_{user1}";
-            return ObjectId.GenerateNewId();
+            var sortedUsers = string.Compare(user1, user2) < 0 ? $"{user1}_{user2}" : $"{user2}_{user1}";
+            return new ObjectId(HashStringToObjectId(sortedUsers));
         }
-    }
 
-    public class User
-    {
-        public string UserId { get; set; }
-        public string UserName { get; set; }
+        private string HashStringToObjectId(string input)
+        {
+            using (var sha1 = System.Security.Cryptography.SHA1.Create())
+            {
+                var hash = sha1.ComputeHash(System.Text.Encoding.UTF8.GetBytes(input));
+                return BitConverter.ToString(hash).Replace("-", "").Substring(0, 24);
+            }
+        }
     }
 }

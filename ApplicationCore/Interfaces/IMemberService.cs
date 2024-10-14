@@ -14,5 +14,7 @@ namespace ApplicationCore.Interfaces
         public bool DeleteWatchList(int memberId, int courseId);
         public bool GetIsTutor(int memberId);
         public Task<int> GetTutorId(int courseId);
+        public Task<string> GetMemberName(int memberId);
+        public Task<string> GetTutorName(int tutorId);
     }
 }
