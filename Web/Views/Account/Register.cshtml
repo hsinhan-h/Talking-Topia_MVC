@@ -15,8 +15,8 @@
         <div class="register-container">
             <h2 class="text-center mb-4">註冊</h2>
             <form asp-controller="Account" asp-action="Register" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
-
+@*                 <div asp-validation-summary="All" class="text-danger"></div>
+ *@
                 <div class="mb-3">
                     <input asp-for="RegisterViewModel.FirstName" class="form-control" placeholder="名字" />
                     <span asp-validation-for="RegisterViewModel.FirstName" class="text-danger"></span>

@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Services;
 using Infrastructure.Service;
+using Web.Hubs;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using Web.Models.MongoDB;
+using Web.Settings;
 
 namespace Web
 {
@@ -59,7 +64,7 @@ namespace Web
             builder.Services.AddScoped<NationService>();
             builder.Services.AddScoped<CourseCategoryService>();
             builder.Services.AddScoped<CloudinaryService>();
-            
+
             // 要加下面這個 AddInfrastructureService      
             builder.Services.AddInfrastructureService(builder.Configuration);
             // 將DI改至Configurations資料夾內的兩支檔案，若有改就可以把上方那一排Service注入個別刪除
@@ -72,11 +77,13 @@ namespace Web
             //    builder.Configuration.AddUserSecrets<Program>();
             //}
 
-            builder.Services.AddCors(options => {
+            builder.Services.AddCors(options =>
+            {
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.AllowAnyOrigin()
+                        builder.WithOrigins("https://localhost:7263")
+                               .AllowAnyOrigin()
                                .AllowAnyMethod()
                                .AllowAnyHeader()
                                .WithExposedHeaders("*");
@@ -85,6 +92,21 @@ namespace Web
                         //       .WithMethods("GET", "POST", "PUT", "DELETE");
                     });
             });
+
+            // Add SignalR
+            builder.Services.AddSignalR();
+
+            // Add MongoDB settings
+            builder.Services
+            .Configure<MongoDbSettings>(builder.Configuration.GetSection(nameof(MongoDbSettings)))
+            .AddSingleton(sp => sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+            builder.Services.AddSingleton<IMongoClient>(sp =>
+            {
+                var settings = sp.GetRequiredService<MongoDbSettings>();
+                return new MongoClient(settings.ConnectionString);
+            });
+            builder.Services.AddScoped<MongoRepository>();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie(options =>
@@ -132,6 +154,8 @@ namespace Web
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapHub<ChatHub>("/chatHub");
 
             app.Run();
         }

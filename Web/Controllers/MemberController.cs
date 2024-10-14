@@ -172,11 +172,10 @@ namespace Web.Controllers
                 return Json(new { success = false, message = "請檢查表單輸入是否正確", errors });
             }
 
-
             // 檢查新密碼與確認新密碼是否一致
             if (model.NewPassword != model.ConfirmNewPassword)
             {
-                return Json(new { success = false, message = "新密碼與確認新密碼不相符喔喔喔喔喔喔喔。" });
+                return Json(new { success = false, message = "新密碼與確認新密碼不相符" });
             }
 
             // 從當前登入的使用者取得 MemberId
@@ -184,7 +183,7 @@ namespace Web.Controllers
 
             if (string.IsNullOrEmpty(memberId))
             {
-                return Json(new { success = false, message = "無法取得使用者 ID，請重新登入。" });
+                return Json(new { success = false, message = "無法取得使用者 ID，請重新登入" });
             }
 
             // 執行密碼變更邏輯
@@ -192,14 +191,13 @@ namespace Web.Controllers
 
             if (result.Success)
             {
-                return Json(new { success = true, message = "密碼修改成功。" });
+                return Json(new { success = true, message = "密碼修改成功" });
             }
             else
             {
                 return Json(new { success = false, message = result.Message });
             }
         }
-
 
 
     }

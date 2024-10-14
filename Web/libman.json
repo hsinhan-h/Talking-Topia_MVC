@@ -34,9 +34,17 @@
       "destination": "wwwroot/lodash.js/"
     },
     {
-      "provider": "cdnjs",
       "library": "quill@2.0.2",
       "destination": "wwwroot/lib/quill"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/js/signalr",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
     }
   ]
 }

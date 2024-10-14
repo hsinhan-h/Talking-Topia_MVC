@@ -1,11 +1,20 @@
 ﻿@{
     ViewData["Title"] = "註冊成功";
 }
-
-<div class="container text-center mt-6">
-    <div class="alert alert-success">
-        <h4>@TempData["SuccessMessage"]</h4>
-        <p id="countdown">6 秒後將自動返回登入畫面...</p>
+@section topCSS
+{
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/normalize.css" rel="stylesheet" />
+    <link href="~/css/register_success.css" rel="stylesheet" />
+}
+<div class="container px-5">
+    <div class="row">
+        <div class="registration-success-container">
+            <div class="alert alert-success">
+                <h4>@TempData["SuccessMessage"]</h4>
+                <p id="countdown">6 秒後將自動返回登入畫面...</p>
+            </div>
+        </div>
     </div>
 </div>
 
