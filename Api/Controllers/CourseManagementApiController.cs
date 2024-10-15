@@ -36,7 +36,7 @@ namespace Api.Controllers
         {
             try
             {
-                var result = await _courseManagementApiService.UpadateCourseInfo(dto);
+                var result = await _courseManagementApiService.UpdateCourseInfo(dto);
 
                 if (result)
                 {

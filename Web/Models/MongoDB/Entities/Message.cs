@@ -42,9 +42,9 @@ public enum MessageType
 
 public class Visibility
 {
-    [BsonElement("A")]
-    public bool A { get; set; }
+    [BsonElement("Sender")]
+    public bool Sender { get; set; }
 
-    [BsonElement("B")]
-    public bool B { get; set; }
+    [BsonElement("Receiver")]
+    public bool Receiver { get; set; }
 }
