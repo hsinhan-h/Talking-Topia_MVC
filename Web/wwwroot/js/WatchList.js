@@ -13,7 +13,6 @@ const tutorCardComponent = {
                 <div class="tutor-head-brief-pricing">
                     <span class="fifty-min-course-pricing fw-bolder">NT$ {{ card.FiftyminPrice }}</span><span class="text"> / 50分鐘</span>
                 </div>
-                <div class="lh-tutor-follow my-2">+關注</div>
             </div>
             <div class="lh-tutor-card__body">
                 <div class="tutor-title-and-ranking d-flex justify-between align-items-center">
@@ -42,7 +41,6 @@ const tutorCardComponent = {
     `
 };
 
-
 const watch = createApp({
     components: {
         'tutor-card': tutorCardComponent
@@ -60,15 +58,38 @@ const watch = createApp({
         switchTab(tab) {
             this.activeTab = tab;
             this.$nextTick(() => {
-                const tutorRecommendCarousel = $('.tutor-recommend-carousel-wrapper');
-                const arrowPrev = tutorRecommendCarousel.find('.arrow_prev');
-                const arrowNext = tutorRecommendCarousel.find('.arrow_next');
+                this.initializeSlick();
+            });
+        },
+        bookCourse(courseId) {
+            window.location.href = `/Course/CourseMainPage?courseId=${courseId}`;
+        },
+        initializeSlick() {
+            const tutorRecommendCarousel = $('.tutor-recommend-carousel-wrapper');
+            const arrowPrev = tutorRecommendCarousel.find('.arrow_prev');
+            const arrowNext = tutorRecommendCarousel.find('.arrow_next');
 
+            let itemCount = 0;
+            if (this.activeTab === 'language') {
+                itemCount = this.languageWatchList.length;
+            } else if (this.activeTab === 'coding') {
+                itemCount = this.codingWatchList.length;
+            } else if (this.activeTab === 'school') {
+                itemCount = this.schoolWatchList.length;
+            }
+
+            if (itemCount === 0) {
+                return; // 如果項目數量為 0，則不初始化 Slick，避免出現錯誤
+            }
+
+            const slidesToShow = itemCount > 5 ? 5 : itemCount;
+
+            if (!$('.tutor-recommend-carousel').hasClass('slick-initialized')) {
                 $('.tutor-recommend-carousel').slick({
-                    infinite: true,
+                    infinite: false,
                     autoplay: false,
-                    slidesToShow: 5,
-                    slidesToScroll: 1,
+                    slidesToShow: slidesToShow,
+                    slidesToScroll: itemCount >= 5 ? 1 : 1,
                     responsive: [
                         {
                             breakpoint: 480,
@@ -79,10 +100,7 @@ const watch = createApp({
                         }
                     ],
                 });
-            });
-        },
-        bookCourse(courseId) {
-            window.location.href = `/Course/CourseMainPage?courseId=${courseId}`;
+            }
         }
     },
     mounted() {
@@ -93,28 +111,11 @@ const watch = createApp({
                 this.languageWatchList = data.Result.LanguageWatchList || [];
                 this.codingWatchList = data.Result.CodingWatchList || [];
                 this.schoolWatchList = data.Result.SchoolWatchList || [];
+
                 this.isLoading = false;
 
                 this.$nextTick(() => {
-                    const tutorRecommendCarousel = $('.tutor-recommend-carousel-wrapper');
-                    const arrowPrev = tutorRecommendCarousel.find('.arrow_prev');
-                    const arrowNext = tutorRecommendCarousel.find('.arrow_next');
-
-                    $('.tutor-recommend-carousel').slick({
-                        infinite: true,
-                        autoplay: false,
-                        slidesToShow: 4,
-                        slidesToScroll: 1,
-                        responsive: [                            
-                            {
-                                breakpoint: 480,
-                                settings: {
-                                    slidesToShow: 1,
-                                    slidesToScroll: 1,
-                                },
-                            }
-                        ],                      
-                    });
+                    this.initializeSlick();
                 });
             })
             .catch(error => {
