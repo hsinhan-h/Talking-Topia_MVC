@@ -32,7 +32,7 @@ const courseCardsApp = Vue.createApp({
         this.selectedSubject = params.get('subject') ? decodeURIComponent(params.get('subject')) : null;
         this.selectedNation = params.get('nation') || null;
         this.selectedBudget = params.get('budget') || null;
-        this.fetchCoursesDebounced();
+        this.fetchCourses();
         this.fetchCategories();
         this.fetchNations();
     },
@@ -47,7 +47,7 @@ const courseCardsApp = Vue.createApp({
     methods: {
         fetchCoursesDebounced: _.debounce(function () {
             this.fetchCourses();
-        }, 300), //延遲300ms觸發fetch
+        }, 500), //延遲500ms觸發fetch
 
         async fetchCourses() {
             this.loading = true;
@@ -242,7 +242,7 @@ const courseCardsApp = Vue.createApp({
 
         applyFilter() {
             this.page = 1;
-            this.fetchCourses();
+            this.fetchCoursesDebounced();
             //this.fetchTotalCourseQty();
             this.updateQueryString();
         },
