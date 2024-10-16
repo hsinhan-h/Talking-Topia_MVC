@@ -191,6 +191,7 @@
 .tutor-headshot {
     width: 83px;
     height: 83px;
+    object-fit: cover;
 }
 
 .tutor-nation-icon {
