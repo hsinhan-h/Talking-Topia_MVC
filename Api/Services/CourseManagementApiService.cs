@@ -79,41 +79,61 @@ namespace Api.Services
                 .ToList();
         }
 
-        public async Task<int> GetUnapprovedCourseQtyStartingFrom2024()
+        public async Task<int> GetCourseQtyByPublishingStatus(bool isPublished, bool startFromCurrentMonth)
         {
-            var courses = await _courseRepository.ListAsync();
-            return courses
-                .Where(course => course.CoursesStatus == 0 && course.Cdate > new DateTime(2024, 1, 1))
-                .Count();
+            var courses = await _courseRepository
+                .ListAsync();
+            var filteredCourses = courses
+                .Where(c => c.IsEnabled == isPublished && c.CoursesStatus == 1);
+            if (startFromCurrentMonth)
+            {
+                var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return filteredCourses.Where(c => c.Cdate >= firstDayOfCurrentMonth).Count();
+            }
+            return filteredCourses.Count();
         }
 
-        public async Task<int> GetApprovedCourseQtyStartingFrom2024()
+        public async Task<int> GetCourseQty(bool startFromCurrentMonth)
         {
-            var courses = await _courseRepository.ListAsync();
-            return courses
-                .Where(course => course.CoursesStatus == 1 && course.Cdate > new DateTime(2024, 1, 1))
-                .Count();
+            var courses = await _courseRepository
+                .ListAsync();
+            var filteredCourses = courses
+               .Where(c => c.CoursesStatus != 2);
+            if (startFromCurrentMonth)
+            {
+                var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return filteredCourses.Where(c => c.Cdate >= firstDayOfCurrentMonth).Count();
+            }
+            return filteredCourses.Count();
         }
 
-        public async Task<int> GetRejectedCourseQtyStartingFrom2024()
+
+        public async Task<int> GetCourseQtyByCoursesStatus(int coursesStatus, bool startFromCurrentMonth)
         {
-            var courses = await _courseRepository.ListAsync();
-            return courses
-                .Where(course => course.CoursesStatus == 2 && course.Cdate > new DateTime(2024, 1, 1))
-                .Count();
+            var courses = await _courseRepository
+                .ListAsync();
+            var filteredCourses = courses
+                .Where(c => c.CoursesStatus == coursesStatus);
+            if (startFromCurrentMonth)
+            {
+                var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                return filteredCourses.Where(c => c.Cdate >= firstDayOfCurrentMonth).Count();
+            }
+            return filteredCourses.Count();
         }
 
 
         public async Task<List<CourseManagementDto>> GetCourseManagementData()
         {
             var courses = await _courseRepository.ListAsync();
+            var validCourses = courses.Where(c => c.CoursesStatus != 2);
             var images = await _courseImageRepository.ListAsync();
             var categories = await _courseCategoryRepository.ListAsync();
             var subjects = await _courseSubjectRepository.ListAsync();
             var tutors = await _memberRepository.ListAsync();
 
             var courseManagementData =
-                from c in courses
+                from c in validCourses
                 join img in images on c.CourseId equals img.CourseId into courseImages
                 from courseImage in courseImages.DefaultIfEmpty()
                 join ct in categories on c.CategoryId equals ct.CourseCategoryId into courseCategories
@@ -134,7 +154,11 @@ namespace Api.Services
                     CourseImages = courseImages.Select(i => i.ImageUrl).ToList(),
                     PublishStatus = c.IsEnabled && c.CoursesStatus == 1,
                     PublishDate = c.Cdate,
-                    IsUnderReview = c.CoursesStatus == 0
+                    IsUnderReview = c.CoursesStatus == 0,
+                    TwentyFiveMinUnitPrice = c.TwentyFiveMinUnitPrice,
+                    FiftyMinUnitPrice = c.FiftyMinUnitPrice,
+                    ThumbnailUrl = c.ThumbnailUrl,
+                    VideoUrl = c.VideoUrl
                 };
 
             return courseManagementData
@@ -143,19 +167,81 @@ namespace Api.Services
                 .ToList();
         }
 
+        public async Task<bool> UpdateCourseInfo(UpdateCourseDto dto)
+        {
+            var course = await _courseRepository.GetByIdAsync(dto.CourseId);
+            //var category = await _courseCategoryRepository.FirstOrDefaultAsync(ct => ct.CategorytName == dto.CourseCategory);
+            //var subject = await _courseSubjectRepository.FirstOrDefaultAsync(s => s.SubjectName == dto.CourseSubject);
+            if (course == null)
+            {
+                return false;
+            }
+            course.Title = dto.CourseTitle;
+            course.SubTitle = dto.CourseSubTitle;
+            course.CategoryId = dto.CourseCategory;
+            course.SubjectId = dto.CourseSubject;
+            course.TwentyFiveMinUnitPrice = (decimal)dto.TwentyFiveMinUnitPrice;
+            course.FiftyMinUnitPrice = (decimal)dto.FiftyMinUnitPrice;
+            course.VideoUrl = dto.VideoUrl;
+            course.Description = dto.Description;
+
+            //DB課程圖片
+            var existingImages = await _courseImageRepository.ListAsync(ci => ci.CourseId == dto.CourseId);
+            
+            //刪除
+            var imagesToRemove = existingImages.Where(ei => !dto.CourseImages.Contains(ei.ImageUrl)).ToList();
+            if (imagesToRemove.Any())
+            {
+                await _courseImageRepository.DeleteRangeAsync(imagesToRemove);
+            }
+
+            //新增
+            var newImages = dto.CourseImages
+                .Where(imageUrl => !existingImages.Any(ei => ei.ImageUrl == imageUrl))
+                .Select(imageUrl => new CourseImage
+                {
+                    CourseId = dto.CourseId,
+                    ImageUrl = imageUrl,
+                    Cdate = DateTime.Now
+                }).ToList();
+            if(newImages.Any())
+            {
+                await _courseImageRepository.AddRangeAsync(newImages);
+            }
+
+            _courseRepository.Update(course);
+            return true;
+        }
 
 
         public async Task<bool> UpdateCoursesStatus(int courseId, bool courseApprove)
         {
             var course =  await _courseRepository.GetByIdAsync(courseId);
             
-            if ((course == null))
+            if (course == null)
             {
                 return false;
             }
 
             course.CoursesStatus = courseApprove ? (short)1 : (short)2; //如果審核通過, 將CourseStatus設為1, 反之設為2
-            if (courseApprove == true) course.Cdate = DateTime.Now; //更新課程上架時間
+            course.Cdate = DateTime.Now; //更新課程上架時間
+
+            _courseRepository.Update(course);
+            return true;
+        }
+
+
+        public async Task<bool> UpdatePublishingStatus(int courseId, bool coursePublish)
+        {
+            var course = await _courseRepository.GetByIdAsync(courseId);
+
+            if ((course == null))
+            {
+                return false;
+            }
+
+            course.IsEnabled = coursePublish; 
+            course.Cdate = DateTime.Now; 
 
             _courseRepository.Update(course);
             return true;

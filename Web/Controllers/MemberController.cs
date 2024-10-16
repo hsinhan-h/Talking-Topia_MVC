@@ -61,13 +61,10 @@ namespace Web.Controllers
 
         public async Task<IActionResult> MemberData(int memberId)
         {
-            //var summaryData = await _memberDataService.GetMemberData(memberId);  // 使用 MemberId 查找
-            //return View(summaryData);
-
             // 從登入的使用者的 Claims 中提取會員 ID
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
-            // 如果沒有找到會員 ID 的 Claim，重定向到登入頁面
+            // 如果沒有找到會員 ID 的 Claim，返回登入頁面
             if (memberIdClaim == null)
             {
                 return RedirectToAction("Login", "Account");
@@ -135,29 +132,35 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
+                var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (memberIdClaim == null)
                 {
-                    // 從 Claims 中獲取會員 ID
-                    var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-                    if (memberIdClaim == null)
-                    {
-                        return Json(new { success = false, message = "無法取得會員ID，請重新登入" });
-                    }
-
-                    int memberId = int.Parse(memberIdClaim.Value);
-
-                    // 使用 Service 層更新會員資料
-                    await _memberDataService.UpdateMemberData(model, memberId);
-
-                    return Json(new { success = true, message = "儲存成功" });
+                    TempData["Header"] = "錯誤訊息";
+                    TempData["Message"] = "無法取得會員ID，請重新登入";
+                    return Json(new { success = false });
                 }
-                catch (Exception ex)
+
+                int memberId = int.Parse(memberIdClaim.Value);
+
+                var result = await _memberDataService.UpdateMemberData(model, memberId);
+
+                if (result.Success)
                 {
-                    return Json(new { success = false, message = $"儲存失敗: {ex.Message}" });
+                    TempData["Message"] = "會員資料儲存成功！";
+                    TempData["Header"] = "會員資料儲存";
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    TempData["Header"] = "錯誤訊息";
+                    TempData["Message"] = result.Message;
+                    return Json(new { success = false });
                 }
             }
 
-            return Json(new { success = false, message = "資料驗證失敗" });
+            TempData["Header"] = "錯誤訊息";
+            TempData["Message"] = "資料驗證失敗";
+            return Json(new { success = false });
         }
 
         [HttpPost]
@@ -169,11 +172,10 @@ namespace Web.Controllers
                 return Json(new { success = false, message = "請檢查表單輸入是否正確", errors });
             }
 
-
             // 檢查新密碼與確認新密碼是否一致
             if (model.NewPassword != model.ConfirmNewPassword)
             {
-                return Json(new { success = false, message = "新密碼與確認新密碼不相符喔喔喔喔喔喔喔。" });
+                return Json(new { success = false, message = "新密碼與確認新密碼不相符" });
             }
 
             // 從當前登入的使用者取得 MemberId
@@ -181,7 +183,7 @@ namespace Web.Controllers
 
             if (string.IsNullOrEmpty(memberId))
             {
-                return Json(new { success = false, message = "無法取得使用者 ID，請重新登入。" });
+                return Json(new { success = false, message = "無法取得使用者 ID，請重新登入" });
             }
 
             // 執行密碼變更邏輯
@@ -189,13 +191,14 @@ namespace Web.Controllers
 
             if (result.Success)
             {
-                return Json(new { success = true, message = "密碼修改成功。" });
+                return Json(new { success = true, message = "密碼修改成功" });
             }
             else
             {
                 return Json(new { success = false, message = result.Message });
             }
         }
+
 
     }
 }

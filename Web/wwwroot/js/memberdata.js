@@ -5,7 +5,7 @@ function submitPasswordChange() {
     let confirmPassword = document.getElementById('confirmPasswordInput').value;
 
     if (newPassword !== confirmPassword) {
-        alert("新密碼與確認密碼不相符");
+        showToast("新密碼與確認密碼不相符");
         return;
     }
 
@@ -23,35 +23,167 @@ function submitPasswordChange() {
         },
         body: JSON.stringify(requestData)
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
-                alert("密碼修改成功");
-                window.location.reload(); // 重新載入頁面
+                showToast('成功', '密碼修改成功');
+                setTimeout(() => window.location.reload(), 2000); // 重新載入頁面
             } else {
-                alert(data.message);
+                showToast('錯誤', data.message);
             }
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert("密碼修改失敗");
+            showToast('錯誤', '密碼修改失敗，請稍後再試');
         });
 }
 
-function saveProfileData() {
-    event.preventDefault();
 
-    const gender = document.querySelector('input[name="gender"]:checked').value;
 
+// 即時驗證輸入框
+function validateInput(input) {
+    const errorSpanId = input.id + "-error";
+    let errorMessage = "";
+
+    if (input.value.trim() === "") {
+        errorMessage = `${input.previousElementSibling.textContent}是必填的`;
+    } else if (input.type === "email" && !validateEmail(input.value)) {
+        errorMessage = "請輸入有效的電子郵件地址";
+    } else if (input.type === "tel" && !validatePhone(input.value)) {
+        errorMessage = "請輸入有效的電話號碼";
+    } else if (input.id === "firstnameInput" && input.value.length > 50) {
+        errorMessage = "名字不得超過50字元";
+    } else if (input.id === "lastnameInput" && input.value.length > 50) {
+        errorMessage = "姓氏不得超過50字元";
+    } else if (input.id === "nicknameInput" && input.value.length > 50) {
+        errorMessage = "暱稱不得超過50字元";
+    }
+
+    let errorSpan = document.getElementById(errorSpanId);
+    if (!errorSpan) {
+        errorSpan = document.createElement("span");
+        errorSpan.id = errorSpanId;
+        errorSpan.className = "text-danger";
+        input.parentNode.appendChild(errorSpan);
+    }
+
+    if (errorMessage) {
+        errorSpan.textContent = errorMessage;
+    } else {
+        errorSpan.textContent = "";
+    }
+}
+
+
+// 表單驗證邏輯
+// 表單驗證邏輯
+function validateInput(input) {
+    const errorSpanId = input.id + "-error";
+    let errorMessage = "";
+
+    if (input.disabled) {
+        return; // 如果輸入框為禁用狀態，不進行驗證
+    }
+
+    // 檢查是否有標籤存在，如果沒有則設置具人性化的標題
+    let label;
+    if (input.previousElementSibling && input.previousElementSibling.tagName === 'LABEL') {
+        label = input.previousElementSibling.textContent.trim();
+    } else {
+        // 根據 `input.id` 自定義一個更人性化的標籤
+        switch (input.id) {
+            case 'firstnameInput':
+                label = '名字';
+                break;
+            case 'lastnameInput':
+                label = '姓氏';
+                break;
+            case 'nicknameInput':
+                label = '暱稱';
+                break;
+            case 'emailInput':
+                label = '電子信箱';
+                break;
+            case 'phoneInput':
+                label = '電話';
+                break;
+            case 'birthdayInput':
+                label = '生日';
+                break;
+            default:
+                label = input.id; // 使用 id 作為最後的備選
+        }
+    }
+
+    // 生成錯誤訊息
+    if (input.value.trim() === "") {
+        errorMessage = `${label}欄位為必填`;
+    } else if (input.type === "email" && !validateEmail(input.value)) {
+        errorMessage = "請輸入有效的電子郵件地址";
+    } else if (input.type === "tel" && !validatePhone(input.value)) {
+        errorMessage = "請輸入有效的電話號碼";
+    } else if (input.id === "firstnameInput" && input.value.length > 50) {
+        errorMessage = "名字不得超過50字元";
+    } else if (input.id === "lastnameInput" && input.value.length > 50) {
+        errorMessage = "姓氏不得超過50字元";
+    } else if (input.id === "nicknameInput" && input.value.length > 50) {
+        errorMessage = "暱稱不得超過50字元";
+    }
+
+    // 確保存在錯誤訊息元素
+    let errorSpan = document.getElementById(errorSpanId);
+    if (!errorSpan) {
+        errorSpan = document.createElement("span");
+        errorSpan.id = errorSpanId;
+        errorSpan.className = "text-danger";
+        input.parentNode.appendChild(errorSpan);
+    }
+
+    // 顯示或清除錯誤訊息
+    if (errorMessage) {
+        errorSpan.textContent = errorMessage;
+    } else {
+        errorSpan.textContent = "";
+    }
+}
+
+// 表單提交時進行驗證
+function saveProfileData(event) {
+    if (event) event.preventDefault(); // 阻止表單默認提交行為
+
+    const inputs = document.querySelectorAll('#app input.form-control');
+    let isValid = true;
+
+    // 遍歷所有輸入框進行驗證
+    inputs.forEach(input => {
+        validateInput(input);
+        const errorSpan = document.getElementById(input.id + "-error");
+        if (errorSpan && errorSpan.textContent !== "") {
+            isValid = false; // 如果有錯誤訊息，則驗證失敗
+        }
+    });
+
+    if (!isValid) {
+        showToast("錯誤", "請檢查所有必填欄位並修正錯誤");
+        return;
+    }
+
+    // 如果驗證通過，則提交表單
+    const gender = document.querySelector('input[name="gender"]:checked')?.value;
     const profileData = {
-        Account: document.getElementById('floatingInput7').value,
-        LastName: document.getElementById('floatingInput9').value,
-        FirstName: document.getElementById('floatingInput8').value,
-        Nickname: document.getElementById('floatingInput1').value,
-        Gender: gender.toString(),  // 將性別值轉換為字串 "1" 或 "2"
-        Birthday: document.getElementById('floatingInput2').value,
-        Email: document.getElementById('floatingInput10').value,
-        Phone: document.getElementById('floatingInput11').value,
+        Account: document.getElementById('accountInput').value,
+        LastName: document.getElementById('lastnameInput').value,
+        FirstName: document.getElementById('firstnameInput').value,
+        Nickname: document.getElementById('nicknameInput').value,
+        Gender: gender ? gender.toString() : "",
+        Birthday: document.getElementById('birthdayInput').value,
+        Email: document.getElementById('emailInput').value,
+        Phone: document.getElementById('phoneInput').value,
         CoursePrefer: collectCoursePreferences()
     };
 
@@ -63,44 +195,33 @@ function saveProfileData() {
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                alert('儲存成功！');
+                showToast("會員資料儲存", "儲存成功！");
                 // 更新 Navbar 上的使用者名稱
                 document.getElementById('navbar-username').textContent = 'Hi! ' + profileData.FirstName;
-
                 // 切換按鈕顯示狀態
-                const editButton = document.getElementById('edit-button');
-                const saveButton = document.getElementById('save-button');
-                const cancelButton = document.getElementById('cancel-button');
-
-                editButton.classList.remove('d-none');
-                saveButton.classList.add('d-none');
-                cancelButton.classList.add('d-none');
-
-                // 禁用所有表單元素
-                const inputs = document.querySelectorAll('#app input.form-control');
-                const checkboxes = document.querySelectorAll('#app input[type="checkbox"]');
-                const radioButtons = document.querySelectorAll('#app input[type="radio"]');
-
-                inputs.forEach(input => {
-                    input.disabled = true;
-                });
-
-                checkboxes.forEach(checkbox => {
-                    checkbox.disabled = true;
-                });
-
-                radioButtons.forEach(radio => {
-                    radio.disabled = true;
-                });
+                toggleEditMode();
             } else {
-                alert('儲存失敗，請重試。錯誤原因: ' + response.message + '\n' + (response.exception || ''));
+                showToast("錯誤訊息", '儲存失敗，請重試。錯誤原因: ' + response.message);
             }
         },
         error: function (xhr, status, error) {
-            alert('儲存過程中出現錯誤，請稍後再試。錯誤訊息: ' + xhr.responseText);
+            showToast("錯誤訊息", '儲存過程中出現錯誤，請稍後再試。錯誤訊息: ' + xhr.responseText);
         }
     });
 }
+
+// 電子郵件驗證函數
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+// 電話驗證函數
+function validatePhone(phone) {
+    const re = /^[0-9\-()+ ]+$/;
+    return re.test(phone);
+}
+
 function collectCoursePreferences() {
     const selectedCourses = [];
     document.querySelectorAll('input[type="checkbox"]:checked').forEach(input => {
@@ -108,6 +229,8 @@ function collectCoursePreferences() {
     });
     return selectedCourses;
 }
+//編輯
+// 初始化編輯模式的切換
 function toggleEditMode() {
     // 取得所有需要編輯的文字輸入欄位
     const inputs = document.querySelectorAll('#app input.form-control');
@@ -120,7 +243,17 @@ function toggleEditMode() {
 
     // 切換每個文字輸入欄位的 disabled 屬性
     inputs.forEach(input => {
-        input.disabled = !input.disabled;
+        // 對於帳號和電子信箱欄位，始終保持 disabled
+        if (input.id !== 'accountInput' && input.id !== 'emailInput') {
+            input.disabled = !input.disabled;
+
+            // 如果啟用了編輯模式，為輸入框添加即時驗證
+            if (!input.disabled) {
+                input.addEventListener('input', function () {
+                    validateInput(input);
+                });
+            }
+        }
     });
 
     // 切換每個 checkbox 的 disabled 屬性
@@ -150,5 +283,20 @@ function toggleEditMode() {
         saveButton.classList.remove('d-none');
         cancelButton.classList.remove('d-none');
     }
+}
+
+//showToast
+function showToast(header, message) {
+    const toastElement = document.getElementById('toast');
+    const toastHeader = toastElement.querySelector('.toast-header strong');
+    const toastBody = toastElement.querySelector('.toast-body');
+
+    // 設定 toast 標題和訊息
+    toastHeader.textContent = header;
+    toastBody.textContent = message;
+
+    // 顯示 toast
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
 }
 

@@ -1,4 +1,22 @@
-﻿@{
+﻿
+
+@{
     ViewData["Title"] = "Access Denied";
 }
-<h2>Opps.... 沒有授權的頁面!</h2>
+
+@section topCSS
+
+{
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/normalize.css" rel="stylesheet" />
+    <link href="~/css/accessdenied.css" rel="stylesheet" />
+}
+<div class="container px-5">
+    <div class="row">
+        <div class="access-denied-container">
+            <h2>未授權頁面</h2>
+            <p>此為未授權頁面，請重新登入</p>
+            <a href="@Url.Action("Account", "Account")" class="btn btn-custom">前往登入</a>
+        </div>
+    </div>
+</div>

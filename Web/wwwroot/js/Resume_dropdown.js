@@ -127,9 +127,7 @@ const appresume = createApp({
             editMode: false,
             HeadImgisUploading: false,
             showValidation: false ,
-            validationMessage:'',
-
-            
+            formIsValid:true
         };
     },
     computed: {
@@ -153,30 +151,26 @@ const appresume = createApp({
                 return this.commonData['subcategory_' + this.selectedSubcategory]?.name || '';
             }
             return '';
+        },
+        canAddWorkExperience() {
+            return this.works.length < 3;
+        },
+        canAddLicens() {
+            return this.licenses.length < 3;
         }
     },
     created() {
         this.convertData(data_categories);
         this.loadHeadShotImage()
     },
-    mounted() {
-        //const editors = document.querySelectorAll(".editor_resume");//這裡一改成標籤的class name
-        //editors.forEach((element) => {
-        //    element.style.height = "300px"; 
-        //    new Quill(element, {
-        //        theme: 'snow',
-        //        placeholder: '輸入...',
-        //        modules: {
-        //            toolbar: [
-        //                ['bold', 'italic', 'underline'],
-        //                ['link', 'image', 'video'],
-        //                [{ 'list': 'ordered' }, { 'list': 'bullet' }]
-        //            ]
-        //        }
-        //    });
-        //});
 
+    mounted() {
         this.fetchBackendData(); 
+        window.addEventListener('beforeunload', this.beforeUnloadHandler);
+    },
+    beforeDestroy() {
+        // 在元件銷毀前移除監聽事件
+        window.removeEventListener('beforeunload', this.beforeUnloadHandler);
     },
     methods: {
         convertData(data) {
@@ -258,6 +252,7 @@ const appresume = createApp({
         },
 
         addLicense() {
+            if (!this.canAddLicens) return;
             const newLicense = {
                 ProfessionalLicenseName: '',
                 ProfessionalLicenseUrl: null,
@@ -380,6 +375,7 @@ const appresume = createApp({
             }
         },
         addWorkExperience() {
+            if (!this.canAddWorkExperience) return;
             //新增工作經驗欄位
             const newWorkExperience = {
                 workName: '',
@@ -506,20 +502,71 @@ const appresume = createApp({
         },
   
         validateForm() {
-            let formIsValid = true;
-            this.showValidation = true; 
+            this.formIsValid = true;
+
+            // 檢查大頭貼是否提供
             if (this.headShotImage == null) {
                 console.log('請提供大頭貼');
-                return;
+                this.formIsValid = false;
             }
-            // 如果表單無效，顯示模態框提示
-            if (!formIsValid) {
+
+            // 檢查每個證照是否填寫完整
+            this.licenses.forEach((license, index) => {
+                if (!license.ProfessionalLicenseName ) {
+                    console.log(`證照 ${index + 1} 欄位未填寫完畢`);
+                    this.formIsValid = false;
+                }
+            });
+            this.works.forEach((work, index) => {
+                if (
+                    !work.workName ||
+                    !work.workStartDate ||
+                    !work.workEndDate
+                )
+                {
+                    console.log(`工作經歷 ${index + 1} 欄位未填寫完畢`);
+                    this.formIsValid = false;
+                }
+            });
+            // 如果表單不符合驗證條件，顯示提示視窗
+            if (!this.formIsValid) {
                 const validationModal = new bootstrap.Modal(document.getElementById('validationModal'));
                 validationModal.show();
-            } else {
-                // 如果所有證照和工作經驗都已確認，提交表單
-                this.$refs.form.submit();  
+                return; 
             }
+            window.removeEventListener('beforeunload', this.beforeUnloadHandler);
+
+            // 表單通過驗證後提交
+            this.$refs.form.submit();
+        },
+        beforeUnloadHandler(e) {
+            this.removeIncompleteLicenses();
+            this.removeIncompletework();
+            e.preventDefault();
+            e.returnValue = '您有尚未完成的表單，確定要離開此頁面嗎？';
+        },
+        removeIncompleteLicenses() {
+            // 遍歷所有證照並移除未填寫完整的證照
+            this.licenses.forEach((license, index) => {
+                if (!license.ProfessionalLicenseName) {
+                    this.removeLicense(index);
+                }
+            });
+            console.log('未填寫的證照已移除');
+        },
+        removeIncompletework() {
+            // 遍歷所有證照並移除未填寫完整的證照
+            this.works.forEach((work, index) => {
+                if (
+                    !work.workName ||
+                    !work.workStartDate ||
+                    !work.workEndDate
+                )
+                {
+                    this.removeWorkExperience(index);
+                }
+            });
+            console.log('未填寫的工作已移除');
         },
         checkHeadFile() {
             const HeadImage = this.selectedFile;
@@ -670,4 +717,4 @@ const appresume = createApp({
     },
     
 });
-appresume.mount('#vue-wrapper');
+appresume.mount('#vue-wrappers');

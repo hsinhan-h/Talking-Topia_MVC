@@ -42,12 +42,10 @@
 
     var toastElement = document.getElementById('toast');
     var message = toastElement.getAttribute('data-message');
-    var header = toastElement.getAttribute('data-header');
 
     // 確保 message 和 header 都存在且非空
-    if (message && message.trim() !== "" && header && header.trim() !== "") {
-        var toast = new bootstrap.Toast(toastElement);
-        toast.show();
+    if (message && message.trim() !== "" ) {
+        toastr.success(`${message}`);
     }
 
     const weekdays = [

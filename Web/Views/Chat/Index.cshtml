@@ -1,0 +1,30 @@
+﻿@{
+    var senderId = ViewBag.SenderId;
+    var senderName = ViewBag.SenderName;
+    var receiverId = ViewBag.ReceiverId;
+    var receiverName = ViewBag.ReceiverName;
+}
+
+<div class="container">
+    <div id="chat">
+        <p>您的 ID：@senderId</p>
+        <p>對方 ID：@receiverId</p>
+        <input type="text" id="messageInput" placeholder="輸入訊息" />
+        <button id="sendButton">發送訊息</button>
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+
+@section topCSS {
+    <link href="~/css/message.css" rel="stylesheet" />
+}
+@section endJS {
+    <script>
+        window.senderId = "@senderId";
+        window.senderName = "@senderName";
+        window.receiverId = "@receiverId";
+        window.receiverName = "@receiverName";
+    </script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js" defer></script>
+}

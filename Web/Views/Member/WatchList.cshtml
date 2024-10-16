@@ -1,73 +1,71 @@
-﻿@model CourseMainPageViewModel
+﻿<div class="container lh-backstage" id="app">
+    <!-- Tabs Navigation -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item lh-backstage-nav-item">
+            <a class="nav-link" :class="{ active: activeTab === 'language' }" @@click="switchTab('language')">
+                語言學習
+            </a>
+        </li>
+        <li class="nav-item lh-backstage-nav-item">
+            <a class="nav-link" :class="{ active: activeTab === 'coding' }" @@click="switchTab('coding')">
+                程式設計
+            </a>
+        </li>
+        <li class="nav-item lh-backstage-nav-item">
+            <a class="nav-link" :class="{ active: activeTab === 'school' }" @@click="switchTab('school')">
+                升學科目
+            </a>
+        </li>
+    </ul>
 
-
-<div class="container lh-backstage" id="app">
-    <div class="row overflow-hidden">
-        <div class="col-12 lh-backstage-main-section">
-            <div class="lh-backstage-watchlist-section mb-5">
-                <!-- Tabs Navigation -->
-                <ul class="nav nav-tabs">
-                    <li class="nav-item lh-backstage-nav-item">
-                        <a class="nav-link"
-                           :class="{ active: activeTab === 'language' }"
-                        @@click="activeTab = 'language'"
-                           href="#">
-                            語言學習
-                        </a>
-                    </li>
-                    <li class="nav-item lh-backstage-nav-item">
-                        <a class="nav-link"
-                           :class="{ active: activeTab === 'coding' }"
-                        @@click="activeTab = 'coding'"
-                           href="#">
-                            程式設計
-                        </a>
-                    </li>
-                    <li class="nav-item lh-backstage-nav-item">
-                        <a class="nav-link"
-                           :class="{ active: activeTab === 'school' }"
-                        @@click="activeTab = 'school'"
-                           href="#">
-                            升學科目
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- Tab Content -->
-                <div class="tab-content mt-3">
-                    <div v-if="activeTab === 'language'" class="tab-pane active">
-                        <!-- 語言學習 -->
-                        <div class="tutor-recommend-carousel d-flex">
-                            <!-- Render Partial View -->
-                            @foreach (var card in Model.LanguageWatchList)
-                            {
-                                <partial name="_TutorRecommendPartial" model="card" />
-                            }
-                        </div>
-                    </div>
-                    <div v-if="activeTab === 'coding'" class="tab-pane active">
-                        <!-- 程式設計 -->
-                        <div class="tutor-recommend-carousel d-flex">
-                            @foreach (var card in Model.CodingWatchList)
-                            {
-                                <partial name="_TutorRecommendPartial" model="card" />
-                            }
-                        </div>
-                    </div>
-                    <div v-if="activeTab === 'school'" class="tab-pane active">
-                        <!-- 升學科目 -->
-                        <div class="tutor-recommend-carousel d-flex">
-                            @foreach (var card in Model.SchoolWatchList)
-                            {
-                                <partial name="_TutorRecommendPartial" model="card" />
-                            }
-                        </div>
-                    </div>
+    <!-- Tab Content -->
+    <div v-if="!isLoading">
+        <div class="tutor-recommend-carousel-wrapper w-100 my-2 position-relative">
+            <div v-if="activeTab === 'language'" class="tab-pane active">
+                <div v-if="languageWatchList.length === 0" class="p-auto">
+                    <p>目前沒有關注任何此類別的課程!!</p>
+                </div>
+                <div v-else class="tutor-recommend-carousel d-flex">
+                    <tutor-card v-for="(card, index) in languageWatchList"
+                                :key="card.CourseId"
+                                :card="card"
+                                @@book-course="bookCourse">
+                    </tutor-card>
                 </div>
             </div>
-        </div>
+            <div v-if="activeTab === 'coding'" class="tab-pane active">
+                <div v-if="codingWatchList.length === 0" class="p-auto">
+                    <p>目前沒有關注任何此類別的課程!!</p>
+                </div>
+                <div v-else class="tutor-recommend-carousel d-flex">
+                    <tutor-card v-for="(card, index) in codingWatchList"
+                                :key="card.CourseId"
+                                :card="card"
+                                @@book-course="bookCourse">
+                    </tutor-card>
+                </div>
+            </div>
+            <div v-if="activeTab === 'school'" class="tab-pane active">
+                <div v-if="schoolWatchList.length === 0" class="p-auto">
+                    <p>目前沒有關注任何此類別的課程!!</p>
+                </div>
+                <div v-else class="tutor-recommend-carousel d-flex">
+                    <tutor-card v-for="(card, index) in schoolWatchList"
+                                :key="card.CourseId"
+                                :card="card"
+                                @@book-course="bookCourse">
+                    </tutor-card>                   
+                </div>
+            </div>
+        </div>         
+    </div>
+    <div v-else>
+        <p>Loading...</p>
     </div>
 </div>
+
+
+
 
 
 
@@ -76,12 +74,14 @@
 @section topCSS {
     <link rel="stylesheet" href="~/css/tutor_recommend.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/backstage.css" asp-append-version="true" />
+    <link href="~/css/tutor_recommend.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/tutor_recommend_carousel_slider.css" rel="stylesheet" asp-append-version="true" />
 }
 
 @section endJS {
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="~/js/watchlist.js" asp-append-version="true"></script>
-    <script src="~/js/tutor_recommend_carousel.js" asp-append-version="true"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    @* <script src="~/js/tutor_recommend_carousel.js" asp-append-version="true"></script> *@
+    <script src="~/js/WatchList.js" asp-append-version="true"></script>
     
 
 }

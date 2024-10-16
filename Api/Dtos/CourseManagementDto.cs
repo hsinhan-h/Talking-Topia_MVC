@@ -40,7 +40,7 @@ namespace Api.Dtos
         /// <summary>
         /// 課程圖片
         /// </summary>
-        public List<string> CourseImages { get; set; }
+        public List<string>? CourseImages { get; set; }
 
         /// <summary>
         /// 上架狀態

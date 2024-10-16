@@ -24,9 +24,12 @@ namespace Api
             // 1. 加入 JwtSettings 並從 appsettings.json 讀取
             var jwtSettings = builder.Configuration.GetSection(JwtSettings.Key).Get<JwtSettings>();
             builder.Services.AddSingleton(jwtSettings);
+            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
             // 2. 註冊 JwtService
             builder.Services.AddScoped<JwtService>();
+            builder.Services.AddScoped<CloudinaryService>();
+            builder.Services.AddScoped<CourseImageService>();
 
             // 3. 配置 JWT 驗證
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -122,6 +125,7 @@ namespace Api
             builder.Services.AddApiService();
 
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
