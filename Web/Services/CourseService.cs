@@ -8,18 +8,19 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
+using Web.Helpers;
 
 namespace Web.Services
 {
     public class CourseService
     {
         private readonly IRepository _repository;
-        private readonly IDistributedCache _distributedCache;
+        private readonly RedisCacheHelper _cacheHelper;
 
-        public CourseService(IRepository repository, IDistributedCache distributedCache)
+        public CourseService(IRepository repository, RedisCacheHelper cacheHelper)
         {
             _repository = repository;
-            _distributedCache = distributedCache;
+            _cacheHelper = cacheHelper;
         }
 
         public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(
@@ -35,11 +36,11 @@ namespace Web.Services
         {
             //基於query string產生cache key
             string cacheKey = $"CourseList_{page}_{pageSize}_{userId}_{selectedSubject}_{selectedNation}_{selectedWeekdays}_{selectedTimeslots}_{selectedBudget}_{selectedSortOption}";
-            var cachedData = await _distributedCache.GetAsync(cacheKey);
-            var cachedCourseInfoListViewModel = ByteArrayToObj<CourseInfoListViewModel>(cachedData);
 
-            if (cachedCourseInfoListViewModel != null)
-                return cachedCourseInfoListViewModel;
+            //若cache有對應cache key的資料, 直接返回cached data
+            var cachedData = await _cacheHelper.GetFromCacheAsync<CourseInfoListViewModel>(cacheKey);
+            if (cachedData != null)
+                return cachedData;
 
             //課程主資訊查詢 & 套用篩選 (主資訊: 跟篩選相關的資訊)
             IQueryable<CourseInfoViewModel> courseMainInfoQuery = GetCourseMainInfoQuery();
@@ -105,13 +106,8 @@ namespace Web.Services
                 TotalCourseQty = totalCourseQty
             };
 
-            //將查詢結果存進distributed cache
-            var byteResult = ObjectToByteArray(courseListQueryResult);
-            await _distributedCache.SetAsync(cacheKey, byteResult, new DistributedCacheEntryOptions()
-            {
-                SlidingExpiration = TimeSpan.FromMinutes(5),
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20)
-            });
+            //將查詢結果存進distributed cache (設定SlidingExpiration為5min, AbsoluteExpirationRelativeToNow為20分)
+            await _cacheHelper.SetCacheAsync(cacheKey, courseListQueryResult, TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(20));
 
             return courseListQueryResult;
         }

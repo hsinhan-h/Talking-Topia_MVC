@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Web.Models.MongoDB;
 using Web.Settings;
+using Web.Helpers;
 
 namespace Web
 {
@@ -64,6 +65,7 @@ namespace Web
             builder.Services.AddScoped<NationService>();
             builder.Services.AddScoped<CourseCategoryService>();
             builder.Services.AddScoped<CloudinaryService>();
+            builder.Services.AddScoped<RedisCacheHelper>();
 
             // 要加下面這個 AddInfrastructureService      
             builder.Services.AddInfrastructureService(builder.Configuration);
