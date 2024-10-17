@@ -20,6 +20,7 @@
 .tutor-recommend-carousel .tutor-headshot {
     width: 100px;
     height: 100px;
+    object-fit: cover;
 }
 
 .tutor-recommend-carousel .tutor-nation-icon {
