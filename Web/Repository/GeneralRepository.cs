@@ -100,5 +100,10 @@ namespace Web.Repository
             return await _context.Members.FirstOrDefaultAsync(u => u.LineUserId == lineId);
 
         }
+
+        public async Task<Course> GetCourseByIdAsync(int courseId)
+        {
+            return await _context.Courses.FirstOrDefaultAsync(c => c.CourseId == courseId);
+        }
     }
 }

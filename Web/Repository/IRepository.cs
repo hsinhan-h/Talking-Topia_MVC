@@ -24,6 +24,7 @@ namespace Web.Repository
         Task<TutorTimeSlot> GetTutorTimeSlotAsync(int tutorId, int courseHourId, int weekday);
 
         Task<Member> GetMemberByLineIdAsync(string lineId);
+        Task<Course> GetCourseByIdAsync(int courseId);
         
     }
 }

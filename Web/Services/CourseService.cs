@@ -733,7 +733,11 @@ namespace Web.Services
 
         }
 
-
+        public async Task<string> GetCourseNameAsync(int courseId)
+        {
+            var course = await _repository.GetCourseByIdAsync(courseId);
+            return course?.Title;
+        }
 
 
 
