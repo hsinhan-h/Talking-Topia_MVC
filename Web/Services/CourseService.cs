@@ -29,34 +29,35 @@ namespace Web.Services
             string selectedBudget = null,
             string selectedSortOption = null)
         {
-            //課程主資訊查詢&套用篩選
+            //課程主資訊查詢 & 套用篩選 (主資訊: 跟篩選相關的資訊)
             IQueryable<CourseInfoViewModel> courseMainInfoQuery = GetCourseMainInfoQuery();
             courseMainInfoQuery = await ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedWeekdays, selectedTimeslots, selectedBudget, selectedSortOption);
             
-            //取得課程總數
+            //取得篩選後的課程總數
             int totalCourseQty = await courseMainInfoQuery.CountAsync();
 
+            //分頁
+            //1. 取當前頁數的課程資訊
             List<CourseInfoViewModel> courseMainInfo = await courseMainInfoQuery
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
+            //2. 過濾當前頁面的CourseId及MemberId
             List<int> courseIds = courseMainInfo.Select(c => c.CourseId).ToList();
             List<int> memberIds = courseMainInfo.Select(c => c.MemberId).ToList();
 
+            //3. 用已過濾後的Id做額外資訊查詢 (課程圖片/教師已被預約時段/教師教課時段/關注課程)
             var courseImagesInfo = await GetCourseImagesAsync(courseIds);
-            //var courseRatingsAndReviewsInfo = await GetCourseRatingsAndReviewsAsync(courseIds);
             var bookedTimeSlotsInfo = await GetBookedTimeSlotsAsync(courseIds);
             var availableTimeSlotsInfo = await GetAvailableTimeSlotsAsync(memberIds);
             var followingCoursesInfo = await GetFollowingStatusAsync(userId, courseIds);
 
-            // 合併查詢
+            //4. 合併查詢 (只join分頁過的資訊)
             var completeCoursesInfo = (
                 from courseMain in courseMainInfo
                 join imgInfo in courseImagesInfo on courseMain.CourseId equals imgInfo.CourseId into imgInfoGroup
                 from imgInfo in imgInfoGroup.DefaultIfEmpty()
-                //join revInfo in courseRatingsAndReviewsInfo on courseMain.CourseId equals revInfo.CourseId into revInfoGroup
-                //from revInfo in revInfoGroup.DefaultIfEmpty()
                 join bookInfo in bookedTimeSlotsInfo on courseMain.CourseId equals bookInfo.CourseId into bookInfoGroup
                 from bookInfo in bookInfoGroup.DefaultIfEmpty()
                 join tTimeInfo in availableTimeSlotsInfo on courseMain.MemberId equals tTimeInfo.MemberId into tTimeInfoGroup
@@ -235,7 +236,7 @@ namespace Web.Services
             return courseMainInfoQuery;
         }
 
-        //主查詢
+        //課程主資訊查詢
         private IQueryable<CourseInfoViewModel> GetCourseMainInfoQuery()
         {
             return (
@@ -288,22 +289,6 @@ namespace Web.Services
                     }).ToList()
                 }).ToListAsync();
         }
-
-        // 評價及評論數查詢 (by courseIds)
-        //private async Task<List<CourseInfoViewModel>> GetCourseRatingsAndReviewsAsync(List<int> courseIds)
-        //{
-        //    return await (
-        //        from review in _repository.GetAll<Entities.Review>().AsNoTracking()
-        //        where courseIds.Contains(review.CourseId)
-        //        group review by review.CourseId into gpReview
-        //        select new CourseInfoViewModel
-        //        {
-        //            CourseId = gpReview.Key,
-        //            CourseRatings = gpReview.Any() ?
-        //                            Math.Round(gpReview.Average(cr => cr.Rating), 2) : 0,
-        //            CourseReviews = gpReview.Count()
-        //        }).ToListAsync();
-        //}
 
         //已被預約時間查詢 (by courseIds)
         private async Task<List<CourseInfoViewModel>> GetBookedTimeSlotsAsync(List<int> courseIds)
