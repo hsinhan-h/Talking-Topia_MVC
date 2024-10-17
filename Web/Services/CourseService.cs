@@ -6,16 +6,20 @@ using Web.Entities;
 using Web.Dtos;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Web.Services
 {
     public class CourseService
     {
         private readonly IRepository _repository;
+        private readonly IDistributedCache _distributedCache;
 
-        public CourseService(IRepository repository)
+        public CourseService(IRepository repository, IDistributedCache distributedCache)
         {
             _repository = repository;
+            _distributedCache = distributedCache;
         }
 
         public async Task<CourseInfoListViewModel> GetCourseCardsListAsync(
@@ -29,6 +33,14 @@ namespace Web.Services
             string selectedBudget = null,
             string selectedSortOption = null)
         {
+            //基於query string產生cache key
+            string cacheKey = $"CourseList_{page}_{pageSize}_{userId}_{selectedSubject}_{selectedNation}_{selectedWeekdays}_{selectedTimeslots}_{selectedBudget}_{selectedSortOption}";
+            var cachedData = await _distributedCache.GetAsync(cacheKey);
+            var cachedCourseInfoListViewModel = ByteArrayToObj<CourseInfoListViewModel>(cachedData);
+
+            if (cachedCourseInfoListViewModel != null)
+                return cachedCourseInfoListViewModel;
+
             //課程主資訊查詢 & 套用篩選 (主資訊: 跟篩選相關的資訊)
             IQueryable<CourseInfoViewModel> courseMainInfoQuery = GetCourseMainInfoQuery();
             courseMainInfoQuery = await ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedWeekdays, selectedTimeslots, selectedBudget, selectedSortOption);
@@ -87,11 +99,21 @@ namespace Web.Services
                     FollowingStatus = followingInfo.FollowingStatus
                 }).ToList();
 
-            return new CourseInfoListViewModel
+            var courseListQueryResult = new CourseInfoListViewModel
             {
                 CourseInfoList = completeCoursesInfo,
                 TotalCourseQty = totalCourseQty
             };
+
+            //將查詢結果存進distributed cache
+            var byteResult = ObjectToByteArray(courseListQueryResult);
+            await _distributedCache.SetAsync(cacheKey, byteResult, new DistributedCacheEntryOptions()
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(5),
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20)
+            });
+
+            return courseListQueryResult;
         }
 
         //處理篩選
@@ -340,7 +362,6 @@ namespace Web.Services
             }).ToList();
         }
 
-
         public async Task<CourseInfoViewModel> GetBookingTableAsync(int courseId)
         {
             var courseInfo = await _repository
@@ -380,6 +401,18 @@ namespace Web.Services
                 .FirstOrDefaultAsync();
 
             return courseInfo;
+        }
+
+        //物件轉為distributed cache支援的Byte Array格式
+        private static byte[] ObjectToByteArray(object obj)
+        {
+            return JsonSerializer.SerializeToUtf8Bytes(obj);
+        }
+
+        //distributed cache取得的ByteArray轉回物件
+        private static T ByteArrayToObj<T>(byte[] byteArr) where T : class
+        {
+            return byteArr is null ? null : JsonSerializer.Deserialize<T>(byteArr);
         }
 
 
