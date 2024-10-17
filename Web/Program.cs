@@ -13,6 +13,9 @@ using MongoDB.Driver;
 using Web.Models.MongoDB;
 using Web.Settings;
 using Web.Helpers;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace Web
 {
@@ -41,6 +44,13 @@ namespace Web
             builder.Services.AddScoped<IEmailService, EmailService>();
 
             builder.Services.AddHttpContextAccessor();
+
+            //µù¥Uredis distributed cache
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration["ConnectionStrings:Redis"];
+                options.InstanceName = "TalkingTopia-Cache";
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
