@@ -16,6 +16,8 @@ using Web.Helpers;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
+using Coravel;
+using Coravel.Scheduling.Schedule.Interfaces;
 
 namespace Web
 {
@@ -42,6 +44,9 @@ namespace Web
 
             //註冊EmailService
             builder.Services.AddScoped<IEmailService, EmailService>();
+
+            //註冊Coravel Scheduler
+            builder.Services.AddScheduler();
 
             builder.Services.AddHttpContextAccessor();
 
@@ -76,6 +81,7 @@ namespace Web
             builder.Services.AddScoped<CourseCategoryService>();
             builder.Services.AddScoped<CloudinaryService>();
             builder.Services.AddScoped<RedisCacheHelper>();
+            builder.Services.AddScoped<AppointmentNotificationService>();
 
             // 要加下面這個 AddInfrastructureService      
             builder.Services.AddInfrastructureService(builder.Configuration);
@@ -162,6 +168,16 @@ namespace Web
             // 先驗證再授權.
             app.UseAuthentication();
             app.UseAuthorization();
+
+            //設置Coravel排程
+            var scheduler = app.Services.GetRequiredService<IScheduler>();
+            scheduler.Schedule(async() =>
+            {
+                using var scope = app.Services.CreateScope();
+                var notificationService = scope.ServiceProvider.GetRequiredService<AppointmentNotificationService>();
+                await notificationService.SendNotificationsAsync();
+            }).Daily();
+
 
             app.MapControllerRoute(
                 name: "default",
