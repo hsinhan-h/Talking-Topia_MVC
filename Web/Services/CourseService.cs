@@ -578,7 +578,7 @@ namespace Web.Services
                 CourseCount = x.CourseCount,
                 CourseDurance = time,
                 Discount = (int)x.Discount,
-                DiscountPrice = x.Discount == 0 ? price.ToString() : (price * (1 - (x.Discount / 100))).ToString("0"),
+                DiscountPrice = x.Discount == 0 ? price.ToString("N0") : (price * (1 - (x.Discount / 100))).ToString("N0"),
             }).ToList();
         }
 
@@ -634,8 +634,8 @@ namespace Web.Services
                                     NationFlagImg = nation.FlagImage,
                                     CourseTitle = course.Title,
                                     CourseSubTitle = course.SubTitle,
-                                    TwentyFiveMinPrice = (int)course.TwentyFiveMinUnitPrice,
-                                    FiftyminPrice = (int)course.FiftyMinUnitPrice,
+                                    TwentyFiveMinPrice = course.TwentyFiveMinUnitPrice.ToString("N0"),
+                                    FiftyminPrice = course.FiftyMinUnitPrice.ToString("N0"),
                                     Description = course.Description,
                                 }).ToList();
 
@@ -677,17 +677,6 @@ namespace Web.Services
                     ReviewDate = comment.Cdate.ToString("yyyy/MM/dd"),
                     ReviewContent = comment.CommentText
                 }).ToListAsync();
-
-            if (reviews.Count == 0)
-            {
-                reviews = new List<CourseReview>
-                {
-                   new CourseReview
-                   {
-                        ReviewContent="目前沒有評論"
-                   }
-                };
-            };
 
             return (new CourseReviewListDto
             {
