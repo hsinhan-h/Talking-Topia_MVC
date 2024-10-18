@@ -46,10 +46,11 @@ namespace Web.Controllers
 
                 //發送預約成功郵件
                 var memberEmail = await _memberAppointmentService.GetMemberEmailAsync(memberId);
+                var memberName = await _memberAppointmentService.GetMemberFirstNameAsync(memberId);
                 var courseName = await _courseService.GetCourseNameAsync(courseId);
-                string subject = "Talking Topia - 課程預約成功通知";
+                string subject = $"Talking Topia - 課程預約成功通知: {courseName}";
                 string formattedTime = new TimeSpan(bookingTime - 1, 0, 0).ToString(@"hh\:mm");
-                string body = $"您好，<br>您已成功在Talking Topia預約一筆課程<br><br>課程名稱: {courseName}<br>預約時間:  {bookingDate.ToString("yyyy-MM-dd")} {formattedTime}";
+                string body = $"{memberName} 您好，<br>您已成功在Talking Topia預約一筆課程<br><br>課程名稱: {courseName}<br>預約時間:  {bookingDate.ToString("yyyy-MM-dd")} {formattedTime}";
 
                 //用Task.Run()將發信任務放到背景執行
                 Task.Run(() => _emailService.SendEmailAsync(memberEmail, subject, body));
