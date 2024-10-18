@@ -32,7 +32,7 @@ namespace Web.Controllers.Api
 
             // 抓ReceiverId
             int tutorId = await _memberService.GetTutorId(courseId);
-            
+
             string member = await _memberService.GetMemberName(memberId);
             string tutor = await _memberService.GetTutorName(tutorId);
 

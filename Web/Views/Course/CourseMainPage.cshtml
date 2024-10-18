@@ -445,16 +445,16 @@
         <div class="col-md-4 col-12 " id="tuition-sidebar">
             <div class="side-bar-header">一對一課程</div>
             <div class="side-bar-body">
-                <div class="course-info-card try-out-course d-flex mb-3 ">
+                <a asp-controller="Chat" asp-action="Index" asp-route-courseId="@Model.CourseId" class="course-info-card try-out-course d-flex mb-3 ">
                     <div class="course-charging d-flex flex-column">
-                        <div class="charging-fee">體驗價格換成其他的</div>
+                        <div class="charging-fee">與教師展開對話</div>
                         <div class="course-number-time"></div>
                     </div>
                     <div class="course-discount d-flex">
                         <div class="course-discount-logo d-none">5% Off</div>
                         <i class="fa-solid fa-angle-right"></i>
                     </div>
-                </div>
+                </a>
                 <div class="course-type-switch-tab d-flex">
                     <div class="course-info-tab px-4 py-2 mb-2 course-info-tab-color" id="min-25">25分鐘</div>
                     <div class="course-info-tab px-4 py-2 mb-2" id="min-50">50分鐘</div>
