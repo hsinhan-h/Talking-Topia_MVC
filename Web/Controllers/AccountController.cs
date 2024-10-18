@@ -257,6 +257,7 @@ namespace Web.Controllers
                     Udate = DateTime.Now,
                     IsTutor = false,
                     IsVerifiedTutor = false,
+                    EmailVerificationToken = "" // 初始化為空字符串，避免資料庫錯誤
                 };
 
                 _repository.Create(newMember);
