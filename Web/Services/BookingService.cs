@@ -326,5 +326,12 @@ namespace Web.Services
                     SubjectName = s.SubjectName
                 }).ToList();
         }
+
+        public async Task<List<Booking>> GetBookingsByDateAsync(DateTime date)
+        {
+            return await _repository.GetAll<Booking>()
+                .Where(b => b.BookingDate == date)
+                .ToListAsync();
+        }
     }
 }
