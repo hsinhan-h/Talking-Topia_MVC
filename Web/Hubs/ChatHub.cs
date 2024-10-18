@@ -85,10 +85,8 @@ namespace Web.Hubs
                     ConversationId = CreateConversationId(senderId, receiverId),
                     SenderId = senderId,
                     SenderName = sender.FirstName + " " + sender.LastName,
-                    //SenderName = "測試A",
                     ReceiverId = receiverId,
                     ReceiverName = receiver.FirstName + " " + receiver.LastName,
-                    //ReceiverName = "測試B",
                     Content = message,
                     Timestamp = DateTime.UtcNow,
                     MessageType = MessageType.Sent,
@@ -100,9 +98,6 @@ namespace Web.Hubs
 
                 await Clients.Group(groupName).SendAsync("ReceiveMessage", senderId, message);
                 Console.WriteLine($"訊息已發送至群組 {groupName}：{senderId} 對 {receiverId} 說 {message}");
-
-                //await Clients.Client(receiverId).SendAsync("ReceiveMessage", message);
-                //await Clients.Client(senderId).SendAsync("ReceiveMessage", message);
             }
             catch (Exception ex)
             {

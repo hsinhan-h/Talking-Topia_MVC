@@ -130,13 +130,13 @@
                 </div>
                 
                 <div class="tutor-rating d-flex align-content-center">
-                    <p class="comment-count ">{{ courseReviews.length }} 筆韓文課程評價</p>
+                    <p class="comment-count ">{{ courseReviews.length }} 筆課程評價</p>
                     <div class="rating-star" >
                         <p-rating class="display-rating-star my-1" v-model="fetchedRating" readonly></p-rating>
                     </div>
                 </div>
-                <div v-for="(review, index) in courseReviews.slice(0, 2)" :key="index" class="comment-card">
-                    <p v-if="courseReviews.length === 0">目前沒有評論</p>
+                <p v-if="courseReviews.length === 0">目前沒有評論</p>
+                <div v-for="(review, index) in courseReviews.slice(0, 2)" :key="index" class="comment-card">                    
                     <div class="comment d-flex ">
                         <div class="user-icon ">
                             <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -541,7 +541,7 @@
                 <div class="modal-body course-comment-modal-body d-flex">
                     <div class="comment-modal-selection col-md-6 col-12">
                         <div class="comment-rating-section mb-4">
-                            <h3>韓文評價</h3>
+                            <h3>課程評價</h3>
                             <div class="comment-rating-group">
                                 <div class="form-check" v-for="rating in [5, 4, 3, 2, 1]" :key="rating">
                                     <input class="form-check-input comment-rating-selection" type="checkbox"

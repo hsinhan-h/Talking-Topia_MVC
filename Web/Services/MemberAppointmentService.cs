@@ -58,5 +58,11 @@ namespace Web.Services
             return member?.Email;
         }
 
+        public async Task<string> GetMemberFirstNameAsync(int memberId)
+        {
+            var member = await _repository.GetMemberByIdAsync(memberId);
+            return member?.FirstName;
+        }
+
     }
 }

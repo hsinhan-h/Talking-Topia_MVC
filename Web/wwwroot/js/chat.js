@@ -1,10 +1,12 @@
 ﻿"use strict";
 
+const senderId = window.senderId;
+const sender = window.senderName;
+const receiverId = window.receiverId;
+const receiver = window.receiverName;
+const messagesList = document.getElementById("messagesList");
+
 async function startChat() {
-    const senderId = window.senderId;
-    const sender = window.senderName;
-    const receiverId = window.receiverId;
-    const receiver = window.receiverName;
 
     let connection = createSignalRConnection(senderId, receiverId);
 
@@ -62,9 +64,10 @@ function setupSignalREvents(connection, senderId, receiverId) {
     });
 
     connection.on("ReceiveMessage", (user, message) => {
-        console.log(`收到來自 ${user} 的訊息：${message}`);
-        addMessageToChat(user, message, false);
-        //loadChatHistory(senderId, receiverId);
+        console.log(`收到來自 ${user} 的訊息：${message};user的型別是${typeof user} `);
+        let userName = (user.toString() == senderId) ? sender : receiver;
+        console.log(`UserName是${userName}; sender是${sender}; receiver是${receiver}`)
+        addMessageToChat(userName, message, false);
     });
 }
 
@@ -72,7 +75,6 @@ async function loadChatHistory(senderId, receiverId) {
     try {
         const response = await fetch(`/api/chat/history?user1=${senderId}&user2=${receiverId}`);
         const messages = await response.json();
-        console.log(`歷史訊息是${messages}`);
         messages.forEach(msg => {
             addMessageToChat(msg.senderName, msg.content, false);
         });
@@ -82,13 +84,21 @@ async function loadChatHistory(senderId, receiverId) {
 }
 
 function addMessageToChat(user, message, isSender) {
+    //li.textContent = `${user}說：${message}`;
     const li = document.createElement("li");
-    li.textContent = `${user}：${message}`;
-    li.classList.add(isSender ? "sent-message" : "received-message");
-    document.getElementById("messagesList").appendChild(li);
+    li.classList.add(isSender ? "sent-message" : "received-message", "chat-message", "d-flex");
+    const div = document.createElement("div");
+    div.classList.add("message-content");
+    const strong = document.createElement("strong");
+    strong.textContent = user;
+    const p = document.createElement("p");
+    p.textContent = `${message}`;
+    div.appendChild(strong);
+    div.appendChild(p);
+    li.appendChild(div);
+    messagesList.appendChild(li);
 
     // 自動滾動到訊息列表底部
-    const messagesList = document.getElementById("messagesList");
     messagesList.scrollTop = messagesList.scrollHeight;
 }
 

@@ -31,15 +31,15 @@ namespace Web.Controllers.Api
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
 
             // 抓ReceiverId
-            int tutorId = await _memberService.GetTutorId(courseId);
+            var tutor = await _memberService.GetTutor(courseId);
 
             string member = await _memberService.GetMemberName(memberId);
-            string tutor = await _memberService.GetTutorName(tutorId);
 
             ViewBag.SenderId = memberId;
             ViewBag.SenderName = member;
-            ViewBag.ReceiverId = tutorId;
-            ViewBag.ReceiverName = tutor;
+            ViewBag.ReceiverId = tutor.MemberId;
+            ViewBag.ReceiverName = tutor.MemberName;
+            ViewBag.HeadShotImage = tutor.HeadShotImage;
 
             return View();
         }
