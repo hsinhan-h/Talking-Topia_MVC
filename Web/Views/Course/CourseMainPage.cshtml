@@ -26,7 +26,7 @@
         <div class="col-md-8 col-12 " id="tutor-main-page">
             <div class="lh-tutor-title d-flex mb-3">
                 <div class="lh-tutor-pic position-relative">
-                    <img class="tutor-headshot rounded-circle  "
+                    <img class="tutor-headshot rounded-circle"
                          src="@Url.Content(Model.TutorHeadShotImage)" />
                     <img class="tutor-nation-icon rounded-circle border border-white position-absolute "
                          src="@Url.Content(Model.TutorFlagImage)" />
@@ -111,7 +111,7 @@
                 <div class="award-icon"><img src="~/image/tutor_badge_imgs/tutor_badge.webp"></div>
                 <div class="badge-content">
                     <strong>僅有 8.5% 的優質教師</strong>
-                    <br>在 AmazingTalker 受到大量學生喜愛，好評不斷的優質教師！
+                    <br>在 TalkingTopia 受到大量學生喜愛，好評不斷的優質教師！
                 </div>
             </div>
             <div class="lh-tutor-comment " >
@@ -156,63 +156,6 @@
                     顯示全部{{ courseReviews.length }}則評論
                     <i class="fa-solid fa-chevron-down"></i>
                 </button>
-            </div>
-            <div class="lh-learning-story mb-4 d-none">
-                <h3 class="w-100 mb-4">3篇韓文學習故事</h3>
-                <div class="learning-story-card">
-                    <div class="story-photo">
-                        <img src="https://picsum.photos/200" alt="">
-                    </div>
-                    <div class="story-status">
-                        <p>學了韓文後去韓國旅遊更順利</p>
-                        <span>
-                            <span class="me-2">
-                                <i class="fa-regular fa-heart me-1"></i>
-                                <span>1個喜歡</span>
-                            </span>
-                            <span class="me-2">
-                                <i class="fa-regular fa-comment-dots me-1"></i>
-                                <span>3個留言</span>
-                            </span>
-                        </span>
-                    </div>
-                </div>
-                <div class="learning-story-card">
-                    <div class="story-photo">
-                        <img src="https://picsum.photos/200" alt="">
-                    </div>
-                    <div class="story-status">
-                        <p>韓文學習</p>
-                        <span>
-                            <span class="me-2">
-                                <i class="fa-regular fa-heart me-1"></i>
-                                <span>2個喜歡</span>
-                            </span>
-                            <span class="me-2">
-                                <i class="fa-regular fa-comment-dots me-1"></i>
-                                <span>1個留言</span>
-                            </span>
-                        </span>
-                    </div>
-                </div>
-                <div class="learning-story-card">
-                    <div class="story-photo">
-                        <img src="https://picsum.photos/200" alt="">
-                    </div>
-                    <div class="story-status">
-                        <p>自學韓語半年後依舊選擇家教的理由</p>
-                        <span>
-                            <span class="me-2">
-                                <i class="fa-regular fa-heart me-1"></i>
-                                <span>5個喜歡</span>
-                            </span>
-                            <span class="me-2">
-                                <i class="fa-regular fa-comment-dots me-1"></i>
-                                <span>2個留言</span>
-                            </span>
-                        </span>
-                    </div>
-                </div>
             </div>
             <div class="lh-tutor-evaluation d-flex ">
                 <h3 class="w-100">教師表現數據</h3>
@@ -391,13 +334,7 @@
                         <li>手機、電腦皆可使用 ZOOM 上課（手機請先下載 ZOOM 應用程式）</li>
                     </ul>
                 </div>
-                <div class="more-trouble-content">
-                    退課須知
-                    <ul>
-                        <li>當課程發生問題可選擇『回報問題』，可由教師選擇重新預約或是退AT幣</li>
-                        <li>如教師超過12小時未給予回覆，系統將自動退AT幣給您</li>
-                    </ul>
-                </div>
+                
             </div>
             <partial name="_BookingTablePartial" />
             <div class="modal fade" id="confirmBookingModal" tabindex="-1"
@@ -587,7 +524,7 @@
 
 
 </div>
-<div class="lh-rwd-course-info-tab col-12">
+@* <div class="lh-rwd-course-info-tab col-12">
     <div class="try-out-class-info">
         <div class="tab-charging-fee">This will be replace</div>
         <div class="tab-course-number-time">25分鐘體驗課</div>
@@ -597,7 +534,7 @@
         <button class="try-out-tutor-contact">聯繫老師</button>
 
     </div>
-</div>
+</div> *@
 
 
 
