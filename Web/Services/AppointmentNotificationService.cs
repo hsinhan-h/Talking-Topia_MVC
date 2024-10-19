@@ -35,15 +35,30 @@ namespace Web.Services
             {
                 try
                 {
-                    var memberEmail = await _memberAppointmentService.GetMemberEmailAsync(booking.StudentId);
-                    var memberName = await _memberAppointmentService.GetMemberFirstNameAsync(booking.StudentId);
-                    var courseName = await _courseService.GetCourseNameAsync(booking.CourseId);
-                    string formattedTime = new TimeSpan(booking.BookingTime - 1, 0, 0).ToString(@"hh\:mm");
+                    if ((daysLeft == 2 && booking.NotifyCount == 0) || (daysLeft == 1 && booking.NotifyCount <= 1))
+                    {
+                        var memberEmail = await _memberAppointmentService.GetMemberEmailAsync(booking.StudentId);
+                        var memberName = await _memberAppointmentService.GetMemberFirstNameAsync(booking.StudentId);
+                        var courseName = await _courseService.GetCourseNameAsync(booking.CourseId);
+                        string formattedTime = new TimeSpan(booking.BookingTime - 1, 0, 0).ToString(@"hh\:mm");
 
-                    string subject = $"提醒: {memberName}，您預約的Talking Topia課程將在{daysLeft}天後開始 {courseName}";
-                    string body = $"{memberName}您好，<br>提醒您，您已預約的課程 <strong style='color: blue;'>{courseName}</strong> <br>即將在 <strong style='color: red;'>{daysLeft} 天</strong>後開始，請準時與您的教師赴約。<br><br><strong style='color: red;'>預約時間: {booking.BookingDate.ToString("yyyy-MM-dd")} {formattedTime}</strong>";
+                        string subject = $"提醒: {memberName}，您預約的Talking Topia課程將在{daysLeft}天後開始 {courseName}";
+                        string body = $"{memberName}您好，<br>提醒您，您已預約的課程 <strong style='color: blue;'>{courseName}</strong> <br>即將在 <strong style='color: red;'>{daysLeft} 天</strong>後開始，請準時與您的教師赴約。<br><br><strong style='color: red;'>預約時間: {booking.BookingDate.ToString("yyyy-MM-dd")} {formattedTime}</strong>";
 
-                    await _emailService.SendEmailAsync(memberEmail, subject, body);
+                        await _emailService.SendEmailAsync(memberEmail, subject, body);
+
+                        //更新notifyCount
+                        if (daysLeft == 2)
+                        {
+                            booking.NotifyCount = 1;
+                        }
+                        else if (daysLeft == 1) 
+                        { 
+                            booking.NotifyCount = 2;
+                        }
+
+                        await _bookingService.UpdateBookingAsync(booking);
+                    }                   
                 }
                 catch (Exception ex)
                 {

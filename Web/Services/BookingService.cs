@@ -210,11 +210,20 @@ namespace Web.Services
                 BookingTime = bookingTime,
                 StudentId = studentId,
                 Cdate = DateTime.Now,
-                Udate = DateTime.Now
+                Udate = DateTime.Now,
+                NotifyCount = 0
             };
             _repository.Create(booking);
             _repository.SaveChanges();
         }
+
+        public async Task UpdateBookingAsync(Booking booking)
+        {
+            _repository.Update(booking);
+            await _repository.SaveChangesAsync();
+        }
+
+
         /// <summary>
         /// 課程新增或修改
         /// </summary>

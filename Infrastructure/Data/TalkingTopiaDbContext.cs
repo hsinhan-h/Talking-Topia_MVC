@@ -194,6 +194,9 @@ public partial class TalkingTopiaDbContext : DbContext
                 .HasComment("更新時間")
                 .HasColumnType("datetime")
                 .HasColumnName("UDate");
+            entity.Property(e => e.NotifyCount)
+                .HasComment("已發送通知次數")
+                .HasDefaultValue(0); // 默認值0
 
             entity.HasOne(d => d.Course).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.CourseId)
