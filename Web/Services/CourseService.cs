@@ -52,9 +52,11 @@ namespace Web.Services
             List<int> courseIds = courseMainInfo.Select(c => c.CourseId).ToList();
             List<int> memberIds = courseMainInfo.Select(c => c.MemberId).ToList();
 
-            //3. 用已過濾後的Id做額外資訊查詢 (課程圖片/教師已被預約時段/教師教課時段/關注課程)
+            //3-1. 用已過濾後的Id做額外資訊查詢 (關注課程)
             var followingCoursesInfo = await GetFollowingStatusAsync(userId, courseIds);
+            
             string followingStatusKey = string.Join("_", followingCoursesInfo.Where(f => f.FollowingStatus == true).Select(f => f.CourseId).ToList());
+            
             //基於query string產生cache key
             string cacheKey = $"CourseList_{page}_{pageSize}_{userId}_{selectedSubject}_{selectedNation}_{selectedWeekdays}_{selectedTimeslots}_{selectedBudget}_{selectedSortOption}_{followingStatusKey}";
             //若cache有對應cache key的資料, 直接返回cached data
@@ -62,7 +64,7 @@ namespace Web.Services
             if (cachedData != null)
                 return cachedData;
 
-
+            //3-2. 用已過濾後的Id做額外資訊查詢 (課程圖片/教師已被預約時段/教師教課時段/關注課程)
             var courseImagesInfo = await GetCourseImagesAsync(courseIds);
             var bookedTimeSlotsInfo = await GetBookedTimeSlotsAsync(courseIds);
             var availableTimeSlotsInfo = await GetAvailableTimeSlotsAsync(memberIds);

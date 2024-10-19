@@ -1,18 +1,27 @@
 ﻿using ApplicationCore.Entities;
+using Web.Helpers;
 
 namespace Web.Services
 {
     public class CourseCategoryService
     {
         private readonly IRepository _repository;
+        private readonly RedisCacheHelper _cacheHelper;
 
-        public CourseCategoryService(IRepository repository)
+        public CourseCategoryService(IRepository repository, RedisCacheHelper cacheHelper)
         {
             _repository = repository;
+            _cacheHelper = cacheHelper;
         }
 
         public async Task<List<CourseCategoryViewModel>> GetCourseCategoriesWithSubjectsAsync()
         {
+            //如果redis cache已有類別科目清單資料, 直接return cache資料
+            var cacheKey = "CourseCategoriesWithSubjects";
+            var cachedData = await _cacheHelper.GetFromCacheAsync<List<CourseCategoryViewModel>>(cacheKey);
+            if (cachedData != null)
+                return cachedData;
+
             var courseCategoriesWithSubjects = await (
                 from category in _repository.GetAll<Entities.CourseCategory>()
                 join subject in _repository.GetAll<Entities.CourseSubject>()
@@ -25,6 +34,10 @@ namespace Web.Services
                         SubjectName = s.SubjectName
                     }).ToList()
                 }).ToListAsync();
+
+            //將類別及科目清單查詢結果存到redis cache, SlidingExpiration設為30分, AbsoluteExpirationRelativeToNow設為1小時
+            await _cacheHelper.SetCacheAsync(cacheKey, courseCategoriesWithSubjects, TimeSpan.FromMinutes(30), TimeSpan.FromHours(1));
+
             return courseCategoriesWithSubjects;
         }
 
