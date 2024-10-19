@@ -43,4 +43,17 @@ namespace Api.Dtos
         public string CurrentMonth { get; set; }
         
     }
+    public class TutorHeadImgDto
+    {
+        public int MemberId { get; set; }
+        public string HeadImgUrl { get; set; }
+
+        public string FileName { get; set; }
+    }
+    public class UpdateImageDto
+    {
+        public int MemberId { get; set; }
+        public string ImageUrls { get; set; }
+    }
+
 }

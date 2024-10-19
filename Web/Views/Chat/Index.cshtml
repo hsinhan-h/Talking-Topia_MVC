@@ -3,27 +3,61 @@
     var senderName = ViewBag.SenderName;
     var receiverId = ViewBag.ReceiverId;
     var receiverName = ViewBag.ReceiverName;
+    var headShotImage = ViewBag.HeadShotImage;
 }
 
 <div class="container">
-    <div id="chat">
-        <p>您的 ID：@senderId</p>
-        <p>對方 ID：@receiverId</p>
-        <input type="text" id="messageInput" placeholder="輸入訊息" />
-        <button id="sendButton">發送訊息</button>
-        <ul id="messagesList"></ul>
+    <div class="row">
+        <div class="message-window col-12 col-md-3">
+            <div class="message-header">
+                <h5>訊息列表</h5>
+            </div>
+            <ul class="message-list">
+                <li class="message-item">
+                    <img src="@headShotImage" alt="User" />
+                    <div class="message-content">
+                        <h6>@receiverName</h6>
+                    </div>
+                    <div class="message-time">daysago</div>
+                </li>
+            </ul>
+        </div>
+        <div class="chat-container col-12 col-md-9 " id="chat">
+            <!-- 教師介紹部分 -->
+            <div class="teacher-intro">
+                <img src="@headShotImage" alt="TutorImage" />
+                <div><strong>@receiverName</strong></div>
+            </div>
+            <!-- 聊天內容部分 -->
+            <ul class="chat-body" id="messagesList">
+                <li class="chat-message d-flex">
+                    <div class="message-content">
+                        <strong>@receiverName</strong>
+                        <p>Hi， @senderName ！很高興你的來訊😊</p>
+                    </div>
+                </li>
+            </ul>
+            <!-- 輸入框部分 -->
+            <div class="chat-input col-12">
+                <textarea id="messageInput"
+                          placeholder="請輸入訊息 (換行請長按Shift鍵後按Enter鍵)"></textarea>
+                <button id="sendButton">➤</button>
+            </div>
+        </div>
     </div>
 </div>
+
+
 
 @section topCSS {
     <link href="~/css/message.css" rel="stylesheet" />
 }
 @section endJS {
     <script>
-        window.senderId = "@senderId";
-        window.senderName = "@senderName";
-        window.receiverId = "@receiverId";
-        window.receiverName = "@receiverName";
+        window.senderId = "@Html.Raw(senderId)";
+        window.senderName = "@Html.Raw(senderName)";
+        window.receiverId = "@Html.Raw(receiverId)";
+        window.receiverName = "@Html.Raw(receiverName)";
     </script>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js" defer></script>

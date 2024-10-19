@@ -31,6 +31,14 @@ const courseCardsApp = Vue.createApp({
         this.page = parseInt(params.get('page')) || 1; //從query string取得page
         this.selectedSubject = params.get('subject') ? decodeURIComponent(params.get('subject')) : null;
         this.selectedNation = params.get('nation') || null;
+        const weekdaysParam = params.get('weekdays');
+        if (weekdaysParam) {
+            this.selectedWeekdays = decodeURIComponent(weekdaysParam).split(',').map(day => parseInt(day));
+        };
+        const timeslotsParam = params.get('timeslots');
+        if (timeslotsParam) {
+            this.selectedTimeslots = decodeURIComponent(timeslotsParam).split(',');
+        }
         this.selectedBudget = params.get('budget') || null;
         this.fetchCourses();
         this.fetchCategories();
