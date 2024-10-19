@@ -3,6 +3,8 @@ using ApplicationCore.Entities;
 using Api.Dtos;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.FileIO;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 
 namespace Api.Services
@@ -19,6 +21,65 @@ namespace Api.Services
             _nationRepository = nationRepository;
             _applyListRepository= applyListRepository;
         }
+
+
+
+
+        //AI相關
+        public async Task<TutorHeadImgDto> GetDbImgUrlinforamtionfun(int memberId)
+        {
+            // 從資料庫取得對應的 Member
+            var member = await _memberRepository.GetByIdAsync(memberId);
+
+
+            if (member == null)
+            {
+                throw new Exception($"找不到 ID 為 {memberId} 的會員資料");
+            }
+            var headImgUrl = member.HeadShotImage;
+            var fileType = Path.GetExtension(new Uri(headImgUrl).AbsolutePath).ToLower();
+
+            // 定義支援的圖片類型
+            var supportedTypes = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+
+            if (!supportedTypes.Contains(fileType))
+            {
+                throw new Exception($"不支援的圖片類型: {fileType}");
+            }
+
+            // 解析出檔案名稱
+            var fileName = Path.GetFileName(new Uri(headImgUrl).AbsolutePath);
+
+            // 回傳包含圖片 URL、檔案名稱和會員 ID 的 DTO
+            return new TutorHeadImgDto
+            {
+                HeadImgUrl = headImgUrl,
+                MemberId = memberId,
+                FileName = fileName  // 回傳檔案名稱
+            };
+        }
+
+
+        public async Task<string> UpdateMemberImageUrlsAsync(int memberId, string imageUrls)
+        {
+            // 從資料庫取得對應的 Member
+            var member = await _memberRepository.GetByIdAsync(memberId);
+
+            if (member == null)
+            {
+                throw new Exception($"找不到 ID 為 {memberId} 的會員資料");
+            }
+
+            // 更新 HeadShotImage 欄位
+            member.HeadShotImage = imageUrls;
+
+            // 保存變更到資料庫
+            await _memberRepository.UpdateAsync(member);
+
+            // 回傳成功訊息
+            return "圖片 URL 已成功更新";
+        }
+
 
 
 
