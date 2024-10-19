@@ -155,19 +155,19 @@ namespace Web.Services
                     {
                         case "6-12":
                             return availableTimeSlotsInfo
-                                .Where(ts => ts.AvailableTimeSlots.Any(slot => string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday) && slot.StartHour >= 6 && slot.StartHour < 12))
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => (string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday)) && slot.StartHour >= 6 && slot.StartHour < 12))
                                 .Select(ts => ts.MemberId);
                         case "12-18":
                             return availableTimeSlotsInfo
-                                .Where(ts => ts.AvailableTimeSlots.Any(slot => string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday) && slot.StartHour >= 12 && slot.StartHour < 18))
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => (string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday)) && slot.StartHour >= 12 && slot.StartHour < 18))
                                 .Select(ts => ts.MemberId);
                         case "18-24":
                             return availableTimeSlotsInfo
-                                .Where(ts => ts.AvailableTimeSlots.Any(slot => string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday) && slot.StartHour >= 18 && slot.StartHour < 24))
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => (string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday)) && slot.StartHour >= 18 && slot.StartHour < 24))
                                 .Select(ts => ts.MemberId);
                         case "0-6":
                             return availableTimeSlotsInfo
-                                .Where(ts => ts.AvailableTimeSlots.Any(slot => string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday) && slot.StartHour >= 0 && slot.StartHour < 6))
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => (string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday)) && slot.StartHour >= 0 && slot.StartHour < 6))
                                 .Select(ts => ts.MemberId);
                         default:
                             return Enumerable.Empty<int>();
