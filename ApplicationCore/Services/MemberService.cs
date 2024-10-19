@@ -87,6 +87,8 @@ namespace ApplicationCore.Services
                 MemberId = tutor.MemberId,
                 MemberName = tutor.FirstName,
                 HeadShotImage = tutor.HeadShotImage,
+                CourseTitle = course.Title,
+                CourseSubTitle = course.SubTitle,
             };
             return result;
         }

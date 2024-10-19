@@ -1,33 +1,32 @@
 ﻿@{
+    var courseId = ViewBag.CourseId;
     var senderId = ViewBag.SenderId;
     var senderName = ViewBag.SenderName;
     var receiverId = ViewBag.ReceiverId;
     var receiverName = ViewBag.ReceiverName;
     var headShotImage = ViewBag.HeadShotImage;
+    var courseTitle = ViewBag.CourseTitle;
+    var courseSubTitle = ViewBag.CourseSubTitle;
 }
 
 <div class="container">
     <div class="row">
         <div class="message-window col-12 col-md-3">
             <div class="message-header">
-                <h5>訊息列表</h5>
+                <h5>個人檔案</h5>
             </div>
-            <ul class="message-list">
-                <li class="message-item">
-                    <img src="@headShotImage" alt="User" />
-                    <div class="message-content">
-                        <h6>@receiverName</h6>
-                    </div>
-                    <div class="message-time">daysago</div>
-                </li>
-            </ul>
+            <div class="message-list">
+                <div class="message-item">
+                    <a href="~/Course/CourseMainPage?courseId=@courseId">
+                        <img class="profile-img" src="@headShotImage" alt="User" />
+                    </a>
+                    <h6 class="profile-name">@receiverName</h6>
+                    <p>@courseTitle</p>
+                    <p>@courseSubTitle</p>
+                </div>
+            </div>
         </div>
         <div class="chat-container col-12 col-md-9 " id="chat">
-            <!-- 教師介紹部分 -->
-            <div class="teacher-intro">
-                <img src="@headShotImage" alt="TutorImage" />
-                <div><strong>@receiverName</strong></div>
-            </div>
             <!-- 聊天內容部分 -->
             <ul class="chat-body" id="messagesList">
                 <li class="chat-message d-flex">

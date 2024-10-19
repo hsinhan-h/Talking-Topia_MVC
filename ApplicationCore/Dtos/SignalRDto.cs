@@ -11,5 +11,7 @@ namespace ApplicationCore.Dtos
         public int MemberId { get; set; }
         public string MemberName { get; set; }
         public string HeadShotImage { get; set; }
+        public string CourseTitle { get; set; }
+        public string CourseSubTitle { get; set; }
     }
 }
