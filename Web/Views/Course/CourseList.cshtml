@@ -291,7 +291,7 @@
                        :data-bs-video="courseCard.courseVideo">
                         <img class="lazyload" :data-src="courseCard.courseVideoThumbnail" data-expand="300" alt="">
                     </a>
-                    <img class="lazyload" v-if="courseCard.courseImages.length > 0" v-for="(image, index) in courseCard.courseImages" :key="index" :data-src="image.imageUrl" data-expand="300" alt="">
+                    <img v-if="courseCard.courseImages.length > 0" v-for="(image, index) in courseCard.courseImages" :key="index" :src="image.imageUrl" alt="">
                 </div>
                 <div class="arrow_prev position-absolute"><i class="fa-solid fa-angle-left"></i></div>
                 <div class="arrow_next position-absolute"><i class="fa-solid fa-angle-right"></i></div>
