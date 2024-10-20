@@ -84,7 +84,6 @@ async function loadChatHistory(senderId, receiverId) {
 }
 
 function addMessageToChat(user, message, isSender) {
-    //li.textContent = `${user}說：${message}`;
     const li = document.createElement("li");
     li.classList.add(isSender ? "sent-message" : "received-message", "chat-message", "d-flex");
     const div = document.createElement("div");
@@ -97,9 +96,14 @@ function addMessageToChat(user, message, isSender) {
     div.appendChild(p);
     li.appendChild(div);
     messagesList.appendChild(li);
+    scrollToBottom();
+}
 
-    // 自動滾動到訊息列表底部
-    messagesList.scrollTop = messagesList.scrollHeight;
+function scrollToBottom() {
+    setTimeout(function () {
+        messagesList.scrollTop = messagesList.scrollHeight;
+
+    }, 100);
 }
 
 window.addEventListener("DOMContentLoaded", startChat);
