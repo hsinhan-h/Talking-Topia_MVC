@@ -14,7 +14,7 @@ namespace Infrastructure.Service
     {
         private readonly string _clientId = "2006372467";
         private readonly string _clientSecret = "1f42c2be3fd2e8783b2bcfc13370a584";
-        private readonly string _redirectUri = "https://localhost:7263/Account/SSOcallback";
+        private readonly string _redirectUri = "https://talkingtopia-edfmd7fmeudpckg6.japaneast-01.azurewebsites.net/Account/SSOcallback";
 
         public async Task<LineTokenResponseDto> GetAccessTokenAsync(string code)
         {

@@ -204,7 +204,7 @@ namespace Web.Controllers
             var state = Guid.NewGuid().ToString("N");
             HttpContext.Session.SetString("LineState", state);
 
-            var redirectUrl = $"https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2006372467&redirect_uri=https://localhost:7263/Account/SSOcallback&state={state}&scope=profile%20openid%20email";
+            var redirectUrl = $"https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2006372467&redirect_uri=https://talkingtopia-edfmd7fmeudpckg6.japaneast-01.azurewebsites.net/Account/SSOcallback&state={state}&scope=profile%20openid%20email";
             return Redirect(redirectUrl);
         }
 
