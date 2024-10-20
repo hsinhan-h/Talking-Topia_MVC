@@ -176,7 +176,7 @@ namespace Web
                 using var scope = app.Services.CreateScope();
                 var notificationService = scope.ServiceProvider.GetRequiredService<AppointmentNotificationService>();
                 await notificationService.SendNotificationsAsync();
-            }).Daily();
+            }).EveryMinute();
 
 
             app.MapControllerRoute(

@@ -34,14 +34,6 @@ namespace Web.Services
             string selectedBudget = null,
             string selectedSortOption = null)
         {
-            //基於query string產生cache key
-            string cacheKey = $"CourseList_{page}_{pageSize}_{userId}_{selectedSubject}_{selectedNation}_{selectedWeekdays}_{selectedTimeslots}_{selectedBudget}_{selectedSortOption}";
-
-            //若cache有對應cache key的資料, 直接返回cached data
-            var cachedData = await _cacheHelper.GetFromCacheAsync<CourseInfoListViewModel>(cacheKey);
-            if (cachedData != null)
-                return cachedData;
-
             //課程主資訊查詢 & 套用篩選 (主資訊: 跟篩選相關的資訊)
             IQueryable<CourseInfoViewModel> courseMainInfoQuery = GetCourseMainInfoQuery();
             courseMainInfoQuery = await ApplyCourseMainInfoQueryFilters(courseMainInfoQuery, selectedSubject, selectedNation, selectedWeekdays, selectedTimeslots, selectedBudget, selectedSortOption);
@@ -60,11 +52,24 @@ namespace Web.Services
             List<int> courseIds = courseMainInfo.Select(c => c.CourseId).ToList();
             List<int> memberIds = courseMainInfo.Select(c => c.MemberId).ToList();
 
-            //3. 用已過濾後的Id做額外資訊查詢 (課程圖片/教師已被預約時段/教師教課時段/關注課程)
+            //3-1. 用已過濾後的Id做額外資訊查詢 (關注課程)
+            var followingCoursesInfo = await GetFollowingStatusAsync(userId, courseIds);
+            
+            string followingStatusKey = string.Join("_", followingCoursesInfo.Where(f => f.FollowingStatus == true).Select(f => f.CourseId).ToList());
+            
+            //基於query string產生cache key
+            string cacheKey = $"CourseList_{page}_{pageSize}_{userId}_{selectedSubject}_{selectedNation}_{selectedWeekdays}_{selectedTimeslots}_{selectedBudget}_{selectedSortOption}_{followingStatusKey}";
+            //若cache有對應cache key的資料, 直接返回cached data
+            var cachedData = await _cacheHelper.GetFromCacheAsync<CourseInfoListViewModel>(cacheKey);
+            if (cachedData != null)
+                return cachedData;
+
+            //3-2. 用已過濾後的Id做額外資訊查詢 (課程圖片/教師已被預約時段/教師教課時段/關注課程)
             var courseImagesInfo = await GetCourseImagesAsync(courseIds);
             var bookedTimeSlotsInfo = await GetBookedTimeSlotsAsync(courseIds);
             var availableTimeSlotsInfo = await GetAvailableTimeSlotsAsync(memberIds);
-            var followingCoursesInfo = await GetFollowingStatusAsync(userId, courseIds);
+            
+
 
             //4. 合併查詢 (只join分頁過的資訊)
             var completeCoursesInfo = (
@@ -150,19 +155,19 @@ namespace Web.Services
                     {
                         case "6-12":
                             return availableTimeSlotsInfo
-                                .Where(ts => ts.AvailableTimeSlots.Any(slot => string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday) && slot.StartHour >= 6 && slot.StartHour < 12))
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => (string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday)) && slot.StartHour >= 6 && slot.StartHour < 12))
                                 .Select(ts => ts.MemberId);
                         case "12-18":
                             return availableTimeSlotsInfo
-                                .Where(ts => ts.AvailableTimeSlots.Any(slot => string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday) && slot.StartHour >= 12 && slot.StartHour < 18))
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => (string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday)) && slot.StartHour >= 12 && slot.StartHour < 18))
                                 .Select(ts => ts.MemberId);
                         case "18-24":
                             return availableTimeSlotsInfo
-                                .Where(ts => ts.AvailableTimeSlots.Any(slot => string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday) && slot.StartHour >= 18 && slot.StartHour < 24))
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => (string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday)) && slot.StartHour >= 18 && slot.StartHour < 24))
                                 .Select(ts => ts.MemberId);
                         case "0-6":
                             return availableTimeSlotsInfo
-                                .Where(ts => ts.AvailableTimeSlots.Any(slot => string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday) && slot.StartHour >= 0 && slot.StartHour < 6))
+                                .Where(ts => ts.AvailableTimeSlots.Any(slot => (string.IsNullOrEmpty(weekday) || slot.Weekday == int.Parse(weekday)) && slot.StartHour >= 0 && slot.StartHour < 6))
                                 .Select(ts => ts.MemberId);
                         default:
                             return Enumerable.Empty<int>();
@@ -346,7 +351,7 @@ namespace Web.Services
 
         //關注課程查詢 (by courseIds)
         public async Task<List<CourseInfoViewModel>> GetFollowingStatusAsync(int userId, List<int> courseIds)
-        {
+        {      
             var watchedCourses = await _repository
                 .GetAll<Entities.WatchList>().AsNoTracking()
                 .Where(w => w.FollowerId == userId && courseIds.Contains(w.CourseId ?? -1))
@@ -397,18 +402,6 @@ namespace Web.Services
                 .FirstOrDefaultAsync();
 
             return courseInfo;
-        }
-
-        //物件轉為distributed cache支援的Byte Array格式
-        private static byte[] ObjectToByteArray(object obj)
-        {
-            return JsonSerializer.SerializeToUtf8Bytes(obj);
-        }
-
-        //distributed cache取得的ByteArray轉回物件
-        private static T ByteArrayToObj<T>(byte[] byteArr) where T : class
-        {
-            return byteArr is null ? null : JsonSerializer.Deserialize<T>(byteArr);
         }
 
 

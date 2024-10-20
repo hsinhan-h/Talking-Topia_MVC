@@ -11,11 +11,13 @@ namespace Web.Controllers.Api
     {
         private readonly MongoRepository _repository;
         private readonly IMemberService _memberService;
+        //private readonly ChatIndexViewModelService _chatIndexViewModelService;
 
         public ChatController(MongoRepository repository, IMemberService memberService)
         {
             _repository = repository;
             _memberService = memberService;
+            //_chatIndexViewModelService = chatIndexViewModelService;
         }
 
         public async Task<IActionResult> Index(int courseId)
@@ -32,15 +34,22 @@ namespace Web.Controllers.Api
 
             // 抓ReceiverId
             var tutor = await _memberService.GetTutor(courseId);
-
             string member = await _memberService.GetMemberName(memberId);
 
+
+            ViewBag.CourseId = courseId;
             ViewBag.SenderId = memberId;
             ViewBag.SenderName = member;
             ViewBag.ReceiverId = tutor.MemberId;
             ViewBag.ReceiverName = tutor.MemberName;
             ViewBag.HeadShotImage = tutor.HeadShotImage;
+            ViewBag.CourseTitle = tutor.CourseTitle;
+            ViewBag.CourseSubTitle = tutor.CourseSubTitle;
 
+            //var chat = await _repository.GetMessagesBySenderIdAsync(memberId.ToString());
+            //var chatVM = await _chatIndexViewModelService.GetChatListAsync(chat);
+
+            //return View(chatVM);
             return View();
         }
 
