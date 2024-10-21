@@ -105,8 +105,7 @@ namespace Api.Services
                 Cdate = member.Cdate.ToString("yyyy-MM-dd"),
                 NationId = member.NationId,
                 NationName = nation != null ? nation.NationName : "Unknown",
-                IsEmailConfirmed = member.IsEmailConfirmed== false?  "已停權" : "授權中",
-                
+                Totalresult = member.IsEmailConfirmed == false && member.LineUserId == null ? "已停權" : "授權中"
             };
 
             return allmemberdata.ToList();
