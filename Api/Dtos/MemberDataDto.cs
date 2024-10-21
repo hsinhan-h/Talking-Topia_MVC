@@ -25,6 +25,9 @@
         public int? NationId { get; set; }
         public string NationName { get; set; }
         public string IsEmailConfirmed { get; set; }
+        public string Linestatus { get; set; }
+
+        public string Totalresult { get; set; }
 
     }
     public class MemberDataCountDto

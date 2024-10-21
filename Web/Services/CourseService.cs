@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 using Web.Helpers;
+using MongoDB.Driver.Linq;
 
 namespace Web.Services
 {
@@ -684,13 +685,24 @@ namespace Web.Services
         public ReviewButtonDto GetReviewInfo(int memberId, int courseId) 
         {
             var hasCommented = _repository.GetAll<Entities.Review>().Any(r => r.StudentId == memberId && r.CourseId == courseId);
-            var hasTakenClass = _repository.GetAll<Entities.Booking>().Any(b=>b.StudentId == memberId && b.CourseId == courseId);
+            var hasTakenClass = _repository.GetAll<Entities.Booking>()
+                                .AsEnumerable() // 轉換為記憶體中的集合
+                                .Any(b => b.StudentId == memberId &&
+                                          b.CourseId == courseId &&
+                                          DateTime.Now >= b.BookingDate.Add(ConvertToTimeSpan(b.BookingTime)));
             var reviewButtonDto = new ReviewButtonDto
             {
                 HasCommented = hasCommented,
                 HasTakenClass = hasTakenClass,
             };
             return (reviewButtonDto);
+        }
+
+        private TimeSpan ConvertToTimeSpan(int bookingTime)
+        {
+            int hours = bookingTime / 100;  // 取得小時部分
+            int minutes = bookingTime % 100; // 取得分鐘部分
+            return new TimeSpan(hours, minutes, 0); // 建立 TimeSpan 物件
         }
 
         public void CreateReviews(int studentId, int courseId, byte NewReviewRating, string NewReviewContent)
