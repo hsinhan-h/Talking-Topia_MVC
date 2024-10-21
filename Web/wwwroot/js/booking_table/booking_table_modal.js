@@ -220,11 +220,12 @@ setInterval(() => {
     const currentTimestamp = Date.now();
     const selectedBookingTimeStamp = localStorage.getItem("selectedBookingTimeStamp");
 
-    //檢查booking的時間戳是否存在, 以及目前的時間是否超過
+    //檢查booking的時間戳是否存在, 以及目前的時間是否超過預約時間
     if (selectedBookingTimeStamp && currentTimestamp > parseInt(selectedBookingTimeStamp)) {
         alert("目前時間已超過此預約的時段，更新頁面");
-        localStorage.removeItem("")
-    }
+        localStorage.removeItem("selectedBookingTimeStamp");
 
-})
+        location.reload();
+    }
+}, 6000)  //每分鐘檢查一次
 
