@@ -90,6 +90,10 @@ export async function generateBookingTable(weekStart, courseId) {
                 cell.style.color = '#999';
                 cell.removeAttribute("title");
                 cell.removeAttribute("data-bs-custom-class");
+
+                if (cell._tooltipInstance) {
+                    cell._tooltipInstance.dispose();  
+                }
             }
             else if (timeDifference < 6 * 60 * 60 * 1000) {
                 cell.style.color = '#999';
@@ -227,5 +231,5 @@ setInterval(() => {
 
         location.reload();
     }
-}, 6000)  //每分鐘檢查一次
+}, 60000)  //每分鐘檢查一次
 
