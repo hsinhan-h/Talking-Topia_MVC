@@ -171,13 +171,17 @@ namespace Web
 
             //³]¸mCoravel±Æµ{
             var scheduler = app.Services.GetRequiredService<IScheduler>();
-            scheduler.Schedule(async() =>
+            scheduler.Schedule(async () =>
             {
                 using var scope = app.Services.CreateScope();
                 var notificationService = scope.ServiceProvider.GetRequiredService<AppointmentNotificationService>();
                 await notificationService.SendNotificationsAsync();
             }).EveryMinute();
 
+            app.MapControllerRoute(
+            name: "Logiin",
+            pattern: "Account/Login",
+            defaults: new { controller = "Account", action = "Account" });
 
             app.MapControllerRoute(
                 name: "default",
