@@ -50,7 +50,6 @@
                                         <td>時長/單價/堂數</td>
                                         <td>折扣</td>
                                         <td>小計</td>
-                                        <td>統一編號</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,7 +75,6 @@
                                                 <td>@Model.MemberOrderList[i].CourseLength 分鐘/NT$@Model.MemberOrderList[i].UnitPrice.ToString("#,###")/@Model.MemberOrderList[i].CourseQuantity 堂</td>
                                                 <td>@discountPrice</td>
                                                 <td>NT$@Model.MemberOrderList[i].SubTotal.ToString("#,###")</td>
-                                                <td>@Model.MemberOrderList[i].TaxIdNumber</td>
                                             </tr>
                                         }
                                     }
@@ -104,7 +102,6 @@
                                         <td>時長/單價/堂數</td>
                                         <td>折扣</td>
                                         <td>小計</td>
-                                        <td>統一編號</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -130,7 +127,6 @@
                                                 <td>@Model.PendingOrders[i].CourseLength 分鐘/NT$@Model.PendingOrders[i].UnitPrice.ToString("#,###")/@Model.PendingOrders[i].CourseQuantity 堂</td>
                                                 <td>@discountPrice</td>
                                                 <td>NT$@Model.PendingOrders[i].SubTotal.ToString("#,###")</td>
-                                                <td>@Model.PendingOrders[i].TaxIdNumber</td>
                                             </tr>
 
                                         }
@@ -159,7 +155,6 @@
                                         <td>時長/單價/堂數</td>
                                         <td>折扣</td>
                                         <td>小計</td>
-                                        <td>統一編號</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -184,7 +179,6 @@
                                                 <td>@Model.FailedOrders[i].CourseLength 分鐘/NT$@Model.FailedOrders[i].UnitPrice.ToString("#,###")/@Model.FailedOrders[i].CourseQuantity 堂</td>
                                                 <td>@discountPrice</td>
                                                 <td>NT$@Model.FailedOrders[i].SubTotal.ToString("#,###")</td>
-                                                <td>@Model.FailedOrders[i].TaxIdNumber</td>
                                             </tr>
 
                                         }
