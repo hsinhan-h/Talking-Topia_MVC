@@ -18,6 +18,7 @@ namespace Api.Dtos
 
         public string RejectReason { get; set; }
         public string ResumeStatus { get; set; }
+        public string RequestAI { get; set; }
     }
     public class UpdateTutorDataDto
     {
@@ -53,7 +54,7 @@ namespace Api.Dtos
     public class UpdateImageDto
     {
         public int MemberId { get; set; }
-        public string ImageUrls { get; set; }
+        public List<string> ImageUrls { get; set; }
     }
 
 }
