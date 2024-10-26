@@ -1,9 +1,9 @@
-
-
-
 $(document).ready(function () {
-    
-    
+    // 預設分類名稱 (可根據實際情況修改)
+    var defaultCategory = '語言學習'; // 確認這是你要預設加載的分類名稱
+
+    // 初始化載入預設分類的課程
+    loadCourses(defaultCategory);
 
     // 監聽 tab 點擊事件
     $('.lh-layout-tab').on('click', function () {
@@ -14,7 +14,6 @@ $(document).ready(function () {
 
         // 獲取對應的 category 名稱 (中文)
         var category = $(this).data('category');
-                
 
         loadCourses(category);
     });
@@ -24,12 +23,12 @@ $(document).ready(function () {
         $.ajax({
             url: '/Home/GetCoursesByCategory',
             type: 'GET',
-            data: { categoryName: category }, 
+            data: { categoryName: category },
             success: function (data) {
                 renderCourses(data);  // 成功獲取數據後渲染
             },
             error: function (err) {
-                
+                console.error("Failed to load courses:", err);
             }
         });
     }
@@ -45,7 +44,6 @@ $(document).ready(function () {
             <a href="/Course/CourseList?page=1&subject=${encodeURIComponent(course.subjectName)}&sortOption=default" class="lh-layout-course-item">
                 <img src="${course.tutorHeadShotImage}" alt="Teacher's Image" />
                 <h3>${course.subjectName}</h3>
-
             </a>
         `;
             courseList.append(courseItem); // 動態添加每個課程卡片
