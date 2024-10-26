@@ -1,10 +1,6 @@
+
 $(document).ready(function () {
-    // 預設分類名稱 (可根據實際情況修改)
-    var defaultCategory = '語言學習'; // 確認這是你要預設加載的分類名稱
-
-    // 初始化載入預設分類的課程
-    loadCourses(defaultCategory);
-
+   
     // 監聽 tab 點擊事件
     $('.lh-layout-tab').on('click', function () {
         // 移除所有 tab 的 active 樣式
@@ -17,6 +13,9 @@ $(document).ready(function () {
 
         loadCourses(category);
     });
+
+    // 頁面載入時模擬點擊預設的 tab
+    $('.lh-layout-tab.active').trigger('click');
 
     // 發送 AJAX 請求來獲取對應分類的課程
     function loadCourses(category) {
