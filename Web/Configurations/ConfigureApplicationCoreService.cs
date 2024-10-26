@@ -17,6 +17,7 @@ namespace Web.Configurations
             services.AddScoped<ICourseService, AppCourseService>();
             services.AddScoped<ECpayService>();
             services.AddScoped<ICourseService, AppCourseService>();
+            services.AddScoped<IOpenAIService, OpenAIService>();
 
             return services;
         }

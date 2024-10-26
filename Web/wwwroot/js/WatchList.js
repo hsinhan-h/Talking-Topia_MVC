@@ -86,10 +86,10 @@ const watch = createApp({
 
             if (!$('.tutor-recommend-carousel').hasClass('slick-initialized')) {
                 $('.tutor-recommend-carousel').slick({
-                    infinite: false,
+                    infinite: true,
                     autoplay: false,
                     slidesToShow: slidesToShow,
-                    slidesToScroll: itemCount >= 5 ? 1 : 1,
+                    slidesToScroll: 1,
                     responsive: [
                         {
                             breakpoint: 480,

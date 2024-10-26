@@ -171,13 +171,37 @@ namespace Web
 
             //³]¸mCoravel±Æµ{
             var scheduler = app.Services.GetRequiredService<IScheduler>();
-            scheduler.Schedule(async() =>
+            scheduler.Schedule(async () =>
             {
                 using var scope = app.Services.CreateScope();
                 var notificationService = scope.ServiceProvider.GetRequiredService<AppointmentNotificationService>();
                 await notificationService.SendNotificationsAsync();
             }).EveryMinute();
 
+            app.MapControllerRoute(
+            name: "Login",
+            pattern: "Login",
+            defaults: new { controller = "Account", action = "Account" });
+
+            app.MapControllerRoute(
+            name: "MemberData",
+            pattern: "MemberData",
+            defaults: new { controller = "Member", action = "MemberData" });
+
+            app.MapControllerRoute(
+            name: "MemberTransaction",
+            pattern: "MemberOrderDetails",
+            defaults: new { controller = "Member", action = "MemberTransaction" });
+
+            app.MapControllerRoute(
+            name: "TutorData",
+            pattern: "TutorData",
+            defaults: new { controller = "Tutor", action = "TutorData" });
+
+            app.MapControllerRoute(
+            name: "PublishCourse",
+            pattern: "PublishCourse",
+            defaults: new { controller = "Tutor", action = "PublishCourse" });
 
             app.MapControllerRoute(
                 name: "default",

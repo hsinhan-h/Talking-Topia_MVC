@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 using System.ComponentModel;
+using Web.Dtos;
 using Web.Entities;
 using Web.Repository;
 using Web.ViewModels;
@@ -22,6 +23,104 @@ namespace Web.Services
         }
 
         //Api需要的
+
+        public async Task<(bool Success, string Message)> UpdateAIimgfuction(UpdateAIImgDto request)
+        {
+            try
+            {
+                // 查找會員
+                var member = await _repository.GetAll<Entities.Member>()
+                            .Where(m => m.MemberId == request.MemberId)
+                            .FirstOrDefaultAsync();
+
+                if (member == null)
+                {
+                    return (false, "未找到會員");
+                }
+
+                member.HeadShotImage = request.Url;  
+
+                // 更新資料庫紀錄
+                _repository.Update(member);
+                await _repository.SaveChangesAsync();
+
+                return (true, "更新成功");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("更新 AI 圖片 URL 失敗", ex);
+            }
+        }
+
+        
+        public async Task<AIImagesResponseDto> GetAIimgesList(int memberId)
+        {
+            var applyList = await _repository.GetAll<Entities.ApplyList>()
+                .Where(a => a.MemberId == memberId)
+                .Select(a => new AIImage
+                {
+                    Url1 = a.AiimageUrl1,
+                    Url2 = a.AiimageUrl2,
+                    Url3 = a.AiimageUrl3
+                })
+                .ToListAsync();
+
+            if (!applyList.Any())  
+            {
+                return new AIImagesResponseDto
+                {
+                    Success = false,
+                    Message = "找不到圖片資料。",
+                    Data = null
+                };
+            }
+
+            return new AIImagesResponseDto
+            {
+                Success = true,
+                Message = "圖片資料取得成功。",
+                Data = applyList
+            };
+        }
+
+        public async Task<(bool Success, string Message)> CheckAIStatusfuction(int memberId)
+        {
+            try
+            {
+                // 查找會員
+                var member = await _repository.GetAll<Entities.Member>()
+                            .Where(m => m.MemberId == memberId)
+                            .FirstOrDefaultAsync();
+
+                if (member == null)
+                {
+                    return (false, "未找到會員");
+                }
+
+                var applyCourseList = await _repository.GetAll<Entities.ApplyList>()
+                    .Where(ac => ac.MemberId == member.MemberId)
+                    .ToListAsync();
+
+                if (applyCourseList.Count == 0)
+                {
+                    return (false, "未找到申請記錄");
+                }
+
+                foreach (var apply in applyCourseList)
+                {
+                    apply.AiimgageStatus = true;
+                    _repository.Create(apply);
+                }
+                await _repository.SaveChangesAsync();
+                return (true, "更新成功");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update AI status", ex);
+            }
+        }
+
+
         public async Task<TutorResumeViewModel> ChangeResumeLicenses(int memberId, List<int> licenseIds, List<string> licenseNames, List<string> licenseUrls)
         {
             try
@@ -340,8 +439,8 @@ namespace Web.Services
                     .FirstOrDefaultAsync(m => m.MemberId == memberId);
                 if (member != null)
                 {
-                    member.HeadShotImage = ""; 
-                    _repository.Update(member); 
+                    member.HeadShotImage = "";
+                    _repository.Update(member);
                     await _repository.SaveChangesAsync();
                     return new TutorResumeViewModel
                     {
@@ -377,7 +476,7 @@ namespace Web.Services
                         StudyStartYear = e.StudyStartYear,
                         DepartmentName = e.DepartmentName
                     })
-                    .FirstOrDefaultAsync(); 
+                    .FirstOrDefaultAsync();
             if (education == null)
             {
                 return new TutorResumeViewModel();
@@ -555,7 +654,7 @@ namespace Web.Services
             await _repository.BeginTransActionAsync();
             try
             {
-                
+
                 // 檢查會員是否存在
                 var existingMember = await _repository.GetMemberByIdAsync(memberId);
                 if (existingMember == null)
@@ -566,7 +665,7 @@ namespace Web.Services
                         Message = "找不到該會員，請檢查會員資料。",
                     };
                 }
-               
+
                 // 更新會員資料
                 existingMember.IsVerifiedTutor = false;
                 existingMember.Cdate = DateTime.Now;
@@ -581,7 +680,7 @@ namespace Web.Services
                 existingMember.AccountType = (existingMember.AccountType != 0 ? existingMember.AccountType : 0);
                 if (!existingMember.IsTutor)
                 {
-                    existingMember.IsTutor = false; 
+                    existingMember.IsTutor = false;
                 }
 
                 // 創建或更新教育經歷
@@ -670,21 +769,21 @@ namespace Web.Services
 
                     if (applyList.ApplyDateTime == null)
                     {
-                        applyList.ApplyDateTime = DateTime.Now;  
+                        applyList.ApplyDateTime = DateTime.Now;
                     }
 
 
                     if (applyList.UpdateStatusDateTime == null)
                     {
-                        applyList.UpdateStatusDateTime = DateTime.Now; 
+                        applyList.UpdateStatusDateTime = DateTime.Now;
                     }
 
                     if (string.IsNullOrEmpty(applyList.RejectReason))
                     {
-                        applyList.RejectReason = null;  
+                        applyList.RejectReason = null;
                     }
 
-                    _repository.Update(applyList);  
+                    _repository.Update(applyList);
                 }
                 else
                 {
@@ -698,7 +797,7 @@ namespace Web.Services
                         RejectReason = null,
                     };
 
-                    _repository.Create(newApplyList);  
+                    _repository.Create(newApplyList);
                 }
 
 

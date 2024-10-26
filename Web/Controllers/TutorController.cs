@@ -260,5 +260,7 @@ namespace Web.Controllers
             }
             return View(appointmentDetails);
         }
+
+        
     }
 }

@@ -43,7 +43,7 @@ public partial class Booking
     /// <summary>
     /// 已發送通知次數
     /// </summary>
-    public int? NotifyCount {  get; set; }
+    public int? NotifyCount { get; set; }
 
     public virtual Course Course { get; set; }
 
