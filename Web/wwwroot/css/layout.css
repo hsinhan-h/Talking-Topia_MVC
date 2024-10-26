@@ -98,6 +98,43 @@
 
 
 
+/* 美化搜尋按鈕 */
+#difysearch .btn {
+    background-color: #02cab977; /* 設定按鈕的主色調 */
+    border: none;
+    color: white;
+    padding: 3px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50px; /* 圓角按鈕 */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 加入過渡效果 */
+}
+    #difysearch .btn .fa-magnifying-glass {
+        margin-left: 4px;
+        color: #e0f8f6;
+        font-size: 18px;
+        margin-right: 8px; /* 圖示與文字之間的間距 */
+    }
+
+    #difysearch .btn:hover {
+        background-color: #02cab9; /* 當滑鼠懸停時變色 */
+    }
+
+    #difysearch .btn:active {
+        background-color: #b3efea; /* 按下去時變色 */
+    }
+
+/* 在小螢幕時適當縮小按鈕尺寸 */
+@media (max-width: 767px) {
+    #difysearch .btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
 
 @media screen and (max-width: 767px) {
     .navbar .search-course {
