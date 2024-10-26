@@ -59,7 +59,7 @@
     ];
     const timeslotRow = document.getElementById("timeslot-row");
 
-    // 創建日選擇框（假設你希望這些選擇框出現在你的 HTML 中的某處）
+    // 創建日選擇框
     weekdays.forEach((day, index) => {
         const dayCheckbox = document.createElement("div");
         dayCheckbox.className = "form-check";
@@ -76,7 +76,7 @@
 
         dayCheckbox.appendChild(input);
         dayCheckbox.appendChild(label);
-        document.body.appendChild(dayCheckbox); // 將日選擇框附加到 body 或適當的容器中
+        document.body.appendChild(dayCheckbox); 
     });
 
     weekdays.forEach((day) => {

@@ -60,24 +60,27 @@ namespace Api.Services
         }
 
 
-        public async Task<string> UpdateMemberImageUrlsAsync(int memberId, string imageUrls)
+        public async Task<string> UpdateMemberImageUrlsAsync(int memberId, List<string> imageUrls)
         {
-            // 從資料庫取得對應的 Member
-            var member = await _memberRepository.GetByIdAsync(memberId);
+            var memberApplyData =
+                from member in await _memberRepository.ListAsync(m => m.MemberId == memberId)
+                join applyList in await _applyListRepository.ListAsync(a => a.MemberId == memberId)
+                on member.MemberId equals applyList.MemberId
+                select new { Member = member, ApplyList = applyList };
 
-            if (member == null)
+            var memberToUpdate = memberApplyData.FirstOrDefault();
+            if (memberToUpdate == null)
             {
-                throw new Exception($"找不到 ID 為 {memberId} 的會員資料");
+                return ("未找到該會員。");
             }
 
-            // 更新 HeadShotImage 欄位
-            member.HeadShotImage = imageUrls;
+            memberToUpdate.ApplyList.AiimageUrl1 = imageUrls.Count > 0 ? imageUrls[0] : null;
+            memberToUpdate.ApplyList.AiimageUrl2 = imageUrls.Count > 1 ? imageUrls[1] : null;
+            memberToUpdate.ApplyList.AiimageUrl3 = imageUrls.Count > 2 ? imageUrls[2] : null;
 
-            // 保存變更到資料庫
-            await _memberRepository.UpdateAsync(member);
+            await _applyListRepository.UpdateAsync(memberToUpdate.ApplyList);
 
-            // 回傳成功訊息
-            return "圖片 URL 已成功更新";
+            return "會員資料已成功更新。";
         }
 
 
@@ -105,8 +108,7 @@ namespace Api.Services
                 Cdate = member.Cdate.ToString("yyyy-MM-dd"),
                 NationId = member.NationId,
                 NationName = nation != null ? nation.NationName : "Unknown",
-                IsEmailConfirmed = member.IsEmailConfirmed== false?  "已停權" : "授權中",
-                
+                Totalresult = member.IsEmailConfirmed == false && member.LineUserId == null ? "已停權" : "授權中"
             };
 
             return allmemberdata.ToList();
@@ -198,6 +200,7 @@ namespace Api.Services
                 ApplyStatus = applyList?.ApplyStatus ?? false,
                 ApprovedDateTime = applyList?.ApprovedDateTime?.ToString("yyyy-MM-dd") ?? "N/A",
                 Istutor = member.IsTutor ? "已成為教師" : "尚未成為教師",
+                RequestAI = applyList != null && applyList.AiimgageStatus == true ? "需要" : "無需求",
                 ResumeStatus = applyList != null && applyList.ApplyStatus
                                 ? resumeStatus.通過申請.ToString()  
                                 : applyList?.RejectReason != null
