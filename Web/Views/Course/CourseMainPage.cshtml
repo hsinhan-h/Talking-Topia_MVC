@@ -115,15 +115,18 @@
                 </div>
             </div>
             <div class="lh-tutor-comment " >
-                <div class="course-comment-generator w-100">
+                <div class="course-comment-generator w-100" v-if="hasTakenClass===true">
                     <h3 class="my-2">對課程的感想</h3>
                     <div class="comment-rating-stars w-100 d-flex ">
                         <p class="rating-star-sign">留下你對此課程的評分:</p>
                         <p-rating class="comment-rating-little-star my-1" name="rating" v-model="rating"></p-rating>
                     </div>
                     <div class="comment-input-section my-3 d-flex form-group">
-                        <input type="text" v-model="newReviewContent" class="comment-input-box my-3 col-10" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
-                        <button class="btn comment-submit-btn my-3 " @@click="submitRating">
+                        <input type="text" v-model="newReviewContent" class="comment-input-box my-3 col-8" placeholder="請留下評論...." aria-label="Username" aria-describedby="basic-addon1">
+                        <button class="btn comment-submit-btn my-3" @@click="reviewContentChecked">
+                            評論檢查 
+                        </button>
+                        <button class="btn comment-submit-btn my-3" @@click="submitRating" v-if="commentIsChecked">
                             <i class="bi bi-send"></i> 送出
                         </button>
                     </div>
