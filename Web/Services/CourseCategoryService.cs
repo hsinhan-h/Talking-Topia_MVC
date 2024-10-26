@@ -61,22 +61,29 @@ namespace Web.Services
         public async Task<List<CourseTopicTabViewModel>> GetCoursesByCategoryAsync(string categoryName)
         {
             var courses = await (
-        from category in _repository.GetAll<Entities.CourseCategory>()
-        join subject in _repository.GetAll<Entities.CourseSubject>() on category.CourseCategoryId equals subject.CourseCategoryId
-        join course in _repository.GetAll<Entities.Course>() on subject.SubjectId equals course.SubjectId
-        join image in _repository.GetAll<Entities.CourseImage>() on course.CourseId equals image.CourseId
-        where category.CategorytName == categoryName
-        group new { course, image, subject } by subject.SubjectName into subjectGroup
-        select subjectGroup.FirstOrDefault() // 每個 subject 只取一筆課程
-    ).Take(6).ToListAsync(); // 確保每個分類只渲染 6 筆資料
+                from category in _repository.GetAll<Entities.CourseCategory>()
+                join subject in _repository.GetAll<Entities.CourseSubject>() on category.CourseCategoryId equals subject.CourseCategoryId
+                join course in _repository.GetAll<Entities.Course>() on subject.SubjectId equals course.SubjectId
+                join image in _repository.GetAll<Entities.CourseImage>() on course.CourseId equals image.CourseId
+                where category.CategorytName == categoryName
+                select new { course, image, subject }
+            ).ToListAsync();  // 將查詢結果先轉換為 List
 
-            return courses.Select(s => new CourseTopicTabViewModel
+            // 在客戶端進行分組和選擇操作
+            var groupedCourses = courses
+                .GroupBy(c => c.subject.SubjectName)
+                .Select(group => group.FirstOrDefault()) // 取每個 group 的第一個課程
+                .Take(6)
+                .ToList();
+
+            return groupedCourses.Select(s => new CourseTopicTabViewModel
             {
                 SubjectName = s.subject.SubjectName,
                 TutorHeadShotImage = s.image.ImageUrl,
                 TwentyFiveMinUnitPrice = s.course.TwentyFiveMinUnitPrice
             }).ToList();
         }
+
 
 
 
@@ -98,6 +105,7 @@ namespace Web.Services
 
             return courseCategoriesWithCourses;
         }
+
 
 
 
