@@ -124,8 +124,47 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+//Search
+$(document).ready(function () {
+    $('#difysearch').on('submit', function (e) {
+        e.preventDefault(); // 防止表單的預設提交
 
+        var query = $('#courseSearchInput').val();
 
+        $.ajax({
+            url: '/Search/Index',
+            type: 'GET',
+            data: { query: query },
+            success: function (response) {
+                if (response.success) {
+                    // 如果成功，使用返回的 redirectUrl 進行跳轉
+                    window.location.href = response.redirectUrl;
+                } else {
+                    // 如果找不到資料，顯示“無資料”
+                    $('.second-column').html('<p class="text-muted">' + response.message + '</p>');
+                }
+            },
+            error: function () {
+                $('.second-column').html('<p class="text-muted">搜尋時出現錯誤，請稍後再試</p>');
+            }
+        });
+    });
+});
 
+//$(document).ready(function () {
+//    // 防抖函數，延遲 500 毫秒後才執行搜尋提交
+//    function debounce(func, delay) {
+//        let timer;
+//        return function (...args) {
+//            clearTimeout(timer);
+//            timer = setTimeout(() => func.apply(this, args), delay);
+//        };
+//    }
 
+//    // 在搜尋輸入框上使用防抖函數，監聽 input 事件
+//    $('#courseSearchInput').on('input', debounce(function () {
+//        // 自動提交表單或進行 AJAX 請求
+//        $('#difysearch').submit();
+//    }, 500));
+//});
 
