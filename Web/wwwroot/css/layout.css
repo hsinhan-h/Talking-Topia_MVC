@@ -130,7 +130,6 @@
 /* 在小螢幕時適當縮小按鈕尺寸 */
 @media (max-width: 767px) {
     #difysearch .btn {
-        padding: 8px 16px;
         font-size: 14px;
     }
 }
