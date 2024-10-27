@@ -18,6 +18,8 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using Coravel;
 using Coravel.Scheduling.Schedule.Interfaces;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace Web
 {
@@ -47,7 +49,6 @@ namespace Web
 
             //µù¥USearchService
             builder.Services.AddScoped<ISearchService, ApplicationCore.Services.SearchService>();
-
 
             //µù¥UCoravel Scheduler
             builder.Services.AddScheduler();
