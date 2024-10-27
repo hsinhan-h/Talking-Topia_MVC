@@ -293,6 +293,13 @@ namespace Web.Services
             return qVM;
         }
 
+        public async Task<Entities.TutorTimeSlot> GetTutorTimeSlotAsync(int tutorId, int courseHourId, int weekday)
+        {
+            return await _repository.GetAll<Entities.TutorTimeSlot>()
+                            .FirstOrDefaultAsync(x => x.TutorId == tutorId
+                                                    && x.CourseHourId == courseHourId
+                                                    && x.Weekday == weekday);
+        }
         public async Task<TutorDataViewModel> CreateTutorTimeData(TutorDataViewModel qVM, int memberId)
         {
             await _repository.BeginTransActionAsync();
@@ -305,13 +312,18 @@ namespace Web.Services
                     qVM.Message = "找不到該會員，請檢查會員資料。";
                     return qVM;
                 }
-
+                if (qVM.Schedule == null || qVM.Schedule.Count == 0)
+                {
+                    qVM.Success = true;
+                    qVM.Message = "教師資料更新成功";
+                    return qVM;
+                }
                 foreach (var schedule in qVM.Schedule.Values)
                 {
                     var weekday = schedule.Weekday;
                     foreach (var courseHourId in schedule.CouseHoursId)
                     {
-                        var existingSlot = await _repository.GetTutorTimeSlotAsync(memberId, courseHourId, weekday);
+                        var existingSlot = await GetTutorTimeSlotAsync(memberId, courseHourId, weekday);
                         if (existingSlot == null)
                         {
                             var courseHour = new Entities.TutorTimeSlot
@@ -329,7 +341,7 @@ namespace Web.Services
                 await _repository.SaveChangesAsync();
                 await _repository.CommitAsync();
                 qVM.Success = true;
-                qVM.Message = "會員資料新增成功";
+                qVM.Message = "教師資料新增成功";
             }
             catch (Exception ex)
             {

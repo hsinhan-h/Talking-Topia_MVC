@@ -87,13 +87,7 @@ namespace Web.Repository
             .FirstOrDefaultAsync(m => m.MemberId == memberId);
         }
 
-        public async Task<TutorTimeSlot> GetTutorTimeSlotAsync(int tutorId, int courseHourId, int weekday)
-        {
-            return await _context.TutorTimeSlots
-                                 .FirstOrDefaultAsync(x => x.TutorId == tutorId
-                                                        && x.CourseHourId == courseHourId
-                                                        && x.Weekday == weekday);
-        }
+ 
 
         public async Task<Member> GetMemberByLineIdAsync(string lineId)
         {
