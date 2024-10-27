@@ -20,7 +20,7 @@ namespace Web.Controllers.Api
             //_chatIndexViewModelService = chatIndexViewModelService;
         }
 
-        public async Task<IActionResult> Index(int courseId)
+        public async Task<IActionResult> Index(int id, string type)
         {
             // 抓SenderID
             var memberIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -31,25 +31,33 @@ namespace Web.Controllers.Api
 
             if (!result)
             { return RedirectToAction(nameof(AccountController.Account), "Account"); }
-
-            // 抓ReceiverId
-            var tutor = await _memberService.GetTutor(courseId);
             string member = await _memberService.GetMemberName(memberId);
 
-
-            ViewBag.CourseId = courseId;
             ViewBag.SenderId = memberId;
             ViewBag.SenderName = member;
-            ViewBag.ReceiverId = tutor.MemberId;
-            ViewBag.ReceiverName = tutor.MemberName;
-            ViewBag.HeadShotImage = tutor.HeadShotImage;
-            ViewBag.CourseTitle = tutor.CourseTitle;
-            ViewBag.CourseSubTitle = tutor.CourseSubTitle;
 
-            //var chat = await _repository.GetMessagesBySenderIdAsync(memberId.ToString());
-            //var chatVM = await _chatIndexViewModelService.GetChatListAsync(chat);
-
-            //return View(chatVM);
+            if (type == "tutor")
+            {
+                // 抓ReceiverId
+                var tutor = await _memberService.GetTutor(id);
+                ViewBag.CourseId = id;
+                ViewBag.ReceiverId = tutor.MemberId;
+                ViewBag.ReceiverName = tutor.MemberName;
+                ViewBag.HeadShotImage = tutor.HeadShotImage;
+                ViewBag.CourseTitle = tutor.CourseTitle;
+                ViewBag.CourseSubTitle = tutor.CourseSubTitle;
+            }
+            else if (type == "student")
+            {
+                // 抓ReceiverId
+                var receiver = await _memberService.GetStudent(id);
+                ViewBag.CourseId = 0;
+                ViewBag.ReceiverId = receiver.MemberId;
+                ViewBag.ReceiverName = receiver.MemberName;
+                ViewBag.HeadShotImage = receiver.HeadShotImage;
+                ViewBag.CourseTitle = "";
+                ViewBag.CourseSubTitle = "";
+            }
             return View();
         }
 

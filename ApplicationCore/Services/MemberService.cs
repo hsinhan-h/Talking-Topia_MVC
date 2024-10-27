@@ -78,11 +78,11 @@ namespace ApplicationCore.Services
             return result;
         }
 
-        public async Task<SignalRDto> GetTutor(int courseId)
+        public async Task<SignalRTutorDto> GetTutor(int courseId)
         {
             var course = await _courseRepository.FirstOrDefaultAsync(c => c.CourseId == courseId);
             var tutor = await _memberRepository.FirstOrDefaultAsync(x => x.MemberId == course.TutorId);
-            var result = new SignalRDto
+            var result = new SignalRTutorDto
             {
                 MemberId = tutor.MemberId,
                 MemberName = tutor.FirstName,
@@ -97,6 +97,18 @@ namespace ApplicationCore.Services
         {
             var result = await _memberRepository.FirstOrDefaultAsync(x => x.MemberId == memberId);
             return result.FirstName;
+        }
+
+        public async Task<SignalRStudentDto> GetStudent(int studentId)
+        {
+            var student = await _memberRepository.FirstOrDefaultAsync(x => x.MemberId == studentId);
+            var result = new SignalRStudentDto
+            {
+                MemberId= student.MemberId,
+                MemberName= student.FirstName,
+                HeadShotImage= student.HeadShotImage,
+            };
+            return result;
         }
     }
 }

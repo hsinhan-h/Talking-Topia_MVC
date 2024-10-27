@@ -7,6 +7,15 @@
     var headShotImage = ViewBag.HeadShotImage;
     var courseTitle = ViewBag.CourseTitle;
     var courseSubTitle = ViewBag.CourseSubTitle;
+    string path;
+    if (courseId != 0)
+    {
+        path = $"~/Course/CourseMainPage?courseId={courseId}";
+    }
+    else
+    {
+        path = "/";
+    }
 }
 
 <div class="container">
@@ -17,7 +26,7 @@
             </div>
             <div class="message-list">
                 <div class="message-item">
-                    <a href="~/Course/CourseMainPage?courseId=@courseId">
+                    <a href="@path">
                         <img class="profile-img" src="@headShotImage" alt="User" />
                     </a>
                     <h6 class="profile-name">@receiverName</h6>
