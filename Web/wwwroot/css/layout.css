@@ -29,10 +29,24 @@
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     }
 
+
+
 .navbar-toggler {
+    position: absolute;
+    right: 20px; /* 固定於螢幕右邊，您可以根據需要調整距離 */
+    top: 50%;
+    transform: translateY(-50%);
     border: none;
+    background: none;
+    cursor: pointer;
+    padding: 10px;
+    color: #333;
+    font-size: 24px;
 }
 
+navbar-toggler-icon {
+    color: #333;
+}
     .navbar-toggler:focus,
     .navbar-toggler:active {
         outline: none;
@@ -97,41 +111,65 @@
     }
 
 
-
-/* 美化搜尋按鈕 */
-#difysearch .btn {
-    background-color: #02cab977; /* 設定按鈕的主色調 */
-    border: none;
-    color: white;
-    padding: 3px 0px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 50px; /* 圓角按鈕 */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* 加入過渡效果 */
+.dify-search {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 5px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
 }
-    #difysearch .btn .fa-magnifying-glass {
-        margin-left: 4px;
-        color: #e0f8f6;
-        font-size: 18px;
-        margin-right: 8px; /* 圖示與文字之間的間距 */
+
+    .dify-search:focus-within {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    #difysearch .btn:hover {
-        background-color: #02cab9; /* 當滑鼠懸停時變色 */
+    .dify-search input[type="text"] {
+        border: none;
+        outline: none;
+        width: 200px;
+        padding: 5px;
+        font-size: 16px;
+        background-color: transparent;
+        color: #333;
     }
 
-    #difysearch .btn:active {
-        background-color: #b3efea; /* 按下去時變色 */
+    .dify-search button.difysearchbtn {
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 5px;
+        margin-left: 5px;
+        color: #888;
+        transition: color 0.3s ease;
     }
 
-/* 在小螢幕時適當縮小按鈕尺寸 */
+        .dify-search button.difysearchbtn:hover {
+            color: #000;
+        }
+
+        .dify-search button.difysearchbtn:disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
 @media (max-width: 767px) {
-    #difysearch .btn {
-        font-size: 14px;
+    .dify-search {
+        padding: 3px 8px; /* 減少 padding 以適應小螢幕 */
+        border-radius: 20px; /* 讓圓角在小螢幕上更小 */
     }
+
+        .dify-search input[type="text"] {
+            font-size: 14px; /* 減小字體大小以避免擁擠 */
+            padding: 3px; /* 減少內距以適應小螢幕 */
+        }
+
+        .dify-search button.difysearchbtn {
+            padding: 3px; /* 減少按鈕的 padding 以便更加緊湊 */
+            margin-left: -20px /* 減少按鈕與輸入框之間的間距 */
+        }
 }
 
 
@@ -152,54 +190,10 @@
     }
 
     .navbar-toggler {
-        margin-left: auto;
+        right: 5px; /* 在小螢幕上減少菜單按鈕的右側距離 */
     }
 }
 
-.mega-menu {
-    width: 600px; /* Adjusted to make it narrower */
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-    .mega-menu .col-4 {
-        width: 50%; /* 調整第一欄與第二欄的寬度各佔50% */
-        padding: 10px;
-    }
-
-    .mega-menu a {
-        display: block;
-        padding: 5px 0;
-        color: #333;
-        text-decoration: none;
-    }
-
-        .mega-menu a:hover {
-            color: #00c8c8;
-        }
-
-    /* 當 hover 到第一欄的時候顯示第二欄 */
-    .mega-menu:hover .second-column {
-        display: block;
-    }
-
-/* 根據 hover 的第一欄顯示對應的第二欄選單 */
-.first-column a:hover[data-target="language-learning"] ~ .second-column .language-learning,
-.first-column a:hover[data-target="programming-language"] ~ .second-column .programming-language,
-.first-column a:hover[data-target="academic"] ~ .second-column .academic {
-    display: block;
-}
-
-/* 預設不顯示第二欄 */
-.mega-menu .second-column {
-    display: none;
-}
-
-.second-column .sub-menu {
-    display: none;
-}
 
 .btn-block {
     width: 100%;
