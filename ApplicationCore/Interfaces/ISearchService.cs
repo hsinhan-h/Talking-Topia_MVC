@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Dtos;
+﻿using ApplicationCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces
 {
-    public interface ICourseService
+    public interface ISearchService
     {
-        public bool IsCourse(int courseId);
-
-
+        Task<List<Course>> SearchCoursesAsync(string query);
     }
 }

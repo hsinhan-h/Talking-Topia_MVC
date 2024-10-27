@@ -45,6 +45,10 @@ namespace Web
             //µù¥UEmailService
             builder.Services.AddScoped<IEmailService, EmailService>();
 
+            //µù¥USearchService
+            builder.Services.AddScoped<ISearchService, ApplicationCore.Services.SearchService>();
+
+
             //µù¥UCoravel Scheduler
             builder.Services.AddScheduler();
 
