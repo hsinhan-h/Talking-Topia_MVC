@@ -12,6 +12,19 @@
         <!-- 將搜尋欄位移出collapse -->
         <ul class="navbar-nav mx-3">
             <li class="nav-item search-course">
+                <div class="dify-search" id="dify-search-app">
+                    <input v-model="productTitle" type="text" name="product-title" id="product-title" placeholder="請輸入搜尋內容..." autocomplete="off">
+                    <button class="difysearchbtn"
+                                :disabled="!difyCreateButtonStatus"
+                                v-on:click="generateProductDetailsByDify">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+            </li>
+        </ul>
+
+       @*  <ul class="navbar-nav mx-3">
+            <li class="nav-item search-course">
                 <form class="d-flex" action="/Search/Index" method="get" id="difysearch">
                     <div class="input-container nav-item dropdown">
                         <input class="form-control nav-link dropdown-toggle" id="courseSearchInput" role="button" type="search" name="query" placeholder="搜尋課程" aria-label="Search">
@@ -29,27 +42,12 @@
                                 <div class="col-4 second-column">
                                     <!-- 預設為空，在 AJAX 成功後填充 -->
                                 </div>
-                                <!-- 第三欄 (固定顯示內容) -->
-@*                                 <div class="col-4 third-column">
-                                    <div class="rating">
-                                        <span>5.0 ★</span>
-                                        <span>(1,758,545 評價)</span>
-                                    </div>
-                                    <button class="btn btn-block my-3 btn-find-tutor">找英文家教</button>
-                                    <ul class="list-unstyled">
-                                        <li><a href="#">更多資訊</a></li>
-                                        <li><a href="#">英文課程內容</a></li>
-                                        <li><a href="#">英文教師新資料</a></li>
-                                        <li><a href="#">英文學生學習故事</a></li>
-                                        <li><a href="#">英文學生評價內容</a></li>
-                                    </ul>
-                                </div> *@
                             </div>
                         </div>
                     </div>
                 </form>
             </li>
-        </ul>
+        </ul> *@
         <div class="collapse navbar-collapse" id="navbarNav">
             <!-- 左側導覽連結 -->
             <ul class="navbar-nav">

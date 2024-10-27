@@ -50,6 +50,12 @@ namespace Web
             //µù¥USearchService
             builder.Services.AddScoped<ISearchService, ApplicationCore.Services.SearchService>();
 
+
+            builder.Services.AddScoped<DifySearchRecommendationService>();
+
+            builder.Services.AddScoped<Web.Services.OpenAI.OpenAIService>();
+
+
             //µù¥UCoravel Scheduler
             builder.Services.AddScheduler();
 
