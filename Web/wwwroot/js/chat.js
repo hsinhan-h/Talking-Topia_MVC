@@ -67,7 +67,8 @@ function setupSignalREvents(connection, senderId, receiverId) {
         console.log(`收到來自 ${user} 的訊息：${message};user的型別是${typeof user} `);
         let userName = (user.toString() == senderId) ? sender : receiver;
         console.log(`UserName是${userName}; sender是${sender}; receiver是${receiver}`)
-        addMessageToChat(userName, message, false);
+        const time = new Date().toLocaleString();
+        addMessageToChat(userName, message, time, false);
     });
 }
 
@@ -76,26 +77,46 @@ async function loadChatHistory(senderId, receiverId) {
         const response = await fetch(`/api/chat/history?user1=${senderId}&user2=${receiverId}`);
         const messages = await response.json();
         messages.forEach(msg => {
-            addMessageToChat(msg.senderName, msg.content, false);
+            const time = new Date(msg.timestamp).toLocaleString();
+            addMessageToChat(msg.senderName, msg.content, time, false);
         });
     } catch (err) {
         console.error("載入歷史訊息失敗：", err.toString());
     }
 }
 
-function addMessageToChat(user, message, isSender) {
+function addMessageToChat(user, message, time, isSender) {
     const li = document.createElement("li");
     li.classList.add(isSender ? "sent-message" : "received-message", "chat-message", "d-flex");
+
     const div = document.createElement("div");
     div.classList.add("message-content");
+
     const strong = document.createElement("strong");
     strong.textContent = user;
+
+    const messageBody = document.createElement("div");
+    messageBody.classList.add("message-body");
+    messageBody.style.display = "flex";
+    messageBody.style.justifyContent = "space-between";
+    messageBody.style.alignItems = "center";
+
     const p = document.createElement("p");
     p.textContent = `${message}`;
+
+    const span = document.createElement("span");
+    span.classList.add("message-time");
+    span.textContent = time;
+
+    messageBody.appendChild(p);
+    messageBody.appendChild(span);
+
     div.appendChild(strong);
-    div.appendChild(p);
+    div.appendChild(messageBody);
+
     li.appendChild(div);
     messagesList.appendChild(li);
+
     scrollToBottom();
 }
 
