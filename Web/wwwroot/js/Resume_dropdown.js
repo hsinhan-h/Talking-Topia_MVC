@@ -248,9 +248,8 @@ const appresume = createApp({
                 console.log("無法獲取會員 ID");
                 return;
             }
-
             fetch(`/api/UpdateResume/CheckAIStatus/`, {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
