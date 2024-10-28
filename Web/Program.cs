@@ -18,6 +18,8 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using Coravel;
 using Coravel.Scheduling.Schedule.Interfaces;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace Web
 {
@@ -44,6 +46,15 @@ namespace Web
 
             //µù¥UEmailService
             builder.Services.AddScoped<IEmailService, EmailService>();
+
+            //µù¥USearchService
+            builder.Services.AddScoped<ISearchService, ApplicationCore.Services.SearchService>();
+
+
+            builder.Services.AddScoped<DifySearchRecommendationService>();
+
+            builder.Services.AddScoped<Web.Services.OpenAI.OpenAIService>();
+
 
             //µù¥UCoravel Scheduler
             builder.Services.AddScheduler();

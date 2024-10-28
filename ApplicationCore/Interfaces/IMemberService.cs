@@ -14,7 +14,8 @@ namespace ApplicationCore.Interfaces
         public int AddWatchList(int memberId, int courseId);
         public bool DeleteWatchList(int memberId, int courseId);
         public bool GetIsTutor(int memberId);
-        public Task<SignalRDto> GetTutor(int courseId);
+        public Task<SignalRTutorDto> GetTutor(int courseId);
+        public Task<SignalRStudentDto> GetStudent(int studentId);
         public Task<string> GetMemberName(int memberId);
     }
 }
