@@ -367,57 +367,8 @@
         });
 
     }
-    function deleteReservation(memberId) {
-        const apiUrlreserveTime = `/api/UpdateTutorReserveTime/UpdateTutorReserveTime?memberId=${memberId}`;
-
-        fetch(apiUrlreserveTime, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const editButton = document.querySelector('#edit-button');
-                    editButton.classList.remove('d-none'); 
-                    const popover = new bootstrap.Popover(editButton, {
-                        trigger: 'manual', 
-                        content: '請重新選擇時段', 
-                        placement: 'top' 
-                    });
-                    popover.show();
-
-                    modalElement.addEventListener('hide.bs.modal', (event) => {
-                        event.preventDefault(); // 阻止預設關閉行為
-                        submitReservation(() => {
-                            toastr.success('提交成功！'); // 顯示成功訊息
-                            bootstrapModal.hide(); // 成功後允許關閉 modal
-                        });
-                    });
-                    setTimeout(() => {
-                        popover.hide();
-                    }, 3000);
-
-                } else {
-                    console.log('更新失敗，請重試！');
-                }
-            })
-            .catch(error => {
-                console.error('Error updating data:', error);
-                console.log('更新過程中發生錯誤！');
-            });
-    }
-    window.addEventListener('beforeunload', (event) => {
-        if (!isFormSubmitted) {
-            event.preventDefault(); // 阻止跳轉
-            event.returnValue = '您有尚未提交的變更，確定要離開此頁面嗎？'; // 顯示警告訊息
-        }
-    });
     // 點擊事件內調用函數
     document.getElementById("edit-button").addEventListener("click", function () {
-        const memberId = document.getElementById('memberIdDisplay').innerText; 
-        deleteReservation(memberId); 
         const enablecheckbox = document.querySelectorAll('input[type="checkbox"]');
         enablecheckbox.forEach(checkbox => { checkbox.disabled = false })
     });
