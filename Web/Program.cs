@@ -20,11 +20,13 @@ using Coravel;
 using Coravel.Scheduling.Schedule.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Web
 {
     public class Program
     {
+        [Experimental("SKEXP0020")]
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -137,6 +139,12 @@ namespace Web
             });
             builder.Services.AddScoped<MongoRepository>();
 
+            // Product Semantic Search Service
+            builder.Services
+                .Configure<ApplicationCore.Settings.MongoDbVecotrSearchSettings>(builder.Configuration.GetSection(nameof(ApplicationCore.Settings.MongoDbVecotrSearchSettings)));
+
+
+
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie(options =>
                             {
@@ -152,6 +160,10 @@ namespace Web
             builder.Services.AddAuthorization();
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
+
+            
+
+
 
             var app = builder.Build();
 
