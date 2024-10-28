@@ -6,8 +6,10 @@ using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Data;
 using System.Security.Claims;
 using System.Text;
 
@@ -28,8 +30,6 @@ namespace Api
 
             // 2. µù¥U JwtService
             builder.Services.AddScoped<JwtService>();
-            builder.Services.AddScoped<CloudinaryService>();
-            builder.Services.AddScoped<CourseImageService>();
 
             // 3. °t¸m JWT ÅçÃÒ
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -58,7 +58,6 @@ namespace Api
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JwtSettings:SignKey")))
                     };
                 });
-
 
             builder.Services.AddControllers();
 
