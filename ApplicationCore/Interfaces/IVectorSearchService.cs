@@ -1,4 +1,5 @@
-﻿using Microsoft.SemanticKernel.Memory;
+﻿using ApplicationCore.Dtos;
+using Microsoft.SemanticKernel.Memory;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -13,5 +14,6 @@ namespace ApplicationCore.Interfaces
     {
        public Task FetchAndSaveProductDocuments(ISemanticTextMemory memory, int startIndex, int limitSize);
        public Task FetchAndSaveProductDocumentsAsync(int startIndex, int limitSize);
+       public Task<List<CourseVectorSearchResultDto>> GetVectorSearchAsync(string userInput);
     }
 }

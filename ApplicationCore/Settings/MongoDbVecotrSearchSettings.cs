@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Settings
 {
-    public class MongoDbSettings
+    public class MongoDbVecotrSearchSettings
     {
         public string ConnectionString { get; set; }
         public string VectorDatabaseName { get; set; }

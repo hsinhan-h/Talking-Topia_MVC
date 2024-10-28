@@ -141,10 +141,9 @@ namespace Web
 
             // Product Semantic Search Service
             builder.Services
-                .Configure<ApplicationCore.Settings.MongoDbSettings>(builder.Configuration.GetSection(nameof(ApplicationCore.Settings.MongoDbSettings)));
+                .Configure<ApplicationCore.Settings.MongoDbVecotrSearchSettings>(builder.Configuration.GetSection(nameof(ApplicationCore.Settings.MongoDbVecotrSearchSettings)));
 
 
-            builder.Services.AddScoped<VectorSearchServices>();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie(options =>

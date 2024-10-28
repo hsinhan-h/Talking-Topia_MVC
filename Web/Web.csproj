@@ -52,9 +52,15 @@
 		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.10" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Microsoft.SemanticKernel" Version="1.25.0" />
+		<PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.25.0" />
+		<PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.25.0" />
 		<PackageReference Include="MongoDB.Bson" Version="2.29.0" />
 		<PackageReference Include="MongoDB.Driver" Version="2.29.0" />
-		<PackageReference Include="OpenAI" Version="2.0.0" />
+		<PackageReference Include="System.ClientModel" Version="1.2.1" />
+		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0-beta.1" />
+		<PackageReference Include="OpenAI" Version="2.1.0-beta.1" />
+
 	</ItemGroup>
 
 	<ItemGroup>

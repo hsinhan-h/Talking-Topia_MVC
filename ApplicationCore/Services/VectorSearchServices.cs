@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Entities;
+﻿using ApplicationCore.Dtos;
+using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Memory;
 using MongoDB.Driver;
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -24,7 +26,7 @@ namespace ApplicationCore.Services
         private readonly IRepository<Course> _courseRepository;
         private readonly MemoryBuilder _memoryBuilder;
         private readonly ISemanticTextMemory _semanticTextMemory;
-        private readonly ApplicationCore.Settings.MongoDbSettings _mongoDbSettings;
+        private readonly ApplicationCore.Settings.MongoDbVecotrSearchSettings _mongoDbSettings;
         private readonly MongoDBMemoryStore _mongoDBMemoryStore;
         private readonly string _openAiApiKey;
         private readonly string _connectionString;
@@ -34,7 +36,7 @@ namespace ApplicationCore.Services
         private readonly IMongoClient _mongoClient;
 
 
-        public VectorSearchServices(IRepository<Course> courseRepository, IOptions<ApplicationCore.Settings.MongoDbSettings> mongoDbSettings,IConfiguration configuration)
+        public VectorSearchServices(IRepository<Course> courseRepository, IOptions<MongoDbVecotrSearchSettings> mongoDbSettings,IConfiguration configuration)
         {
             _courseRepository = courseRepository;
             // Initialize the openAI API key for text embedding generation
@@ -47,9 +49,15 @@ namespace ApplicationCore.Services
             _collectionName = _mongoDbSettings.VectorCollectionName;
             // Initialize the memory store: MongoDBMemoryStore(or you can use other memory store like QdrantMemoryStore, etc.)
             _mongoDBMemoryStore = new MongoDBMemoryStore(_connectionString, _databaseName, _searchIndexName);
+            // 顯式地創建 ApiKeyCredential，避免隱式轉換錯誤
+            var apiKeyCredential = new ApiKeyCredential(_openAiApiKey);
             // Initialize the memory builder: set up text embedding generation and memory store
             _memoryBuilder = new MemoryBuilder();
-            _memoryBuilder.WithOpenAITextEmbeddingGeneration("text-embedding-ada-002", _openAiApiKey);
+            // 初始化記憶體建構器
+            _memoryBuilder = new MemoryBuilder();
+            _memoryBuilder.WithOpenAITextEmbeddingGeneration(
+                modelId: "text-embedding-ada-002",
+                apiKey: _openAiApiKey);
             _memoryBuilder.WithMemoryStore(_mongoDBMemoryStore);
             // Build the memory: create the semantic text memory
             _semanticTextMemory = _memoryBuilder.Build();
@@ -67,10 +75,10 @@ namespace ApplicationCore.Services
                 {
                     await memory.SaveInformationAsync(
                         collection: _collectionName,
-                        text: course.Description,
+                        text: course.Title,
                         id: course.CourseId.ToString(),
                         description: course.SubTitle,
-                        additionalMetadata: course.Title
+                        additionalMetadata: course.Description
                     );
                 }
                 catch (Exception ex)
@@ -86,25 +94,30 @@ namespace ApplicationCore.Services
             await FetchAndSaveProductDocuments(_semanticTextMemory, startIndex, limitSize);
         }
 
-        //public async Task<List<ProductSearchResult>> GetRecommendationsAsync(string userInput)
-        //{
-        //    var memories = _semanticTextMemory.SearchAsync(_collectionName, userInput, limit: 10, minRelevanceScore: 0.6);
+        Task IVectorSearchService.FetchAndSaveProductDocuments(ISemanticTextMemory memory, int startIndex, int limitSize)
+        {
+            throw new NotImplementedException();
+        }
 
-        //    var result = new List<ProductSearchResult>();
-        //    await foreach (var memory in memories)
-        //    {
-        //        var productSearchResult = new ProductSearchResult
-        //        {
-        //            Id = memory.Metadata.Id,
-        //            Description = memory.Metadata.Description,
-        //            Name = memory.Metadata.AdditionalMetadata,
-        //            Relevance = memory.Relevance.ToString("0.00")
-        //        };
-        //        result.Add(productSearchResult);
-        //    }
+        public async Task<List<CourseVectorSearchResultDto>> GetVectorSearchAsync(string userInput)
+        {
+            var memories = _semanticTextMemory.SearchAsync(_collectionName, userInput, limit: 4, minRelevanceScore: 0.6);
 
-        //    return result;
-        //}
+            var result = new List<CourseVectorSearchResultDto>();
+            await foreach (var memory in memories)
+            {
+                var courseVectorSearchResult = new CourseVectorSearchResultDto
+                {
+                    Id = memory.Metadata.Id,
+                    Description = memory.Metadata.Description,
+                    Name = memory.Metadata.Text,
+                    Relevance = memory.Relevance.ToString("0.00")
+                };
+                result.Add(courseVectorSearchResult);
+            }
+
+            return result;
+        }
 
     }
 }
