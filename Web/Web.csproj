@@ -36,6 +36,7 @@
 		<PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
 		<PackageReference Include="Coravel" Version="6.0.0" />
 		<PackageReference Include="Dapper" Version="2.1.35" />
+		<PackageReference Include="LineBotSDK" Version="2.13.39" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.10" />
@@ -55,6 +56,7 @@
 		<PackageReference Include="MongoDB.Bson" Version="2.29.0" />
 		<PackageReference Include="MongoDB.Driver" Version="2.29.0" />
 		<PackageReference Include="OpenAI" Version="2.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.9.0" />
 	</ItemGroup>
 
 	<ItemGroup>
