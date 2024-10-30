@@ -83,42 +83,52 @@ namespace Web.Services
             };
         }
 
-        public async Task<(bool Success, string Message)> CheckAIStatusfuction(int memberId)
+        public async Task<(bool Success, string Message)> CheckAIStatusFunction(int memberId)
         {
             try
             {
-                // 查找會員
-                var member = await _repository.GetAll<Entities.Member>()
-                            .Where(m => m.MemberId == memberId)
-                            .FirstOrDefaultAsync();
+                var applyList = await GetApplyListByMemberIdAsync(memberId);
 
-                if (member == null)
+                if (applyList != null)
                 {
-                    return (false, "未找到會員");
+                    // 更新已有的資料
+                    if (applyList.AiimgageStatus == null)
+                    {
+                        applyList.AiimgageStatus = true;
+                    }
+
+                    _repository.Update(applyList);
+                }
+                else
+                {
+                    // 如果沒有該會員的資料，創建新的記錄
+                    var newApplyList = new Entities.ApplyList
+                    {
+                        MemberId = memberId,
+                        ApplyStatus = false,
+                        ApplyDateTime = DateTime.Now,
+                        ApprovedDateTime = null,
+                        UpdateStatusDateTime = null,
+                        RejectReason = null,
+                        AiimgageStatus = true,
+                    };
+
+                    _repository.Create(newApplyList);
                 }
 
-                var applyCourseList = await _repository.GetAll<Entities.ApplyList>()
-                    .Where(ac => ac.MemberId == member.MemberId)
-                    .ToListAsync();
-
-                if (applyCourseList.Count == 0)
-                {
-                    return (false, "未找到申請記錄");
-                }
-
-                foreach (var apply in applyCourseList)
-                {
-                    apply.AiimgageStatus = true;
-                    _repository.Create(apply);
-                }
+                // 保存變更並提交
                 await _repository.SaveChangesAsync();
-                return (true, "更新成功");
+  
+
+                return (true, "AI status updated successfully.");
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update AI status", ex);
+                // 捕捉例外狀況並回傳失敗訊息
+                return (false, $"Failed to update AI status: {ex.Message}");
             }
         }
+
 
 
         public async Task<TutorResumeViewModel> ChangeResumeLicenses(int memberId, List<int> licenseIds, List<string> licenseNames, List<string> licenseUrls)

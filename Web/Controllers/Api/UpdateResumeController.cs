@@ -300,10 +300,10 @@ namespace Web.Controllers.Api
             });
         }
         //AI相關
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> CheckAIStatus([FromBody] MemberIdDto dto)
         {
-            var result = await _resumeDataService.CheckAIStatusfuction(dto.MemberId);
+            var result = await _resumeDataService.CheckAIStatusFunction(dto.MemberId);
 
             if (!result.Success)
             {
