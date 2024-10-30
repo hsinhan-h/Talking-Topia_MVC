@@ -93,11 +93,6 @@ namespace Web
             // ConfigureApplicationCoreService -> for 非Web專案內的DI
             // ConfigureWebService -> for Web專案內的DI
             builder.Services.AddApplicationCoreService().AddWebService();
-            // 大國的，勿刪(只在開發環境加入User Secrets)
-            //if (builder.Environment.IsDevelopment())
-            //{
-            //    builder.Configuration.AddUserSecrets<Program>();
-            //}
 
             builder.Services.AddCors(options =>
             {
