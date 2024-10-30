@@ -20,11 +20,13 @@ using Coravel;
 using Coravel.Scheduling.Schedule.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Web
 {
     public class Program
     {
+        [Experimental("SKEXP0020")]
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -106,11 +108,6 @@ namespace Web
             // ConfigureApplicationCoreService -> for 非Web專案內的DI
             // ConfigureWebService -> for Web專案內的DI
             builder.Services.AddApplicationCoreService().AddWebService();
-            // 大國的，勿刪(只在開發環境加入User Secrets)
-            //if (builder.Environment.IsDevelopment())
-            //{
-            //    builder.Configuration.AddUserSecrets<Program>();
-            //}
 
             builder.Services.AddCors(options =>
             {
@@ -143,6 +140,12 @@ namespace Web
             });
             builder.Services.AddScoped<MongoRepository>();
 
+            // Product Semantic Search Service
+            builder.Services
+                .Configure<ApplicationCore.Settings.MongoDbVecotrSearchSettings>(builder.Configuration.GetSection(nameof(ApplicationCore.Settings.MongoDbVecotrSearchSettings)));
+
+
+
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie(options =>
                             {
@@ -158,6 +161,10 @@ namespace Web
             builder.Services.AddAuthorization();
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
+
+            
+
+
 
             var app = builder.Build();
 

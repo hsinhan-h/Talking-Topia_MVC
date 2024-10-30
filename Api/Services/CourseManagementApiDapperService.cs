@@ -198,11 +198,19 @@ namespace Api.Services
             {
                 var result = await _dbConnection.ExecuteAsync(updateQuery, dto, transaction);
 
-                await _dbConnection.ExecuteAsync(deleteImagesQuery, new { dto.CourseId, dto.CourseImages }, transaction);
+                //刪除
+                await _dbConnection.ExecuteAsync(deleteImagesQuery, new { CourseId = dto.CourseId, CourseImages = dto.CourseImages }, transaction);
+
+                var existingImages = await _dbConnection.QueryAsync<string>(
+                "SELECT ImageUrl FROM CourseImages WHERE CourseId = @CourseId",
+                new { CourseId = dto.CourseId }, transaction);
 
                 foreach (var imageUrl in dto.CourseImages)
                 {
-                    await _dbConnection.ExecuteAsync(insertImagesQuery, new { CourseId = dto.CourseId, ImageUrl = imageUrl, Cdate = DateTime.Now }, transaction);
+                    if (!existingImages.Contains(imageUrl)) // 檢查圖片是否已存在
+                    {
+                        await _dbConnection.ExecuteAsync(insertImagesQuery, new { CourseId = dto.CourseId, ImageUrl = imageUrl, Cdate = DateTime.Now }, transaction);
+                    }
                 }
 
                 transaction.Commit();
