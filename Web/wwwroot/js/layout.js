@@ -276,7 +276,7 @@ window.difyApp = Vue.createApp({
     },
     watch: {
         productTitle: function (val) {
-            this.difyCreateButtonStatus = val.length >= 5 && val.length <= 30;
+            this.difyCreateButtonStatus = val.length >= 2 && val.length <= 30;
         }
     }
 });

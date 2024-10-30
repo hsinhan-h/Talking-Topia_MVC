@@ -23,31 +23,7 @@
             </li>
         </ul>
 
-       @*  <ul class="navbar-nav mx-3">
-            <li class="nav-item search-course">
-                <form class="d-flex" action="/Search/Index" method="get" id="difysearch">
-                    <div class="input-container nav-item dropdown">
-                        <input class="form-control nav-link dropdown-toggle" id="courseSearchInput" role="button" type="search" name="query" placeholder="搜尋課程" aria-label="Search">
-                        <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        <div class="dropdown-menu mega-menu p-3" aria-labelledby="courseMenu">
-                            <div class="row">
-                                <!-- 第一欄 -->
-                                <div class="col-4 first-column">
-                                    <ul class="list-unstyled">
-                                        <li><a href="#" data-target="language-learning">語言學習</a></li>
-                                        <li><a href="#" data-target="programming-language">程式設計</a></li>
-                                        <li><a href="#" data-target="academic">升學科目</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-4 second-column">
-                                    <!-- 預設為空，在 AJAX 成功後填充 -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </li>
-        </ul> *@
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <!-- 左側導覽連結 -->
             <ul class="navbar-nav">
@@ -81,11 +57,11 @@
                             <i class="fa-solid fa-cart-shopping"></i>
                         </a>
                     </li>
-                    <li class="nav-item message-item">
+@*                     <li class="nav-item message-item">
                         <a class="nav-link" href="">
                             <i class="fa-regular fa-comments"></i>
                         </a>
-                    </li>
+                    </li> *@
 
 
                     <!--會員系統子選單開始-->
@@ -118,11 +94,11 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Account" asp-action="Account">登入/註冊</a>
                     </li>
-                    <li class="nav-item message-item">
+                    @* <li class="nav-item message-item">
                         <a class="nav-link" href="">
                             <i class="fa-regular fa-comments"></i>
                         </a>
-                    </li>
+                    </li> *@
                 }
             </ul>
         </div>

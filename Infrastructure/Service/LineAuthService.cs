@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Dtos;
 using ApplicationCore.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,18 @@ namespace Infrastructure.Service
 {
     public class LineAuthService : ILineAuthService
     {
-        private readonly string _clientId = "2006372467";
-        private readonly string _clientSecret = "1f42c2be3fd2e8783b2bcfc13370a584";
-        private readonly string _redirectUri = "https://talkingtopia-edfmd7fmeudpckg6.japaneast-01.azurewebsites.net/Account/SSOcallback";
+        private readonly string _clientId;
+        private readonly string _clientSecret;
+        private readonly string _redirectUri;
+
+        public LineAuthService(IConfiguration configuration)
+        {
+            _clientId = configuration["LINE-Login-Setting:Channel_ID"];
+            _clientSecret = configuration["LINE-Login-Setting:Channel_Secret"];
+            _redirectUri = configuration["LINE-Login-Setting:CallbackURL"];
+        }
+
+       
 
         public async Task<LineTokenResponseDto> GetAccessTokenAsync(string code)
         {

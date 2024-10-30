@@ -338,11 +338,10 @@ navbar-toggler-icon {
     }
 }
 
-
 .lh-layout-footer {
     background-color: #eee;
     color: #333;
-    padding: 40px 20px;
+    padding: 40px 300px;
 }
 
 .lh-layout-footer-container {
@@ -396,6 +395,37 @@ navbar-toggler-icon {
             text-decoration: underline;
         }
 
+/* 新增的 LINE QR Code 區塊樣式 */
+.lh-layout-footer-line {
+    text-align: center;
+}
+
+.line-qrcode {
+    width: 100px; /* 調整 QR Code 的大小 */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.line-account {
+    font-size: 14px;
+    color: #333; /* 可以根據需求調整顏色 */
+    margin-top: 5px;
+}
+.lh-layout-footer-line p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.lh-layout-footer-line a {
+    color: #1DB954; /* LINE 綠色 */
+    text-decoration: none;
+}
+
+    .lh-layout-footer-line a:hover {
+        text-decoration: underline;
+    }
+
+/* 手機螢幕樣式調整 */
 @media screen and (max-width: 767px) {
     .lh-layout-footer-linkGroup {
         flex-direction: column;
