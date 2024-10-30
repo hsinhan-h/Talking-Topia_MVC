@@ -34,9 +34,15 @@ namespace Web
                 builder.Configuration.AddUserSecrets<Program>();
             }
 
+            builder.Services.AddMemoryCache();
+            //µù¥U CacheService
+            builder.Services.AddScoped<CacheService>();
+
             // Add DbContext configuration
             builder.Services.AddDbContext<Data.TalkingTopiaDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("TalkingTopiaDb")));
+
+
 
             //µù¥UIRepository
             builder.Services.AddScoped<IRepository, GeneralRepository>();
@@ -188,6 +194,9 @@ namespace Web
                 var notificationService = scope.ServiceProvider.GetRequiredService<AppointmentNotificationService>();
                 await notificationService.SendNotificationsAsync();
             }).EveryMinute();
+
+            app.MapControllers();
+
 
             app.MapControllerRoute(
             name: "Login",
